@@ -44,3 +44,7 @@ konkret användbarhetsbrist, inte ett problem som kan lösas med fler stjärnor.
 
 Automatiska kontroller: `npm run check`, samt `python tests/browser_reading_flow.py`
 med Playwright och Chromium installerade.
+
+## Test av läsbarhet och Aha-frågor
+
+Se `docs/READING-FLOW.md` för ett barnprovtest utan hjälp i svarssituationen. Vi observerar om barnet verkligen läser och kan använda ordet i en ny berättelse; att trycka på en knapp är inte bevis för förståelse.

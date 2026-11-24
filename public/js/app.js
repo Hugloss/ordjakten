@@ -938,6 +938,7 @@
     game={settings:roundSettings,questions,index:0,answers:{},selected:{},finished:false,
       startedAt:Date.now(),deadline:0,remainingMs:settings.timerSeconds*1000,
       feedback:false,paused:false,streak:0,bestStreak:0,stars:0,
+      readingMetrics:{offered:0,attempted:0,firstTry:0,completed:0},
       questId:questId&&J.QUESTS[questId]?questId:null,priorMistakes:priorReviewErrors()};
     orderSelection=[];
     document.documentElement.dataset.adventure=game.settings.adventure;
@@ -1023,6 +1024,10 @@
     $('feedback-area').hidden=true;
     readingCheck=null;
     $('reading-check').hidden=true;
+    $('reading-launch').hidden=true;
+    $('reading-reread').hidden=true;
+    $('reading-why').hidden=true;
+    $('feedback-area').dataset.readingPending='false';
     $('reading-response').textContent='';
     $('next').hidden=true;
     $('test-footnote').hidden=game.settings.mode!=='test';
@@ -1056,35 +1061,67 @@
     if(game.index>0 && typeof $('question-area').scrollIntoView==='function')
       $('question-area').scrollIntoView({behavior:'instant',block:'start'});
   }
+
   function showReadingCheck(check) {
-    const section=$('reading-check');section.hidden=!check;
+    const section=$('reading-check');
+    const launch=$('reading-launch');
+    section.hidden=true;
+    launch.hidden=!check;
     section.dataset.complete='false';
     $('reading-response').textContent='';
+    $('reading-why').hidden=true;
+    $('reading-reread').hidden=!check;
     const box=$('reading-options');box.replaceChildren();
     if(!check)return;
+    check.attempts=0;
+    game.readingMetrics.offered++;
     $('reading-check-title').textContent=check.prompt;
+    $('reading-instruction').textContent=check.source==='meaning'
+      ? 'Vilken betydelse är rätt? Tänk på förklaringen du just läste.'
+      : 'Vilket nytt exempel passar? Använd det du just läste.';
     check.options.forEach((answer,index)=>{
       const button=element('button','reading-option');button.type='button';
       button.dataset.readingOption=String(index);
-      const letter=element('span','reading-letter','AB'[index]);letter.setAttribute('aria-hidden','true');
+      const letter=element('span','reading-letter','ABC'[index]);letter.setAttribute('aria-hidden','true');
       const label=element('span','',answer.label);button.append(letter,label);
       box.append(button);
     });
+  }
+  function revealReadingCheck() {
+    if(!game||!game.feedback||!readingCheck)return;
+    $('reading-launch').hidden=true;
+    $('reading-check').hidden=false;
+    $('reading-check-title').setAttribute('tabindex','-1');
+    $('reading-check-title').focus({preventScroll:true});
+    if(typeof $('reading-check').scrollIntoView==='function')
+      $('reading-check').scrollIntoView({behavior:'auto',block:'start'});
   }
   function answerReadingCheck(index) {
     if(!game||!game.feedback||!readingCheck||$('reading-check').dataset.complete==='true')return;
     const option=readingCheck.options[index];
     if(!option)return;
-    const button=$('reading-options').querySelector(`[data-reading-option="${index}"]`);
+    const button=$('reading-options').querySelector('[data-reading-option="'+index+'"]');
+    readingCheck.attempts++;
+    if(readingCheck.attempts===1)game.readingMetrics.attempted++;
     if(B.isCorrect(readingCheck,index)){
+      if(readingCheck.attempts===1)game.readingMetrics.firstTry++;
+      game.readingMetrics.completed++;
       $('reading-check').dataset.complete='true';
+      $('feedback-area').dataset.readingPending='false';
       button.dataset.correct='true';
       $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
-      $('reading-response').textContent='🌟 Aha! Nu kan du fortsätta till nästa ord.';
+      $('reading-response').textContent='🌟 Du hittade rätt i det nya exemplet!';
+      $('reading-why').textContent=readingCheck.why ? 'Därför passar det: '+readingCheck.why :
+        'Det här exemplet passar med betydelsen du läste.';
+      $('reading-why').hidden=false;
+      $('reading-reread').hidden=true;
+      const q=game.questions[game.index];
+      if(game.answers[q.id]==='right')showBurst();
       $('next').hidden=false;
-    } else {
+    }else{
       button.dataset.wrong='true';button.disabled=true;
-      $('reading-response').textContent='Nästan! Läs förklaringen igen och prova det andra alternativet.';
+      $('reading-response').textContent='Inte riktigt. Läs förklaringen en gång till och försök igen.';
+      $('reading-reread').hidden=false;
     }
   }
   function submit(index) {
@@ -1130,7 +1167,8 @@
       const reached=A.newlyReached(game.settings.adventure,game.questions.length,game.index,game.index+1);
       $('adventure-milestone').hidden=reached.length===0;
       if(reached.length){const stop=reached[reached.length-1];$('milestone-emoji').textContent=stop.emoji;$('milestone-text').textContent=stop.message;}
-      if(outcome==='right'){playSound('right');showBurst();}
+      if(outcome==='right')playSound('right');
+      // Keep visual rewards out of the reading step until the Aha check is done.
       else if(outcome==='wrong')playSound('wrong');
       const correct=q.taskType==='order'?q.correctOrder.join(' → '):q.options.find(item=>item.correct).label;
       $('feedback-correct').textContent=outcome==='right'?'Bra jobbat!':q.taskType==='order'?'Rätt ordning: '+correct:'Rätt svar: '+correct;
@@ -1150,8 +1188,9 @@
       $('question-area').hidden=true;
       $('feedback-area').hidden=false;
       // The reading checkpoint is for learning, never an extra scored test.
-      readingCheck=B.makeCheck(q,{bank,contexts,surprises});
+      readingCheck=B.makeCheck(q,{bank,contexts,surprises,missions});
       showReadingCheck(readingCheck);
+      $('feedback-area').dataset.readingPending=readingCheck?'true':'false';
       $('next').hidden=!!readingCheck;
       $('next').textContent=game.index===game.questions.length-1?'🏆 Visa mitt resultat':q.kind==='expression'?'Nästa uttryck →':'Nästa ord →';
       $('test-footnote').hidden=true;
@@ -1204,6 +1243,13 @@
     if(!$('adaptive-results').hidden){
       const skills=D.summary(history.skillProgress);
       $('adaptive-results-message').textContent=`Du har provat ${skills.practised} övningsmoment på ${skills.concepts} ord och uttryck. ${skills.needsPractice} moment kan behöva en ny chans. I nästa omgång får du både variation och hjälp med det som varit svårt.`;
+    }
+    const reading=game.readingMetrics;
+    $('results-reading').hidden=game.settings.mode!=='train'||!reading||reading.attempted===0;
+    if(!$('results-reading').hidden){
+      $('results-reading-detail').textContent='Du klarade '+reading.firstTry+' av '+reading.attempted+
+        ' Aha-frågor direkt på första försöket. Totalt klarade du '+reading.completed+
+        ' Aha-frågor. De hjälper dig att förstå orden i nya sammanhang.';
     }
     $('result-right').textContent=String(result.right);
     $('result-wrong').textContent=String(result.wrong);
@@ -1540,6 +1586,12 @@
   $('answer-options').addEventListener('click',event=>{
     const target=event.target.closest('button[data-option]');
     if(target && $('answer-options').contains(target))submit(Number(target.dataset.option));
+  });
+  $('reading-start').addEventListener('click',revealReadingCheck);
+  $('reading-reread').addEventListener('click',()=>{
+    $('explanation-word').focus({preventScroll:true});
+    if(typeof $('explanation-word').scrollIntoView==='function')
+      $('explanation-word').scrollIntoView({behavior:'auto',block:'start'});
   });
   $('story-reveal').addEventListener('click',()=>{
     if(!game||game.finished||game.feedback)return;

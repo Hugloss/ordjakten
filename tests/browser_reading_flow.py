@@ -8,7 +8,12 @@ ROOT = Path(__file__).resolve().parents[1]
 PREVIEWS=ROOT/'docs'/'previews'
 
 def answer_reading(page):
+    assert page.locator('#reading-launch').is_visible()
+    assert page.locator('#reading-check').is_hidden()
+    assert page.locator('#next').is_hidden()
+    page.locator('#reading-start').click()
     assert page.locator('#reading-check').is_visible()
+    assert page.locator('.reading-option').count()==3
     assert page.locator('#next').is_hidden(), 'Next must not appear before comprehension check'
     # The options themselves are not marked as correct in the DOM: the user
     # must choose. In the browser test, compare with curated question text.
@@ -34,11 +39,14 @@ def answer_reading(page):
     if bad:
         page.locator('.reading-option').nth(bad[0]).click()
         assert page.locator('#next').is_hidden()
-        assert 'Läs förklaringen igen' in page.locator('#reading-response').inner_text()
+        assert 'Läs förklaringen' in page.locator('#reading-response').inner_text()
+        assert page.locator('#reading-reread').is_visible()
+        page.locator('#reading-reread').click()
     good=[i for i,t in enumerate(labels) if right in t]
     assert len(good)==1, (prompt,right,labels)
     page.locator('.reading-option').nth(good[0]).click()
     assert page.locator('#reading-check').get_attribute('data-complete')=='true'
+    assert page.locator('#reading-why').is_visible()
     assert page.locator('#next').is_visible()
 
 def context_mobile(browser):

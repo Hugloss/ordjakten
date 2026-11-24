@@ -296,7 +296,7 @@
         </section>
         <div id="question-area">
           <div id="reading-story" class="question-card"><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
-          <button id="story-reveal" class="primary-button big-button" type="button" hidden>📖 Jag har läst – visa svaren →</button>
+          <button id="story-reveal" class="primary-button big-button" type="button" hidden>Visa svaren →</button>
           <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
           <div id="answer-options" class="answer-grid"></div>
           <section id="order-area" class="mission-order-area panel" hidden aria-label="Sätt händelserna i ordning">
@@ -310,12 +310,18 @@
         <div id="feedback-area" hidden aria-live="polite" aria-atomic="true">
           <div id="feedback-status" class="feedback-status"><div id="feedback-emoji" class="result-icon">✅</div><h2 id="feedback-title">Rätt svar!</h2><p id="feedback-correct"></p><p id="feedback-reward" class="feedback-reward" hidden></p></div>
           <div class="explanation"><span id="explanation-label" class="eyebrow">📖 STEG 1: LÄS FÖRKLARINGEN</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div></div>
+          <div id="reading-launch" class="reading-launch" hidden>
+            <p class="reading-launch-prompt">📖 Läs förklaringen ovan. Du ska strax använda ordet i ett annat exempel.</p>
+            <button id="reading-start" class="primary-button big-button full-button" type="button">🧠 Jag är redo – prova i en ny situation →</button>
+          </div>
           <section id="reading-check" class="reading-check" aria-label="En liten förståelsefråga" hidden>
-            <span class="reading-label">🧠 STEG 2: VISA ATT DU FÖRSTÅTT</span>
+            <span class="reading-label">🧠 STEG 2: ANVÄND DET DU LÄST</span>
             <h3 id="reading-check-title"></h3>
-            <p class="reading-intro">Läs förklaringen ovan. Välj sedan den situation som passar. Det ger inga extra poäng.</p>
+            <p class="reading-intro" id="reading-instruction">Tänk efter och välj rätt svar. Den här övningen ger inga extra poäng.</p>
             <div id="reading-options" class="reading-options"></div>
             <p id="reading-response" class="reading-response" role="status" aria-live="polite"></p>
+            <p id="reading-why" class="reading-why" hidden></p>
+            <button id="reading-reread" type="button" class="secondary-button" hidden>📖 Läs förklaringen igen ↑</button>
           </section>
           <div id="feedback-cheer" class="feedback-cheer"><span id="feedback-companion" aria-hidden="true">🦊</span><p id="feedback-message"></p></div>
           <div id="adaptive-feedback" class="adaptive-feedback" hidden><strong id="adaptive-feedback-title">🧠 Vi lär oss steg för steg</strong><p id="adaptive-feedback-text"></p></div>
@@ -339,6 +345,7 @@
       <section id="view-results" class="view" aria-labelledby="results-title" hidden>
         <div class="results-hero panel"><div id="results-companion" class="results-companion" aria-hidden="true">🦊</div><div class="trophy" aria-hidden="true">🏆</div><h1 id="results-title">Ordjakten är klar!</h1><div id="results-percent" class="results-percent">80 %</div><p id="results-descriptor" class="muted"></p><p id="results-cheer" class="results-cheer"></p></div>
         <section class="panel adventure-finale" aria-labelledby="finale-title"><div id="finale-emoji" aria-hidden="true">🌲</div><div><h2 id="finale-title">Mystiska skogen</h2><p id="finale-text">Du har utforskat hela skogen!</p><p id="finale-stops" class="subtle-note"></p></div></section>
+        <section id="results-reading" class="panel results-reading" hidden><h2>📖 Så gick Aha-frågorna</h2><p id="results-reading-detail"></p><p class="subtle-note">Aha-frågorna hjälper dig att öva. De ändrar inte poängen i ordjakten.</p></section>
         <section id="results-rewards" class="panel rewards-panel" hidden aria-labelledby="rewards-title"><div class="section-header"><h2 id="rewards-title">🌟 Dina upptäckter</h2></div><p id="rewards-stars" class="rewards-stars"></p><div id="rewards-badges" class="rewards-badges"></div></section>
         <section id="quest-finale" class="panel quest-finale" hidden aria-labelledby="quest-finale-title"><div id="quest-finale-emoji" class="quest-finale-emoji" aria-hidden="true">🌟</div><div><h2 id="quest-finale-title">Miniuppdrag avklarat!</h2><p id="quest-finale-text"></p><p id="quest-finale-count" class="subtle-note"></p></div></section>
         <div class="result-grid"><div class="result-stat positive"><span>✅ Rätt</span><strong id="result-right">0</strong></div><div class="result-stat negative"><span>❌ Fel</span><strong id="result-wrong">0</strong></div><div class="result-stat neutral"><span>⏳ Obesvarade</span><strong id="result-empty">0</strong></div></div>

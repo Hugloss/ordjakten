@@ -51,6 +51,10 @@
           "text": "Mira kramar en nalle med mjuk päls som sticker ut åt alla håll.",
           "why": "Nallens mjuka och luftiga päls ger den känslan."
         }
+      ],
+      "readingDistractors": [
+        "sv-0036",
+        "sv-0009"
       ]
     },
     {
@@ -103,6 +107,10 @@
           "text": "En platt sten med våt mossa gör att Alva nästan tappar fotfästet.",
           "why": "Den våta mossan gör stenen lätt att glida på."
         }
+      ],
+      "readingDistractors": [
+        "sv-0001",
+        "sv-0011"
       ]
     },
     {
@@ -233,6 +241,10 @@
           "text": "På vattenpölen ligger ett tunt islager som går sönder när en pinne nuddar det.",
           "why": "Det tunna islagret går lätt sönder."
         }
+      ],
+      "readingDistractors": [
+        "sv-0025",
+        "sv-0024"
       ]
     },
     {
@@ -259,6 +271,10 @@
           "text": "Lampan ovanför köksbordet tänds och hela rummet blir ljust.",
           "why": "Taklampan ger ifrån sig ljus."
         }
+      ],
+      "readingDistractors": [
+        "sv-0021",
+        "sv-0036"
       ]
     },
     {
@@ -337,6 +353,10 @@
           "text": "Påskharen av choklad är tom på insidan när Iris biter av ett öra.",
           "why": "Chokladfiguren har ett tomt utrymme inuti."
         }
+      ],
+      "readingDistractors": [
+        "sv-0041",
+        "sv-0036"
       ]
     },
     {
@@ -415,6 +435,10 @@
           "text": "Buketten som var fin i måndags hänger nu trött över vasens kant.",
           "why": "Blommorna hänger eftersom de inte längre är spänstiga."
         }
+      ],
+      "readingDistractors": [
+        "sv-0030",
+        "sv-0026"
       ]
     },
     {
@@ -779,6 +803,10 @@
           "text": "Alex hittar ett märkligt skal och börjar undersöka var det kommer ifrån.",
           "why": "Alex vill lära sig mer om skalet."
         }
+      ],
+      "readingDistractors": [
+        "sv-0088",
+        "sv-0095"
       ]
     },
     {
@@ -935,6 +963,10 @@
           "text": "Guiden tar på sig handskar och lyfter den gamla skålen mycket långsamt.",
           "why": "Guiden hanterar skålen med stor försiktighet."
         }
+      ],
+      "readingDistractors": [
+        "sv-0076",
+        "sv-0071"
       ]
     },
     {
@@ -961,6 +993,10 @@
           "text": "Maja trodde att hon missat bussen, men den var sen. Hon kan andas ut.",
           "why": "Maja slipper oroa sig för att ha missat bussen."
         }
+      ],
+      "readingDistractors": [
+        "sv-0071",
+        "sv-0074"
       ]
     },
     {
@@ -1039,6 +1075,10 @@
           "text": "Sam provar skottet hundra gånger tills tekniken börjar sitta.",
           "why": "Sam fortsätter målmedvetet trots svårigheten."
         }
+      ],
+      "readingDistractors": [
+        "sv-0076",
+        "sv-0074"
       ]
     },
     {
@@ -1065,6 +1105,10 @@
           "text": "Det finns redan nog med kartor till alla grupper. En bunt till behövs inte.",
           "why": "Det behövs inga fler kartor."
         }
+      ],
+      "readingDistractors": [
+        "sv-0079",
+        "sv-0088"
       ]
     },
     {
@@ -1091,6 +1135,10 @@
           "text": "Mio rengör läderskorna med en mjuk borste så att ytan inte repas.",
           "why": "Den mjuka borsten sliter mindre på lädret."
         }
+      ],
+      "readingDistractors": [
+        "sv-0036",
+        "sv-0025"
       ]
     },
     {
