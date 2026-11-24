@@ -1,0 +1,23 @@
+/* Läsbara serierutor som använder befintliga lokala Noto Emoji-illustrationer. */
+.comic-strip{padding:20px 18px;border:2px solid var(--accent-line);border-radius:22px;background:var(--surface);color:var(--text);margin-top:15px}
+.comic-strip-heading{margin:0 0 6px;color:var(--accent);font-size:clamp(16px,2.8vw,21px);font-weight:950;line-height:1.35}
+.comic-strip-subtitle{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.45}
+.comic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
+.comic-panel{border:2px solid var(--border);background:var(--surface-2);border-radius:17px;padding:13px 12px 17px;display:flex;flex-direction:column;min-width:0;min-height:235px;color:var(--text);overflow-wrap:anywhere}
+.comic-panel:last-child{border-color:var(--accent-line);background:var(--accent-soft)}
+.comic-step{font-size:11px;line-height:1.45;letter-spacing:.3px;font-weight:900;color:var(--accent);text-align:center}
+.comic-icons{display:flex;justify-content:center;align-items:center;gap:4px;min-height:92px;margin:8px 0;flex-wrap:nowrap}
+.comic-icon{display:block;width:clamp(47px,7vw,75px);height:clamp(47px,7vw,75px);object-fit:contain;flex:0 1 auto;min-width:0}
+.comic-icon-fallback{font-size:clamp(32px,5vw,52px);line-height:1.1;display:inline-flex;align-items:center}
+.comic-caption-title{font-size:clamp(15px,2vw,18px);font-weight:900;color:var(--text);line-height:1.35;margin:6px 0 8px;text-align:center}
+.comic-caption{font-size:15px;font-weight:650;color:var(--text);line-height:1.5;margin:0;text-align:center}
+.comic-strip .comic-footer{font-size:13px;color:var(--muted);margin:15px 0 0;line-height:1.5}
+.comic-review{margin-top:12px}
+.comic-review>summary{cursor:pointer;color:var(--accent);font-weight:850;padding:12px 8px;list-style-position:inside;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);min-height:44px}
+.comic-review .comic-strip{margin-top:8px;padding:12px}
+.comic-review .comic-strip-heading{font-size:17px}
+.comic-review:focus-within{border-radius:10px}
+.comic-review>summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:700px){.comic-grid{grid-template-columns:1fr;gap:11px}.comic-panel{min-height:0;display:grid;grid-template-columns:78px minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:10px;align-items:center;padding:13px 12px}.comic-step{grid-column:1 / -1;text-align:left}.comic-icons{grid-row:2 / 4;grid-column:1;flex-direction:column;min-height:78px;max-width:78px;margin:0;gap:0}.comic-icon{width:44px;height:44px;margin-top:-4px}.comic-icons .comic-icon:first-child{margin-top:0}.comic-icon-fallback{font-size:33px}.comic-caption-title{grid-row:2;grid-column:2;text-align:left;margin:5px 0;font-size:17px}.comic-caption{grid-row:3;grid-column:2;text-align:left;font-size:15px}.comic-strip{padding:17px 14px}}
+@media(max-width:365px){.comic-icons{max-width:58px}.comic-panel{grid-template-columns:60px minmax(0,1fr)}.comic-icon{width:39px;height:39px}}
+@media(prefers-reduced-motion:reduce){.comic-grid *{animation:none!important;transition:none!important}}

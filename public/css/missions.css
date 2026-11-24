@@ -1,0 +1,35 @@
+/* Ordjakten 0.9: three small, accessible tasks. Theme colours come from style.css. */
+.mission-setting{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mission-setting button,.mission-mode-choice{min-width:0;min-height:56px;padding:11px 9px;border:2px solid var(--border);border-radius:12px;background:var(--surface-2);color:var(--text);font-size:14px;font-weight:850;text-align:left;line-height:1.35}
+.mission-setting button[aria-pressed='true'],.mission-mode-choice[aria-pressed='true']{border-color:var(--accent-line);background:var(--accent-soft)}
+.mission-setting button small{display:block;font-size:12px;color:var(--muted);font-weight:650;margin-top:3px}
+.mission-mode-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 13px}
+.mission-mode-choice{text-align:center;padding:9px 3px;font-size:12px;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.mission-mode-choice .mission-mode-icon{font-size:22px;line-height:1.25}
+.mission-mode-choice .mission-check{color:var(--accent);font-size:11px;line-height:1.2}
+.mission-progress{margin:0 0 12px;color:var(--muted);font-size:13px;font-weight:800}
+.mission-instructions{font-size:15px;color:var(--muted);line-height:1.5;margin:0 0 9px}
+.mission-buttons{display:grid;grid-template-columns:1fr;gap:9px}
+.mission-choice{min-width:0;min-height:62px;padding:12px 13px;border:2px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:15px;line-height:1.45;text-align:left;font-weight:740;overflow-wrap:anywhere}
+.mission-choice:disabled{opacity:1;cursor:default}
+.mission-choice.is-right{border-color:var(--green-border);background:var(--green-bg);color:var(--green-text)}
+.mission-choice.is-wrong{border-color:var(--red-border);background:var(--red-bg);color:var(--red-text)}
+.mission-choice[aria-pressed='true']{border-color:var(--accent-line);background:var(--accent-soft)}
+.mission-order-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.mission-order-controls button{padding:9px 13px;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-weight:800}
+.mission-order-controls button:disabled{opacity:.5}
+.mission-selected{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px;margin:10px 0;color:var(--text)}
+.mission-selected p{margin:0 0 7px!important;font-weight:850;color:var(--text)}
+.mission-selected ol{margin:0;padding:0 0 0 23px;line-height:1.6}
+.mission-selected li{margin-bottom:5px;overflow-wrap:anywhere}
+.mission-hint-button{display:inline-flex;align-items:center;min-height:42px;background:transparent;color:var(--accent);border:1px solid var(--accent-line);border-radius:10px;padding:9px 12px;margin:10px 0;font-size:13px;font-weight:850}
+.mission-hint{padding:11px;border-radius:10px;background:var(--accent-soft);color:var(--text);font-weight:700;line-height:1.5}
+.mission-done{margin:10px 0;padding:10px 12px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:10px;color:var(--green-text);font-weight:850;line-height:1.5}
+.mission-order-area{margin-top:13px}
+.mission-order-area .mission-choice{display:block;width:100%;margin-bottom:8px}
+.mission-order-area .mission-selected{margin:12px 0}
+.mission-order-area .primary-button{width:100%;margin-top:8px}
+.mission-order-area .mission-order-hint{color:var(--muted);font-size:13px;line-height:1.5;margin:5px 0}
+.mission-badge{font-size:13px;font-weight:850;color:var(--accent);margin:7px 0}
+@media(max-width:390px){.mission-setting{grid-template-columns:1fr}.mission-mode-choice{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.mission-choice,.mission-mode-choice{transition:none!important}}

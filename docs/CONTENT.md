@@ -1,0 +1,59 @@
+# Ord- och frågekvalitet
+
+## Kanonisk ordbank
+
+`public/data/ordbank.json` innehåller 121 unika ord från tidigare konversationer. Alla har stabila ID:n och metadata.
+
+Browser-versionen `public/data/wordbank.js` speglar hela JSON-filen. För att synkronisera efter redigering:
+
+```sh
+python3 - <<'PY'
+import json
+from pathlib import Path
+p=Path('public/data/ordbank.json')
+data=json.loads(p.read_text(encoding='utf-8'))
+Path('public/data/wordbank.js').write_text(
+    '/* Generated from ordbank.json */\nwindow.ORDJAKTEN_WORDS = '+
+    json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
+PY
+npm run check
+```
+
+Nya ord ska få nytt unikt `sv-####`-ID, nivå (`easy`, `medium`, `hard`, `expert`), `definition`, `example`, `source`, `review_status` och `illustration` (eller `null`). Ändra aldrig ett befintligt ID för att byta text.
+
+## Emojis och bilder
+
+`public/data/curation.js` är en **allowlist** över bildstödda ord. Den innehåller tre uttryckligt valda felalternativ per ord. Frågor som *grumlig* är textbaserade, eftersom 🪣 beskriver en hink och inte grumligt vatten. En vanlig sten, konservburk eller boll behöver inte visa *skrovlig*, *bucklig* respektive *studsande*.
+
+- Granska symbolen på Android, iOS, Windows och macOS när bildstödet ska publiceras.
+- Ett bildval måste beskriva det som faktiskt syns; bildens etikett får inte hävda något som symbolen inte visar.
+- Använd inte en utvald emoji om ett annat alternativ är lika rimligt korrekt.
+- Emoji är inte ett universellt bildspråk. Ord utan tydlig bild visas på textnivån.
+
+## Textalternativ
+
+Textfrågor byggs med ett korrekt facit från ordets definition och 3 (eller 4) distraktorer från andra definitioner i samma frågebank. Kategorier och synonymspärrar ligger i `curation.js`. Detta ger variation men ersätter **inte språkgranskning**.
+
+Redaktionell kontroll per fråga före större lansering:
+
+1. Är definitionen språkligt korrekt för det testade ordet?
+2. Finns det exakt ett försvarbart rätt svar i just denna fråga?
+3. Är distraktorerna rimliga och lagom svåra, inte obegripliga nonsensalternativ?
+4. Är svarsalternativens längd, grammatik och detaljnivå jämförbara?
+5. Är exempelmeningen korrekt och begriplig?
+6. Finns det risk för att facit avslöjas i en tidigare fråga?
+7. Är bilden på lätt nivå rätt och begriplig för ett barn som aldrig sett ordet förut?
+
+Automatiska tester verifierar ID:n, korrektsvar, dubbla etiketter, antal svar och 25 olika frågor per nivå. De kan **inte** bevisa semantisk entydighet.
+
+## Nästa steg för innehållet
+
+Inför redaktionell status per fråga (utkast/granskad/publicerad). För en skolversion bör svarsalternativen sparas som individuellt granskade uppgifter med fasta option-ID:n, snarare än väljas från genererade definitionsgrupper.
+
+## 25 vardagsuttryck (version 0.6)
+
+Uttryck med sammanhang ligger **inte** i `ordbank.json`. De har stabila `ut-####`-ID:n i `data/expressions.json` och en identisk browser-export i `data/expressions.js`.
+
+Det finns fem manuellt valda betydelsealternativ per uttryck, ett rätt. Motorn använder fyra svar i vanliga nivåer och fem i högskoleprovsutmaningen. Alla tvådelade Aha-förklaringar visas **efter** svaret i Träna och bara i facit efter Testa dig. Inga emojis används som alternativ för bildliga uttryck.
+
+Se `EXPRESSIONS.md` för innehållsformat, synkroniseringskommando, pedagogik och redaktionell granskningslista.

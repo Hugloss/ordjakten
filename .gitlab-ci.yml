@@ -1,0 +1,24 @@
+# Prepared for later use. Nothing is published until YOU push to GitLab.
+stages:
+  - test
+  - deploy
+
+default:
+  image: node:22-alpine
+
+quality:
+  stage: test
+  script:
+    - node scripts/check-content.js
+    - node --test tests/*.test.js
+
+publish-pages:
+  stage: deploy
+  needs: [quality]
+  script:
+    - test -s public/index.html
+    - test -s public/js/app.js
+    - echo "Publishing static Ordjakten assets from public/"
+  pages: true
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

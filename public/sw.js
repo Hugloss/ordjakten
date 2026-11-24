@@ -1,0 +1,99 @@
+/* Offline-only enhancement. App works fully without service workers. */
+const CACHE_NAME = 'ordjakten-static-v20'; // Increment on each content release.
+const ICON_FILES = [
+  "./assets/story-icons/1f305.png",
+  "./assets/story-icons/1f31f.png",
+  "./assets/story-icons/1f327-fe0f.png",
+  "./assets/story-icons/1f340.png",
+  "./assets/story-icons/1f373.png",
+  "./assets/story-icons/1f389.png",
+  "./assets/story-icons/1f3ad.png",
+  "./assets/story-icons/1f3af.png",
+  "./assets/story-icons/1f3c3.png",
+  "./assets/story-icons/1f3d2.png",
+  "./assets/story-icons/1f3e0.png",
+  "./assets/story-icons/1f3ea.png",
+  "./assets/story-icons/1f3eb.png",
+  "./assets/story-icons/1f440.png",
+  "./assets/story-icons/1f44d.png",
+  "./assets/story-icons/1f45f.png",
+  "./assets/story-icons/1f49b.png",
+  "./assets/story-icons/1f4a1.png",
+  "./assets/story-icons/1f4a4.png",
+  "./assets/story-icons/1f4a6.png",
+  "./assets/story-icons/1f4a7.png",
+  "./assets/story-icons/1f4aa.png",
+  "./assets/story-icons/1f4ac.png",
+  "./assets/story-icons/1f4ad.png",
+  "./assets/story-icons/1f4cb.png",
+  "./assets/story-icons/1f4d6.png",
+  "./assets/story-icons/1f4da.png",
+  "./assets/story-icons/1f504.png",
+  "./assets/story-icons/1f50d.png",
+  "./assets/story-icons/1f518.png",
+  "./assets/story-icons/1f525.png",
+  "./assets/story-icons/1f601.png",
+  "./assets/story-icons/1f606.png",
+  "./assets/story-icons/1f60a.png",
+  "./assets/story-icons/1f60c.png",
+  "./assets/story-icons/1f614.png",
+  "./assets/story-icons/1f615.png",
+  "./assets/story-icons/1f61f.png",
+  "./assets/story-icons/1f623.png",
+  "./assets/story-icons/1f62c.png",
+  "./assets/story-icons/1f62e.png",
+  "./assets/story-icons/1f630.png",
+  "./assets/story-icons/1f631.png",
+  "./assets/story-icons/1f634.png",
+  "./assets/story-icons/1f645.png",
+  "./assets/story-icons/1f64b.png",
+  "./assets/story-icons/1f68c.png",
+  "./assets/story-icons/1f697.png",
+  "./assets/story-icons/1f6b2.png",
+  "./assets/story-icons/1f6d1.png",
+  "./assets/story-icons/1f914.png",
+  "./assets/story-icons/1f91d.png",
+  "./assets/story-icons/1f91e.png",
+  "./assets/story-icons/1f945.png",
+  "./assets/story-icons/1f971.png",
+  "./assets/story-icons/1f9ca.png",
+  "./assets/story-icons/1f9e0.png",
+  "./assets/story-icons/1f9e9.png",
+  "./assets/story-icons/1f9ed.png",
+  "./assets/story-icons/1f9f9.png",
+  "./assets/story-icons/1f9fa.png",
+  "./assets/story-icons/1fa9f.png",
+  "./assets/story-icons/23f0.png",
+  "./assets/story-icons/23f1-fe0f.png",
+  "./assets/story-icons/23f3.png",
+  "./assets/story-icons/26a1.png",
+  "./assets/story-icons/26bd.png",
+  "./assets/story-icons/26c8-fe0f.png",
+  "./assets/story-icons/2705.png",
+  "./assets/story-icons/2728.png",
+  "./assets/story-icons/274c.png",
+  "./assets/story-icons/27a1-fe0f.png",
+  "./assets/story-icons/2b50.png"
+];
+const FILES = [
+  './','./index.html','./css/style.css','./css/playful.css','./css/adventures.css','./css/expressions.css','./css/comics.css','./css/surprises.css','./css/missions.css','./css/quests.css','./css/review.css','./css/contexts.css','./css/adaptive.css','./css/learning-map.css','./css/focus-practice.css','./css/contrast.css','./css/confusions.css','./css/clue-ladder.css','./css/retention.css','./js/adaptive.js','./js/learning-map.js','./js/focus-practice.js','./js/contrast.js','./js/confusions.js','./js/clue-ladder.js','./js/retention.js','./js/app.js','./js/engine.js','./js/playful.js','./js/adventures.js','./js/adventure-map.js','./js/comics.js','./js/surprises.js','./js/missions.js','./js/quests.js','./js/review.js',
+  './data/wordbank.js','./data/ordbank.json','./data/curation.js','./data/expressions.js','./data/expressions.json','./data/comics.js','./data/comics.json','./data/surprises.js','./data/surprises.json','./data/missions.js','./data/missions.json','./data/word-contexts.js','./data/word-contexts.json','./data/contrasts.js','./data/contrasts.json','./data/clue-ladder.js','./data/clue-ladder.json',
+  './manifest.webmanifest','./icons/icon.svg','./assets/story-icons/NOTO-EMOJI-LICENSE-AND-COPYRIGHT.txt'
+].concat(ICON_FILES);
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(FILES)));
+  self.skipWaiting();
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil(caches.keys().then(names=>Promise.all(names.filter(n=>n.startsWith('ordjakten-static-')&&n!==CACHE_NAME).map(n=>caches.delete(n)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch',event=>{
+  const request=event.request;
+  if(request.method!=='GET'||new URL(request.url).origin!==self.location.origin)return;
+  if(!request.url.startsWith(self.registration.scope))return;
+  event.respondWith(fetch(request).then(response=>{
+    if(response.ok){const clone=response.clone();caches.open(CACHE_NAME).then(cache=>cache.put(request,clone)).catch(()=>{});}
+    return response;
+  }).catch(()=>caches.match(request).then(cached=>cached||Response.error())));
+});

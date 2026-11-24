@@ -1,0 +1,1006 @@
+{
+  "version": 1,
+  "description": "Barnvänliga svenska uttryck med korta vardagsberättelser, egna svarsalternativ och Aha-förklaringar.",
+  "expressions": [
+    {
+      "id": "ut-0001",
+      "phrase": "För en gångs skull",
+      "scene": "För en gångs skull kunde min pappa skjutsa barnen till hockeyn.",
+      "definition": "Något händer den här gången, fast det inte brukar hända så ofta.",
+      "example": "För en gångs skull kom bussen i tid.",
+      "reveal": [
+        {
+          "title": "📅 Så brukar det vara",
+          "text": "Pappa kan oftast inte skjutsa till hockeyn."
+        },
+        {
+          "title": "🚗 Men den här gången",
+          "text": "Nu kunde han skjutsa! Det var ovanligt."
+        }
+      ],
+      "options": [
+        {
+          "label": "Något händer den här gången, fast det inte brukar hända så ofta.",
+          "correct": true
+        },
+        {
+          "label": "Pappa skjutsar till hockeyn varje gång som vanligt.",
+          "correct": false
+        },
+        {
+          "label": "Pappa kunde inte skjutsa den här gången.",
+          "correct": false
+        },
+        {
+          "label": "Pappa lovar att skjutsa till varje träning framöver.",
+          "correct": false
+        },
+        {
+          "label": "Pappa skulle skjutsa till ett nytt ställe.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0002",
+      "phrase": "I sista stund",
+      "scene": "Vi hann till bussen i sista stund, precis innan dörrarna stängdes.",
+      "definition": "Man hinner precis innan det är för sent.",
+      "example": "Jag lämnade in läxan i sista stund.",
+      "reveal": [
+        {
+          "title": "⏳ Nästan för sent",
+          "text": "Bussen är på väg att åka."
+        },
+        {
+          "title": "🏃 Precis i tid",
+          "text": "Vi hinner ombord innan den går."
+        }
+      ],
+      "options": [
+        {
+          "label": "Man hinner precis innan det är för sent.",
+          "correct": true
+        },
+        {
+          "label": "Vi kom till bussen mycket för tidigt.",
+          "correct": false
+        },
+        {
+          "label": "Vi missade bussen helt.",
+          "correct": false
+        },
+        {
+          "label": "Vi väntade på nästa buss i en timme.",
+          "correct": false
+        },
+        {
+          "label": "Vi åkte buss för sista gången någonsin.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0003",
+      "phrase": "Ha is i magen",
+      "scene": "Det var en minut kvar av matchen, men tränaren sa: ”Ha is i magen!”",
+      "definition": "Att behålla lugnet och inte förhasta sig.",
+      "example": "Jag hade is i magen medan jag väntade på resultatet.",
+      "reveal": [
+        {
+          "title": "😰 Det känns pirrigt",
+          "text": "Man vill göra något direkt."
+        },
+        {
+          "title": "😌 Vad uttrycket menar",
+          "text": "Var lugn och tänk efter först."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att behålla lugnet och inte förhasta sig.",
+          "correct": true
+        },
+        {
+          "label": "Att äta is för att svalka sig.",
+          "correct": false
+        },
+        {
+          "label": "Att springa så fort man orkar.",
+          "correct": false
+        },
+        {
+          "label": "Att låta någon annan bestämma allt.",
+          "correct": false
+        },
+        {
+          "label": "Att avbryta matchen när man blir nervös.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0004",
+      "phrase": "Hålla tummarna",
+      "scene": "”Jag håller tummarna för att du gör mål!” sa systern.",
+      "definition": "Att hoppas att något ska gå bra för någon.",
+      "example": "Vi håller tummarna för fint väder på utflykten.",
+      "reveal": [
+        {
+          "title": "🤞 Det man gör",
+          "text": "Man håller tummarna som en lyckogest."
+        },
+        {
+          "title": "💛 Det man menar",
+          "text": "Jag hoppas verkligen att det går bra!"
+        }
+      ],
+      "options": [
+        {
+          "label": "Att hoppas att något ska gå bra för någon.",
+          "correct": true
+        },
+        {
+          "label": "Att hålla hårt i en boll.",
+          "correct": false
+        },
+        {
+          "label": "Att visa att man är arg.",
+          "correct": false
+        },
+        {
+          "label": "Att inte vilja vara med.",
+          "correct": false
+        },
+        {
+          "label": "Att räkna sina fingrar långsamt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0005",
+      "phrase": "Ta det med en nypa salt",
+      "scene": "”Man blir bäst i världen på en dag!” sa en kompis. ”Ta det med en nypa salt”, svarade jag.",
+      "definition": "Att inte tro på allt någon säger utan tänka kritiskt.",
+      "example": "Jag tog ryktet med en nypa salt.",
+      "reveal": [
+        {
+          "title": "🗣️ Någon påstår något",
+          "text": "Det låter kanske överdrivet."
+        },
+        {
+          "title": "🧠 Vad uttrycket menar",
+          "text": "Fundera: stämmer det verkligen?"
+        }
+      ],
+      "options": [
+        {
+          "label": "Att inte tro på allt någon säger utan tänka kritiskt.",
+          "correct": true
+        },
+        {
+          "label": "Att strö salt på maten.",
+          "correct": false
+        },
+        {
+          "label": "Att genast berätta vidare som om det var sant.",
+          "correct": false
+        },
+        {
+          "label": "Att alltid lita på den som pratar högst.",
+          "correct": false
+        },
+        {
+          "label": "Att svara utan att lyssna.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0006",
+      "phrase": "Hålla ett öga på",
+      "scene": "”Kan du hålla ett öga på min cykel medan jag går in?”",
+      "definition": "Att passa eller hålla uppsikt över något.",
+      "example": "Jag höll ett öga på hunden i parken.",
+      "reveal": [
+        {
+          "title": "🚲 Något lämnas en stund",
+          "text": "Cykeln står utanför affären."
+        },
+        {
+          "title": "👀 Uppdraget",
+          "text": "Titta till cykeln så att allt är okej."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att passa eller hålla uppsikt över något.",
+          "correct": true
+        },
+        {
+          "label": "Att måla ett öga på cykeln.",
+          "correct": false
+        },
+        {
+          "label": "Att blunda och inte titta.",
+          "correct": false
+        },
+        {
+          "label": "Att låna cykeln utan lov.",
+          "correct": false
+        },
+        {
+          "label": "Att flytta cykeln till ett gömställe.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0007",
+      "phrase": "Det var nära ögat",
+      "scene": "Bollen flög precis förbi fönstret. ”Oj, det var nära ögat!”",
+      "definition": "Det var mycket nära att något dåligt hände, men det gick bra.",
+      "example": "Det var nära ögat när jag nästan halkade i trappan.",
+      "reveal": [
+        {
+          "title": "⚽ Det kunde ha gått illa",
+          "text": "Fönstret var nästan träffat."
+        },
+        {
+          "title": "😮 Men det gick bra",
+          "text": "Bollen missade! Vilken tur."
+        }
+      ],
+      "options": [
+        {
+          "label": "Det var mycket nära att något dåligt hände, men det gick bra.",
+          "correct": true
+        },
+        {
+          "label": "Bollen träffade någon i ögat.",
+          "correct": false
+        },
+        {
+          "label": "Fönstret gick sönder direkt.",
+          "correct": false
+        },
+        {
+          "label": "Bollen flög långt bort från huset.",
+          "correct": false
+        },
+        {
+          "label": "Någon såg bollen på mycket nära håll.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0008",
+      "phrase": "Vara ute och cykla",
+      "scene": "”Stockholm ligger i Norge”, sa Leo. ”Nu är du ute och cyklar!”",
+      "definition": "Att ha helt fel eller vara på fel spår i sina tankar.",
+      "example": "Jag var ute och cyklade när jag gissade svaret.",
+      "reveal": [
+        {
+          "title": "💬 En tokig gissning",
+          "text": "Leo säger något som inte stämmer."
+        },
+        {
+          "title": "🧭 Vad uttrycket betyder",
+          "text": "Hans tanke har hamnat på fel spår."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att ha helt fel eller vara på fel spår i sina tankar.",
+          "correct": true
+        },
+        {
+          "label": "Att vara på väg hem på en riktig cykel.",
+          "correct": false
+        },
+        {
+          "label": "Att ha svarat helt rätt.",
+          "correct": false
+        },
+        {
+          "label": "Att träna på att hitta i en stad.",
+          "correct": false
+        },
+        {
+          "label": "Att inte våga gissa alls.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0009",
+      "phrase": "Lägga benen på ryggen",
+      "scene": "När regnet plötsligt öste ner lade vi benen på ryggen mot huset.",
+      "definition": "Att springa iväg mycket snabbt.",
+      "example": "När bussen kom lade jag benen på ryggen.",
+      "reveal": [
+        {
+          "title": "🌧️ Något händer plötsligt",
+          "text": "Det börjar ösregna."
+        },
+        {
+          "title": "🏃 Vad vi gör",
+          "text": "Vi springer snabbt till skydd."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att springa iväg mycket snabbt.",
+          "correct": true
+        },
+        {
+          "label": "Att ligga ner och vila ryggen.",
+          "correct": false
+        },
+        {
+          "label": "Att gå långsamt för att njuta av regnet.",
+          "correct": false
+        },
+        {
+          "label": "Att ta av sig skorna.",
+          "correct": false
+        },
+        {
+          "label": "Att bära en ryggsäck med benen.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0010",
+      "phrase": "Gå som smort",
+      "scene": "Vi byggde klart legomodellen snabbt. Allt gick som smort!",
+      "definition": "Att något fungerar enkelt och utan problem.",
+      "example": "Bakningen gick som smort när alla hjälptes åt.",
+      "reveal": [
+        {
+          "title": "🧱 Vi bygger något",
+          "text": "Bitarna passar och vi samarbetar."
+        },
+        {
+          "title": "✨ Resultatet",
+          "text": "Det går lätt och utan krångel."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att något fungerar enkelt och utan problem.",
+          "correct": true
+        },
+        {
+          "label": "Att någon spillde smör på legot.",
+          "correct": false
+        },
+        {
+          "label": "Att bygget gick sönder hela tiden.",
+          "correct": false
+        },
+        {
+          "label": "Att vi var tvungna att ge upp direkt.",
+          "correct": false
+        },
+        {
+          "label": "Att vi inte började bygga alls.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0011",
+      "phrase": "Sätta fart",
+      "scene": "”Nu får vi sätta fart, annars missar vi bussen!”",
+      "definition": "Att börja skynda sig eller göra något snabbare.",
+      "example": "Vi satte fart med städningen innan gästerna kom.",
+      "reveal": [
+        {
+          "title": "🚌 Bussen närmar sig",
+          "text": "Vi har inte mycket tid."
+        },
+        {
+          "title": "⚡ Vad vi behöver göra",
+          "text": "Öka tempot och skynda oss."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att börja skynda sig eller göra något snabbare.",
+          "correct": true
+        },
+        {
+          "label": "Att stanna och vänta länge.",
+          "correct": false
+        },
+        {
+          "label": "Att sätta upp en ny vägskylt.",
+          "correct": false
+        },
+        {
+          "label": "Att börja gå långsammare.",
+          "correct": false
+        },
+        {
+          "label": "Att lämna kvar väskorna för alltid.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0012",
+      "phrase": "Bita i det sura äpplet",
+      "scene": "Jag hade tappat bort boken. Jag fick bita i det sura äpplet och berätta för läraren.",
+      "definition": "Att göra något jobbigt som man helst skulle slippa.",
+      "example": "Jag bet i det sura äpplet och bad om ursäkt.",
+      "reveal": [
+        {
+          "title": "😬 Det känns jobbigt",
+          "text": "Jag vill helst slippa berätta."
+        },
+        {
+          "title": "💪 Men jag gör det ändå",
+          "text": "Jag tar tag i det obehagliga."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att göra något jobbigt som man helst skulle slippa.",
+          "correct": true
+        },
+        {
+          "label": "Att äta ett surt äpple till lunch.",
+          "correct": false
+        },
+        {
+          "label": "Att skylla på någon annan och gå därifrån.",
+          "correct": false
+        },
+        {
+          "label": "Att göra det roligaste först.",
+          "correct": false
+        },
+        {
+          "label": "Att låtsas som om ingenting har hänt för alltid.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0013",
+      "phrase": "Vara på vippen",
+      "scene": "Jag var på vippen att somna när filmen nästan var slut.",
+      "definition": "Att vara mycket nära att något händer.",
+      "example": "Hon var på vippen att vinna loppet.",
+      "reveal": [
+        {
+          "title": "😴 Jag är jättetrött",
+          "text": "Ögonen vill falla igen."
+        },
+        {
+          "title": "💤 Nästan",
+          "text": "Jag kommer snart att somna."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att vara mycket nära att något händer.",
+          "correct": true
+        },
+        {
+          "label": "Att ha sovit hela natten redan.",
+          "correct": false
+        },
+        {
+          "label": "Att precis ha vaknat helt utvilad.",
+          "correct": false
+        },
+        {
+          "label": "Att medvetet välja en annan film.",
+          "correct": false
+        },
+        {
+          "label": "Att vara långt ifrån att somna.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0014",
+      "phrase": "Få blodad tand",
+      "scene": "Efter första målet fick hon blodad tand och ville spela ännu mer hockey.",
+      "definition": "Att bli extra sugen på att fortsätta efter att något gått bra.",
+      "example": "När jag löste första gåtan fick jag blodad tand.",
+      "reveal": [
+        {
+          "title": "🏒 Första lyckade försöket",
+          "text": "Hon gör mål och blir glad."
+        },
+        {
+          "title": "🔥 Nu vill hon mer",
+          "text": "Hon känner sig peppad att fortsätta!"
+        }
+      ],
+      "options": [
+        {
+          "label": "Att bli extra sugen på att fortsätta efter att något gått bra.",
+          "correct": true
+        },
+        {
+          "label": "Att bita sig i läppen så att det blöder.",
+          "correct": false
+        },
+        {
+          "label": "Att bestämma sig för att aldrig spela igen.",
+          "correct": false
+        },
+        {
+          "label": "Att bli helt ointresserad av hockeyn.",
+          "correct": false
+        },
+        {
+          "label": "Att vilja byta till en helt annan sport direkt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0015",
+      "phrase": "Kasta in handduken",
+      "scene": "Pusslet var jättesvårt och till slut kastade jag in handduken.",
+      "definition": "Att ge upp och sluta försöka.",
+      "example": "Efter flera timmar kastade laget in handduken.",
+      "reveal": [
+        {
+          "title": "🧩 Många svåra försök",
+          "text": "Jag provar men får inte ihop pusslet."
+        },
+        {
+          "title": "🛑 Till slut",
+          "text": "Jag slutar försöka för den här gången."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att ge upp och sluta försöka.",
+          "correct": true
+        },
+        {
+          "label": "Att kasta en riktig handduk på golvet.",
+          "correct": false
+        },
+        {
+          "label": "Att lösa pusslet på första försöket.",
+          "correct": false
+        },
+        {
+          "label": "Att fortsätta kämpa utan att ta paus.",
+          "correct": false
+        },
+        {
+          "label": "Att bjuda in fler till pusslet.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0016",
+      "phrase": "Dra sitt strå till stacken",
+      "scene": "Alla hjälpte till att städa klassrummet. Jag drog mitt strå till stacken genom att plocka papper.",
+      "definition": "Att hjälpa till med sin del av ett gemensamt arbete.",
+      "example": "Alla drog sitt strå till stacken inför skolavslutningen.",
+      "reveal": [
+        {
+          "title": "🧹 Ett stort jobb",
+          "text": "Hela klassen ska städa."
+        },
+        {
+          "title": "🤝 Min lilla del",
+          "text": "Jag gör något som hjälper alla."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att hjälpa till med sin del av ett gemensamt arbete.",
+          "correct": true
+        },
+        {
+          "label": "Att ta ett halmstrå från marken.",
+          "correct": false
+        },
+        {
+          "label": "Att låta alla andra göra jobbet.",
+          "correct": false
+        },
+        {
+          "label": "Att bestämma att ingen behöver städa.",
+          "correct": false
+        },
+        {
+          "label": "Att göra arbetet svårare för klassen.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0017",
+      "phrase": "Ta tjuren vid hornen",
+      "scene": "Jag tyckte att det var läskigt att be om hjälp, men jag tog tjuren vid hornen och frågade.",
+      "definition": "Att våga ta itu med något svårt eller obehagligt direkt.",
+      "example": "Hon tog tjuren vid hornen och pratade om problemet.",
+      "reveal": [
+        {
+          "title": "😟 En jobbig sak",
+          "text": "Det känns svårt att fråga."
+        },
+        {
+          "title": "🦸 Jag vågar ändå",
+          "text": "Jag möter problemet och ber om hjälp."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att våga ta itu med något svårt eller obehagligt direkt.",
+          "correct": true
+        },
+        {
+          "label": "Att klappa en tjur på hornen.",
+          "correct": false
+        },
+        {
+          "label": "Att skjuta upp problemet hur länge som helst.",
+          "correct": false
+        },
+        {
+          "label": "Att låtsas att problemet inte finns.",
+          "correct": false
+        },
+        {
+          "label": "Att springa bort så fort det blir svårt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0018",
+      "phrase": "Hålla huvudet kallt",
+      "scene": "Det blev rörigt under matchen, men målvakten höll huvudet kallt.",
+      "definition": "Att tänka lugnt och klokt även när det blir stressigt.",
+      "example": "Jag höll huvudet kallt när jag glömde min väska.",
+      "reveal": [
+        {
+          "title": "😵 Många saker händer",
+          "text": "Det är stressigt på planen."
+        },
+        {
+          "title": "🧠 Det smarta valet",
+          "text": "Målvakten håller sig lugn och fokuserad."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att tänka lugnt och klokt även när det blir stressigt.",
+          "correct": true
+        },
+        {
+          "label": "Att lägga en ispåse på huvudet.",
+          "correct": false
+        },
+        {
+          "label": "Att bli så arg att man slutar lyssna.",
+          "correct": false
+        },
+        {
+          "label": "Att blunda och hoppas att det löser sig.",
+          "correct": false
+        },
+        {
+          "label": "Att springa utan att tänka alls.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0019",
+      "phrase": "På samma våglängd",
+      "scene": "Vi behövde knappt prata när vi byggde kojan. Vi var på samma våglängd.",
+      "definition": "Att tänka liknande och förstå varandra lätt.",
+      "example": "De två kompisarna var på samma våglängd när de planerade festen.",
+      "reveal": [
+        {
+          "title": "🛠️ Två kompisar samarbetar",
+          "text": "Vi förstår varandras idéer."
+        },
+        {
+          "title": "🤝 Det flyter på",
+          "text": "Vi tänker ganska lika!"
+        }
+      ],
+      "options": [
+        {
+          "label": "Att tänka liknande och förstå varandra lätt.",
+          "correct": true
+        },
+        {
+          "label": "Att lyssna på exakt samma radiokanal.",
+          "correct": false
+        },
+        {
+          "label": "Att vara helt oense om varje sak.",
+          "correct": false
+        },
+        {
+          "label": "Att råka bygga kojor i olika städer.",
+          "correct": false
+        },
+        {
+          "label": "Att aldrig ha träffats förut.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0020",
+      "phrase": "Ropa hej för tidigt",
+      "scene": "”Vi kommer vinna!” ropade vi innan matchen var slut. Då hade vi ropat hej för tidigt.",
+      "definition": "Att fira eller tro att man har lyckats innan det är säkert.",
+      "example": "Jag ropade hej för tidigt när jag trodde att pusslet var klart.",
+      "reveal": [
+        {
+          "title": "🥳 Vi vill fira",
+          "text": "Vi tror att matchen redan är vunnen."
+        },
+        {
+          "title": "⏳ Men det är inte klart",
+          "text": "Matchen pågår fortfarande."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att fira eller tro att man har lyckats innan det är säkert.",
+          "correct": true
+        },
+        {
+          "label": "Att säga hej till någon för tidigt på morgonen.",
+          "correct": false
+        },
+        {
+          "label": "Att vänta tills matchen är färdig innan man firar.",
+          "correct": false
+        },
+        {
+          "label": "Att hälsa på motståndarna efter matchen.",
+          "correct": false
+        },
+        {
+          "label": "Att vara säker på att man redan har förlorat.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0021",
+      "phrase": "Göra en höna av en fjäder",
+      "scene": "Jag tappade en knapp, men min kompis sa att hela jackan var förstörd. Hon gjorde en höna av en fjäder.",
+      "definition": "Att överdriva ett litet problem så att det verkar jättestort.",
+      "example": "Det är lätt att göra en höna av en fjäder när man oroar sig.",
+      "reveal": [
+        {
+          "title": "🪶 Ett litet problem",
+          "text": "En knapp har lossnat."
+        },
+        {
+          "title": "🐔 Det låter mycket värre",
+          "text": "Någon beskriver det som en katastrof."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att överdriva ett litet problem så att det verkar jättestort.",
+          "correct": true
+        },
+        {
+          "label": "Att sy fast knappen igen.",
+          "correct": false
+        },
+        {
+          "label": "Att ta hand om en höna på en gård.",
+          "correct": false
+        },
+        {
+          "label": "Att låtsas att jackan aldrig funnits.",
+          "correct": false
+        },
+        {
+          "label": "Att göra ett stort problem mindre än det är.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0022",
+      "phrase": "Ha många järn i elden",
+      "scene": "Mamma lagade mat, hjälpte till med läxan och planerade helgen. Hon hade många järn i elden.",
+      "definition": "Att hålla på med många olika saker samtidigt.",
+      "example": "Jag hade många järn i elden inför skolavslutningen.",
+      "reveal": [
+        {
+          "title": "🍳 Många uppgifter",
+          "text": "Det finns flera saker att göra."
+        },
+        {
+          "title": "🌀 Samtidigt",
+          "text": "Mamma försöker hinna med allt."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att hålla på med många olika saker samtidigt.",
+          "correct": true
+        },
+        {
+          "label": "Att värma metallstänger i en brasa.",
+          "correct": false
+        },
+        {
+          "label": "Att bara göra en enda sak hela dagen.",
+          "correct": false
+        },
+        {
+          "label": "Att glömma bort alla sina planer.",
+          "correct": false
+        },
+        {
+          "label": "Att alltid ha mycket ledig tid.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0023",
+      "phrase": "Komma på andra tankar",
+      "scene": "Jag ville inte följa med till simhallen, men när kompisarna ringde kom jag på andra tankar.",
+      "definition": "Att ändra sig och börja tänka annorlunda om något.",
+      "example": "Först ville jag stanna hemma, men jag kom på andra tankar.",
+      "reveal": [
+        {
+          "title": "🙅 Först",
+          "text": "Jag tänker tacka nej."
+        },
+        {
+          "title": "🙂 Sedan",
+          "text": "Jag ångrar mig och vill följa med."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att ändra sig och börja tänka annorlunda om något.",
+          "correct": true
+        },
+        {
+          "label": "Att glömma bort vad simhallen heter.",
+          "correct": false
+        },
+        {
+          "label": "Att ha bestämt sig för att aldrig bada.",
+          "correct": false
+        },
+        {
+          "label": "Att följa med redan från början utan tvekan.",
+          "correct": false
+        },
+        {
+          "label": "Att tappa bort mobilen och leta efter den.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0024",
+      "phrase": "Gå över styr",
+      "scene": "Vattenkriget skulle vara en liten lek, men till slut gick det över styr.",
+      "definition": "Att något blir för mycket eller svårt att kontrollera.",
+      "example": "Skämtandet gick över styr när någon blev ledsen.",
+      "reveal": [
+        {
+          "title": "💦 Det börjar som lek",
+          "text": "Alla skvätter lite vatten."
+        },
+        {
+          "title": "🌊 Men det blir för mycket",
+          "text": "Leken spårar ur och någon får nog."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att något blir för mycket eller svårt att kontrollera.",
+          "correct": true
+        },
+        {
+          "label": "Att leken blev lugnare och lugnare.",
+          "correct": false
+        },
+        {
+          "label": "Att alla slutade innan någon blev blöt.",
+          "correct": false
+        },
+        {
+          "label": "Att båten körde förbi en brygga.",
+          "correct": false
+        },
+        {
+          "label": "Att det var exakt lika roligt och lugnt hela tiden.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0025",
+      "phrase": "Vända blad",
+      "scene": "Efter förlusten bestämde laget sig för att vända blad och tänka på nästa match.",
+      "definition": "Att lämna något bakom sig och börja på nytt.",
+      "example": "Efter bråket vände vi blad och blev vänner igen.",
+      "reveal": [
+        {
+          "title": "😔 Något gick dåligt",
+          "text": "Laget förlorade en match."
+        },
+        {
+          "title": "🌱 En ny början",
+          "text": "Nu blickar de framåt mot nästa chans."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att lämna något bakom sig och börja på nytt.",
+          "correct": true
+        },
+        {
+          "label": "Att bara bläddra till nästa sida i en bok.",
+          "correct": false
+        },
+        {
+          "label": "Att älta förlusten utan att gå vidare.",
+          "correct": false
+        },
+        {
+          "label": "Att sluta spela hockey för alltid.",
+          "correct": false
+        },
+        {
+          "label": "Att spela om samma match om och om igen.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+/* 0.15: targeted practice is distinct from graded quizzes and rewards. */
+.focus-back {margin-bottom:12px}
+.focus-hero {display:flex;gap:16px;align-items:center}
+.focus-buddy {font-size:42px;line-height:1;flex-shrink:0}
+.focus-hero h1 {font-size:clamp(26px,4vw,37px);margin:3px 0 6px;overflow-wrap:anywhere}
+.focus-hero p {margin:0;line-height:1.55}
+.focus-metrics {display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.focus-metrics span {border:1px solid var(--border);background:var(--surface-2);border-radius:10px;padding:10px 13px;color:var(--text);font-weight:800}
+.focus-line {height:10px;background:var(--surface-2);border-radius:50px;overflow:hidden;border:1px solid var(--border)}
+.focus-line-fill {height:100%;width:0;background:var(--accent);border-radius:50px;transition:width .2s}
+.focus-question {display:grid;gap:14px}
+.focus-task-label {font-size:13px;color:var(--muted);font-weight:900;letter-spacing:.04em}
+.focus-stem {font-size:clamp(22px,3.5vw,30px);line-height:1.3;overflow-wrap:anywhere;margin:8px 0}
+.focus-scene {background:var(--surface-2);border-left:4px solid var(--accent-line);padding:14px;border-radius:10px;font-size:17px;line-height:1.55;font-weight:650}
+.focus-choices {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.focus-choices[data-layout='text'] {grid-template-columns:1fr}
+.focus-choice {padding:15px;min-height:62px;background:var(--surface-2);border:2px solid var(--border);color:var(--text);border-radius:13px;font-size:16px;font-weight:750;text-align:left;line-height:1.45;overflow-wrap:anywhere}
+.focus-choice[data-picture='true']{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px;min-height:105px}
+.focus-choice-emoji {font-size:38px}
+.focus-choice:hover {border-color:var(--accent-line)}
+.focus-choice:focus-visible,.learning-focus-button:focus-visible,.learning-focus-skill:focus-visible {outline:3px solid var(--accent-line);outline-offset:2px}
+.focus-selected {margin:10px 0;line-height:1.7;min-height:35px}
+.focus-order-controls {display:flex;flex-wrap:wrap;gap:10px}
+.focus-feedback {display:grid;gap:12px}
+.focus-verdict {border:2px solid var(--green-border);background:var(--green-bg);color:var(--green-text);padding:18px;border-radius:15px;text-align:center}
+.focus-verdict[data-outcome='wrong'] {border-color:var(--red-border);background:var(--red-bg);color:var(--red-text)}
+.focus-verdict h2 {font-size:26px;color:inherit;margin:4px 0}
+.focus-explain {border-left:5px solid var(--accent-line);line-height:1.65}
+.focus-explain h3 {font-size:26px;margin-bottom:9px;overflow-wrap:anywhere}
+.focus-explain p {line-height:1.7}
+.focus-why {background:var(--surface-2);border:1px solid var(--border);padding:13px;border-radius:10px}
+.focus-finish {text-align:center;display:grid;gap:13px}
+.focus-finish h2{font-size:28px;margin:0}
+.focus-finish p{line-height:1.6;margin:0}
+.focus-actions{display:grid;gap:10px}
+.focus-skill-insight {background:var(--accent-soft);border:1px solid var(--accent-line);padding:13px;border-radius:12px;font-size:15px;font-weight:750}
+.learning-focus {margin-top:15px;border-top:1px solid var(--border);padding-top:15px;display:grid;gap:11px}
+.learning-focus h4{font-size:15px;margin:0}
+.learning-focus-button {min-height:48px;width:100%}
+.learning-focus-skills{display:flex;flex-wrap:wrap;gap:8px}
+.learning-focus-skill{background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:9px;font-weight:750;font-size:13px;min-height:43px}
+.learning-focus-note {font-size:12px;line-height:1.5;color:var(--muted)}
+.learning-home-focus {display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.learning-home-focus p{margin:0;flex:1;min-width:160px;font-size:13px;line-height:1.5}
+@media(max-width:380px){.focus-hero{align-items:flex-start}.focus-buddy{font-size:34px}.focus-choice{padding:11px}}
+@media(prefers-reduced-motion:reduce){.focus-line-fill{transition:none}}
