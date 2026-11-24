@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="./css/confusions.css">
   <link rel="stylesheet" href="./css/clue-ladder.css">
   <link rel="stylesheet" href="./css/retention.css">
+  <link rel="stylesheet" href="./css/reading-flow.css">
   <title>Ordjakten – hitta ordens betydelse</title>
   <script src="./data/wordbank.js" defer></script>
   <script src="./data/curation.js" defer></script>
@@ -51,6 +52,7 @@
   <script src="./js/clue-ladder.js" defer></script>
   <script src="./js/retention.js" defer></script>
   <script src="./js/focus-practice.js" defer></script>
+  <script src="./js/reading-check.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -293,7 +295,9 @@
           <p id="journey-progress" class="journey-progress" aria-live="off">0 av 4 platser upptäckta</p>
         </section>
         <div id="question-area">
-          <div class="question-card"><span id="question-prompt" class="eyebrow">VAD BETYDER ORDET?</span><h1 id="question-word">Nyfiken</h1><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">🎭 LÄS BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">🎭 LÄS DEN LILLA BERÄTTELSEN</span><p id="expression-story"></p></div><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
+          <div id="reading-story" class="question-card"><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
+          <button id="story-reveal" class="primary-button big-button" type="button" hidden>📖 Jag har läst – visa svaren →</button>
+          <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
           <div id="answer-options" class="answer-grid"></div>
           <section id="order-area" class="mission-order-area panel" hidden aria-label="Sätt händelserna i ordning">
             <p class="mission-order-hint">💡 Tryck på den första händelsen, sedan den andra och sist den tredje. Du kan ändra dig innan du svarar.</p>
@@ -305,11 +309,18 @@
         </div>
         <div id="feedback-area" hidden aria-live="polite" aria-atomic="true">
           <div id="feedback-status" class="feedback-status"><div id="feedback-emoji" class="result-icon">✅</div><h2 id="feedback-title">Rätt svar!</h2><p id="feedback-correct"></p><p id="feedback-reward" class="feedback-reward" hidden></p></div>
+          <div class="explanation"><span id="explanation-label" class="eyebrow">📖 STEG 1: LÄS FÖRKLARINGEN</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div></div>
+          <section id="reading-check" class="reading-check" aria-label="En liten förståelsefråga" hidden>
+            <span class="reading-label">🧠 STEG 2: VISA ATT DU FÖRSTÅTT</span>
+            <h3 id="reading-check-title"></h3>
+            <p class="reading-intro">Läs förklaringen ovan. Välj sedan den situation som passar. Det ger inga extra poäng.</p>
+            <div id="reading-options" class="reading-options"></div>
+            <p id="reading-response" class="reading-response" role="status" aria-live="polite"></p>
+          </section>
           <div id="feedback-cheer" class="feedback-cheer"><span id="feedback-companion" aria-hidden="true">🦊</span><p id="feedback-message"></p></div>
           <div id="adaptive-feedback" class="adaptive-feedback" hidden><strong id="adaptive-feedback-title">🧠 Vi lär oss steg för steg</strong><p id="adaptive-feedback-text"></p></div>
           <div id="star-burst" class="star-burst" hidden aria-hidden="true">✦ ⭐ ✦</div>
           <div id="adventure-milestone" class="adventure-milestone" hidden aria-live="polite"><span id="milestone-emoji" aria-hidden="true">🍄</span><strong id="milestone-text"></strong></div>
-          <div class="explanation"><span id="explanation-label" class="eyebrow">📖 DET HÄR BETYDER ORDET</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div></div>
           <section id="expression-reveal" class="comic-strip surprise-reveal" hidden aria-label="En frivillig berättelselucka">
             <h3 class="comic-strip-heading">🎁 Du hittade en berättelselucka!</h3>
             <p class="comic-strip-subtitle">Öppna luckan när du vill. Du får en liten bildserie och ett extra uppdrag. Det ger inga extra testpoäng.</p>

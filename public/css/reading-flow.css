@@ -1,0 +1,34 @@
+/* Reading-first experience for children 8–10. Reuse the site's theme tokens. */
+.question-card.is-story {padding:20px;text-align:left}
+.question-card.is-story .eyebrow{display:block;font-size:15px;letter-spacing:.04em;line-height:1.45;color:var(--accent);font-weight:950;margin:0 0 12px}
+.question-card.is-story h1{font-size:clamp(19px,3vw,25px)!important;line-height:1.3;margin:16px 0 3px;text-align:left;letter-spacing:0}
+.question-card.is-story .context-scene,.question-card.is-story .expression-scene{margin:0;max-width:none;padding:18px 20px;background:var(--accent-soft);border:2px solid var(--accent-line);border-radius:15px}
+.question-card.is-story .context-scene-label,.question-card.is-story .expression-scene-label{font-size:14px;letter-spacing:0;font-weight:950;margin-bottom:11px;color:var(--text)}
+.question-card.is-story #context-story,.question-card.is-story #expression-story{font-size:clamp(22px,3.8vw,28px);line-height:1.5;font-weight:800;color:var(--text);text-wrap:pretty}
+.answer-step{display:flex;align-items:flex-start;gap:12px;margin:18px 0 12px;padding:13px 16px;border:2px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text)}
+.answer-step strong{font-size:17px;white-space:nowrap;line-height:1.5;color:var(--accent)}
+.answer-step .subtle-note{margin:0;font-size:17px;line-height:1.5;font-weight:750;color:var(--text)}
+.answer-grid .answer-option:not(.with-picture){font-size:16px;min-height:58px;font-weight:700}
+#story-reveal{width:100%;margin:10px 0 14px;min-height:58px;font-size:18px}
+#feedback-area .feedback-status{padding:14px 17px}
+#feedback-area .feedback-status .result-icon{font-size:30px}
+#feedback-area .feedback-status h2{font-size:23px;margin:5px 0 4px}
+#feedback-area .explanation{margin:16px 0;padding:22px;background:var(--surface);border:3px solid var(--accent-line);border-radius:20px}
+#feedback-area .explanation>.eyebrow{display:block;font-size:16px;font-weight:950;letter-spacing:0;line-height:1.4;color:var(--accent)}
+#feedback-area .explanation h2{font-size:clamp(30px,5vw,42px);line-height:1.18;margin:15px 0}
+#feedback-area .explanation #explanation-definition{font-size:clamp(21px,3.3vw,25px);line-height:1.55;font-weight:780;color:var(--text)}
+#feedback-area .explanation #explanation-example{font-size:clamp(18px,2.7vw,21px);line-height:1.55;font-style:normal;color:var(--text);margin:16px 0 0}
+.reading-check{margin:19px 0;padding:21px 20px;border:2px solid var(--accent-line);border-radius:18px;background:var(--surface-2);color:var(--text)}
+.reading-check .reading-label{font-size:15px;font-weight:950;color:var(--accent);letter-spacing:.02em}
+.reading-check h3{font-size:clamp(21px,3.5vw,27px);line-height:1.3;margin:12px 0 10px;color:var(--text)}
+.reading-check .reading-intro{font-size:16px;font-weight:650;color:var(--muted);margin:0 0 15px;line-height:1.5}
+.reading-options{display:grid;grid-template-columns:1fr;gap:11px}
+.reading-option{display:flex;align-items:start;gap:12px;min-height:72px;padding:15px;border:2px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:18px;line-height:1.5;font-weight:750;text-align:left;overflow-wrap:anywhere}
+.reading-option:disabled{cursor:default}
+.reading-option[data-wrong='true']{opacity:.65;border-color:var(--red-border)}
+.reading-option[data-correct='true']{border-color:var(--green-border);background:var(--green-bg);color:var(--green-text)}
+.reading-option .reading-letter{font-size:16px;font-weight:950;color:inherit;border:1px solid currentColor;border-radius:7px;flex:0 0 30px;text-align:center}
+.reading-response{font-size:17px;font-weight:800;line-height:1.5;margin:12px 0 0;color:var(--text)}
+.reading-check[data-complete='true']{border-color:var(--green-border)}
+#next[hidden]{display:none!important}
+@media(max-width:570px){.question-card.is-story{padding:14px}.question-card.is-story .context-scene,.question-card.is-story .expression-scene{padding:17px 14px}.question-card.is-story #context-story,.question-card.is-story #expression-story{font-size:23px;line-height:1.55}.answer-step{display:block}.answer-step strong{display:block;margin-bottom:4px}.reading-check{padding:16px}.reading-option{font-size:17px}}

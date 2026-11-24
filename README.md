@@ -56,6 +56,20 @@ Tillhörande licens finns i
 `public/assets/story-icons/NOTO-EMOJI-LICENSE-AND-COPYRIGHT.txt`.
 Det finns ännu ingen vald generell licens för den övriga projektkoden.
 
+## Läsvänligt träningsflöde (för barn 8–10 år)
+
+I **Träna** visas berättelsen med stor läsbar text före svaren. När en
+berättelse finns får barnet först trycka **Jag har läst – visa svaren**.
+Efter varje svar visas förklaringen tydligt och barnet får en kort
+**Aha-fråga** med två alternativ innan nästa ord går att öppna.
+Frågan bygger på skrivna vardagsberättelser eller på granskade definitioner;
+den ger **inga ytterligare provpoäng, stjärnor eller repetitionsframsteg**.
+
+I **Testa dig** och högskoleprovsutmaningen finns ingen förklaringsfråga
+under själva provet: facit och förklaringar visas först efteråt.
+Kontrollen kan ge mer aktiv läsning, men den garanterar inte att barnet har
+förstått texten. Låt gärna barnet berätta innebörden med egna ord.
+
 ## Kvalitetsstatus
 
 `npm run check` passerar **155 automatiska tester** i den importerade

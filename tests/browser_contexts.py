@@ -25,7 +25,7 @@ def test_train(browser):
     page.set_default_timeout(6000)
     page.locator('#quick-contexts').click()
     assert page.locator('#view-play').is_visible()
-    assert 'VILKET ORD PASSAR' in page.locator('#question-prompt').inner_text()
+    assert 'LÄS BERÄTTELSEN' in page.locator('#question-prompt').inner_text()
     assert page.locator('#context-scene').is_visible()
     assert page.locator('.answer-option').count()==4
     assert page.locator('.with-picture').count()==0

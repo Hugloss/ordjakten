@@ -1,5 +1,5 @@
 /* Offline-only enhancement. App works fully without service workers. */
-const CACHE_NAME = 'ordjakten-static-v20'; // Increment on each content release.
+const CACHE_NAME = 'ordjakten-static-v21'; // Increment on each content release.
 const ICON_FILES = [
   "./assets/story-icons/1f305.png",
   "./assets/story-icons/1f31f.png",
@@ -76,7 +76,7 @@ const ICON_FILES = [
   "./assets/story-icons/2b50.png"
 ];
 const FILES = [
-  './','./index.html','./css/style.css','./css/playful.css','./css/adventures.css','./css/expressions.css','./css/comics.css','./css/surprises.css','./css/missions.css','./css/quests.css','./css/review.css','./css/contexts.css','./css/adaptive.css','./css/learning-map.css','./css/focus-practice.css','./css/contrast.css','./css/confusions.css','./css/clue-ladder.css','./css/retention.css','./js/adaptive.js','./js/learning-map.js','./js/focus-practice.js','./js/contrast.js','./js/confusions.js','./js/clue-ladder.js','./js/retention.js','./js/app.js','./js/engine.js','./js/playful.js','./js/adventures.js','./js/adventure-map.js','./js/comics.js','./js/surprises.js','./js/missions.js','./js/quests.js','./js/review.js',
+  './','./index.html','./css/style.css','./css/playful.css','./css/adventures.css','./css/expressions.css','./css/comics.css','./css/surprises.css','./css/missions.css','./css/quests.css','./css/review.css','./css/contexts.css','./css/adaptive.css','./css/learning-map.css','./css/focus-practice.css','./css/contrast.css','./css/confusions.css','./css/clue-ladder.css','./css/retention.css','./css/reading-flow.css','./js/adaptive.js','./js/learning-map.js','./js/focus-practice.js','./js/contrast.js','./js/confusions.js','./js/clue-ladder.js','./js/retention.js','./js/reading-check.js','./js/app.js','./js/engine.js','./js/playful.js','./js/adventures.js','./js/adventure-map.js','./js/comics.js','./js/surprises.js','./js/missions.js','./js/quests.js','./js/review.js',
   './data/wordbank.js','./data/ordbank.json','./data/curation.js','./data/expressions.js','./data/expressions.json','./data/comics.js','./data/comics.json','./data/surprises.js','./data/surprises.json','./data/missions.js','./data/missions.json','./data/word-contexts.js','./data/word-contexts.json','./data/contrasts.js','./data/contrasts.json','./data/clue-ladder.js','./data/clue-ladder.json',
   './manifest.webmanifest','./icons/icon.svg','./assets/story-icons/NOTO-EMOJI-LICENSE-AND-COPYRIGHT.txt'
 ].concat(ICON_FILES);

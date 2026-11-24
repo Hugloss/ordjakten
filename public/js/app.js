@@ -24,12 +24,13 @@
   const H = window.OrdjaktenConfusions;
   const T = window.OrdjaktenClues;
   const U = window.OrdjaktenRetention;
+  const B = window.OrdjaktenReading;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -54,6 +55,7 @@
   let selectedBookDoor = null;
   const missionChoices=new Map();
   let orderSelection=[];
+  let readingCheck = null;
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -1019,21 +1021,30 @@
     $('adventure-milestone').hidden=true;
     $('question-area').hidden=false;
     $('feedback-area').hidden=true;
+    readingCheck=null;
+    $('reading-check').hidden=true;
+    $('reading-response').textContent='';
     $('next').hidden=true;
     $('test-footnote').hidden=game.settings.mode!=='test';
     $('adaptive-feedback').hidden=true;
     $('question-word').textContent=q.taskType==='context'?q.contextTitle:q.taskType==='reverse'?q.stem:q.word;
     $('context-scene').hidden=q.taskType!=='context';
     if(q.taskType==='context')$('context-story').textContent=q.stem;
-    $('explanation-label').textContent=q.kind==='expression'?'📖 DET HÄR BETYDER UTTRYCKET':'📖 DET HÄR BETYDER ORDET';
+    $('explanation-label').textContent=q.kind==='expression'?'📖 STEG 1: LÄS VAD UTTRYCKET BETYDER':'📖 STEG 1: LÄS VAD ORDET BETYDER';
     $('expression-scene').hidden=q.kind!=='expression';
     if(q.kind==='expression')$('expression-story').textContent=q.scene;
     $('question-prompt').textContent=q.taskType==='context'?'🎭 VILKET ORD PASSAR I BERÄTTELSEN?':q.taskType==='reverse'?'🌱 VILKET ORD PASSAR TILL BETYDELSEN?':q.taskType==='sentence'?'💬 VILKEN MENING PASSAR?':q.taskType==='order'?'🧩 VAD HÄNDER FÖRST?':q.kind==='expression'?'🕵️ VAD BETYDER UTTRYCKET?':q.picture?'VILKEN BILD PASSAR BÄST?':'VAD BETYDER ORDET?';
     $('question-instruction').textContent=q.taskType==='context'?'Läs noga och välj ordet som beskriver situationen':q.taskType==='reverse'?'Läs betydelsen och hitta ordet som passar':q.taskType==='sentence'?'Välj meningen där uttrycket används rätt':q.taskType==='order'?'Tryck på händelserna i rätt ordning – först, sedan, sist':q.kind==='expression'?'Läs meningen och välj den bästa förklaringen':q.picture?'Välj rätt bild och ord':'Välj den bästa betydelsen';
     $('expression-story').parentElement.hidden=q.kind!=='expression'||q.taskType==='order'||(game.settings.reviewOnly&&q.taskType==='sentence');
+    const storyVisible=!$('context-scene').hidden || !$('expression-story').parentElement.hidden;
+    if(storyVisible)$('question-prompt').textContent='📖 STEG 1: LÄS BERÄTTELSEN';
+    $('answer-step').querySelector('strong').textContent=storyVisible?'🎯 STEG 2: VÄLJ SVAR':'🎯 VÄLJ SVAR';
+    $('reading-story').classList.toggle('is-story',storyVisible);
+    $('story-reveal').hidden=!(storyVisible && game.settings.mode==='train');
+    $('answer-step').hidden=!$('story-reveal').hidden;
     const options=$('answer-options');options.className='answer-grid'+(q.picture?' picture-grid':'');options.replaceChildren();
-    $('order-area').hidden=q.taskType!=='order';
-    options.hidden=q.taskType==='order';
+    $('order-area').hidden=q.taskType!=='order'||!$('story-reveal').hidden;
+    options.hidden=q.taskType==='order'||!$('story-reveal').hidden;
     if(q.taskType==='order'){orderSelection=[];renderOrderQuestion(q);}
     q.options.forEach((option,index)=>{
       const btn=document.createElement('button');btn.type='button';btn.className='answer-option'+(q.picture?' with-picture':'');btn.dataset.option=String(index);
@@ -1044,6 +1055,37 @@
     updateScore();
     if(game.index>0 && typeof $('question-area').scrollIntoView==='function')
       $('question-area').scrollIntoView({behavior:'instant',block:'start'});
+  }
+  function showReadingCheck(check) {
+    const section=$('reading-check');section.hidden=!check;
+    section.dataset.complete='false';
+    $('reading-response').textContent='';
+    const box=$('reading-options');box.replaceChildren();
+    if(!check)return;
+    $('reading-check-title').textContent=check.prompt;
+    check.options.forEach((answer,index)=>{
+      const button=element('button','reading-option');button.type='button';
+      button.dataset.readingOption=String(index);
+      const letter=element('span','reading-letter','AB'[index]);letter.setAttribute('aria-hidden','true');
+      const label=element('span','',answer.label);button.append(letter,label);
+      box.append(button);
+    });
+  }
+  function answerReadingCheck(index) {
+    if(!game||!game.feedback||!readingCheck||$('reading-check').dataset.complete==='true')return;
+    const option=readingCheck.options[index];
+    if(!option)return;
+    const button=$('reading-options').querySelector(`[data-reading-option="${index}"]`);
+    if(B.isCorrect(readingCheck,index)){
+      $('reading-check').dataset.complete='true';
+      button.dataset.correct='true';
+      $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
+      $('reading-response').textContent='🌟 Aha! Nu kan du fortsätta till nästa ord.';
+      $('next').hidden=false;
+    } else {
+      button.dataset.wrong='true';button.disabled=true;
+      $('reading-response').textContent='Nästan! Läs förklaringen igen och prova det andra alternativet.';
+    }
   }
   function submit(index) {
     if(!game||game.finished||game.feedback)return;
@@ -1107,11 +1149,14 @@
       if(q.kind==='expression' && outcome!=='unanswered')changeDoor('unlocked',q.id);
       $('question-area').hidden=true;
       $('feedback-area').hidden=false;
-      $('next').hidden=false;
+      // The reading checkpoint is for learning, never an extra scored test.
+      readingCheck=B.makeCheck(q,{bank,contexts,surprises});
+      showReadingCheck(readingCheck);
+      $('next').hidden=!!readingCheck;
       $('next').textContent=game.index===game.questions.length-1?'🏆 Visa mitt resultat':q.kind==='expression'?'Nästa uttryck →':'Nästa ord →';
       $('test-footnote').hidden=true;
       // Move focus to explanation for screen-reader users, without hiding it behind answers.
-      $('feedback-title').setAttribute('tabindex','-1');$('feedback-title').focus({preventScroll:true});
+      $('explanation-word').setAttribute('tabindex','-1');$('explanation-word').focus({preventScroll:true});
       // Place the explanation in view on a small screen after hiding the question.
       if(typeof $('feedback-area').scrollIntoView==='function')
         $('feedback-area').scrollIntoView({behavior:'auto',block:'start'});
@@ -1496,7 +1541,26 @@
     const target=event.target.closest('button[data-option]');
     if(target && $('answer-options').contains(target))submit(Number(target.dataset.option));
   });
-  $('next').addEventListener('click',()=>{if(game&&game.feedback)advance();});
+  $('story-reveal').addEventListener('click',()=>{
+    if(!game||game.finished||game.feedback)return;
+    $('story-reveal').hidden=true;
+    $('answer-step').hidden=false;
+    const q=game.questions[game.index];
+    $('answer-options').hidden=q.taskType==='order';
+    $('order-area').hidden=q.taskType!=='order';
+    const first=$('answer-options').querySelector('button')||$('order-area').querySelector('button');
+    if(first)first.focus({preventScroll:true});
+    if(typeof $('answer-step').scrollIntoView==='function')
+      $('answer-step').scrollIntoView({behavior:'auto',block:'start'});
+  });
+  $('reading-options').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-reading-option]');
+    if(button && !button.disabled && $('reading-options').contains(button))
+      answerReadingCheck(Number(button.dataset.readingOption));
+  });
+  $('next').addEventListener('click',()=>{
+    if(game&&game.feedback&&(!readingCheck||$('reading-check').dataset.complete==='true'))advance();
+  });
   $('play-again').addEventListener('click',()=>{
     if(settings.reviewOnly){const pool=E.getTopicPool(bank,curation,expressions,settings);if(!readyReviewCount(pool))settings.reviewOnly=false;}
     startRound();
