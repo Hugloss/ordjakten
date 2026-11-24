@@ -87,3 +87,13 @@
 .reading-check .reading-response{margin:16px 0 0}
 #feedback-area[data-reading-stage='done'] #feedback-reading-stage{border-color:var(--green-border)}
 @media(max-width:570px){#reading-story.is-story #context-story,#reading-story.is-story #expression-story{font-size:24px;line-height:1.55}.reading-stage{text-align:left}.story-help{font-size:18px}}
+
+/* Optional read-aloud button stays secondary to the story and explanation. */
+.reading-audio{display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 18px;min-height:48px;margin:12px 0 4px;
+  font-size:17px;font-weight:800;line-height:1.4;text-align:center;
+  color:var(--text);border:2px solid var(--border);border-radius:12px}
+.reading-audio[hidden],
+#feedback-area[data-reading-stage='quiz'] #listen-explanation{display:none!important}
+.reading-audio[aria-pressed='true']{border-color:var(--accent);background:var(--accent-soft)}
+@media(max-width:570px){.reading-audio{width:100%}}
