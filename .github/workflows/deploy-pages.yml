@@ -1,0 +1,47 @@
+# Publish only the static game. No npm install, image generation or browser matrix.
+name: Publish Ordjakten to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # The full fast Node tests run once on main, here, before deployment.
+      - name: Test game and validate Pages base path + offline files
+        run: npm run check
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload public/ as the site root
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

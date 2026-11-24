@@ -1,4 +1,4 @@
-# Fast, dependency-free checks. This workflow does not deploy the site.
+# Fast, dependency-free PR checks. Main branch is checked by the Pages deployment workflow.
 # Pull-request branches run once via pull_request; only main receives push checks.
 # Standard GitHub-hosted runners in public repositories do not use the
 # included private-repository Actions minutes.
@@ -6,8 +6,6 @@ name: Check Ordjakten
 
 on:
   pull_request:
-    branches: [main]
-  push:
     branches: [main]
   workflow_dispatch:
 
