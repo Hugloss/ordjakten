@@ -34,6 +34,7 @@ def test_train(browser):
     PREVIEWS.mkdir(parents=True,exist_ok=True)
     page.locator('#question-area').screenshot(path=str(PREVIEWS/'v012-vardag-fraga-mobil.png'))
     word=identify_word(page)
+    page.locator('#story-reveal').click()
     page.locator('.answer-option').filter(has_text=word).click()
     assert page.locator('#question-area').is_hidden()
     assert page.locator('#context-aha').is_visible()
@@ -41,10 +42,24 @@ def test_train(browser):
     assert page.locator('#explanation-word').inner_text()==word
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     page.locator('#feedback-area').screenshot(path=str(PREVIEWS/'v012-vardag-aha-mobil.png'))
+    def solve_aha():
+        page.locator('#reading-start').click()
+        scenes=page.evaluate("""() => {
+          const w=window.ORDJAKTEN_WORDS.words.find(x=>x.word===document.querySelector('#explanation-word').textContent);
+          return window.ORDJAKTEN_CONTEXTS.wordContexts.find(c=>c.id===w.id).scenes.map(s=>s.text);
+        }""")
+        matches=[i for i,o in enumerate(page.locator('.reading-option').all_inner_texts())
+                 if any(scene in o for scene in scenes)]
+        assert len(matches)==1
+        page.locator('.reading-option').nth(matches[0]).click()
+        assert page.locator('#next').is_visible()
+    solve_aha()
     for _ in range(4):
         page.locator('#next').click()
         w=identify_word(page)
+        page.locator('#story-reveal').click()
         page.locator('.answer-option').filter(has_text=w).click()
+        solve_aha()
     page.locator('#next').click()
     assert page.locator('#view-results').is_visible()
     assert page.locator('#result-right').inner_text()=='5'
@@ -70,6 +85,8 @@ def test_test_mode_and_settings(browser):
         if page.locator('#context-scene').is_visible():
             n_context+=1
             assert page.locator('#context-aha').is_hidden()
+        if page.locator('#story-reveal').is_visible():
+            page.locator('#story-reveal').click()
         page.locator('.answer-option').first.click()
         assert page.locator('#feedback-area').is_hidden()
     assert n_context>=1, 'At least one authored contextual item must be present in this deterministic medium round'

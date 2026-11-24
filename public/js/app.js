@@ -61,6 +61,7 @@
   history.questCounts=J.sanitizeCounts(history.questCounts);
   history.reviewProgress=R.sanitize(history.reviewProgress,history.mistakes);
   history.skillProgress=D.sanitize(history.skillProgress);
+  history.readingProgress=B.sanitizeProgress(history.readingProgress);
   history.confusionProgress=H.sanitize(history.confusionProgress,contrastHistoryData);
   history.clueProgress=T.sanitize(history.clueProgress,clues);
   history.retentionProgress=U.sanitize(history.retentionProgress,contrastHistoryData);
@@ -442,7 +443,7 @@
         `Bra övat! Nästa repetition om ungefär ${Math.ceil(diff/(24*60*60*1000))} dagar.`;
     }else if(stats.mastered)note='🌟 Du har lärt dig alla dina tidigare svåra ord!';
     $('review-due-note').textContent=note;
-    const focus=D.suggestions(history.skillProgress,2);
+    const focus=D.suggestions(history.skillProgress,2,history.readingProgress);
     const names=new Map([...bank.words.map(w=>[w.id,w.word]),...expressions.expressions.map(x=>[x.id,x.phrase])]);
     $('adaptive-focus-note').hidden=!focus.length;
     if(focus.length) $('adaptive-focus-note').textContent='🎯 Sånt vi kan öva vidare på: '+
@@ -540,7 +541,7 @@
     const totals=L.summary(learningEntries());
     $('learning-home-seen').textContent=String(totals.discovered);
     $('learning-home-applied').textContent=String(totals.applied);
-    const suggested=D.suggestions(history.skillProgress,1).find(row=>F.findItem(row.id,bank,expressions));
+    const suggested=D.suggestions(history.skillProgress,1,history.readingProgress).find(row=>F.findItem(row.id,bank,expressions));
     $('learning-home-focus').hidden=!suggested;
     if(suggested){
       const item=F.findItem(suggested.id,bank,expressions);
@@ -931,7 +932,7 @@
     const roundSettings={...settings,contextOnly:roundOptions.contextOnly===true,
       adaptivePractice:questId==='stories'?false:settings.adaptivePractice};
     let questions;
-    try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D);}
+    try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D,history.readingProgress);}
     catch(error){showSetupError(error.message);return;}
     if(!questions.length){showSetupError('Det finns inga tillgängliga frågor.');return;}
     saveHistory();
@@ -1034,6 +1035,8 @@
     $('test-footnote').hidden=game.settings.mode!=='test';
     $('adaptive-feedback').hidden=true;
     $('question-word').textContent=q.taskType==='context'?q.contextTitle:q.taskType==='reverse'?q.stem:q.word;
+    $('reading-story').classList.toggle('is-context',q.taskType==='context');
+    if(q.taskType==='context')$('context-scene').querySelector('.context-scene-label').textContent='📖 BERÄTTELSEN · '+q.contextTitle;
     $('context-scene').hidden=q.taskType!=='context';
     if(q.taskType==='context')$('context-story').textContent=q.stem;
     $('explanation-label').textContent=q.kind==='expression'?'📖 STEG 1: LÄS VAD UTTRYCKET BETYDER':'📖 STEG 1: LÄS VAD ORDET BETYDER';
@@ -1112,6 +1115,12 @@
     if(typeof $('reading-check').scrollIntoView==='function')
       $('reading-check').scrollIntoView({behavior:'auto',block:'start'});
   }
+  function saveAhaOutcome(outcome) {
+    const q=game?.questions?.[game.index];
+    if(!q||!readingCheck)return;
+    history.readingProgress=B.recordProgress(history.readingProgress,q.id,readingCheck.source,outcome);
+    saveHistory();
+  }
   function answerReadingCheck(index) {
     if(!game||!game.feedback||!readingCheck||$('reading-check').dataset.complete==='true')return;
     const option=readingCheck.options[index];
@@ -1122,6 +1131,7 @@
     const nextStep=B.nextStep(readingCheck.attempts,B.isCorrect(readingCheck,index));
     if(nextStep==='complete'){
       if(readingCheck.attempts===1)game.readingMetrics.firstTry++;
+      saveAhaOutcome(readingCheck.attempts===1?'first':'retry');
       game.readingMetrics.completed++;
       $('reading-check').dataset.complete='true';
       $('feedback-area').dataset.readingPending='false';
@@ -1129,7 +1139,8 @@
       $('feedback-reading-stage').textContent='✅ Du har provat det du läste';
       button.dataset.correct='true';
       $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
-      $('reading-response').textContent='🌟 Du hittade rätt i det nya exemplet!';
+      $('reading-response').textContent=readingCheck.source==='meaning'
+        ? '🌟 Du hittade rätt betydelse!':'🌟 Du hittade rätt i den nya berättelsen!';
       $('reading-why').textContent=readingCheck.why ? 'Därför passar det: '+readingCheck.why :
         'Det här exemplet passar med betydelsen du läste.';
       $('reading-why').hidden=false;
@@ -1153,6 +1164,7 @@
     }else{
       // After two errors, teach rather than trap the child in more guesses.
       game.readingMetrics.guided++;
+      saveAhaOutcome('guided');
       $('reading-check').dataset.complete='true';
       $('feedback-area').dataset.readingPending='false';
       $('feedback-area').dataset.readingStage='done';
@@ -1160,7 +1172,7 @@
       $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
       const correct=readingCheck.options.find(item=>item.correct);
       $('reading-response').textContent='Det här var svårt. Ingen fara – vi övar mer på det senare.';
-      $('reading-why').textContent='Rätt exempel: '+correct.label+'. '+
+      $('reading-why').textContent=(readingCheck.source==='meaning'?'Rätt betydelse: ':'Rätt exempel: ')+correct.label+'. '+
         (readingCheck.why||'Jämför med betydelsen ovan.');
       $('reading-why').hidden=false;
       $('reading-reread').hidden=true;
@@ -1452,7 +1464,7 @@
     });
   }
   function exportHistory() {
-    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
+    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }

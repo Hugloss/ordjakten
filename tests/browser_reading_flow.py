@@ -57,8 +57,9 @@ def context_mobile(browser):
     assert page.locator('#context-scene').is_visible()
     assert page.locator('#story-reveal').is_visible()
     assert page.locator('#answer-options').is_hidden()
-    assert page.evaluate('''() => document.querySelector('#context-story').getBoundingClientRect().top <
-      document.querySelector('#question-word').getBoundingClientRect().top''')
+    # An unexplained place name must no longer appear below the story.
+    assert page.locator('#question-word').is_hidden()
+    assert 'BERÄTTELSEN' in page.locator('.context-scene-label').inner_text()
     PREVIEWS.mkdir(exist_ok=True,parents=True)
     page.locator('#question-area').screenshot(path=str(PREVIEWS/'reading-first-mobile.png'))
     page.locator('#story-reveal').click()

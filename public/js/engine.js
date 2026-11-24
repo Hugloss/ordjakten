@@ -15,7 +15,7 @@
     companion:'fox', adventure:'forest', sound:false,
     timerMode: 'off', timerSeconds: 180, timerScope: 'total', reviewOnly: false,
     expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true
-  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},retentionProgress:{}});
+  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},retentionProgress:{}});
 
   function shuffle(input, random = Math.random) {
     const result = input.slice();
@@ -160,7 +160,7 @@
       const options = [{label: entry.illustration.label, emoji: entry.illustration.value, correct: true}]
         .concat(distractions.map(pair => ({emoji: pair[0], label: pair[1], correct: false})));
       if (new Set(options.map(o => o.emoji)).size !== 4) throw new Error('Dubblerad emoji: '+entry.id);
-      return {id: entry.id, word: entry.word, definition: entry.definition, example: entry.example,
+      return {kind:'word',id: entry.id, word: entry.word, definition: entry.definition, example: entry.example,
         options: shuffle(options, random), picture: true};
     }
     const all = getPool(bank, curation, difficulty);
@@ -176,7 +176,7 @@
     if (others.length < numberWrong) throw new Error('För få svarsalternativ för '+entry.word);
     const options = [{label:entry.definition,correct:true}].concat(others.map(w => ({label:w.definition,correct:false})));
     if (new Set(options.map(o => o.label)).size !== options.length) throw new Error('Dubblerade svar för '+entry.word);
-    return {id: entry.id,word: entry.word,definition:entry.definition,example:entry.example,
+    return {kind:'word',id: entry.id,word: entry.word,definition:entry.definition,example:entry.example,
       options:shuffle(options,random),picture:false};
   }
   // A review can retrieve the meaning in the opposite direction: read the
@@ -222,7 +222,7 @@
     if(difficulty==='exam')return 'meaning'; // preserve five answers in exam mode
     return ({meaning:'sentence',sentence:'order',order:'meaning'})[lastVariant] || 'sentence';
   }
-  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null) {
+  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null) {
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const pool=getTopicPool(bank,curation,expressions,settings);
     const count=VALID_COUNTS.includes(settings.count)?settings.count:10;
@@ -242,7 +242,7 @@
     const adapt = adaptive && settings.adaptivePractice === true && settings.mode === 'train' &&
       settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly;
     const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
-    if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,settings,contextIds,!!missions,now,random);
+    if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,settings,contextIds,!!missions,now,random,readingProgress);
     else if(topic==='mixed'){
       const words=shuffle(candidates.filter(x=>x.kind==='word'),random);
       const phrases=shuffle(candidates.filter(x=>x.kind==='expression'),random);
@@ -257,7 +257,7 @@
       if(item.kind!=='expression') {
         const hasContext=!!getContextRecord(contexts,item.entry.id)&&settings.difficulty!=='exam';
         const variant=adapt ? adaptive.choiceType(item,settings,skillProgress,
-          adaptive.availableTypes(item,settings,hasContext,!!missions),random) :
+          adaptive.availableTypes(item,settings,hasContext,!!missions),random,readingProgress) :
           settings.contextOnly&&hasContext?'context':
           settings.reviewOnly&&settings.mode!=='test'?nextReviewTask(
           reviewProgress?.[item.entry.id]?.lastVariant || 'meaning','word',settings.difficulty,hasContext):
@@ -274,7 +274,7 @@
         return makeQuestion(item.entry,bank,curation,settings.difficulty,random);
       }
       const task=adapt?adaptive.choiceType(item,settings,skillProgress,
-        adaptive.availableTypes(item,settings,false,!!missions),random):
+        adaptive.availableTypes(item,settings,false,!!missions),random,readingProgress):
         settings.reviewOnly&&settings.mode!=='test'&&missions ? nextReviewTask(
         reviewProgress?.[item.entry.id]?.lastVariant || 'meaning','expression',settings.difficulty):
         settings.difficulty==='exam'?'meaning':settings.expressionTask==='mix'&&missions
@@ -316,7 +316,7 @@
     };
   }
   function sanitizeHistory(history) {
-    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},confusionProgress:{},clueProgress:{},retentionProgress:{}};
+    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},confusionProgress:{},clueProgress:{},retentionProgress:{}};
     const rawResults = Array.isArray(history.results)?history.results:[];
     const results = rawResults.filter(x => x && typeof x==='object' && Number.isFinite(x.finishedAt))
       .slice(-50).map(x => ({finishedAt:x.finishedAt,level:String(x.level||''),mode:String(x.mode||''),
@@ -362,8 +362,9 @@
     const clueProgress=history.clueProgress&&typeof history.clueProgress==='object'&&!Array.isArray(history.clueProgress)?history.clueProgress:{};
     // Separate, strictly validated by retention.js once curated scene IDs are available.
     const retentionProgress=history.retentionProgress&&typeof history.retentionProgress==='object'&&!Array.isArray(history.retentionProgress)?history.retentionProgress:{};
+    const readingProgress=history.readingProgress&&typeof history.readingProgress==='object'&&!Array.isArray(history.readingProgress)?history.readingProgress:{};
     const skillProgress=history.skillProgress&&typeof history.skillProgress==='object'&&!Array.isArray(history.skillProgress)?history.skillProgress:{};
-    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,confusionProgress,clueProgress,retentionProgress};
+    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,confusionProgress,clueProgress,retentionProgress};
   }
   function applyOutcome(mistakes,id,outcome) {
     const updated={...mistakes};

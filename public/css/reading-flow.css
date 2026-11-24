@@ -71,6 +71,18 @@
 #feedback-area[data-reading-stage='quiz'] .explanation,#feedback-area[data-reading-stage='quiz'] #feedback-status,
 #feedback-area[data-reading-stage='reread'] #feedback-status{display:none!important}
 #feedback-area[data-reading-stage='quiz'] #feedback-reading-stage{margin-bottom:12px}
+/* The scene title belongs WITH the large story. Never append a second,
+   unexplained heading (such as "En sjö") underneath the reading text. */
+#reading-story.is-context #question-word{display:none!important}
+/* Immediate correctness remains visible, but the large celebration waits
+   until the child has had a chance to read and apply the explanation. */
+#feedback-area[data-reading-pending='true'] #feedback-status{display:flex;flex-wrap:wrap;
+  gap:6px 12px;align-items:center;text-align:left;padding:10px 13px;min-height:0;
+  border-width:1px;background:var(--surface)}
+#feedback-area[data-reading-pending='true'] #feedback-status .result-icon{font-size:22px}
+#feedback-area[data-reading-pending='true'] #feedback-status h2{font-size:18px;margin:0}
+#feedback-area[data-reading-pending='true'] #feedback-status p:not(#feedback-reward){
+  margin:0;font-size:15px;line-height:1.45}
 #reading-reread{min-height:48px;font-size:17px;font-weight:850;margin-top:16px}
 .reading-check .reading-response{margin:16px 0 0}
 #feedback-area[data-reading-stage='done'] #feedback-reading-stage{border-color:var(--green-border)}

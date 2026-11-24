@@ -84,5 +84,47 @@
     if(correct)return 'complete';
     return attempts>=2?'guided':'reread';
   }
-  return {makeCheck,isCorrect,nextStep};
+  // Separate, local reading observations. A correct main answer does not
+  // mean that a new example was understood. Only the Aha checkpoint updates
+  // this record; it never creates grades, extra stars or user profiles.
+  const ID=/^(?:sv|ut)-\d{4,}$/;
+  const counter=value=>Number.isInteger(value)&&value>=0?Math.min(9999,value):0;
+  function sanitizeProgress(raw) {
+    const out=Object.create(null);
+    if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;
+    for(const [id,value] of Object.entries(raw).slice(0,500)){
+      if(!ID.test(id)||!value||typeof value!=='object'||Array.isArray(value))continue;
+      const entry=Object.create(null);
+      for(const type of ['transfer','recognition']){
+        const item=value[type];
+        if(!item||typeof item!=='object'||Array.isArray(item))continue;
+        const first=counter(item.first),supported=counter(item.supported);
+        if(first+supported===0)continue;
+        entry[type]={first,supported,streak:Math.min(counter(item.streak),first,99),
+          lastAt:Number.isFinite(item.lastAt)&&item.lastAt>=0&&item.lastAt<=4102444800000?
+            Math.floor(item.lastAt):0};
+      }
+      if(Object.keys(entry).length)out[id]=entry;
+    }
+    return out;
+  }
+  function recordProgress(raw,id,source,outcome,now=Date.now()) {
+    if(!ID.test(id)||!['context','expression','meaning'].includes(source)||
+      !['first','retry','guided'].includes(outcome))return raw;
+    const type=source==='meaning'?'recognition':'transfer';
+    const cards=sanitizeProgress(raw);
+    const before=cards[id]?.[type]||{first:0,supported:0,streak:0,lastAt:0};
+    const first=outcome==='first';
+    return {...cards,[id]:{...cards[id],[type]:{
+      first:Math.min(9999,before.first+(first?1:0)),
+      supported:Math.min(9999,before.supported+(first?0:1)),
+      streak:first?Math.min(99,before.streak+1):0,
+      lastAt:Number.isFinite(now)&&now>=0&&now<=4102444800000?Math.floor(now):Date.now()
+    }}};
+  }
+  function needsReview(raw,id,type='transfer') {
+    const entry=raw?.[id]?.[type];
+    return !!entry && entry.supported>0 && entry.streak<2;
+  }
+  return {makeCheck,isCorrect,nextStep,sanitizeProgress,recordProgress,needsReview};
 });

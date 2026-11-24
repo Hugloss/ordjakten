@@ -77,9 +77,17 @@
     if(entry.streak===1)return 9;
     return Math.max(1,5-Math.min(entry.streak,4));
   }
-  function choiceType(item,settings,progress,types,random=Math.random) {
+  function choiceType(item,settings,progress,types,random=Math.random,readingProgress=null) {
     if(types.length===1)return types[0];
-    const record = progress?.[item.entry.id];
+    const id=item.entry.id;
+    // A child may recognise the right main answer yet need help applying its
+    // meaning. Prefer a NEW context/sentence on later visits, not the same key.
+    if(readingNeeds(readingProgress,id,'transfer')){
+      if(item.kind==='word'&&types.includes('context'))return 'context';
+      if(item.kind==='expression'&&types.includes('sentence'))return 'sentence';
+    }
+    if(readingNeeds(readingProgress,id,'recognition')&&types.includes('reverse'))return 'reverse';
+    const record = progress?.[id];
     const skills=record?.skills || {};
     if(!types.some(type=>skills[type]?.attempts)){
       const sample=random();
@@ -97,7 +105,11 @@
     // Never show the identical story on the next visit; cycle all three.
     return (last+1)%3;
   }
-  function focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now) {
+  function readingNeeds(progress,id,type) {
+    const item=progress?.[id]?.[type];
+    return !!item&&item.supported>0&&item.streak<2;
+  }
+  function focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress=null) {
     const id=item.entry.id;
     const types=availableTypes(item,settings,contextIds.has(id),missionsAvailable);
     const skills=progress?.[id]?.skills || {};
@@ -105,11 +117,12 @@
     if(card && card.streak < 3 && card.dueAt > now)return 0; // Respect the existing waiting interval.
     const weak=types.filter(type=>needsPractice(skills[type]));
     const due=card && card.streak<3 && card.dueAt<=now;
-    return due || weak.length? 1 + Math.max(0,...weak.map(type=>skills[type].wrong)) : 0;
+    const readingWeak=readingNeeds(readingProgress,id,'transfer')||readingNeeds(readingProgress,id,'recognition');
+    return due || weak.length || readingWeak ? 1 + Math.max(0,...weak.map(type=>skills[type].wrong)) + (readingWeak?2:0) : 0;
   }
-  function pickPool(pool,count,progress,reviews,settings,contextIds,missionsAvailable,now,random) {
+  function pickPool(pool,count,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress=null) {
     if(count<=0)return [];
-    const scored=pool.map((item,index)=>({item,index,focus:focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now)}));
+    const scored=pool.map((item,index)=>({item,index,focus:focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress)}));
     // Limit focused questions to half the round: exploration always has room.
     const focused=shuffle(scored.filter(x=>x.focus>0),random)
       .sort((a,b)=>b.focus-a.focus).slice(0,Math.min(Math.ceil(count/2),scored.filter(x=>x.focus>0).length));
@@ -128,17 +141,17 @@
     for(let i=arr.length-1;i>0;i--){const j=Math.min(i,Math.max(0,Math.floor(random()*(i+1))));[arr[i],arr[j]]=[arr[j],arr[i]];}
     return arr;
   }
-  function pickItems(candidates,count,progress,reviews,settings,contextIds,missionsAvailable,now=Date.now(),random=Math.random) {
+  function pickItems(candidates,count,progress,reviews,settings,contextIds,missionsAvailable,now=Date.now(),random=Math.random,readingProgress=null) {
     const wanted=Math.min(Math.max(0,count),candidates.length);
-    if(settings.topic!=='mixed')return pickPool(candidates,wanted,progress,reviews,settings,contextIds,missionsAvailable,now,random);
+    if(settings.topic!=='mixed')return pickPool(candidates,wanted,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress);
     const words=candidates.filter(item=>item.kind==='word'),expressions=candidates.filter(item=>item.kind==='expression');
     const phraseCount=Math.min(Math.ceil(wanted/2),expressions.length);
     const wordCount=Math.min(wanted-phraseCount,words.length);
-    const selected=pickPool(words,wordCount,progress,reviews,settings,contextIds,missionsAvailable,now,random)
-      .concat(pickPool(expressions,phraseCount,progress,reviews,settings,contextIds,missionsAvailable,now,random));
+    const selected=pickPool(words,wordCount,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress)
+      .concat(pickPool(expressions,phraseCount,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress));
     const chosen=new Set(selected.map(item=>item.entry.id));
     return shuffle(selected.concat(pickPool(candidates.filter(item=>!chosen.has(item.entry.id)),wanted-selected.length,
-      progress,reviews,settings,contextIds,missionsAvailable,now,random)),random);
+      progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress)),random);
   }
   function summary(progress) {
     const result={concepts:0,practised:0,needsPractice:0,comfortable:0};
@@ -150,13 +163,26 @@
     }
     return result;
   }
-  function suggestions(progress, max=3) {
+  function suggestions(progress, max=3, readingProgress=null) {
     const found=[];
     for (const [id,card] of Object.entries(progress||{})) {
       if (!ID.test(id))continue;
       for (const [skill,entry] of Object.entries(card?.skills||{})) {
         if(SKILLS.includes(skill)&&needsPractice(entry))found.push({id,skill,wrong:entry.wrong,lastAt:entry.lastAt});
       }
+    }
+    // Do not lose a missed Aha checkpoint just because the main answer was
+    // right. Report the available *kind of practice*, not a misleading grade.
+    for(const [id,card] of Object.entries(readingProgress||{})){
+      if(!ID.test(id))continue;
+      if(readingNeeds(readingProgress,id,'transfer')){
+        const skill=id.startsWith('ut-')?'sentence':'context';
+        if(!found.some(item=>item.id===id&&item.skill===skill))
+          found.push({id,skill,wrong:1,lastAt:card.transfer?.lastAt||0});
+      }
+      if(readingNeeds(readingProgress,id,'recognition')&&
+        !found.some(item=>item.id===id&&item.skill==='reverse'))
+          found.push({id,skill:'reverse',wrong:1,lastAt:card.recognition?.lastAt||0});
     }
     return found.sort((a,b)=>b.wrong-a.wrong || b.lastAt-a.lastAt || a.id.localeCompare(b.id)).slice(0,Math.max(0,Math.min(5,max)));
   }

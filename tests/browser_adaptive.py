@@ -27,7 +27,14 @@ def main():
         for n in range(5):
             page.locator('.answer-option').first.click()
             assert page.locator('#feedback-area').is_visible()
-            assert page.locator('#adaptive-feedback').is_visible(), 'Skill explanation should appear only after answering'
+            # Reading comes before the secondary skill message, not after.
+            assert page.locator('#adaptive-feedback').is_hidden()
+            page.locator('#reading-start').click()
+            page.locator('.reading-option').first.click()
+            if page.locator('#next').is_hidden():
+                page.locator('#reading-start').click()
+                page.locator('.reading-option').first.click()
+            assert page.locator('#adaptive-feedback').is_visible()
             assert page.locator('#question-area').is_hidden()
             if n==0:
                 page.locator('#feedback-area').screenshot(path=str(OUT/'v013-feedback-mobil.png'))
@@ -50,6 +57,8 @@ def main():
         page.locator('[data-count="5"]').click()
         page.locator('#start').click()
         for _ in range(5):
+            if page.locator('#story-reveal').is_visible():
+                page.locator('#story-reveal').click()
             page.locator('.answer-option').first.click()
             assert page.locator('#adaptive-feedback').is_hidden()
             assert page.locator('#feedback-area').is_hidden()
