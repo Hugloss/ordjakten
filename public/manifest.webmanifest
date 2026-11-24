@@ -1,0 +1,13 @@
+{
+  "id":"./",
+  "name":"Ordjakten – hitta ordens betydelse",
+  "short_name":"Ordjakten",
+  "description":"Ett roligt ordspel för barn och vuxna. Träna ord och testa dina kunskaper.",
+  "lang":"sv-SE",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#0b1220",
+  "theme_color":"#0b1220",
+  "icons":[{"src":"./icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]
+}

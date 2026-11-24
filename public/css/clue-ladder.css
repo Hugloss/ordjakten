@@ -1,0 +1,10 @@
+/* 0.19: visual level indicator; the story and answers remain the priority.
+ * Inherit the user's dark/light/high-contrast tokens from the existing theme. */
+.focus-clue-level {
+  display:inline-flex;align-items:center;gap:6px;
+  margin:6px 0 2px 7px;padding:7px 12px;
+  background:var(--surface-2);color:var(--text);border:2px solid var(--border);
+  border-radius:999px;font-size:.92rem;font-weight:850;line-height:1.35;
+}
+.focus-clue-level[hidden]{display:none}
+@media (max-width:380px){.focus-clue-level{margin-left:0;display:flex;width:max-content;max-width:100%;}}

@@ -1,0 +1,33 @@
+# Fast, dependency-free checks. This workflow does not deploy the site.
+# Pull-request branches run once via pull_request; only main receives push checks.
+# Standard GitHub-hosted runners in public repositories do not use the
+# included private-repository Actions minutes.
+name: Check Ordjakten
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A newer commit makes previous checks on the same PR obsolete.
+concurrency:
+  group: ordjakten-check-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # Includes content validation + the full fast Node test suite.
+      # Browser/Playwright tests stay local rather than running on every push.
+      - run: npm run check

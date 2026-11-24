@@ -1,0 +1,34 @@
+/* Miniuppdrag: valfri variation, inga dagliga krav eller tävlingspoäng i provläge. */
+.quest-shelf{margin:0 0 23px}
+.quest-shelf .section-header{margin-bottom:8px}
+.quest-greeting{line-height:1.55;font-size:14px;font-weight:650;color:var(--muted);margin:0 0 14px}
+.quest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.quest-card{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;min-height:155px;background:var(--surface-2);color:var(--text);border:2px solid var(--border);border-radius:14px;text-align:left;padding:13px;line-height:1.25}
+.quest-card .quest-card-icon{font-size:30px;line-height:1.2}
+.quest-card strong{font-size:16px;color:var(--text);overflow-wrap:anywhere}
+.quest-card small{font-size:12px;color:var(--muted);line-height:1.4}
+.quest-card .quest-count{color:var(--accent);font-size:12px;font-weight:850;margin-top:auto;line-height:1.35}
+.quest-card:disabled{opacity:.62}
+.quest-card:disabled .quest-count{color:var(--muted)}
+.quest-surprise{margin-top:12px}
+.quest-progress{background:var(--surface);border:2px solid var(--accent-line);border-radius:16px;padding:14px;margin:15px 0;color:var(--text)}
+.quest-progress-heading{display:flex;align-items:center;gap:12px}
+.quest-progress-heading>span:first-child{font-size:34px}
+.quest-progress-heading>div{flex:1;min-width:0}
+.quest-progress-heading strong{font-size:16px;font-weight:900}
+.quest-progress-heading p{font-size:13px;color:var(--muted);line-height:1.4;margin:4px 0 0}
+.quest-progress-heading>span:last-child{font-size:17px;font-weight:900;white-space:nowrap}
+.quest-mini-track{height:9px;border-radius:100px;background:var(--surface-2);border:1px solid var(--border);margin-top:12px;overflow:hidden}
+.quest-mini-track>div{background:var(--accent-line);height:100%;border-radius:100px;transition:width .2s ease}
+.quest-finale{display:flex;align-items:center;gap:16px;border:2px solid var(--accent-line);margin:16px 0}
+.quest-finale-emoji{font-size:42px}
+.quest-finale h2{font-size:21px;margin:0 0 7px}
+.quest-finale p{line-height:1.5;margin:0}
+.next-steps{margin-top:16px}
+.next-steps h2{font-size:21px;margin-bottom:6px}
+.next-step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
+.next-step-button{min-width:0;min-height:54px;padding:11px 7px;text-align:center;font-size:14px;font-weight:850;line-height:1.35;background:var(--accent-soft);border:2px solid var(--accent-line);color:var(--text);border-radius:12px}
+.next-step-button:disabled{background:var(--surface-2);border-color:var(--border);opacity:.6}
+@media (hover:hover) and (pointer:fine){.quest-card:not(:disabled):hover,.next-step-button:not(:disabled):hover{border-color:var(--accent);background:var(--accent-soft)}}
+@media (max-width:640px){.quest-grid{grid-template-columns:1fr}.quest-card{min-height:0;display:grid;grid-template-columns:43px minmax(0,1fr);grid-template-rows:auto auto auto;gap:3px 10px;padding:13px}.quest-card .quest-card-icon{grid-row:1/4;align-self:center}.quest-card .quest-count{margin-top:3px}.next-step-grid{grid-template-columns:1fr}.next-step-button{min-height:48px}}
+@media (prefers-reduced-motion:reduce){.quest-mini-track>div{transition:none}}

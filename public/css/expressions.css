@@ -1,0 +1,30 @@
+/* Ordjakten: special questions for expressions and everyday sayings. */
+.topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.topic-choice{min-width:0;min-height:112px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:2px solid var(--border);border-radius:14px;background:var(--surface-2);color:var(--text);text-align:center}
+.topic-choice>span{font-size:27px}
+.topic-choice strong{font-size:17px;font-weight:900}
+.topic-choice small{color:var(--muted);font-size:12px;line-height:1.35}
+.topic-choice[aria-pressed="true"]{border-color:var(--accent-line);box-shadow:inset 0 0 0 1px var(--accent-line);background:var(--accent-soft)}
+.question-card:has(.expression-scene:not([hidden])){padding:22px 18px}
+.question-card:has(.expression-scene:not([hidden])) h1{font-size:clamp(27px,5vw,44px);letter-spacing:-.7px;margin:14px 0 18px}
+.expression-scene{background:var(--surface-2);border:2px solid var(--accent-line);border-radius:18px;padding:17px 19px;text-align:left;max-width:700px;margin:0 auto}
+.expression-scene-label{display:block;color:var(--accent);font-size:12px;font-weight:900;letter-spacing:.7px;margin-bottom:8px}
+.expression-scene p{font-size:clamp(17px,2.7vw,21px);font-weight:700;color:var(--text);line-height:1.6;margin:0}
+.word-item .expression-scene-mini{padding:9px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;font-size:15px;line-height:1.5}
+@media(max-width:460px){.topic-grid{gap:5px}.topic-choice{min-height:112px;padding:10px 3px}.topic-choice strong{font-size:14px}.topic-choice small{font-size:11px}}
+
+/* Keep the active question close to the top on small screens. Maps stay optional. */
+.adventure-map-summary{display:flex;align-items:center;gap:11px;cursor:pointer;min-height:58px;list-style:none}
+.adventure-map-summary::-webkit-details-marker{display:none}
+.adventure-map-summary>span:first-child{font-size:35px;flex-shrink:0}
+.adventure-summary-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}
+.adventure-summary-copy strong{color:var(--text);font-size:17px;font-weight:900}
+.adventure-summary-copy small{color:var(--muted);font-size:12px;line-height:1.4}
+.adventure-summary-action{color:var(--accent);border:1px solid var(--border);border-radius:10px;padding:9px 6px;white-space:nowrap;font-size:12px;font-weight:900}
+.adventure-journey #journey-details[open] .adventure-map-summary{margin-bottom:10px}
+.adventure-journey #journey-details:not([open]) .adventure-summary-action::after{content:' ▾'}
+.adventure-journey #journey-details[open] .adventure-summary-action::after{content:' ▴'}
+.adventure-map-summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:10px}
+@media(max-width:570px){.adventure-journey{margin:11px 0 14px}.adventure-journey #journey-progress{text-align:left;margin:5px 0 0}.adventure-map-summary>span:first-child{font-size:29px}}
+
+.quick-expressions{margin-top:10px;min-height:54px;border-color:var(--accent-line);font-size:16px}

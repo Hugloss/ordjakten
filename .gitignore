@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+coverage/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+
+# Optional Python-based browser tests
+__pycache__/
+*.pyc
+
+# Generated browser screenshots; do not commit historical preview captures.
+docs/previews/*.png

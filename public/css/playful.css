@@ -1,0 +1,95 @@
+/* Ordjakten 0.2 — playful, legible 8–10 design without external fonts or assets.
+   This layer sits on top of the accessible base theme; dark/light/high contrast work unchanged. */
+html[data-theme="dark"] {
+  --play-gold: #fde68a;
+  --play-mint: #a7f3d0;
+  --play-sky: #bfdbfe;
+  --play-speech: #243b58;
+  --play-glow: rgba(251,191,36,.10);
+}
+html[data-theme="light"] {
+  --play-gold: #854d0e;
+  --play-mint: #065f46;
+  --play-sky: #1d4ed8;
+  --play-speech: #e7f0ff;
+  --play-glow: rgba(245,158,11,.09);
+}
+body { background-image:radial-gradient(ellipse 50% 25% at 90% 5%,var(--play-glow),transparent); }
+.brand { letter-spacing:-1px; }
+.brand-icon {display:inline-flex; width:43px;height:43px;align-items:center;justify-content:center;border-radius:14px;background:var(--accent-soft);border:1px solid var(--accent-line)}
+.brand-dot {color:var(--play-gold)}
+.hero {margin-bottom:28px}
+.hero .eyebrow {letter-spacing:1px}
+.hero h1{font-weight:950;letter-spacing:-1.8px}
+.hero h1 span {color:var(--play-gold)}
+.hero-companion{margin:23px auto 0;display:flex;justify-content:center;align-items:center;gap:12px;max-width:475px;text-align:left}
+.hero-companion-emoji {font-size:clamp(49px,8vw,72px);filter:drop-shadow(0 4px 4px rgba(0,0,0,.13));display:inline-block;animation:buddy-bob 3.4s ease-in-out infinite}
+.hero-companion-message{display:block;position:relative;border:2px solid var(--border);background:var(--play-speech);color:var(--text);font-size:15px;font-weight:850;line-height:1.45;border-radius:18px;padding:13px 17px;min-width:0}
+.hero-badges{margin-top:19px}
+.hero-badges span{border-radius:12px;font-weight:850}
+.select-card {min-height:182px;transition:transform .14s,border-color .14s}
+.mode-icon {font-size:35px}
+.select-card strong{letter-spacing:-.4px}
+.level-card{border-radius:16px;min-height:76px}
+.level-icon{font-size:31px}
+.primary-button {background:linear-gradient(140deg,#1d4ed8,#2563eb)!important;box-shadow:0 4px 0 rgba(11,44,122,.42);font-weight:950}
+.primary-button:active{box-shadow:0 1px 0 rgba(11,44,122,.42);transform:translateY(2px)}
+.companion-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.companion-choice{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;min-width:0;min-height:100px;padding:10px 5px;border-radius:15px;background:var(--surface-2);color:var(--text);border:2px solid var(--border)}
+.companion-choice span {font-size:37px;line-height:1.2}
+.companion-choice strong {font-size:14px;color:var(--text)}
+.companion-choice[aria-pressed="true"]{border-color:var(--accent-line);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line)}
+.companion-choice[aria-pressed="true"] strong::after {content:" ✓";color:var(--accent)}
+.mission-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 13px;padding:12px 14px;border:1px solid var(--border);background:var(--surface);border-radius:18px}
+.companion-bubble {display:flex;align-items:center;gap:10px;flex:1;min-width:190px}
+.companion-face {font-size:46px;line-height:1.2;flex-shrink:0;animation:buddy-bob 3.4s ease-in-out infinite}
+.companion-bubble strong{display:block;font-size:14px;line-height:1.4;color:var(--text)}
+.companion-bubble p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+.mission-stars{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.star-total,.streak-pill{display:inline-flex;align-items:center;justify-content:center;min-height:37px;padding:7px 10px;border-radius:12px;font-weight:950;font-size:13px;white-space:nowrap}
+.star-total{background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--text)}
+.streak-pill{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green-text)}
+.milestone-trail{list-style:none;display:flex;justify-content:space-between;align-items:stretch;gap:5px;margin:8px 0 17px;padding:0}
+.milestone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:48px;text-align:center;border-radius:12px;border:1px dashed var(--border);background:var(--surface);color:var(--muted);font-size:11px;font-weight:850}
+.milestone-icon{font-size:18px;line-height:1.2}
+.milestone-done{background:var(--green-bg);border:2px solid var(--green-border);color:var(--green-text)}
+.milestone-done .milestone-icon{animation:pop-in .25s ease-out both}
+.question-card {background:linear-gradient(175deg,var(--surface),var(--surface-2));border:2px solid var(--border);padding:34px 17px 28px}
+.question-card h1{color:var(--text);font-weight:950;letter-spacing:-1.6px}
+.answer-option{min-height:72px;border-radius:17px;font-weight:800;transition:transform .12s,border-color .12s}
+.answer-option.with-picture{min-height:151px}
+.answer-option.with-picture .choice-emoji{font-size:51px;line-height:1.2}
+.feedback-status{border-radius:22px;padding:27px 18px}
+.feedback-status h2 {font-size:clamp(26px,5vw,35px);line-height:1.25;letter-spacing:-.5px}
+.feedback-reward{display:inline-block!important;background:var(--surface);border:1px solid var(--border);border-radius:12px;color:var(--play-gold)!important;font-size:16px;padding:7px 13px;margin:12px 0 0!important}
+.feedback-reward[hidden]{display:none!important}
+.feedback-cheer{margin:13px 0;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px 14px}
+.feedback-cheer span{font-size:41px;line-height:1.2;flex-shrink:0}
+.feedback-cheer p{margin:0;color:var(--text);font-size:15px;font-weight:800;line-height:1.5}
+.star-burst{font-size:28px;letter-spacing:10px;color:var(--play-gold);text-align:center;line-height:1.3;pointer-events:none}
+.burst-on{animation:star-burst .75s ease-out both}
+.explanation{background:var(--surface);border-left-width:6px;padding:25px}
+.explanation h2{font-weight:950}
+.explanation #explanation-definition{font-size:clamp(18px,3.2vw,22px);line-height:1.6}
+.results-companion{font-size:54px;line-height:1.2;animation:buddy-bob 3.4s ease-in-out infinite}
+.results-hero .trophy{font-size:49px;margin:5px 0}
+.results-cheer{font-weight:850;color:var(--text);font-size:17px;line-height:1.5;margin:13px 0 4px}
+.rewards-panel{margin-top:16px;border-color:var(--accent-line)}
+.rewards-stars{font-size:23px;color:var(--play-gold);font-weight:950;margin:3px 0 15px}
+.rewards-badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.reward-badge{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:15px;padding:12px;min-width:0}
+.reward-icon{font-size:35px;line-height:1.2}
+.reward-badge strong{display:block;font-size:15px;color:var(--text)}
+.reward-badge small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:3px}
+@keyframes buddy-bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+@keyframes pop-in{0%{transform:scale(.65)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes star-burst{0%{transform:scale(.65) translateY(7px);opacity:0}40%{transform:scale(1.12);opacity:1}100%{transform:scale(1.0) translateY(-8px);opacity:0}}
+@media(max-width:570px){.hero h1{font-size:clamp(34px,8vw,46px)}.hero-companion{margin-top:17px}.hero-companion-message{font-size:13px;padding:11px 13px}.hero-companion-emoji{font-size:50px}.rewards-badges{grid-template-columns:1fr}.mission-bar{padding:10px}.question-card{padding:25px 13px}}
+@media(max-width:370px){.companion-choice span{font-size:31px}.companion-choice strong{font-size:12px}.mission-stars{width:100%}}
+@media(hover:hover) and (pointer:fine){.answer-option:hover,.select-card:hover,.companion-choice:hover{transform:translateY(-2px)}}
+@media(prefers-reduced-motion:reduce){.hero-companion-emoji,.companion-face,.results-companion,.milestone-done .milestone-icon,.star-burst{animation:none!important}.answer-option,.select-card{transition:none!important}}
+@media(max-width:570px){.brand-icon{width:33px;height:33px;font-size:24px}.top-nav{gap:2px}.nav-btn{padding-left:7px;padding-right:7px}}
+@media(max-width:370px){.brand{font-size:18px;gap:5px}.brand-icon{width:30px;height:30px;font-size:22px}.nav-btn{font-size:11px;padding-left:5px;padding-right:5px}}
+.quick-start-area{max-width:430px;margin:20px auto 4px}
+.quick-start-button{width:100%;font-size:18px;min-height:62px}
+.quick-start-area .subtle-note{margin-top:9px;font-size:12px;font-weight:800}

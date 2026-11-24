@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="sv" data-theme="dark" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Ordjakten – upptäck nya ord med bildstöd, ordförståelse och utmaningar. Träna i din egen takt eller testa dina kunskaper.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/playful.css">
+  <link rel="stylesheet" href="./css/adventures.css">
+  <link rel="stylesheet" href="./css/expressions.css">
+  <link rel="stylesheet" href="./css/comics.css">
+  <link rel="stylesheet" href="./css/surprises.css">
+  <link rel="stylesheet" href="./css/missions.css">
+  <link rel="stylesheet" href="./css/quests.css">
+  <link rel="stylesheet" href="./css/review.css">
+  <link rel="stylesheet" href="./css/contexts.css">
+  <link rel="stylesheet" href="./css/adaptive.css">
+  <link rel="stylesheet" href="./css/learning-map.css">
+  <link rel="stylesheet" href="./css/focus-practice.css">
+  <link rel="stylesheet" href="./css/contrast.css">
+  <link rel="stylesheet" href="./css/confusions.css">
+  <link rel="stylesheet" href="./css/clue-ladder.css">
+  <link rel="stylesheet" href="./css/retention.css">
+  <link rel="stylesheet" href="./css/reading-flow.css">
+  <title>Ordjakten – hitta ordens betydelse</title>
+  <script src="./data/wordbank.js" defer></script>
+  <script src="./data/curation.js" defer></script>
+  <script src="./data/expressions.js" defer></script>
+  <script src="./data/comics.js" defer></script>
+  <script src="./data/surprises.js" defer></script>
+  <script src="./data/missions.js" defer></script>
+  <script src="./data/word-contexts.js" defer></script>
+  <script src="./data/contrasts.js" defer></script>
+  <script src="./data/clue-ladder.js" defer></script>
+  <script src="./js/engine.js" defer></script>
+  <script src="./js/playful.js" defer></script>
+  <script src="./js/adventures.js" defer></script>
+  <script src="./js/adventure-map.js" defer></script>
+  <script src="./js/comics.js" defer></script>
+  <script src="./js/surprises.js" defer></script>
+  <script src="./js/missions.js" defer></script>
+  <script src="./js/quests.js" defer></script>
+  <script src="./js/review.js" defer></script>
+  <script src="./js/adaptive.js" defer></script>
+  <script src="./js/learning-map.js" defer></script>
+  <script src="./js/contrast.js" defer></script>
+  <script src="./js/confusions.js" defer></script>
+  <script src="./js/clue-ladder.js" defer></script>
+  <script src="./js/retention.js" defer></script>
+  <script src="./js/focus-practice.js" defer></script>
+  <script src="./js/reading-check.js" defer></script>
+  <script src="./js/app.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Hoppa till innehållet</a>
+  <div class="site-wrap">
+    <header class="site-header">
+      <a href="./" id="brand" class="brand" aria-label="Ordjakten startsida"><span aria-hidden="true" class="brand-icon">🔎</span><span>Ordjakten<span class="brand-dot">.</span></span></a>
+      <nav class="top-nav" aria-label="Huvudmeny">
+        <button type="button" data-nav="home" class="nav-btn" aria-current="page">Spela</button>
+        <button type="button" data-nav="words" class="nav-btn">Ordbank</button>
+        <button type="button" data-nav="history" class="nav-btn">Resultat</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="view-home" class="view page-enter" aria-labelledby="home-title">
+        <div class="hero">
+          <div class="eyebrow">✨ ETT NYTT ÄVENTYR VÄNTAR</div>
+          <h1 id="home-title">Ordjakten börjar här!<br><span>Hur många ord hittar du?</span></h1>
+          <p>Välj en ordkompis, lös kluriga ordgåtor och samla stjärnor på vägen.</p>
+          <div class="hero-companion" aria-hidden="true"><span class="hero-companion-emoji">🦊</span><span class="hero-companion-message">Hej! Jag heter Roffe. Ska vi gå på ordjakt?</span></div>
+          <div class="quick-start-area"><button type="button" id="quick-start" class="primary-button big-button quick-start-button">⚡ Spela 10 ord direkt →</button><button type="button" id="quick-expressions" class="secondary-button big-button quick-expressions">💬 Prova 5 kluriga uttryck →</button><button type="button" id="quick-contexts" class="secondary-button big-button quick-contexts">🎭 5 ord i vardagen →</button><button type="button" id="quick-contrast" class="secondary-button big-button quick-contrast">⚖️ Hitta skillnaden · 4 situationer →</button><p class="subtle-note">📚 Spela i din takt. I Hitta skillnaden blir ledtrådarna lite klurigare när du är redo.</p></div>
+          <button type="button" id="open-book-home" class="book-home-link">🎁 Min luckbok <span id="book-home-count">· 0 av 25 upptäckta</span> →</button>
+          <div class="hero-badges"><span>⭐ Samla stjärnor</span><span>🎯 121 ord + 25 uttryck</span><span>🎒 Spela utan konto</span></div>
+        </div>
+
+        <section class="panel learning-home" aria-labelledby="learning-home-title">
+          <div class="learning-home-intro">
+            <div><p class="eyebrow">🗺️ DIN EGEN UPPTÄCKTSKARTA</p><h2 id="learning-home-title">Min ordstig</h2>
+              <p class="muted">Varje ord kan få fyra små upptäckter. Se vad du har provat och vilket äventyr som väntar härnäst!</p></div>
+            <div class="learning-home-sparks" aria-hidden="true"><span>🔎</span><span>🧠</span><span>🎭</span><span>⭐</span></div>
+          </div>
+          <div class="learning-home-metrics" aria-label="Dina upptäckter">
+            <span>🔎 <strong id="learning-home-seen">0</strong> upptäckta</span>
+            <span>🎭 <strong id="learning-home-applied">0</strong> prövade på fler sätt</span>
+          </div>
+          <div id="learning-home-focus" class="learning-home-focus" hidden>
+            <p id="learning-home-focus-note">Ett ord väntar på en ny sorts träning.</p>
+            <button type="button" id="learning-home-focus-start" class="secondary-button">🎯 Träna det här!</button>
+          </div>
+          <button type="button" id="open-learning-home" class="secondary-button full-button">🗺️ Visa min ordstig →</button>
+        </section>
+
+        <section id="retention-home" class="panel retention-home" aria-labelledby="retention-home-title" hidden>
+          <div class="section-header"><h2 id="retention-home-title">🎁 Minns du fortfarande?</h2><span class="help-text">Nya berättelser en annan dag</span></div>
+          <p class="muted">Din ordkompis kan föreslå ett återbesök. Du bestämmer själv när du vill spela!</p>
+          <div class="retention-counts" aria-label="Ordpar du har återbesökt">
+            <span>🔎 <strong id="retention-started">0</strong> påbörjade</span>
+            <span>🎁 <strong id="retention-ready">0</strong> kan övas nu</span>
+            <span>⏳ <strong id="retention-later">0</strong> väntar till senare</span>
+          </div>
+          <p id="retention-home-note" class="subtle-note" role="status" aria-live="polite"></p>
+          <div id="retention-home-list" class="retention-list"></div>
+          <p class="subtle-note">Stjärnor och provpoäng påverkas inte. Du behöver inte komma hit varje dag.</p>
+        </section>
+        <section id="confusion-home" class="panel confusion-home" aria-labelledby="confusion-title" hidden>
+          <div class="section-header"><h2 id="confusion-title">⚖️ Ord att jämföra</h2><span class="help-text">Små upptäckter, inga betyg</span></div>
+          <p class="muted">När två ord lätt blandas ihop får du en kort jämförelse med nya möjligheter att försöka.</p>
+          <p id="confusion-summary" class="confusion-summary" aria-live="polite"></p>
+          <div id="confusion-list" class="confusion-list"></div>
+          <p class="subtle-note">Tipsen bygger bara på övningarna <strong>Hitta skillnaden</strong>. De är inte ett provresultat.</p>
+        </section>
+        <section class="panel quest-shelf" aria-labelledby="quest-shelf-title">
+          <div class="section-header"><h2 id="quest-shelf-title">🧭 Små uppdrag från din ordkompis</h2><span class="help-text">Helt frivilligt – utan tidspress</span></div>
+          <p id="quest-home-greeting" class="quest-greeting">🦊 Prova ett kort uppdrag eller välj dina egna inställningar längre ner.</p>
+          <div class="quest-grid" id="quest-home-buttons">
+            <button type="button" class="quest-card" data-start-quest="scout"><span class="quest-card-icon" aria-hidden="true">🔎</span><strong>Upptäck 5 ord</strong><small>Varje försök räknas!</small><span class="quest-count" id="quest-count-scout">0 avklarade uppdrag</span></button>
+            <button type="button" class="quest-card" data-start-quest="stories"><span class="quest-card-icon" aria-hidden="true">💬</span><strong>Fem kluriga uttryck</strong><small>Tre olika sätt att öva</small><span class="quest-count" id="quest-count-stories">0 avklarade uppdrag</span></button>
+            <button type="button" class="quest-card" data-start-quest="comeback"><span class="quest-card-icon" aria-hidden="true">🌱</span><strong>Ge ett ord en ny chans</strong><small id="quest-review-help">Öva på ett tidigare svårt ord</small><span class="quest-count" id="quest-count-comeback">0 avklarade uppdrag</span></button>
+          </div>
+          <button type="button" id="quest-surprise" class="secondary-button full-button quest-surprise">🎲 Överraska mig med ett uppdrag</button>
+          <div class="review-trail" aria-label="Din repetitionsstig">
+            <strong>🧠 Din repetitionsstig</strong>
+            <div class="review-trail-counts">
+              <span>🌱 <b id="review-due-count">0</b> att öva nu</span>
+              <span>⏳ <b id="review-waiting-count">0</b> kommer senare</span>
+              <span>🌟 <b id="review-mastered-count">0</b> inlärda</span>
+            </div>
+            <p id="review-due-note" class="subtle-note">När ett ord är svårt får du en ny sorts fråga nästa gång.</p>
+            <p id="adaptive-focus-note" class="adaptive-focus-note" hidden></p>
+          </div>
+          <p class="subtle-note">🌟 Uppdragsmärken sparas här på enheten. Ingen daglig serie att hålla vid liv.</p>
+        </section>
+        <form id="setup-form" class="setup-layout" novalidate>
+          <div class="setup-main">
+            <section class="panel adventure-setup" aria-labelledby="adventure-title">
+              <div class="section-header"><h2 id="adventure-title">🗺️ Välj ditt äventyr!</h2><span class="help-text">Samma ord – tolv olika världar</span></div>
+              <p class="subtle-note">Världen ändrar berättelsen och kartan, inte svårighetsgraden.</p>
+              <div class="adventure-worlds" role="group" aria-label="Välj äventyr">
+                <div class="adventure-category"><h3>🧭 Upptäck & utforska</h3><div id="adventure-grid-explore" class="adventure-grid"></div></div>
+                <div class="adventure-category"><h3>💖 Magi, djur & musik</h3><div id="adventure-grid-magic" class="adventure-grid"></div></div>
+              </div>
+              <div id="adventure-intro" class="adventure-intro" aria-live="polite">🌲 Följ stigen och upptäck skogens gömda platser.</div>
+              <div class="adventure-map-preview" aria-label="Förhandsvisning av vald äventyrskarta">
+                <div class="map-preview-head"><strong>🗺️ Så ser din värld ut</strong><span>Fyra platser att upptäcka</span></div>
+                <div id="adventure-preview-map" class="adventure-map-canvas" aria-hidden="true"></div>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="topic-title">
+              <div class="section-header"><h2 id="topic-title">💬 Vad vill du upptäcka?</h2><span class="help-text">Nytt: uttryck i vardagen!</span></div>
+              <div class="topic-grid" role="group" aria-label="Välj frågetyp">
+                <button type="button" class="topic-choice" data-topic="words" aria-pressed="true"><span aria-hidden="true">🔤</span><strong>Ord</strong><small>Ett ord i taget</small></button>
+                <button type="button" class="topic-choice" data-topic="expressions" aria-pressed="false"><span aria-hidden="true">💬</span><strong>Uttryck</strong><small>Förstå små berättelser</small></button>
+                <button type="button" class="topic-choice" data-topic="mixed" aria-pressed="false"><span aria-hidden="true">🎲</span><strong>Blandat</strong><small>Ord och uttryck</small></button>
+              </div>
+              <p id="topic-help" class="subtle-note">Börja med bildfrågor eller prova uttryck som ”för en gångs skull”.</p>
+            </section>
+            <section class="panel context-settings" id="context-settings" aria-labelledby="context-settings-title">
+              <div class="section-header"><h2 id="context-settings-title">🎭 Ord i vardagen</h2><span class="help-text">Koppla ordet till en berättelse</span></div>
+              <label class="check-row"><input id="context-mix" type="checkbox" checked><span>Blanda in små vardagssituationer när du tränar eller testar ord</span></label>
+              <p id="context-help" class="subtle-note">På medel och svårt kan du få en berättelse och välja vilket ord som passar. Lätt behåller sina bilder.</p>
+            </section>
+            <section class="panel" id="expression-task-settings" aria-labelledby="expression-task-title" hidden>
+              <div class="section-header"><h2 id="expression-task-title">🎯 Hur vill du lära dig uttrycken?</h2><span class="help-text">Välj själv eller bli överraskad</span></div>
+              <div class="mission-setting" role="group" aria-label="Typ av uttrycksuppdrag">
+                <button type="button" data-expression-task="mix" aria-pressed="true">🎲 Blanda uppdragen<small>En ny sort kan komma nästa gång</small></button>
+                <button type="button" data-expression-task="meaning" aria-pressed="false">🧠 Förstå uttrycket<small>Vad betyder det?</small></button>
+                <button type="button" data-expression-task="sentence" aria-pressed="false">💬 Välj rätt mening<small>Var passar uttrycket?</small></button>
+                <button type="button" data-expression-task="order" aria-pressed="false">🧩 Ordna händelserna<small>Vad hände först, sedan och sist?</small></button>
+              </div>
+              <p id="expression-task-help" class="subtle-note">Blanda ger flera sorters frågor i samma omgång.</p>
+              <label class="check-row"><input id="mission-hints" type="checkbox" checked><span>💡 Visa frivilliga ledtrådar i luckboken</span></label>
+            </section>
+            <section class="panel" aria-labelledby="mode-title">
+              <div class="section-header"><h2 id="mode-title">1. Hur vill du spela?</h2><span class="help-text">Välj ett läge</span></div>
+              <div class="mode-grid" role="group" aria-label="Spelläge">
+                <button type="button" class="select-card" data-mode="train" aria-pressed="true"><span class="mode-icon">📚</span><strong>Träna</strong><small>Samla stjärnor! Läs förklaringen efter varje ord.</small><span class="selected-chip">Vald ✓</span></button>
+                <button type="button" class="select-card" data-mode="test" aria-pressed="false"><span class="mode-icon">🏆</span><strong>Testa dig</strong><small>En riktig utmaning! Facit kommer efter sista ordet.</small><span class="selected-chip">Vald ✓</span></button>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="difficulty-title">
+              <div class="section-header"><h2 id="difficulty-title">2. Välj svårighetsgrad</h2></div>
+              <div class="level-list" role="group" aria-label="Svårighetsgrad">
+                <button type="button" class="level-card" data-level="easy" aria-pressed="true"><span class="level-icon">🌱</span><span class="level-copy"><strong>Lätt</strong><small>Med tydliga bilder och text</small></span><span class="level-tick">✓</span></button>
+                <button type="button" class="level-card" data-level="medium" aria-pressed="false"><span class="level-icon">🧩</span><span class="level-copy"><strong>Medel</strong><small>Ordförståelse utan bilder</small></span><span class="level-tick">✓</span></button>
+                <button type="button" class="level-card" data-level="hard" aria-pressed="false"><span class="level-icon">🔥</span><span class="level-copy"><strong>Svårt</strong><small>Kluriga ord och betydelser</small></span><span class="level-tick">✓</span></button>
+                <button type="button" class="level-card" data-level="exam" aria-pressed="false"><span class="level-icon">🎓</span><span class="level-copy"><strong>Högskoleprovsutmaning</strong><small>Fem alternativ, inspirerat av ORD-delen</small></span><span class="level-tick">✓</span></button>
+              </div>
+              <p id="level-note" class="subtle-note">På lätt nivå visar vi bara bilder som faktiskt hör ihop med svaren.</p>
+            </section>
+
+            <section class="panel" aria-labelledby="count-title">
+              <div class="section-header"><h2 id="count-title">3. Hur många ord?</h2></div>
+              <div class="count-grid" role="group" aria-label="Antal ord">
+                <button type="button" data-count="5" class="pill" aria-pressed="false">5</button>
+                <button type="button" data-count="10" class="pill" aria-pressed="true">10</button>
+                <button type="button" data-count="15" class="pill" aria-pressed="false">15</button>
+                <button type="button" data-count="20" class="pill" aria-pressed="false">20</button>
+                <button type="button" data-count="25" class="pill" aria-pressed="false">25</button>
+              </div>
+              <p id="pool-info" class="subtle-note" aria-live="polite"></p>
+            </section>
+          </div>
+
+          <div class="setup-side">
+            <section class="panel companion-setup" aria-labelledby="companion-title">
+              <div class="section-header"><h2 id="companion-title">🧭 Välj din ordkompis</h2></div>
+              <p class="subtle-note" style="margin-top:0">Vem ska heja på dig under ordjakten?</p>
+              <div class="companion-grid" role="group" aria-label="Välj ordkompis">
+                <button type="button" class="companion-choice" data-companion="fox" aria-pressed="true"><span aria-hidden="true">🦊</span><strong>Roffe</strong></button>
+                <button type="button" class="companion-choice" data-companion="owl" aria-pressed="false"><span aria-hidden="true">🦉</span><strong>Ulla</strong></button>
+                <button type="button" class="companion-choice" data-companion="dragon" aria-pressed="false"><span aria-hidden="true">🐉</span><strong>Dino</strong></button>
+              </div>
+              <label class="check-row"><input type="checkbox" id="play-sounds"><span>🔊 Små ljudeffekter när jag tränar <small>Avstängda från början</small></span></label>
+            </section>
+            <section class="panel" aria-labelledby="timer-title">
+              <div class="section-header"><h2 id="timer-title">⏱️ Timer</h2></div>
+              <div class="timer-grid" role="group" aria-label="Timerläge">
+                <button type="button" class="timer-choice" data-timer="off" aria-pressed="true">Ingen tid</button>
+                <button type="button" class="timer-choice" data-timer="total" aria-pressed="false">Total tid</button>
+                <button type="button" class="timer-choice" data-timer="per" aria-pressed="false">Per fråga</button>
+              </div>
+              <div id="timer-controls" class="timer-details" hidden>
+                <label for="timer-preset" class="form-label">Välj tidsgräns</label>
+                <select id="timer-preset" class="field">
+                  <option value="60">1 minut</option><option value="180" selected>3 minuter</option>
+                  <option value="300">5 minuter</option><option value="600">10 minuter</option>
+                  <option value="900">15 minuter</option><option value="custom">Egen tid</option>
+                </select>
+                <div id="custom-timer" class="custom-time" hidden>
+                  <label>Minuter <input id="custom-min" class="field" type="number" min="0" max="60" step="1" inputmode="numeric" value="3"></label>
+                  <label>Sekunder <input id="custom-sec" class="field" type="number" min="0" max="59" step="1" inputmode="numeric" value="0"></label>
+                </div>
+                <p id="timer-help" class="subtle-note">Total tid för hela omgången.</p>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="theme-title">
+              <div class="section-header"><h2 id="theme-title">🎨 Utseende</h2></div>
+              <div class="theme-grid" role="group" aria-label="Välj färgtema">
+                <button type="button" class="theme-choice" data-theme-choice="dark" aria-pressed="true">🌙 Mörkt</button>
+                <button type="button" class="theme-choice" data-theme-choice="light" aria-pressed="false">☀️ Ljust</button>
+                <button type="button" class="theme-choice" data-theme-choice="auto" aria-pressed="false">🔄 Auto</button>
+              </div>
+              <label class="check-row"><input type="checkbox" id="high-contrast"><span>Extra hög kontrast</span></label>
+            </section>
+
+            <section class="panel mini-panel" id="adaptive-settings">
+              <div class="section-header"><h2>🧠 Smart träning</h2><span class="help-text">Frivilligt</span></div>
+              <label class="check-row"><input type="checkbox" id="adaptive-practice" checked><span><strong>Variera efter vad jag behöver öva</strong><small>Lite extra av svåra saker, men alltid plats för nytt</small></span></label>
+              <p id="adaptive-home-summary" class="subtle-note">Spelet lär känna vilka sorters frågor som behöver tränas.</p>
+              <p class="subtle-note">Gäller bara Träna. I Testa dig får alla samma sorts blandade urval.</p>
+            </section>
+            <section class="panel mini-panel">
+              <label class="check-row"><input type="checkbox" id="review-only"><span><strong>Träna mina fel</strong><small id="review-info">Öva på ord du tidigare missat</small></span></label>
+              <p class="subtle-note">Resultat sparas bara på den här enheten.</p>
+            </section>
+
+            <button type="submit" id="start" class="primary-button big-button"><span>🚀</span> Starta Ordjakten <span aria-hidden="true">→</span></button>
+            <button type="button" id="exam-preset" class="secondary-button full-button">🎓 Snabbval: 10 ord på 3 minuter</button>
+            <div id="setup-error" class="form-error" role="alert" hidden></div>
+          </div>
+        </form>
+      </section>
+
+      <section id="view-play" class="view" aria-label="Pågående ordjakt" hidden>
+        <div class="play-top"><button type="button" id="leave" class="text-button">← Avsluta omgången</button><span id="play-tag" class="tag">📚 Träna • Lätt</span></div>
+        <div class="score-grid" aria-label="Pågående resultat">
+          <div class="stat"><span id="progress-label">ORD</span><strong id="stat-progress">1 / 10</strong></div>
+          <div class="stat"><span>✅ RÄTT</span><strong id="stat-right">0</strong></div>
+          <div class="stat"><span>❌ FEL</span><strong id="stat-wrong">0</strong></div>
+          <div id="clock-stat" class="stat clock-stat" hidden><span>⏱️ TID</span><strong id="stat-clock" role="timer" aria-live="off">03:00</strong></div>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="Avklarade frågor" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+        <div id="mission-bar" class="mission-bar" aria-label="Stjärnjakten" hidden>
+          <div class="companion-bubble"><span id="play-companion-emoji" class="companion-face" aria-hidden="true">🦊</span><div><strong id="play-companion-name">Roffe hejar på dig!</strong><p id="play-companion-hint">Vi klarar det här tillsammans!</p></div></div>
+          <div class="mission-stars"><span id="play-stars" class="star-total">⭐ 0 stjärnor</span><span id="play-streak" class="streak-pill" hidden>🔥 3 i rad</span></div>
+        </div>
+        <section id="quest-progress" class="quest-progress" aria-label="Miniuppdragets framsteg" hidden>
+          <div class="quest-progress-heading"><span id="quest-progress-icon" aria-hidden="true">🔎</span><div><strong id="quest-progress-title">Ordspanaren</strong><p id="quest-progress-caption">Upptäck fem ord!</p></div><span id="quest-progress-count">0 / 5</span></div>
+          <div class="quest-mini-track" role="progressbar" aria-label="Miniuppdrag avklarat" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="quest-progress-bar"><div id="quest-progress-fill"></div></div>
+        </section>
+        <section id="adventure-journey" class="adventure-journey" aria-label="Din äventyrskarta">
+          <details id="journey-details" open>
+            <summary class="adventure-map-summary"><span id="journey-icon" aria-hidden="true">🌲</span><span class="adventure-summary-copy"><strong id="journey-name">Mystiska skogen</strong><small id="journey-intro">Följ stigen! Varje ord tar oss längre fram.</small></span><span class="adventure-summary-action">🗺️ Kartan</span></summary>
+            <div id="journey-map" class="adventure-map-canvas" aria-label="Illustrerad äventyrskarta"></div>
+            <ol id="journey-stops" class="journey-stops" aria-label="Fyra platser på äventyret"></ol>
+          </details>
+          <p id="journey-progress" class="journey-progress" aria-live="off">0 av 4 platser upptäckta</p>
+        </section>
+        <div id="question-area">
+          <p id="reading-stage" class="reading-stage" role="status" aria-live="polite">📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå</p>
+          <div id="reading-story" class="question-card"><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
+          <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
+          <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
+          <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
+          <div id="answer-options" class="answer-grid"></div>
+          <section id="order-area" class="mission-order-area panel" hidden aria-label="Sätt händelserna i ordning">
+            <p class="mission-order-hint">💡 Tryck på den första händelsen, sedan den andra och sist den tredje. Du kan ändra dig innan du svarar.</p>
+            <div id="order-choices" class="mission-buttons"></div>
+            <div class="mission-selected"><p>📋 Din berättelse</p><ol id="order-selection" aria-live="polite"></ol><small id="order-count" class="mission-order-hint">0 av 3 händelser valda</small></div>
+            <div class="mission-order-controls"><button type="button" id="order-undo" disabled>↶ Ångra</button><button type="button" id="order-reset" disabled>🔄 Börja om</button></div>
+            <button type="button" id="order-submit" class="primary-button big-button full-button" disabled>✅ Kontrollera ordningen</button>
+          </section>
+        </div>
+        <div id="feedback-area" hidden aria-live="polite" aria-atomic="true">
+          <p id="feedback-reading-stage" class="reading-stage" role="status">📖 Läs först – 🧠 prova sedan</p>
+          <div id="feedback-status" class="feedback-status"><div id="feedback-emoji" class="result-icon">✅</div><h2 id="feedback-title">Rätt svar!</h2><p id="feedback-correct"></p><p id="feedback-reward" class="feedback-reward" hidden></p></div>
+          <div class="explanation"><span id="explanation-label" class="eyebrow">📖 LÄS FÖRKLARINGEN</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div></div>
+          <div id="reading-launch" class="reading-launch" hidden>
+            <p id="reading-launch-prompt" class="reading-launch-prompt">📖 Läs betydelsen och exemplet ovan. Sedan får du visa vad du förstått.</p>
+            <button id="reading-start" class="primary-button big-button full-button" type="button">🧠 Jag har läst – prova mig →</button>
+          </div>
+          <section id="reading-check" class="reading-check" aria-label="En liten förståelsefråga" hidden>
+            <span class="reading-label">🧠 STEG 2: ANVÄND DET DU LÄST</span>
+            <h3 id="reading-check-title"></h3>
+            <p class="reading-intro" id="reading-instruction">Tänk efter och välj rätt svar. Den här övningen ger inga extra poäng.</p>
+            <div id="reading-options" class="reading-options"></div>
+            <p id="reading-response" class="reading-response" role="status" aria-live="polite"></p>
+            <p id="reading-why" class="reading-why" hidden></p>
+            <button id="reading-reread" type="button" class="secondary-button" hidden>📖 Läs förklaringen igen</button>
+          </section>
+          <div id="feedback-cheer" class="feedback-cheer"><span id="feedback-companion" aria-hidden="true">🦊</span><p id="feedback-message"></p></div>
+          <div id="adaptive-feedback" class="adaptive-feedback" hidden><strong id="adaptive-feedback-title">🧠 Vi lär oss steg för steg</strong><p id="adaptive-feedback-text"></p></div>
+          <div id="star-burst" class="star-burst" hidden aria-hidden="true">✦ ⭐ ✦</div>
+          <div id="adventure-milestone" class="adventure-milestone" hidden aria-live="polite"><span id="milestone-emoji" aria-hidden="true">🍄</span><strong id="milestone-text"></strong></div>
+          <section id="expression-reveal" class="comic-strip surprise-reveal" hidden aria-label="En frivillig berättelselucka">
+            <h3 class="comic-strip-heading">🎁 Du hittade en berättelselucka!</h3>
+            <p class="comic-strip-subtitle">Öppna luckan när du vill. Du får en liten bildserie och ett extra uppdrag. Det ger inga extra testpoäng.</p>
+            <button id="expression-open" type="button" class="secondary-button full-button" aria-expanded="false" aria-controls="expression-surprise-body">🎁 Öppna luckan</button>
+            <div id="expression-surprise-body" hidden>
+              <h4 class="surprise-story-title">🎬 Aha! En liten bildserie</h4>
+              <div id="expression-comic"></div>
+              <p class="comic-footer">De färdiga bilderna är bara stöd – läs också texten!</p>
+              <div id="expression-bonus"></div>
+            </div>
+          </section>
+        </div>
+        <div class="play-footer"><button type="button" id="next" class="primary-button big-button" hidden>Nästa ord →</button><p id="test-footnote" class="subtle-note" hidden>Du får se facit när testet är klart.</p></div>
+      </section>
+
+      <section id="view-results" class="view" aria-labelledby="results-title" hidden>
+        <div class="results-hero panel"><div id="results-companion" class="results-companion" aria-hidden="true">🦊</div><div class="trophy" aria-hidden="true">🏆</div><h1 id="results-title">Ordjakten är klar!</h1><div id="results-percent" class="results-percent">80 %</div><p id="results-descriptor" class="muted"></p><p id="results-cheer" class="results-cheer"></p></div>
+        <section class="panel adventure-finale" aria-labelledby="finale-title"><div id="finale-emoji" aria-hidden="true">🌲</div><div><h2 id="finale-title">Mystiska skogen</h2><p id="finale-text">Du har utforskat hela skogen!</p><p id="finale-stops" class="subtle-note"></p></div></section>
+        <section id="results-reading" class="panel results-reading" hidden><h2>📖 Så gick Aha-frågorna</h2><p id="results-reading-detail"></p><p class="subtle-note">Aha-frågorna hjälper dig att öva. De ändrar inte poängen i ordjakten.</p></section>
+        <section id="results-rewards" class="panel rewards-panel" hidden aria-labelledby="rewards-title"><div class="section-header"><h2 id="rewards-title">🌟 Dina upptäckter</h2></div><p id="rewards-stars" class="rewards-stars"></p><div id="rewards-badges" class="rewards-badges"></div></section>
+        <section id="quest-finale" class="panel quest-finale" hidden aria-labelledby="quest-finale-title"><div id="quest-finale-emoji" class="quest-finale-emoji" aria-hidden="true">🌟</div><div><h2 id="quest-finale-title">Miniuppdrag avklarat!</h2><p id="quest-finale-text"></p><p id="quest-finale-count" class="subtle-note"></p></div></section>
+        <div class="result-grid"><div class="result-stat positive"><span>✅ Rätt</span><strong id="result-right">0</strong></div><div class="result-stat negative"><span>❌ Fel</span><strong id="result-wrong">0</strong></div><div class="result-stat neutral"><span>⏳ Obesvarade</span><strong id="result-empty">0</strong></div></div>
+        <section class="panel review-result-note" aria-live="polite"><h2>🧠 Vad har du lärt dig?</h2><p id="review-result-message">Ord som varit svåra kommer tillbaka med en annan fråga.</p><p id="review-result-counts" class="subtle-note"></p></section>
+        <section id="adaptive-results" class="panel adaptive-results" hidden><h2>🧠 Vad tränade du på?</h2><p id="adaptive-results-message"></p></section>
+        <section id="learning-finale" class="panel learning-finale" aria-labelledby="learning-finale-title">
+          <div><h2 id="learning-finale-title">🗺️ Din ordstig växer!</h2>
+            <p id="learning-finale-message" class="muted">Se dina upptäckter och välj vad du vill träna vidare på.</p></div>
+          <button id="open-learning-results" type="button" class="secondary-button">Se min ordstig →</button>
+        </section>
+        <div id="results-review" class="panel review-panel"><div class="section-header"><h2 id="review-title">📖 Repetera orden</h2></div><div id="review-list" class="review-list"></div></div>
+        <section class="panel next-steps" aria-labelledby="next-steps-title"><h2 id="next-steps-title">🧭 Vad vill du upptäcka nu?</h2><p id="next-steps-note" class="subtle-note">Välj ett kort uppdrag eller fortsätt med dina vanliga inställningar.</p><div class="next-step-grid" id="quest-result-buttons"><button type="button" class="next-step-button" data-start-quest="scout">🔎 Fem ord</button><button type="button" class="next-step-button" data-start-quest="stories">💬 Fem uttryck</button><button type="button" class="next-step-button" data-start-quest="comeback">🌱 Öva det svåra</button></div></section>
+        <div class="results-actions"><button type="button" id="play-again" class="primary-button big-button">🔁 Spela en ny omgång</button><button type="button" id="change-settings" class="secondary-button big-button">⚙️ Ändra inställningar</button><button type="button" id="results-book" class="secondary-button big-button">🎁 Öppna min luckbok</button></div>
+      </section>
+
+      <section id="view-book" class="view" aria-labelledby="book-title" hidden>
+        <header class="panel book-intro">
+          <span class="eyebrow">🎁 25 BERÄTTELSELUCKOR</span>
+          <h1 id="book-title">Min luckbok</h1>
+          <p class="muted">Hitta ett uttryck i Ordjakten för att låsa upp en lucka. Öppna den och välj mellan tre små uppdrag: förstå uttrycket, hitta rätt mening eller sätt händelser i ordning. Alla tre ger en stjärna i luckan!</p>
+          <div id="book-progress" class="book-progress" aria-live="polite">🔒 0 hittade · 📖 0 öppnade · ⭐ 0 förstådda</div>
+          <div class="book-nav"><button id="book-go-home" type="button" class="secondary-button">← Startsidan</button><button id="book-start-expressions" type="button" class="primary-button">💬 Hitta fler uttryck</button></div>
+        </header>
+        <div id="book-empty" class="panel book-empty">🦊 Din första lucka väntar! Spela <strong>5 kluriga uttryck</strong> så kan du öppna din första berättelse.</div>
+        <section id="book-detail" class="panel book-detail" hidden aria-labelledby="book-phrase">
+          <p class="eyebrow">🎁 DIN ÖPPNADE LUCKA</p>
+          <h2 id="book-phrase"></h2>
+          <p id="book-context" class="book-scene"></p>
+          <p id="book-definition" class="book-meaning"></p>
+          <div id="book-comic" class="comic-strip" aria-label="Tre bildrutor som förklarar uttrycket"></div>
+          <div id="book-bonus"></div>
+        </section>
+        <h2 class="book-grid-heading">Välj en lucka</h2>
+        <div id="book-grid" class="book-grid" role="group" aria-label="25 berättelseluckor"></div>
+        <p class="subtle-note">Luckorna är inte tidslåsta. Varje uttryck har tre uppdrag, och alla får prova flera gånger. Allt sparas i din webbläsare.</p>
+      </section>
+
+      <section id="view-learning" class="view" aria-labelledby="learning-title" hidden>
+        <div class="page-heading"><span class="eyebrow">🗺️ DIN SPRÅKRESA</span><h1 id="learning-title">Min ordstig</h1>
+          <p class="muted">Varje ord har sin egen lilla stig. Här ser du vad du har provat och vad som vore roligt att öva igen.</p>
+        </div>
+        <section class="panel learning-overview" aria-label="Sammanfattning av dina upptäckter">
+          <div class="learning-overview-grid">
+            <div><span aria-hidden="true">🔎</span><strong id="learning-total-seen">0</strong><small>Upptäckta ord</small></div>
+            <div><span aria-hidden="true">🧠</span><strong id="learning-total-meaning">0</strong><small>Hittat rätt betydelse eller bild</small></div>
+            <div><span aria-hidden="true">🎭</span><strong id="learning-total-applied">0</strong><small>Övat på fler sätt</small></div>
+            <div><span aria-hidden="true">⭐</span><strong id="learning-total-repeat">0</strong><small>Klarat flera gånger</small></div>
+          </div>
+          <p class="subtle-note">Det här visar vilka övningar du har provat, inte något betyg. Ett rätt svar betyder inte att man måste kunna ordet för alltid.</p>
+        </section>
+        <section class="panel learning-controls" aria-label="Hitta ord i din stig">
+          <label class="form-label" for="learning-search">🔎 Sök efter ett ord eller uttryck</label>
+          <input id="learning-search" class="field" type="search" autocomplete="off" placeholder="Exempel: grumlig, skrovlig, för en gångs skull">
+          <div class="learning-filters" role="group" aria-label="Visa vilka framsteg">
+            <button type="button" data-learning-status="discovered" aria-pressed="true">Mina upptäckter</button>
+            <button type="button" data-learning-status="practice" aria-pressed="false">Öva igen</button>
+            <button type="button" data-learning-status="many" aria-pressed="false">Fler sätt</button>
+            <button type="button" data-learning-status="all" aria-pressed="false">Alla ord</button>
+          </div>
+          <label class="form-label" for="learning-kind">Visa</label>
+          <select class="field" id="learning-kind"><option value="all">Ord och uttryck</option><option value="words">Bara ord</option><option value="expressions">Bara uttryck</option></select>
+          <p id="learning-count" class="subtle-note" role="status" aria-live="polite"></p>
+        </section>
+        <div id="learning-list" class="learning-list" aria-label="Ordstigar"></div>
+        <button id="learning-more" type="button" class="secondary-button full-button" hidden>Visa fler ord ↓</button>
+        <section id="learning-empty" class="panel learning-empty" hidden>
+          <span class="learning-empty-emoji" aria-hidden="true">🦊🔎</span>
+          <h2>Här väntar nya upptäckter!</h2>
+          <p id="learning-empty-text">Spela en ordjakt, så dyker dina ord upp här.</p>
+        </section>
+        <button id="learning-back" type="button" class="secondary-button full-button">← Till startsidan</button>
+      </section>
+
+      <section id="view-focus" class="view" aria-labelledby="focus-title" hidden>
+        <button id="focus-back" type="button" class="secondary-button focus-back">← Till min ordstig</button>
+        <header class="panel focus-hero">
+          <span id="focus-buddy" class="focus-buddy" aria-hidden="true">🦊</span>
+          <div><p class="eyebrow">🎯 DIN EGEN LILLA TRÄNING</p>
+            <h1 id="focus-title">Träna det här!</h1>
+            <p id="focus-description" class="muted">Korta frågor i lugn och ro, utan timer och provpoäng.</p></div>
+        </header>
+        <div class="focus-metrics" aria-label="Hur långt har du kommit?">
+          <span id="focus-progress">Uppgift 1 av 3</span>
+          <span id="focus-right">✅ 0 rätt</span><span id="focus-wrong">❌ 0 fel</span>
+        </div>
+        <div class="focus-line" role="progressbar" id="focus-progress-track" aria-label="Avklarade uppgifter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="focus-progress-fill" class="focus-line-fill"></div>
+        </div>
+        <section id="focus-question" class="focus-question panel" aria-label="Dagens övning">
+          <div><p id="focus-task" class="focus-task-label">🎭 ORD I VARDAGEN</p>
+            <p id="focus-context-label" class="focus-context-label" hidden></p>
+            <p id="focus-clue-level" class="focus-clue-level" hidden></p>
+            <h2 id="focus-stem" class="focus-stem">Vilket ord passar?</h2>
+            <p id="focus-scene" class="focus-scene" hidden></p></div>
+          <div id="focus-choices" class="focus-choices" data-layout="text"></div>
+          <div id="focus-order" hidden>
+            <p class="muted">Tryck på händelserna i rätt ordning, först till sist.</p>
+            <ol id="focus-order-selected" class="focus-selected" aria-live="polite"></ol>
+            <div class="focus-order-controls"><button id="focus-undo" type="button" class="secondary-button">↶ Ångra</button>
+              <button id="focus-reset" type="button" class="secondary-button">Börja om</button></div>
+            <button id="focus-check-order" type="button" class="primary-button full-button" disabled>✅ Kontrollera ordningen</button>
+          </div>
+        </section>
+        <section id="focus-feedback" class="focus-feedback" aria-live="polite" hidden>
+          <div id="focus-verdict" class="focus-verdict" data-outcome="right"><div id="focus-verdict-icon" class="text-5xl">✅</div>
+            <h2 id="focus-verdict-title">Rätt!</h2><p id="focus-correct"></p></div>
+          <div class="panel focus-explain"><p class="eyebrow">📖 AHA! DET HÄR BETYDER ORDET</p>
+            <h3 id="focus-explain-word"></h3><p id="focus-definition"></p>
+            <p id="focus-example" class="muted"></p><p id="focus-why" class="focus-why" hidden></p></div>
+          <button id="focus-next" type="button" class="primary-button full-button">Nästa uppgift →</button>
+        </section>
+        <section id="focus-finished" class="panel focus-finish" aria-live="polite" hidden>
+          <div style="font-size:48px" aria-hidden="true">🌟</div><h2>Du vågade prova!</h2>
+          <p id="focus-summary"></p><p id="focus-skill-insight" class="focus-skill-insight"></p><p id="focus-next-hint" class="muted"></p>
+          <div class="focus-actions">
+            <button id="focus-other-skill" type="button" class="primary-button full-button">🧩 Prova ett annat sätt</button>
+            <button id="focus-done" type="button" class="secondary-button full-button">🗺️ Se min ordstig</button>
+          </div>
+          <p class="subtle-note">Den här övningen ger inga provpoäng eller extra stjärnor. Dina försök hjälper spelet att välja framtida frågor.</p>
+        </section>
+      </section>
+
+      <section id="view-words" class="view" aria-labelledby="words-title" hidden>
+        <div class="page-heading"><span class="eyebrow">📚 DIN ORDSAMLING</span><h1 id="words-title">Alla våra ord och uttryck</h1><p class="muted">121 ord och 25 vardagsuttryck med betydelser och exempel. Sök och läs i lugn och ro.</p></div>
+        <div class="panel words-toolbar"><label class="form-label" for="word-search">Sök efter ord eller betydelse</label><input type="search" id="word-search" class="field" placeholder="Till exempel skrovlig eller för en gångs skull …"><label class="form-label" for="word-type-filter">Innehåll</label><select id="word-type-filter" class="field"><option value="all">Ord och uttryck</option><option value="words">Bara ord</option><option value="expressions">Bara uttryck</option></select><label class="form-label" for="word-filter">Svårighetsgrad</label><select id="word-filter" class="field"><option value="all">Alla nivåer</option><option value="easy">Lätt</option><option value="medium">Medel</option><option value="hard">Svårt</option><option value="expert">Expert</option></select><p id="word-count" class="subtle-note" aria-live="polite"></p></div>
+        <div id="word-list" class="word-list"></div><button id="more-words" type="button" class="secondary-button full-button" hidden>Visa fler ord</button>
+      </section>
+
+      <section id="view-history" class="view" aria-labelledby="history-title" hidden>
+        <div class="page-heading"><span class="eyebrow">🏅 DINA RESULTAT</span><h1 id="history-title">Dina ordjakter</h1><p class="muted">Resultaten finns bara i den här webbläsaren. Ingen registrering behövs.</p></div>
+        <div class="panel history-panel"><h2>Senaste omgångarna</h2><div id="history-list" class="history-list"></div></div>
+        <div class="history-actions"><button id="export-history" type="button" class="secondary-button">⬇️ Exportera resultat</button><button id="clear-history" type="button" class="danger-button">🗑️ Radera sparade resultat</button></div>
+      </section>
+      <div id="global-error" class="form-error" role="alert" hidden></div>
+    </main>
+    <footer class="site-footer"><span>🔎 Ordjakten • Lär dig något nytt varje dag</span><span>Inga konton · Ingen reklam · Ingen spårning · <a href="./assets/story-icons/NOTO-EMOJI-LICENSE-AND-COPYRIGHT.txt">Bildkällor och licenser</a></span></footer>
+  </div>
+  <noscript><div class="no-js">Aktivera JavaScript i webbläsaren för att spela Ordjakten.</div></noscript>
+</body>
+</html>

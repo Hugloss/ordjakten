@@ -1,0 +1,14 @@
+/* 0.20: lugna, frivilliga återbesök – tema ärvt från Ordjakten. */
+.retention-home{display:grid;gap:12px}
+.retention-counts{display:flex;flex-wrap:wrap;gap:8px}
+.retention-counts span{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--border);padding:8px 11px;border-radius:12px;font-size:.91rem;font-weight:650}
+.retention-counts strong{font-size:1.08rem}
+.retention-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,225px),1fr));gap:10px}
+.retention-item{padding:13px;border-radius:13px;border:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.retention-item h3{font-size:1.02rem;margin:0}
+.retention-item p{font-size:.95rem;line-height:1.5;margin:0}
+.retention-item button{min-height:44px;margin-top:auto}
+.retention-learning{padding:12px;border-left:4px solid var(--accent-line);border-radius:8px;margin:12px 0;background:var(--surface-2)}
+.retention-learning strong{display:block;margin-bottom:6px}
+.retention-learning p{margin:4px 0;font-size:.94rem;line-height:1.45}
+@media(max-width:360px){.retention-counts{display:grid;grid-template-columns:1fr 1fr}.retention-counts span:last-child{grid-column:1/-1}}

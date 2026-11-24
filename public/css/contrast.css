@@ -1,0 +1,14 @@
+/* 0.16: short, high-contrast word-to-word comparisons; no additional images. */
+.quick-contrast {border-style:dashed}
+.focus-choices[data-layout="contrast"] {grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.focus-choices[data-layout="contrast"] .focus-choice {text-align:center;font-size:clamp(17px,2.5vw,21px);min-height:76px;font-weight:850;border-width:2px}
+.focus-choices[data-layout="contrast"] .focus-choice:focus-visible {outline-offset:3px}
+@media(max-width:350px){.focus-choices[data-layout="contrast"]{grid-template-columns:1fr}}
+/* 0.18: environment labels never depend on which answer is correct. */
+.focus-context-label{display:inline-block;margin:8px 0 2px;padding:6px 12px;
+ border:1.5px solid var(--border-color, #64748b);border-radius:999px;
+ color:var(--text-primary, inherit);font-weight:800;font-size:.93rem}
+.focus-context-label[hidden]{display:none}
+.confusion-context-tip{font-size:.9rem;line-height:1.55;opacity:.9}
+.learning-context-trail{background:var(--surface-2);border:1px solid var(--border);
+ border-radius:12px;padding:12px 14px;line-height:1.6;font-size:14px;font-weight:700}

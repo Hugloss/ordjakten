@@ -1,0 +1,581 @@
+{
+  "version": 1,
+  "description": "25 uttryck x 2 nya uppdrag: välj rätt mening och sätt händelser i rätt ordning. Redaktionsskrivet för barn 8–10 år.",
+  "missions": [
+    {
+      "id": "ut-0001",
+      "sentences": [
+        {
+          "label": "Mamma brukar jobba sent, men för en gångs skull hann hon se min träning.",
+          "correct": true
+        },
+        {
+          "label": "Mamma kommer till varje träning, så för en gångs skull kom hon som vanligt.",
+          "correct": false
+        },
+        {
+          "label": "Vi tränar alltid på söndagar, och för en gångs skull tränar vi varje söndag.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Mamma har nästan aldrig tid att se träningen.",
+        "En kväll får mamma sluta arbetet tidigt.",
+        "Just den kvällen hinner hon till träningen."
+      ],
+      "hint": "Fundera på vad som brukar hända och vad som är ovanligt."
+    },
+    {
+      "id": "ut-0002",
+      "sentences": [
+        {
+          "label": "Jag kom fram precis när tåget skulle gå och hann med i sista stund.",
+          "correct": true
+        },
+        {
+          "label": "Jag var på stationen två timmar tidigt och hann med i sista stund.",
+          "correct": false
+        },
+        {
+          "label": "Tåget hade åkt en timme tidigare, men jag hann ändå med i sista stund.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Jag ser att tågets avgång närmar sig.",
+        "Jag skyndar mig till perrongen.",
+        "Jag kliver på precis innan dörrarna stängs."
+      ],
+      "hint": "När är något nästan för sent?"
+    },
+    {
+      "id": "ut-0003",
+      "sentences": [
+        {
+          "label": "Trots att jag blev stressad tänkte jag lugnt och hade is i magen.",
+          "correct": true
+        },
+        {
+          "label": "Jag sprang runt och skrek av panik, så jag hade is i magen.",
+          "correct": false
+        },
+        {
+          "label": "Jag chansade snabbt utan att tänka, eftersom jag hade is i magen.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Det blir en jämn match med några minuter kvar.",
+        "Mira stannar upp och tänker lugnt.",
+        "Hon väljer ett klokt passningsalternativ."
+      ],
+      "hint": "Vad gör man med känslorna när det blir stressigt?"
+    },
+    {
+      "id": "ut-0004",
+      "sentences": [
+        {
+          "label": "Vi håller tummarna för att vår kompis får rollen i pjäsen.",
+          "correct": true
+        },
+        {
+          "label": "Vi håller tummarna för att det redan är säkert att solen går upp.",
+          "correct": false
+        },
+        {
+          "label": "Vi håller tummarna för att kunna räkna våra fingrar.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Alex ska få veta om hen får vara med i kören.",
+        "Vännerna hoppas att beskedet blir positivt.",
+        "Alex får beskedet efter skolan."
+      ],
+      "hint": "Uttrycket handlar om en önskan när svaret ännu är okänt."
+    },
+    {
+      "id": "ut-0005",
+      "sentences": [
+        {
+          "label": "Jag hörde ett osäkert rykte och tog det med en nypa salt.",
+          "correct": true
+        },
+        {
+          "label": "Jag saltade pastavattnet och tog det med en nypa salt.",
+          "correct": false
+        },
+        {
+          "label": "Jag visste säkert vad som hänt, men kallade min egen film för en nypa salt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En kompis berättar ett fantastiskt rykte.",
+        "Nora undrar om ryktet verkligen stämmer.",
+        "Hon kollar fakta innan hon tror på det."
+      ],
+      "hint": "Tänk på skillnaden mellan ett rykte och ett säkert faktum."
+    },
+    {
+      "id": "ut-0006",
+      "sentences": [
+        {
+          "label": "Jag håller ett öga på ryggsäcken medan min vän hämtar saft.",
+          "correct": true
+        },
+        {
+          "label": "Jag gick långt därifrån och glömde väskan, så jag höll ett öga på den.",
+          "correct": false
+        },
+        {
+          "label": "Jag gav bort ryggsäcken för alltid och höll ett öga på den.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Omar ställer sin cykel utanför affären.",
+        "Han ber sin vän passa cykeln en kort stund.",
+        "Vännen tittar till cykeln tills Omar är tillbaka."
+      ],
+      "hint": "Vad innebär det att hålla uppsikt?"
+    },
+    {
+      "id": "ut-0007",
+      "sentences": [
+        {
+          "label": "Cykeln sladdade, men jag ramlade inte. Det var nära ögat!",
+          "correct": true
+        },
+        {
+          "label": "Jag ramlade och slog mig illa. Det var nära ögat eftersom inget hände.",
+          "correct": false
+        },
+        {
+          "label": "Jag satt tryggt hemma hela dagen utan fara och sa att det var nära ögat.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En fotboll flyger rakt mot ett fönster.",
+        "Bollen passerar bara några centimeter från rutan.",
+        "Fönstret förblir helt och oskadat."
+      ],
+      "hint": "En olycka kunde ha skett men undveks."
+    },
+    {
+      "id": "ut-0008",
+      "sentences": [
+        {
+          "label": "Jag trodde att Göteborg var Sveriges huvudstad – jag var ute och cyklade.",
+          "correct": true
+        },
+        {
+          "label": "Jag trampade till skolan på cykel, så jag var ute och cyklade om svaret.",
+          "correct": false
+        },
+        {
+          "label": "Jag svarade helt rätt och visste allt, men var ändå ute och cyklade.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Linn gissar att havsvatten är sött.",
+        "Läraren förklarar att Linn har fel.",
+        "Linn förstår att hon var ute och cyklade."
+      ],
+      "hint": "Här handlar uttrycket inte om en verklig cykeltur."
+    },
+    {
+      "id": "ut-0009",
+      "sentences": [
+        {
+          "label": "När bussen kom lade vi benen på ryggen och sprang till hållplatsen.",
+          "correct": true
+        },
+        {
+          "label": "Vi satt stilla i soffan och lade benen på ryggen hela kvällen.",
+          "correct": false
+        },
+        {
+          "label": "Vi gick extra sakta och lade benen på ryggen för att dröja längre.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "De ser att bussen närmar sig hållplatsen.",
+        "Barnen börjar springa så fort de kan.",
+        "De hinner precis fram till bussen."
+      ],
+      "hint": "Hur snabbt rör man sig när man har bråttom?"
+    },
+    {
+      "id": "ut-0010",
+      "sentences": [
+        {
+          "label": "Alla bitar passade direkt och bygget gick som smort.",
+          "correct": true
+        },
+        {
+          "label": "Ingenting passade och vi måste börja om varje minut, så det gick som smort.",
+          "correct": false
+        },
+        {
+          "label": "Vi hade slutat bygga helt och kallade vårt misslyckande för att gå som smort.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Gruppen planerar hur kojan ska se ut.",
+        "Alla delarna passar och arbetet flyter på.",
+        "Kojan blir färdig utan några större problem."
+      ],
+      "hint": "Gick arbetet lätt eller med många hinder?"
+    },
+    {
+      "id": "ut-0011",
+      "sentences": [
+        {
+          "label": "När lektionen skulle börja satte vi fart och skyndade till klassrummet.",
+          "correct": true
+        },
+        {
+          "label": "Vi la oss för att vila länge och satte fart genom att stå stilla.",
+          "correct": false
+        },
+        {
+          "label": "Vi arbetade med samma långsamma takt som alltid utan att börja, men satte fart.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Barnen upptäcker att rasten snart är slut.",
+        "De börjar springa mot klassrummet.",
+        "De sitter på sina platser när lektionen börjar."
+      ],
+      "hint": "Tänk på om man börjar eller ökar tempot."
+    },
+    {
+      "id": "ut-0012",
+      "sentences": [
+        {
+          "label": "Det kändes jobbigt att be om ursäkt, men jag bet i det sura äpplet.",
+          "correct": true
+        },
+        {
+          "label": "Jag åt en sur frukt och sa att jag bet i det sura äpplet som ett svårt beslut.",
+          "correct": false
+        },
+        {
+          "label": "Jag gjorde bara sådant jag gillade och slapp allt jobbigt, så jag bet i det sura äpplet.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Milo råkar ta sönder sin systers bygge.",
+        "Milo förstår att han behöver berätta vad som hänt.",
+        "Trots att det är svårt säger han förlåt."
+      ],
+      "hint": "Ibland måste man göra något jobbigt fast man inte vill."
+    },
+    {
+      "id": "ut-0013",
+      "sentences": [
+        {
+          "label": "Koppen stod längst ut på bordet och var på vippen att ramla ner.",
+          "correct": true
+        },
+        {
+          "label": "Koppen hade legat på golvet i flera dagar och var på vippen att falla.",
+          "correct": false
+        },
+        {
+          "label": "Koppen stod säkert i skåpet utan minsta risk och var på vippen att välta.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En vas placeras nära kanten av bordet.",
+        "Bordet får en liten knuff och vasen börjar luta.",
+        "En vuxen fångar vasen innan den faller."
+      ],
+      "hint": "Hur nära är händelsen att ske?"
+    },
+    {
+      "id": "ut-0014",
+      "sentences": [
+        {
+          "label": "Efter första lyckade dansuppvisningen fick Sam blodad tand och ville dansa igen.",
+          "correct": true
+        },
+        {
+          "label": "När det gick jättebra ville Sam aldrig dansa mer och fick blodad tand.",
+          "correct": false
+        },
+        {
+          "label": "Sam tappade en tand under maten och fick blodad tand för nya uppdrag.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Aya provar att måla en liten tavla.",
+        "Hon blir nöjd med sitt första försök.",
+        "Hon vill genast måla flera tavlor."
+      ],
+      "hint": "Vad kan en liten framgång få en att vilja göra?"
+    },
+    {
+      "id": "ut-0015",
+      "sentences": [
+        {
+          "label": "Efter många försök gav vi upp pusslet och kastade in handduken.",
+          "correct": true
+        },
+        {
+          "label": "Vi fortsatte hela natten utan att ge upp och kastade in handduken.",
+          "correct": false
+        },
+        {
+          "label": "Vi la en handduk i tvättkorgen och kastade in handduken som en tävling.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "De försöker lösa ett svårt mysterium flera gånger.",
+        "Trots nya försök kommer de inte vidare.",
+        "Till sist bestämmer de sig för att sluta försöka."
+      ],
+      "hint": "Fortsätter man eller slutar man försöka?"
+    },
+    {
+      "id": "ut-0016",
+      "sentences": [
+        {
+          "label": "Alla hjälpte till med städningen och drog sitt strå till stacken.",
+          "correct": true
+        },
+        {
+          "label": "Ingen hjälpte till men alla drog sitt strå till stacken.",
+          "correct": false
+        },
+        {
+          "label": "Jag bar ett riktigt halmstrå till en lada och gjorde därmed hela gruppens jobb.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Klassen ska ordna en fest och många uppgifter behövs.",
+        "Eleverna tar varsin liten uppgift.",
+        "Tillsammans blir de klara med alla förberedelser."
+      ],
+      "hint": "Är man en del av ett gemensamt arbete?"
+    },
+    {
+      "id": "ut-0017",
+      "sentences": [
+        {
+          "label": "Det var nervöst att ringa, men Elin tog tjuren vid hornen och ringde ändå.",
+          "correct": true
+        },
+        {
+          "label": "Elin fortsatte skjuta upp samtalet och tog tjuren vid hornen genom att vänta.",
+          "correct": false
+        },
+        {
+          "label": "Elin ritade en tjur med horn och löste därmed problemet utan att ta tag i det.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En elev har ett svårt problem att prata om.",
+        "Eleven bestämmer sig för att inte vänta längre.",
+        "Eleven söker upp läraren och ber om hjälp."
+      ],
+      "hint": "Att våga möta problemet är viktigare än djuret i uttrycket."
+    },
+    {
+      "id": "ut-0018",
+      "sentences": [
+        {
+          "label": "När brandlarmet ljöd höll läraren huvudet kallt och ledde oss lugnt ut.",
+          "correct": true
+        },
+        {
+          "label": "Alla fick panik, och läraren tappade kontrollen men höll huvudet kallt.",
+          "correct": false
+        },
+        {
+          "label": "Jag ställde huvudet under en kall dusch och höll huvudet kallt under provet.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Ett oväntat ljud hörs när klassen arbetar.",
+        "Läraren stannar upp och tänker lugnt.",
+        "Klassen får tydliga instruktioner och går ut ordnat."
+      ],
+      "hint": "Handlar det om lugnt tänkande eller temperatur?"
+    },
+    {
+      "id": "ut-0019",
+      "sentences": [
+        {
+          "label": "Vi förstod direkt varandras idéer och var på samma våglängd.",
+          "correct": true
+        },
+        {
+          "label": "Vi var helt oense och förstod inte varandra men var på samma våglängd.",
+          "correct": false
+        },
+        {
+          "label": "Vi lyssnade på samma radiofrekvens och var därför automatiskt på samma våglängd i tankarna.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Nora och Siri börjar prata om sitt gemensamma projekt.",
+        "De märker att de tänker ganska lika.",
+        "De bygger snabbt vidare på varandras idéer."
+      ],
+      "hint": "Hur fungerar samarbetet när man förstår varandra väl?"
+    },
+    {
+      "id": "ut-0020",
+      "sentences": [
+        {
+          "label": "Vi började fira innan resultatet var klart och ropade hej för tidigt.",
+          "correct": true
+        },
+        {
+          "label": "Vi väntade tills segern var säker och ropade hej för tidigt ändå.",
+          "correct": false
+        },
+        {
+          "label": "Vi firade aldrig något, men ropade hej för tidigt efter att inget hänt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Laget leder med ett mål strax före slutet.",
+        "Spelarna börjar fira fast matchen ännu pågår.",
+        "Motståndarna kvitterar innan slutsignalen."
+      ],
+      "hint": "När blir det för tidigt att fira?"
+    },
+    {
+      "id": "ut-0021",
+      "sentences": [
+        {
+          "label": "En borttappad penna blev en jättestor katastrof – vi gjorde en höna av en fjäder.",
+          "correct": true
+        },
+        {
+          "label": "Vi löste lugnt ett litet problem utan att överdriva men gjorde en höna av en fjäder.",
+          "correct": false
+        },
+        {
+          "label": "Vi hittade en fjäder i hönshuset och gjorde en höna av en fjäder på riktigt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En liten fläck syns på en tröja.",
+        "En kompis säger att hela dagen nu är förstörd.",
+        "Alla inser att fläcken faktiskt går att tvätta bort."
+      ],
+      "hint": "Är problemet litet eller gör man det mycket större?"
+    },
+    {
+      "id": "ut-0022",
+      "sentences": [
+        {
+          "label": "När Amir både bakade, packade och gjorde läxor hade han många järn i elden.",
+          "correct": true
+        },
+        {
+          "label": "Amir hade en enda liten uppgift och ingenting annat men hade många järn i elden.",
+          "correct": false
+        },
+        {
+          "label": "Amir tittade på flera järn i en öppen eld och fick därmed många skoluppgifter.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Maja lovar att hjälpa till med tre olika aktiviteter.",
+        "Hon försöker hinna med dem samma eftermiddag.",
+        "Hon märker att det blev mycket att göra på en gång."
+      ],
+      "hint": "Gör personen en sak eller flera saker samtidigt?"
+    },
+    {
+      "id": "ut-0023",
+      "sentences": [
+        {
+          "label": "Först ville jag inte följa med, men sedan kom jag på andra tankar och ändrade mig.",
+          "correct": true
+        },
+        {
+          "label": "Jag bestämde mig direkt och tyckte samma hela tiden men kom på andra tankar.",
+          "correct": false
+        },
+        {
+          "label": "Jag tänkte på två läxor samtidigt och kom på andra tankar utan att ändra åsikt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Jon säger nej till att följa med på utflykten.",
+        "Han får veta att bästa kompisen också ska med.",
+        "Jon ändrar sig och bestämmer sig för att följa med."
+      ],
+      "hint": "Håller personen fast vid beslutet eller ändrar den sig?"
+    },
+    {
+      "id": "ut-0024",
+      "sentences": [
+        {
+          "label": "Leken började lugnt men blev för stökig och gick över styr.",
+          "correct": true
+        },
+        {
+          "label": "Alla hade roligt i lugn takt och inget blev för mycket, så det gick över styr.",
+          "correct": false
+        },
+        {
+          "label": "Båten åkte sakta fram och någon gick över dess styrning, alltså gick leken över styr.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Barnen börjar kasta lite vatten på varandra för skojs skull.",
+        "Fler deltar och börjar skvätta för mycket.",
+        "Leken blir kaotisk och måste avbrytas."
+      ],
+      "hint": "När blir något svårt att kontrollera?"
+    },
+    {
+      "id": "ut-0025",
+      "sentences": [
+        {
+          "label": "Efter bråket bestämde vi oss för att vända blad och börja om.",
+          "correct": true
+        },
+        {
+          "label": "Vi fortsatte bråka om exakt samma sak varje dag och vände blad.",
+          "correct": false
+        },
+        {
+          "label": "Jag vände sidan i min bok och lämnade därmed mitt gamla problem bakom mig utan att tänka på det.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Två vänner blir osams under rasten.",
+        "De pratar lugnt och reder ut vad som hänt.",
+        "De bestämmer sig för att släppa bråket och börja på nytt."
+      ],
+      "hint": "Handlar det om att fastna i det gamla eller gå vidare?"
+    }
+  ]
+}

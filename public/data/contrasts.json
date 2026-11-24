@@ -1,0 +1,979 @@
+{
+  "schema_version": 2,
+  "status": "editorial_draft",
+  "purpose": "Åtta kuraterade vardagsscener per par, balanserade mellan målorden och fördelade på hem, skola, natur och fritid; svårigheter i nya sammanhang kan prioriteras utan att frågorna genereras.",
+  "pairs": [
+    {
+      "id": "js-01",
+      "left": "sv-0044",
+      "right": "sv-0003",
+      "title": "Vatten och sikt",
+      "scenes": [
+        {
+          "title": "Sjön efter regnet",
+          "text": "Efter skyfallet virvlade lera runt i sjön. Det gick knappt att se ner under ytan.",
+          "target": "sv-0044",
+          "why": "Små partiklar gör att man inte kan se klart genom vattnet.",
+          "difference": "Det andra ordet beskriver något man faktiskt kan se igenom.",
+          "id": "js-01-01",
+          "context": "natur"
+        },
+        {
+          "title": "Glasklara bäcken",
+          "text": "Bäcken var så ren att Nora kunde se små stenar på botten, långt under ytan.",
+          "target": "sv-0003",
+          "why": "Det går tydligt att se genom vattnet.",
+          "difference": "Vattnet är inte fullt av partiklar som skymmer sikten.",
+          "id": "js-01-02",
+          "context": "natur"
+        },
+        {
+          "title": "Vattenglaset",
+          "text": "Oskar rörde ner lite jord i glaset. Nu såg han inte sin hand på andra sidan.",
+          "target": "sv-0044",
+          "why": "Jorden gör vattnet oklart och svårt att se igenom.",
+          "difference": "Om vattnet varit klart skulle handen synas genom det.",
+          "id": "js-01-03",
+          "context": "hem"
+        },
+        {
+          "title": "Rent akvarium",
+          "text": "Efter att familjen rengjort akvariet hemma gick det lätt att se fiskarna genom det klara vattnet.",
+          "target": "sv-0003",
+          "why": "Fiskarna syns tydligt genom vattnet.",
+          "difference": "Ingenting grumlar sikten i den här situationen.",
+          "id": "js-01-04",
+          "context": "hem"
+        },
+        {
+          "id": "js-01-05",
+          "context": "skola",
+          "title": "Laborationen",
+          "text": "På NO-lektionen hällde gruppen lerpulver i en bägare. De kunde inte längre se måtten på andra sidan.",
+          "target": "sv-0044",
+          "why": "Lerpulvret flyter runt och gör vätskan svår att se igenom.",
+          "difference": "När man kan se genom vätskan trots glaset passar det andra ordet."
+        },
+        {
+          "id": "js-01-06",
+          "context": "skola",
+          "title": "Rent provrör",
+          "text": "Laborationsassistenten höll upp ett provrör med klart vatten. Klasskamraterna såg linjerna på väggen genom det.",
+          "target": "sv-0003",
+          "why": "Linjerna syntes genom vätskan i provröret.",
+          "difference": "Inga partiklar skymmer sikten i det här exemplet."
+        },
+        {
+          "id": "js-01-07",
+          "context": "fritid",
+          "title": "Fisketuren",
+          "text": "Vid bryggan rörde barnen upp sand från botten med sina håvar. Nu syntes inte fiskarna under ytan.",
+          "target": "sv-0044",
+          "why": "Sandkornen svävar i vattnet och skymmer sikten.",
+          "difference": "Det andra ordet passar när det går att se igenom vattnet."
+        },
+        {
+          "id": "js-01-08",
+          "context": "fritid",
+          "title": "Simhallens bassäng",
+          "text": "Efter att bassängen rengjorts kunde simmarna se de blå bottenlinjerna även på den djupa delen.",
+          "target": "sv-0003",
+          "why": "Vattnet låter oss se linjerna långt under ytan.",
+          "difference": "Om sikten hindras av partiklar skulle det andra ordet passa."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-02",
+      "left": "sv-0001",
+      "right": "sv-0041",
+      "title": "Olika ojämna ytor",
+      "scenes": [
+        {
+          "title": "Muren",
+          "text": "Under utflykten drog Alva handen över den gamla stenmuren och kände massor av små, sträva ojämnheter.",
+          "target": "sv-0001",
+          "why": "Ytan känns grov och sträv med många små ojämnheter.",
+          "difference": "Det handlar inte om stora intryckta gropar i en tunn yta.",
+          "id": "js-02-01",
+          "context": "natur"
+        },
+        {
+          "title": "Cykelkorgen",
+          "text": "Under cykelturen ramlade korgen omkull. Metallen trycktes in på tre ställen och fick tydliga gropar.",
+          "target": "sv-0041",
+          "why": "Ytan har tydliga intryckningar efter smällen.",
+          "difference": "Det är gropar från slag, inte en yta som mest känns sträv.",
+          "id": "js-02-02",
+          "context": "fritid"
+        },
+        {
+          "title": "Sandpappret",
+          "text": "Hemma i verktygslådan hittade Theo sandpapper. Det rev lite mot fingret eftersom ytan hade små hårda korn.",
+          "target": "sv-0001",
+          "why": "De små kornen gör ytan sträv vid beröring.",
+          "difference": "Inga intryckta bucklor beskrivs.",
+          "id": "js-02-03",
+          "context": "hem"
+        },
+        {
+          "title": "Konservburken",
+          "text": "Hemma klämdes konservburken mellan två väskor och fick flera tydliga intryckningar.",
+          "target": "sv-0041",
+          "why": "Burken har tryckts in på flera ställen.",
+          "difference": "Att något är intryckt säger inte att ytan känns sträv.",
+          "id": "js-02-04",
+          "context": "hem"
+        },
+        {
+          "id": "js-02-05",
+          "context": "skola",
+          "title": "Skolans tegelvägg",
+          "text": "När klassen undersökte gamla tegelstenar kändes ytorna grova och sträva mot fingertopparna.",
+          "target": "sv-0001",
+          "why": "Det handlar om en grov ytstruktur med många små ojämnheter.",
+          "difference": "En intryckt metallbit har en annan sorts ojämnhet."
+        },
+        {
+          "id": "js-02-06",
+          "context": "skola",
+          "title": "Skåpdörren",
+          "text": "Någon råkade slå sin ryggsäck mot metallskåpet. Efteråt fanns ett tydligt intryckt märke mitt på dörren.",
+          "target": "sv-0041",
+          "why": "Metallens form har tryckts in av en smäll.",
+          "difference": "En sträv känsla när man drar handen över ytan är något annat."
+        },
+        {
+          "id": "js-02-07",
+          "context": "natur",
+          "title": "Barken på trädet",
+          "text": "På skogsutflykten kände Elsa på en gammal tall. Barken var full av hårda, sträva skåror.",
+          "target": "sv-0001",
+          "why": "Barkens grova struktur känns ojämn när man tar på den.",
+          "difference": "En intryckt grop efter ett slag beskrivs med det andra ordet."
+        },
+        {
+          "id": "js-02-08",
+          "context": "natur",
+          "title": "Vattenflaskan på stigen",
+          "text": "En aluminiumflaska hamnade under en sten i ryggsäcken. Nu hade flaskans sida fått en stor intryckning.",
+          "target": "sv-0041",
+          "why": "Flaskans tunna metall fick en grop när den pressades.",
+          "difference": "Det betyder inte att själva ytan har fått små sträva korn."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-03",
+      "left": "sv-0022",
+      "right": "sv-0023",
+      "title": "Mönster på saker",
+      "scenes": [
+        {
+          "title": "Tröjan",
+          "text": "Hemma provade Nora en tröja med långa blå linjer från axeln ner till kanten.",
+          "target": "sv-0022",
+          "why": "Mönstret består av långa linjer.",
+          "difference": "Små enskilda prickar skulle ge ett annat mönster.",
+          "id": "js-03-01",
+          "context": "hem"
+        },
+        {
+          "title": "Muggen",
+          "text": "Vid frukosten såg Mia att muggen var full av små röda runda fläckar, åtskilda från varandra.",
+          "target": "sv-0023",
+          "why": "Mönstret består av små separata prickar.",
+          "difference": "Det finns inga långa linjer över muggen.",
+          "id": "js-03-02",
+          "context": "hem"
+        },
+        {
+          "title": "Flaggan",
+          "text": "På campingplatsens flagga fanns smala gula och vita band som löpte parallellt från toppen till nederkanten.",
+          "target": "sv-0022",
+          "why": "De långa banden bildar ränder.",
+          "difference": "Prickar skulle vara små separata märken.",
+          "id": "js-03-03",
+          "context": "fritid"
+        },
+        {
+          "title": "Ryggsäcken",
+          "text": "Skolryggsäcken var täckt av hundratals små gröna cirklar, men inga långa sammanhängande linjer.",
+          "target": "sv-0023",
+          "why": "De små åtskilda cirklarna är prickar.",
+          "difference": "Mönstret har inte långa ränder.",
+          "id": "js-03-04",
+          "context": "skola"
+        },
+        {
+          "id": "js-03-05",
+          "context": "natur",
+          "title": "Fjärilens vingar",
+          "text": "Naturgruppen såg en fjäril med långa mörka band som löpte tvärs över de ljusa vingarna.",
+          "target": "sv-0022",
+          "why": "Mönstret består av utdragna band och linjer.",
+          "difference": "Enskilda små runda märken ger det andra mönstret."
+        },
+        {
+          "id": "js-03-06",
+          "context": "natur",
+          "title": "Svampens hatt",
+          "text": "I skogen hittade barnen en svamp vars röda hatt hade många små vita rundlar.",
+          "target": "sv-0023",
+          "why": "De små separata rundlarna bildar ett mönster av prickar.",
+          "difference": "Långa sammanhängande band skulle beskrivas med det andra ordet."
+        },
+        {
+          "id": "js-03-07",
+          "context": "skola",
+          "title": "Draperiet i matsalen",
+          "text": "Tyget i matsalen hade blå och gröna linjer som gick hela vägen från överkant till nederkant.",
+          "target": "sv-0022",
+          "why": "De långa linjerna bildar ränder på tyget.",
+          "difference": "Det finns inte små fristående rundlar i den beskrivningen."
+        },
+        {
+          "id": "js-03-08",
+          "context": "fritid",
+          "title": "Badbollen",
+          "text": "På badbollen fanns många små gula cirklar mot en blå bakgrund, helt åtskilda från varandra.",
+          "target": "sv-0023",
+          "why": "De åtskilda cirklarna är prickar.",
+          "difference": "Långa sammanhängande linjer skulle vara det andra mönstret."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-04",
+      "left": "sv-0028",
+      "right": "sv-0029",
+      "title": "Vad händer med vätskan?",
+      "scenes": [
+        {
+          "title": "Nykokt te",
+          "text": "Hemma i köket steg en tunn vit sky från den nykokta tekoppen eftersom drycken var mycket varm.",
+          "target": "sv-0028",
+          "why": "Värme får fuktig luft att bilda synliga små droppar ovanför koppen.",
+          "difference": "Det är inte ett lager av bubblor på dryckens yta.",
+          "id": "js-04-01",
+          "context": "hem"
+        },
+        {
+          "title": "Diskbaljan",
+          "text": "I hemmets diskbalja vispade barnen runt diskmedel tills vattenytan fylldes av små bubblor.",
+          "target": "sv-0029",
+          "why": "Diskmedlet gör att många bubblor bildas på ytan.",
+          "difference": "Det beskrivs ingen dimma som stiger från varmt vatten.",
+          "id": "js-04-02",
+          "context": "hem"
+        },
+        {
+          "title": "Varm soppa",
+          "text": "Över soppgrytan hemma syntes en vit sky som sakta steg mot köksfläkten.",
+          "target": "sv-0028",
+          "why": "Den synliga skyn bildas när fukt från den heta soppan kyls.",
+          "difference": "Det är inte bubblor av tvål eller skum på ytan.",
+          "id": "js-04-03",
+          "context": "hem"
+        },
+        {
+          "title": "Badskummet",
+          "text": "Hemma hällde barnen badskum i badkaret och rörde om tills ytan täcktes av små bubblor.",
+          "target": "sv-0029",
+          "why": "Många små bubblor bildar skum.",
+          "difference": "Här stiger ingen synlig sky upp från en varm dryck.",
+          "id": "js-04-04",
+          "context": "hem"
+        },
+        {
+          "id": "js-04-05",
+          "context": "skola",
+          "title": "Vattenkokaren i hemkunskapen",
+          "text": "När vattnet kokat syntes en vit sky som steg upp från kannans öppning.",
+          "target": "sv-0028",
+          "why": "Det synliga molnet bildas när varm vattenånga kyls till små droppar.",
+          "difference": "Många bubblor på ytan är något annat."
+        },
+        {
+          "id": "js-04-06",
+          "context": "skola",
+          "title": "Såpbubbleexperimentet",
+          "text": "Eleverna blandade vatten och diskmedel. När de skakade flaskan täcktes ytan av ett tjockt lager bubblor.",
+          "target": "sv-0029",
+          "why": "Diskmedlet hjälper bubblor att bildas på vattenytan.",
+          "difference": "Det är ingen vit sky som stiger från en het vätska."
+        },
+        {
+          "id": "js-04-07",
+          "context": "fritid",
+          "title": "Varm choklad i pausen",
+          "text": "Efter skridskoåkningen såg barnen en tunn vit sky stiga från den heta chokladen i muggen.",
+          "target": "sv-0028",
+          "why": "Värmen gör att fukt ovanför muggen syns som små droppar.",
+          "difference": "Det handlar inte om ett lager bubblor på drycken."
+        },
+        {
+          "id": "js-04-08",
+          "context": "fritid",
+          "title": "Tvätta cykeln",
+          "text": "När Lea skrubbade cykeln med schampo och vatten täcktes borsten av massor av små bubblor.",
+          "target": "sv-0029",
+          "why": "Tvål och omrörning gör att många bubblor bildas.",
+          "difference": "Det krävs ingen hög värme eller stigande vattenånga."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-05",
+      "left": "sv-0030",
+      "right": "sv-0027",
+      "title": "Hur mår växterna?",
+      "scenes": [
+        {
+          "title": "Sommarskogen",
+          "text": "Överallt växte tjocka gröna buskar, höga ormbunkar och mängder av friska blad.",
+          "target": "sv-0030",
+          "why": "Växterna frodas och växer tätt och kraftigt.",
+          "difference": "De hänger inte livlöst på grund av uttorkning.",
+          "id": "js-05-01",
+          "context": "natur"
+        },
+        {
+          "title": "Blomman vid fönstret",
+          "text": "Efter två veckor utan vatten hängde bladen slaka och blomman hade tappat spänsten.",
+          "target": "sv-0027",
+          "why": "Växten har tappat spänst och hänger ned.",
+          "difference": "Den växer inte kraftigt med friska, täta blad.",
+          "id": "js-05-02",
+          "context": "hem"
+        },
+        {
+          "title": "Den gröna dalen",
+          "text": "Dalen var fylld av täta ängar och kraftiga plantor som växte åt alla håll.",
+          "target": "sv-0030",
+          "why": "Här växer mycket och kraftigt med gott om grönska.",
+          "difference": "Plantorna beskrivs som friska, inte nedhängande.",
+          "id": "js-05-03",
+          "context": "natur"
+        },
+        {
+          "title": "Buketten",
+          "text": "I vardagsrummet böjde sig de gamla tulpanerna över vasens kant och bladen kändes helt slappa.",
+          "target": "sv-0027",
+          "why": "Blommorna har tappat sin spänst och hänger.",
+          "difference": "De växer inte tätt eller kraftigt.",
+          "id": "js-05-04",
+          "context": "hem"
+        },
+        {
+          "id": "js-05-05",
+          "context": "skola",
+          "title": "Klassens kryddodling",
+          "text": "Kryddplantorna i klassrummet hade kraftiga stjälkar och mängder av friska gröna blad.",
+          "target": "sv-0030",
+          "why": "Plantorna växer rikligt och ser starka ut.",
+          "difference": "Slaka blad på en uttorkad planta skulle beskrivas med det andra ordet."
+        },
+        {
+          "id": "js-05-06",
+          "context": "skola",
+          "title": "Det bortglömda klassrumsfröet",
+          "text": "Eleverna glömde att vattna sin lilla planta i flera veckor. Nu hängde de tunna bladen slappt.",
+          "target": "sv-0027",
+          "why": "Bladen har tappat sin spänst efter för lite vatten.",
+          "difference": "En kraftigt växande planta med rikliga gröna blad passar inte här."
+        },
+        {
+          "id": "js-05-07",
+          "context": "fritid",
+          "title": "Kolonilotten",
+          "text": "Efter en regnig sommar var odlingslotten full av täta grönsaker och höga friska solrosor.",
+          "target": "sv-0030",
+          "why": "Växterna utvecklas rikligt och kraftigt.",
+          "difference": "Plantorna beskrivs inte som torra eller slokande."
+        },
+        {
+          "id": "js-05-08",
+          "context": "fritid",
+          "title": "Blomman efter resan",
+          "text": "Familjen kom hem från semestern och fann blommans stjälkar hängande över krukkanten.",
+          "target": "sv-0027",
+          "why": "Den har tappat spänst efter att ha saknat vatten.",
+          "difference": "Det andra ordet beskriver en växt som växer kraftigt och rikligt."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-06",
+      "left": "sv-0007",
+      "right": "sv-0018",
+      "title": "Blänker eller lyser?",
+      "scenes": [
+        {
+          "title": "Discokulan",
+          "text": "Små speglar på kulan kastade tillbaka ljuset från strålkastaren i glimmande punkter.",
+          "target": "sv-0007",
+          "why": "Många små reflexer gör att ytan glimmar.",
+          "difference": "Kulan avger inte själv ljuset som träffar den.",
+          "id": "js-06-01",
+          "context": "fritid"
+        },
+        {
+          "title": "Ficklampan",
+          "text": "På campingturen tryckte Ella på ficklampans knapp. En stark ljusstråle lyste upp stigen framför henne.",
+          "target": "sv-0018",
+          "why": "Lampan ger själv ifrån sig ljus.",
+          "difference": "Det handlar inte om små reflexer från en annan ljuskälla.",
+          "id": "js-06-02",
+          "context": "fritid"
+        },
+        {
+          "title": "Paljettjackan",
+          "text": "På dansfesten gnistrade små blanka paljetter på jackan varje gång solen träffade den.",
+          "target": "sv-0007",
+          "why": "Paljetterna reflekterar ljuset i många små glimtar.",
+          "difference": "Jackan skapar inte en egen ljusstråle.",
+          "id": "js-06-03",
+          "context": "fritid"
+        },
+        {
+          "title": "Nattlampan",
+          "text": "Den tända nattlampan spred ett milt sken över sängen hemma trots att rummet annars var mörkt.",
+          "target": "sv-0018",
+          "why": "Nattlampan avger ljus som lyser upp rummet.",
+          "difference": "Det handlar inte om många små blänk från reflektioner.",
+          "id": "js-06-04",
+          "context": "hem"
+        },
+        {
+          "id": "js-06-05",
+          "context": "skola",
+          "title": "Glitter på bilden",
+          "text": "Små blanka bitar på affischen kastade tillbaka ljus när klassen vinklade pappret.",
+          "target": "sv-0007",
+          "why": "Bitarna blänker genom att reflektera ljus från rummet.",
+          "difference": "De lyser inte själva som en tänd lampa."
+        },
+        {
+          "id": "js-06-06",
+          "context": "skola",
+          "title": "Projektorn",
+          "text": "Läraren slog på projektorn. Den skickade en tydlig ljusstråle mot klassrummets duk.",
+          "target": "sv-0018",
+          "why": "Projektorn ger ifrån sig sitt eget ljus när den är påslagen.",
+          "difference": "Det handlar inte om att blanka bitar bara speglar ljus."
+        },
+        {
+          "id": "js-06-07",
+          "context": "natur",
+          "title": "Frost i morgonsolen",
+          "text": "Små iskristaller på gräset gnistrade när solens strålar träffade dem från sidan.",
+          "target": "sv-0007",
+          "why": "Kristallerna reflekterar solens ljus i många små glimtar.",
+          "difference": "De tillverkar inte ljuset själva."
+        },
+        {
+          "id": "js-06-08",
+          "context": "natur",
+          "title": "Eldflugan på kvällen",
+          "text": "I skymningen såg barnen en liten insekt vars bakkropp skickade ut sitt eget gröngula sken.",
+          "target": "sv-0018",
+          "why": "Insekten producerar själv det ljus som syns.",
+          "difference": "Det är inte bara små blanka ytor som kastar tillbaka solljus."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-07",
+      "left": "sv-0043",
+      "right": "sv-0036",
+      "title": "Sladdar och papper",
+      "scenes": [
+        {
+          "title": "Hörlurarna",
+          "text": "Inför bussresan hade Miras två hörlurssladdar snott sig runt varandra så att hon fick lösa flera knutar.",
+          "target": "sv-0043",
+          "why": "Sladdarna har fastnat i slingor och knutar.",
+          "difference": "Det beskrivs inte en yta med många veck.",
+          "id": "js-07-01",
+          "context": "fritid"
+        },
+        {
+          "title": "Papperslappen",
+          "text": "Hemma rullade Max ut en papperslapp ur fickan. Den var full av små veck och rynkor.",
+          "target": "sv-0036",
+          "why": "Pappret har fått många veck och rynkor.",
+          "difference": "Det finns inga slingor eller knutar att reda ut.",
+          "id": "js-07-02",
+          "context": "hem"
+        },
+        {
+          "title": "Garnnystanet",
+          "text": "Hemma hade garnet snurrat ihop sig till ett virrvarr av öglor och knutar.",
+          "target": "sv-0043",
+          "why": "Garnets slingor har snott ihop sig.",
+          "difference": "Garnet har inte blivit veckat som ett pappersark.",
+          "id": "js-07-03",
+          "context": "hem"
+        },
+        {
+          "title": "Skolbladet",
+          "text": "Arket hade blivit hopknycklat i ryggsäcken och var nu fullt av veck.",
+          "target": "sv-0036",
+          "why": "Det tunna arket har blivit veckigt.",
+          "difference": "Ingen tråd eller sladd har snott ihop sig.",
+          "id": "js-07-04",
+          "context": "skola"
+        },
+        {
+          "id": "js-07-05",
+          "context": "natur",
+          "title": "Snöret vid vindskyddet",
+          "text": "Efter blåsten hade flera rep snott sig runt varandra så att ingen kunde lossa dem utan att reda ut knutarna.",
+          "target": "sv-0043",
+          "why": "Repen har slingrat ihop sig och fastnat i knutar.",
+          "difference": "Veck i ett papper är en annan typ av ojämnhet."
+        },
+        {
+          "id": "js-07-06",
+          "context": "natur",
+          "title": "Löv i fickan",
+          "text": "När Noa vecklade ut det tunna torra lövet från fickan hade det fått många små veck och skrynklor.",
+          "target": "sv-0036",
+          "why": "Lövets tunna yta har veckats och blivit rynkig.",
+          "difference": "Det finns inga sammanflätade snören eller knutar."
+        },
+        {
+          "id": "js-07-07",
+          "context": "skola",
+          "title": "Garnet i slöjden",
+          "text": "Fyra garntrådar hade snurrat ihop sig kring stolsbenet. Läraren fick hjälpa till att lösa knutarna.",
+          "target": "sv-0043",
+          "why": "Trådarna har fastnat i varandra och bildat ett virrvarr.",
+          "difference": "Ett papper med veck är en annan sorts problem."
+        },
+        {
+          "id": "js-07-08",
+          "context": "fritid",
+          "title": "Biljetten till matchen",
+          "text": "Pappersbiljetten hade legat hoptryckt i jackfickan. Den var full av små veck när den togs fram.",
+          "target": "sv-0036",
+          "why": "Pappret har pressats ihop och fått rynkor.",
+          "difference": "Det finns inga ihoptrasslade slingor eller knutar."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-08",
+      "left": "sv-0071",
+      "right": "sv-0075",
+      "title": "Två sorters undran",
+      "scenes": [
+        {
+          "title": "Museet",
+          "text": "Sam ville lära sig hur roboten fungerade och ställde många intresserade frågor.",
+          "target": "sv-0071",
+          "why": "Sam vill förstå och upptäcka något nytt.",
+          "difference": "Det finns ingen anledning att tro att någon döljer något.",
+          "id": "js-08-01",
+          "context": "fritid"
+        },
+        {
+          "title": "Den öppna dörren",
+          "text": "Efter konserten såg vakten att förrådets lås var brutet och undrade om någon försökt ta sig in.",
+          "target": "sv-0075",
+          "why": "Vakten anar att något inte står rätt till.",
+          "difference": "Det handlar inte bara om att vilja lära sig mer.",
+          "id": "js-08-02",
+          "context": "fritid"
+        },
+        {
+          "title": "Rymdboken",
+          "text": "Hemma i soffan ville Nora veta varför planeter rör sig och läste vidare för att lära sig.",
+          "target": "sv-0071",
+          "why": "Nora försöker upptäcka hur något fungerar.",
+          "difference": "Hon misstänker inte att någon gör fel.",
+          "id": "js-08-03",
+          "context": "hem"
+        },
+        {
+          "title": "Den försvunna väskan",
+          "text": "Efter idrotten i skolan var väskan plötsligt borta. Amir undrade om någon hade tagit den.",
+          "target": "sv-0075",
+          "why": "Amir tror att något kanske inte står rätt till.",
+          "difference": "Han frågar inte enbart av intresse för att lära sig.",
+          "id": "js-08-04",
+          "context": "skola"
+        },
+        {
+          "id": "js-08-05",
+          "context": "skola",
+          "title": "Rymdfrågan",
+          "text": "När klassen pratade om månen räckte Vera upp handen för att få veta hur astronauter kan hoppa där.",
+          "target": "sv-0071",
+          "why": "Vera vill lära sig mer och ställer intresserade frågor.",
+          "difference": "Hon misstänker inte att någon försöker lura henne."
+        },
+        {
+          "id": "js-08-06",
+          "context": "skola",
+          "title": "Den ändrade uppgiften",
+          "text": "Uppgiften på tavlan hade plötsligt bytts ut och ingen visste varför. Omar undrade om någon gjort det med flit.",
+          "target": "sv-0075",
+          "why": "Omar funderar på om någon kan ha gjort något avsiktligt eller fel.",
+          "difference": "Det är inte samma sak som att bara vilja förstå ett nytt ämne."
+        },
+        {
+          "id": "js-08-07",
+          "context": "natur",
+          "title": "Myrstacken",
+          "text": "På utflykten stannade Mia länge vid en myrstack för att undersöka hur myrorna byggde gångar.",
+          "target": "sv-0071",
+          "why": "Hon vill upptäcka och förstå något nytt i naturen.",
+          "difference": "Hon oroar sig inte för att myrorna försöker lura henne."
+        },
+        {
+          "id": "js-08-08",
+          "context": "natur",
+          "title": "Det sönderslagna boet",
+          "text": "Ledaren hittade ett fågelbo som någon hade flyttat. Hen undrade om en människa hade varit där.",
+          "target": "sv-0075",
+          "why": "Ledaren misstänker att något ovanligt kan ha hänt och letar efter orsaken.",
+          "difference": "Det är mer än att bara vara intresserad av fåglar."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-09",
+      "left": "sv-0083",
+      "right": "sv-0084",
+      "title": "Lugnt eller fartfyllt?",
+      "scenes": [
+        {
+          "title": "Sjön i gryningen",
+          "text": "På morgonen var det helt stilla vid sjön. Inga röster eller ljud störde lugnet.",
+          "target": "sv-0083",
+          "why": "Platsen är stillsam och utan störningar.",
+          "difference": "Det händer inte mycket i rörelse och ljud.",
+          "id": "js-09-01",
+          "context": "natur"
+        },
+        {
+          "title": "Skolgården",
+          "text": "Barnen sprang, skrattade och lekte samtidigt på hela skolgården.",
+          "target": "sv-0084",
+          "why": "Här är det fullt av rörelse och energi.",
+          "difference": "Miljön är inte stilla eller tyst.",
+          "id": "js-09-02",
+          "context": "skola"
+        },
+        {
+          "title": "Biblioteket",
+          "text": "I skolbiblioteket läste alla stilla och det enda ljudet var någon som försiktigt vände ett blad.",
+          "target": "sv-0083",
+          "why": "Miljön är lugn och nästan ljudlös.",
+          "difference": "Det är inte mycket aktivitet eller rörelse.",
+          "id": "js-09-03",
+          "context": "skola"
+        },
+        {
+          "title": "Danssalen",
+          "text": "Musiken spelade och alla hoppade och rörde sig med massor av energi.",
+          "target": "sv-0084",
+          "why": "Rummet fylls av rörelse och fart.",
+          "difference": "Stämningen är inte stilla eller tyst.",
+          "id": "js-09-04",
+          "context": "fritid"
+        },
+        {
+          "id": "js-09-05",
+          "context": "hem",
+          "title": "Morgonen hemma",
+          "text": "Familjen satt tyst tillsammans och läste. Inga höga ljud störde den lugna stunden.",
+          "target": "sv-0083",
+          "why": "Stämningen är stillsam och rofylld.",
+          "difference": "Fartfylld aktivitet och många röster skulle vara det andra ordet."
+        },
+        {
+          "id": "js-09-06",
+          "context": "hem",
+          "title": "Födelsedagskalaset",
+          "text": "I vardagsrummet sjöng barnen, dansade och pratade glatt i mun på varandra.",
+          "target": "sv-0084",
+          "why": "Det är mycket rörelse och energi i rummet.",
+          "difference": "En stilla, tyst stund hade passat det andra ordet."
+        },
+        {
+          "id": "js-09-07",
+          "context": "fritid",
+          "title": "Stugan vid fjället",
+          "text": "Efter vandringen vilade alla utanför stugan. Bara en svag vind hördes i träden.",
+          "target": "sv-0083",
+          "why": "Här är det lugnt och nästan helt stilla.",
+          "difference": "En plats full av höga röster och fart skulle ha en annan stämning."
+        },
+        {
+          "id": "js-09-08",
+          "context": "natur",
+          "title": "Fågellivet på våren",
+          "text": "I buskarna hoppade fåglar mellan grenarna, sjöng och flaxade hela morgonen.",
+          "target": "sv-0084",
+          "why": "Många djur rör sig och låter med energi.",
+          "difference": "En helt stilla och tyst skog skulle beskrivas med det andra ordet."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-10",
+      "left": "sv-0092",
+      "right": "sv-0109",
+      "title": "Sällsynt eller kort tid?",
+      "scenes": [
+        {
+          "title": "Den blå hummern",
+          "text": "Fiskaren hade sett tusentals humrar, men bara en enda med den här färgen.",
+          "target": "sv-0092",
+          "why": "Händelsen förekommer mycket sällan.",
+          "difference": "Det sägs inget om hur länge hummern finns kvar.",
+          "id": "js-10-01",
+          "context": "natur"
+        },
+        {
+          "title": "Den provisoriska bron",
+          "text": "På cykelutflykten fick familjen passera en liten provisorisk bro som bara skulle finnas under veckan medan den riktiga lagades.",
+          "target": "sv-0109",
+          "why": "Bron finns bara under en begränsad tid.",
+          "difference": "Det sägs inte att broar av det här slaget är sällsynta.",
+          "id": "js-10-02",
+          "context": "fritid"
+        },
+        {
+          "title": "Meteoren",
+          "text": "Astronomen hade tittat på himlen i många år men aldrig tidigare sett just en sådan ljusblixt.",
+          "target": "sv-0092",
+          "why": "Upplevelsen är sällsynt för astronomen.",
+          "difference": "Det handlar om hur ofta något händer, inte om varaktigheten.",
+          "id": "js-10-03",
+          "context": "natur"
+        },
+        {
+          "title": "Vikarielektionen",
+          "text": "Läraren var borta en dag, så en annan lärare tog över just den lektionen.",
+          "target": "sv-0109",
+          "why": "Ersättaren behövs bara under en kort begränsad period.",
+          "difference": "Det står inte att vikarier är mycket sällsynta.",
+          "id": "js-10-04",
+          "context": "skola"
+        },
+        {
+          "id": "js-10-05",
+          "context": "hem",
+          "title": "En färgad tomat",
+          "text": "Familjen hittade en tomat med en mycket sällsynt färg som ingen av dem sett förut.",
+          "target": "sv-0092",
+          "why": "Tomaten skiljer sig från vad man vanligen ser.",
+          "difference": "Hur länge tomaten finns är inte det viktiga här."
+        },
+        {
+          "id": "js-10-06",
+          "context": "hem",
+          "title": "Lånad stol",
+          "text": "Familjen fick låna en extra stol under helgen. På måndag skulle den lämnas tillbaka.",
+          "target": "sv-0109",
+          "why": "Stolen ska bara användas under en begränsad tid.",
+          "difference": "Det handlar inte om att stolen är sällsynt."
+        },
+        {
+          "id": "js-10-07",
+          "context": "fritid",
+          "title": "Den sällsynta medaljen",
+          "text": "På museet visades en medalj som bara tillverkats i ett enda exemplar.",
+          "target": "sv-0092",
+          "why": "Det finns mycket få exemplar av just den saken.",
+          "difference": "Det säger ingenting om hur lång tid den visas."
+        },
+        {
+          "id": "js-10-08",
+          "context": "skola",
+          "title": "Den extra läraren",
+          "text": "En vikarie hjälpte klassen i två dagar tills den ordinarie läraren kom tillbaka.",
+          "target": "sv-0109",
+          "why": "Hjälpen är tänkt att pågå en kort begränsad period.",
+          "difference": "Det säger inte om en vikarie är sällsynt eller vanlig."
+        }
+      ],
+      "starter": false
+    },
+    {
+      "id": "js-11",
+      "left": "sv-0087",
+      "right": "sv-0081",
+      "title": "Förstår du vad som händer?",
+      "scenes": [
+        {
+          "title": "Fågelräkningen",
+          "text": "Elsa noterade varje fågel som landade och missade inte en enda rörelse.",
+          "target": "sv-0087",
+          "why": "Elsa lägger noggrant märke till det som händer.",
+          "difference": "Hon verkar förstå uppgiften och vet vad hon ska göra.",
+          "id": "js-11-01",
+          "context": "natur"
+        },
+        {
+          "title": "Kartans alla pilar",
+          "text": "Under vandringen delades vägen i fem riktningar och Max förstod inte vilken han skulle välja.",
+          "target": "sv-0081",
+          "why": "Max har svårt att få klarhet i situationen.",
+          "difference": "Han har inte förstått vägen trots alla skyltar.",
+          "id": "js-11-02",
+          "context": "fritid"
+        },
+        {
+          "title": "Lärarens instruktioner",
+          "text": "Nour lyssnade noga, tittade på varje steg och kunde sedan göra uppgiften rätt.",
+          "target": "sv-0087",
+          "why": "Nour följer noga med och lägger märke till detaljer.",
+          "difference": "Hon är inte vilse i instruktionerna.",
+          "id": "js-11-03",
+          "context": "skola"
+        },
+        {
+          "title": "De nya reglerna",
+          "text": "I skolan sade två uppsättningar nya regler emot varandra och Leon visste till slut inte vad som gällde.",
+          "target": "sv-0081",
+          "why": "Leon förstår inte längre hur reglerna hänger ihop.",
+          "difference": "Det handlar inte om hur noggrant han tittar.",
+          "id": "js-11-04",
+          "context": "skola"
+        },
+        {
+          "id": "js-11-05",
+          "context": "hem",
+          "title": "Instruktionen till spelet",
+          "text": "Nina lyssnade på varje regel och upptäckte direkt när en spelbricka saknades.",
+          "target": "sv-0087",
+          "why": "Nina följer noga med och lägger märke till detaljer.",
+          "difference": "Hon verkar inte ha svårt att förstå vad som händer."
+        },
+        {
+          "id": "js-11-06",
+          "context": "hem",
+          "title": "Bytta lådor",
+          "text": "Någon hade flyttat om alla lådorna i köket och Hugo visste inte längre var sakerna låg.",
+          "target": "sv-0081",
+          "why": "Hugo har svårt att förstå den nya ordningen.",
+          "difference": "Att lägga märke till detaljer skulle vara något annat."
+        },
+        {
+          "id": "js-11-07",
+          "context": "fritid",
+          "title": "Fotbollstränarens signal",
+          "text": "På planen följde Dana noga tränarens tecken och reagerade direkt när signalen kom.",
+          "target": "sv-0087",
+          "why": "Dana observerar och följer med i vad som händer.",
+          "difference": "Hon är inte vilse bland motsägelsefulla instruktioner."
+        },
+        {
+          "id": "js-11-08",
+          "context": "natur",
+          "title": "Tre olika vägskyltar",
+          "text": "På skogsstigen pekade tre skyltar åt olika håll mot samma mål. Kim förstod inte vilken väg som var rätt.",
+          "target": "sv-0081",
+          "why": "Skyltarna gör det svårt att avgöra hur man ska gå.",
+          "difference": "Bara noggrann uppmärksamhet löser inte de motstridiga beskeden."
+        }
+      ],
+      "starter": true
+    },
+    {
+      "id": "js-12",
+      "left": "sv-0110",
+      "right": "sv-0103",
+      "title": "Noggrant eller slarvigt?",
+      "scenes": [
+        {
+          "title": "Presentinslagningen",
+          "text": "Hemma mätte Ella presentpappret noga, vek jämna kanter och såg till att ingenting gick sönder.",
+          "target": "sv-0110",
+          "why": "Ella gör arbetet med stor omsorg och noggrannhet.",
+          "difference": "Hon ignorerar inte någon viktig del av uppgiften.",
+          "id": "js-12-01",
+          "context": "hem"
+        },
+        {
+          "title": "Det glömda låset",
+          "text": "Den ansvarige på skolan gick hem utan att kontrollera att ytterdörren var låst, trots tydliga instruktioner.",
+          "target": "sv-0103",
+          "why": "Personen slarvar med något den ansvarar för.",
+          "difference": "Arbetet utförs inte omsorgsfullt eller noggrant.",
+          "id": "js-12-02",
+          "context": "skola"
+        },
+        {
+          "title": "Modellbygget",
+          "text": "På modellbyggarklubben följde David varje steg och kontrollerade delarna en extra gång innan han limmade.",
+          "target": "sv-0110",
+          "why": "David arbetar noga och med omtanke.",
+          "difference": "Han hoppar inte över viktiga kontroller.",
+          "id": "js-12-03",
+          "context": "fritid"
+        },
+        {
+          "title": "Cykelverkstaden",
+          "text": "Mekanikern på cykelklubben struntade i att dra åt skruvarna trots att det ingick i säkerhetskontrollen.",
+          "target": "sv-0103",
+          "why": "Mekanikern missar medvetet en viktig ansvarsuppgift.",
+          "difference": "Det är inte ett arbete som görs noggrant.",
+          "id": "js-12-04",
+          "context": "fritid"
+        },
+        {
+          "id": "js-12-05",
+          "context": "skola",
+          "title": "Redovisningen",
+          "text": "Maja kontrollerade fakta, rättade stavningen och ordnade bilderna noga innan arbetet lämnades in.",
+          "target": "sv-0110",
+          "why": "Hon är noggrann och tar ansvar för kvaliteten.",
+          "difference": "Att ignorera tydliga fel hade varit motsatsen."
+        },
+        {
+          "id": "js-12-06",
+          "context": "hem",
+          "title": "Det oskyddade fönstret",
+          "text": "Den vuxne visste att ett fönster var trasigt men struntade i att täcka öppningen trots risken för regn.",
+          "target": "sv-0103",
+          "why": "Den vuxne försummar något viktigt som behöver åtgärdas.",
+          "difference": "Noggrant ansvar och eftertanke hade varit det andra ordet."
+        },
+        {
+          "id": "js-12-07",
+          "context": "natur",
+          "title": "Fågelholken",
+          "text": "Barnen mätte träbitarna, slipade bort vassa kanter och kontrollerade noga att holken blev säker för fåglarna.",
+          "target": "sv-0110",
+          "why": "De arbetar noga och tänker på hur andra påverkas.",
+          "difference": "Att slarva bort säkerhetskontrollen vore motsatsen."
+        },
+        {
+          "id": "js-12-08",
+          "context": "natur",
+          "title": "Nedskräpningen",
+          "text": "Ledaren visste att skräp låg kvar vid lägerplatsen men struntade i att samla upp det trots sitt ansvar.",
+          "target": "sv-0103",
+          "why": "Ledaren låter bli att göra det som hen ansvarar för.",
+          "difference": "Ett noggrant och omtänksamt avslut hade varit motsatsen."
+        }
+      ],
+      "starter": false
+    }
+  ]
+}

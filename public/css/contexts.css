@@ -1,0 +1,13 @@
+/* v0.12: 43 curated concepts in short real-world scenes, no generated images. */
+.quick-contexts{margin-top:10px;min-height:54px;font-size:16px;border-color:var(--accent-line)}
+.context-settings .check-row{line-height:1.5}
+.context-scene{background:var(--surface-2);border:2px solid var(--accent-line);border-radius:17px;padding:18px;text-align:left;max-width:720px;margin:15px auto 7px}
+.context-scene-label{display:block;font-size:12px;letter-spacing:1px;font-weight:900;color:var(--accent);margin-bottom:9px}
+.context-scene p{font-size:clamp(18px,2.7vw,22px);font-weight:750;line-height:1.6;color:var(--text);margin:0}
+.question-card:has(.context-scene:not([hidden])) h1{font-size:clamp(26px,4.4vw,40px);margin:16px 0 12px;letter-spacing:-.5px}
+.context-aha{background:var(--accent-soft);border-left:5px solid var(--accent-line);border-radius:10px;padding:17px 18px;margin-top:18px;color:var(--text)}
+.context-aha strong{display:block;font-size:17px;margin-bottom:9px;color:var(--text)}
+.context-aha p{margin:0;line-height:1.6;font-size:17px;font-weight:700;color:var(--text)}
+.context-scene-review,.context-review-why{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;color:var(--text);line-height:1.5}
+.context-review-why{border-left:4px solid var(--accent-line)}
+@media(max-width:460px){.context-scene{padding:14px}.context-scene p{font-size:18px}.context-aha{padding:13px}}
