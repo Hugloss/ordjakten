@@ -60,3 +60,18 @@
   .reading-launch{padding:16px}
   .reading-option{font-size:18px;padding:16px}
 }
+
+/* One visible learning action at a time; theme tokens work in dark and light. */
+.reading-stage{margin:0 0 14px;padding:13px 16px;border:2px solid var(--accent-line);border-radius:13px;background:var(--accent-soft);color:var(--text);font-size:clamp(16px,3vw,20px);font-weight:850;line-height:1.4;text-align:center}
+.story-help{margin:15px 0 8px;color:var(--text);font-size:clamp(18px,3vw,21px);font-weight:750;line-height:1.5}
+.story-help[hidden]{display:none!important}
+#reading-story.is-story #question-prompt{font-size:clamp(19px,3.4vw,24px);letter-spacing:0}
+#reading-story.is-story #question-word{font-size:clamp(18px,2.7vw,22px)!important;line-height:1.4}
+#reading-story.is-story #context-story,#reading-story.is-story #expression-story{font-size:clamp(24px,4.2vw,30px);line-height:1.52;font-weight:850}
+#feedback-area[data-reading-stage='quiz'] .explanation,#feedback-area[data-reading-stage='quiz'] #feedback-status,
+#feedback-area[data-reading-stage='reread'] #feedback-status{display:none!important}
+#feedback-area[data-reading-stage='quiz'] #feedback-reading-stage{margin-bottom:12px}
+#reading-reread{min-height:48px;font-size:17px;font-weight:850;margin-top:16px}
+.reading-check .reading-response{margin:16px 0 0}
+#feedback-area[data-reading-stage='done'] #feedback-reading-stage{border-color:var(--green-border)}
+@media(max-width:570px){#reading-story.is-story #context-story,#reading-story.is-story #expression-story{font-size:24px;line-height:1.55}.reading-stage{text-align:left}.story-help{font-size:18px}}

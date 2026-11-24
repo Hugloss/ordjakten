@@ -39,9 +39,11 @@ def answer_reading(page):
     if bad:
         page.locator('.reading-option').nth(bad[0]).click()
         assert page.locator('#next').is_hidden()
-        assert 'Läs förklaringen' in page.locator('#reading-response').inner_text()
-        assert page.locator('#reading-reread').is_visible()
-        page.locator('#reading-reread').click()
+        assert page.locator('#reading-check').is_hidden()
+        assert page.locator('.explanation').is_visible()
+        page.locator('#reading-launch').is_visible()
+        page.locator('#reading-start').click()
+        labels=page.locator('.reading-option').all_inner_texts()
     good=[i for i,t in enumerate(labels) if right in t]
     assert len(good)==1, (prompt,right,labels)
     page.locator('.reading-option').nth(good[0]).click()
@@ -100,7 +102,9 @@ def test_mode(browser):
     page.locator('[data-count="5"]').click()
     page.locator('#start').click()
     for _ in range(5):
-        assert page.locator('#story-reveal').is_hidden()
+        assert page.locator('#story-reveal').is_visible()
+        assert page.locator('#answer-options').is_hidden()
+        page.locator('#story-reveal').click()
         assert page.locator('.answer-option').first.is_visible()
         page.locator('.answer-option').first.click()
         assert page.locator('#feedback-area').is_hidden()

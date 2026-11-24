@@ -37,7 +37,11 @@ def run(browser):
             wrong=next(j for j in range(len(labels)) if j!=correct[0])
             page.locator('.reading-option').nth(wrong).click()
             assert page.locator('#next').is_hidden()
-            page.locator('#reading-reread').click()
+            assert page.locator('.explanation').is_visible()
+            page.locator('#reading-start').click()
+            labels=page.locator('.reading-option').all_inner_texts()
+            correct=[j for j,t in enumerate(labels) if any(scene in t and scene!=original for scene in texts)]
+            assert len(correct)==1,(word,labels)
         page.locator('.reading-option').nth(correct[0]).click()
         assert page.locator('#next').is_visible()
         page.locator('#next').click()
@@ -45,7 +49,7 @@ def run(browser):
     assert page.locator('#result-right').inner_text()=='5'
     assert page.locator('#result-wrong').inner_text()=='0'
     assert page.locator('#results-reading').is_visible()
-    assert '4 av 5 Aha-frågor direkt på första försöket' in page.locator('#results-reading-detail').inner_text()
+    assert '4 av 5 Aha-frågor direkt' in page.locator('#results-reading-detail').inner_text()
     assert not errors,errors
     page.close()
 

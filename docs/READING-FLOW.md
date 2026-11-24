@@ -50,3 +50,16 @@ Kör kontrollen med:
 
 Testwebbläsaren injicerar resurser i about:blank. Verifiera
 localStorage över verklig omladdning och offline separat före lansering.
+
+
+## Barnprovspelning: förtydligad läsning
+- Kartan börjar ihopvikt så berättelsen syns först, även på mobil.
+- Barnet får ett eget lässteg och får först därefter se svaren.
+- Efter svaret döljs frågan och definitionen visas stort med exempel.
+- Aha-frågan visas först efter lässteget. Förklaringen döljs under Aha-frågan, men går att öppna igen frivilligt.
+- Vid första Aha-felet återkommer förklaringen och svaren flyttas om.
+- Vid andra felet får barnet det rätta exemplet förklarat och går vidare utan att fastna. Det registreras som handledd förståelse, **inte** som rätt direkt.
+- Testläget får samma visuella berättelseprioritet men aldrig facit mitt i omgången.
+- Inga extra provpoäng, minustal eller stjärnor ges för Aha-frågorna. Inget tidsstyrt lästvång används.
+
+Rätt svar på Aha-frågan bevisar inte att barnet läste. Nästa barnprovspelning bör kontrollera att barnet själv kan beskriva ett nytt exempel.

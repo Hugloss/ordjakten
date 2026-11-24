@@ -79,5 +79,10 @@
   function isCorrect(check,index) {
     return check?.options?.[index]?.correct === true;
   }
-  return {makeCheck,isCorrect};
+  // Two misses lead to a worked example, not an endless process of elimination.
+  function nextStep(attempts,correct) {
+    if(correct)return 'complete';
+    return attempts>=2?'guided':'reread';
+  }
+  return {makeCheck,isCorrect,nextStep};
 });

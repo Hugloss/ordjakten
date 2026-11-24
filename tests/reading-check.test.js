@@ -92,3 +92,11 @@ test('all expressions have three edited transfer choices',()=>{
     assert.notEqual(check.options.find(x=>x.correct).label,question.scene);
   }
 });
+
+test('after one incorrect Aha response the learner rereads; after two misses gets an example',()=>{
+  assert.equal(B.nextStep(1,false),'reread');
+  assert.equal(B.nextStep(2,false),'guided');
+  assert.equal(B.nextStep(3,false),'guided');
+  assert.equal(B.nextStep(1,true),'complete');
+  assert.equal(B.nextStep(2,true),'complete');
+});

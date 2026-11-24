@@ -48,3 +48,7 @@ med Playwright och Chromium installerade.
 ## Test av läsbarhet och Aha-frågor
 
 Se `docs/READING-FLOW.md` för ett barnprovtest utan hjälp i svarssituationen. Vi observerar om barnet verkligen läser och kan använda ordet i en ny berättelse; att trycka på en knapp är inte bevis för förståelse.
+
+
+## Nytt provspelningstest
+Observera utan att vägleda: hittar barnet berättelsen på första skärmen, läser det betydelsen innan Aha-frågan och förstår det varför rätt exempel passar? Vid första fel ska förklaringen återkomma. Vid ett andra fel visas facit pedagogiskt, utan att ett gissat svar får räknas som självständig förståelse. Prova mobil, dator, ljus/mörk, lång berättelse och Testa dig. Ingen lästid lagras om barnet.
