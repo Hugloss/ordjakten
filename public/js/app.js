@@ -617,7 +617,11 @@
     $('learning-home-focus').hidden=!suggested;
     if(suggested){
       const item=F.findItem(suggested.id,bank,expressions);
-      $('learning-home-focus-note').textContent=`🎯 ${item.name} – ${F.LABELS[suggested.skill]||'En ny utmaning'} väntar på en ny chans.`;
+      const ahaType=suggested.skill==='reverse'?'recognition':'transfer';
+      const ahaWeak=B.needsReview(history.readingProgress,item.id,ahaType);
+      $('learning-home-focus-note').textContent=ahaWeak
+        ? `🎭 ${item.name} – prova ett nytt exempel för att förstå ordet på fler sätt.`
+        : `🎯 ${item.name} – ${F.LABELS[suggested.skill]||'En ny utmaning'} väntar på en ny chans.`;
       $('learning-home-focus-start').dataset.focusId=item.id;
       $('learning-home-focus-start').dataset.focusSkill=suggested.skill;
     }
@@ -1192,7 +1196,7 @@
   function saveAhaOutcome(outcome) {
     const q=game?.questions?.[game.index];
     if(!q||!readingCheck)return;
-    history.readingProgress=B.recordProgress(history.readingProgress,q.id,readingCheck.source,outcome);
+    history.readingProgress=B.recordProgress(history.readingProgress,q.id,readingCheck.source,outcome,Date.now(),readingCheck.evidence);
     saveHistory();
   }
   function answerReadingCheck(index) {
@@ -1318,7 +1322,7 @@
       $('question-area').hidden=true;
       $('feedback-area').hidden=false;
       // The reading checkpoint is for learning, never an extra scored test.
-      readingCheck=B.makeCheck(q,{bank,contexts,surprises,missions});
+      readingCheck=B.makeCheck(q,{bank,contexts,surprises,missions,readingProgress:history.readingProgress});
       showReadingCheck(readingCheck);
       $('feedback-area').dataset.readingStage='explain';
       $('view-play').dataset.readingPhase='explain';

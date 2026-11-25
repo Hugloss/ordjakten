@@ -20,7 +20,7 @@
     }
     return copy;
   }
-  function makeChallenge(prompt,right,distractors,source,random,why) {
+  function makeChallenge(prompt,right,distractors,source,random,why,evidence='') {
     if(!right||typeof right!=='string')return null;
     const wrong=[];
     for(const item of distractors){
@@ -29,32 +29,44 @@
     if(!wrong.length)return null;
     const options=shuffle([{label:right,correct:true},
       ...shuffle(wrong,random).slice(0,2).map(label=>({label,correct:false}))],random);
-    return {prompt,options,source,why:why||''};
+    return {prompt,options,source,why:why||'',evidence};
   }
-  function makeCheck(question,{bank,contexts,surprises,missions,random=Math.random}={}) {
+  function makeCheck(question,{bank,contexts,surprises,missions,readingProgress=null,random=Math.random}={}) {
     if(!question||!question.id||!question.definition)return null;
     const word=question.word;
+    const lastEvidence=readingProgress?.[question.id]?.transfer?.lastEvidence;
     if(question.kind==='expression'){
       const challenge=surprises?.challenges?.find(x=>x.id===question.id);
-      const right=challenge?.options?.find(x=>x.correct===true)?.label;
-      const wrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
       const mission=missions?.missions?.find(x=>x.id===question.id);
+      const candidates=[];
+      const surpriseRight=challenge?.options?.find(x=>x.correct===true)?.label;
+      const sentenceRight=mission?.sentences?.find(x=>x.correct===true)?.label;
+      if(surpriseRight)candidates.push({label:surpriseRight,key:'expression:challenge',why:challenge?.explanation});
+      if(sentenceRight && sentenceRight!==surpriseRight)
+        candidates.push({label:sentenceRight,key:'expression:mission',why:mission?.hint||challenge?.explanation});
+      const fresh=candidates.filter(c=>c.key!==lastEvidence);
+      const picked=choose(fresh.length?fresh:candidates,random);
+      const wrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
       wrong.push(...(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label));
-      return makeChallenge('Vilken NY situation visar uttrycket ”'+word+'”?',right,wrong,
-        'expression',random,challenge?.explanation);
+      return picked?makeChallenge('Vilken NY situation visar uttrycket ”'+word+'”?',picked.label,wrong,
+        'expression',random,picked.why,picked.key):null;
     }
     if(question.kind!=='word')return null;
     const scenes=contexts?.wordContexts||[];
     const record=scenes.find(x=>x.id===question.id);
     if(record){
-      const fresh=record.scenes.filter((scene,i)=>
-        i!==question.contextIndex&&scene.text!==question.stem);
-      const target=choose(fresh,random);
+      const fresh=record.scenes.map((scene,index)=>({scene,index})).filter(({scene,index})=>
+        index!==question.contextIndex&&scene.text!==question.stem);
+      // If a child needed help before, use another AUTHORED scene whenever
+      // possible. Store only its index, never the text or the child's answer.
+      const unused=fresh.filter(({index})=>'context:'+index!==lastEvidence);
+      const target=choose(unused.length?unused:fresh,random);
       const ids=[...new Set([...record.distractors,...(record.readingDistractors||[])])];
       const records=shuffle(ids.map(id=>scenes.find(x=>x.id===id)).filter(x=>x?.scenes?.length),random);
       const wrong=records.map(x=>choose(x.scenes,random)?.text);
       const check=makeChallenge('Vilken ANNAN berättelse visar ordet ”'+word+'”?',
-        target?.text,wrong,'context',random,target?.why);
+        target?.scene.text,wrong,'context',random,target?.scene.why,
+        target?'context:'+target.index:'');
       if(check)return check;
     }
     const words=bank?.words||[];
@@ -89,6 +101,14 @@
   // this record; it never creates grades, extra stars or user profiles.
   const ID=/^(?:sv|ut)-\d{4,}$/;
   const counter=value=>Number.isInteger(value)&&value>=0?Math.min(9999,value):0;
+  const DAY_MS=24*60*60*1000;
+  const VALID_EVIDENCE={
+    word:/^context:[012]$/,
+    expression:/^expression:(?:challenge|mission)$/
+  };
+  const evidenceValid=(id,key)=>typeof key==='string' &&
+    (id.startsWith('sv-')?VALID_EVIDENCE.word:VALID_EVIDENCE.expression).test(key);
+  const at=value=>Number.isFinite(value)&&value>=0&&value<=4102444800000?Math.floor(value):0;
   function sanitizeProgress(raw) {
     const out=Object.create(null);
     if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;
@@ -100,31 +120,75 @@
         if(!item||typeof item!=='object'||Array.isArray(item))continue;
         const first=counter(item.first),supported=counter(item.supported);
         if(first+supported===0)continue;
-        entry[type]={first,supported,streak:Math.min(counter(item.streak),first,99),
-          lastAt:Number.isFinite(item.lastAt)&&item.lastAt>=0&&item.lastAt<=4102444800000?
-            Math.floor(item.lastAt):0};
+        const card={first,supported,streak:Math.min(counter(item.streak),first,99),
+          lastAt:at(item.lastAt)};
+        // Old records have no "quality" field. Keep their existing mastery
+        // behavior rather than discarding a child's earlier achievements.
+        if(type==='transfer' && Number.isInteger(item.quality) &&
+           item.quality>=0 && item.quality<=2){
+          const keys=Array.isArray(item.proofs)?item.proofs.filter(key=>evidenceValid(id,key)):[];
+          const proofs=[...new Set(keys)].slice(-2);
+          card.quality=Math.min(item.quality,Math.max(proofs.length,
+            // Legacy mastered cards may predate the evidence keys.
+            item.legacyMastered===true?2:0));
+          card.proofs=proofs;
+          if(evidenceValid(id,item.lastEvidence))card.lastEvidence=item.lastEvidence;
+          card.lastQualifiedAt=at(item.lastQualifiedAt);
+          if(item.legacyMastered===true)card.legacyMastered=true;
+        }
+        entry[type]=card;
       }
       if(Object.keys(entry).length)out[id]=entry;
     }
     return out;
   }
-  function recordProgress(raw,id,source,outcome,now=Date.now()) {
+  function recordProgress(raw,id,source,outcome,now=Date.now(),evidence='') {
     if(!ID.test(id)||!['context','expression','meaning'].includes(source)||
       !['first','retry','guided'].includes(outcome))return raw;
     const type=source==='meaning'?'recognition':'transfer';
     const cards=sanitizeProgress(raw);
     const before=cards[id]?.[type]||{first:0,supported:0,streak:0,lastAt:0};
     const first=outcome==='first';
-    return {...cards,[id]:{...cards[id],[type]:{
+    const timestamp=at(now)||Date.now();
+    const card={
       first:Math.min(9999,before.first+(first?1:0)),
       supported:Math.min(9999,before.supported+(first?0:1)),
       streak:first?Math.min(99,before.streak+1):0,
-      lastAt:Number.isFinite(now)&&now>=0&&now<=4102444800000?Math.floor(now):Date.now()
-    }}};
+      lastAt:timestamp
+    };
+    if(type==='transfer' && evidenceValid(id,evidence)){
+      const legacyMastered=before.legacyMastered===true ||
+        (before.quality===undefined && before.supported>0 && before.streak>=2);
+      let proofs=Array.isArray(before.proofs)?[...before.proofs]:[];
+      let quality=before.quality??(legacyMastered?2:0);
+      let lastQualifiedAt=before.lastQualifiedAt||0;
+      if(!first){
+        // Assisted or retried answers are useful learning, not independent
+        // proof of transfer. A new struggle reopens the review cycle.
+        proofs=[];quality=0;lastQualifiedAt=0;
+      }else if(!legacyMastered && quality<2){
+        const previous=lastQualifiedAt||before.lastAt||0;
+        const spaced=timestamp>=previous+DAY_MS;
+        const novel=!proofs.includes(evidence) && before.lastEvidence!==evidence;
+        if(spaced && novel){
+          proofs.push(evidence);
+          quality=Math.min(2,proofs.length);
+          lastQualifiedAt=timestamp;
+        }
+      }
+      card.quality=quality;
+      card.proofs=proofs.slice(-2);
+      card.lastEvidence=evidence;
+      card.lastQualifiedAt=lastQualifiedAt;
+      if(legacyMastered && first)card.legacyMastered=true;
+    }
+    return {...cards,[id]:{...cards[id],[type]:card}};
   }
   function needsReview(raw,id,type='transfer') {
     const entry=raw?.[id]?.[type];
-    return !!entry && entry.supported>0 && entry.streak<2;
+    return !!entry && entry.supported>0 &&
+      (type==='transfer' && Number.isInteger(entry.quality)?
+        entry.quality<2:entry.streak<2);
   }
   return {makeCheck,isCorrect,nextStep,sanitizeProgress,recordProgress,needsReview};
 });

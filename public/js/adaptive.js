@@ -107,7 +107,8 @@
   }
   function readingNeeds(progress,id,type) {
     const item=progress?.[id]?.[type];
-    return !!item&&item.supported>0&&item.streak<2;
+    return !!item&&item.supported>0 &&
+      (type==='transfer'&&Number.isInteger(item.quality)?item.quality<2:item.streak<2);
   }
   function focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress=null) {
     const id=item.entry.id;
