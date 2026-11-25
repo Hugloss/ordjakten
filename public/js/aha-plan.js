@@ -8,6 +8,19 @@
   'use strict';
   const DAY=86400000;
   const LIMIT=5;
+  // A voluntary per-word Aha is also available before a difficulty has been
+  // observed. It uses exactly the same spacing and authored-source rules.
+  function option(item,progress,{bank,contexts,surprises,missions,reading,random=Math.random}){
+    if(!item||!item.id||!item.definition)return null;
+    const card=progress?.[item.id]?.transfer;
+    const check=reading.makeCheck({...item,word:item.word||item.name,options:[]},
+      {bank,contexts,surprises,missions,readingProgress:progress,random});
+    if(!check||check.source!==(item.kind==='word'?'context':'expression')||
+      !check.evidence||check.evidence===card?.lastEvidence||
+      check.options.length<2||check.options.filter(x=>x.correct).length!==1)return null;
+    const last=Math.max(card?.lastAt||0,card?.lastQualifiedAt||0);
+    return {...item,word:item.word||item.name,check,dueAt:last?last+DAY:0};
+  }
   function plan(raw,{bank,expressions,contexts,surprises,missions,reading,now=Date.now(),random=Math.random}){
     const progress=reading.sanitizeProgress(raw);
     const ready=[],waiting=[];
@@ -19,17 +32,8 @@
     for(const item of catalog){
       if(seen.has(item.id)||!reading.needsReview(progress,item.id,'transfer'))continue;
       seen.add(item.id);
-      const card=progress[item.id].transfer;
-      const check=reading.makeCheck({...item,options:[]},
-        {bank,contexts,surprises,missions,readingProgress:progress,random});
-      if(!check || check.source!==(item.kind==='word'?'context':'expression') ||
-        !check.evidence || check.evidence===card.lastEvidence ||
-        check.options.length<2 || check.options.filter(x=>x.correct).length!==1)continue;
-      // Rest after the latest encounter, even after a same-day normal quiz.
-      // The existing evidence rules still decide when the need is resolved.
-      const last=Math.max(card.lastAt||0,card.lastQualifiedAt||0);
-      const dueAt=last?last+DAY:0;
-      (dueAt<=now?ready:waiting).push({...item,check,dueAt});
+      const row=option(item,progress,{bank,contexts,surprises,missions,reading,random});
+      if(row)(row.dueAt<=now?ready:waiting).push(row);
     }
     const order=(a,b)=>a.dueAt-b.dueAt||a.id.localeCompare(b.id);
     ready.sort(order);waiting.sort(order);
@@ -43,5 +47,5 @@
     return {attempts:count,step,outcome:step==='complete'?(count===1?'first':'retry'):
       step==='guided'?'guided':null};
   }
-  return {DAY,LIMIT,plan,answer};
+  return {DAY,LIMIT,plan,answer,option};
 });

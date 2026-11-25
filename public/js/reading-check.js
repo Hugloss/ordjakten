@@ -34,7 +34,9 @@
   function makeCheck(question,{bank,contexts,surprises,missions,readingProgress=null,random=Math.random}={}) {
     if(!question||!question.id||!question.definition)return null;
     const word=question.word;
-    const lastEvidence=readingProgress?.[question.id]?.transfer?.lastEvidence;
+    const transfer=readingProgress?.[question.id]?.transfer;
+    const lastEvidence=transfer?.lastEvidence;
+    const proofs=new Set(Array.isArray(transfer?.proofs)&&transfer.quality<2?transfer.proofs:[]);
     if(question.kind==='expression'){
       const challenge=surprises?.challenges?.find(x=>x.id===question.id);
       const mission=missions?.missions?.find(x=>x.id===question.id);
@@ -51,7 +53,8 @@
         !shown.has(c.label)&&c.label!==question.scene&&c.label!==question.stem);
       const eligible=novelHere.length?novelHere:candidates;
       const fresh=eligible.filter(c=>c.key!==lastEvidence);
-      const picked=choose(fresh.length?fresh:eligible,random);
+      const unproved=fresh.filter(c=>!proofs.has(c.key));
+      const picked=choose(unproved.length?unproved:fresh.length?fresh:eligible,random);
       const wrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
       wrong.push(...(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label));
       return picked?makeChallenge('Vilken NY situation visar uttrycket ”'+word+'”?',picked.label,wrong,
@@ -66,7 +69,8 @@
       // If a child needed help before, use another AUTHORED scene whenever
       // possible. Store only its index, never the text or the child's answer.
       const unused=fresh.filter(({index})=>'context:'+index!==lastEvidence);
-      const target=choose(unused.length?unused:fresh,random);
+      const unproved=unused.filter(({index})=>!proofs.has('context:'+index));
+      const target=choose(unproved.length?unproved:unused.length?unused:fresh,random);
       const ids=[...new Set([...record.distractors,...(record.readingDistractors||[])])];
       const records=shuffle(ids.map(id=>scenes.find(x=>x.id===id)).filter(x=>x?.scenes?.length),random);
       const wrong=records.map(x=>choose(x.scenes,random)?.text);

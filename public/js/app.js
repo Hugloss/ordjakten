@@ -575,23 +575,45 @@
     }
     return plan;
   }
+  function ahaOption(item,random=()=>.37){
+    return AhaPlan.option(item,history.readingProgress,{bank,contexts,surprises,missions,reading:B,random});
+  }
+  function wordProfile(item,types,now=Date.now()){
+    return L.profile(item,{skillProgress:history.skillProgress,missionProgress:history.missionProgress,
+      readingProgress:history.readingProgress,types,transfer:ahaOption(item),reading:B,now});
+  }
   function learningEntries(plan=getAhaPlan()){
     const ready=new Set(plan.ready.map(row=>row.id)),waiting=new Set(plan.waiting.map(row=>row.id));
     return L.entries(learningCatalog,history.skillProgress,history.reviewProgress,
       history.missionProgress,history.mistakes).map(item=>{
-      if(!ready.has(item.id)&&!waiting.has(item.id))return item;
+      const observed=history.readingProgress[item.id];
+      const hasAha=!!(observed?.recognition||observed?.transfer);
+      if(!hasAha&&!ready.has(item.id)&&!waiting.has(item.id))return item;
       // Aha is evidence of an encounter, not mastery of a skill.
       const steps=item.steps.map((step,index)=>index===0?{...step,done:true}:step);
       return {...item,seen:true,steps,done:steps.filter(step=>step.done).length,
-        needsPractice:true,tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
-          'En ny berättelse väntar till en annan dag.'};
+        needsPractice:item.needsPractice||B.needsReview(history.readingProgress,item.id,'transfer')||
+          B.needsReview(history.readingProgress,item.id,'recognition'),
+        tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
+          waiting.has(item.id)?'En ny berättelse väntar till en annan dag.':item.tip};
     });
   }
-  function startAhaRound(){
-    const plan=getAhaPlan(Math.random);
-    if(!plan.round.length){renderAhaPreview();return;}
-    ahaRound={items:plan.round,index:0,attempts:0,stage:'read',completed:0};
+  function startAhaRound(id=null){
+    const row=id?ahaOption(learningCatalog.find(item=>item.id===id),Math.random):null;
+    const items=id?(row&&row.dueAt<=Date.now()?[row]:[]):getAhaPlan(Math.random).round;
+    if(!items.length){renderAhaPreview();if(screen==='learning')renderLearning();return;}
+    ahaRound={items,index:0,attempts:0,stage:'read',completed:0,returnId:id};
     show('aha');renderAhaStep();
+  }
+  function leaveAhaRound(){
+    const id=ahaRound?.returnId;
+    if(!id){goNav('learning');return;}
+    const item=learningCatalog.find(row=>row.id===id);
+    learningFilter='all';learningLimit=18;
+    $('learning-kind').value='all';$('learning-search').value=item.name;
+    goNav('learning');
+    const button=$('learning-list').querySelector('[data-learning-open="'+id+'"]');
+    if(button){button.click();button.focus({preventScroll:true});}
   }
   function renderAhaStep(message=''){
     const row=ahaRound.items[ahaRound.index];
@@ -745,6 +767,9 @@
     const list=$('learning-list');list.replaceChildren();
     const showing=matches.slice(0,learningLimit);
     for(const item of showing){
+      const itemForFocus=F.findItem(item.id,bank,expressions);
+      const types=F.supported(itemForFocus,curation,contexts,missions,K,contrasts);
+      const profile=wordProfile(item,types);
       const card=element('article','learning-word-card');
       const button=element('button','learning-word-toggle');button.type='button';
       button.dataset.learningOpen=item.id;button.setAttribute('aria-expanded','false');
@@ -755,19 +780,33 @@
       button.append(element('span','learning-word-subtitle',item.seen?'Din stig växer för varje försök.':'Det här ordet väntar på att upptäckas.'));
       const pebbles=element('span','learning-word-pebbles');
       pebbles.setAttribute('aria-hidden','true');
-      for(const step of item.steps){const pebble=element('span','learning-pebble',step.icon);pebble.dataset.done=String(step.done);pebbles.append(pebble);}
-      pebbles.append(element('span','learning-word-count',`${item.done} av 4 upptäckter`));button.append(pebbles);
+      for(const facet of profile.facets){
+        const pebble=element('span','learning-pebble',facet.icon);
+        pebble.dataset.state=facet.state;pebble.dataset.done=String(['right','spaced'].includes(facet.state));pebbles.append(pebble);
+      }
+      pebbles.append(element('span','learning-word-count',profile.tried===1?'1 sätt provat':profile.tried+' sätt provade'));button.append(pebbles);
       const detail=element('div','learning-word-detail');detail.id='learning-detail-'+item.id;detail.hidden=true;
       detail.append(element('p','learning-definition',item.definition),element('p','learning-example','Exempel: '+item.example));
-      const track=element('ol','learning-steps');track.setAttribute('aria-label','Ordets fyra upptäckter');
-      for(const step of item.steps){
-        const row=element('li');row.dataset.done=String(step.done);
-        const icon=element('span','learning-stage-icon',step.icon);icon.setAttribute('aria-hidden','true');
-        const label=element('span','learning-stage-label',step.label);
-        const state=element('span','learning-stage-state',step.done?'Klart':'Att prova');
-        row.title=step.help;row.append(icon,label,state);track.append(row);
+      detail.append(element('h3','learning-profile-title','Fem sätt att förstå'));
+      const track=element('ul','learning-steps learning-profile');track.setAttribute('aria-label','Olika sätt att öva ordförståelse');
+      for(const facet of profile.facets){
+        const row=element('li');row.dataset.facet=facet.id;row.dataset.state=facet.state;
+        row.dataset.done=String(['right','spaced'].includes(facet.state));
+        const icon=element('span','learning-stage-icon',facet.icon);icon.setAttribute('aria-hidden','true');
+        const text=element('div','learning-profile-text');
+        text.append(element('strong','learning-stage-label',facet.label),element('span','learning-stage-state',facet.status));
+        if(facet.help&&facet.state!=='unavailable')text.append(element('p','learning-profile-help',facet.help));
+        row.append(icon,text);
+        if(facet.action){
+          const action=element('button','learning-focus-skill',facet.action.kind==='aha'?'Prova Aha →':'Öva →');
+          action.type='button';action.setAttribute('aria-label','Öva '+facet.label);
+          if(facet.action.kind==='aha')action.dataset.ahaWord=item.id;
+          else{action.dataset.focusId=item.id;action.dataset.focusSkill=facet.action.skill;}
+          row.append(action);
+        }
+        track.append(row);
       }
-      detail.append(track,element('p','learning-word-tip','💡 '+item.tip));
+      detail.append(track);
       if(item.skills.length){const note=item.skills.map(x=>`${x.label}: ${x.right} rätt och ${x.wrong} fel`).join(' · ');
         detail.append(element('p','learning-evidence','Dina övningar: '+note));}
       const pair=K.findPair(item.id,contrasts);
@@ -794,20 +833,23 @@
           insight.recurring?'⚖️ De här två orden har varit kluriga att skilja åt. Prova en jämförelse i din egen takt!':
             '⚖️ Du kan jämföra det här ordet med ett liknande ord igen.'));
       }
-      const itemForFocus=F.findItem(item.id,bank,expressions);
-      const types=F.supported(itemForFocus,curation,contexts,missions,K,contrasts);
       if(types.length){
-        const recommended=F.recommended(itemForFocus,types,history.skillProgress);
+        const next=profile.next;
+        const recommended=next?.action.kind==='focus'?next.action.skill:F.recommended(itemForFocus,types,history.skillProgress);
         const focusBox=element('section','learning-focus');
-        focusBox.append(element('h4','','🎯 Vill du träna just det här?'));
-        const main=element('button','primary-button learning-focus-button',`🎯 Träna det här! · ${F.LABELS[recommended]}`);
-        main.type='button';main.dataset.focusId=item.id;main.dataset.focusSkill=recommended;focusBox.append(main);
+        focusBox.append(element('h4','',next?'🎯 Nästa idé för dig':'🎯 Vill du träna just det här?'));
+        const main=element('button','primary-button learning-focus-button',next?.action.kind==='aha'?
+          '🎭 Prova en annan Aha-berättelse →':`🎯 Träna det här! · ${F.LABELS[recommended]}`);
+        main.type='button';
+        if(next?.action.kind==='aha')main.dataset.ahaWord=item.id;
+        else{main.dataset.focusId=item.id;main.dataset.focusSkill=recommended;}
+        focusBox.append(main);
         if(types.length>1){
           focusBox.append(element('p','learning-focus-note','Eller välj själv vilken sorts uppgift du vill prova:'));
           const list=element('div','learning-focus-skills');
           for(const type of types){
             // The recommended action already has its own large button.
-            if(type===recommended)continue;
+            if(type===recommended&&next?.action.kind!=='aha')continue;
             const other=element('button','learning-focus-skill',F.LABELS[type]);
             other.type='button';other.dataset.focusId=item.id;other.dataset.focusSkill=type;
             list.append(other);
@@ -817,7 +859,7 @@
         focusBox.append(element('p','learning-focus-note','Korta övningar utan timer (4 när du jämför två ord). Inga provpoäng eller extra stjärnor.'));
         detail.append(focusBox);
       }
-      detail.append(element('p','learning-evidence','Upptäckterna är övningssignaler, inte ett betyg. Du kan få dem i olika ordning.'));
+      detail.append(element('p','learning-evidence','Du kan öva på olika sätt och i vilken ordning du vill. Ett rätt svar är en upptäckt, inte ett betyg.'));
       card.append(button,detail);list.append(card);
     }
     $('learning-count').textContent=`Visar ${showing.length} av ${matches.length} ord och uttryck.`;
@@ -1689,9 +1731,9 @@
   $('high-contrast').addEventListener('change',e=>setSettings({contrast:e.target.checked}));
   $('review-only').addEventListener('change',e=>setSettings({reviewOnly:e.target.checked}));
   $('setup-form').addEventListener('submit',event=>{event.preventDefault();startRound();});
-  for(const location of ['home','learning'])$('aha-'+location+'-start').addEventListener('click',startAhaRound);
-  $('aha-round-back').addEventListener('click',()=>goNav('learning'));
-  $('aha-round-done').addEventListener('click',()=>goNav('learning'));
+  for(const location of ['home','learning'])$('aha-'+location+'-start').addEventListener('click',()=>startAhaRound());
+  $('aha-round-back').addEventListener('click',leaveAhaRound);
+  $('aha-round-done').addEventListener('click',leaveAhaRound);
   $('aha-round-reveal').addEventListener('click',revealAhaQuestion);
   $('aha-round-next').addEventListener('click',advanceAhaRound);
   $('aha-round-options').addEventListener('click',event=>{
@@ -1711,6 +1753,8 @@
   }));
   $('learning-more').addEventListener('click',()=>{learningLimit=Math.min(learningLimit+18,learningCatalog.length);renderLearning();});
   $('learning-list').addEventListener('click',event=>{
+    const ahaButton=event.target.closest('button[data-aha-word]');
+    if(ahaButton&&$('learning-list').contains(ahaButton)){startAhaRound(ahaButton.dataset.ahaWord);return;}
     const focusButton=event.target.closest('button[data-focus-id]');
     if(focusButton&&$('learning-list').contains(focusButton)){
       startFocus(focusButton.dataset.focusId,focusButton.dataset.focusSkill);return;

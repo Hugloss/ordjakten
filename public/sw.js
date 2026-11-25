@@ -1,5 +1,5 @@
 /* Offline-only enhancement. App works fully without service workers. */
-const CACHE_NAME = 'ordjakten-static-v25-aha-plan'; // Increment on each content release.
+const CACHE_NAME = 'ordjakten-static-v26-word-profile'; // Increment on each content release.
 const ICON_FILES = [
   "./assets/story-icons/1f305.png",
   "./assets/story-icons/1f31f.png",

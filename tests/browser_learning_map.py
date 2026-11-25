@@ -18,6 +18,12 @@ def play_five(page):
             break
         page.locator('.answer-option').first.click()
         assert page.locator('#feedback-area').is_visible()
+        if page.locator('#reading-start').is_visible():
+            page.locator('#reading-start').click()
+            page.locator('#reading-options button').first.click()
+            if page.locator('#reading-start').is_visible():
+                page.locator('#reading-start').click()
+                page.locator('#reading-options button').first.click()
         page.locator('#next').click()
     assert page.locator('#view-results').is_visible()
 
@@ -42,7 +48,7 @@ def main():
         button.click()
         assert button.get_attribute('aria-expanded')=='true'
         assert page.locator('.learning-word-detail').is_visible()
-        assert page.locator('.learning-steps li').count()==4
+        assert page.locator('.learning-steps li').count()==5
         assert page.locator('.learning-steps li[data-done="true"]').count()==0
         page.locator('#learning-search').fill('')
         page.locator('#learning-back').click()
@@ -63,8 +69,8 @@ def main():
         first.click()
         assert first.get_attribute('aria-expanded')=='true'
         assert child.locator('.learning-word-detail:visible').count()==1
-        assert child.locator('.learning-steps li:visible').count()==4
-        assert child.locator('.learning-steps li[data-done="true"]:visible').count()>=1
+        assert child.locator('.learning-steps li:visible').count()==5
+        assert child.locator('.learning-steps li[data-state="new"]:visible').count()<5
         assert child.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), 'Mobile horizontal overflow'
         child.screenshot(path=str(OUT/'v014-ordstig-detalj-mobil.png'),full_page=False)
         child.evaluate("document.documentElement.style.scrollBehavior='auto'; document.scrollingElement.scrollTop=0")
@@ -106,7 +112,7 @@ def main():
         tiny.locator('#learning-search').fill('för en gångs skull')
         tiny.locator('.learning-word-toggle').click()
         assert tiny.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), '320px text overflows'
-        assert tiny.locator('.learning-steps li:visible').count()==4
+        assert tiny.locator('.learning-steps li:visible').count()==5
         assert not errors,errors
         tiny.close()
         browser.close()
