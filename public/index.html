@@ -53,6 +53,7 @@
   <script src="./js/retention.js" defer></script>
   <script src="./js/focus-practice.js" defer></script>
   <script src="./js/reading-check.js" defer></script>
+  <script src="./js/aha-plan.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -92,6 +93,12 @@
           <div id="learning-home-focus" class="learning-home-focus" hidden>
             <p id="learning-home-focus-note">Ett ord väntar på en ny sorts träning.</p>
             <button type="button" id="learning-home-focus-start" class="secondary-button">🎯 Träna det här!</button>
+          </div>
+          <div id="aha-home" class="learning-home-focus" hidden>
+            <strong>🎭 Nya berättelser för dig</strong>
+            <p id="aha-home-note" class="muted" role="status"></p>
+            <button type="button" id="aha-home-start" class="primary-button full-button"></button>
+            <p class="subtle-note">En liten runda i din egen takt. Inga provpoäng.</p>
           </div>
           <button type="button" id="open-learning-home" class="secondary-button full-button">🗺️ Visa min ordstig →</button>
         </section>
@@ -400,6 +407,12 @@
           </div>
           <p class="subtle-note">Det här visar vilka övningar du har provat, inte något betyg. Ett rätt svar betyder inte att man måste kunna ordet för alltid.</p>
         </section>
+        <section id="aha-learning" class="panel" aria-labelledby="aha-learning-title" hidden>
+          <h2 id="aha-learning-title">🎭 Nya berättelser för dig</h2>
+          <p id="aha-learning-note" class="muted" role="status"></p>
+          <button type="button" id="aha-learning-start" class="primary-button full-button"></button>
+          <p class="subtle-note">Du får öva på ord som varit kluriga i Aha-frågorna. Ingen timer eller provpoäng.</p>
+        </section>
         <section class="panel learning-controls" aria-label="Hitta ord i din stig">
           <label class="form-label" for="learning-search">🔎 Sök efter ett ord eller uttryck</label>
           <input id="learning-search" class="field" type="search" autocomplete="off" placeholder="Exempel: grumlig, skrovlig, för en gångs skull">
@@ -421,6 +434,39 @@
           <p id="learning-empty-text">Spela en ordjakt, så dyker dina ord upp här.</p>
         </section>
         <button id="learning-back" type="button" class="secondary-button full-button">← Till startsidan</button>
+      </section>
+
+      <section id="view-aha" class="view" aria-labelledby="aha-round-title" hidden>
+        <button id="aha-round-back" type="button" class="secondary-button focus-back">← Till min ordstig</button>
+        <header class="panel focus-hero">
+          <span class="focus-buddy" aria-hidden="true">🎭</span>
+          <div><p class="eyebrow">DIN EGEN LILLA AHA-RUNDA</p><h1 id="aha-round-title">Nya berättelser</h1>
+            <p class="muted">Läs, tänk och prova i lugn och ro. Inga provpoäng.</p></div>
+        </header>
+        <p id="aha-round-progress" class="focus-metrics" role="status"></p>
+        <section id="aha-round-read" class="panel focus-explain">
+          <p class="eyebrow">📖 STEG 1: LÄS</p>
+          <h2 id="aha-round-word" tabindex="-1"></h2>
+          <p id="aha-round-definition"></p>
+          <p id="aha-round-read-note" class="muted" role="status"></p>
+          <button id="aha-round-reveal" type="button" class="primary-button full-button">Jag har läst – prova mig →</button>
+        </section>
+        <section id="aha-round-question" class="panel" hidden>
+          <p class="eyebrow">🧠 STEG 2: VÄLJ BERÄTTELSE</p>
+          <h2 id="aha-round-prompt" tabindex="-1"></h2>
+          <div id="aha-round-options" class="reading-options" role="group" aria-labelledby="aha-round-prompt"></div>
+        </section>
+        <section id="aha-round-feedback" class="panel focus-explain" hidden>
+          <h2 id="aha-round-feedback-title" tabindex="-1"></h2>
+          <p id="aha-round-correct"></p><p id="aha-round-why" class="muted"></p>
+          <button id="aha-round-next" type="button" class="primary-button full-button">Nästa berättelse →</button>
+        </section>
+        <section id="aha-round-finished" class="panel focus-finish" hidden>
+          <h2 id="aha-round-finished-title" tabindex="-1">🌟 Du vågade prova!</h2>
+          <p id="aha-round-summary"></p>
+          <p class="muted">Orden får vila till en annan dag. Under tiden kan du upptäcka andra ord!</p>
+          <button id="aha-round-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
+        </section>
       </section>
 
       <section id="view-focus" class="view" aria-labelledby="focus-title" hidden>

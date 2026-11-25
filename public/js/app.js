@@ -25,12 +25,13 @@
   const T = window.OrdjaktenClues;
   const U = window.OrdjaktenRetention;
   const B = window.OrdjaktenReading;
+  const AhaPlan = window.OrdjaktenAhaPlan;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !AhaPlan || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -56,6 +57,7 @@
   const missionChoices=new Map();
   let orderSelection=[];
   let readingCheck = null;
+  let ahaRound = null;
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -470,7 +472,7 @@
   function show(name) {
     if(name!=='play') stopReadAloud();
     screen = name;
-    for (const view of ['home','play','results','words','history','book','learning','focus']) $('view-'+view).hidden = view!==name;
+    for (const view of ['home','play','results','words','history','book','learning','focus','aha']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
       const chosen=btn.dataset.nav===(name==='play'||name==='results'?'home':name);
       if(chosen)btn.setAttribute('aria-current','page'); else btn.removeAttribute('aria-current');
@@ -553,9 +555,107 @@
     setSettings(plan.settings);
     startRound(id);
   }
-  function learningEntries(){
+  function getAhaPlan(random=()=>.37){
+    return AhaPlan.plan(history.readingProgress,{bank,expressions,contexts,surprises,missions,reading:B,random});
+  }
+  function renderAhaPreview(){
+    const plan=getAhaPlan();
+    const ready=plan.ready.length,waiting=plan.waiting.length;
+    const note=ready
+      ? (ready===1?'En ny berättelse väntar på dig!':ready+' ord och uttryck har nya berättelser att prova.')+
+        (waiting?' Några andra får vila till en annan dag.':'')
+      : 'Bra övat! Dina nästa berättelser kommer en annan dag.';
+    for(const location of ['home','learning']){
+      $('aha-'+location).hidden=!ready&&!waiting;
+      $('aha-'+location+'-note').textContent=note;
+      const button=$('aha-'+location+'-start');
+      button.hidden=!ready;
+      button.textContent=ready?'🎭 Prova '+plan.round.length+
+        (plan.round.length===1?' ny berättelse →':' nya berättelser →'):'';
+    }
+    return plan;
+  }
+  function learningEntries(plan=getAhaPlan()){
+    const ready=new Set(plan.ready.map(row=>row.id)),waiting=new Set(plan.waiting.map(row=>row.id));
     return L.entries(learningCatalog,history.skillProgress,history.reviewProgress,
-      history.missionProgress,history.mistakes);
+      history.missionProgress,history.mistakes).map(item=>{
+      if(!ready.has(item.id)&&!waiting.has(item.id))return item;
+      // Aha is evidence of an encounter, not mastery of a skill.
+      const steps=item.steps.map((step,index)=>index===0?{...step,done:true}:step);
+      return {...item,seen:true,steps,done:steps.filter(step=>step.done).length,
+        needsPractice:true,tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
+          'En ny berättelse väntar till en annan dag.'};
+    });
+  }
+  function startAhaRound(){
+    const plan=getAhaPlan(Math.random);
+    if(!plan.round.length){renderAhaPreview();return;}
+    ahaRound={items:plan.round,index:0,attempts:0,stage:'read',completed:0};
+    show('aha');renderAhaStep();
+  }
+  function renderAhaStep(message=''){
+    const row=ahaRound.items[ahaRound.index];
+    ahaRound.stage='read';
+    $('aha-round-progress').textContent='Berättelse '+(ahaRound.index+1)+' av '+ahaRound.items.length;
+    $('aha-round-word').textContent=row.word;
+    $('aha-round-definition').textContent=row.definition;
+    $('aha-round-read-note').textContent=message||'Läs vad ordet eller uttrycket betyder.';
+    $('aha-round-read').hidden=false;
+    $('aha-round-question').hidden=true;
+    $('aha-round-feedback').hidden=true;
+    $('aha-round-finished').hidden=true;
+    $('aha-round-word').focus({preventScroll:true});scrollTop();
+  }
+  function revealAhaQuestion(){
+    if(!ahaRound||ahaRound.stage!=='read')return;
+    ahaRound.stage='question';
+    const {check}=ahaRound.items[ahaRound.index];
+    $('aha-round-read').hidden=true;
+    $('aha-round-question').hidden=false;
+    $('aha-round-prompt').textContent=check.prompt;
+    const options=$('aha-round-options');options.replaceChildren();
+    check.options.forEach((option,index)=>{
+      const button=element('button','reading-option',option.label);
+      button.type='button';button.dataset.ahaOption=String(index);options.append(button);
+    });
+    $('aha-round-prompt').focus({preventScroll:true});scrollTop();
+  }
+  function answerAhaRound(index){
+    if(!ahaRound||ahaRound.stage!=='question')return;
+    const row=ahaRound.items[ahaRound.index];
+    const result=AhaPlan.answer(row.check,index,ahaRound.attempts,B);
+    if(!result)return;
+    ahaRound.attempts=result.attempts;
+    if(result.step==='reread'){
+      row.check.options.push(row.check.options.shift());
+      renderAhaStep('Det var klurigt! Läs betydelsen igen. Du får ett nytt försök.');
+      return;
+    }
+    // Save completed checkpoints exactly once, without normal quiz scores.
+    ahaRound.stage='feedback';ahaRound.completed++;
+    history.readingProgress=B.recordProgress(history.readingProgress,row.id,row.check.source,
+      result.outcome,Date.now(),row.check.evidence);
+    saveHistory();
+    $('aha-round-question').hidden=true;
+    $('aha-round-feedback').hidden=false;
+    $('aha-round-feedback-title').textContent=result.step==='guided'?'📖 Vi lär oss tillsammans!':'🌟 Du hittade rätt berättelse!';
+    $('aha-round-correct').textContent=row.check.options.find(option=>option.correct).label;
+    $('aha-round-why').textContent=row.check.why||'Jämför berättelsen med betydelsen du läste.';
+    $('aha-round-next').textContent=ahaRound.index+1===ahaRound.items.length?'Klar med rundan →':'Nästa berättelse →';
+    $('aha-round-feedback-title').focus({preventScroll:true});scrollTop();
+  }
+  function advanceAhaRound(){
+    if(!ahaRound||ahaRound.stage!=='feedback')return;
+    if(ahaRound.index+1<ahaRound.items.length){
+      ahaRound.index++;ahaRound.attempts=0;renderAhaStep();return;
+    }
+    ahaRound.stage='finished';
+    $('aha-round-feedback').hidden=true;
+    $('aha-round-finished').hidden=false;
+    $('aha-round-progress').textContent='Rundan är klar!';
+    $('aha-round-summary').textContent=ahaRound.completed===1?'Du har provat en berättelse på nytt.':
+      'Du har provat '+ahaRound.completed+' berättelser på nytt.';
+    $('aha-round-finished-title').focus({preventScroll:true});scrollTop();
   }
   // A gentle, optional compass: only observed wrong alternatives from the
   // two-answer comparison exercise can create these suggestions.
@@ -610,7 +710,8 @@
   function renderLearningPreview(){
     renderConfusionPreview();
     renderRetentionHome();
-    const totals=L.summary(learningEntries());
+    const plan=renderAhaPreview();
+    const totals=L.summary(learningEntries(plan));
     $('learning-home-seen').textContent=String(totals.discovered);
     $('learning-home-applied').textContent=String(totals.applied);
     const suggested=D.suggestions(history.skillProgress,1,history.readingProgress).find(row=>F.findItem(row.id,bank,expressions));
@@ -630,7 +731,7 @@
       : 'Din ordstig börjar med första ordet du möter. Varje försök räknas!';
   }
   function renderLearning(){
-    const all=learningEntries();
+    const all=learningEntries(renderAhaPreview());
     const totals=L.summary(all);
     $('learning-total-seen').textContent=String(totals.discovered);
     $('learning-total-meaning').textContent=String(totals.recognised);
@@ -1500,6 +1601,7 @@
   }
   function goNav(name){
     if(screen==='focus')focusPractice=null;
+    if(screen==='aha')ahaRound=null;
     if(screen==='play'&&!leaveGame())return;
     if(screen==='results'){game=null;}
     if(name==='home')renderSetup();
@@ -1585,6 +1687,18 @@
   $('high-contrast').addEventListener('change',e=>setSettings({contrast:e.target.checked}));
   $('review-only').addEventListener('change',e=>setSettings({reviewOnly:e.target.checked}));
   $('setup-form').addEventListener('submit',event=>{event.preventDefault();startRound();});
+  for(const location of ['home','learning'])$('aha-'+location+'-start').addEventListener('click',startAhaRound);
+  $('aha-round-back').addEventListener('click',()=>goNav('learning'));
+  $('aha-round-done').addEventListener('click',()=>goNav('learning'));
+  $('aha-round-reveal').addEventListener('click',revealAhaQuestion);
+  $('aha-round-next').addEventListener('click',advanceAhaRound);
+  $('aha-round-options').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-aha-option]');
+    if(button&&$('aha-round-options').contains(button))answerAhaRound(Number(button.dataset.ahaOption));
+  });
+  window.addEventListener('focus',()=>{
+    if(screen==='home'||screen==='learning')renderAhaPreview();
+  });
   $('open-learning-home').addEventListener('click',()=>goNav('learning'));
   $('open-learning-results').addEventListener('click',()=>goNav('learning'));
   $('learning-back').addEventListener('click',()=>goNav('home'));
@@ -1785,7 +1899,7 @@
   $('export-history').addEventListener('click',exportHistory);
   $('clear-history').addEventListener('click',()=>{
     if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor och uppdragsstjärnor? Detta går inte att ångra.'))return;
-    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
+    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   createAdventureChoices();renderSetup();show('home');
   if ('serviceWorker' in navigator && window.isSecureContext) {
