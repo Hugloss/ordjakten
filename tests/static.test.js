@@ -87,3 +87,15 @@ test('typed retrieval is wired before the app, available offline and included in
   assert.match(app,/recallProgress:history\.recallProgress/);
   assert.match(html,/<input id="recall-answer"[^>]*autocomplete="off"/);
 });
+
+test('workshop is offline and free text never joins a quiz or stored history',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/workshop.js')>=0&&html.indexOf('./js/workshop.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/workshop.js'"));
+  assert.match(html,/<textarea id="workshop-reflection"[^>]*autocomplete="off"/);
+  assert.ok(!app.includes("workshop-reflection').value.trim"));
+  const block=app.slice(app.indexOf('  function startWorkshop('),app.indexOf('  function getRecallPlan('));
+  assert.ok(!block.includes('saveHistory('));
+  assert.ok(!block.includes('history.results'));
+  assert.ok(block.includes("$('workshop-reflection').value=''"));
+});
