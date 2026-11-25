@@ -84,7 +84,14 @@
     // meaning. Prefer a NEW context/sentence on later visits, not the same key.
     if(readingNeeds(readingProgress,id,'transfer')){
       if(item.kind==='word'&&types.includes('context'))return 'context';
-      if(item.kind==='expression'&&types.includes('sentence'))return 'sentence';
+      if(item.kind==='expression'&&types.includes('sentence')){
+        // Rotate the PRIMARY task too: a sentence-choice question has already
+        // shown the mission sentence. After the authored surprise example,
+        // switch to meaning so the next Aha can show the other authored scene.
+        const last=readingProgress?.[id]?.transfer?.lastEvidence;
+        return last==='expression:challenge'&&types.includes('meaning')?
+          'meaning':'sentence';
+      }
     }
     if(readingNeeds(readingProgress,id,'recognition')&&types.includes('reverse'))return 'reverse';
     const record = progress?.[id];

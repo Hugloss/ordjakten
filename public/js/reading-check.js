@@ -44,8 +44,14 @@
       if(surpriseRight)candidates.push({label:surpriseRight,key:'expression:challenge',why:challenge?.explanation});
       if(sentenceRight && sentenceRight!==surpriseRight)
         candidates.push({label:sentenceRight,key:'expression:mission',why:mission?.hint||challenge?.explanation});
-      const fresh=candidates.filter(c=>c.key!==lastEvidence);
-      const picked=choose(fresh.length?fresh:candidates,random);
+      // Aha must not repeat the correct sentence already present among the
+      // main question's answer choices. Prefer a genuinely NEW authored scene.
+      const shown=new Set((question.options||[]).map(option=>option.label));
+      const novelHere=candidates.filter(c=>
+        !shown.has(c.label)&&c.label!==question.scene&&c.label!==question.stem);
+      const eligible=novelHere.length?novelHere:candidates;
+      const fresh=eligible.filter(c=>c.key!==lastEvidence);
+      const picked=choose(fresh.length?fresh:eligible,random);
       const wrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
       wrong.push(...(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label));
       return picked?makeChallenge('Vilken NY situation visar uttrycket ”'+word+'”?',picked.label,wrong,

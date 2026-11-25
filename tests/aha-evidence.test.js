@@ -39,6 +39,25 @@ test('every authored word context offers a novel Aha scene when another is avail
     assert.equal(second.options.filter(o=>o.correct).length,1);
   }
 });
+test('Aha never reuses the correct sentence visible in the main expression quiz',()=>{
+  for(const expr of expressions.expressions){
+    const q=E.makeExpressionQuestion(expr,'medium',()=>.3,'sentence',missions);
+    const mainCorrect=q.options.find(o=>o.correct).label;
+    const aha=check(q);
+    assert.equal(aha.evidence,'expression:challenge');
+    assert.notEqual(aha.options.find(o=>o.correct).label,mainCorrect);
+    const afterHelp=B.recordProgress({},expr.id,'expression','guided',NOW,aha.evidence);
+    const item={kind:'expression',entry:{id:expr.id}};
+    assert.equal(D.choiceType(item,{difficulty:'medium',expressionTask:'mix'},
+      {},['meaning','sentence','order'],()=>.4,afterHelp),'meaning');
+    const nextQ=E.makeExpressionQuestion(expr,'medium',()=>.3,'meaning',missions);
+    const nextAha=check(nextQ,afterHelp);
+    assert.equal(nextAha.evidence,'expression:mission');
+    const afterMission=B.recordProgress(afterHelp,expr.id,'expression','first',NOW+DAY,nextAha.evidence);
+    assert.equal(D.choiceType(item,{difficulty:'medium',expressionTask:'mix'},
+      {},['meaning','sentence','order'],()=>.4,afterMission),'sentence');
+  }
+});
 test('all expressions alternate between authored surprise and mission examples',()=>{
   for(const expr of expressions.expressions){
     const q=E.makeExpressionQuestion(expr,'medium',()=>.7,'meaning',missions);
