@@ -70,3 +70,17 @@
 .recall-actions{display:flex;flex-wrap:wrap;gap:8px}
 .recall-actions button{flex:1;min-height:46px}
 #view-recall .panel{margin-bottom:12px}
+
+/* A small workshop with readable puzzle pieces and no correctness score. */
+.workshop-task{display:grid;gap:12px}
+.workshop-task h2{font-size:clamp(23px,4vw,32px);line-height:1.35;margin:0;overflow-wrap:anywhere}
+.workshop-target{font-size:clamp(25px,4.5vw,34px);line-height:1.4;overflow-wrap:anywhere}
+.workshop-reading{font-size:clamp(19px,3.5vw,24px);line-height:1.55;overflow-wrap:anywhere}
+.workshop-pieces{display:flex;flex-wrap:wrap;gap:9px}
+.workshop-piece{font-size:18px;line-height:1.4;min-height:48px;max-width:100%;overflow-wrap:anywhere;white-space:normal}
+.workshop-story{display:grid;gap:8px;width:100%}
+.workshop-story strong{font-size:16px}
+.workshop-feedback-body{display:grid;gap:10px}
+.workshop-feedback-body p{font-size:18px;line-height:1.55;background:var(--surface-2);padding:12px;border-radius:10px;overflow-wrap:anywhere;margin:0}
+#workshop-reflection{font-size:20px;line-height:1.5;min-height:112px;width:100%;resize:vertical}
+#view-workshop .panel{margin-bottom:12px}

@@ -55,6 +55,7 @@
   <script src="./js/reading-check.js" defer></script>
   <script src="./js/aha-plan.js" defer></script>
   <script src="./js/recall.js" defer></script>
+  <script src="./js/workshop.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -105,6 +106,10 @@
             <strong>🔤 Hitta ordet själv</strong>
             <p id="recall-home-note" class="muted" role="status"></p>
             <button type="button" id="recall-home-start" class="secondary-button full-button"></button>
+          </div>
+          <div class="recall-preview">
+            <strong>🛠️ Ordverkstaden</strong><p class="muted">Bygg en mening, klura på ord och hitta på ett eget exempel.</p>
+            <button type="button" id="workshop-home-start" class="secondary-button full-button">Öppna ordverkstaden →</button>
           </div>
           <button type="button" id="open-learning-home" class="secondary-button full-button">🗺️ Visa min ordstig →</button>
         </section>
@@ -424,6 +429,11 @@
           <p id="recall-learning-note" class="muted" role="status"></p>
           <button type="button" id="recall-learning-start" class="secondary-button full-button"></button>
         </section>
+        <section class="panel recall-preview" aria-labelledby="workshop-learning-title">
+          <h2 id="workshop-learning-title">🛠️ Ordverkstaden</h2>
+          <p class="muted">Välj ett ord från din stig eller låt spelet välja en liten verkstad.</p>
+          <button type="button" id="workshop-learning-start" class="secondary-button full-button">Öppna ordverkstaden →</button>
+        </section>
         <section class="panel learning-controls" aria-label="Hitta ord i din stig">
           <label class="form-label" for="learning-search">🔎 Sök efter ett ord eller uttryck</label>
           <input id="learning-search" class="field" type="search" autocomplete="off" placeholder="Exempel: grumlig, skrovlig, för en gångs skull">
@@ -515,6 +525,59 @@
           <h2 id="recall-finished-title" tabindex="-1">🌟 Bra att du försökte!</h2>
           <p>Du har övat på att hitta ord själv. Nästa gång kan du få en annan ledtråd.</p>
           <button id="recall-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
+        </section>
+      </section>
+
+      <section id="view-workshop" class="view" aria-labelledby="workshop-title" hidden>
+        <button id="workshop-back" type="button" class="secondary-button focus-back">← Till min ordstig</button>
+        <header class="panel focus-hero">
+          <span class="focus-buddy" aria-hidden="true">🛠️</span>
+          <div><p class="eyebrow">LEK MED SPRÅKET</p><h1 id="workshop-title">Ordverkstaden</h1>
+            <p class="muted">Bygg, jämför och hitta på i din egen takt. Inga provpoäng.</p></div>
+        </header>
+        <p id="workshop-progress" class="focus-metrics" role="status"></p>
+        <section id="workshop-build" class="panel workshop-task" hidden>
+          <h2 id="workshop-build-title" tabindex="-1">🧩 Bygg vår exempelmening</h2>
+          <strong id="workshop-build-word" class="workshop-target"></strong>
+          <p id="workshop-build-meaning" class="workshop-reading"></p>
+          <p class="muted">Tryck på delarna i den ordning du vill ha dem.</p>
+          <p id="workshop-built" class="focus-scene workshop-reading" aria-live="polite"></p>
+          <div id="workshop-pieces" class="workshop-pieces" role="group" aria-label="Meningsdelar"></div>
+          <div class="recall-actions">
+            <button id="workshop-build-undo" type="button" class="secondary-button">↶ Ångra</button>
+            <button id="workshop-build-reset" type="button" class="secondary-button">Börja om</button>
+          </div>
+          <button id="workshop-build-show" type="button" class="secondary-button full-button">💡 Visa vår exempelmening</button>
+          <p id="workshop-build-example" class="workshop-reading" hidden></p>
+          <button id="workshop-build-check" type="button" class="primary-button full-button" disabled>Jämför min mening →</button>
+        </section>
+        <section id="workshop-repair" class="panel workshop-task" hidden>
+          <h2 id="workshop-repair-title" tabindex="-1">🔍 Hitta ordet som behöver bytas</h2>
+          <p id="workshop-repair-label" class="workshop-reading"></p>
+          <div id="workshop-repair-choices" class="reading-options" role="group" aria-label="Vilken berättelse behöver ett annat ord?"></div>
+        </section>
+        <section id="workshop-feedback" class="panel workshop-task" hidden>
+          <h2 id="workshop-feedback-title" tabindex="-1"></h2>
+          <div id="workshop-feedback-body" class="workshop-feedback-body"></div>
+          <button id="workshop-next" type="button" class="primary-button full-button">Fortsätt →</button>
+        </section>
+        <section id="workshop-reflect" class="panel workshop-task" hidden>
+          <h2 id="workshop-reflect-title" tabindex="-1">✨ Hitta på en egen mening</h2>
+          <strong id="workshop-reflect-word" class="workshop-target"></strong>
+          <p id="workshop-reflect-meaning" class="workshop-reading"></p>
+          <p>Tänk på något du har varit med om eller hitta på en berättelse. Du kan säga meningen högt eller skriva här.</p>
+          <label for="workshop-reflection">Min mening (frivilligt)</label>
+          <textarea id="workshop-reflection" class="field" rows="3" maxlength="400" autocomplete="off" spellcheck="false" lang="sv"></textarea>
+          <p class="muted">Fundera: passar ordet i din mening? Skulle en kompis förstå vad ordet betyder?</p>
+          <button id="workshop-reflection-show" type="button" class="secondary-button full-button">💡 Visa ett exempel</button>
+          <p id="workshop-reflection-example" class="workshop-reading" hidden></p>
+          <p class="subtle-note">Spelet läser, sparar och bedömer inte din mening.</p>
+          <button id="workshop-reflection-done" type="button" class="primary-button full-button">Jag har funderat – klar →</button>
+        </section>
+        <section id="workshop-finished" class="panel focus-finish" hidden>
+          <h2 id="workshop-finished-title" tabindex="-1">🌟 Du har lekt med ord!</h2>
+          <p>Att prova, läsa och tänka på olika meningar hjälper dig att förstå hur ord används.</p>
+          <button id="workshop-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
         </section>
       </section>
 

@@ -27,12 +27,13 @@
   const B = window.OrdjaktenReading;
   const AhaPlan = window.OrdjaktenAhaPlan;
   const Recall = window.OrdjaktenRecall;
+  const Workshop = window.OrdjaktenWorkshop;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !AhaPlan || !Recall || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !AhaPlan || !Recall || !Workshop || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -60,6 +61,7 @@
   let readingCheck = null;
   let ahaRound = null;
   let recallRound = null;
+  let workshop = null;
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -475,7 +477,7 @@
   function show(name) {
     if(name!=='play') stopReadAloud();
     screen = name;
-    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall']) $('view-'+view).hidden = view!==name;
+    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
       const chosen=btn.dataset.nav===(name==='play'||name==='results'?'home':name);
       if(chosen)btn.setAttribute('aria-current','page'); else btn.removeAttribute('aria-current');
@@ -584,6 +586,117 @@
   function wordProfile(item,types,now=Date.now()){
     return L.profile(item,{skillProgress:history.skillProgress,missionProgress:history.missionProgress,
       readingProgress:history.readingProgress,types,transfer:ahaOption(item),reading:B,now});
+  }
+  function startWorkshop(id=null){
+    const item=id?learningCatalog.find(row=>row.id===id):
+      Workshop.pick(learningCatalog,contrasts,history,Recall.eligible,Math.random);
+    const plan=Workshop.plan(item,learningCatalog,contrasts,Math.random);
+    if(!plan)return;
+    workshop={...plan,index:0,selected:[],stage:'task',returnId:id};
+    show('workshop');renderWorkshop();
+  }
+  function workshopTask(){return workshop?.steps[workshop.index];}
+  function renderWorkshop(){
+    const step=workshopTask();
+    workshop.stage='task';workshop.selected=[];
+    $('workshop-progress').textContent='Uppgift '+(workshop.index+1)+' av '+workshop.steps.length;
+    for(const type of ['build','repair','reflect'])$('workshop-'+type).hidden=step.type!==type;
+    $('workshop-feedback').hidden=true;
+    $('workshop-finished').hidden=true;
+    $('workshop-reflection').value='';
+    $('workshop-reflection-example').hidden=true;
+    $('workshop-reflection-show').hidden=false;
+    if(step.type==='build'){
+      $('workshop-build-word').textContent=workshop.item.name;
+      $('workshop-build-meaning').textContent=workshop.item.definition;
+      $('workshop-build-example').hidden=true;
+      $('workshop-build-example').textContent=step.original;
+      $('workshop-build-show').hidden=false;
+      drawWorkshopPieces();
+    }else if(step.type==='repair'){
+      $('workshop-repair-label').textContent='Båda berättelserna fick ordet ”'+step.given+'”. Vilken behöver ett annat ord?';
+      const box=$('workshop-repair-choices');box.replaceChildren();
+      step.scenes.forEach((scene,index)=>{
+        const button=element('button','reading-option workshop-story');button.type='button';button.dataset.workshopScene=String(index);
+        button.append(element('strong','',scene.title),element('span','',scene.text));
+        box.append(button);
+      });
+    }else{
+      $('workshop-reflect-word').textContent=workshop.item.name;
+      $('workshop-reflect-meaning').textContent=workshop.item.definition;
+      $('workshop-reflection-example').textContent=workshop.item.example;
+    }
+    $('workshop-'+step.type+'-title').focus({preventScroll:true});scrollTop();
+  }
+  function drawWorkshopPieces(){
+    const step=workshopTask(),selected=workshop.selected;
+    const result=Workshop.built(step,selected);
+    if(!result)return;
+    const box=$('workshop-pieces');box.replaceChildren();
+    for(const piece of step.pieces){
+      const button=element('button','secondary-button workshop-piece',piece.label);
+      button.type='button';button.dataset.workshopPiece=String(piece.id);
+      button.disabled=selected.includes(piece.id);
+      box.append(button);
+    }
+    $('workshop-built').textContent=result.sentence||'Välj en del att börja med.';
+    $('workshop-build-check').disabled=!result.complete;
+    $('workshop-build-undo').disabled=!selected.length;
+    $('workshop-build-reset').disabled=!selected.length;
+  }
+  function showWorkshopFeedback(title,paragraphs){
+    if(!workshop||workshop.stage!=='task')return;
+    workshop.stage='feedback';
+    $('workshop-'+workshopTask().type).hidden=true;
+    $('workshop-feedback-title').textContent=title;
+    const box=$('workshop-feedback-body');box.replaceChildren();
+    for(const value of paragraphs)box.append(element('p','',value));
+    $('workshop-feedback').hidden=false;
+    $('workshop-feedback-title').focus({preventScroll:true});scrollTop();
+  }
+  function checkWorkshopBuild(){
+    if(workshop?.stage!=='task'||workshopTask()?.type!=='build')return;
+    const step=workshopTask(),result=Workshop.built(step,workshop.selected);
+    if(!result?.complete)return;
+    showWorkshopFeedback(result.same?'🌟 Du byggde vår exempelmening!':'📖 Jämför med vår exempelmening',[
+      'Din mening: '+result.sentence,'Vår exempelmening: '+step.original,
+      result.same?'Fundera på varför ordet passar här.':'Din ordning kan också fungera. Läs båda meningarna och fundera på vad som låter bra.'
+    ]);
+  }
+  function answerWorkshopRepair(index){
+    if(workshop?.stage!=='task'||workshopTask()?.type!=='repair')return;
+    const step=workshopTask(),selected=step.scenes[index];
+    if(!selected)return;
+    const fixed=step.scenes.find(scene=>scene.needsRepair);
+    showWorkshopFeedback(selected.needsRepair?'🌟 Du hittade berättelsen!':'💡 Titta på skillnaden',[
+      'Här behöver vi byta ord: '+fixed.title+'.',
+      ...step.scenes.map(scene=>scene.title+' – '+scene.word+'. '+scene.why+' '+scene.difference)
+    ]);
+  }
+  function advanceWorkshop(){
+    if(!workshop||workshop.stage!=='feedback')return;
+    if(workshop.index+1>=workshop.steps.length)return;
+    workshop.index++;renderWorkshop();
+  }
+  function finishWorkshop(){
+    if(workshop?.stage!=='task'||workshopTask()?.type!=='reflect')return;
+    // Never inspect or persist the child's free sentence.
+    $('workshop-reflection').value='';
+    workshop.stage='finished';
+    $('workshop-reflect').hidden=true;
+    $('workshop-finished').hidden=false;
+    $('workshop-progress').textContent='Verkstaden är klar!';
+    $('workshop-finished-title').focus({preventScroll:true});scrollTop();
+  }
+  function leaveWorkshop(){
+    const id=workshop?.returnId;
+    if(!id){goNav('learning');return;}
+    const item=learningCatalog.find(row=>row.id===id);
+    learningFilter='all';learningLimit=18;
+    $('learning-kind').value='all';$('learning-search').value=item.name;
+    goNav('learning');
+    const button=$('learning-list').querySelector('[data-learning-open="'+id+'"]');
+    if(button){button.click();button.focus({preventScroll:true});}
   }
   function getRecallPlan(){return Recall.plan(learningCatalog,history);}
   function renderRecallPreview(){
@@ -946,6 +1059,9 @@
         }
         detail.append(box);
       }
+      const workshopButton=element('button','secondary-button full-button','🛠️ Öppna ordverkstaden →');
+      workshopButton.type='button';workshopButton.dataset.workshopWord=item.id;
+      detail.append(workshopButton);
       if(item.skills.length){const note=item.skills.map(x=>`${x.label}: ${x.right} rätt och ${x.wrong} fel`).join(' · ');
         detail.append(element('p','learning-evidence','Dina övningar: '+note));}
       const pair=K.findPair(item.id,contrasts);
@@ -1785,6 +1901,7 @@
     if(screen==='focus')focusPractice=null;
     if(screen==='aha'){ahaRound=null;$('aha-round-options').replaceChildren();}
     if(screen==='recall'){recallRound=null;$('recall-answer').value='';}
+    if(screen==='workshop'){workshop=null;$('workshop-reflection').value='';$('workshop-feedback-body').replaceChildren();}
     if(screen==='play'&&!leaveGame())return;
     if(screen==='results'){game=null;}
     if(name==='home')renderSetup();
@@ -1870,6 +1987,39 @@
   $('high-contrast').addEventListener('change',e=>setSettings({contrast:e.target.checked}));
   $('review-only').addEventListener('change',e=>setSettings({reviewOnly:e.target.checked}));
   $('setup-form').addEventListener('submit',event=>{event.preventDefault();startRound();});
+  for(const location of ['home','learning'])$('workshop-'+location+'-start').addEventListener('click',()=>startWorkshop());
+  $('workshop-pieces').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-workshop-piece]');
+    if(!button||button.disabled||workshop?.stage!=='task'||workshopTask()?.type!=='build')return;
+    const id=Number(button.dataset.workshopPiece);
+    if(workshop.selected.includes(id)||!workshopTask().pieces.some(piece=>piece.id===id))return;
+    workshop.selected.push(id);drawWorkshopPieces();
+    const next=$('workshop-pieces').querySelector('button:not(:disabled)')||$('workshop-build-check');
+    next.focus({preventScroll:true});
+  });
+  $('workshop-build-undo').addEventListener('click',()=>{
+    if(workshop?.stage==='task'&&workshopTask()?.type==='build'){workshop.selected.pop();drawWorkshopPieces();}
+  });
+  $('workshop-build-reset').addEventListener('click',()=>{
+    if(workshop?.stage==='task'&&workshopTask()?.type==='build'){workshop.selected=[];drawWorkshopPieces();}
+  });
+  $('workshop-build-check').addEventListener('click',checkWorkshopBuild);
+  $('workshop-build-show').addEventListener('click',()=>{
+    if(workshop?.stage!=='task'||workshopTask()?.type!=='build')return;
+    $('workshop-build-example').hidden=false;$('workshop-build-show').hidden=true;
+  });
+  $('workshop-repair-choices').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-workshop-scene]');
+    if(button&&$('workshop-repair-choices').contains(button))answerWorkshopRepair(Number(button.dataset.workshopScene));
+  });
+  $('workshop-reflection-show').addEventListener('click',()=>{
+    if(workshop?.stage!=='task'||workshopTask()?.type!=='reflect')return;
+    $('workshop-reflection-example').hidden=false;$('workshop-reflection-show').hidden=true;
+  });
+  $('workshop-reflection-done').addEventListener('click',finishWorkshop);
+  $('workshop-next').addEventListener('click',advanceWorkshop);
+  $('workshop-back').addEventListener('click',leaveWorkshop);
+  $('workshop-done').addEventListener('click',leaveWorkshop);
   for(const location of ['home','learning'])$('recall-'+location+'-start').addEventListener('click',()=>startRecall());
   $('recall-form').addEventListener('submit',event=>{event.preventDefault();submitRecall();});
   $('recall-hint').addEventListener('click',giveRecallHint);
@@ -1899,6 +2049,8 @@
   }));
   $('learning-more').addEventListener('click',()=>{learningLimit=Math.min(learningLimit+18,learningCatalog.length);renderLearning();});
   $('learning-list').addEventListener('click',event=>{
+    const workshopButton=event.target.closest('button[data-workshop-word]');
+    if(workshopButton&&$('learning-list').contains(workshopButton)){startWorkshop(workshopButton.dataset.workshopWord);return;}
     const recallButton=event.target.closest('button[data-recall-word]');
     if(recallButton&&$('learning-list').contains(recallButton)){startRecall(recallButton.dataset.recallWord);return;}
     const ahaButton=event.target.closest('button[data-aha-word]');
