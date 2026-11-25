@@ -95,7 +95,7 @@
   ],
   "js-06-05": [
     "kastade tillbaka ljus",
-    "när klassen vinklade pappret"
+    "på affischen"
   ],
   "js-07-01": [
     "snott sig runt varandra så att hon fick lösa flera knutar",
@@ -195,7 +195,7 @@
   ],
   "js-05-07": [
     "full av täta grönsaker och höga friska solrosor",
-    "Efter en regnig sommar"
+    "odlingslotten"
   ],
   "js-06-08": [
     "skickade ut sitt eget gröngula sken",
@@ -249,8 +249,8 @@
       if(!attempts||!lastAt||!['right','helped','previewed'].includes(card.word)||
         !['right','supported'].includes(card.clue))continue;
       result[task.id]={stamp:task.stamp,attempts,lastAt,word:card.word,clue:card.clue,
-        wordRight:Math.min(attempts,count(card.wordRight)),
-        clueRight:Math.min(attempts,count(card.clueRight))};
+        wordRight:Math.min(attempts,Math.max(Number(card.word==='right'),count(card.wordRight))),
+        clueRight:Math.min(attempts,Math.max(Number(card.clue==='right'),count(card.clueRight)))};
     }
     return result;
   }
@@ -300,11 +300,12 @@
   }
   function summary(tasks,progress,target,now=Date.now()){
     const rows=tasks.filter(task=>task.target===target);
-    const cards=rows.map(task=>progress?.[task.id]).filter(Boolean);
+    const clean=sanitize(progress,rows);
+    const cards=rows.map(task=>clean[task.id]).filter(Boolean);
     return {total:rows.length,seen:cards.length,wordRight:cards.filter(card=>card.wordRight>0).length,
       clueRight:cards.filter(card=>card.clueRight>0).length,
       needsPractice:cards.some(card=>needs(card)&&card.lastAt+DAY<=now),
-      ready:rows.some(task=>!progress?.[task.id]||progress[task.id].lastAt+DAY<=now)};
+      ready:rows.some(task=>!clean[task.id]||clean[task.id].lastAt+DAY<=now)};
   }
   return {DAY,LIMIT,ANNOTATIONS,catalog,sanitize,plan,shuffle,clueStep,record,summary};
 });

@@ -651,7 +651,8 @@
     $('detector-word-stage').hidden=true;
     $('detector-clue-stage').hidden=false;
     $('detector-clue-title').textContent='Var i texten märker du att ordet ”'+task.word+'” passar?';
-    $('detector-clue-note').textContent='Välj den textbit som bäst hjälper dig att förstå ordet.';
+    $('detector-clue-note').textContent=(id===task.target?'Du hittade ordet! ':'Vi letar efter '+task.word.toLocaleLowerCase('sv-SE')+' här. ')+
+      'Välj den textbit som bäst hjälper dig att förstå ordet.';
     $('detector-help').hidden=false;
     $('detector-help-text').textContent=task.definition;
     drawDetectorQuotes();
@@ -696,7 +697,13 @@
     $('detector-feedback').hidden=false;
     $('detector-feedback-title').textContent=clue==='right'?'🌟 Du hittade ledtråden!':'💡 Här är ledtråden vi letade efter';
     $('detector-feedback-word').textContent=task.word+' – '+task.definition;
-    $('detector-evidence').textContent='”'+task.quotes.find(quote=>quote.correct).label+'”';
+    const evidence=task.quotes.find(quote=>quote.correct).label;
+    $('detector-evidence').textContent='”'+evidence+'”';
+    // Highlight the exact evidence in context only after the task is complete.
+    const story=$('detector-story-text'),start=task.text.indexOf(evidence);
+    const mark=element('mark','detector-highlight',evidence);
+    story.replaceChildren(document.createTextNode(task.text.slice(0,start)),mark,
+      document.createTextNode(task.text.slice(start+evidence.length)));
     $('detector-why').textContent=task.why;
     $('detector-next').textContent=round.index+1===round.items.length?'Klar med rundan →':'Nästa berättelse →';
     $('detector-feedback-title').focus({preventScroll:true});scrollTop();

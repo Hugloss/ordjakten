@@ -99,3 +99,15 @@ test('workshop is offline and free text never joins a quiz or stored history',()
   assert.ok(!block.includes('history.results'));
   assert.ok(block.includes("$('workshop-reflection').value=''"));
 });
+
+test('detector loads before the app, is available offline and resets/exports only local observations',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/detector.js')>=0&&html.indexOf('./js/detector.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/detector.js'"));
+  assert.match(app,/history\.detectorProgress=Detector\.sanitize\(null,detectorCatalog\)/);
+  assert.match(app,/detectorProgress:history\.detectorProgress/);
+  const flow=app.slice(app.indexOf('  function startDetector('),app.indexOf('  function startWorkshop('));
+  assert.ok(!flow.includes('history.results'));
+  assert.ok(!flow.includes('history.skillProgress='));
+  assert.ok(!flow.includes('history.readingProgress='));
+});
