@@ -28,12 +28,13 @@
   const AhaPlan = window.OrdjaktenAhaPlan;
   const Recall = window.OrdjaktenRecall;
   const Workshop = window.OrdjaktenWorkshop;
+  const Detector = window.OrdjaktenDetector;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !AhaPlan || !Recall || !Workshop || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !AhaPlan || !Recall || !Workshop || !Detector || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -53,6 +54,7 @@
   let learningFilter = 'discovered';
   let focusPractice = null;
   const learningCatalog = L.catalog(bank,expressions,contexts);
+  const detectorCatalog = Detector.catalog(learningCatalog,contrasts);
   let audioContext = null;
   let burstTimer = 0;
   let selectedBookDoor = null;
@@ -62,6 +64,7 @@
   let ahaRound = null;
   let recallRound = null;
   let workshop = null;
+  let detectorRound = null;
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -69,6 +72,7 @@
   history.skillProgress=D.sanitize(history.skillProgress);
   history.readingProgress=B.sanitizeProgress(history.readingProgress);
   history.recallProgress=Recall.sanitize(history.recallProgress,learningCatalog);
+  history.detectorProgress=Detector.sanitize(history.detectorProgress,detectorCatalog);
   history.confusionProgress=H.sanitize(history.confusionProgress,contrastHistoryData);
   history.clueProgress=T.sanitize(history.clueProgress,clues);
   history.retentionProgress=U.sanitize(history.retentionProgress,contrastHistoryData);
@@ -477,7 +481,7 @@
   function show(name) {
     if(name!=='play') stopReadAloud();
     screen = name;
-    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop']) $('view-'+view).hidden = view!==name;
+    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
       const chosen=btn.dataset.nav===(name==='play'||name==='results'?'home':name);
       if(chosen)btn.setAttribute('aria-current','page'); else btn.removeAttribute('aria-current');
@@ -586,6 +590,134 @@
   function wordProfile(item,types,now=Date.now()){
     return L.profile(item,{skillProgress:history.skillProgress,missionProgress:history.missionProgress,
       readingProgress:history.readingProgress,types,transfer:ahaOption(item),reading:B,now});
+  }
+  function getDetectorPlan(id=null,random=()=>.37){
+    const known=new Set(learningCatalog.filter(item=>Recall.eligible(item,history)||
+      history.recallProgress[item.id]).map(item=>item.id));
+    return Detector.plan(detectorCatalog,history.detectorProgress,known,Date.now(),random,id);
+  }
+  function renderDetectorPreview(){
+    const plan=getDetectorPlan();
+    for(const location of ['home','learning']){
+      $('detector-'+location).hidden=!plan.ready&&!plan.waiting;
+      $('detector-'+location+'-note').textContent=plan.round.length?
+        'Läs en berättelse och leta efter ledtråden som avslöjar vilket ord som passar.':
+        'Bra letat! Du kan prova fler ledtrådar en annan dag.';
+      const button=$('detector-'+location+'-start');
+      button.hidden=!plan.round.length;
+      button.textContent='🔎 Prova '+plan.round.length+(plan.round.length===1?' berättelse →':' berättelser →');
+    }
+  }
+  function startDetector(id=null){
+    const plan=getDetectorPlan(id,Math.random);
+    if(!plan.round.length){renderDetectorPreview();if(screen==='learning')renderLearning();return;}
+    detectorRound={items:plan.round,index:0,stage:'read',returnId:id};
+    show('detector');renderDetector();
+  }
+  function detectorTask(){return detectorRound?.items[detectorRound.index];}
+  function renderDetector(){
+    const round=detectorRound,task=detectorTask();
+    round.stage='read';round.attempts=0;round.helped=false;round.word=null;
+    $('detector-progress').textContent='Berättelse '+(round.index+1)+' av '+round.items.length;
+    $('detector-story').hidden=false;
+    $('detector-story-title').textContent=task.title;
+    $('detector-story-text').textContent=task.text;
+    $('detector-read').hidden=false;
+    $('detector-word-stage').hidden=true;
+    $('detector-clue-stage').hidden=true;
+    $('detector-feedback').hidden=true;
+    $('detector-finished').hidden=true;
+    $('detector-word-options').replaceChildren();
+    $('detector-clue-options').replaceChildren();
+    $('detector-clue-note').textContent='';
+    $('detector-help-text').hidden=true;
+    $('detector-story-title').focus({preventScroll:true});scrollTop();
+  }
+  function revealDetectorWord(){
+    if(detectorRound?.stage!=='read')return;
+    detectorRound.stage='word';$('detector-read').hidden=true;$('detector-word-stage').hidden=false;
+    const box=$('detector-word-options');
+    for(const option of Detector.shuffle(detectorTask().words)){
+      const button=element('button','reading-option',option.label);
+      button.type='button';button.dataset.detectorWord=option.id;box.append(button);
+    }
+    $('detector-word-title').focus({preventScroll:true});
+  }
+  function answerDetectorWord(id){
+    const round=detectorRound,task=detectorTask();
+    if(round?.stage!=='word'||!task.words.some(option=>option.id===id))return;
+    round.word=round.returnId?'previewed':id===task.target?'right':'helped';
+    round.stage='clue';
+    $('detector-word-stage').hidden=true;
+    $('detector-clue-stage').hidden=false;
+    $('detector-clue-title').textContent='Var i texten märker du att ordet ”'+task.word+'” passar?';
+    $('detector-clue-note').textContent='Välj den textbit som bäst hjälper dig att förstå ordet.';
+    $('detector-help').hidden=false;
+    $('detector-help-text').textContent=task.definition;
+    drawDetectorQuotes();
+    $('detector-clue-title').focus({preventScroll:true});scrollTop();
+  }
+  function drawDetectorQuotes(){
+    const box=$('detector-clue-options');box.replaceChildren();
+    for(const quote of Detector.shuffle(detectorTask().quotes)){
+      const button=element('button','reading-option','”'+quote.label+'”');
+      button.type='button';button.dataset.detectorQuote=String(detectorTask().quotes.indexOf(quote));
+      box.append(button);
+    }
+  }
+  function detectorHelp(){
+    if(detectorRound?.stage!=='clue')return;
+    detectorRound.helped=true;
+    $('detector-help-text').hidden=false;
+    $('detector-help').hidden=true;
+    $('detector-help-text').focus({preventScroll:true});
+  }
+  function answerDetectorQuote(index){
+    const round=detectorRound,task=detectorTask();
+    if(round?.stage!=='clue'||!Number.isInteger(index)||!task.quotes[index])return;
+    const step=Detector.clueStep(task,task.quotes[index].label,round.attempts);
+    if(!step)return;
+    round.attempts++;
+    if(step==='reread'){
+      round.helped=true;
+      $('detector-clue-note').textContent='Läs gärna berättelsen igen. Vilken del beskriver själva betydelsen?';
+      detectorHelp();drawDetectorQuotes();return;
+    }
+    finishDetectorStory(step==='complete'&&!round.helped?'right':'supported');
+  }
+  function finishDetectorStory(clue){
+    const round=detectorRound,task=detectorTask();
+    if(round?.stage!=='clue')return;
+    round.stage='feedback';
+    history.detectorProgress=Detector.record(history.detectorProgress,detectorCatalog,task.id,
+      {word:round.word,clue},Date.now());
+    saveHistory();
+    $('detector-clue-stage').hidden=true;
+    $('detector-feedback').hidden=false;
+    $('detector-feedback-title').textContent=clue==='right'?'🌟 Du hittade ledtråden!':'💡 Här är ledtråden vi letade efter';
+    $('detector-feedback-word').textContent=task.word+' – '+task.definition;
+    $('detector-evidence').textContent='”'+task.quotes.find(quote=>quote.correct).label+'”';
+    $('detector-why').textContent=task.why;
+    $('detector-next').textContent=round.index+1===round.items.length?'Klar med rundan →':'Nästa berättelse →';
+    $('detector-feedback-title').focus({preventScroll:true});scrollTop();
+  }
+  function advanceDetector(){
+    const round=detectorRound;
+    if(round?.stage!=='feedback')return;
+    if(round.index+1<round.items.length){round.index++;renderDetector();return;}
+    round.stage='finished';
+    $('detector-story').hidden=true;$('detector-feedback').hidden=true;
+    $('detector-finished').hidden=false;$('detector-progress').textContent='Rundan är klar!';
+    $('detector-finished-title').focus({preventScroll:true});scrollTop();
+  }
+  function leaveDetector(){
+    const id=detectorRound?.returnId;
+    if(!id){goNav('learning');return;}
+    const item=learningCatalog.find(row=>row.id===id);
+    learningFilter='all';learningLimit=18;$('learning-kind').value='all';$('learning-search').value=item.name;
+    goNav('learning');
+    const button=$('learning-list').querySelector('[data-learning-open="'+id+'"]');
+    if(button){button.click();button.focus({preventScroll:true});}
   }
   function startWorkshop(id=null){
     const item=id?learningCatalog.find(row=>row.id===id):
@@ -807,8 +939,9 @@
       history.missionProgress,history.mistakes).map(item=>{
       const observed=history.readingProgress[item.id];
       const recall=history.recallProgress[item.id];
+      const detector=Detector.summary(detectorCatalog,history.detectorProgress,item.id);
       const hasAha=!!(observed?.recognition||observed?.transfer);
-      if(!recall&&!hasAha&&!ready.has(item.id)&&!waiting.has(item.id))return item;
+      if(!detector.seen&&!recall&&!hasAha&&!ready.has(item.id)&&!waiting.has(item.id))return item;
       // Aha is evidence of an encounter, not mastery of a skill.
       const steps=item.steps.map((step,index)=>index===0?{...step,done:true}:step);
       return {...item,seen:true,steps,done:steps.filter(step=>step.done).length,
@@ -817,7 +950,7 @@
         revisit:item.revisit||(observed?.transfer?.quality===2&&observed.transfer.proofs?.length===2),
         needsPractice:item.needsPractice||B.needsReview(history.readingProgress,item.id,'transfer')||
           B.needsReview(history.readingProgress,item.id,'recognition')||
-          (recall?.last==='assisted'&&Recall.dueAt(recall)<=Date.now()),
+          (recall?.last==='assisted'&&Recall.dueAt(recall)<=Date.now())||detector.needsPractice,
         tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
           waiting.has(item.id)?'En ny berättelse väntar till en annan dag.':item.tip};
     });
@@ -958,7 +1091,7 @@
     renderConfusionPreview();
     renderRetentionHome();
     const plan=renderAhaPreview();
-    renderRecallPreview();
+    renderRecallPreview();renderDetectorPreview();
     const all=learningEntries(plan);
     const totals=L.summary(all);
     $('learning-home-seen').textContent=String(totals.discovered);
@@ -985,7 +1118,7 @@
   }
   function renderLearning(){
     const all=learningEntries(renderAhaPreview());
-    renderRecallPreview();
+    renderRecallPreview();renderDetectorPreview();
     const totals=L.summary(all);
     $('learning-total-seen').textContent=String(totals.discovered);
     $('learning-total-meaning').textContent=String(totals.recognised);
@@ -1062,6 +1195,20 @@
       const workshopButton=element('button','secondary-button full-button','🛠️ Öppna ordverkstaden →');
       workshopButton.type='button';workshopButton.dataset.workshopWord=item.id;
       detail.append(workshopButton);
+      const detector=Detector.summary(detectorCatalog,history.detectorProgress,item.id);
+      if(detector.total){
+        const box=element('section','learning-focus');
+        box.append(element('h4','','🔎 Orddetektiven'));
+        box.append(element('p','learning-focus-note',detector.seen?
+          detector.seen+' av '+detector.total+' berättelser provade. I '+detector.clueRight+
+            ' hittade du ledtråden utan extra hjälp.':
+          'Leta efter den textbit som visar varför ordet passar.'));
+        if(detector.ready){
+          const action=element('button','secondary-button full-button','Leta efter ledtråden →');
+          action.type='button';action.dataset.detectorTarget=item.id;box.append(action);
+        }else box.append(element('p','learning-focus-note','Dina nästa ledtrådar kommer en annan dag.'));
+        detail.append(box);
+      }
       if(item.skills.length){const note=item.skills.map(x=>`${x.label}: ${x.right} rätt och ${x.wrong} fel`).join(' · ');
         detail.append(element('p','learning-evidence','Dina övningar: '+note));}
       const pair=K.findPair(item.id,contrasts);
@@ -1902,6 +2049,7 @@
     if(screen==='aha'){ahaRound=null;$('aha-round-options').replaceChildren();}
     if(screen==='recall'){recallRound=null;$('recall-answer').value='';}
     if(screen==='workshop'){workshop=null;$('workshop-reflection').value='';$('workshop-feedback-body').replaceChildren();}
+    if(screen==='detector'){detectorRound=null;$('detector-word-options').replaceChildren();$('detector-clue-options').replaceChildren();}
     if(screen==='play'&&!leaveGame())return;
     if(screen==='results'){game=null;}
     if(name==='home')renderSetup();
@@ -1946,7 +2094,7 @@
     });
   }
   function exportHistory() {
-    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
+    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -1987,6 +2135,21 @@
   $('high-contrast').addEventListener('change',e=>setSettings({contrast:e.target.checked}));
   $('review-only').addEventListener('change',e=>setSettings({reviewOnly:e.target.checked}));
   $('setup-form').addEventListener('submit',event=>{event.preventDefault();startRound();});
+  for(const location of ['home','learning'])$('detector-'+location+'-start').addEventListener('click',()=>startDetector());
+  $('detector-read').addEventListener('click',revealDetectorWord);
+  $('detector-word-options').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-detector-word]');
+    if(button&&$('detector-word-options').contains(button))answerDetectorWord(button.dataset.detectorWord);
+  });
+  $('detector-clue-options').addEventListener('click',event=>{
+    const button=event.target.closest('button[data-detector-quote]');
+    if(button&&$('detector-clue-options').contains(button))answerDetectorQuote(Number(button.dataset.detectorQuote));
+  });
+  $('detector-help').addEventListener('click',detectorHelp);
+  $('detector-reveal').addEventListener('click',()=>finishDetectorStory('supported'));
+  $('detector-next').addEventListener('click',advanceDetector);
+  $('detector-back').addEventListener('click',leaveDetector);
+  $('detector-done').addEventListener('click',leaveDetector);
   for(const location of ['home','learning'])$('workshop-'+location+'-start').addEventListener('click',()=>startWorkshop());
   $('workshop-pieces').addEventListener('click',event=>{
     const button=event.target.closest('button[data-workshop-piece]');
@@ -2037,7 +2200,7 @@
     if(button&&$('aha-round-options').contains(button))answerAhaRound(Number(button.dataset.ahaOption));
   });
   window.addEventListener('focus',()=>{
-    if(screen==='home'||screen==='learning'){renderAhaPreview();renderRecallPreview();}
+    if(screen==='home'||screen==='learning'){renderAhaPreview();renderRecallPreview();renderDetectorPreview();}
   });
   $('open-learning-home').addEventListener('click',()=>goNav('learning'));
   $('open-learning-results').addEventListener('click',()=>goNav('learning'));
@@ -2049,6 +2212,8 @@
   }));
   $('learning-more').addEventListener('click',()=>{learningLimit=Math.min(learningLimit+18,learningCatalog.length);renderLearning();});
   $('learning-list').addEventListener('click',event=>{
+    const detectiveButton=event.target.closest('button[data-detector-target]');
+    if(detectiveButton&&$('learning-list').contains(detectiveButton)){startDetector(detectiveButton.dataset.detectorTarget);return;}
     const workshopButton=event.target.closest('button[data-workshop-word]');
     if(workshopButton&&$('learning-list').contains(workshopButton)){startWorkshop(workshopButton.dataset.workshopWord);return;}
     const recallButton=event.target.closest('button[data-recall-word]');
@@ -2245,7 +2410,7 @@
   $('export-history').addEventListener('click',exportHistory);
   $('clear-history').addEventListener('click',()=>{
     if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor och uppdragsstjärnor? Detta går inte att ångra.'))return;
-    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
+    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   createAdventureChoices();renderSetup();show('home');
   if ('serviceWorker' in navigator && window.isSecureContext) {

@@ -56,6 +56,7 @@
   <script src="./js/aha-plan.js" defer></script>
   <script src="./js/recall.js" defer></script>
   <script src="./js/workshop.js" defer></script>
+  <script src="./js/detector.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -110,6 +111,11 @@
           <div class="recall-preview">
             <strong>🛠️ Ordverkstaden</strong><p class="muted">Bygg en mening, klura på ord och hitta på ett eget exempel.</p>
             <button type="button" id="workshop-home-start" class="secondary-button full-button">Öppna ordverkstaden →</button>
+          </div>
+          <div id="detector-home" class="recall-preview" hidden>
+            <strong>🔎 Orddetektiven</strong>
+            <p id="detector-home-note" class="muted" role="status"></p>
+            <button type="button" id="detector-home-start" class="secondary-button full-button"></button>
           </div>
           <button type="button" id="open-learning-home" class="secondary-button full-button">🗺️ Visa min ordstig →</button>
         </section>
@@ -434,6 +440,11 @@
           <p class="muted">Välj ett ord från din stig eller låt spelet välja en liten verkstad.</p>
           <button type="button" id="workshop-learning-start" class="secondary-button full-button">Öppna ordverkstaden →</button>
         </section>
+        <section id="detector-learning" class="panel recall-preview" aria-labelledby="detector-learning-title" hidden>
+          <h2 id="detector-learning-title">🔎 Orddetektiven</h2>
+          <p id="detector-learning-note" class="muted" role="status"></p>
+          <button type="button" id="detector-learning-start" class="secondary-button full-button"></button>
+        </section>
         <section class="panel learning-controls" aria-label="Hitta ord i din stig">
           <label class="form-label" for="learning-search">🔎 Sök efter ett ord eller uttryck</label>
           <input id="learning-search" class="field" type="search" autocomplete="off" placeholder="Exempel: grumlig, skrovlig, för en gångs skull">
@@ -525,6 +536,46 @@
           <h2 id="recall-finished-title" tabindex="-1">🌟 Bra att du försökte!</h2>
           <p>Du har övat på att hitta ord själv. Nästa gång kan du få en annan ledtråd.</p>
           <button id="recall-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
+        </section>
+      </section>
+
+      <section id="view-detector" class="view" aria-labelledby="detector-title" hidden>
+        <button id="detector-back" type="button" class="secondary-button focus-back">← Till min ordstig</button>
+        <header class="panel focus-hero">
+          <span class="focus-buddy" aria-hidden="true">🔎</span>
+          <div><p class="eyebrow">LETA EFTER LEDTRÅDAR</p><h1 id="detector-title">Orddetektiven</h1>
+            <p class="muted">Läs, välj ett ord och leta efter ledtråden. Inga provpoäng.</p></div>
+        </header>
+        <p id="detector-progress" class="focus-metrics" role="status"></p>
+        <section id="detector-story" class="panel workshop-task">
+          <p class="eyebrow">📖 LÄS BERÄTTELSEN</p>
+          <h2 id="detector-story-title" tabindex="-1"></h2>
+          <p id="detector-story-text" class="workshop-reading focus-scene"></p>
+          <button id="detector-read" type="button" class="primary-button full-button">Jag har läst →</button>
+        </section>
+        <section id="detector-word-stage" class="panel workshop-task" hidden>
+          <h2 id="detector-word-title" tabindex="-1">Vilket ord passar bäst?</h2>
+          <div id="detector-word-options" class="reading-options" role="group" aria-labelledby="detector-word-title"></div>
+        </section>
+        <section id="detector-clue-stage" class="panel workshop-task" hidden>
+          <h2 id="detector-clue-title" tabindex="-1"></h2>
+          <p id="detector-clue-note" class="muted" role="status"></p>
+          <div id="detector-clue-options" class="reading-options" role="group" aria-labelledby="detector-clue-title"></div>
+          <button id="detector-help" type="button" class="secondary-button full-button">💡 Visa ordets betydelse</button>
+          <p id="detector-help-text" class="focus-scene workshop-reading" tabindex="-1" hidden></p>
+          <button id="detector-reveal" type="button" class="secondary-button full-button">Visa ledtråden →</button>
+        </section>
+        <section id="detector-feedback" class="panel workshop-task" hidden>
+          <h2 id="detector-feedback-title" tabindex="-1"></h2>
+          <p id="detector-feedback-word" class="workshop-reading"></p>
+          <p id="detector-evidence" class="focus-scene workshop-reading"></p>
+          <p id="detector-why" class="workshop-reading"></p>
+          <button id="detector-next" type="button" class="primary-button full-button">Nästa berättelse →</button>
+        </section>
+        <section id="detector-finished" class="panel focus-finish" hidden>
+          <h2 id="detector-finished-title" tabindex="-1">🌟 Bra letat!</h2>
+          <p>Du har övat på att hitta ledtrådar i text. Det hjälper dig att förstå ord i nya berättelser.</p>
+          <button id="detector-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
         </section>
       </section>
 
