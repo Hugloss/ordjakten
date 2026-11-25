@@ -11,7 +11,7 @@
   const ID=/^(?:sv|ut)-\d{4,}$/;
   const integer=(value,max)=>Number.isInteger(value)&&value>=0?Math.min(value,max):0;
   const time=value=>Number.isSafeInteger(value)&&value>=0&&value<=4102444800000?value:0;
-  const normalize=value=>typeof value==='string'?value.slice(0,200).normalize('NFC')
+  const normalize=value=>typeof value==='string'&&value.length<=200?value.normalize('NFC')
     .trim().replace(/[.!?]+$/u,'').trim().replace(/\s+/gu,' ').toLocaleLowerCase('sv-SE'):'';
   function mask(text,target){
     if(typeof text!=='string'||!target)return {text:'',count:0};
@@ -92,7 +92,7 @@
       typeof matched!=='boolean'||typeof helped!=='boolean'||typeof previewed!=='boolean')return raw;
     const progress=sanitize(raw,catalog),previous=progress[id];
     const at=time(now);
-    if(!at||previous&&at<dueAt(previous))return raw;
+    if(!at||previous&&at<dueAt(previous)||stage!==(previous?.stage??1))return raw;
     const direct=matched&&!helped&&!previewed&&stage>0;
     // A previewed word card is intentional practice, not a cold recall
     // observation. It must neither promote nor demote an established stage.

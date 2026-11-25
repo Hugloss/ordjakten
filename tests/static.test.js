@@ -74,3 +74,16 @@ test('personal Aha round loads before the app and is available offline',()=>{
   const reset=app.slice(app.indexOf("$('clear-history').addEventListener"));
   assert.match(reset,/history\.readingProgress=B\.sanitizeProgress\(null\)/);
 });
+
+test('typed retrieval is wired before the app, available offline and included in reset/export',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(read('js/recall.js').length>0);
+  assert.ok(html.indexOf('./js/recall.js')>=0&&html.indexOf('./js/recall.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/recall.js'"));
+  for(const location of ['home','learning']){
+    for(const suffix of ['', '-start','-note'])assert.ok(html.includes('id="recall-'+location+suffix+'"'));
+  }
+  assert.match(app,/history\.recallProgress=Recall\.sanitize\(null,learningCatalog\)/);
+  assert.match(app,/recallProgress:history\.recallProgress/);
+  assert.match(html,/<input id="recall-answer"[^>]*autocomplete="off"/);
+});

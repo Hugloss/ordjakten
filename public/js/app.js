@@ -620,6 +620,7 @@
     $('recall-letter-hint').textContent=prompt.letters;
     $('recall-letter-hint').hidden=!prompt.letters;
     $('recall-hint').hidden=!!prompt.letters;
+    $('recall-hint').textContent=row.kind==='expression'?'💡 Visa första bokstäverna':'💡 Visa första bokstaven';
     $('recall-response').textContent='';
     $('recall-answer').value='';
     $('recall-form').hidden=false;
@@ -647,7 +648,7 @@
     saveHistory();
     $('recall-form').hidden=true;
     $('recall-feedback').hidden=false;
-    $('recall-feedback-title').textContent=matched?'🌟 Du hittade ordet!':'📖 Här är ordet vi tänkte på';
+    $('recall-feedback-title').textContent=matched?'🌟 Du hittade rätt!':'📖 Här är svaret vi tänkte på';
     $('recall-solution').textContent=row.answer;
     const item=learningCatalog.find(item=>item.id===row.id);
     $('recall-explanation').textContent=item.definition;
@@ -702,7 +703,8 @@
         application:item.application||observed?.transfer?.first>0,
         revisit:item.revisit||(observed?.transfer?.quality===2&&observed.transfer.proofs?.length===2),
         needsPractice:item.needsPractice||B.needsReview(history.readingProgress,item.id,'transfer')||
-          B.needsReview(history.readingProgress,item.id,'recognition'),
+          B.needsReview(history.readingProgress,item.id,'recognition')||
+          (recall?.last==='assisted'&&Recall.dueAt(recall)<=Date.now()),
         tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
           waiting.has(item.id)?'En ny berättelse väntar till en annan dag.':item.tip};
     });
@@ -902,7 +904,8 @@
         const pebble=element('span','learning-pebble',facet.icon);
         pebble.dataset.state=facet.state;pebble.dataset.done=String(['right','spaced'].includes(facet.state));pebbles.append(pebble);
       }
-      pebbles.append(element('span','learning-word-count',profile.tried===1?'1 sätt provat':profile.tried+' sätt provade'));button.append(pebbles);
+      const triedLabel=profile.tried===1?'1 sätt provat':profile.tried+' sätt provade';
+      pebbles.append(element('span','learning-word-count',triedLabel+(history.recallProgress[item.id]?' · 🔤 Skrivövning':'')));button.append(pebbles);
       const detail=element('div','learning-word-detail');detail.id='learning-detail-'+item.id;detail.hidden=true;
       detail.append(element('p','learning-definition',item.definition),element('p','learning-example','Exempel: '+item.example));
       detail.append(element('h3','learning-profile-title','Fem sätt att förstå'));
