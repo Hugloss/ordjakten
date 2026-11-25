@@ -44,3 +44,14 @@
 .learning-home-focus p{margin:0;flex:1;min-width:160px;font-size:13px;line-height:1.5}
 @media(max-width:380px){.focus-hero{align-items:flex-start}.focus-buddy{font-size:34px}.focus-choice{padding:11px}}
 @media(prefers-reduced-motion:reduce){.focus-line-fill{transition:none}}
+
+/* Aha is one reading step at a time, with the explanation as prominent as
+ * the answer options. Reuse the established theme and accessible buttons. */
+#aha-home {display:grid;gap:10px;margin:12px 0;padding:16px;border:2px solid var(--accent-line);border-radius:14px;background:var(--surface-2)}
+#aha-home strong,#aha-learning-title {font-size:clamp(19px,3vw,24px)}
+#aha-home-note,#aha-learning-note {font-size:17px;line-height:1.5;min-width:0}
+#aha-round-progress {font-weight:800;font-size:17px}
+#aha-round-word,#aha-round-prompt {font-size:clamp(24px,4vw,34px);line-height:1.4;overflow-wrap:anywhere}
+#aha-round-definition,#aha-round-correct {font-size:clamp(22px,3.5vw,27px);line-height:1.55;font-weight:700;overflow-wrap:anywhere}
+#aha-round-why {font-size:18px;line-height:1.55}
+#view-aha .panel {margin-bottom:12px}

@@ -61,3 +61,16 @@ test('PWA assets use relative URLs suitable for project subpaths',()=>{
   assert.match(read('sw.js'),/\.\/js\/adventures\.js/);
   assert.match(read('sw.js'),/\.\/js\/adventure-map\.js/);
 });
+
+test('personal Aha round loads before the app and is available offline',()=>{
+  const html=read('index.html'),app=read('js/app.js');
+  assert.ok(read('js/aha-plan.js').length>0);
+  assert.ok(html.indexOf('./js/aha-plan.js')>=0);
+  assert.ok(html.indexOf('./js/aha-plan.js')<html.indexOf('./js/app.js'));
+  assert.match(read('sw.js'),/\.\/js\/aha-plan\.js/);
+  for(const location of ['home','learning']){
+    for(const suffix of ['','-start','-note'])assert.ok(html.includes('id="aha-'+location+suffix+'"'));
+  }
+  const reset=app.slice(app.indexOf("$('clear-history').addEventListener"));
+  assert.match(reset,/history\.readingProgress=B\.sanitizeProgress\(null\)/);
+});

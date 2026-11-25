@@ -612,7 +612,8 @@
     const {check}=ahaRound.items[ahaRound.index];
     $('aha-round-read').hidden=true;
     $('aha-round-question').hidden=false;
-    $('aha-round-prompt').textContent=check.prompt;
+    const row=ahaRound.items[ahaRound.index];
+    $('aha-round-prompt').textContent='Vilken berättelse passar '+(row.kind==='expression'?'uttrycket':'ordet')+' ”'+row.word+'”?';
     const options=$('aha-round-options');options.replaceChildren();
     check.options.forEach((option,index)=>{
       const button=element('button','reading-option',option.label);
@@ -714,7 +715,8 @@
     const totals=L.summary(learningEntries(plan));
     $('learning-home-seen').textContent=String(totals.discovered);
     $('learning-home-applied').textContent=String(totals.applied);
-    const suggested=D.suggestions(history.skillProgress,1,history.readingProgress).find(row=>F.findItem(row.id,bank,expressions));
+    // Give the short Aha round the clearest action when it is ready.
+    const suggested=plan.ready.length?null:D.suggestions(history.skillProgress,1,history.readingProgress).find(row=>F.findItem(row.id,bank,expressions));
     $('learning-home-focus').hidden=!suggested;
     if(suggested){
       const item=F.findItem(suggested.id,bank,expressions);
@@ -1601,7 +1603,7 @@
   }
   function goNav(name){
     if(screen==='focus')focusPractice=null;
-    if(screen==='aha')ahaRound=null;
+    if(screen==='aha'){ahaRound=null;$('aha-round-options').replaceChildren();}
     if(screen==='play'&&!leaveGame())return;
     if(screen==='results'){game=null;}
     if(name==='home')renderSetup();
