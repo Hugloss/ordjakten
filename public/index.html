@@ -298,6 +298,7 @@
           <p id="reading-stage" class="reading-stage" role="status" aria-live="polite">📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå</p>
           <div id="reading-story" class="question-card"><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
           <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
+          <button id="listen-story" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på texten</button>
           <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
           <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
           <div id="answer-options" class="answer-grid"></div>
@@ -312,7 +313,7 @@
         <div id="feedback-area" hidden aria-live="polite" aria-atomic="true">
           <p id="feedback-reading-stage" class="reading-stage" role="status">📖 Läs först – 🧠 prova sedan</p>
           <div id="feedback-status" class="feedback-status"><div id="feedback-emoji" class="result-icon">✅</div><h2 id="feedback-title">Rätt svar!</h2><p id="feedback-correct"></p><p id="feedback-reward" class="feedback-reward" hidden></p></div>
-          <div class="explanation"><span id="explanation-label" class="eyebrow">📖 LÄS FÖRKLARINGEN</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div></div>
+          <div class="explanation"><span id="explanation-label" class="eyebrow">📖 LÄS FÖRKLARINGEN</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><button id="listen-explanation" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på förklaringen</button><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div></div>
           <div id="reading-launch" class="reading-launch" hidden>
             <p id="reading-launch-prompt" class="reading-launch-prompt">📖 Läs betydelsen och exemplet ovan. Sedan får du visa vad du förstått.</p>
             <button id="reading-start" class="primary-button big-button full-button" type="button">🧠 Jag har läst – prova mig →</button>

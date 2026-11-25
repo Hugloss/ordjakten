@@ -66,6 +66,77 @@
   history.clueProgress=T.sanitize(history.clueProgress,clues);
   history.retentionProgress=U.sanitize(history.retentionProgress,contrastHistoryData);
   const reducedMotion = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  // Optional Swedish speech assistance. Nothing is spoken automatically or sent
+  // to our servers. Browser/OS voice availability can vary by device.
+  const canReadAloud = typeof window.speechSynthesis !== 'undefined' &&
+    typeof window.SpeechSynthesisUtterance === 'function';
+  const speechLabels = {
+    'listen-story':'🔊 Lyssna på texten',
+    'listen-explanation':'🔊 Lyssna på förklaringen'
+  };
+  let speakingButton = null;
+  let currentUtterance = null;
+  function resetSpeechButtons() {
+    for (const [id,label] of Object.entries(speechLabels)) {
+      const button = $(id);
+      button.textContent=label;
+      button.setAttribute('aria-pressed','false');
+    }
+  }
+  function stopReadAloud() {
+    if (canReadAloud) {
+      try { window.speechSynthesis.cancel(); } catch { /* Speech API optional. */ }
+    }
+    currentUtterance=null;
+    speakingButton=null;
+    resetSpeechButtons();
+  }
+  function speakReadAloud(text,button) {
+    if (!canReadAloud || !text || !text.trim()) return;
+    if (speakingButton===button) { stopReadAloud(); return; }
+    stopReadAloud();
+    const utterance = new window.SpeechSynthesisUtterance(text.slice(0,1600));
+    utterance.lang='sv-SE';
+    utterance.rate=0.9;
+    try {
+      const voices = window.speechSynthesis.getVoices() || [];
+      const swedish = voices.find(voice=>voice.lang?.toLowerCase()==='sv-se') ||
+        voices.find(voice=>voice.lang?.toLowerCase().startsWith('sv'));
+      if (swedish) utterance.voice=swedish;
+    } catch { /* The browser may not expose voices yet. */ }
+    currentUtterance=utterance;
+    speakingButton=button;
+    button.textContent='⏹️ Stoppa uppläsning';
+    button.setAttribute('aria-pressed','true');
+    const onFinish=()=>{
+      if(currentUtterance===utterance){
+        currentUtterance=null;
+        speakingButton=null;
+        resetSpeechButtons();
+      }
+    };
+    utterance.onend=onFinish;
+    utterance.onerror=onFinish;
+    try { window.speechSynthesis.speak(utterance); }
+    catch { onFinish(); }
+  }
+  function storyReadAloudText() {
+    const q=game?.questions?.[game.index];
+    if(!q || game?.feedback) return '';
+    if(q.kind==='expression') return q.scene || q.word || '';
+    if(q.taskType==='context') return q.stem || '';
+    if(q.taskType==='reverse') return q.stem || '';
+    return q.word || '';
+  }
+  function explanationReadAloudText() {
+    if(!game?.feedback || game.settings.mode!=='train') return '';
+    const chunks=[$('explanation-word').textContent,
+      $('explanation-definition').textContent,
+      $('explanation-example').textContent];
+    if(!$('context-aha').hidden)chunks.push($('context-reason').textContent);
+    return chunks.filter(Boolean).join('. ');
+  }
+
 
   function readHistory() {
     try { return E.sanitizeHistory(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')); }
@@ -397,6 +468,7 @@
     window.scrollTo({top:0,behavior:'instant'});
   }
   function show(name) {
+    if(name!=='play') stopReadAloud();
     screen = name;
     for (const view of ['home','play','results','words','history','book','learning','focus']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
@@ -1018,6 +1090,7 @@
   }
   function renderQuestion() {
     if(!game||game.finished)return;
+    stopReadAloud();
     clearBurst();
     const q=game.questions[game.index];
     $('adventure-milestone').hidden=true;
@@ -1105,6 +1178,7 @@
   }
   function revealReadingCheck() {
     if(!game||!game.feedback||!readingCheck)return;
+    stopReadAloud();
     $('reading-launch').hidden=true;
     $('reading-check').hidden=false;
     $('reading-reread').hidden=false;
@@ -1181,6 +1255,7 @@
   }
   function submit(index) {
     if(!game||game.finished||game.feedback)return;
+    stopReadAloud();
     // Check actual wall-clock time even if the interval callback was delayed.
     if(index!==null && game.deadline && Date.now()>=game.deadline){
       if(game.settings.timerMode==='total'){finishRound(true);return;}
@@ -1268,6 +1343,7 @@
   }
   function finishRound(timeExpired) {
     if(!game||game.finished)return;
+    stopReadAloud();
     game.finished=true;stopTimer();clearBurst();
     const result=E.score(game.answers,game.questions.length);
     // Test-mode doors unlock only AFTER the test has finished, never during it.
@@ -1656,6 +1732,18 @@
     $('explanation-word').focus({preventScroll:true});
     if(typeof $('explanation-word').scrollIntoView==='function')
       $('explanation-word').scrollIntoView({behavior:'auto',block:'start'});
+  });
+  $('listen-story').hidden=!canReadAloud;
+  $('listen-explanation').hidden=!canReadAloud;
+  $('listen-story').addEventListener('click',()=>{
+    speakReadAloud(storyReadAloudText(),$('listen-story'));
+  });
+  $('listen-explanation').addEventListener('click',()=>{
+    speakReadAloud(explanationReadAloudText(),$('listen-explanation'));
+  });
+  window.addEventListener('pagehide',stopReadAloud);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)stopReadAloud();
   });
   $('story-reveal').addEventListener('click',()=>{
     if(!game||game.finished||game.feedback)return;
