@@ -54,6 +54,7 @@
   <script src="./js/focus-practice.js" defer></script>
   <script src="./js/reading-check.js" defer></script>
   <script src="./js/aha-plan.js" defer></script>
+  <script src="./js/recall.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -99,6 +100,11 @@
             <p id="aha-home-note" class="muted" role="status"></p>
             <button type="button" id="aha-home-start" class="primary-button full-button"></button>
             <p class="subtle-note">En liten runda i din egen takt. Inga provpoäng.</p>
+          </div>
+          <div id="recall-home" class="recall-preview" hidden>
+            <strong>🔤 Hitta ordet själv</strong>
+            <p id="recall-home-note" class="muted" role="status"></p>
+            <button type="button" id="recall-home-start" class="secondary-button full-button"></button>
           </div>
           <button type="button" id="open-learning-home" class="secondary-button full-button">🗺️ Visa min ordstig →</button>
         </section>
@@ -413,6 +419,11 @@
           <button type="button" id="aha-learning-start" class="primary-button full-button"></button>
           <p class="subtle-note">Du får öva på ord som varit kluriga i Aha-frågorna. Ingen timer eller provpoäng.</p>
         </section>
+        <section id="recall-learning" class="panel recall-preview" aria-labelledby="recall-learning-title" hidden>
+          <h2 id="recall-learning-title">🔤 Hitta ordet själv</h2>
+          <p id="recall-learning-note" class="muted" role="status"></p>
+          <button type="button" id="recall-learning-start" class="secondary-button full-button"></button>
+        </section>
         <section class="panel learning-controls" aria-label="Hitta ord i din stig">
           <label class="form-label" for="learning-search">🔎 Sök efter ett ord eller uttryck</label>
           <input id="learning-search" class="field" type="search" autocomplete="off" placeholder="Exempel: grumlig, skrovlig, för en gångs skull">
@@ -466,6 +477,44 @@
           <p id="aha-round-summary"></p>
           <p class="muted">Orden får vila till en annan dag. Under tiden kan du upptäcka andra ord!</p>
           <button id="aha-round-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
+        </section>
+      </section>
+
+      <section id="view-recall" class="view" aria-labelledby="recall-title" hidden>
+        <button id="recall-back" type="button" class="secondary-button focus-back">← Till min ordstig</button>
+        <header class="panel focus-hero">
+          <span class="focus-buddy" aria-hidden="true">🔤</span>
+          <div><p class="eyebrow">EN LITEN ORDGÅTA</p><h1 id="recall-title">Hitta ordet själv</h1>
+            <p class="muted">Tänk på ett ord eller uttryck ur Ordjakten. Du kan få hjälp när du vill.</p></div>
+        </header>
+        <p id="recall-progress" class="focus-metrics" role="status"></p>
+        <form id="recall-form" class="panel recall-form" autocomplete="off">
+          <h2 id="recall-prompt" tabindex="-1">Vilket ord eller uttryck tänker vi på?</h2>
+          <p class="eyebrow">BETYDELSE</p>
+          <p id="recall-definition"></p>
+          <p id="recall-cloze" class="focus-scene" hidden></p>
+          <p id="recall-letter-hint" class="recall-letters" hidden></p>
+          <label for="recall-answer" class="form-label">Skriv ordet eller uttrycket här</label>
+          <input id="recall-answer" class="field" type="text" maxlength="120" lang="sv" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off">
+          <p id="recall-response" role="status" class="muted"></p>
+          <button type="submit" class="primary-button full-button">Prova mitt svar →</button>
+          <div class="recall-actions">
+            <button id="recall-hint" type="button" class="secondary-button">💡 Visa första bokstaven</button>
+            <button id="recall-reveal" type="button" class="secondary-button">📖 Visa ordet</button>
+          </div>
+          <p class="subtle-note">Andra ord kan också passa. Ingen timer, inga provpoäng. Det du skriver sparas inte.</p>
+        </form>
+        <section id="recall-feedback" class="panel focus-explain" hidden>
+          <h2 id="recall-feedback-title" tabindex="-1"></h2>
+          <p id="recall-solution"></p>
+          <p id="recall-explanation"></p>
+          <p id="recall-example" class="muted"></p>
+          <button id="recall-next" type="button" class="primary-button full-button">Nästa ord →</button>
+        </section>
+        <section id="recall-finished" class="panel focus-finish" hidden>
+          <h2 id="recall-finished-title" tabindex="-1">🌟 Bra att du försökte!</h2>
+          <p>Du har övat på att hitta ord själv. Nästa gång kan du få en annan ledtråd.</p>
+          <button id="recall-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
         </section>
       </section>
 

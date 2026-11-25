@@ -55,3 +55,18 @@
 #aha-round-definition,#aha-round-correct {font-size:clamp(22px,3.5vw,27px);line-height:1.55;font-weight:700;overflow-wrap:anywhere}
 #aha-round-why {font-size:18px;line-height:1.55}
 #view-aha .panel {margin-bottom:12px}
+
+/* Retrieval: large clue, single input, optional support, no score. */
+.recall-preview{display:grid;gap:10px;border:1px solid var(--border);background:var(--surface-2);padding:15px;border-radius:12px}
+.recall-preview strong{font-size:20px}
+.recall-preview p{margin:0;font-size:16px;line-height:1.5}
+.recall-form{display:grid;gap:12px}
+#recall-prompt{font-size:clamp(23px,4vw,32px);line-height:1.4;margin:0}
+#recall-definition,#recall-explanation,#recall-cloze{font-size:clamp(21px,3.5vw,26px);line-height:1.55;font-weight:700;overflow-wrap:anywhere}
+#recall-answer{font-size:22px;min-height:54px}
+#recall-response{line-height:1.55;margin:0}
+#recall-solution{font-size:clamp(26px,5vw,36px);font-weight:850;overflow-wrap:anywhere}
+.recall-letters{font-size:25px;letter-spacing:.04em;overflow-wrap:anywhere}
+.recall-actions{display:flex;flex-wrap:wrap;gap:8px}
+.recall-actions button{flex:1;min-height:46px}
+#view-recall .panel{margin-bottom:12px}
