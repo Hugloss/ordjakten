@@ -10,196 +10,196 @@
   const DAY=86400000,LIMIT=3;
   const ANNOTATIONS=Object.freeze({
   "js-01-01": [
-    "Det gick knappt att se ner under ytan",
-    "i sjön"
+    "knappt att se",
+    "runt i sjön"
   ],
   "js-01-02": [
-    "kunde se små stenar på botten",
-    "Nora"
+    "kunde se små stenar",
+    "långt under ytan"
   ],
   "js-01-03": [
-    "Nu såg han inte sin hand på andra sidan",
-    "Oskar"
+    "såg han inte",
+    "på andra sidan"
   ],
-  "js-01-04": [
-    "gick det lätt att se fiskarna genom det klara vattnet",
-    "familjen"
+  "js-01-06": [
+    "såg linjerna på väggen genom det",
+    "Laborationsassistenten höll upp ett provrör"
   ],
   "js-02-01": [
-    "massor av små, sträva ojämnheter",
-    "Under utflykten"
+    "små, sträva ojämnheter",
+    "över den gamla stenmuren"
   ],
   "js-02-02": [
-    "Metallen trycktes in på tre ställen och fick tydliga gropar",
+    "fick tydliga gropar",
     "Under cykelturen"
   ],
   "js-02-03": [
-    "ytan hade små hårda korn",
+    "små hårda korn",
     "Hemma i verktygslådan"
   ],
   "js-02-04": [
-    "fick flera tydliga intryckningar",
-    "Hemma"
+    "tydliga intryckningar",
+    "mellan två väskor"
   ],
   "js-03-01": [
-    "långa blå linjer från axeln ner till kanten",
-    "Hemma"
+    "långa blå linjer",
+    "Hemma provade Nora"
   ],
   "js-03-02": [
-    "små röda runda fläckar, åtskilda från varandra",
+    "runda fläckar",
     "Vid frukosten"
   ],
   "js-03-05": [
-    "långa mörka band som löpte tvärs över de ljusa vingarna",
-    "Naturgruppen"
+    "långa mörka band",
+    "Naturgruppen såg en fjäril"
   ],
   "js-03-06": [
-    "många små vita rundlar",
-    "I skogen"
+    "små vita rundlar",
+    "I skogen hittade barnen"
   ],
   "js-04-01": [
-    "steg en tunn vit sky från den nykokta tekoppen",
+    "en tunn vit sky",
     "Hemma i köket"
   ],
   "js-04-02": [
-    "vattenytan fylldes av små bubblor",
+    "små bubblor",
     "I hemmets diskbalja"
   ],
   "js-04-03": [
     "en vit sky som sakta steg",
-    "hemma"
+    "Över soppgrytan hemma"
   ],
   "js-04-08": [
-    "täcktes borsten av massor av små bubblor",
+    "massor av små bubblor",
     "När Lea skrubbade cykeln"
   ],
   "js-05-02": [
-    "hängde bladen slaka och blomman hade tappat spänsten",
+    "hängde bladen slaka",
     "Efter två veckor"
   ],
-  "js-05-05": [
-    "kraftiga stjälkar och mängder av friska gröna blad",
-    "i klassrummet"
-  ],
   "js-05-04": [
-    "bladen kändes helt slappa",
+    "helt slappa",
     "I vardagsrummet"
   ],
+  "js-05-05": [
+    "friska gröna blad",
+    "i klassrummet"
+  ],
+  "js-05-07": [
+    "full av täta grönsaker",
+    "Efter en regnig sommar"
+  ],
   "js-06-02": [
-    "En stark ljusstråle lyste upp stigen",
+    "lyste upp stigen",
     "På campingturen"
   ],
   "js-06-03": [
-    "gnistrade små blanka paljetter",
+    "gnistrade",
     "På dansfesten"
   ],
   "js-06-05": [
     "kastade tillbaka ljus",
     "på affischen"
   ],
+  "js-06-08": [
+    "skickade ut sitt eget gröngula sken",
+    "I skymningen såg barnen en liten insekt"
+  ],
   "js-07-01": [
-    "snott sig runt varandra så att hon fick lösa flera knutar",
+    "lösa flera knutar",
     "Inför bussresan"
   ],
   "js-07-02": [
-    "full av små veck och rynkor",
-    "Hemma"
+    "små veck och rynkor",
+    "rullade Max ut en papperslapp"
   ],
-  "js-07-03": [
-    "ett virrvarr av öglor och knutar",
-    "Hemma"
+  "js-07-05": [
+    "reda ut knutarna",
+    "Efter blåsten"
   ],
   "js-07-08": [
-    "full av små veck",
+    "små veck",
     "i jackfickan"
-  ],
-  "js-08-01": [
-    "ville lära sig hur roboten fungerade",
-    "Sam"
   ],
   "js-08-02": [
     "undrade om någon försökt ta sig in",
-    "Efter konserten"
+    "Efter konserten såg vakten"
   ],
   "js-08-03": [
-    "ville Nora veta varför planeter rör sig",
+    "ville Nora veta",
     "Hemma i soffan"
   ],
   "js-08-04": [
     "undrade om någon hade tagit den",
     "Efter idrotten i skolan"
   ],
+  "js-08-05": [
+    "för att få veta hur astronauter kan hoppa där",
+    "När klassen pratade om månen"
+  ],
   "js-09-01": [
-    "Inga röster eller ljud störde lugnet",
+    "helt stilla",
     "På morgonen"
   ],
   "js-09-02": [
-    "sprang, skrattade och lekte samtidigt",
+    "sprang, skrattade och lekte",
     "på hela skolgården"
   ],
-  "js-09-07": [
-    "Bara en svag vind hördes i träden",
-    "Efter vandringen"
-  ],
   "js-09-06": [
-    "sjöng barnen, dansade och pratade glatt i mun på varandra",
+    "sjöng barnen, dansade",
     "I vardagsrummet"
   ],
+  "js-09-07": [
+    "Bara en svag vind",
+    "Efter vandringen"
+  ],
   "js-10-01": [
-    "bara en enda med den här färgen",
-    "Fiskaren"
+    "bara en enda",
+    "Fiskaren hade sett"
   ],
   "js-10-02": [
     "bara skulle finnas under veckan",
-    "På cykelutflykten"
+    "På cykelutflykten fick familjen"
   ],
   "js-10-03": [
-    "aldrig tidigare sett just en sådan ljusblixt",
-    "Astronomen"
+    "aldrig tidigare sett",
+    "Astronomen hade tittat på himlen"
   ],
   "js-10-06": [
-    "På måndag skulle den lämnas tillbaka",
-    "Familjen"
+    "lämnas tillbaka",
+    "en extra stol"
   ],
   "js-11-01": [
     "missade inte en enda rörelse",
-    "Elsa"
+    "varje fågel som landade"
   ],
   "js-11-02": [
-    "förstod inte vilken han skulle välja",
+    "Max förstod inte",
     "Under vandringen"
   ],
   "js-11-07": [
-    "följde Dana noga tränarens tecken",
-    "På planen"
+    "följde Dana noga",
+    "när signalen kom"
   ],
   "js-11-08": [
-    "Kim förstod inte vilken väg som var rätt",
+    "Kim förstod inte",
     "På skogsstigen"
   ],
-  "js-12-01": [
-    "mätte Ella presentpappret noga, vek jämna kanter",
-    "Hemma"
-  ],
   "js-12-02": [
-    "gick hem utan att kontrollera att ytterdörren var låst",
-    "på skolan"
+    "utan att kontrollera",
+    "Den ansvarige på skolan"
   ],
   "js-12-03": [
     "kontrollerade delarna en extra gång",
-    "På modellbyggarklubben"
+    "På modellbyggarklubben följde David"
   ],
   "js-12-04": [
-    "struntade i att dra åt skruvarna trots att det ingick i säkerhetskontrollen",
-    "på cykelklubben"
+    "struntade i att dra åt skruvarna",
+    "Mekanikern på cykelklubben"
   ],
-  "js-05-07": [
-    "full av täta grönsaker och höga friska solrosor",
-    "odlingslotten"
-  ],
-  "js-06-08": [
-    "skickade ut sitt eget gröngula sken",
-    "I skymningen"
+  "js-12-05": [
+    "kontrollerade fakta, rättade stavningen",
+    "innan arbetet lämnades in"
   ]
 });
   const count=n=>Number.isInteger(n)&&n>=0?Math.min(n,9999):0;

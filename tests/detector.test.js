@@ -39,7 +39,7 @@ test('missing, overlapping and duplicate excerpts are excluded rather than guess
   assert.equal(D.catalog(words,contrasts,{'js-01-01':['never exists','i sjön']}).length,0);
   assert.equal(D.catalog(words,contrasts,{'js-01-01':['Det gick knappt','gick knappt']}).length,0);
   const changed=JSON.parse(JSON.stringify(contrasts));
-  changed.pairs[0].scenes[0].text+=' i sjön';
+  changed.pairs[0].scenes[0].text+=' '+D.ANNOTATIONS['js-01-01'][1];
   assert.equal(D.catalog(words,changed,{'js-01-01':D.ANNOTATIONS['js-01-01']}).length,0);
 });
 test('quick round is short and avoids priming the other word of the same pair',()=>{
@@ -120,4 +120,16 @@ test('detector changes only its own observations, not scores, normal skills or A
   assert.equal(E.score({[first.target]:'right'},1).right,1);
   const profile=L.profile(words.find(word=>word.id===first.target),{types:['context','contrast','meaning']});
   assert.equal(profile.facets.find(row=>row.id==='contrast').state,'new');
+});
+
+test('quote length is not a reliable shortcut to the intended answer',()=>{
+  let longer=0,shorter=0;
+  for(const task of tasks){
+    const [right,other]=task.quotes.map(quote=>quote.label.length);
+    assert.ok(Math.max(right,other)/Math.min(right,other)<=1.8,task.id);
+    if(right>other)longer++;
+    if(right<other)shorter++;
+  }
+  assert.ok(longer>=tasks.length*.3);
+  assert.ok(shorter>=tasks.length*.3);
 });

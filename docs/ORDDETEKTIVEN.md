@@ -14,4 +14,4 @@ Frivilligt minipass med högst tre berättelser från olika granskade ordpar. L�
 Lokal `detectorProgress`: endast scen-ID, innehållskontrollkod, begränsade räknare, senaste utfall och tidsstämpel. Ingen egen text eller externa anrop. Avbrutna uppgifter sparas inte. Export och radering inkluderar historiken; gammal historik fungerar oförändrad.
 
 ## Kontroll
-`npm run check` inkluderar testfallen för citat, urval, väntetid, stöd, dataformat och poängisolering. Frivilligt `python tests/browser_detector.py` använder befintlig about:blank-harness. Verifiera särskilt att uppgiften inte blir en test av textens längd eller visuella mönster, och om citaten är begripliga för målgruppen.
+`npm run check` inkluderar testfallen för citat, urval, väntetid, stöd, dataformat och poängisolering. Frivilligt `python tests/browser_detector.py` använder befintlig about:blank-harness. Citatens längder är balanserade och testas så att rätt svar inte konsekvent är längre. Verifiera ändå att visuella mönster inte ger en genväg, och att citaten är begripliga för målgruppen.
