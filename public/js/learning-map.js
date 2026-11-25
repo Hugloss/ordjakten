@@ -142,10 +142,10 @@
     const needs=!!reading?.needsReview(readingProgress,item.id,'transfer');
     // Legacy streaks, picture/reverse/contrast successes and ordering tasks
     // are NOT proof of independently answering two distinct Aha examples.
-    const spaced=t?.quality===2&&new Set(t.proofs||[]).size===2&&!needs;
+    const spaced=t?.quality===2&&Array.isArray(t.proofs)&&new Set(t.proofs).size===2&&!needs;
     const ready=!!transfer&&transfer.dueAt<=now;
     const transferRow={
-      state:spaced?'spaced':!transfer&&!attempted?'unavailable':transfer&&!ready?'waiting':
+      state:spaced?'spaced':!transfer?'unavailable':!ready?'waiting':
         needs?'practice':positive(t?.first)>0?'right':attempted?'supported':'new',
       seen:attempted,right:spaced||positive(t?.first)>0,
       action:ready?{kind:'aha'}:null,
@@ -159,10 +159,11 @@
     const facets=FACETS.map((facet,index)=>({...facet,...records[index],status:stateLabels[records[index].state]}));
     // First address observed needs, then missing experience. Meaning before
     // transfer when both are difficult. Waiting tasks are not auto-selected.
-    const priority=['meaning','transfer','story','contrast','recognition'];
-    const find=(states)=>priority.map(id=>facets.find(row=>row.id===id))
+    const weakOrder=['meaning','transfer','story','contrast','recognition'];
+    const exploreOrder=['meaning','recognition','story','contrast','transfer'];
+    const find=(states,order)=>order.map(id=>facets.find(row=>row.id===id))
       .find(row=>row.action&&states.includes(row.state));
-    const next=find(['practice'])||find(['new','supported'])||
+    const next=find(['practice'],weakOrder)||find(['new','supported'],exploreOrder)||
       (transferRow.action&&attempted&&!spaced&&!t?.legacyMastered&&t?.quality!==2?facets[4]:null);
     return {facets,next:next||null,seen:facets.some(row=>row.seen),
       tried:facets.filter(row=>row.seen).length,needsPractice:facets.some(row=>row.state==='practice')||needs};

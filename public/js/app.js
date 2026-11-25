@@ -592,6 +592,9 @@
       // Aha is evidence of an encounter, not mastery of a skill.
       const steps=item.steps.map((step,index)=>index===0?{...step,done:true}:step);
       return {...item,seen:true,steps,done:steps.filter(step=>step.done).length,
+        recognition:item.recognition||observed?.recognition?.first>0,
+        application:item.application||observed?.transfer?.first>0,
+        revisit:item.revisit||(observed?.transfer?.quality===2&&observed.transfer.proofs?.length===2),
         needsPractice:item.needsPractice||B.needsReview(history.readingProgress,item.id,'transfer')||
           B.needsReview(history.readingProgress,item.id,'recognition'),
         tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
@@ -734,21 +737,25 @@
     renderConfusionPreview();
     renderRetentionHome();
     const plan=renderAhaPreview();
-    const totals=L.summary(learningEntries(plan));
+    const all=learningEntries(plan);
+    const totals=L.summary(all);
     $('learning-home-seen').textContent=String(totals.discovered);
     $('learning-home-applied').textContent=String(totals.applied);
-    // Give the short Aha round the clearest action when it is ready.
-    const suggested=plan.ready.length?null:D.suggestions(history.skillProgress,1,history.readingProgress).find(row=>F.findItem(row.id,bank,expressions));
+    // The ready personal Aha round remains the main recommendation. When
+    // waiting, suggest an actually available weak ordinary skill instead.
+    const candidates=plan.ready.length?[]:all.filter(item=>item.needsPractice).map(item=>{
+      const types=F.supported(F.findItem(item.id,bank,expressions),curation,contexts,missions,K,contrasts);
+      const next=wordProfile(item,types).next;
+      if(next?.state!=='practice'||next.action.kind!=='focus')return null;
+      const skill=history.skillProgress[item.id]?.skills?.[next.action.skill];
+      return {item,next,wrong:skill?.wrong||0,lastAt:skill?.lastAt||0};
+    }).filter(Boolean).sort((a,b)=>b.wrong-a.wrong||a.lastAt-b.lastAt||a.item.id.localeCompare(b.item.id));
+    const suggested=candidates[0];
     $('learning-home-focus').hidden=!suggested;
     if(suggested){
-      const item=F.findItem(suggested.id,bank,expressions);
-      const ahaType=suggested.skill==='reverse'?'recognition':'transfer';
-      const ahaWeak=B.needsReview(history.readingProgress,item.id,ahaType);
-      $('learning-home-focus-note').textContent=ahaWeak
-        ? `🎭 ${item.name} – prova ett nytt exempel för att förstå ordet på fler sätt.`
-        : `🎯 ${item.name} – ${F.LABELS[suggested.skill]||'En ny utmaning'} väntar på en ny chans.`;
-      $('learning-home-focus-start').dataset.focusId=item.id;
-      $('learning-home-focus-start').dataset.focusSkill=suggested.skill;
+      $('learning-home-focus-note').textContent='🎯 '+suggested.item.name+' – '+suggested.next.label.toLocaleLowerCase('sv-SE')+' kan få en ny chans.';
+      $('learning-home-focus-start').dataset.focusId=suggested.item.id;
+      $('learning-home-focus-start').dataset.focusSkill=suggested.next.action.skill;
     }
     $('learning-finale-message').textContent=totals.discovered
       ? `Du har upptäckt ${totals.discovered} ord och uttryck. ${totals.applied} har du redan provat på fler sätt. Fortsätt i din egen takt!`
@@ -770,6 +777,9 @@
       const itemForFocus=F.findItem(item.id,bank,expressions);
       const types=F.supported(itemForFocus,curation,contexts,missions,K,contrasts);
       const profile=wordProfile(item,types);
+      const next=profile.next;
+      const recommended=next?.action.kind==='focus'?next.action.skill:F.recommended(itemForFocus,types,history.skillProgress);
+      const mainIsAha=next?.action.kind==='aha';
       const card=element('article','learning-word-card');
       const button=element('button','learning-word-toggle');button.type='button';
       button.dataset.learningOpen=item.id;button.setAttribute('aria-expanded','false');
@@ -797,7 +807,9 @@
         text.append(element('strong','learning-stage-label',facet.label),element('span','learning-stage-state',facet.status));
         if(facet.help&&facet.state!=='unavailable')text.append(element('p','learning-profile-help',facet.help));
         row.append(icon,text);
-        if(facet.action){
+        const isMain=facet.action&&(mainIsAha?facet.action.kind==='aha':
+          facet.action.kind==='focus'&&facet.action.skill===recommended);
+        if(facet.action&&!isMain){
           const action=element('button','learning-focus-skill',facet.action.kind==='aha'?'Prova Aha →':'Öva →');
           action.type='button';action.setAttribute('aria-label','Öva '+facet.label);
           if(facet.action.kind==='aha')action.dataset.ahaWord=item.id;
@@ -834,8 +846,6 @@
             '⚖️ Du kan jämföra det här ordet med ett liknande ord igen.'));
       }
       if(types.length){
-        const next=profile.next;
-        const recommended=next?.action.kind==='focus'?next.action.skill:F.recommended(itemForFocus,types,history.skillProgress);
         const focusBox=element('section','learning-focus');
         focusBox.append(element('h4','',next?'🎯 Nästa idé för dig':'🎯 Vill du träna just det här?'));
         const main=element('button','primary-button learning-focus-button',next?.action.kind==='aha'?
@@ -844,20 +854,21 @@
         if(next?.action.kind==='aha')main.dataset.ahaWord=item.id;
         else{main.dataset.focusId=item.id;main.dataset.focusSkill=recommended;}
         focusBox.append(main);
-        if(types.length>1){
-          focusBox.append(element('p','learning-focus-note','Eller välj själv vilken sorts uppgift du vill prova:'));
+        const represented=new Set(profile.facets.filter(facet=>facet.action?.kind==='focus').map(facet=>facet.action.skill));
+        if(!mainIsAha)represented.add(recommended);
+        const extras=types.filter(type=>!represented.has(type));
+        if(extras.length){
+          focusBox.append(element('p','learning-focus-note','Fler sätt att öva:'));
           const list=element('div','learning-focus-skills');
-          for(const type of types){
-            // The recommended action already has its own large button.
-            if(type===recommended&&next?.action.kind!=='aha')continue;
+          for(const type of extras){
             const other=element('button','learning-focus-skill',F.LABELS[type]);
             other.type='button';other.dataset.focusId=item.id;other.dataset.focusSkill=type;
             list.append(other);
           }
           focusBox.append(list);
         }
-        focusBox.append(element('p','learning-focus-note','Korta övningar utan timer (4 när du jämför två ord). Inga provpoäng eller extra stjärnor.'));
-        detail.append(focusBox);
+        focusBox.append(element('p','learning-focus-note','Små övningar utan timer eller provpoäng.'));
+        detail.insertBefore(focusBox,detail.querySelector('.learning-profile-title'));
       }
       detail.append(element('p','learning-evidence','Du kan öva på olika sätt och i vilken ordning du vill. Ett rätt svar är en upptäckt, inte ett betyg.'));
       card.append(button,detail);list.append(card);
