@@ -563,7 +563,13 @@
       .map(task=>({task,card:progress[task.id],dueAt:progress[task.id]?progress[task.id].lastAt+DAY:0,draw:random()}));
     const ready=rows.filter(row=>row.dueAt<=now);
     const rank=row=>needs(row.card)?0:!row.card?1:2;
-    ready.sort((a,b)=>rank(a)-rank(b)||Number((b.task.level||1)>1)-Number((a.task.level||1)>1)||a.dueAt-b.dueAt||
+    const completesProof=row=>{
+      const proof=tiers[row.task.pairId]?.proof;
+      const previous=proof&&tasks.find(task=>task.id===proof.id);
+      return !!(previous&&now>=proof.at+DAY&&previous.target!==row.task.target&&previous.context!==row.task.context);
+    };
+    ready.sort((a,b)=>Number(completesProof(b))-Number(completesProof(a))||
+      rank(a)-rank(b)||Number((b.task.level||1)>1)-Number((a.task.level||1)>1)||a.dueAt-b.dueAt||
       Number(knownPairs.has(b.task.pairId))-Number(knownPairs.has(a.task.pairId))||a.draw-b.draw||a.task.id.localeCompare(b.task.id));
     const chosen=[],pairs=new Set();
     for(const row of ready){

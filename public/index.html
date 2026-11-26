@@ -547,10 +547,12 @@
             <p class="muted">Läs, välj ett ord och leta efter ledtråden. Inga provpoäng.</p></div>
         </header>
         <p id="detector-progress" class="focus-metrics" role="status"></p>
+        <p id="detector-level" class="detector-level"></p>
         <section id="detector-story" class="panel workshop-task">
           <p class="eyebrow">📖 LÄS BERÄTTELSEN</p>
           <h2 id="detector-story-title" tabindex="-1"></h2>
           <p id="detector-story-text" class="workshop-reading focus-scene"></p>
+          <p id="detector-think" class="workshop-reading" hidden></p>
           <button id="detector-read" type="button" class="primary-button full-button">Jag har läst →</button>
         </section>
         <section id="detector-word-stage" class="panel workshop-task" hidden>
@@ -561,6 +563,7 @@
           <h2 id="detector-clue-title" tabindex="-1"></h2>
           <p id="detector-clue-note" class="muted" role="status"></p>
           <div id="detector-clue-options" class="reading-options" role="group" aria-labelledby="detector-clue-title"></div>
+          <button id="detector-clue-check" type="button" class="primary-button full-button" hidden disabled>Jämför mina två ledtrådar →</button>
           <button id="detector-help" type="button" class="secondary-button full-button">💡 Visa ordets betydelse</button>
           <p id="detector-help-text" class="focus-scene workshop-reading" tabindex="-1" hidden></p>
           <button id="detector-reveal" type="button" class="secondary-button full-button">Visa ledtråden →</button>
@@ -570,6 +573,7 @@
           <p id="detector-feedback-word" class="workshop-reading"></p>
           <p id="detector-evidence" class="focus-scene workshop-reading"></p>
           <p id="detector-why" class="workshop-reading"></p>
+          <p id="detector-level-note" class="subtle-note" hidden></p>
           <button id="detector-next" type="button" class="primary-button full-button">Nästa berättelse →</button>
         </section>
         <section id="detector-finished" class="panel focus-finish" hidden>
