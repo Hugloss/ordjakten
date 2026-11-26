@@ -63,3 +63,12 @@ localStorage över verklig omladdning och offline separat före lansering.
 - Inga extra provpoäng, minustal eller stjärnor ges för Aha-frågorna. Inget tidsstyrt lästvång används.
 
 Rätt svar på Aha-frågan bevisar inte att barnet läste. Nästa barnprovspelning bör kontrollera att barnet själv kan beskriva ett nytt exempel.
+
+## Lekfulla ordfrågor
+I otidtagna ordjakter (utom högskoleprovsnivån och ordningsuppgifter) får frågans svarsalternativ ett litet draghandtag och en illustrerad port. Fyra egenritade SVG-miljöer (skog, rymd, hav och slott) används i de tolv världarna med egna namn och symboler. Bilderna är dekorativa, inte nya facitbilder. Läsgaten och frågetextens storlek ändras inte. Port och ägg visas först när svarsalternativen är synliga.
+
+Barnet kan fortfarande trycka på ett svar eller använda tangentbordet. För drag används pointer capture på handtaget (mus, penna eller pekskärm); resten av kortet är en vanlig knapp och sidan kan scrollas som tidigare. Endast ett drag som avslutas inom porten för aktuell fråga anropar ordinarie submit. Avbrutet drag, utanförsläpp, dold sida eller byte av fråga rensas utan svar. Ingen extra poäng eller separat bedömning.
+
+I Träna finns ett frivilligt illustrerat ledtrådsägg. Det öppnas vid tryck och ger en strategi för frågetypen (läs sammanhang, jämför bilder, läs hela uttrycket etc.), inte ordspecifika ledtrådar eller facit. Strategin är oberoende av rätt svar och påverkar därför inte den befintliga kunskapsregistreringen. I Testa dig visas ingen ledtråd eller rätt/fel-feedback. Tidtagna omgångar och högskoleprovsnivån använder den vanliga kompakta frågevyn. Aha-läsgaten och poängsättningen är oförändrade.
+
+Frivillig webbläsarharness laddar nu produktionssidans script i faktisk ordning, inklusive tidigare saknade camp-moduler. Camp-testets omladdning ersätts med en ny sida seedad med sparad historik; about:blank-shimmen kan inte verifiera riktig origin-persistens. `tests/browser_question_play.py` täcker läsgate, ägg, drag, tryck och testläge; måste köras i riktig Chromium. Ingen ny CI-jobbtyp eller nya paket. Barnprovspelning och visuell kontroll återstår.

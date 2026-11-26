@@ -71,6 +71,7 @@
   <script src="./js/camp-living.js" defer></script>
   <script src="./js/camp-minigames.js" defer></script>
   <script src="./js/camp-builders.js" defer></script>
+  <script src="./js/question-play.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -357,7 +358,68 @@
           <button id="listen-story" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på texten</button>
           <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
           <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
-          <div id="answer-options" class="answer-grid"></div>
+          <div id="question-egg-box" class="quest-egg-box" hidden>
+            <button id="question-egg" class="quest-egg-button" type="button" aria-expanded="false" aria-controls="question-egg-hint" data-open="false">
+              <svg class="quest-egg-art" viewBox="0 0 100 105" aria-hidden="true">
+                <defs><linearGradient id="quest-egg-shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff6cf"/><stop offset=".55" stop-color="#e7b9fa"/><stop offset="1" stop-color="#8f71d5"/></linearGradient></defs>
+                <ellipse cx="50" cy="96" rx="32" ry="5" fill="#362454" opacity=".25"/>
+                <g class="quest-egg-closed"><path d="M50 6C29 6 12 45 12 65C12 87 27 96 50 96S88 87 88 65C88 45 71 6 50 6Z" fill="url(#quest-egg-shell)" stroke="#6951aa" stroke-width="3"/><path d="M26 45Q50 24 73 45M19 66Q50 46 81 66" fill="none" stroke="#f9fff5" stroke-width="7" stroke-linecap="round"/><circle cx="38" cy="28" r="5" fill="#fff"/><path d="M50 48l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#efb94f"/></g>
+                <g class="quest-egg-open"><path d="M14 69l13-10 12 12 13-13 11 11 13-12 10 12Q85 96 50 96T14 69Z" fill="url(#quest-egg-shell)" stroke="#6951aa" stroke-width="3"/><path d="M50 12l8 17 19 2-14 13 4 19-17-9-17 9 4-19-14-13 19-2z" fill="#ffd56e" stroke="#ad6f1a" stroke-width="2"/><circle cx="45" cy="39" r="2.3" fill="#63451e"/><circle cx="55" cy="39" r="2.3" fill="#63451e"/><path d="M45 46Q50 50 55 46" fill="none" stroke="#63451e" stroke-width="2" stroke-linecap="round"/></g>
+              </svg>
+              <span><strong id="question-egg-label">Öppna ledtrådsägget</strong><small>En liten tankeledtråd – frivilligt</small></span>
+            </button>
+            <p id="question-egg-hint" class="quest-egg-hint" role="status" hidden></p>
+          </div>
+          <div id="answer-play-layout" class="answer-play-layout">
+            <div id="answer-options" class="answer-grid"></div>
+            <div id="question-portal" class="question-portal" data-scene="forest" hidden aria-label="Mål för svarkort">
+              <svg class="quest-portal-art" viewBox="0 0 300 210" aria-hidden="true">
+                <defs>
+                  <linearGradient id="qp-forest" x2="0" y2="1"><stop stop-color="#91d8c7"/><stop offset="1" stop-color="#d8e9a8"/></linearGradient>
+                  <linearGradient id="qp-space" x2="0" y2="1"><stop stop-color="#252657"/><stop offset="1" stop-color="#6e58a0"/></linearGradient>
+                  <linearGradient id="qp-ocean" x2="0" y2="1"><stop stop-color="#a9e8ee"/><stop offset="1" stop-color="#2f8eac"/></linearGradient>
+                  <linearGradient id="qp-castle" x2="0" y2="1"><stop stop-color="#ebc6ed"/><stop offset="1" stop-color="#f7dfba"/></linearGradient>
+                  <radialGradient id="qp-light"><stop stop-color="#fff6cd"/><stop offset=".55" stop-color="#b9ecff"/><stop offset="1" stop-color="#6c8edb"/></radialGradient>
+                  <g id="qp-tree"><path d="M-5 0h10v47H-5Z" fill="#875b43"/><path d="M0-53Q-27-16-32 8Q0 23 32 8Q27-16 0-53Z" fill="#287b65"/><path d="M0-39Q-23-9-24 8Q0 16 24 8" fill="#56aa83"/></g>
+                  <g id="qp-star"><path d="M0-9 3-3 10 0 3 3 0 10-3 3-10 0-3-3Z" fill="#fff2a3"/></g>
+                </defs>
+                <g class="quest-scene quest-scene-forest">
+                  <rect width="300" height="210" fill="url(#qp-forest)"/><circle cx="236" cy="40" r="24" fill="#fff6c6"/>
+                  <path d="M0 115Q50 54 102 102T210 91T300 100V210H0Z" fill="#81bc91"/><path d="M0 142Q70 107 137 145T300 133V210H0Z" fill="#4c9975"/>
+                  <use href="#qp-tree" transform="translate(39 104) scale(1.5)"/><use href="#qp-tree" transform="translate(263 117) scale(1.4)"/>
+                  <path d="M93 210 137 145H165L212 210Z" fill="#dfc58d"/><path d="M9 182q16-26 28 0m225 0q12-28 26 0" fill="#f4a9ba" stroke="#e8f8cf" stroke-width="2"/>
+                </g>
+                <g class="quest-scene quest-scene-space">
+                  <rect width="300" height="210" fill="url(#qp-space)"/><circle cx="48" cy="49" r="29" fill="#d9a2e9"/><ellipse cx="48" cy="49" rx="43" ry="9" transform="rotate(-21 48 49)" fill="none" stroke="#ffe5ae" stroke-width="5"/>
+                  <use href="#qp-star" transform="translate(102 28)"/><use href="#qp-star" transform="translate(250 47) scale(.7)"/><use href="#qp-star" transform="translate(211 21) scale(.6)"/><use href="#qp-star" transform="translate(18 106) scale(.5)"/>
+                  <path d="M0 157Q77 110 145 150T300 142V210H0Z" fill="#807bb1"/><ellipse cx="241" cy="184" rx="34" ry="12" fill="#535487"/><ellipse cx="57" cy="190" rx="27" ry="10" fill="#535487"/>
+                </g>
+                <g class="quest-scene quest-scene-ocean">
+                  <rect width="300" height="210" fill="url(#qp-ocean)"/><path d="M0 44Q45 30 90 44T180 44T270 44T360 44" fill="none" stroke="#f4ffff" stroke-width="5" opacity=".8"/>
+                  <path d="M0 180Q79 143 145 176T300 169V210H0Z" fill="#e2bd8b"/>
+                  <path d="M28 183v-45m0 19-16-12m16 23 18-22m224 37v-49m0 20-14-16m14 29 19-25" fill="none" stroke="#e988a3" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M36 86q20-18 40 0-20 18-40 0l-13 10v-20zM233 91q19-17 38 0-19 17-38 0l-12 9V82z" fill="#f8ce71"/>
+                  <g fill="none" stroke="#e6fbff" stroke-width="2"><circle cx="64" cy="125" r="6"/><circle cx="248" cy="120" r="8"/><circle cx="260" cy="103" r="4"/></g>
+                </g>
+                <g class="quest-scene quest-scene-castle">
+                  <rect width="300" height="210" fill="url(#qp-castle)"/><circle cx="48" cy="40" r="21" fill="#fff6d8"/>
+                  <path d="M15 110Q150-32 285 110M30 110Q150-12 270 110M45 110Q150 8 255 110" fill="none" stroke-width="7" stroke-linecap="round" stroke="#eea0bd" opacity=".65"/>
+                  <path d="M0 145Q72 117 148 148T300 140V210H0Z" fill="#96bda0"/>
+                  <g fill="#b18abe" stroke="#785883" stroke-width="2"><path d="M18 143V72h10V59h10v13h10V59h10v13h10v71Z"/><path d="M232 143V72h10V59h10v13h10V59h10v13h10v71Z"/></g>
+                  <path d="M85 210 135 145h30l50 65Z" fill="#f5d4ab"/>
+                </g>
+                <g class="quest-arch">
+                  <ellipse cx="150" cy="183" rx="68" ry="13" fill="#182b47" opacity=".25"/>
+                  <path d="M92 178V104a58 58 0 0 1 116 0v74Z" fill="#3e406b" stroke="#fce7ad" stroke-width="5"/>
+                  <path d="M105 178v-72a45 45 0 0 1 90 0v72Z" fill="url(#qp-light)" stroke="#d5efff" stroke-width="3"/>
+                  <path d="M84 178h132v10H84Z" fill="#e4bf81" stroke="#654f67" stroke-width="2"/>
+                  <use href="#qp-star" transform="translate(150 39) scale(1.2)"/><use href="#qp-star" transform="translate(111 110) scale(.6)"/><use href="#qp-star" transform="translate(190 138) scale(.5)"/>
+                  <path d="M150 125v29m-10-10 10 10 10-10" fill="none" stroke="#4d629a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+              </svg>
+              <div class="quest-portal-copy"><span id="question-portal-symbol" aria-hidden="true"></span><strong id="question-portal-title"></strong><p id="question-portal-caption"></p><small>Dra från ✥ på ett svarskort hit, eller tryck på svaret som vanligt.</small></div>
+            </div>
+          </div>
           <section id="order-area" class="mission-order-area panel" hidden aria-label="Sätt händelserna i ordning">
             <p class="mission-order-hint">💡 Tryck på den första händelsen, sedan den andra och sist den tredje. Du kan ändra dig innan du svarar.</p>
             <div id="order-choices" class="mission-buttons"></div>

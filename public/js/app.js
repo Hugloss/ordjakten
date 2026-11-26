@@ -43,13 +43,14 @@
   const Living = window.OrdjaktenLiving;
   const Mini = window.OrdjaktenMiniGames;
   const Builders = window.OrdjaktenBuilders;
+  const QuestionPlay = window.OrdjaktenQuestionPlay;
   const WorldMissions = window.OrdjaktenWorldMissions;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -90,6 +91,7 @@
   let worldMission=null,worldMissionEarned=null;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
+  let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -2916,11 +2918,94 @@
     $('order-submit').disabled=orderSelection.length!==3;
     $('order-count').textContent=`${orderSelection.length} av 3 händelser valda`;
   }
+  function resetQuestionDrag(){
+    const drag=questionDrag;questionDrag=null;
+    if(drag&&typeof drag.handle.hasPointerCapture==='function'&&drag.handle.hasPointerCapture(drag.pointerId)){
+      try{drag.handle.releasePointerCapture(drag.pointerId);}catch{}
+    }
+    questionGhost?.remove();questionGhost=null;
+    $('question-portal').classList.remove('is-drop-ready');
+    $('answer-options').classList.remove('is-dragging');
+  }
+  function clearQuestionPlay(){
+    resetQuestionDrag();questionToken=null;questionPresentation=null;
+    $('question-portal').hidden=true;$('question-egg-box').hidden=true;
+    $('answer-play-layout').classList.remove('is-adventure');
+    $('question-egg').setAttribute('aria-expanded','false');
+    $('question-egg').dataset.open='false';$('question-egg-hint').hidden=true;
+    $('question-egg-hint').textContent='';
+  }
+  function questionReady(){
+    return screen==='play'&&game&&!game.finished&&!game.feedback&&questionToken&&
+      questionToken.game===game&&questionToken.index===game.index&&
+      !$('question-area').hidden&&$('story-reveal').hidden&&!$('answer-options').hidden;
+  }
+  function updateQuestionPlay(){
+    const visible=!!(questionPresentation?.enabled&&questionReady());
+    $('question-portal').hidden=!visible;
+    $('question-egg-box').hidden=!(visible&&questionPresentation.egg);
+    $('answer-play-layout').classList.toggle('is-adventure',visible);
+  }
+  function prepareQuestionPlay(q){
+    clearQuestionPlay();
+    questionToken={game,index:game.index};
+    questionPresentation=QuestionPlay.plan(game.settings,q,game.index);
+    if(!questionPresentation.enabled)return;
+    const {world,hint,caption}=questionPresentation;
+    $('question-portal').dataset.scene=world.scene;
+    $('question-portal-title').textContent=world.name;
+    $('question-portal-caption').textContent=caption;
+    $('question-portal-symbol').textContent=world.target;
+    $('question-egg-hint').textContent=hint;
+    updateQuestionPlay();
+  }
+  function openQuestionEgg(){
+    if(!questionReady()||!questionPresentation?.egg||$('question-egg').dataset.open==='true')return;
+    $('question-egg').dataset.open='true';$('question-egg').setAttribute('aria-expanded','true');
+    $('question-egg-label').textContent='Ägget är öppnat!';
+    $('question-egg-hint').hidden=false;
+  }
+  function startQuestionDrag(event){
+    const handle=event.target.closest('.quest-drag-grip');
+    if(!handle||!questionReady()||!questionPresentation?.enabled||event.button!==0||!event.isPrimary)return;
+    const btn=handle.closest('button[data-option]');
+    if(!btn||!$('answer-options').contains(btn)||typeof handle.setPointerCapture!=='function')return;
+    resetQuestionDrag();
+    questionDrag={handle,index:Number(btn.dataset.option),pointerId:event.pointerId,token:questionToken,
+      x:event.clientX,y:event.clientY,moved:false,label:btn.getAttribute('aria-label')||''};
+    try{handle.setPointerCapture(event.pointerId);}catch{resetQuestionDrag();return;}
+    event.preventDefault();
+  }
+  function moveQuestionDrag(event){
+    const drag=questionDrag;
+    if(!drag||event.pointerId!==drag.pointerId)return;
+    if(!questionReady()||drag.token!==questionToken){resetQuestionDrag();return;}
+    if(!drag.moved&&!QuestionPlay.moved(drag.x,drag.y,event.clientX,event.clientY))return;
+    if(!drag.moved){
+      drag.moved=true;questionGhost=element('div','quest-drag-ghost',drag.label);
+      questionGhost.setAttribute('aria-hidden','true');document.body.append(questionGhost);
+      $('answer-options').classList.add('is-dragging');
+    }
+    questionGhost.style.left=event.clientX+'px';questionGhost.style.top=event.clientY+'px';
+    $('question-portal').classList.toggle('is-drop-ready',
+      QuestionPlay.inside($('question-portal').getBoundingClientRect(),event.clientX,event.clientY));
+    event.preventDefault();
+  }
+  function endQuestionDrag(event){
+    const drag=questionDrag;if(!drag||drag.pointerId!==event.pointerId)return;
+    const valid=questionReady()&&questionPresentation?.enabled&&QuestionPlay.validDrop(drag,questionToken,
+      $('question-portal').getBoundingClientRect(),event.clientX,event.clientY,game.questions[game.index].options.length);
+    resetQuestionDrag();
+    // Releasing elsewhere simply cancels. The same submit function handles
+    // pointer drops and ordinary click/keyboard answers.
+    if(valid){event.preventDefault();submit(drag.index);}
+  }
   function renderQuestion() {
     if(!game||game.finished)return;
     stopReadAloud();
     clearBurst();
     const q=game.questions[game.index];
+    clearQuestionPlay();$('question-egg-label').textContent='Öppna ledtrådsägget';
     $('adventure-milestone').hidden=true;
     $('question-area').hidden=false;
     $('feedback-area').hidden=true;
@@ -2960,11 +3045,14 @@
     $('order-area').hidden=q.taskType!=='order'||!$('story-reveal').hidden;
     options.hidden=q.taskType==='order'||!$('story-reveal').hidden;
     if(q.taskType==='order'){orderSelection=[];renderOrderQuestion(q);}
+    prepareQuestionPlay(q);
     q.options.forEach((option,index)=>{
       const btn=document.createElement('button');btn.type='button';btn.className='answer-option'+(q.picture?' with-picture':'');btn.dataset.option=String(index);
       if(q.picture){const pic=document.createElement('span');pic.className='choice-emoji';pic.textContent=option.emoji;pic.setAttribute('aria-hidden','true');btn.append(pic);}
       else {const letter=document.createElement('span');letter.className='choice-letter';letter.setAttribute('aria-hidden','true');letter.textContent='ABCDE'[index];btn.append(letter);}
-      const label=document.createElement('span');label.textContent=option.label;btn.append(label);btn.setAttribute('aria-label',option.label);options.append(btn);
+      const label=document.createElement('span');label.textContent=option.label;btn.append(label);btn.setAttribute('aria-label',option.label);
+      if(questionPresentation.enabled){const grip=element('span','quest-drag-grip','✥');grip.setAttribute('aria-hidden','true');grip.title='Dra kortet härifrån';btn.append(grip);}
+      options.append(btn);
     });
     updateScore();
     // Focus attention on the actual question, including the first one.
@@ -3098,11 +3186,13 @@
     }
     const q=game.questions[game.index];
     if(game.answers[q.id])return;
+    if(index!==null&&!$('story-reveal').hidden)return;
     const isOrder=q.taskType==='order';
     const option=(index===null||isOrder)?null:q.options[index];
     if(index!==null&&!isOrder&&!option)return;
     if(isOrder&&index!==null&&orderSelection.length!==3)return;
     const outcome=index===null?'unanswered':isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):(option.correct?'right':'wrong');
+    clearQuestionPlay();
     game.answers[q.id]=outcome;
     game.selected[q.id]=isOrder&&index!==null?orderSelection.map(key=>q.correctOrder[key]).join(' → '):option?option.label:null;
     game.streak=outcome==='right'?game.streak+1:0;
@@ -3179,7 +3269,7 @@
   function finishRound(timeExpired) {
     if(!game||game.finished)return;
     stopReadAloud();
-    game.finished=true;stopTimer();clearBurst();
+    game.finished=true;stopTimer();clearBurst();clearQuestionPlay();
     const result=E.score(game.answers,game.questions.length);
     // Test-mode doors unlock only AFTER the test has finished, never during it.
     // An unanswered, never-seen question does not unlock its story.
@@ -3328,7 +3418,7 @@
   }
   function leaveGame() {
     if(game&&!game.finished && !window.confirm('Vill du avsluta den här ordjakten? Omgångens resultat sparas inte.'))return false;
-    stopTimer();clearBurst();game=null;show('home');renderSetup();return true;
+    stopTimer();clearBurst();clearQuestionPlay();game=null;show('home');renderSetup();return true;
   }
   function clearLearningExercise(){
     if(screen==='focus')focusPractice=null;
@@ -3833,9 +3923,21 @@
   $('order-undo').addEventListener('click',()=>{if(!game||game.feedback||game.finished)return;orderSelection.pop();drawMainOrderSelection(game.questions[game.index]);});
   $('order-reset').addEventListener('click',()=>{if(!game||game.feedback||game.finished)return;orderSelection=[];drawMainOrderSelection(game.questions[game.index]);});
   $('order-submit').addEventListener('click',()=>{if(orderSelection.length===3)submit(-2);});
+  $('question-egg').addEventListener('click',openQuestionEgg);
+  $('answer-options').addEventListener('pointerdown',startQuestionDrag);
+  $('answer-options').addEventListener('pointermove',moveQuestionDrag);
+  $('answer-options').addEventListener('pointerup',endQuestionDrag);
+  $('answer-options').addEventListener('pointercancel',event=>{
+    if(questionDrag?.pointerId===event.pointerId)resetQuestionDrag();
+  });
+  $('answer-options').addEventListener('lostpointercapture',event=>{
+    if(questionDrag?.pointerId===event.pointerId)resetQuestionDrag();
+  });
   $('answer-options').addEventListener('click',event=>{
+    // A grip release must never turn a cancelled drag into a scored answer.
+    if(event.target.closest('.quest-drag-grip')){event.preventDefault();return;}
     const target=event.target.closest('button[data-option]');
-    if(target && $('answer-options').contains(target))submit(Number(target.dataset.option));
+    if(questionReady()&&target&&$('answer-options').contains(target))submit(Number(target.dataset.option));
   });
   $('reading-start').addEventListener('click',revealReadingCheck);
   $('reading-reread').addEventListener('click',()=>{
@@ -3858,9 +3960,9 @@
   $('listen-explanation').addEventListener('click',()=>{
     speakReadAloud(explanationReadAloudText(),$('listen-explanation'));
   });
-  window.addEventListener('pagehide',stopReadAloud);
+  window.addEventListener('pagehide',()=>{stopReadAloud();resetQuestionDrag();});
   document.addEventListener('visibilitychange',()=>{
-    if(document.hidden)stopReadAloud();
+    if(document.hidden){stopReadAloud();resetQuestionDrag();}
   });
   $('story-reveal').addEventListener('click',()=>{
     if(!game||game.finished||game.feedback)return;
@@ -3872,6 +3974,7 @@
     const q=game.questions[game.index];
     $('answer-options').hidden=q.taskType==='order';
     $('order-area').hidden=q.taskType!=='order';
+    updateQuestionPlay();
     const first=$('answer-options').querySelector('button')||$('order-area').querySelector('button');
     if(first)first.focus({preventScroll:true});
     // Keep the story visible while choosing, rather than scrolling past it.

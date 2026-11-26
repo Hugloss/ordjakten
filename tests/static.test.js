@@ -307,3 +307,15 @@ test('creative builders share the minigame menu and are offline without history 
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('setSettings('));
   assert.ok(app.includes('campBuild=null;\n    campMini=null;'));
 });
+
+test('illustrated question play uses the same scored submission and preserves the reading gate',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/question-play.js')>=0&&html.indexOf('./js/question-play.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/question-play.js'"));
+  for(const id of ['question-egg','question-egg-hint','question-portal','answer-play-layout'])assert.ok(html.includes('id="'+id+'"'));
+  const flow=app.slice(app.indexOf('  function resetQuestionDrag('),app.indexOf('  function renderQuestion('));
+  assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('.correct'));
+  assert.ok(flow.includes("if(valid){event.preventDefault();submit(drag.index);}"));
+  assert.ok(flow.includes("!$('question-area').hidden&&$('story-reveal').hidden&&!$('answer-options').hidden"));
+  assert.ok(app.includes("if(index!==null&&!$('story-reveal').hidden)return;"));
+});

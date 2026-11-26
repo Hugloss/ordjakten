@@ -97,3 +97,45 @@
 #feedback-area[data-reading-stage='quiz'] #listen-explanation{display:none!important}
 .reading-audio[aria-pressed='true']{border-color:var(--accent);background:var(--accent-soft)}
 @media(max-width:570px){.reading-audio{width:100%}}
+
+/* Illustrated question play: readable question first, then optional movement.
+   The drag handle alone consumes pointer gestures; cards remain ordinary buttons. */
+.answer-play-layout{min-width:0}
+.answer-play-layout.is-adventure{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.65fr);gap:12px;align-items:start}
+.quest-egg-box{margin:12px 0}
+.quest-egg-button{display:flex;align-items:center;gap:12px;text-align:left;color:var(--text);background:var(--surface);border:2px solid var(--border);border-radius:16px;width:100%;padding:8px 12px;font:inherit;min-height:72px;cursor:pointer}
+.quest-egg-button strong,.quest-egg-button small{display:block;line-height:1.4}
+.quest-egg-button small{color:var(--muted);font-size:13px}
+.quest-egg-art{width:56px;height:59px;flex:0 0 56px}
+.quest-egg-open,.quest-egg-button[data-open='true'] .quest-egg-closed{display:none}
+.quest-egg-button[data-open='true'] .quest-egg-open{display:block}
+.quest-egg-hint{font-size:18px;line-height:1.5;padding:12px 15px;margin:8px 0 0;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px}
+.question-portal{min-width:0;overflow:hidden;border:2px solid var(--border);border-radius:19px;background:var(--surface);text-align:center;position:sticky;top:8px}
+.question-portal[hidden]{display:none}
+.quest-portal-art{display:block;width:100%;height:auto;aspect-ratio:300/210}
+.quest-scene{display:none}
+.question-portal[data-scene='forest'] .quest-scene-forest,.question-portal[data-scene='space'] .quest-scene-space,.question-portal[data-scene='ocean'] .quest-scene-ocean,.question-portal[data-scene='castle'] .quest-scene-castle{display:block}
+.quest-portal-copy{padding:12px;line-height:1.4}
+#question-portal-symbol{font-size:25px;margin-right:5px}
+#question-portal-title{font-size:18px}
+.quest-portal-copy p{font-weight:800;margin:5px 0}
+.quest-portal-copy small{display:block;color:var(--muted);font-size:13px}
+.question-portal.is-drop-ready{border-color:#f4bf58;outline:3px solid #f4bf58;outline-offset:-3px}
+.answer-option{position:relative}
+.answer-play-layout.is-adventure .answer-option{padding-right:46px}
+.answer-play-layout.is-adventure .answer-option.with-picture{padding:13px 32px 13px 7px}
+.answer-option .quest-drag-grip{position:absolute;right:3px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:38px;height:44px;border-radius:10px;cursor:grab;touch-action:none;user-select:none;color:var(--accent);background:var(--surface);border:1px solid var(--border);font-size:20px}
+.answer-option.with-picture .quest-drag-grip{right:2px;width:28px;top:12px;transform:none}
+.answer-grid.is-dragging .quest-drag-grip{cursor:grabbing}
+.quest-drag-ghost{position:fixed;z-index:1000;pointer-events:none;transform:translate(-50%,-50%);width:max-content;max-width:min(250px,75vw);padding:11px 16px;background:var(--surface);color:var(--text);border:2px solid var(--accent);border-radius:14px;font:inherit;font-weight:800;box-shadow:0 6px 24px #0004;text-align:center;overflow-wrap:anywhere}
+@media(max-width:680px){
+ .answer-play-layout.is-adventure{grid-template-columns:1fr}
+ .question-portal{position:relative;top:auto;grid-row:1;display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr);align-items:center;text-align:left}
+ .quest-portal-copy{padding:6px 10px}
+ .quest-portal-copy p{font-size:14px;margin:2px 0}
+ .quest-portal-copy small{font-size:12px}
+ #question-portal-title{font-size:16px}
+ .answer-play-layout.is-adventure .answer-option.with-picture{padding-right:32px}
+}
+@media(prefers-reduced-motion:no-preference){.quest-egg-button[data-open='true'] .quest-egg-open{animation:quest-hatch .35s ease-out both}@keyframes quest-hatch{from{transform:scale(.8);opacity:.5}to{transform:scale(1);opacity:1}}}
+@media(forced-colors:active){.question-portal.is-drop-ready{outline:3px solid Highlight}.quest-egg-button:focus-visible{outline:3px solid Highlight}}

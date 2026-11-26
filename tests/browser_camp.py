@@ -138,7 +138,13 @@ def main(browser):
     assert stored()["campStories"] == [{"scene":"space","hero":"owl","prop":"mark-space-0","plot":"show"}]
     assert page.locator("#camp-theatre-save").is_disabled()
     assert {k:v for k,v in stored().items() if k != "campStories"} == {k:v for k,v in before.items() if k != "campStories"}
-    page.reload()
+    # The about:blank storage shim is not persistent across a real reload.
+    saved = stored()
+    page.close()
+    page, errors_after = make_page(browser, {"width":390,"height":800},
+                                  storage_seed={"ordjakten-v1":json.dumps(saved)})
+    assert not errors, errors
+    errors = errors_after
     page.locator('#story-home [data-camp-open]').click()
     assert page.locator("#camp-story-list li").count() == 1
     page.locator("[data-story-read]").click()
