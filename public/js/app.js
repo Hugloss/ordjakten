@@ -600,7 +600,7 @@
   function getConceptPlan(groupId=null,random=()=>.37){
     const known=new Set(learningCatalog.filter(item=>Recall.eligible(item,history)||
       history.recallProgress[item.id]).map(item=>item.id));
-    return Concepts.plan(conceptCatalog,history.conceptProgress,known,Date.now(),random,groupId,conceptMap?.wordId);
+    return Concepts.plan(conceptCatalog,history.conceptProgress,known,Date.now(),random,groupId,conceptMap?.wordId,conceptMap?.filter||'all');
   }
   function openConceptMap(id=null){
     if(id&&!Concepts.forWord(conceptCatalog,id).length)return;
@@ -622,10 +622,10 @@
       'Samband till '+learningCatalog.find(item=>item.id===conceptMap.wordId).name:'';
     const plan=getConceptPlan();
     $('concepts-quick').disabled=!plan.round.length;
-    $('concepts-quick').textContent=plan.round.length?'🧩 Prova '+plan.round.length+
-      (plan.round.length===1?' samband →':' samband →'):'Inga nya frågor just nu';
+    $('concepts-quick').textContent=plan.round.length?'🧩 Prova '+plan.round.length+' samband →':'Inga nya frågor just nu';
     $('concepts-note').textContent=plan.round.length?'Korta uppgifter utan timer eller provpoäng.':
-      'Du kan fortfarande utforska orden. Tidigare uppgifter får vila till en annan dag.';
+      plan.waiting?'Du kan fortfarande utforska orden. Tidigare uppgifter får vila till en annan dag.':
+      'Prova att välja en annan typ av samband.';
     for(const button of $('concepts-filters').querySelectorAll('button')){
       button.setAttribute('aria-pressed',String(button.dataset.conceptType===conceptMap.filter));
     }
@@ -653,8 +653,9 @@
       button.type='button';button.dataset.conceptPractice=group.id;button.disabled=!progress.ready;
       body.append(button,element('p','subtle-note','När du har läst sambandet räknas uppgiften som övning med stöd.'));
       card.append(body);
+      const currentMap=conceptMap;
       card.addEventListener('toggle',()=>{
-        if(card.open&&conceptMap&&screen==='concepts')conceptMap.exposed.add(group.id);
+        if(card.open&&conceptMap===currentMap&&screen==='concepts')currentMap.exposed.add(group.id);
       });
       $('concepts-list').append(card);
     }

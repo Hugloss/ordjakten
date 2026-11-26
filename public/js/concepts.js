@@ -190,7 +190,7 @@
     "id": "bk-06",
     "type": "contrast",
     "title": "Fortsätta eller ge upp",
-    "starter": true,
+    "starter": false,
     "words": [
       "sv-0108",
       "ut-0015"
@@ -260,7 +260,7 @@
     "id": "bk-08",
     "type": "nuance",
     "title": "Sällan eller kort tid?",
-    "starter": true,
+    "starter": false,
     "words": [
       "sv-0092",
       "sv-0109"
@@ -672,6 +672,7 @@
   function catalog(words,data=GROUPS){
     const byId=new Map(words.map(word=>[word.id,word]));
     const groups=[],tasks=[],errors=[],groupIds=new Set(),questionIds=new Set(),prompts=new Set();
+    if(!Array.isArray(data))return {groups,tasks,errors:['Saknar ordsamband.']};
     for(const group of data){
       if(!group||!/^bk-\d{2}$/.test(group.id)||groupIds.has(group.id)||!Object.hasOwn(TYPES,group.type)||
         typeof group.starter!=='boolean'||!text(group.title)||!text(group.explanation)||
@@ -720,24 +721,30 @@
     }
     return out;
   }
-  function plan(content,raw={},known=new Set(),now=Date.now(),random=Math.random,groupId=null,wordId=null){
+  function plan(content,raw={},known=new Set(),now=Date.now(),random=Math.random,groupId=null,wordId=null,type='all'){
     const progress=sanitize(raw,content.tasks);
-    const eligible=new Set(content.groups.filter(group=>groupId?group.id===groupId:
+    const eligible=new Set(content.groups.filter(group=>(type==='all'||group.type===type)&&
       (!wordId||group.words.some(word=>word.id===wordId))&&
-      (wordId||group.starter||group.words.some(word=>known.has(word.id))||
-        group.questions.some(task=>progress[task.id]))).map(group=>group.id));
+      (groupId?group.id===groupId:wordId||type!=='all'||group.starter||
+        group.words.some(word=>known.has(word.id))||group.questions.some(task=>progress[task.id]))).map(group=>group.id));
     const rows=content.tasks.filter(task=>eligible.has(task.groupId)).map(task=>({task,card:progress[task.id],
       dueAt:progress[task.id]?progress[task.id].lastAt+DAY:0,draw:random()}));
     const ready=rows.filter(row=>row.dueAt<=now);
     const rank=row=>row.card?.last==='supported'?0:!row.card?1:row.card.last==='previewed'?2:3;
     ready.sort((a,b)=>rank(a)-rank(b)||a.dueAt-b.dueAt||
       Number(known.has(b.task.answer))-Number(known.has(a.task.answer))||a.draw-b.draw||a.task.id.localeCompare(b.task.id));
-    const chosen=[],groups=new Set();
-    for(const row of ready){
-      if(groups.has(row.task.groupId))continue;
-      chosen.push(row.task);groups.add(row.task.groupId);
-      if(chosen.length===(groupId?1:LIMIT))break;
+    const chosen=[],groups=new Set(),types=new Set(),limit=groupId?1:LIMIT;
+    function take(rows,diverse=false){
+      for(const row of rows){
+        if(chosen.length>=limit)break;
+        if(groups.has(row.task.groupId)||(diverse&&types.has(row.task.type)))continue;
+        chosen.push(row.task);groups.add(row.task.groupId);types.add(row.task.type);
+      }
     }
+    // Prioritize actual needs; use the remaining slots to discover different
+    // kinds of relations rather than drilling only one type.
+    take(ready.filter(row=>row.card?.last==='supported'));
+    take(ready,true);take(ready);
     return {round:chosen,ready:ready.length,waiting:rows.length-ready.length};
   }
   function record(raw,tasks,id,outcome,now=Date.now()){

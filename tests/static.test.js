@@ -120,3 +120,16 @@ test('adaptive detector controls and local level history are wired without score
   assert.match(app,/detectorLevels:history\.detectorLevels/);
   assert.match(app,/Detector\.evaluateQuotes\(task,selected,round\.attempts\)/);
 });
+
+test('concept map works offline and stores only separate relation observations',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/concepts.js')>=0&&html.indexOf('./js/concepts.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/concepts.js'"));
+  assert.match(app,/history\.conceptProgress=Concepts\.sanitize\(null,conceptCatalog\.tasks\)/);
+  assert.match(app,/conceptProgress:history\.conceptProgress/);
+  const flow=app.slice(app.indexOf('  function getConceptPlan('),app.indexOf('  function getDetectorPlan('));
+  assert.ok(!flow.includes('history.results'));
+  assert.ok(!flow.includes('history.skillProgress='));
+  assert.ok(!flow.includes('history.readingProgress='));
+  assert.ok(flow.includes('conceptMap.exposed.has(task.groupId)'));
+});
