@@ -59,6 +59,7 @@
   <script src="./js/detector.js" defer></script>
   <script src="./js/concepts.js" defer></script>
   <script src="./js/bridges.js" defer></script>
+  <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -74,6 +75,10 @@
     </header>
 
     <main id="main">
+      <section id="next-journey-banner" class="panel journey-banner" aria-label="Mitt nästa äventyr" hidden>
+        <div><p id="next-journey-progress" class="eyebrow" role="status"></p><strong id="next-journey-method"></strong><p id="next-journey-reason" class="muted"></p></div>
+        <div class="journey-actions"><button id="next-journey-skip" type="button" class="secondary-button">Hoppa över</button><button id="next-journey-stop" type="button" class="secondary-button">Avsluta äventyret</button></div>
+      </section>
       <section id="view-home" class="view page-enter" aria-labelledby="home-title">
         <div class="hero">
           <div class="eyebrow">✨ ETT NYTT ÄVENTYR VÄNTAR</div>
@@ -90,6 +95,11 @@
             <div><p class="eyebrow">🗺️ DIN EGEN UPPTÄCKTSKARTA</p><h2 id="learning-home-title">Min ordstig</h2>
               <p class="muted">Ord kan förstås på flera sätt. Se vad du har provat och vilken liten övning som passar härnäst!</p></div>
             <div class="learning-home-sparks" aria-hidden="true"><span>🔎</span><span>🧠</span><span>🎭</span><span>⭐</span></div>
+          </div>
+          <div class="journey-launch">
+            <h3>✨ Mitt nästa äventyr</h3>
+            <p>Spelet väljer upp till tre små övningar som passar dig just nu. Ingen timer eller provpoäng.</p>
+            <button id="next-journey-home-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
           </div>
           <div class="learning-home-metrics" aria-label="Dina upptäckter">
             <span>🔎 <strong id="learning-home-seen">0</strong> upptäckta</span>
@@ -418,6 +428,11 @@
         <div class="page-heading"><span class="eyebrow">🗺️ DIN SPRÅKRESA</span><h1 id="learning-title">Min ordstig</h1>
           <p class="muted">Varje ord har sin egen lilla stig. Du kan hitta rätt på olika sätt: med en bild, betydelsen, en berättelse eller en jämförelse.</p>
         </div>
+        <section class="panel journey-launch" aria-labelledby="next-journey-learning-title">
+          <h2 id="next-journey-learning-title">✨ Mitt nästa äventyr</h2>
+          <p>En liten runda med olika sätt att öva, vald utifrån dina upptäckter.</p>
+          <button id="next-journey-learning-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
+        </section>
         <section class="panel learning-overview" aria-label="Sammanfattning av dina upptäckter">
           <div class="learning-overview-grid">
             <div><span aria-hidden="true">🔎</span><strong id="learning-total-seen">0</strong><small>Upptäckta ord</small></div>
@@ -540,6 +555,16 @@
           <h2 id="recall-finished-title" tabindex="-1">🌟 Bra att du försökte!</h2>
           <p>Du har övat på att hitta ord själv. Nästa gång kan du få en annan ledtråd.</p>
           <button id="recall-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
+        </section>
+      </section>
+
+      <section id="view-journey" class="view" aria-labelledby="next-journey-title" hidden>
+        <section class="panel journey-finish">
+          <h1 id="next-journey-title" tabindex="-1">✨ Mitt nästa äventyr</h1>
+          <p id="next-journey-summary" class="workshop-reading" role="status"></p>
+          <ul id="next-journey-summary-list" class="journey-summary-list"></ul>
+          <button id="next-journey-back" type="button" class="primary-button full-button">🗺️ Till min ordstig →</button>
+          <button id="next-journey-again" type="button" class="secondary-button full-button">Prova ett nytt äventyr →</button>
         </section>
       </section>
 

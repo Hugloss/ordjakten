@@ -124,3 +124,18 @@
 .bridge-solution{display:grid;gap:10px;padding-left:24px;font-size:19px;line-height:1.5}
 #bridges-prompt{font-size:clamp(23px,4vw,31px);line-height:1.45}
 @media(max-width:540px){.bridge-sort-row{grid-template-columns:minmax(0,1fr)}}
+
+/* One entry point, one short route; no timer, score or answer preview. */
+.journey-launch{display:grid;gap:10px;border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:14px;padding:15px}
+.journey-launch h2,.journey-launch h3{font-size:clamp(23px,4vw,29px);margin:0;line-height:1.35}
+.journey-launch p{font-size:16px;line-height:1.5;margin:0}
+.journey-launch button{font-size:20px;min-height:54px}
+.journey-banner{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:13px;margin-bottom:12px;border-color:var(--accent-line)}
+.journey-banner strong{font-size:18px;line-height:1.35;overflow-wrap:anywhere}
+.journey-banner p{margin:4px 0;line-height:1.45}
+.journey-actions{display:flex;flex-wrap:wrap;gap:8px}
+.journey-actions button{min-height:44px}
+.journey-finish{display:grid;gap:13px}
+.journey-summary-list{list-style:none;padding:0;display:grid;gap:8px;margin:0}
+.journey-summary-item{padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:17px;line-height:1.5}
+@media(max-width:600px){.journey-banner{grid-template-columns:minmax(0,1fr)}.journey-actions button{flex:1}}
