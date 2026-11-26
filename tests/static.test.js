@@ -135,3 +135,17 @@ test('concept map works offline and stores only separate relation observations',
   assert.ok(flow.includes('exposeConceptGroup(task.groupId)'));
   assert.ok(flow.includes('Concepts.outcome(task,id,round.attempts,round.previewed)'));
 });
+
+test('word bridges load offline and keep exercise history separate from quizzes',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/bridges.js')>=0&&html.indexOf('./js/bridges.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/bridges.js'"));
+  assert.match(app,/history\.bridgeProgress=Concepts\.sanitize\(null,bridgeCatalog\.tasks\)/);
+  assert.match(app,/bridgeProgress:history\.bridgeProgress/);
+  const flow=app.slice(app.indexOf('  function getBridgePlan('),app.indexOf('  function renderConceptMap('));
+  assert.ok(!flow.includes('history.results'));
+  assert.ok(!flow.includes('history.skillProgress='));
+  assert.ok(flow.includes('Bridges.evaluate(task,round.selection)===null'));
+  assert.ok(flow.includes('round.helped&&result.outcome'));
+  assert.ok(flow.includes('conceptMap.exposedWords.has(id)'));
+});

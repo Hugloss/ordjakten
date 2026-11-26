@@ -168,18 +168,18 @@
   },
   {
     "id": "ob-08",
-    "groupId": "bk-18",
+    "groupId": "bk-06",
     "kind": "odd",
-    "prompt": "Tre uttryck börjar med hålla. Vilket uttryck handlar i stället om att ge upp?",
+    "prompt": "Tre uttryck handlar om att börja, fortsätta eller ta itu med något. Vilket handlar i stället om att sluta försöka?",
     "cards": [
-      "ut-0004",
-      "ut-0006",
-      "ut-0018",
+      "ut-0011",
+      "ut-0014",
+      "ut-0017",
       "ut-0015"
     ],
     "answer": "ut-0015",
-    "hint": "Tänk på vad uttrycken betyder, inte bara vilka ord de innehåller.",
-    "why": "Kasta in handduken betyder att ge upp. De andra betyder hoppas, hålla uppsikt eller tänka lugnt."
+    "hint": "Tänk på skillnaden mellan att försöka och att ge upp.",
+    "why": "Kasta in handduken betyder att ge upp. Sätta fart, få blodad tand och ta tjuren vid hornen handlar om att börja, vilja fortsätta eller ta itu med något."
   },
   {
     "id": "ob-09",
@@ -265,7 +265,11 @@
     ],
     "answer": "sv-0067",
     "hint": "Leta efter ett ord som beskriver hur en sak är formad.",
-    "why": "Triangelformad beskriver form, precis som rund och fyrkantig."
+    "why": "Triangelformad beskriver form, precis som rund och fyrkantig.",
+    "anchors": [
+      "sv-0016",
+      "sv-0066"
+    ]
   },
   {
     "id": "ob-14",
@@ -279,7 +283,11 @@
     ],
     "answer": "sv-0093",
     "hint": "Vad behöver du vara rädd om?",
-    "why": "Ömtålig ligger nära skör. Något ömtåligt behöver ofta hanteras varsamt."
+    "why": "Ömtålig ligger nära skör. Något ömtåligt behöver ofta hanteras varsamt.",
+    "anchors": [
+      "sv-0012",
+      "sv-0088"
+    ]
   },
   {
     "id": "ob-15",
@@ -293,7 +301,10 @@
     ],
     "answer": "ut-0018",
     "hint": "Tänk på hur du kan agera när du är stressad.",
-    "why": "Hålla huvudet kallt och ha is i magen handlar om att behålla lugnet, med lite olika betoning."
+    "why": "Hålla huvudet kallt och ha is i magen handlar om att behålla lugnet, med lite olika betoning.",
+    "anchors": [
+      "ut-0003"
+    ]
   },
   {
     "id": "ob-16",
@@ -307,7 +318,11 @@
     ],
     "answer": "sv-0037",
     "hint": "Tänk på något du kan se din spegelbild i.",
-    "why": "Speglande handlar om återkastat ljus som ger en bild, inte om att själv lysa."
+    "why": "Speglande handlar om återkastat ljus som ger en bild, inte om att själv lysa.",
+    "anchors": [
+      "sv-0007",
+      "sv-0018"
+    ]
   },
   {
     "id": "ob-17",
@@ -320,8 +335,8 @@
     ],
     "choices": [
       "Varsam handlar om att hantera utan att skada; försiktig om att tänka på risker.",
-      "Varsam beskriver ett ljud; försiktig beskriver en färg.",
-      "Varsam betyder alltid snabb; försiktig betyder alltid långsam."
+      "Varsam handlar främst om att tänka på risker i förväg; försiktig om att hantera något utan att skada det.",
+      "Orden betyder alltid att någon är rädd och inte vågar prova något nytt."
     ],
     "answer": 0,
     "hint": "En person kan vara både varsam och försiktig.",
@@ -356,8 +371,8 @@
     ],
     "choices": [
       "Den kan kasta tillbaka ljus från en lampa utan att själv skapa ljus.",
-      "Allt som glittrar måste också vara en egen ljuskälla.",
-      "Glittrig betyder att något ger ifrån sig ett kraftigt ljud."
+      "En glittrig sak måste själv ge ifrån sig ljus, medan en lysande sak bara återkastar ljus.",
+      "En glittrig sak återger alltid en tydlig spegelbild."
     ],
     "answer": 0,
     "hint": "Fundera på varifrån ljuset kommer.",
@@ -374,7 +389,7 @@
     ],
     "choices": [
       "Förvånad beskriver personens reaktion; häpnadsväckande beskriver något som väcker stark förundran.",
-      "Förvånad beskriver hur länge en händelse varar; häpnadsväckande beskriver hur ofta den sker.",
+      "Förvånad beskriver det som väcker förundran; häpnadsväckande beskriver personens reaktion.",
       "Båda beskriver alltid en persons egen reaktion."
     ],
     "answer": 0,
@@ -398,6 +413,7 @@
       if(!row||!/^ob-\d{2}$/.test(row.id)||ids.has(row.id)||!Object.hasOwn(TYPES,row.kind)||
         !group||!prompt||prompts.has(prompt)||!text(row.hint)||!text(row.why)||
         !Array.isArray(row.cards)||!distinct(row.cards)||row.cards.some(id=>!byId.has(id))||
+        (row.anchors!==undefined&&(!Array.isArray(row.anchors)||!distinct(row.anchors)||row.anchors.some(id=>!byId.has(id))))||
         !group.words.some(word=>row.cards.includes(word.id))){
         errors.push('Ogiltig ordbro: '+row?.id);continue;
       }
@@ -411,7 +427,7 @@
         row.choices.every(text)&&distinct(row.choices)&&Number.isInteger(row.answer)&&row.answer>=0&&row.answer<3;
       if(!valid){errors.push('Ogiltigt facit: '+row.id);continue;}
       ids.add(row.id);prompts.add(prompt);
-      const participants=[...new Set([...group.words.map(w=>w.id),...row.cards])];
+      const participants=[...new Set([...(row.anchors||[]),...row.cards])];
       tasks.push({...row,starter:group.starter,type:group.type,groupTitle:group.title,participants,
         labels:Object.fromEntries(row.cards.map(id=>[id,byId.get(id).name])),
         stamp:stamp([row,group.explanation,participants.map(id=>[id,byId.get(id).name,byId.get(id).definition])])});
@@ -441,11 +457,17 @@
     if(!correct&&attempts===0)return {step:'retry',outcome:null};
     return {step:correct?'complete':'guided',outcome:previewed?'previewed':correct&&attempts===0?'direct':'supported'};
   }
-  function plan(content,progress,known=new Set(),now=Date.now(),random=Math.random,{type='all',wordId=null,groupId=null,kind='all'}={}){
+  function plan(content,progress={},known=new Set(),now=Date.now(),random=Math.random,{type='all',wordId=null,groupId=null,kind='all'}={}){
+    const cardFor=task=>{
+      const card=progress?.[task.id];
+      return card?.stamp===task.stamp&&Number.isSafeInteger(card.lastAt)&&card.lastAt>0&&
+        card.lastAt<=4102444800000&&Number.isInteger(card.attempts)&&card.attempts>0&&
+        ['direct','supported','previewed'].includes(card.last)?card:null;
+    };
     const rows=content.tasks.filter(task=>(type==='all'||task.type===type)&&(kind==='all'||task.kind===kind)&&
       (!groupId||task.groupId===groupId)&&(!wordId||task.participants.includes(wordId))&&
-      (wordId||groupId||type!=='all'||kind!=='all'||task.starter||task.participants.some(id=>known.has(id))||progress[task.id]))
-      .map(task=>({task,card:progress[task.id],dueAt:progress[task.id]?progress[task.id].lastAt+DAY:0,draw:random()}));
+      (wordId||groupId||type!=='all'||kind!=='all'||task.starter||task.participants.some(id=>known.has(id))||cardFor(task)))
+      .map(task=>{const card=cardFor(task);return {task,card,dueAt:card?card.lastAt+DAY:0,draw:random()};});
     const ready=rows.filter(row=>row.dueAt<=now);
     const rank=row=>row.card?.last==='supported'?0:!row.card?1:row.card.last==='previewed'?2:3;
     ready.sort((a,b)=>rank(a)-rank(b)||a.dueAt-b.dueAt||

@@ -612,11 +612,11 @@
     for(const groupId of Concepts.exposedGroups(conceptCatalog,id))conceptMap.exposed.add(groupId);
   }
   function openConceptMap(id=null){
-    if(id&&!Concepts.forWord(conceptCatalog,id).length&&!bridgeCatalog.tasks.some(task=>task.cards.includes(id)))return;
+    if(id&&!Concepts.forWord(conceptCatalog,id).length&&!bridgeCatalog.tasks.some(task=>task.participants.includes(id)))return;
     conceptMap={wordId:id,returnId:id,filter:'all',bridgeKind:'all',exposed:new Set(),exposedWords:new Set(),round:null,bridgeRound:null};
     // The word card already exposed a word and definition, so do not turn
     // a word-specific visit into independent semantic evidence.
-    if(id)for(const group of Concepts.forWord(conceptCatalog,id))exposeConceptGroup(group.id);
+    if(id){conceptMap.exposedWords.add(id);for(const group of Concepts.forWord(conceptCatalog,id))exposeConceptGroup(group.id);}
     show('concepts');renderConceptMap();
     $('concepts-title').focus({preventScroll:true});
   }
@@ -735,6 +735,7 @@
   }
   function exposeBridgeTask(task){
     task.participants.forEach(id=>conceptMap.exposedWords.add(id));
+    conceptMap.exposed.add(task.groupId);
     for(const id of task.participants)for(const group of Concepts.forWord(conceptCatalog,id))conceptMap.exposed.add(group.id);
   }
   function bridgeHelp(){
@@ -1558,7 +1559,7 @@
       workshopButton.type='button';workshopButton.dataset.workshopWord=item.id;
       detail.append(workshopButton);
       const relations=Concepts.forWord(conceptCatalog,item.id);
-      if(relations.length||bridgeCatalog.tasks.some(task=>task.cards.includes(item.id))){
+      if(relations.length||bridgeCatalog.tasks.some(task=>task.participants.includes(item.id))){
         const button=element('button','secondary-button full-button','🗺️ Öppna Begreppskartan och Ordbroar →');
         button.type='button';button.dataset.conceptWord=item.id;detail.append(button);
       }
