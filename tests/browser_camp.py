@@ -39,6 +39,20 @@ def main(browser):
     page.locator("#camp-prompt-next").click()
     assert page.locator("#camp-creative-prompt").inner_text() != prompt
     before = stored()
+    for action in ("butterfly", "rocket", "music", "buddy"):
+        page.locator(f'[data-live-action="{action}"]').click()
+        assert page.locator("#camp-live-line").inner_text()
+    lantern = page.locator('[data-live-action="lantern"]')
+    lantern.click()
+    assert lantern.get_attribute("aria-pressed") == "true"
+    lantern.click()
+    assert lantern.get_attribute("aria-pressed") == "false"
+    egg = page.locator('[data-live-action="egg"]')
+    egg.click()
+    assert "🦕" in egg.inner_text()
+    egg.click()
+    assert "🥚" in egg.inner_text()
+    assert stored() == before
     page.locator("#camp-theatre-start").click()
     page.locator('[data-theatre-choice="owl"]').click()
     assert page.locator('[data-theatre-choice="mark-space-0"]').is_visible()
@@ -52,6 +66,25 @@ def main(browser):
     page.locator("#camp-theatre-close").click()
     assert page.locator("#camp-theatre-start").is_visible()
     assert stored() == before
+    page.locator("#camp-theatre-start").click()
+    page.locator('[data-theatre-choice="owl"]').click()
+    page.locator('[data-theatre-choice="mark-space-0"]').click()
+    page.locator('[data-theatre-choice="show"]').click()
+    page.locator("#camp-theatre-save").click()
+    assert stored()["campStories"] == [{"scene":"space","hero":"owl","prop":"mark-space-0","plot":"show"}]
+    assert page.locator("#camp-theatre-save").is_disabled()
+    assert {k:v for k,v in stored().items() if k != "campStories"} == {k:v for k,v in before.items() if k != "campStories"}
+    page.reload()
+    page.locator('#story-home [data-camp-open]').click()
+    assert page.locator("#camp-story-list li").count() == 1
+    page.locator("[data-story-read]").click()
+    assert "knasiga" in page.locator("#camp-theatre-story-title").inner_text()
+    page.locator("#camp-theatre-close").click()
+    page.once("dialog", lambda dialog: dialog.accept())
+    page.locator("[data-story-remove]").click()
+    assert stored()["campStories"] == []
+    assert page.locator("#camp-story-empty").is_visible()
+    before = stored()
     page.locator("#camp-riddle-start").click()
     page.locator('[data-camp-riddle="sv-0001"]').click()
     assert page.locator("#camp-riddle-hint").is_visible()

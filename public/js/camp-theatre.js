@@ -1,5 +1,5 @@
 /* Sagoteatern: an optional, finite story-making activity. No scores,
- * history writes, currency, random rewards or automatic continuation. */
+ * automatic history writes, currency, random rewards or automatic continuation. */
 (function(root,factory){
   const api=factory(root.OrdjaktenCamp||(typeof require==='function'?require('./adventure-camp'):null),
     root.OrdjaktenPlayful||(typeof require==='function'?require('./playful'):null));
@@ -76,5 +76,15 @@
       selected:[hero,prop,plot].filter(Boolean).map(item=>item.emoji+' '+item.label),
       choices:choices(state),title:panels.length?plot.title:'',panels,canBack:state.stage!=='hero'};
   }
-  return {start,choices,choose,back,model};
+  function record(state){
+    return state?.stage==='ending'&&model(state).panels.length===3?
+      {scene:state.scene,hero:state.hero,prop:state.prop,plot:state.plot}:null;
+  }
+  function restore(row,items){
+    if(!row||!Object.hasOwn(Camp.SCENES,row.scene)||!items.some(item=>item.id===row.prop))return null;
+    let state=start({scene:row.scene,slots:[row.prop]},items,row.hero);
+    state=choose(choose(choose(state,row.hero),row.prop),row.plot);
+    return record(state)?state:null;
+  }
+  return {start,choices,choose,back,model,record,restore};
 });

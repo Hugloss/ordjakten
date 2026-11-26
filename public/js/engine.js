@@ -15,7 +15,7 @@
     companion:'fox', adventure:'forest', sound:false,
     timerMode: 'off', timerSeconds: 180, timerScope: 'total', reviewOnly: false,
     expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true
-  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,retentionProgress:{}});
+  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],retentionProgress:{}});
 
   function shuffle(input, random = Math.random) {
     const result = input.slice();
@@ -315,8 +315,29 @@
       adaptivePractice:obj.adaptivePractice!==false
     };
   }
+  const CAMP_STORY_LIMIT=24;
+  function campStoryKey(row){return [row.scene,row.hero,row.prop,row.plot].join(':');}
+  function sanitizeCampStories(raw,storyProgress){
+    if(!Array.isArray(raw))return [];
+    const seen=new Set(),stories=[];
+    // Bound work on corrupt or hostile stored data; normal saves hold at most 24.
+    for(const row of raw.slice(0,256)){
+      if(!row||typeof row!=='object'||Array.isArray(row)||
+        !['glade','space','coast','garden'].includes(row.scene)||
+        !['fox','owl','dragon'].includes(row.hero)||
+        !['mystery','friend','show'].includes(row.plot)||typeof row.prop!=='string')continue;
+      const mark=/^mark-(forest|space|castle|pirate|ocean|dinosaurs|garden|unicorn|animals|rainbow|horses|music)-([0-3])$/.exec(row.prop);
+      if(!/^free-(book|tent|lantern|flower|blanket|telescope)$/.test(row.prop)&&
+        !(mark&&Number.isInteger(storyProgress?.[mark[1]])&&storyProgress[mark[1]]>Number(mark[2])))continue;
+      const clean={scene:row.scene,hero:row.hero,prop:row.prop,plot:row.plot},key=campStoryKey(clean);
+      if(seen.has(key))continue;
+      seen.add(key);stories.push(clean);
+      if(stories.length===CAMP_STORY_LIMIT)break;
+    }
+    return stories;
+  }
   function sanitizeHistory(history) {
-    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,confusionProgress:{},clueProgress:{},retentionProgress:{}};
+    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],confusionProgress:{},clueProgress:{},retentionProgress:{}};
     const rawResults = Array.isArray(history.results)?history.results:[];
     const results = rawResults.filter(x => x && typeof x==='object' && Number.isFinite(x.finishedAt))
       .slice(-50).map(x => ({finishedAt:x.finishedAt,level:String(x.level||''),mode:String(x.mode||''),
@@ -394,7 +415,7 @@
     const detectorProgress=history.detectorProgress&&typeof history.detectorProgress==='object'&&!Array.isArray(history.detectorProgress)?history.detectorProgress:{};
     const recallProgress=history.recallProgress&&typeof history.recallProgress==='object'&&!Array.isArray(history.recallProgress)?history.recallProgress:{};
     const skillProgress=history.skillProgress&&typeof history.skillProgress==='object'&&!Array.isArray(history.skillProgress)?history.skillProgress:{};
-    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,confusionProgress,clueProgress,retentionProgress};
+    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,campStories:sanitizeCampStories(history.campStories,storyProgress),confusionProgress,clueProgress,retentionProgress};
   }
   function applyOutcome(mistakes,id,outcome) {
     const updated={...mistakes};
@@ -403,5 +424,5 @@
     return updated;
   }
   return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,validateExpressions,validateContexts,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
-    generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome};
+    generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

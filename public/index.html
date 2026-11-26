@@ -68,6 +68,7 @@
   <script src="./js/world-missions.js" defer></script>
   <script src="./js/adventure-camp.js" defer></script>
   <script src="./js/camp-theatre.js" defer></script>
+  <script src="./js/camp-living.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -653,6 +654,24 @@
           <div><span class="eyebrow">🎨 DIN EGEN VÄRLD</span><h1 id="camp-title" tabindex="-1">Min äventyrsplats</h1><p>Inred din plats, lek med orden och välj vart du vill resa. Den är din även när du tar en paus.</p></div>
           <div class="camp-choice-row"><button id="camp-travel-jump" type="button" class="primary-button">🗺️ Välj nästa äventyr</button><button type="button" class="secondary-button" data-nav="learning">Klar för nu – Min ordstig</button></div>
         </header>
+        <section class="panel camp-living" aria-labelledby="camp-live-title">
+          <header class="camp-theatre-heading"><span aria-hidden="true">🪄</span><div>
+            <h2 id="camp-live-title">Lek på din plats</h2>
+            <p>Tryck på sakerna och se vad som händer!</p>
+          </div></header>
+          <div id="camp-live-scene" class="camp-live-scene" data-scene="glade" role="group" aria-label="Lekplatsens föremål">
+            <div class="camp-live-landscape" aria-hidden="true"><span id="camp-live-sky"></span><span id="camp-live-edge"></span></div>
+            <button type="button" class="camp-live-object" data-live-action="butterfly"><span class="camp-live-icon" aria-hidden="true"></span><strong class="camp-live-label"></strong></button>
+            <button type="button" class="camp-live-object" data-live-action="lantern" aria-pressed="false"><span class="camp-live-icon" aria-hidden="true"></span><strong class="camp-live-label"></strong></button>
+            <button type="button" class="camp-live-object" data-live-action="egg" aria-pressed="false"><span class="camp-live-icon" aria-hidden="true"></span><strong class="camp-live-label"></strong></button>
+            <button type="button" class="camp-live-object" data-live-action="rocket"><span class="camp-live-icon" aria-hidden="true"></span><strong class="camp-live-label"></strong></button>
+            <button type="button" class="camp-live-object" data-live-action="music"><span class="camp-live-icon" aria-hidden="true"></span><strong class="camp-live-label"></strong></button>
+            <button type="button" class="camp-live-object" data-live-action="buddy"><span class="camp-live-icon" aria-hidden="true"></span><strong class="camp-live-label"></strong></button>
+          </div>
+          <div class="camp-dialogue camp-live-dialogue"><span id="camp-live-buddy" aria-hidden="true"></span><p id="camp-live-line" role="status"></p></div>
+          <label class="camp-live-sound"><input id="camp-live-sound" type="checkbox"> 🎵 Spela ljud (frivilligt)</label>
+          <p class="story-small">Lek hur du vill. Ingen poängräkning eller tidtagning.</p>
+        </section>
         <section class="panel camp-theatre" aria-labelledby="camp-theatre-title">
           <header class="camp-theatre-heading"><span aria-hidden="true">🎭</span><div>
             <h2 id="camp-theatre-title">Min sagoteater</h2>
@@ -668,6 +687,8 @@
               <h3 id="camp-theatre-story-title"></h3>
               <ol id="camp-theatre-panels" class="camp-theatre-panels"></ol>
               <p>Vad skulle du kalla din saga? Berätta gärna med egna ord.</p>
+              <button id="camp-theatre-save" type="button" class="primary-button full-button">📚 Spara i min sagobok</button>
+              <p id="camp-theatre-save-note" class="camp-notice" tabindex="-1" role="status"></p>
               <button id="camp-theatre-again" type="button" class="primary-button full-button">🎨 Skapa en annan saga</button>
             </div>
             <div class="camp-choice-row camp-theatre-controls">
@@ -675,7 +696,15 @@
               <button id="camp-theatre-close" type="button" class="secondary-button">Klar för nu</button>
             </div>
           </div>
-          <p class="story-small">En lek utan rätt eller fel. Inga poäng eller krav. Sagan sparas inte.</p>
+          <p class="story-small">En lek utan rätt eller fel. Inga poäng eller krav. Spara bara de sagor du vill behålla.</p>
+        </section>
+        <section class="panel camp-story-book" aria-labelledby="camp-story-title">
+          <h2 id="camp-story-title" tabindex="-1">📚 Min sagobok</h2>
+          <p>Här finns dina favoritsagor. Läs dem igen när du vill. Boken sparas på den här enheten.</p>
+          <p id="camp-story-count" class="eyebrow"></p>
+          <p id="camp-story-empty" class="muted">Skapa en saga i sagoteatern och välj att spara den här.</p>
+          <ul id="camp-story-list" class="camp-story-list"></ul>
+          <p id="camp-story-notice" role="status" class="camp-notice"></p>
         </section>
         <section class="panel camp-editor" aria-label="Dekorera äventyrsplatsen">
           <div class="camp-scene-controls"><h2>Välj miljö</h2><div id="camp-scenes" class="camp-choice-row" role="group" aria-label="Miljö">

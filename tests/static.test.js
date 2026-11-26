@@ -274,3 +274,15 @@ test('world missions are offline, map-linked, optional and isolated from educati
   assert.ok(!flow.includes('history.skillProgress')&&!flow.includes('history.results')&&!flow.includes('history.reviewProgress'));
   assert.ok(!flow.includes('history.feedbackProgress')&&!flow.includes('history.practiceBalance'));
 });
+
+test('living camp and favourite stories work offline with bounded local persistence',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/camp-living.js')>=0&&html.indexOf('./js/camp-living.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/camp-living.js'"));
+  for(const id of ['camp-live-scene','camp-live-sound','camp-story-list','camp-theatre-save'])
+    assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(app.includes('campStories:history.campStories')&&app.includes('history.campStories=[]'));
+  const living=app.slice(app.indexOf('  function resetCampLiving('),app.indexOf('  function renderCampStoryBook('));
+  assert.ok(!living.includes('saveHistory(')&&!living.includes('history.results')&&!living.includes('history.storyProgress='));
+  assert.ok(living.includes('settings.sound')&&living.includes('reducedMotion'));
+});
