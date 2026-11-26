@@ -388,9 +388,12 @@
       collected:Object.values(progress).reduce((sum,n)=>sum+n,0)};
   }
   function finish(raw,chapter,journey){
+    if(!journey?.finished||!Array.isArray(journey.completed)||!journey.completed.length)return {progress:raw,earned:null};
+    return completeChapter(raw,chapter);
+  }
+  function completeChapter(raw,chapter){
     const progress=sanitize(raw);
-    if(!chapter||!validWorld(chapter.id)||!journey?.finished||!Array.isArray(journey.completed)||
-      !journey.completed.length||!Number.isInteger(chapter.index))return {progress:raw,earned:null};
+    if(!chapter||!validWorld(chapter.id)||!Number.isInteger(chapter.index))return {progress:raw,earned:null};
     const count=progress[chapter.id]||0;
     if(count!==chapter.index||count>=DATA[chapter.id].length)return {progress:raw,earned:null};
     const earned=model(progress,chapter.id).chapter;
@@ -414,5 +417,5 @@
   function prefer(rows,baseline,mode){
     return allowedOpenings(rows,baseline).find(row=>row.mode===mode)||baseline;
   }
-  return {DATA,validWorld,sanitize,model,finish,openings,prefer};
+  return {DATA,validWorld,sanitize,model,finish,completeChapter,openings,prefer};
 });
