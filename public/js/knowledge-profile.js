@@ -57,7 +57,8 @@
         wordRight:observations.filter(x=>count(x.card.wordRight)>0).length,
         clueRight:observations.filter(x=>count(x.card.clueRight)>0).length,
         wordSupport:observations.filter(x=>x.card.word==='helped').length,
-        clueSupport:observations.filter(x=>x.card.clue==='supported').length};
+        clueSupport:observations.filter(x=>x.card.clue==='supported').length,
+        rows:observations};
       words[id]={id,meaning,recognition,storyRight,storyWeak,transferWeak,
         storyReady:storyWeak&&ordinaryReady||transferWeak&&transferReady,
         meaningWeak:weak(skills.meaning)||reading.needsReview(readingRows,id,'recognition'),
@@ -99,9 +100,11 @@
     }
     if(mode==='detector'&&word){
       if(candidate.reason==='need'){
-        if(word.detector.clueSupport&&word.detector.wordRight)return direct('Du har hittat rätt ord i en berättelse. Prova att också hitta textens ledtråd.');
-        if(word.detector.clueSupport)return direct('En tidigare ledtrådsuppgift behövde stöd. Leta efter ledtråden igen.');
-        if(word.detector.wordSupport)return direct('Ett tidigare ordval var klurigt. Läs berättelsen och jämför orden.');
+        const prior=word.detector.rows.find(row=>row.task.id===task.id)?.card;
+        if(prior?.clue==='supported'&&prior.word==='right')
+          return direct('Du valde rätt ord men fick stöd med ledtråden. Prova att också hitta textens ledtråd.');
+        if(prior?.clue==='supported')return direct('En tidigare ledtrådsuppgift behövde stöd. Leta efter ledtråden igen.');
+        if(prior?.word==='helped')return direct('Ett tidigare ordval var klurigt. Läs berättelsen och jämför orden.');
       }
       if(word.meaning&&word.storyReady&&candidate.reason!=='review')
         return related('Du har hittat rätt betydelse, men en berättelse var klurig. Prova att leta efter ledtrådar.');

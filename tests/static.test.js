@@ -175,3 +175,14 @@ test('shared memory loads offline before both learning engines and is displayed 
   assert.ok(app.includes('B.transferDueAt(')&&app.includes('Recall.dueAt('));
   assert.ok(!app.includes('history.memoryProgress='));
 });
+
+test('personal knowledge recommendations are derived, offline and never persisted as a global ability score',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/knowledge-profile.js')>=0&&html.indexOf('./js/knowledge-profile.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/knowledge-profile.js'"));
+  assert.ok(html.includes('id="knowledge-home-note"')&&html.includes('id="knowledge-next-list"'));
+  assert.ok(app.includes('decorate:row=>Knowledge.decorate(knowledge,row)'));
+  assert.ok(app.includes('step.explanation||Journey.REASONS[step.reason]'));
+  assert.ok(app.includes('Knowledge.notes(knowledge,item.id)'));
+  assert.ok(!app.includes('history.knowledgeProgress')&&!app.includes('history.knowledgeProfile'));
+});
