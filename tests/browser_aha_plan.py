@@ -49,8 +49,9 @@ def main(browser):
     observed = after["readingProgress"]["ut-0001"]["transfer"]
     assert observed["supported"] == 2 and observed["quality"] == 0
     assert observed["lastEvidence"] == "expression:mission"
-    assert {k:v for k,v in after.items() if k != "readingProgress"} == {
-        k:v for k,v in before.items() if k != "readingProgress"}
+    assert after["feedbackProgress"]["aha:ut-0001"]["last"] == "supported"
+    assert {k:v for k,v in after.items() if k not in {"readingProgress", "feedbackProgress"}} == {
+        k:v for k,v in before.items() if k not in {"readingProgress", "feedbackProgress"}}
     page.locator("#aha-round-next").click()
     assert page.locator("#aha-round-finished").is_visible()
     page.locator("#aha-round-done").click()

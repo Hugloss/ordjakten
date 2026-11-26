@@ -61,6 +61,7 @@
   <script src="./js/concepts.js" defer></script>
   <script src="./js/bridges.js" defer></script>
   <script src="./js/knowledge-profile.js" defer></script>
+  <script src="./js/practice-feedback.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -448,6 +449,11 @@
           <ul id="knowledge-next-list" class="knowledge-next-list"></ul>
           <p id="knowledge-empty" class="muted" hidden>Inga lämpliga stationer redo just nu. Du kan utforska orden när du vill.</p>
           <small>Det är förslag. Nästa äventyr väljer bland de övningar som är redo när du börjar.</small>
+          <details id="feedback-learning-summary" class="knowledge-word" hidden>
+            <summary>🌱 Vi provar olika sätt att öva</summary>
+            <p id="feedback-learning-note" class="muted" role="status"></p>
+            <small>Ett svar efter en annan övning visar hur det gick då, inte säkert varför.</small>
+          </details>
         </section>
         <section id="memory-learning" class="panel memory-preview" aria-labelledby="memory-learning-title" hidden>
           <h2 id="memory-learning-title">🌱 Ord som får vila</h2>

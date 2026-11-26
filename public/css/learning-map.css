@@ -159,3 +159,5 @@
 .knowledge-word{border:1px solid var(--border);border-radius:10px;padding:12px;min-width:0}
 .knowledge-word summary{font-size:17px;font-weight:750;line-height:1.45;cursor:pointer}
 .knowledge-word-body{display:grid;gap:8px;margin-top:10px}
+
+#feedback-learning-summary p{margin:8px 0;font-size:16px;line-height:1.5}
