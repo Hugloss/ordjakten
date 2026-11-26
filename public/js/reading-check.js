@@ -2,10 +2,11 @@
  * use edited examples for expressions and word contexts, or definitions
  * already vetted for the original multiple-choice question. */
 (function (root, factory) {
-  const api = factory();
+  const memory=typeof module!=='undefined'&&module.exports?require('./spaced-memory'):root.OrdjaktenMemory;
+  const api = factory(memory);
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.OrdjaktenReading = api;
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (Memory) {
   'use strict';
   function choose(items, random) {
     if (!items.length) return null;
@@ -146,6 +147,10 @@
           card.lastQualifiedAt=at(item.lastQualifiedAt);
           if(item.legacyMastered===true)card.legacyMastered=true;
         }
+        if(type==='transfer'){
+          const memory=Memory.sanitize(item.memory,{maxAt:card.lastAt,evidenceRequired:true});
+          if(memory&&memory.outcome!=='previewed'&&evidenceValid(id,memory.evidence))card.memory=memory;
+        }
         entry[type]=card;
       }
       if(Object.keys(entry).length)out[id]=entry;
@@ -160,6 +165,7 @@
     const before=cards[id]?.[type]||{first:0,supported:0,streak:0,lastAt:0};
     const first=outcome==='first';
     const timestamp=at(now)||Date.now();
+    if(timestamp<before.lastAt)return raw;
     const card={
       first:Math.min(9999,before.first+(first?1:0)),
       supported:Math.min(9999,before.supported+(first?0:1)),
@@ -191,6 +197,14 @@
       card.lastEvidence=evidence;
       card.lastQualifiedAt=lastQualifiedAt;
       if(legacyMastered && first)card.legacyMastered=true;
+      const memory=Memory.observe(before.memory,{outcome:first?'direct':'supported',now:timestamp,
+        lastExposureAt:before.lastAt,evidence,different:before.lastEvidence!==evidence,requiresEvidence:true});
+      if(memory)card.memory=memory;
+    }else if(type==='transfer'&&before.memory){
+      // An unkeyed legacy/fallback success cannot establish new evidence.
+      // A supported answer still invalidates the earned interval.
+      card.memory=first?before.memory:Memory.observe(before.memory,{outcome:'supported',now:timestamp,
+        evidence:before.memory.evidence,requiresEvidence:true});
     }
     return {...cards,[id]:{...cards[id],[type]:card}};
   }
@@ -200,5 +214,14 @@
       (type==='transfer' && Number.isInteger(entry.quality)?
         entry.quality<2:entry.streak<2);
   }
-  return {makeCheck,isCorrect,nextStep,sanitizeProgress,recordProgress,needsReview};
+  function transferDueAt(card){
+    const last=Math.max(card?.lastAt||0,card?.lastQualifiedAt||0);
+    return Math.max(last?Math.min(4102444800000,last+DAY_MS):0,Memory.dueAt(card?.memory));
+  }
+  function hasMaintenance(card){
+    // Old keyed observations can revisit on a one-day baseline, but cannot
+    // inherit a longer interval from aggregate counters or legacy mastery.
+    return !!card&&(!!card.memory||(card.first>0&&card.lastAt>0&&typeof card.lastEvidence==='string'));
+  }
+  return {makeCheck,isCorrect,nextStep,sanitizeProgress,recordProgress,needsReview,transferDueAt,hasMaintenance};
 });

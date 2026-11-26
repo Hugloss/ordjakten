@@ -2,10 +2,11 @@
  * more support. Exact matches are not a semantic/spelling assessment.
  * Store only bounded outcome counters, stage and timestamp; never input. */
 (function(root,factory){
-  const api=factory();
+  const memory=typeof module!=='undefined'&&module.exports?require('./spaced-memory'):root.OrdjaktenMemory;
+  const api=factory(memory);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.OrdjaktenRecall=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Memory){
   'use strict';
   const DAY=86400000,LIMIT=3;
   const ID=/^(?:sv|ut)-\d{4,}$/;
@@ -41,6 +42,9 @@
       const lastAt=time(card.lastAt);
       out[id]={direct,assisted,stage:integer(card.stage,2),lastAt,
         last:card.last==='direct'&&direct?'direct':'assisted'};
+      const memory=Memory.sanitize(card.memory,{maxAt:lastAt});
+      if(memory&&!memory.evidence&&((memory.outcome==='direct'&&out[id].last==='direct')||
+        (memory.outcome!=='direct'&&out[id].last==='assisted')))out[id].memory=memory;
     }
     return out;
   }
@@ -52,7 +56,7 @@
       (Array.isArray(missions)&&(missions.includes('meaning')||missions.includes('sentence')))||
       integer(aha.recognition?.first,9999)>0||integer(aha.transfer?.first,9999)>0;
   }
-  function dueAt(card){return card?.lastAt?card.lastAt+DAY:0;}
+  function dueAt(card){return Math.max(card?.lastAt?Math.min(4102444800000,card.lastAt+DAY):0,Memory.dueAt(card?.memory));}
   function plan(catalog,history={},now=Date.now()){
     const progress=sanitize(history.recallProgress,catalog);
     const ready=[],waiting=[],seen=new Set();
@@ -68,7 +72,7 @@
     }
     // Unsolved/assisted and untried concepts before independent repeats;
     // oldest due time prevents starvation within each group.
-    const rank=row=>row.card?.last==='assisted'?0:row.card?2:1;
+    const rank=row=>row.card?.last==='assisted'&&row.card.memory?.outcome!=='previewed'?0:row.card?2:1;
     ready.sort((a,b)=>rank(a)-rank(b)||a.dueAt-b.dueAt||a.id.localeCompare(b.id));
     waiting.sort((a,b)=>a.dueAt-b.dueAt||a.id.localeCompare(b.id));
     return {ready,waiting,round:ready.slice(0,LIMIT)};
@@ -98,9 +102,10 @@
     // observation. It must neither promote nor demote an established stage.
     const next=previewed?(previous?.stage??1):matched&&!helped?
       Math.min(2,stage+1):stage===0&&matched?1:0;
+    const memory=Memory.observe(previous?.memory,{outcome:previewed?'previewed':direct?'direct':'supported',now:at,lastExposureAt:previous?.lastAt});
     progress[id]={direct:Math.min(9999,(previous?.direct||0)+Number(direct)),
       assisted:Math.min(9999,(previous?.assisted||0)+Number(!direct)),
-      stage:next,lastAt:at,last:direct?'direct':'assisted'};
+      stage:next,lastAt:at,last:direct?'direct':'assisted',memory};
     return progress;
   }
   return {DAY,LIMIT,normalize,mask,task,sanitize,eligible,dueAt,plan,prompt,letters,match,record};

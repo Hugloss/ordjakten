@@ -75,9 +75,9 @@
       if(dueAt>now)return;
       candidates.push({mode,key,words:ids,reason,cost,payload,dueAt:ts(dueAt),discoveryTier});
     };
-    for(const row of aha?.ready||[])add('aha','aha:'+row.id,[row.id],'need',1,row,row.dueAt);
+    for(const row of aha?.ready||[])add('aha','aha:'+row.id,[row.id],row.reason==='review'?'review':'need',1,row,row.dueAt);
     for(const row of recall?.ready||[]){
-      add('recall','recall:'+row.id,[row.id],row.card?.last==='assisted'?'need':row.card?'review':'extend',1,row,row.dueAt);
+      add('recall','recall:'+row.id,[row.id],row.card?.last==='assisted'&&row.card.memory?.outcome!=='previewed'?'need':row.card?'review':'extend',1,row,row.dueAt);
     }
     const groups=new Map((conceptContent?.groups||[]).map(group=>[group.id,group]));
     for(const task of available(detector)){

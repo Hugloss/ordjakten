@@ -1,5 +1,5 @@
-/* A short transfer-only Aha round. Derive the queue from existing reading
- * observations; no second scheduler or persistent state. */
+/* A short transfer-only Aha round. Recover supported examples and revisit
+ * previously successful authored examples using their own memory interval. */
 (function(root,factory){
   const api=factory();
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
@@ -18,8 +18,9 @@
     if(!check||check.source!==(item.kind==='word'?'context':'expression')||
       !check.evidence||check.evidence===card?.lastEvidence||
       check.options.length<2||check.options.filter(x=>x.correct).length!==1)return null;
-    const last=Math.max(card?.lastAt||0,card?.lastQualifiedAt||0);
-    return {...item,word:item.word||item.name,check,dueAt:last?last+DAY:0};
+    const dueAt=reading.transferDueAt(card);
+    return {...item,word:item.word||item.name,check,dueAt,
+      reason:reading.needsReview(progress,item.id,'transfer')||card?.memory?.outcome==='supported'?'need':card?'review':'extend'};
   }
   function plan(raw,{bank,expressions,contexts,surprises,missions,reading,now=Date.now(),random=Math.random}){
     const progress=reading.sanitizeProgress(raw);
@@ -30,12 +31,13 @@
     ];
     const seen=new Set();
     for(const item of catalog){
-      if(seen.has(item.id)||!reading.needsReview(progress,item.id,'transfer'))continue;
+      if(seen.has(item.id)||(!reading.needsReview(progress,item.id,'transfer')&&
+        !reading.hasMaintenance(progress[item.id]?.transfer)))continue;
       seen.add(item.id);
       const row=option(item,progress,{bank,contexts,surprises,missions,reading,random});
       if(row)(row.dueAt<=now?ready:waiting).push(row);
     }
-    const order=(a,b)=>a.dueAt-b.dueAt||a.id.localeCompare(b.id);
+    const order=(a,b)=>Number(b.reason==='need')-Number(a.reason==='need')||a.dueAt-b.dueAt||a.id.localeCompare(b.id);
     ready.sort(order);waiting.sort(order);
     return {ready,waiting,round:ready.slice(0,LIMIT)};
   }
