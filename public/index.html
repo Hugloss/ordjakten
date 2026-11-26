@@ -64,6 +64,7 @@
   <script src="./js/practice-feedback.js" defer></script>
   <script src="./js/practice-balance.js" defer></script>
   <script src="./js/adventure-challenge.js" defer></script>
+  <script src="./js/story-quests.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -81,7 +82,7 @@
 
     <main id="main">
       <section id="next-journey-banner" class="panel journey-banner" aria-label="Mitt nästa äventyr" hidden>
-        <div><p id="next-journey-progress" class="eyebrow" role="status"></p><strong id="next-journey-method"></strong><p id="next-journey-reason" class="muted"></p><p id="next-journey-pacing" class="journey-pacing" hidden></p></div>
+        <div><p id="next-journey-progress" class="eyebrow" role="status"></p><strong id="next-journey-method"></strong><p id="next-journey-story" class="story-banner-title" hidden></p><ol id="next-journey-stations" class="story-stations" aria-label="Äventyrets stationer"></ol><p id="next-journey-reason" class="muted"></p><p id="next-journey-pacing" class="journey-pacing" hidden></p></div>
         <div class="journey-actions"><button id="next-journey-skip" type="button" class="secondary-button">Hoppa över</button><button id="next-journey-stop" type="button" class="secondary-button">Avsluta äventyret</button></div>
       </section>
       <section id="view-home" class="view page-enter" aria-labelledby="home-title">
@@ -105,7 +106,8 @@
             <h3>✨ Mitt nästa äventyr</h3>
             <p>Spelet väljer upp till tre små övningar som passar dig just nu. Ingen timer eller provpoäng.</p>
             <p id="knowledge-home-note" class="knowledge-home-note" role="status"></p>
-            <button id="next-journey-home-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
+            <div id="story-home" class="story-card story-preview"></div>
+            <button id="next-journey-home-start" type="button" class="primary-button full-button">Ut på äventyr! →</button>
           </div>
           <div id="memory-home" class="memory-preview" hidden>
             <strong>🌱 Ord som får vila</strong>
@@ -397,6 +399,7 @@
       <section id="view-results" class="view" aria-labelledby="results-title" hidden>
         <div class="results-hero panel"><div id="results-companion" class="results-companion" aria-hidden="true">🦊</div><div class="trophy" aria-hidden="true">🏆</div><h1 id="results-title">Ordjakten är klar!</h1><div id="results-percent" class="results-percent">80 %</div><p id="results-descriptor" class="muted"></p><p id="results-cheer" class="results-cheer"></p></div>
         <section class="panel adventure-finale" aria-labelledby="finale-title"><div id="finale-emoji" aria-hidden="true">🌲</div><div><h2 id="finale-title">Mystiska skogen</h2><p id="finale-text">Du har utforskat hela skogen!</p><p id="finale-stops" class="subtle-note"></p></div></section>
+        <section id="story-results" class="panel story-card" aria-label="Nästa berättelseäventyr"></section>
         <section id="results-reading" class="panel results-reading" hidden><h2>📖 Så gick Aha-frågorna</h2><p id="results-reading-detail"></p><p class="subtle-note">Aha-frågorna hjälper dig att öva. De ändrar inte poängen i ordjakten.</p></section>
         <section id="results-rewards" class="panel rewards-panel" hidden aria-labelledby="rewards-title"><div class="section-header"><h2 id="rewards-title">🌟 Dina upptäckter</h2></div><p id="rewards-stars" class="rewards-stars"></p><div id="rewards-badges" class="rewards-badges"></div></section>
         <section id="quest-finale" class="panel quest-finale" hidden aria-labelledby="quest-finale-title"><div id="quest-finale-emoji" class="quest-finale-emoji" aria-hidden="true">🌟</div><div><h2 id="quest-finale-title">Miniuppdrag avklarat!</h2><p id="quest-finale-text"></p><p id="quest-finale-count" class="subtle-note"></p></div></section>
@@ -442,7 +445,8 @@
         <section class="panel journey-launch" aria-labelledby="next-journey-learning-title">
           <h2 id="next-journey-learning-title">✨ Mitt nästa äventyr</h2>
           <p>En liten runda med olika sätt att öva, vald utifrån dina upptäckter.</p>
-          <button id="next-journey-learning-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
+          <div id="story-learning" class="story-card story-preview"></div>
+          <button id="next-journey-learning-start" type="button" class="primary-button full-button">Ut på äventyr! →</button>
         </section>
         <section class="panel knowledge-panel" aria-labelledby="knowledge-title">
           <h2 id="knowledge-title">🧭 Din nästa träning</h2>
@@ -599,8 +603,10 @@
         <section class="panel journey-finish">
           <h1 id="next-journey-title" tabindex="-1">✨ Mitt nästa äventyr</h1>
           <p id="next-journey-summary" class="workshop-reading" role="status"></p>
+          <div id="story-earned" class="story-earned" hidden><span id="story-earned-icon" class="story-keepsake-icon" aria-hidden="true"></span><div><p class="eyebrow">Ny upptäckt i din bok!</p><h2 id="story-earned-title"></h2><p id="story-earned-ending"></p></div></div>
+          <div id="story-journey" class="story-card" aria-label="Nästa berättelseäventyr"></div>
           <ul id="next-journey-summary-list" class="journey-summary-list"></ul>
-          <button id="next-journey-back" type="button" class="primary-button full-button">🗺️ Till min ordstig →</button>
+          <button id="next-journey-back" type="button" class="secondary-button full-button">🗺️ Klar för nu – till min ordstig</button>
           <button id="next-journey-again" type="button" class="secondary-button full-button">Prova ett nytt äventyr →</button>
         </section>
       </section>
