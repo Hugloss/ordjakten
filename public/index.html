@@ -60,6 +60,7 @@
   <script src="./js/detector.js" defer></script>
   <script src="./js/concepts.js" defer></script>
   <script src="./js/bridges.js" defer></script>
+  <script src="./js/knowledge-profile.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -100,6 +101,7 @@
           <div class="journey-launch">
             <h3>✨ Mitt nästa äventyr</h3>
             <p>Spelet väljer upp till tre små övningar som passar dig just nu. Ingen timer eller provpoäng.</p>
+            <p id="knowledge-home-note" class="knowledge-home-note" role="status"></p>
             <button id="next-journey-home-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
           </div>
           <div id="memory-home" class="memory-preview" hidden>
@@ -438,6 +440,14 @@
           <h2 id="next-journey-learning-title">✨ Mitt nästa äventyr</h2>
           <p>En liten runda med olika sätt att öva, vald utifrån dina upptäckter.</p>
           <button id="next-journey-learning-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
+        </section>
+        <section class="panel knowledge-panel" aria-labelledby="knowledge-title">
+          <h2 id="knowledge-title">🧭 Din nästa träning</h2>
+          <p class="muted">Spelet använder vad du har provat. Något som ännu inte har prövats är inte en svårighet.</p>
+          <p class="eyebrow">DET HÄR KAN PASSA JUST NU</p>
+          <ul id="knowledge-next-list" class="knowledge-next-list"></ul>
+          <p id="knowledge-empty" class="muted" hidden>Inga lämpliga stationer redo just nu. Du kan utforska orden när du vill.</p>
+          <small>Det är förslag. Nästa äventyr väljer bland de övningar som är redo när du börjar.</small>
         </section>
         <section id="memory-learning" class="panel memory-preview" aria-labelledby="memory-learning-title" hidden>
           <h2 id="memory-learning-title">🌱 Ord som får vila</h2>
