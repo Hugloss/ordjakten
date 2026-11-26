@@ -139,3 +139,10 @@
 .journey-summary-list{list-style:none;padding:0;display:grid;gap:8px;margin:0}
 .journey-summary-item{padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:17px;line-height:1.5}
 @media(max-width:600px){.journey-banner{grid-template-columns:minmax(0,1fr)}.journey-actions button{flex:1}}
+
+/* Rest is part of learning: no deadlines, losses, or overdue counters. */
+.memory-preview{display:grid;gap:6px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.memory-preview strong,.memory-preview h2{font-size:19px;margin:0;line-height:1.4}
+.memory-preview p{margin:0;line-height:1.5;font-size:16px}
+.memory-preview small{line-height:1.5;color:var(--muted)}
+.memory-feedback{padding:10px 12px;background:var(--surface-2);border-radius:10px;font-size:17px;line-height:1.5}

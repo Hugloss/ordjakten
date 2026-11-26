@@ -52,6 +52,7 @@
   <script src="./js/clue-ladder.js" defer></script>
   <script src="./js/retention.js" defer></script>
   <script src="./js/focus-practice.js" defer></script>
+  <script src="./js/spaced-memory.js" defer></script>
   <script src="./js/reading-check.js" defer></script>
   <script src="./js/aha-plan.js" defer></script>
   <script src="./js/recall.js" defer></script>
@@ -100,6 +101,11 @@
             <h3>✨ Mitt nästa äventyr</h3>
             <p>Spelet väljer upp till tre små övningar som passar dig just nu. Ingen timer eller provpoäng.</p>
             <button id="next-journey-home-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
+          </div>
+          <div id="memory-home" class="memory-preview" hidden>
+            <strong>🌱 Ord som får vila</strong>
+            <p id="memory-home-note" class="muted" role="status"></p>
+            <small>Att komma tillbaka efter en paus hjälper oss att minnas.</small>
           </div>
           <div class="learning-home-metrics" aria-label="Dina upptäckter">
             <span>🔎 <strong id="learning-home-seen">0</strong> upptäckta</span>
@@ -433,6 +439,11 @@
           <p>En liten runda med olika sätt att öva, vald utifrån dina upptäckter.</p>
           <button id="next-journey-learning-start" type="button" class="primary-button full-button">Mitt nästa äventyr →</button>
         </section>
+        <section id="memory-learning" class="panel memory-preview" aria-labelledby="memory-learning-title" hidden>
+          <h2 id="memory-learning-title">🌱 Ord som får vila</h2>
+          <p id="memory-learning-note" class="muted" role="status"></p>
+          <small>Återbesök för skrivövningar och Aha. Du behöver inte spela varje dag.</small>
+        </section>
         <section class="panel learning-overview" aria-label="Sammanfattning av dina upptäckter">
           <div class="learning-overview-grid">
             <div><span aria-hidden="true">🔎</span><strong id="learning-total-seen">0</strong><small>Upptäckta ord</small></div>
@@ -510,6 +521,7 @@
         <section id="aha-round-feedback" class="panel focus-explain" hidden>
           <h2 id="aha-round-feedback-title" tabindex="-1"></h2>
           <p id="aha-round-correct"></p><p id="aha-round-why" class="muted"></p>
+          <p id="aha-memory-note" class="memory-feedback"></p>
           <button id="aha-round-next" type="button" class="primary-button full-button">Nästa berättelse →</button>
         </section>
         <section id="aha-round-finished" class="panel focus-finish" hidden>
@@ -549,6 +561,7 @@
           <p id="recall-solution"></p>
           <p id="recall-explanation"></p>
           <p id="recall-example" class="muted"></p>
+          <p id="recall-memory-note" class="memory-feedback"></p>
           <button id="recall-next" type="button" class="primary-button full-button">Nästa ord →</button>
         </section>
         <section id="recall-finished" class="panel focus-finish" hidden>

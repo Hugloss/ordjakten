@@ -25,6 +25,7 @@
   const T = window.OrdjaktenClues;
   const U = window.OrdjaktenRetention;
   const B = window.OrdjaktenReading;
+  const Memory = window.OrdjaktenMemory;
   const AhaPlan = window.OrdjaktenAhaPlan;
   const Recall = window.OrdjaktenRecall;
   const Workshop = window.OrdjaktenWorkshop;
@@ -37,7 +38,7 @@
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -582,17 +583,20 @@
   function renderAhaPreview(){
     const plan=getAhaPlan();
     const ready=plan.ready.length,waiting=plan.waiting.length;
+    const review=plan.ready.some(row=>row.reason==='review');
     const note=ready
-      ? (ready===1?'En ny berättelse väntar på dig!':ready+' ord och uttryck har nya berättelser att prova.')+
+      ? (review?'Prova hur du förstår orden i andra berättelser efter en paus.':
+        ready===1?'En ny berättelse väntar på dig!':ready+' ord och uttryck har andra berättelser att prova.')+
         (waiting?' Några andra får vila till en annan dag.':'')
-      : 'Bra övat! Dina nästa berättelser kommer en annan dag.';
+      : 'Bra övat! '+(waiting?Memory.note(Math.min(...plan.waiting.map(row=>row.dueAt))):'Dina nästa berättelser kommer en annan dag.');
     for(const location of ['home','learning']){
       $('aha-'+location).hidden=!ready&&!waiting;
       $('aha-'+location+'-note').textContent=note;
       const button=$('aha-'+location+'-start');
       button.hidden=!ready;
       button.textContent=ready?'🎭 Prova '+plan.round.length+
-        (plan.round.length===1?' ny berättelse →':' nya berättelser →'):'';
+        (review?(plan.round.length===1?' berättelse igen →':' berättelser igen →'):
+          (plan.round.length===1?' ny berättelse →':' nya berättelser →')):'';
     }
     return plan;
   }
@@ -1331,7 +1335,7 @@
       $('recall-'+location).hidden=!plan.ready.length&&!plan.waiting.length;
       $('recall-'+location+'-note').textContent=plan.ready.length?
         'Prova att skriva ord som du har mött tidigare. Du får hjälp när du vill.':
-        'Bra övat! Orden får vila till nästa dag.';
+        'Bra övat! '+(plan.waiting.length?Memory.note(plan.waiting[0].dueAt):'Orden får vila.');
       const button=$('recall-'+location+'-start');
       button.hidden=!plan.round.length;
       button.textContent='🔤 Hitta '+plan.round.length+(plan.round.length===1?' ord eller uttryck själv →':' ord och uttryck själv →');
@@ -1392,6 +1396,7 @@
     const item=learningCatalog.find(item=>item.id===row.id);
     $('recall-explanation').textContent=item.definition;
     $('recall-example').textContent=item.example;
+    $('recall-memory-note').textContent=Memory.note(Recall.dueAt(history.recallProgress[row.id]));
     $('recall-next').textContent=round.index+1===round.items.length?'Klar med rundan →':'Nästa ord →';
     $('recall-feedback-title').focus({preventScroll:true});scrollTop();
   }
@@ -1448,7 +1453,7 @@
         revisit:item.revisit||(observed?.transfer?.quality===2&&observed.transfer.proofs?.length===2),
         needsPractice:item.needsPractice||B.needsReview(history.readingProgress,item.id,'transfer')||
           B.needsReview(history.readingProgress,item.id,'recognition')||
-          (recall?.last==='assisted'&&Recall.dueAt(recall)<=Date.now())||detector.needsPractice||related.needsPractice||bridge.needsPractice,
+          (recall?.last==='assisted'&&recall.memory?.outcome!=='previewed'&&Recall.dueAt(recall)<=Date.now())||detector.needsPractice||related.needsPractice||bridge.needsPractice,
         tip:ready.has(item.id)?'Prova en ny berättelse i din Aha-runda.':
           waiting.has(item.id)?'En ny berättelse väntar till en annan dag.':item.tip};
     });
@@ -1520,6 +1525,7 @@
     $('aha-round-feedback-title').textContent=result.step==='guided'?'📖 Vi lär oss tillsammans!':'🌟 Du hittade rätt berättelse!';
     $('aha-round-correct').textContent=row.check.options.find(option=>option.correct).label;
     $('aha-round-why').textContent=row.check.why||'Jämför berättelsen med betydelsen du läste.';
+    $('aha-memory-note').textContent=Memory.note(B.transferDueAt(history.readingProgress[row.id]?.transfer));
     $('aha-round-next').textContent=ahaRound.index+1===ahaRound.items.length?'Klar med rundan →':'Nästa berättelse →';
     $('aha-round-feedback-title').focus({preventScroll:true});scrollTop();
   }
@@ -1587,11 +1593,26 @@
       button.type='button';button.dataset.retentionPair=row.pair.id;item.append(button);list.append(item);
     }
   }
+  function renderMemoryPreview(aha=getAhaPlan()){
+    const recall=getRecallPlan(),now=Date.now();
+    const rows=[
+      ...aha.ready,...aha.waiting,
+      ...recall.ready.filter(row=>row.card),...recall.waiting.filter(row=>row.card)
+    ];
+    const ready=rows.filter(row=>row.dueAt<=now).length;
+    const waiting=rows.filter(row=>row.dueAt>now);
+    const next=waiting.length?Math.min(...waiting.map(row=>row.dueAt)):0;
+    for(const location of ['home','learning']){
+      $('memory-'+location).hidden=!rows.length;
+      $('memory-'+location+'-note').textContent=
+        ready+' återbesök redo · '+waiting.length+' övningar vilar.'+(next?' '+Memory.note(next,now):'');
+    }
+  }
   function renderLearningPreview(){
     renderConfusionPreview();
     renderRetentionHome();
     const plan=renderAhaPreview();
-    renderRecallPreview();renderDetectorPreview();
+    renderRecallPreview();renderDetectorPreview();renderMemoryPreview(plan);
     const all=learningEntries(plan);
     const totals=L.summary(all);
     $('learning-home-seen').textContent=String(totals.discovered);
@@ -1617,8 +1638,8 @@
       : 'Din ordstig börjar med första ordet du möter. Varje försök räknas!';
   }
   function renderLearning(){
-    const all=learningEntries(renderAhaPreview());
-    renderRecallPreview();renderDetectorPreview();
+    const plan=renderAhaPreview(),all=learningEntries(plan);
+    renderRecallPreview();renderDetectorPreview();renderMemoryPreview(plan);
     const totals=L.summary(all);
     $('learning-total-seen').textContent=String(totals.discovered);
     $('learning-total-meaning').textContent=String(totals.recognised);
@@ -1663,6 +1684,8 @@
         const text=element('div','learning-profile-text');
         text.append(element('strong','learning-stage-label',facet.label),element('span','learning-stage-state',facet.status));
         if(facet.help&&facet.state!=='unavailable')text.append(element('p','learning-profile-help',facet.help));
+        if(facet.id==='transfer'&&facet.state!=='unavailable'&&B.hasMaintenance(history.readingProgress[item.id]?.transfer))
+          text.append(element('p','learning-profile-help',Memory.note(B.transferDueAt(history.readingProgress[item.id].transfer))));
         row.append(icon,text);
         const isMain=facet.action&&(mainIsAha?facet.action.kind==='aha':
           facet.action.kind==='focus'&&facet.action.skill===recommended);
@@ -1681,7 +1704,8 @@
         const saved=history.recallProgress[item.id],waiting=Recall.dueAt(saved)>Date.now();
         const box=element('section','learning-focus recall-word-card');
         box.append(element('h4','','🔤 Hitta ordet själv'));
-        const note=waiting?'Du får prova igen en annan dag.':
+        const note=waiting?Memory.note(Recall.dueAt(saved)):
+          saved?.memory?.outcome==='previewed'?'Du har läst ordet inför en tidigare skrivövning.':
           saved?.last==='direct'?'Du hittade ordet utan extra ledtrådar senast.':
           saved?'Du har provat med stöd.':'Prova att skriva ordet själv. Du kan alltid få hjälp.';
         box.append(element('p','learning-focus-note',note));
@@ -2763,7 +2787,7 @@
     if(button&&$('aha-round-options').contains(button))answerAhaRound(Number(button.dataset.ahaOption));
   });
   window.addEventListener('focus',()=>{
-    if(screen==='home'||screen==='learning'){renderAhaPreview();renderRecallPreview();renderDetectorPreview();}
+    if(screen==='home'||screen==='learning'){const plan=renderAhaPreview();renderRecallPreview();renderDetectorPreview();renderMemoryPreview(plan);}
   });
   $('open-learning-home').addEventListener('click',()=>goNav('learning'));
   $('open-learning-results').addEventListener('click',()=>goNav('learning'));
