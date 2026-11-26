@@ -89,7 +89,7 @@
       if(answer.correct)continue;
       const match=words.find(x=>x.word.toLocaleLowerCase('sv-SE')===
         String(answer.label).toLocaleLowerCase('sv-SE'));
-      add(match?.definition||(question.picture?null:answer.label));
+      add(match?.definition||(question.picture||question.action?null:answer.label));
     }
     const own=words.find(x=>x.id===question.id);
     for(const entry of words){

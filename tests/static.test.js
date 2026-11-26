@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v49-secret-picture'));
+  assert.ok(worker.includes('v50-semantic-actions'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -367,4 +367,16 @@ test('secret picture and crystal are integrated into ordinary question and disco
   assert.ok(app.includes("$('question-egg').dataset.helper=questionPresentation.helper"));
   assert.ok(css.includes(".quest-picture-art .quest-arch,.quest-picture-art .quest-object{display:none}"));
   assert.ok(css.includes("prefers-reduced-motion:no-preference"));
+});
+
+test('semantic actions integrate into ordinary training and reuse scored submission',()=>{
+ const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js'),css=read('css/reading-flow.css');
+ const actions=require('../public/js/action-words');
+ assert.ok(html.indexOf('./js/action-words.js')>=0&&html.indexOf('./js/action-words.js')<html.indexOf('./js/app.js'));
+ assert.ok(worker.includes("'./js/action-words.js'"));
+ for(const id of ['quest-action-template','quest-action-prompt','quest-action-art','quest-action-solution','quest-action-solution-art'])assert.ok(html.includes('id="'+id+'"'));
+ for(const row of actions.DATA){assert.ok(html.includes('class="quest-action-scene action-'+row.id+'"'));assert.ok(css.includes("data-action='"+row.id+"'"));}
+ assert.ok(app.includes('questions=ActionWords.adaptRound(roundSettings,questions)'));
+ assert.ok(app.includes('renderActionSolution(q);'));
+ assert.ok(app.includes("if(valid){event.preventDefault();submit(drag.index);}"));
 });
