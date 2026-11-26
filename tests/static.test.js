@@ -149,3 +149,18 @@ test('word bridges load offline and keep exercise history separate from quizzes'
   assert.ok(flow.includes('round.helped&&result.outcome'));
   assert.ok(flow.includes('conceptMap.exposedWords.has(id)'));
 });
+
+test('unified next adventure is available offline with distinct DOM IDs and no new persisted score',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/next-adventure.js')>=0&&html.indexOf('./js/next-adventure.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/next-adventure.js'"));
+  assert.ok(html.includes('id="journey-progress"'));
+  assert.ok(html.includes('id="next-journey-progress"'));
+  for(const location of ['home','learning'])assert.ok(html.includes('id="next-journey-'+location+'-start"'));
+  const flow=app.slice(app.indexOf('  function getJourneyPlan('),app.indexOf('  function getConceptPlan('));
+  assert.ok(flow.includes('AhaPlan.plan(')&&flow.includes('Recall.plan(')&&flow.includes('Detector.plan(')&&flow.includes('Concepts.plan(')&&flow.includes('Bridges.plan('));
+  assert.ok(flow.includes('Journey.advance(')&&flow.includes('journeyStepFinished(mode)'));
+  assert.ok(!flow.includes('saveHistory(')&&!flow.includes('history.results')&&!flow.includes('settings='));
+  assert.ok(app.includes('if(journey){journey=null;resetJourneyControls();}'));
+  for(const mode of ['focus','aha','recall','workshop','detector','concept','bridge'])assert.ok(app.includes("doneLearningExercise('"+mode+"'"));
+});

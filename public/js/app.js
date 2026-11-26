@@ -618,9 +618,9 @@
       pairFor:item=>K.findPair(item.id,contrasts),
       aha:AhaPlan.plan(history.readingProgress,{bank,expressions,contexts,surprises,missions,reading:B,now,random}),
       recall:Recall.plan(learningCatalog,history,now),
-      detector:Detector.plan(detectorCatalog,history.detectorProgress,knownIds,now,random,null,history.detectorLevels),
+      detector:{...Detector.plan(detectorCatalog,history.detectorProgress,knownIds,now,random,null,history.detectorLevels),catalog:detectorCatalog},
       concept:Concepts.plan(conceptCatalog,history.conceptProgress,knownIds,now,random),
-      bridge:Bridges.plan(bridgeCatalog,history.bridgeProgress,knownIds,now,random),
+      bridge:{...Bridges.plan(bridgeCatalog,history.bridgeProgress,knownIds,now,random),catalog:bridgeCatalog.tasks},
       conceptContent:conceptCatalog});
   }
   function journeyStepFinished(mode){
@@ -724,7 +724,7 @@
   }
   function doneLearningExercise(mode,normal){
     if(journey){advanceJourney('completed',mode);return;}
-    normal();
+    if(screen===Journey.MODES[mode].screen&&journeyStepFinished(mode))normal();
   }
   function getConceptPlan(groupId=null,random=()=>.37){
     const known=new Set(learningCatalog.filter(item=>Recall.eligible(item,history)||

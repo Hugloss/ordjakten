@@ -42,7 +42,7 @@
         ts(usage[A.mode])-ts(usage[B.mode])||
         (A.reason==='need'||A.reason==='review'?ts(A.dueAt)-ts(B.dueAt):0)||
         // Start a new child with a familiar ordinary word question.
-        (A.reason==='discover'?order.indexOf(A.mode)-order.indexOf(B.mode):0)||
+        (A.reason==='discover'?order.indexOf(A.mode)-order.indexOf(B.mode)||ts(A.discoveryTier)-ts(B.discoveryTier):0)||
         a.draw-b.draw||order.indexOf(A.mode)-order.indexOf(B.mode)||A.key.localeCompare(B.key);
     });
     const steps=[],words=new Set(),methods=new Set(),keys=new Set();
@@ -65,11 +65,15 @@
       if(history.skillProgress?.[id]||history.readingProgress?.[id]||history.reviewProgress?.[id]||
         history.mistakes?.[id]||history.missionProgress?.[id]||history.recallProgress?.[id])encountered.add(id);
     }
+    for(const task of detector?.catalog||[])if(history.detectorProgress?.[task.id])encountered.add(task.target);
+    for(const task of conceptContent?.tasks||[])if(history.conceptProgress?.[task.id])encountered.add(task.answer);
+    for(const task of bridge?.catalog||[])if(history.bridgeProgress?.[task.id])task.cards.forEach(id=>encountered.add(id));
     // Only use validated, due rows from the method's own planner.
-    const add=(mode,key,words,reason,cost,payload,dueAt=0)=>{
+    const add=(mode,key,words,reason,cost,payload,dueAt=0,discoveryTier=0)=>{
       const ids=unique(words);
       if(!ids.length||ids.some(id=>!byId.has(id)))return;
-      candidates.push({mode,key,words:ids,reason,cost,payload,dueAt:ts(dueAt)});
+      if(dueAt>now)return;
+      candidates.push({mode,key,words:ids,reason,cost,payload,dueAt:ts(dueAt),discoveryTier});
     };
     for(const row of aha?.ready||[])add('aha','aha:'+row.id,[row.id],'need',1,row,row.dueAt);
     for(const row of recall?.ready||[]){
@@ -79,9 +83,12 @@
     for(const task of available(detector)){
       const card=history.detectorProgress?.[task.id];
       const ids=task.words.map(word=>word.id);
-      const reason=card&&(card.word==='helped'||card.clue==='supported')?'need':card?'review':
+      const proof=history.detectorLevels?.[task.pairId]?.proof;
+      const previous=proof&&detector?.catalog?.find(row=>row.id===proof.id&&row.stamp===proof.stamp);
+      const qualifies=previous&&proof.at+DAY<=now&&previous.target!==task.target&&previous.context!==task.context&&previous.level===task.level;
+      const reason=card&&(card.word==='helped'||card.clue==='supported')?'need':card||qualifies?'review':
         ids.some(id=>known.has(id))||task.level>1?'extend':'discover';
-      add('detector','detector:'+task.id,ids,reason,1,task,card?.lastAt?card.lastAt+DAY:0);
+      add('detector','detector:'+task.id,ids,reason,1,task,card?.lastAt?card.lastAt+DAY:qualifies?proof.at+DAY:0);
     }
     for(const [mode,plan,progress] of [['concept',concept,history.conceptProgress],['bridge',bridge,history.bridgeProgress]]){
       for(const task of available(plan)){
@@ -108,6 +115,10 @@
       const weakTypes=allowed.filter(type=>weak(skills[type])).sort((a,b)=>
         (skills[b].wrong-skills[a].wrong)||ts(skills[a].lastAt)-ts(skills[b].lastAt)||a.localeCompare(b));
       let skill=weakTypes[0],reason=skill?'need':null,dueAt=skill?ts(skills[skill].lastAt):0;
+      const recognition=history.readingProgress?.[id]?.recognition;
+      if(!skill&&recognition?.supported>0&&recognition.streak<2&&ts(recognition.lastAt)+DAY<=now&&allowed.includes('meaning')){
+        skill='meaning';reason='need';dueAt=ts(recognition.lastAt)+DAY;
+      }
       if(!skill&&due){
         skill=[review.lastVariant,'meaning','picture','reverse'].find(type=>type!=='contrast'&&allowed.includes(type));
         if(skill){reason='review';dueAt=review.dueAt;}
@@ -123,7 +134,7 @@
         if(skill)reason='discover';
       }
       if(skill)add('focus','focus:'+id+':'+skill,skill==='contrast'&&pair?[pair.left,pair.right]:[id],
-        reason,skill==='contrast'?4:3,{id,skill},dueAt);
+        reason,skill==='contrast'?4:3,{id,skill},dueAt,item.difficulty==='easy'?0:1);
       // Workshop is ungraded creative practice; never manufacture a need
       // from its absence of progress. Offer once per concept per page visit.
       if(known.has(id)&&!workshopSeen.has(id)&&item.example&&item.definition)
