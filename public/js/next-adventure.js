@@ -31,7 +31,7 @@
   const available=plan=>plan?.available||plan?.round||[];
   const weak=card=>!!card&&card.wrong>0&&card.streak<2;
   const supported=card=>card?.last==='supported';
-  function select(candidates,{usage={},limit=LIMIT,budget=BUDGET,random=Math.random}={}){
+  function select(candidates,{usage={},limit=LIMIT,budget=BUDGET,random=Math.random,chooseNext=null}={}){
     const rows=candidates.filter(row=>Object.hasOwn(MODES,row?.mode)&&Object.hasOwn(RANK,row.reason)&&
       typeof row.key==='string'&&row.key&&Number.isInteger(row.cost)&&row.cost>=1&&row.cost<=BUDGET&&
       Array.isArray(row.words)&&row.words.length&&row.words.every(id=>typeof id==='string'&&ID.test(id))&&
@@ -51,15 +51,18 @@
     const steps=[],words=new Set(),methods=new Set(),keys=new Set();
     let remaining=Math.min(BUDGET,Math.max(0,Number.isInteger(budget)?budget:BUDGET));
     const cap=Math.min(LIMIT,Math.max(0,Number.isInteger(limit)?limit:LIMIT));
-    for(const {row} of rows){
-      if(steps.length>=cap)break;
-      if(row.cost>remaining||methods.has(row.mode)||keys.has(row.key)||row.words.some(id=>words.has(id)))continue;
+    while(steps.length<cap){
+      const feasible=rows.map(entry=>entry.row).filter(row=>row.cost<=remaining&&!methods.has(row.mode)&&
+        !keys.has(row.key)&&!row.words.some(id=>words.has(id)));
+      if(!feasible.length)break;
+      const preferred=typeof chooseNext==='function'?chooseNext(feasible,steps.slice()):null;
+      const row=feasible.includes(preferred)?preferred:feasible[0];
       steps.push(row);methods.add(row.mode);keys.add(row.key);row.words.forEach(id=>words.add(id));remaining-=row.cost;
     }
     return {steps,maxTasks:steps.reduce((n,row)=>n+row.cost,0)};
   }
   function build({catalog,history={},focusTypes,pairFor,knownIds=new Set(),aha,recall,detector,concept,bridge,
-    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null,adjust=null}){
+    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null,adjust=null,chooseNext=null}){
     const byId=new Map(catalog.map(item=>[item.id,item]));
     const candidates=[],known=new Set([...knownIds].filter(id=>byId.has(id)));
     const encountered=new Set(known);
@@ -72,11 +75,12 @@
     for(const task of conceptContent?.tasks||[])if(history.conceptProgress?.[task.id])encountered.add(task.answer);
     for(const task of bridge?.catalog||[])if(history.bridgeProgress?.[task.id])task.cards.forEach(id=>encountered.add(id));
     // Only use validated, due rows from the method's own planner.
-    const add=(mode,key,words,reason,cost,payload,dueAt=0,discoveryTier=0)=>{
+    const add=(mode,key,words,reason,cost,payload,dueAt=0,discoveryTier=0,targets=words)=>{
       const ids=unique(words);
       if(!ids.length||ids.some(id=>!byId.has(id)))return;
       if(dueAt>now)return;
-      candidates.push({mode,key,words:ids,reason,cost,payload,dueAt:ts(dueAt),discoveryTier});
+      const newWord=targets.some(id=>byId.has(id)&&!encountered.has(id));
+      candidates.push({mode,key,words:ids,reason,cost,payload,dueAt:ts(dueAt),discoveryTier,newWord});
     };
     for(const row of aha?.ready||[])add('aha','aha:'+row.id,[row.id],row.reason==='review'?'review':'need',1,row,row.dueAt);
     for(const row of recall?.ready||[]){
@@ -91,7 +95,7 @@
       const qualifies=previous&&proof.at+DAY<=now&&previous.target!==task.target&&previous.context!==task.context&&previous.level===task.level;
       const reason=card&&(card.word==='helped'||card.clue==='supported')?'need':card||qualifies?'review':
         ids.some(id=>known.has(id))||task.level>1?'extend':'discover';
-      add('detector','detector:'+task.id,ids,reason,1,task,card?.lastAt?card.lastAt+DAY:qualifies?proof.at+DAY:0);
+      add('detector','detector:'+task.id,ids,reason,1,task,card?.lastAt?card.lastAt+DAY:qualifies?proof.at+DAY:0,0,[task.target]);
     }
     for(const [mode,plan,progress] of [['concept',concept,history.conceptProgress],['bridge',bridge,history.bridgeProgress]]){
       for(const task of available(plan)){
@@ -100,7 +104,8 @@
         const ids=mode==='bridge'?task.participants:
           [...group.words.map(word=>word.id),...task.options.map(option=>option.id)];
         const reason=supported(card)?'need':card?'review':ids.some(id=>known.has(id))?'extend':'discover';
-        add(mode,mode+':'+task.id,ids,reason,1,task,card?.lastAt?card.lastAt+DAY:0);
+        add(mode,mode+':'+task.id,ids,reason,1,task,card?.lastAt?card.lastAt+DAY:0,0,
+          mode==='bridge'?(task.cards||task.participants):[task.answer]);
       }
     }
     // Ordinary skill review is not a second Aha or recall queue. A review
@@ -144,7 +149,7 @@
         add('workshop','workshop:'+id,pair?[pair.left,pair.right]:[id],'extend',3,{id});
     }
     const ranked=typeof decorate==='function'?candidates.map(decorate):candidates;
-    return select(typeof adjust==='function'?adjust(ranked):ranked,{usage,random});
+    return select(typeof adjust==='function'?adjust(ranked):ranked,{usage,random,chooseNext});
   }
   // Pure transitions prevent duplicate Done clicks and distinguish a skip
   // from finishing an exercise. Individual engines retain their observations.
