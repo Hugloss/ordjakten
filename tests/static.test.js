@@ -319,3 +319,18 @@ test('illustrated question play uses the same scored submission and preserves th
   assert.ok(flow.includes("!$('question-area').hidden&&$('story-reveal').hidden&&!$('answer-options').hidden"));
   assert.ok(app.includes("if(index!==null&&!$('story-reveal').hidden)return;"));
 });
+
+test('mystery chapters live inside the original round and unlock discoveries after the Aha gate',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
+    assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(worker.includes('v47-mystery-rounds'));
+  const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
+  assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
+  assert.ok(flow.includes('Object.keys(game.answers).length'));
+  assert.ok(app.includes("if($('reading-check').dataset.complete==='true')renderMysteryDiscovery();"));
+  assert.ok(app.includes('if(!readingCheck)renderMysteryDiscovery();'));
+  assert.ok(app.includes('renderMysteryQuestion(storyVisible);'));
+  assert.ok(app.includes('renderMysteryFinale();'));
+  assert.ok(app.includes('suppressQuestionClick'));
+});

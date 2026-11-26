@@ -28,6 +28,177 @@
     expression:'Tänk på hela uttrycket och berättelsen, inte bara ett ord i taget.',
     meaning:'Tänk på en egen situation där du har hört ordet. Jämför sedan alternativen.'
   };
+  // Narrative content depends only on the selected world and completed
+  // questions, never on the answer, score, question identity or correctness.
+  const MYSTERIES={
+  "forest": [
+    "Mysteriet med gläntans försvunna ljus",
+    "Skogens lyktor har slocknat. En liten fågel hittar ett spår bland ormbunkarna.",
+    "Ett kartblad sticker fram ur mossan.",
+    "En liten silvernyckel ligger vid en ihålig stam.",
+    "I gången bakom trädet står en släckt lykta.",
+    "En kista står mitt i gläntan. Vad gömmer sig där?",
+    "I kistan finns stjärnfrön. Gläntan fylls av varmt, magiskt ljus."
+  ],
+  "space": [
+    "Mysteriet med den tysta stjärnbasen",
+    "En signal från en okänd planet har tystnat. Vi undersöker den.",
+    "En stjärnkarta blinkar i robotens hand.",
+    "En liten nyckel passar i den gamla rymdstationens lås.",
+    "Vid kontrollrummet står en märklig energilampa.",
+    "En kapsel väntar vid stationens fönster. Vad finns inuti?",
+    "Kapseln innehåller en stjärnsändare. Nu kan hela basen säga hej till de andra planeterna!"
+  ],
+  "castle": [
+    "Mysteriet med drakens hemliga rum",
+    "Dino har hört en märklig melodi bakom slottets vägg.",
+    "En karta över slottets hemliga gångar ligger på ett bord.",
+    "Ett gyllene lås sitter på en liten dörr.",
+    "En gammal lykta står vid en slingrande trappa.",
+    "I tornrummet finns en utsmyckad kista.",
+    "Kistan innehåller en speldosa. Dino och alla vänner dansar till den hemliga melodin."
+  ],
+  "pirate": [
+    "Mysteriet med den försvunna skattkartan",
+    "En flaskpost berättar om en ö som inte finns på vanliga kartor.",
+    "På stranden ligger en bit av en sjökarta.",
+    "I en klippskreva glimmar en liten nyckel.",
+    "En lykta står vid öppningen till en grotta.",
+    "En skattkista väntar bakom en sten.",
+    "Kistan innehåller en karta över nya öar och en teckning från en vän."
+  ],
+  "ocean": [
+    "Mysteriet med pärlans sång",
+    "En liten sköldpadda letar efter en borttappad, sjungande pärla.",
+    "En snäcka har en karta ritad på sitt skal.",
+    "En nyckel ligger i en gammal korallport.",
+    "En undervattenslykta lyser svagt vid revet.",
+    "Vid havets botten finns en vattentät kista.",
+    "Pärlan finns i kistan! Sköldpaddan lyssnar på havets stilla sång."
+  ],
+  "dinosaurs": [
+    "Mysteriet med det märkliga dinosaurieägget",
+    "En liten dinosaurie har hittat spår som leder in i en dal.",
+    "En karta över fotspåren är ritad på ett blad.",
+    "Vid en stenport ligger en märklig nyckel.",
+    "En liten lykta visar vägen genom en skuggig grotta.",
+    "En gammal låda skyddar ett ovanligt ägg.",
+    "Ur ägget tittar en liten fantasidinosaurie fram och blinkar åt oss."
+  ],
+  "garden": [
+    "Mysteriet med den sovande blomman",
+    "I trädgården finns en blomma som väntar på vårens första ljus.",
+    "En karta över trädgårdens gångar ligger under ett löv.",
+    "En nyckel till växthuset glittrar vid en kruka.",
+    "I växthuset står en magisk växtlykta.",
+    "I en frökista ligger något ovanligt.",
+    "Ett magiskt frö får blomman att veckla ut sina färgglada blad."
+  ],
+  "unicorn": [
+    "Mysteriet med enhörningens silverstjärna",
+    "En enhörning har tappat en silverstjärna på sin sagostig.",
+    "En liten karta syns mellan molnen.",
+    "En nyckel ligger vid regnbågens fot.",
+    "En lykta visar vägen till en hemlig sagogrotta.",
+    "En pärlemorskimrande kista står i grottan.",
+    "Silverstjärnan ligger tryggt i kistan. Enhörningen sätter den på himlen igen."
+  ],
+  "animals": [
+    "Mysteriet med skogens hemliga hälsning",
+    "Djuren har fått en lapp från en okänd vän.",
+    "En karta ligger vid fågelholken.",
+    "En nyckel hänger på en gren bredvid grinden.",
+    "En lykta står utanför djurens lilla samlingsstuga.",
+    "På stugans bord väntar en kista.",
+    "I kistan ligger en bilderbok med en hälsning från djurens nya vän."
+  ],
+  "rainbow": [
+    "Mysteriet med de gömda regnbågsfärgerna",
+    "En regnbåge syns bara svagt på himlen. Vi letar efter färgerna.",
+    "En karta pekar mot en bro av moln.",
+    "En nyckel glittrar vid brons grind.",
+    "En lykta står i ett rum fullt av prismor.",
+    "En kista med färgade lock väntar längst in.",
+    "I kistan finns fantasins färger. Regnbågen lyser i alla sina nyanser igen."
+  ],
+  "horses": [
+    "Mysteriet med den lilla hästskon",
+    "En ponny letar efter en borttappad lyckohästsko.",
+    "En karta över ridstigarna finns vid stallet.",
+    "En nyckel ligger vid en gammal grind.",
+    "En lykta visar vägen längs den dunkla stigen.",
+    "I ett litet stallskåp finns en kista.",
+    "Lyckohästskon ligger i kistan. Ponnyn får tillbaka sin fina prydnad."
+  ],
+  "music": [
+    "Mysteriet med den gömda melodin",
+    "Några mystiska toner hörs från en tom scen.",
+    "En karta med noter ligger vid scenkanten.",
+    "En nyckel passar i dörren till musikrummet.",
+    "En lykta står bredvid ett täckt instrument.",
+    "I instrumentets låda finns en liten kista.",
+    "Kistan innehåller noterna till en ny melodi som alla kan sjunga tillsammans."
+  ]
+};
+  const PHASES=[
+  {
+    "id": "map",
+    "emoji": "🗺️",
+    "title": "Den hemliga kartan",
+    "action": "Lägg ditt svar på kartan",
+    "partial": "Ett tecken till blir synligt på kartan.",
+    "reveal": "Kartans väg blir tydlig! Vi har hittat ett nytt spår."
+  },
+  {
+    "id": "lock",
+    "emoji": "🗝️",
+    "title": "Det mystiska låset",
+    "action": "För ditt svar till låset",
+    "partial": "En liten markering på låset börjar lysa.",
+    "reveal": "Låset öppnas. Bakom det finns en ny väg."
+  },
+  {
+    "id": "lantern",
+    "emoji": "🏮",
+    "title": "Den magiska lyktan",
+    "action": "För ditt svar till lyktan",
+    "partial": "Ett litet ljus tänds i lyktans glas.",
+    "reveal": "Lyktan lyser! Nu ser vi vad som väntar framför oss."
+  },
+  {
+    "id": "chest",
+    "emoji": "🎁",
+    "title": "Den hemliga kistan",
+    "action": "Lägg ditt svar vid kistan",
+    "partial": "Ett tecken på kistan får ett mjukt sken.",
+    "reveal": "Kistan öppnas! Mysteriet har fått sitt slut."
+  }
+];
+  function mystery(settings,answered,total){
+    if(!settings||!['train','test'].includes(settings.mode)||settings.timerMode!=='off'||settings.difficulty==='exam'||
+      !Number.isInteger(total)||total<1||total>100)return null;
+    const story=Object.hasOwn(MYSTERIES,settings.adventure)?MYSTERIES[settings.adventure]:MYSTERIES.forest;
+    const done=Number.isInteger(answered)?Math.max(0,Math.min(total,answered)):0;
+    // Short repetition rounds still finish with a coherent ending. They
+    // discover only as many objects as there are questions.
+    const order=total===1?[3]:total===2?[0,3]:total===3?[0,2,3]:[0,1,2,3];
+    const chapters=order.map((id,i)=>({...PHASES[id],sceneText:story[id+2],
+      threshold:Math.ceil((i+1)*total/order.length)}));
+    const completed=chapters.filter(ch=>done>=ch.threshold).length;
+    const finished=done===total,chapter=chapters[Math.min(completed,chapters.length-1)];
+    return {title:story[0],intro:story[1],ending:story[6],done,total,chapters,completed,finished,chapter,
+      step:Math.min(completed+1,chapters.length)};
+  }
+  function discovery(settings,answered,total){
+    const current=mystery(settings,answered,total);
+    if(!current||current.done===0)return null;
+    const prior=mystery(settings,current.done-1,total);
+    const reached=current.completed>prior.completed;
+    return {artifact:prior.chapter.id,emoji:prior.chapter.emoji,
+      title:reached?prior.chapter.title+' – upptäckt!':'Ett nytt spår',
+      text:current.finished?current.ending:reached?prior.chapter.reveal:prior.chapter.partial,
+      reached,finished:current.finished};
+  }
   function plan(settings,q,index=0){
     const world=Object.hasOwn(WORLDS,settings?.adventure)?WORLDS[settings.adventure]:WORLDS.forest;
     const enabled=!!q&&settings?.difficulty!=='exam'&&q.taskType!=='order'&&
@@ -46,5 +217,5 @@
     return !!drag&&drag.token===token&&drag.moved===true&&
       Number.isInteger(drag.index)&&drag.index>=0&&drag.index<optionCount&&inside(rect,x,y);
   }
-  return {WORLDS,HINTS,plan,moved,inside,validDrop};
+  return {WORLDS,HINTS,MYSTERIES,PHASES,plan,mystery,discovery,moved,inside,validDrop};
 });

@@ -16,10 +16,17 @@ def drag(page, source, target):
 def main(browser):
     page, errors = make_page(browser, {"width":1100,"height":1000})
     page.locator("#quick-contexts").click()
+    assert page.locator("#quest-mystery").is_visible()
+    assert page.locator("#quest-mystery-progress li").count() == 4
+    assert not page.locator("#play-score-details").evaluate("(el) => el.open")
     assert page.locator("#question-portal").is_hidden()
     assert page.locator("#question-egg").is_hidden()
     page.locator("#story-reveal").click()
     assert page.locator("#question-portal").is_visible()
+    assert page.locator("#question-portal").get_attribute("data-artifact") == "map"
+    drag(page, page.locator(".quest-drag-grip").first, page.locator("#quest-mystery-title"))
+    assert page.locator("#question-area").is_visible()
+    assert page.locator("#feedback-area").is_hidden()
     page.locator("#question-egg").click()
     assert page.locator("#question-egg-hint").is_visible()
     assert page.locator("#question-egg").get_attribute("aria-expanded") == "true"
@@ -28,6 +35,16 @@ def main(browser):
     assert page.locator("#question-portal").is_hidden()
     assert page.locator("#reading-launch").is_visible()
     assert page.locator("#next").is_hidden()
+    assert page.locator("#quest-mystery-discovery").is_hidden()
+    # Finish the existing Aha gate with at most two attempts. The discovery
+    # happens after supported learning too; it does not require correctness.
+    for _ in range(2):
+        page.locator("#reading-start").click()
+        page.locator("#reading-options button").first.click()
+        if page.locator("#next").is_visible():
+            break
+    assert page.locator("#next").is_visible()
+    assert page.locator("#quest-mystery-discovery").is_visible()
     assert not errors, errors
     page.close()
 
@@ -42,7 +59,21 @@ def main(browser):
     assert page.locator("#question-egg").is_hidden()
     drag(page, page.locator(".quest-drag-grip").first, page.locator("#question-portal"))
     assert page.locator("#feedback-area").is_hidden()
-    assert page.locator("#stat-progress").inner_text() == "2 / 5"
+    assert page.locator("#stat-progress").text_content() == "2 / 5"
+    assert page.locator("#question-portal").get_attribute("data-artifact") == "map"
+    assert page.locator("#quest-mystery-discovery").is_hidden()
+    for expected in ("lock", "lantern", "chest"):
+        if page.locator("#story-reveal").is_visible():
+            page.locator("#story-reveal").click()
+        page.locator(".answer-option").first.click()
+        assert page.locator("#feedback-area").is_hidden()
+        assert page.locator("#quest-mystery-discovery").is_hidden()
+        if page.locator("#story-reveal").is_visible():
+            page.locator("#story-reveal").click()
+        assert page.locator("#question-portal").get_attribute("data-artifact") == expected
+    page.locator(".answer-option").first.click()
+    assert page.locator("#view-results").is_visible()
+    assert page.locator("#quest-mystery-finale").is_visible()
     assert not errors, errors
     page.close()
 

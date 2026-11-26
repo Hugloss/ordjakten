@@ -139,3 +139,34 @@
 }
 @media(prefers-reduced-motion:no-preference){.quest-egg-button[data-open='true'] .quest-egg-open{animation:quest-hatch .35s ease-out both}@keyframes quest-hatch{from{transform:scale(.8);opacity:.5}to{transform:scale(1);opacity:1}}}
 @media(forced-colors:active){.question-portal.is-drop-ready{outline:3px solid Highlight}.quest-egg-button:focus-visible{outline:3px solid Highlight}}
+
+/* A finite narrative journey inside the existing round. Art and discoveries
+   depend on completed tasks, not correctness. */
+.play-score-details{margin:0 0 8px}
+.play-score-details>summary{font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;min-height:32px;line-height:32px}
+.play-score-details>summary[hidden]{display:none}
+.quest-mystery{border:1px solid var(--border);border-top:4px solid var(--world-color);background:var(--surface);border-radius:18px;padding:14px 16px;margin:0 0 13px}
+.quest-mystery[hidden],.quest-mystery-discovery[hidden],.quest-mystery-finale[hidden]{display:none}
+.quest-mystery-kicker{color:var(--muted);font-size:11px;font-weight:900;letter-spacing:.13em}
+.quest-mystery h2{font-size:clamp(20px,3.5vw,27px);line-height:1.2;margin:5px 0 10px;text-wrap:balance}
+.quest-mystery-progress{display:flex;gap:6px;list-style:none;padding:0;margin:8px 0 12px}
+.quest-mystery-step{min-width:0;flex:1;display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid var(--border);border-radius:11px;padding:7px 3px;font-size:12px;font-weight:800;text-align:center;overflow-wrap:anywhere;color:var(--muted)}
+.quest-mystery-step-icon{font-size:22px;line-height:1.2}
+.quest-mystery-step[data-state='current']{color:var(--text);border:2px solid var(--world-color);background:var(--world-wash)}
+.quest-mystery-step[data-state='found']{color:var(--text);background:var(--surface-2)}
+.quest-mystery-step[data-state='found']::after{content:'✓';color:var(--text);font-weight:900}
+.quest-mystery-step[data-state='later'] .quest-mystery-step-icon{filter:saturate(.35);opacity:.6}
+.quest-mystery-chapter{font-size:13px;font-weight:900;color:var(--muted);margin:0 0 5px}
+#quest-mystery-story{font-size:18px;line-height:1.5;font-weight:700;margin:0}
+.quest-object{display:none}
+.question-portal[data-artifact='map'] .quest-object-map,.question-portal[data-artifact='lock'] .quest-object-lock,.question-portal[data-artifact='lantern'] .quest-object-lantern,.question-portal[data-artifact='chest'] .quest-object-chest{display:block}
+.question-portal[data-artifact='map'] .quest-arch,.question-portal[data-artifact='lock'] .quest-arch,.question-portal[data-artifact='lantern'] .quest-arch,.question-portal[data-artifact='chest'] .quest-arch{display:none}
+.quest-mystery-discovery,.quest-mystery-finale{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:18px;background:var(--surface);margin:16px 0}
+.quest-mystery-reveal-icon{font-size:52px;line-height:1.2;flex:0 0 auto}
+.quest-mystery-discovery h2,.quest-mystery-finale h2{font-size:clamp(19px,3.5vw,25px);line-height:1.3;margin:4px 0}
+.quest-mystery-discovery p,.quest-mystery-finale p{margin:4px 0;line-height:1.5}
+.quest-finale-art{width:clamp(100px,26vw,190px);height:auto;flex-shrink:0}
+.quest-mystery-finale>div{min-width:0}
+@media(max-width:520px){.quest-mystery{padding:12px}.quest-mystery-step{flex-direction:column;gap:2px;font-size:11px}.quest-mystery-step[data-state='found']::after{display:none}.quest-mystery-step-icon{font-size:24px}.quest-mystery-finale{align-items:flex-start;gap:8px}.quest-mystery-finale .quest-finale-art{width:86px}.quest-mystery-reveal-icon{font-size:40px}}
+@media(prefers-reduced-motion:no-preference){.quest-mystery-discovery:not([hidden]) .quest-mystery-reveal-icon{animation:mystery-reveal .42s ease-out both}@keyframes mystery-reveal{from{transform:scale(.8);opacity:.5}70%{transform:scale(1.1)}to{transform:scale(1);opacity:1}}}
+@media(forced-colors:active){.quest-mystery-step[data-state='current']{outline:2px solid Highlight}}

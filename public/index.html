@@ -328,12 +328,15 @@
 
       <section id="view-play" class="view" aria-label="Pågående ordjakt" hidden>
         <div class="play-top"><button type="button" id="leave" class="text-button">← Avsluta omgången</button><span id="play-tag" class="tag">📚 Träna • Lätt</span></div>
-        <div class="score-grid" aria-label="Pågående resultat">
+        <details id="play-score-details" class="play-score-details" open>
+          <summary id="play-score-summary" hidden>📊 Visa omgångens siffror</summary>
+          <div class="score-grid" aria-label="Pågående resultat">
           <div class="stat"><span id="progress-label">ORD</span><strong id="stat-progress">1 / 10</strong></div>
           <div class="stat"><span>✅ RÄTT</span><strong id="stat-right">0</strong></div>
           <div class="stat"><span>❌ FEL</span><strong id="stat-wrong">0</strong></div>
           <div id="clock-stat" class="stat clock-stat" hidden><span>⏱️ TID</span><strong id="stat-clock" role="timer" aria-live="off">03:00</strong></div>
-        </div>
+          </div>
+        </details>
         <div class="progress-track" role="progressbar" aria-label="Avklarade frågor" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
         <div id="mission-bar" class="mission-bar" aria-label="Stjärnjakten" hidden>
           <div class="companion-bubble"><span id="play-companion-emoji" class="companion-face" aria-hidden="true">🦊</span><div><strong id="play-companion-name">Roffe hejar på dig!</strong><p id="play-companion-hint">Vi klarar det här tillsammans!</p></div></div>
@@ -352,6 +355,13 @@
           <p id="journey-progress" class="journey-progress" aria-live="off">0 av 4 platser upptäckta</p>
         </section>
         <div id="question-area">
+          <section id="quest-mystery" class="quest-mystery" aria-labelledby="quest-mystery-title" hidden>
+            <div class="quest-mystery-kicker"><span aria-hidden="true">✦</span> DITT MYSTERIUM <span aria-hidden="true">✦</span></div>
+            <h2 id="quest-mystery-title"></h2>
+            <ol id="quest-mystery-progress" class="quest-mystery-progress" aria-label="Berättelsens delar"></ol>
+            <p id="quest-mystery-chapter" class="quest-mystery-chapter"></p>
+            <p id="quest-mystery-story"></p>
+          </section>
           <p id="reading-stage" class="reading-stage" role="status" aria-live="polite">📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå</p>
           <div id="reading-story" class="question-card"><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
           <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
@@ -408,6 +418,56 @@
                   <g fill="#b18abe" stroke="#785883" stroke-width="2"><path d="M18 143V72h10V59h10v13h10V59h10v13h10v71Z"/><path d="M232 143V72h10V59h10v13h10V59h10v13h10v71Z"/></g>
                   <path d="M85 210 135 145h30l50 65Z" fill="#f5d4ab"/>
                 </g>
+                <g class="quest-object quest-object-map">
+                  <ellipse cx="150" cy="180" rx="76" ry="12" fill="#23374a" opacity=".25"/>
+                  <g transform="rotate(-7 150 115)">
+                    <path d="M86 55Q100 42 114 54L206 54Q223 54 219 71L209 160Q208 180 190 171L89 171Q76 166 82 151Z" fill="#8d633f" stroke="#694830" stroke-width="3"/>
+                    <path d="M91 50Q101 45 111 55L211 55L203 159Q200 169 188 163L88 163Z" fill="#fce8b9" stroke="#a27b4b" stroke-width="2"/>
+                    <path d="M105 128Q117 92 145 111T179 88T197 83" fill="none" stroke="#a0754d" stroke-width="4" stroke-dasharray="5 7" stroke-linecap="round"/>
+                    <path d="M110 86l9-19 10 19zM167 147l13-24 13 24z" fill="#75a67f" stroke="#577d64" stroke-width="2"/>
+                    <path d="M180 77l16 15m0-15-16 15" stroke="#b9535f" stroke-width="6" stroke-linecap="round"/>
+                    <circle cx="124" cy="144" r="12" fill="#e6c47b" stroke="#996e3f" stroke-width="2"/>
+                    <path d="M124 134l4 10-4 10-4-10z" fill="#a36955"/>
+                  </g>
+                  <use href="#qp-star" transform="translate(68 72)"/><use href="#qp-star" transform="translate(233 129) scale(.7)"/>
+                </g>
+                <g class="quest-object quest-object-lock">
+                  <ellipse cx="150" cy="184" rx="76" ry="11" fill="#23374a" opacity=".25"/>
+                  <path d="M101 177V95a49 49 0 0 1 98 0v82Z" fill="#78597c" stroke="#f2d09d" stroke-width="5"/>
+                  <path d="M112 174V95a38 38 0 0 1 76 0v79Z" fill="#926d5d" stroke="#57415a" stroke-width="3"/>
+                  <path d="M129 74v100m42-100v100m-19-117v117" stroke="#5d4548" stroke-width="3" opacity=".7"/>
+                  <path d="M127 117v-9a13 13 0 0 1 26 0v9" fill="none" stroke="#ffda80" stroke-width="8"/>
+                  <rect x="121" y="117" width="38" height="35" rx="7" fill="#e7b65e" stroke="#9b6a3c" stroke-width="3"/>
+                  <path d="M140 126a5 5 0 1 0-3 9l-2 8h10l-2-8a5 5 0 0 0-3-9" fill="#684956"/>
+                  <g transform="rotate(-18 212 130)" fill="#ffda83" stroke="#a77642" stroke-width="3">
+                    <circle cx="212" cy="112" r="15"/><circle cx="212" cy="112" r="6" fill="#80567f"/>
+                    <path d="M206 125h12v42h-12zM218 146h12v7h-12zM218 159h9v7h-9z"/>
+                  </g>
+                  <use href="#qp-star" transform="translate(205 75)"/>
+                </g>
+                <g class="quest-object quest-object-lantern">
+                  <circle cx="150" cy="113" r="73" fill="#fff2b6" opacity=".23"/>
+                  <ellipse cx="150" cy="182" rx="62" ry="10" fill="#23374a" opacity=".23"/>
+                  <path d="M133 59V48a17 17 0 0 1 34 0v11" fill="none" stroke="#6b5464" stroke-width="7"/>
+                  <path d="M109 76l20-19h42l20 19Z" fill="#c49350" stroke="#76533e" stroke-width="3"/>
+                  <path d="M114 78h72l-8 77h-56Z" fill="#ffe7a6" stroke="#76533e" stroke-width="4"/>
+                  <path d="M123 82h54l-6 66h-42Z" fill="url(#qp-light)" opacity=".7"/>
+                  <path d="M130 79v75m40-75v75" stroke="#9b7450" stroke-width="4"/>
+                  <path d="M150 96q-7 17-11 25q-7 20 11 23q19-2 11-23q-3-7-11-25Z" fill="#ed8d59" stroke="#b96446" stroke-width="2"/>
+                  <path d="M150 118q-10 16 0 20q10-4 0-20Z" fill="#fff2b4"/>
+                  <path d="M109 154h82v16h-82Z" fill="#c49350" stroke="#76533e" stroke-width="3"/>
+                  <use href="#qp-star" transform="translate(93 112)"/><use href="#qp-star" transform="translate(202 91) scale(.8)"/>
+                </g>
+                <g class="quest-object quest-object-chest">
+                  <ellipse cx="150" cy="181" rx="87" ry="13" fill="#23374a" opacity=".25"/>
+                  <path d="M74 111Q74 74 111 73h78q37 1 37 38v15H74Z" fill="#93685d" stroke="#573f4b" stroke-width="4"/>
+                  <path d="M82 121h136v54H82Z" fill="#b77d5b" stroke="#573f4b" stroke-width="4"/>
+                  <path d="M74 116h152v13H74ZM91 83h15v92H91ZM194 83h15v92h-15Z" fill="#edc77d" stroke="#8e673f" stroke-width="3"/>
+                  <rect x="136" y="114" width="28" height="32" rx="5" fill="#f5d58d" stroke="#8e673f" stroke-width="3"/>
+                  <path d="M150 123a5 5 0 1 0-3 9l-2 7h10l-2-7a5 5 0 0 0-3-9" fill="#5b4051"/>
+                  <path d="M112 151h22m34 0h22" stroke="#8d534d" stroke-width="3" stroke-linecap="round"/>
+                  <use href="#qp-star" transform="translate(150 46) scale(1.25)"/><use href="#qp-star" transform="translate(238 98) scale(.8)"/>
+                </g>
                 <g class="quest-arch">
                   <ellipse cx="150" cy="183" rx="68" ry="13" fill="#182b47" opacity=".25"/>
                   <path d="M92 178V104a58 58 0 0 1 116 0v74Z" fill="#3e406b" stroke="#fce7ad" stroke-width="5"/>
@@ -461,10 +521,28 @@
             </div>
           </section>
         </div>
+        <section id="quest-mystery-discovery" class="quest-mystery-discovery" aria-labelledby="quest-mystery-discovery-title" hidden>
+          <span id="quest-mystery-discovery-icon" class="quest-mystery-reveal-icon" aria-hidden="true"></span>
+          <div><p class="eyebrow">✦ ETT SPÅR I MYSTERIET</p><h2 id="quest-mystery-discovery-title"></h2><p id="quest-mystery-discovery-text"></p></div>
+        </section>
         <div class="play-footer"><button type="button" id="next" class="primary-button big-button" hidden>Nästa ord →</button><p id="test-footnote" class="subtle-note" hidden>Du får se facit när testet är klart.</p></div>
       </section>
 
       <section id="view-results" class="view" aria-labelledby="results-title" hidden>
+        <section id="quest-mystery-finale" class="panel quest-mystery-finale" aria-labelledby="quest-mystery-finale-title" hidden>
+          <svg viewBox="0 0 220 150" class="quest-finale-art" aria-hidden="true">
+            <defs><radialGradient id="qm-finale-light"><stop stop-color="#fff5b6"/><stop offset="1" stop-color="#f1c86e" stop-opacity="0"/></radialGradient></defs>
+            <circle cx="110" cy="69" r="65" fill="url(#qm-finale-light)"/>
+            <path d="M110 12l7 18 19 2-14 12 4 19-16-10-16 10 4-19-14-12 19-2z" fill="#ffdd8a" stroke="#c68e44" stroke-width="2"/>
+            <g fill="#fce7a2"><path d="M57 28l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/><path d="M164 40l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/></g>
+            <ellipse cx="110" cy="134" rx="76" ry="9" fill="#2c294b" opacity=".24"/>
+            <path d="M47 95l15-35 105-8 8 43Z" fill="#a97d73" stroke="#644957" stroke-width="4"/>
+            <path d="M46 92h128v39H46Z" fill="#ba855f" stroke="#644957" stroke-width="4"/>
+            <path d="M46 89h128v12H46ZM61 97h13v34H61ZM148 97h13v34h-13Z" fill="#f4cf82" stroke="#9b7448" stroke-width="2"/>
+            <rect x="99" y="92" width="22" height="24" rx="4" fill="#ffe1a3" stroke="#9b7448" stroke-width="2"/>
+          </svg>
+          <div><p class="eyebrow">✦ BERÄTTELSENS SLUT</p><h2 id="quest-mystery-finale-title"></h2><p id="quest-mystery-finale-text"></p><p class="story-small">Du har utforskat mysteriet. Här nedanför finns omgångens kunskapsresultat.</p></div>
+        </section>
         <div class="results-hero panel"><div id="results-companion" class="results-companion" aria-hidden="true">🦊</div><div class="trophy" aria-hidden="true">🏆</div><h1 id="results-title">Ordjakten är klar!</h1><div id="results-percent" class="results-percent">80 %</div><p id="results-descriptor" class="muted"></p><p id="results-cheer" class="results-cheer"></p></div>
         <section class="panel adventure-finale" aria-labelledby="finale-title"><div id="finale-emoji" aria-hidden="true">🌲</div><div><h2 id="finale-title">Mystiska skogen</h2><p id="finale-text">Du har utforskat hela skogen!</p><p id="finale-stops" class="subtle-note"></p></div></section>
         <section id="story-results" class="panel story-card" aria-label="Nästa berättelseäventyr"></section>

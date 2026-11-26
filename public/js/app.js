@@ -91,7 +91,7 @@
   let worldMission=null,worldMissionEarned=null;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
-  let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null;
+  let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null,suppressQuestionClick=false;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -2850,6 +2850,10 @@
     $('journey-details').open=false; // Reading must not start below an expanded map.
     $('play-tag').textContent=(settings.mode==='train'?'📚 Träna':'🏆 Testa dig')+' • '+topicLabels[settings.topic]+' • '+labels[settings.difficulty];
     $('progress-label').textContent=settings.topic==='words'?'ORD':'FRÅGA';
+    const mystery=QuestionPlay.mystery(roundSettings,0,questions.length);
+    $('play-score-details').open=!mystery;
+    $('play-score-summary').hidden=!mystery;
+    $('view-play').dataset.mystery=String(!!mystery);
     show('play');
     renderQuestion();
     activateTimer();
@@ -2918,6 +2922,50 @@
     $('order-submit').disabled=orderSelection.length!==3;
     $('order-count').textContent=`${orderSelection.length} av 3 händelser valda`;
   }
+  function mysteryForRound(done=game?.index){
+    return game?QuestionPlay.mystery(game.settings,done,game.questions.length):null;
+  }
+  function renderMysteryQuestion(storyVisible){
+    const model=mysteryForRound();
+    $('quest-mystery').hidden=!model;
+    $('quest-mystery-discovery').hidden=true;
+    $('story-reveal').textContent='Jag har läst – visa svaren →';
+    if(!model)return;
+    $('quest-mystery-title').textContent=model.title;
+    $('quest-mystery-chapter').textContent='Del '+model.step+' av '+model.chapters.length+' · '+model.chapter.title;
+    $('quest-mystery-story').textContent=(model.done===0?model.intro+' ':'')+model.chapter.sceneText;
+    const progress=$('quest-mystery-progress');progress.replaceChildren();
+    for(const [i,chapter] of model.chapters.entries()){
+      const item=element('li','quest-mystery-step');
+      const state=i<model.completed?'found':i===model.completed?'current':'later';
+      item.dataset.state=state;
+      const icon=element('span','quest-mystery-step-icon',chapter.emoji);
+      icon.setAttribute('aria-hidden','true');
+      item.append(icon,element('span','',chapter.id==='map'?'Karta':chapter.id==='lock'?'Lås':chapter.id==='lantern'?'Lykta':'Kista'));
+      item.setAttribute('aria-label',chapter.title+(state==='found'?', upptäckt':state==='current'?', nästa spår':', väntar'));
+      if(state==='current')item.setAttribute('aria-current','step');
+      progress.append(item);
+    }
+    if(storyVisible)$('story-reveal').textContent='🔎 Jag har läst – visa spåren →';
+    $('answer-step').querySelector('strong').textContent='🔎 VÄLJ DITT SPÅR';
+  }
+  function renderMysteryDiscovery(){
+    const done=game?Object.keys(game.answers).length:0;
+    const model=game?.settings.mode==='train'?QuestionPlay.discovery(game.settings,done,game.questions.length):null;
+    $('quest-mystery-discovery').hidden=!model;
+    if(!model)return;
+    $('quest-mystery-discovery').dataset.artifact=model.artifact;
+    $('quest-mystery-discovery-icon').textContent=model.emoji;
+    $('quest-mystery-discovery-title').textContent=model.title;
+    $('quest-mystery-discovery-text').textContent=model.text;
+  }
+  function renderMysteryFinale(){
+    const model=mysteryForRound(game?Object.keys(game.answers).length:0);
+    $('quest-mystery-finale').hidden=!model?.finished;
+    if(!model?.finished)return;
+    $('quest-mystery-finale-title').textContent=model.title+' – upplöst!';
+    $('quest-mystery-finale-text').textContent=model.ending;
+  }
   function resetQuestionDrag(){
     const drag=questionDrag;questionDrag=null;
     if(drag&&typeof drag.handle.hasPointerCapture==='function'&&drag.handle.hasPointerCapture(drag.pointerId)){
@@ -2953,9 +3001,11 @@
     if(!questionPresentation.enabled)return;
     const {world,hint,caption}=questionPresentation;
     $('question-portal').dataset.scene=world.scene;
-    $('question-portal-title').textContent=world.name;
-    $('question-portal-caption').textContent=caption;
-    $('question-portal-symbol').textContent=world.target;
+    const mystery=mysteryForRound();
+    $('question-portal').dataset.artifact=mystery?.chapter.id||'portal';
+    $('question-portal-title').textContent=mystery?.chapter.title||world.name;
+    $('question-portal-caption').textContent=mystery?.chapter.action||caption;
+    $('question-portal-symbol').textContent=mystery?.chapter.emoji||world.target;
     $('question-egg-hint').textContent=hint;
     updateQuestionPlay();
   }
@@ -2967,6 +3017,9 @@
   }
   function startQuestionDrag(event){
     const handle=event.target.closest('.quest-drag-grip');
+    // A cancelled pointer gesture must never be mistaken for a click on
+    // its parent answer button. The next ordinary pointerdown clears it.
+    if(event.isPrimary)suppressQuestionClick=!!handle;
     if(!handle||!questionReady()||!questionPresentation?.enabled||event.button!==0||!event.isPrimary)return;
     const btn=handle.closest('button[data-option]');
     if(!btn||!$('answer-options').contains(btn)||typeof handle.setPointerCapture!=='function')return;
@@ -3045,6 +3098,7 @@
     $('order-area').hidden=q.taskType!=='order'||!$('story-reveal').hidden;
     options.hidden=q.taskType==='order'||!$('story-reveal').hidden;
     if(q.taskType==='order'){orderSelection=[];renderOrderQuestion(q);}
+    renderMysteryQuestion(storyVisible);
     prepareQuestionPlay(q);
     q.options.forEach((option,index)=>{
       const btn=document.createElement('button');btn.type='button';btn.className='answer-option'+(q.picture?' with-picture':'');btn.dataset.option=String(index);
@@ -3070,7 +3124,7 @@
     $('reading-why').hidden=true;
     $('reading-reread').hidden=true;
     $('reading-launch-prompt').textContent='📖 Läs betydelsen och exemplet ovan. Sedan får du visa vad du förstått.';
-    $('reading-start').textContent='🧠 Jag har läst – prova mig →';
+    $('reading-start').textContent=mysteryForRound()?'🔎 Jag har läst – undersök spåret →':'🧠 Jag har läst – prova mig →';
     $('feedback-reading-stage').textContent='📖 Läs först – 🧠 prova sedan';
     $('reading-options').replaceChildren();
     if(!check)return;
@@ -3175,6 +3229,7 @@
       $('reading-reread').hidden=true;
       $('next').hidden=false;
     }
+    if($('reading-check').dataset.complete==='true')renderMysteryDiscovery();
   }
   function submit(index) {
     if(!game||game.finished||game.feedback)return;
@@ -3249,7 +3304,10 @@
       $('view-play').dataset.readingPhase='explain';
       $('feedback-area').dataset.readingPending=readingCheck?'true':'false';
       $('next').hidden=!!readingCheck;
-      $('next').textContent=game.index===game.questions.length-1?'🏆 Visa mitt resultat':q.kind==='expression'?'Nästa uttryck →':'Nästa ord →';
+      const mystery=mysteryForRound();
+      $('next').textContent=mystery?(game.index===game.questions.length-1?'📖 Se hur mysteriet slutar →':'🔎 Följ nästa spår →'):
+        game.index===game.questions.length-1?'🏆 Visa mitt resultat':q.kind==='expression'?'Nästa uttryck →':'Nästa ord →';
+      if(!readingCheck)renderMysteryDiscovery();
       $('test-footnote').hidden=true;
       // Move focus to explanation for screen-reader users, without hiding it behind answers.
       $('explanation-word').setAttribute('tabindex','-1');$('explanation-word').focus({preventScroll:true});
@@ -3317,6 +3375,7 @@
     renderRewards(result);
     renderQuestFinale(questStep);
     renderFinale();
+    renderMysteryFinale();
     renderStoryOptions('results');
     renderReview(result);
     const review=R.summary(history.reviewProgress);
@@ -3935,7 +3994,9 @@
   });
   $('answer-options').addEventListener('click',event=>{
     // A grip release must never turn a cancelled drag into a scored answer.
-    if(event.target.closest('.quest-drag-grip')){event.preventDefault();return;}
+    if(event.target.closest('.quest-drag-grip')||(event.detail>0&&suppressQuestionClick)){
+      suppressQuestionClick=false;event.preventDefault();return;
+    }
     const target=event.target.closest('button[data-option]');
     if(questionReady()&&target&&$('answer-options').contains(target))submit(Number(target.dataset.option));
   });
