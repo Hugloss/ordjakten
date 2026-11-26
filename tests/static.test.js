@@ -111,3 +111,12 @@ test('detector loads before the app, is available offline and resets/exports onl
   assert.ok(!flow.includes('history.skillProgress='));
   assert.ok(!flow.includes('history.readingProgress='));
 });
+
+test('adaptive detector controls and local level history are wired without scored-test changes',()=>{
+  const html=read('index.html'),app=read('js/app.js');
+  for(const id of ['detector-level','detector-think','detector-clue-check','detector-level-note'])assert.ok(html.includes('id="'+id+'"'));
+  assert.match(app,/Detector\.advancedCatalog\(learningCatalog,contrasts,clues\)/);
+  assert.match(app,/history\.detectorLevels=Detector\.sanitizeLevels\(null,detectorCatalog\)/);
+  assert.match(app,/detectorLevels:history\.detectorLevels/);
+  assert.match(app,/Detector\.evaluateQuotes\(task,selected,round\.attempts\)/);
+});

@@ -215,14 +215,14 @@
     "vatten ur kranen"
   ],
   "ld-01-2-03": [
-    "botten syntes inte längre",
+    "syntes inte längre",
     "Efter bildlektionen",
     "sköljts i samma skål"
   ],
   "ld-01-2-08": [
-    "se de blå bottenlinjerna tydligt",
+    "se de blå bottenlinjerna",
     "På simträningen",
-    "i bassängens djupa del"
+    "även i bassängens djupa del"
   ],
   "ld-02-2-01": [
     "fast i många små ojämnheter",
@@ -245,7 +245,7 @@
     "tappade Oskar sin metallflaska"
   ],
   "ld-03-2-03": [
-    "långa, parallella gröna och gula fält",
+    "långa, parallella",
     "På bokens framsida",
     "hade eleverna målat"
   ],
@@ -255,17 +255,17 @@
     "bar domaren en tröja"
   ],
   "ld-03-2-04": [
-    "många små blå cirklar",
+    "små blå cirklar",
     "Barnen slog in paket",
     "på vit bakgrund"
   ],
   "ld-03-2-08": [
-    "små runda färgfläckar",
+    "runda färgfläckar",
     "Till uppvisningen",
     "hade Nora en kjol"
   ],
   "ld-08-2-01": [
-    "ville Leo veta varför",
+    "ville Leo veta",
     "När pappa bakade",
     "degen blev större"
   ],
@@ -288,16 +288,16 @@
   const HARD=Object.freeze({
   "ld-01-3-01": {
     "quotes": [
-      "kunde Mio se mönstret",
+      "se mönstret",
       "gick det inte längre",
-      "På morgonen"
+      "på bordet genom vattenkannan"
     ],
     "question": "Hur är vattnet efter att mjölet blandats i?"
   },
   "ld-01-3-02": {
     "quotes": [
-      "Först syntes inte kökskaklet",
-      "kunde Ida se kaklet igen",
+      "syntes inte kökskaklet",
+      "se kaklet igen",
       "bakom karaffen"
     ],
     "question": "Hur är vattnet efter rengöringen?"
@@ -312,24 +312,24 @@
   },
   "ld-01-3-08": {
     "quotes": [
-      "kunde simmarna inte se de målade linjerna",
-      "gick de att följa med blicken igen",
-      "Senare samma dag"
+      "inte se",
+      "följa med blicken igen",
+      "de målade linjerna på bassängbotten"
     ],
     "question": "Hur är vattnet efter rengöringen?"
   },
   "ld-02-3-01": {
     "quotes": [
-      "fastnade trasan hela tiden",
-      "Efter slipningen gled den lätt",
-      "över träbänken"
+      "fastnade trasan",
+      "gled den lätt",
+      "när den drogs över träbänken"
     ],
     "question": "Hur kändes träytan före slipningen?"
   },
   "ld-02-3-02": {
     "quotes": [
-      "helt plant före flytten",
-      "flera runda fördjupningar",
+      "helt plant",
+      "runda fördjupningar",
       "Locket på metallådan"
     ],
     "question": "Hur ser metallådans lock ut efter flytten?"
@@ -337,23 +337,23 @@
   "ld-02-3-03": {
     "quotes": [
       "rev lite mot fingertopparna",
-      "den andra kändes nästan som glas",
-      "Eleverna strök med handen"
+      "nästan som glas",
+      "Eleverna strök med handen över två brädor"
     ],
     "question": "Hur kändes den första brädan?"
   },
   "ld-02-3-06": {
     "quotes": [
       "var plan innan stormen",
-      "tre grenar hade tryckt in metallen",
-      "kunde Tilda se"
+      "tryckt in metallen",
+      "Efteråt kunde Tilda se"
     ],
     "question": "Hur är skyltens yta efter stormen?"
   },
   "ld-03-3-01": {
     "quotes": [
-      "bytte färg på garnet efter några varv",
-      "långa fält som följde varandra",
+      "bytte färg på garnet",
+      "långa fält",
       "På den färdiga filten"
     ],
     "question": "Hur ser mönstret på filten ut?"
@@ -368,25 +368,25 @@
   },
   "ld-03-3-03": {
     "quotes": [
-      "färgstreck från överkant till nederkant",
-      "Strecken löpte sida vid sida",
-      "på affischen"
+      "från överkant till nederkant",
+      "sida vid sida",
+      "Eleverna drog var sitt"
     ],
     "question": "Hur ser mönstret på affischen ut?"
   },
   "ld-03-3-04": {
     "quotes": [
-      "en liten rund stämpel på många platser",
-      "Det blev ingen sammanhängande linje",
-      "På bildlektionen"
+      "rund stämpel på många platser",
+      "ingen sammanhängande linje",
+      "På bildlektionen tryckte klassen"
     ],
     "question": "Hur ser mönstret ut?"
   },
   "ld-08-3-01": {
     "quotes": [
-      "en apparat ingen använt tidigare",
-      "frågade vad som hände om man vred på ratten",
-      "Hemma stod"
+      "ingen använt tidigare",
+      "frågade vad som hände",
+      "Hemma stod en apparat"
     ],
     "question": "Vilket ord beskriver Kims intresse för apparaten?"
   },

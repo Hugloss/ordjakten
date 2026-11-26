@@ -728,7 +728,8 @@
     saveHistory();
     $('detector-clue-stage').hidden=true;
     $('detector-feedback').hidden=false;
-    $('detector-feedback-title').textContent=clue==='right'?'🌟 Du hittade ledtråden!':'💡 Här är ledtråden vi letade efter';
+    $('detector-feedback-title').textContent=task.required===2?(clue==='right'?'🌟 Du hittade båda ledtrådarna!':'💡 Här är ledtrådarna vi letade efter'):
+      (clue==='right'?'🌟 Du hittade ledtråden!':'💡 Här är ledtråden vi letade efter');
     $('detector-feedback-word').textContent=task.word+' – '+task.definition;
     const evidence=task.quotes.filter(quote=>quote.correct).map(quote=>quote.label);
     $('detector-evidence').textContent=evidence.map(quote=>'”'+quote+'”').join(' + ');
