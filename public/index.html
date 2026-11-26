@@ -58,6 +58,7 @@
   <script src="./js/workshop.js" defer></script>
   <script src="./js/detector.js" defer></script>
   <script src="./js/concepts.js" defer></script>
+  <script src="./js/bridges.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -567,8 +568,47 @@
               <button type="button" class="secondary-button" data-concept-type="context" aria-pressed="false">🌍 Sammanhang</button>
             </div>
           </div>
+          <section class="panel concept-intro" aria-labelledby="bridges-title">
+            <h2 id="bridges-title">🌉 Ordbroar</h2>
+            <p class="muted">Sortera ord, hitta skillnader och bygg samband genom att tänka på flera ord tillsammans.</p>
+            <label for="bridges-kind">Vilken sorts uppgift vill du prova?</label>
+            <select id="bridges-kind" class="field">
+              <option value="all">Blanda uppgifter</option>
+              <option value="sort">🧺 Sortera ord</option>
+              <option value="odd">🔎 Hitta ordet som inte passar</option>
+              <option value="order">🧩 Ord i rätt följd</option>
+              <option value="bridge">🌉 Bygg en ordbro</option>
+              <option value="explain">💬 Förklara skillnaden</option>
+            </select>
+            <button id="bridges-quick" type="button" class="primary-button full-button"></button>
+            <p id="bridges-note" class="muted" role="status"></p>
+          </section>
           <div id="concepts-list" class="concept-list"></div>
           <p id="concepts-empty" class="panel muted" hidden>Inga samband här ännu. Prova en annan kategori eller visa alla ordsamband.</p>
+        </section>
+        <section id="bridges-question" class="panel workshop-task" hidden>
+          <p id="bridges-progress" class="muted" role="status"></p>
+          <p id="bridges-question-type" class="eyebrow"></p>
+          <h2 id="bridges-prompt" tabindex="-1"></h2>
+          <div id="bridges-options" class="bridge-options"></div>
+          <p id="bridges-selection-count" class="muted" role="status"></p>
+          <p id="bridges-response" class="muted" role="status"></p>
+          <button id="bridges-check" type="button" class="primary-button full-button" disabled>Jämför mina val →</button>
+          <button id="bridges-help" type="button" class="secondary-button full-button">💡 Visa en ledtråd</button>
+          <p id="bridges-help-text" class="focus-scene workshop-reading" tabindex="-1" hidden></p>
+          <button id="bridges-reveal" type="button" class="secondary-button full-button">Visa och förklara sambandet →</button>
+        </section>
+        <section id="bridges-feedback" class="panel workshop-task" hidden>
+          <h2 id="bridges-feedback-title" tabindex="-1"></h2>
+          <ul id="bridges-solution" class="bridge-solution"></ul>
+          <p id="bridges-why" class="workshop-reading"></p>
+          <p class="muted">Fundera gärna på varför orden hör ihop och säg det med egna ord. Det du säger bedöms inte.</p>
+          <button id="bridges-next" type="button" class="primary-button full-button">Nästa ordbro →</button>
+        </section>
+        <section id="bridges-finished" class="panel focus-finish" hidden>
+          <h2 id="bridges-finished-title" tabindex="-1">🌟 Du har byggt ordsamband!</h2>
+          <p>Nu har du provat hur flera ord kan höra ihop. Utforska fler samband när du vill.</p>
+          <button id="bridges-done" type="button" class="primary-button full-button">🗺️ Till Begreppskartan →</button>
         </section>
         <section id="concepts-question" class="panel workshop-task" hidden>
           <p id="concepts-progress" class="muted" role="status"></p>

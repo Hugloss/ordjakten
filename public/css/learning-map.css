@@ -108,3 +108,19 @@
 .concept-word span{font-size:16px;line-height:1.5}
 .concept-explanation{font-size:18px;line-height:1.55;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px;overflow-wrap:anywhere}
 #concepts-prompt{font-size:clamp(23px,4vw,31px);line-height:1.45}
+
+/* Ordbroar: click or keyboard, never require drag-and-drop. */
+.bridge-options{display:grid;gap:10px}
+.bridge-sort-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.bridge-sort-row>strong{font-size:19px;line-height:1.4;overflow-wrap:anywhere}
+.bridge-bin-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.bridge-bin-choices button{min-height:46px;white-space:normal;overflow-wrap:anywhere}
+.bridge-options button[aria-pressed='true']{background:var(--accent-soft);border-color:var(--accent-line);box-shadow:inset 0 0 0 1px var(--accent-line)}
+.bridge-slots{display:grid;gap:10px;padding-left:24px}
+.bridge-slot{padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
+.bridge-slot span,.bridge-slot strong{display:block;line-height:1.5;overflow-wrap:anywhere}
+.bridge-slot strong{margin-top:6px;font-size:19px;color:var(--muted)}
+.bridge-slot strong[data-filled='true']{color:var(--text)}
+.bridge-solution{display:grid;gap:10px;padding-left:24px;font-size:19px;line-height:1.5}
+#bridges-prompt{font-size:clamp(23px,4vw,31px);line-height:1.45}
+@media(max-width:540px){.bridge-sort-row{grid-template-columns:minmax(0,1fr)}}
