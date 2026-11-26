@@ -57,6 +57,7 @@
   <script src="./js/recall.js" defer></script>
   <script src="./js/workshop.js" defer></script>
   <script src="./js/detector.js" defer></script>
+  <script src="./js/concepts.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -111,6 +112,7 @@
           <div class="recall-preview">
             <strong>🛠️ Ordverkstaden</strong><p class="muted">Bygg en mening, klura på ord och hitta på ett eget exempel.</p>
             <button type="button" id="workshop-home-start" class="secondary-button full-button">Öppna ordverkstaden →</button>
+            <button type="button" id="concepts-home-open" class="secondary-button full-button">🗺️ Begreppskartan – ord som hör ihop →</button>
           </div>
           <div id="detector-home" class="recall-preview" hidden>
             <strong>🔎 Orddetektiven</strong>
@@ -439,6 +441,7 @@
           <h2 id="workshop-learning-title">🛠️ Ordverkstaden</h2>
           <p class="muted">Välj ett ord från din stig eller låt spelet välja en liten verkstad.</p>
           <button type="button" id="workshop-learning-start" class="secondary-button full-button">Öppna ordverkstaden →</button>
+          <button type="button" id="concepts-learning-open" class="secondary-button full-button">🗺️ Utforska ord som hör ihop →</button>
         </section>
         <section id="detector-learning" class="panel recall-preview" aria-labelledby="detector-learning-title" hidden>
           <h2 id="detector-learning-title">🔎 Orddetektiven</h2>
@@ -536,6 +539,57 @@
           <h2 id="recall-finished-title" tabindex="-1">🌟 Bra att du försökte!</h2>
           <p>Du har övat på att hitta ord själv. Nästa gång kan du få en annan ledtråd.</p>
           <button id="recall-done" type="button" class="primary-button full-button">🗺️ Se min ordstig →</button>
+        </section>
+      </section>
+
+      <section id="view-concepts" class="view" aria-labelledby="concepts-title" hidden>
+        <button id="concepts-back" type="button" class="secondary-button focus-back">← Till min ordstig</button>
+        <header class="panel focus-hero">
+          <span class="focus-buddy" aria-hidden="true">🗺️</span>
+          <div><p class="eyebrow">ORD HÖR IHOP</p><h1 id="concepts-title" tabindex="-1">Begreppskartan</h1>
+            <p class="muted">Utforska liknande ord, skillnader och ord som hör ihop. Ingen timer eller provpoäng.</p></div>
+        </header>
+        <section id="concepts-map">
+          <div class="panel concept-intro">
+            <h2>Vilka ord hör ihop?</h2>
+            <div id="concepts-word-filter" hidden>
+              <p id="concepts-word-note" class="workshop-reading"></p>
+              <button id="concepts-clear-filter" type="button" class="secondary-button">Visa alla samband</button>
+            </div>
+            <button id="concepts-quick" type="button" class="primary-button full-button"></button>
+            <p id="concepts-note" class="muted" role="status"></p>
+            <div id="concepts-filters" class="concept-filters" role="group" aria-label="Välj typ av samband">
+              <button type="button" class="secondary-button" data-concept-type="all" aria-pressed="true">Alla</button>
+              <button type="button" class="secondary-button" data-concept-type="similar" aria-pressed="false">🤝 Liknande ord</button>
+              <button type="button" class="secondary-button" data-concept-type="contrast" aria-pressed="false">↔️ Kontraster</button>
+              <button type="button" class="secondary-button" data-concept-type="nuance" aria-pressed="false">🔍 Nyanser</button>
+              <button type="button" class="secondary-button" data-concept-type="category" aria-pressed="false">🧺 Ordgrupper</button>
+              <button type="button" class="secondary-button" data-concept-type="context" aria-pressed="false">🌍 Sammanhang</button>
+            </div>
+          </div>
+          <div id="concepts-list" class="concept-list"></div>
+          <p id="concepts-empty" class="panel muted" hidden>Inga samband här ännu. Prova en annan kategori eller visa alla ordsamband.</p>
+        </section>
+        <section id="concepts-question" class="panel workshop-task" hidden>
+          <p id="concepts-progress" class="muted" role="status"></p>
+          <p id="concepts-question-type" class="eyebrow"></p>
+          <h2 id="concepts-prompt" tabindex="-1"></h2>
+          <div id="concepts-options" class="reading-options" role="group" aria-labelledby="concepts-prompt"></div>
+          <p id="concepts-response" class="muted" role="status"></p>
+          <p id="concepts-answer-help" class="focus-scene workshop-reading" hidden></p>
+          <button id="concepts-reveal" type="button" class="secondary-button full-button">💡 Visa och förklara sambandet →</button>
+        </section>
+        <section id="concepts-feedback" class="panel workshop-task" hidden>
+          <h2 id="concepts-feedback-title" tabindex="-1"></h2>
+          <strong id="concepts-correct" class="workshop-target"></strong>
+          <p id="concepts-why" class="workshop-reading"></p>
+          <p id="concepts-explanation" class="concept-explanation"></p>
+          <button id="concepts-next" type="button" class="primary-button full-button">Nästa samband →</button>
+        </section>
+        <section id="concepts-finished" class="panel focus-finish" hidden>
+          <h2 id="concepts-finished-title" tabindex="-1">🌟 Du hittade ordsamband!</h2>
+          <p>Ord kan höra ihop på olika sätt. Utforska gärna ett nytt samband eller kom tillbaka en annan dag.</p>
+          <button id="concepts-done" type="button" class="primary-button full-button">🗺️ Till Begreppskartan →</button>
         </section>
       </section>
 

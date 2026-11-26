@@ -85,3 +85,26 @@
 .learning-pebble[data-state='practice']{border-color:var(--accent-line)}
 .learning-word-pebbles{flex-wrap:wrap;gap:6px}
 @media(max-width:360px){.learning-profile.learning-steps li{flex-wrap:wrap}.learning-profile .learning-focus-skill{width:100%}}
+
+/* A compact relation map: readable word cards, not a graph that needs zoom. */
+#view-concepts .panel{margin-bottom:12px}
+.concept-intro{display:grid;gap:12px}
+.concept-filters{display:flex;flex-wrap:wrap;gap:8px}
+.concept-filters button{min-height:44px;flex:1;white-space:normal}
+.concept-filters button[aria-pressed='true']{background:var(--accent-soft);border-color:var(--accent-line)}
+.concept-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;align-items:start}
+.concept-card{border:1px solid var(--border);background:var(--surface);border-radius:14px;min-width:0;overflow:hidden}
+.concept-card-summary{display:grid;grid-template-columns:35px minmax(0,1fr);gap:4px 10px;padding:14px;cursor:pointer;list-style:none}
+.concept-card-summary::-webkit-details-marker{display:none}
+.concept-card-summary strong{font-size:18px;overflow-wrap:anywhere;line-height:1.4}
+.concept-card-summary small{grid-column:2;color:var(--muted);font-size:13px}
+.concept-card-summary strong::after{content:' ＋';color:var(--muted)}
+.concept-card[open] .concept-card-summary strong::after{content:' −'}
+.concept-icon{font-size:27px;grid-row:span 2}
+.concept-card-body{padding:14px;border-top:1px solid var(--border);display:grid;gap:12px}
+.concept-word-list{list-style:none;padding:0;display:grid;gap:8px;margin:0}
+.concept-word{display:grid;gap:5px;border:1px solid var(--border);background:var(--surface-2);padding:12px;border-radius:10px;overflow-wrap:anywhere}
+.concept-word strong{font-size:20px;color:var(--text)}
+.concept-word span{font-size:16px;line-height:1.5}
+.concept-explanation{font-size:18px;line-height:1.55;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px;overflow-wrap:anywhere}
+#concepts-prompt{font-size:clamp(23px,4vw,31px);line-height:1.45}
