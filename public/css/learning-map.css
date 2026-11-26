@@ -205,3 +205,9 @@
 @keyframes story-appear{from{transform:scale(.85);opacity:.6}to{transform:scale(1);opacity:1}}
 @media(max-width:480px){.story-world-path{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.story-keepsake-icon{animation:none}}
+
+.story-album summary{cursor:pointer;font-size:17px;font-weight:700;line-height:1.4}
+.story-album-grid{display:grid;gap:8px;margin-top:10px}
+.story-album-world{padding:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px}
+.story-album-marks{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:5px;margin:8px 0 0;padding:0}
+.story-album-marks li{font-size:15px;line-height:1.4;overflow-wrap:anywhere}

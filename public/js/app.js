@@ -644,6 +644,13 @@
       history.feedbackProgress=after;history.practiceBalance=nextBalance;saveHistory();
     }
   }
+  function finishJourneyStory(){
+    if(!journeyStory||journeyKeepsake)return;
+    const result=Story.finish(history.storyProgress,journeyStory,journey);
+    if(result.earned){
+      history.storyProgress=result.progress;journeyKeepsake=result.earned;saveHistory();
+    }
+  }
   function getKnowledgeProfile(now=Date.now()){
     return Knowledge.analyze({catalog:learningCatalog,history,detectorTasks:detectorCatalog,
       conceptContent:conceptCatalog,bridgeTasks:bridgeCatalog.tasks,contrasts:contrastHistoryData,
@@ -697,6 +704,7 @@
     $('next-journey-method').textContent=meta.icon+' '+meta.label;
     $('next-journey-story').textContent=journeyStory?A.world(journeyStory.id).emoji+' '+journeyStory.title:'';
     $('next-journey-story').hidden=!journeyStory;
+    $('next-journey-story').title=journeyStory?.intro||'';
     const stops=$('next-journey-stations');stops.replaceChildren();
     for(const [i,station] of journey.steps.entries()){
       const status=i<journey.index?(journey.completed.includes(station.mode)?'done':'skipped'):i===journey.index?'current':'ahead';
@@ -773,12 +781,7 @@
   }
   function renderJourneySummary(){
     resetJourneyControls();
-    if(journeyStory&&!journeyKeepsake){
-      const result=Story.finish(history.storyProgress,journeyStory,journey);
-      if(result.earned){
-        history.storyProgress=result.progress;journeyKeepsake=result.earned;saveHistory();
-      }
-    }
+    finishJourneyStory();
     const done=journey?.completed||[],skipped=journey?.skipped||[];
     $('next-journey-title').textContent=journeyKeepsake?'🎉 '+journeyKeepsake.title+' – klart!':done.length?'🌟 Bra äventyr!':'🌱 Utforska i din egen takt';
     $('next-journey-summary').textContent=journey?
@@ -796,7 +799,6 @@
     $('story-earned-icon').textContent=journeyKeepsake?.emoji||'';
     $('story-earned-title').textContent=journeyKeepsake?.keepsake||'';
     $('story-earned-ending').textContent=journeyKeepsake?.ending||'';
-    $('next-journey-again').hidden=true;
     renderStoryOptions('journey');
     show('journey');$('next-journey-title').focus({preventScroll:true});
   }
@@ -1734,7 +1736,20 @@
     }
     host.append(path);
     if(location==='home'||location==='learning'){
-      host.append(element('p','story-small','Din upptäckarbok: '+story.collected+' minnesmärken. Alla försök räknas.'));
+      const album=element('details','story-album');
+      album.append(element('summary','','🎒 Din upptäckarbok · '+story.collected+' minnesmärken'));
+      const collected=element('div','story-album-grid');
+      for(const id of A.WORLD_IDS){
+        const visited=Story.model(history.storyProgress,id).chapters.filter(chapter=>chapter.visited);
+        if(!visited.length)continue;
+        const card=element('section','story-album-world');
+        card.append(element('strong','',A.world(id).emoji+' '+A.world(id).title));
+        const marks=element('ul','story-album-marks');
+        for(const chapter of visited)marks.append(element('li','',chapter.emoji+' '+chapter.keepsake));
+        card.append(marks);collected.append(card);
+      }
+      if(!story.collected)collected.append(element('p','muted','Här får dina upptäckter plats när du har utforskat en berättelse.'));
+      album.append(collected);host.append(album);
       return;
     }
     let openings=[];
@@ -1760,7 +1775,9 @@
       option.value=id;option.selected=id===story.id;select.append(option);
     }
     switcher.append(prompt,select);host.append(switcher);
-    host.append(element('p','story-small','Spela vidare om du vill. Det går lika bra att sluta här – dina upptäckter finns kvar.'));
+    const stop=element('button','secondary-button full-button','Klar för nu – till min ordstig');
+    stop.type='button';stop.dataset.storyStop='true';
+    host.append(stop,element('p','story-small','Dina upptäckter finns kvar. Du kan komma tillbaka när du vill.'));
   }
   function renderKnowledgePreview(knowledge=getKnowledgeProfile()){
     // A deterministic example preview, not a promise to repeat precisely
@@ -2898,11 +2915,12 @@
   $('next-journey-skip').addEventListener('click',()=>{if(journey&&!journey.finished)advanceJourney('skipped',journey.steps[journey.index].mode);});
   $('next-journey-stop').addEventListener('click',()=>goNav('learning'));
   $('next-journey-back').addEventListener('click',()=>goNav('learning'));
-  $('next-journey-again').addEventListener('click',()=>startJourney());
   for(const location of ['results','journey']){
     $('story-'+location).addEventListener('click',event=>{
+      if(screen!==location)return;
+      if(event.target.closest('button[data-story-stop]')){goNav('learning');return;}
       const button=event.target.closest('button[data-story-mode]');
-      if(button&&screen===location&&$('story-'+location).contains(button))startJourney(button.dataset.storyMode);
+      if(button&&$('story-'+location).contains(button))startJourney(button.dataset.storyMode);
     });
     $('story-'+location).addEventListener('change',event=>{
       const select=event.target.closest('select[data-story-world]');

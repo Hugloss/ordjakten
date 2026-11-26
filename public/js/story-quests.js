@@ -383,7 +383,8 @@
     const id=validWorld(world)?world:'forest',progress=sanitize(raw),count=progress[id]||0,total=DATA[id].length;
     const chapters=DATA[id].map(([title,intro,ending,emoji,keepsake],index)=>({
       id,index,title,intro,ending,emoji,keepsake,visited:index<count}));
-    return {id,count,total,complete:count===total,chapter:chapters[Math.min(count,total-1)],chapters,
+    const chapter=count===total?{id,index:total,title:'Ett återbesök',intro:'Vi hälsar på igen.',ending:'Det var fint att komma tillbaka.',emoji:'',keepsake:'',visited:true}:chapters[count];
+    return {id,count,total,complete:count===total,chapter,chapters,
       collected:Object.values(progress).reduce((sum,n)=>sum+n,0)};
   }
   function finish(raw,chapter,journey){
@@ -397,16 +398,21 @@
   }
   // Child chooses the opening activity, never the answer, locked content or
   // a way to bypass a protected followup. Choices come from real candidates.
-  function openings(rows,baseline){
+  function allowedOpenings(rows,baseline){
     if(!rows.includes(baseline))return [];
     if(baseline.feedbackPriority>0)return [baseline];
     const core=['need','review'].includes(baseline.reason);
-    const alternative=rows.find(row=>row.mode!==baseline.mode&&
-      (!core||['need','review'].includes(row.reason))&&!(row.feedbackPriority>0));
+    return [baseline,...rows.filter(row=>row!==baseline&&
+      (!core||['need','review'].includes(row.reason))&&!(row.feedbackPriority>0))];
+  }
+  function openings(rows,baseline){
+    const allowed=allowedOpenings(rows,baseline);
+    if(!allowed.length)return [];
+    const alternative=allowed.find(row=>row.mode!==baseline.mode);
     return alternative?[baseline,alternative]:[baseline];
   }
   function prefer(rows,baseline,mode){
-    return openings(rows,baseline).find(row=>row.mode===mode)||baseline;
+    return allowedOpenings(rows,baseline).find(row=>row.mode===mode)||baseline;
   }
   return {DATA,validWorld,sanitize,model,finish,openings,prefer};
 });

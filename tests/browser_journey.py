@@ -36,9 +36,16 @@ def main(browser):
     assert page.locator("#view-journey").is_visible()
     assert "1 av" in page.locator("#next-journey-summary").inner_text()
     assert page.locator("#next-journey-banner").is_hidden()
-    assert stored() == after
+    assert stored()["storyProgress"] == {before["settings"]["adventure"]: 1}
+    assert {k:v for k,v in stored().items() if k != "storyProgress"} == {k:v for k,v in after.items() if k != "storyProgress"}
+    assert page.locator("#story-earned").is_visible()
+    assert page.locator("#story-journey .story-place[data-state=visited]").count() == 1
+    assert 1 <= page.locator("#story-journey button[data-story-mode]").count() <= 2
     page.locator("#next-journey-back").click()
     assert page.locator("#view-learning").is_visible()
+    assert page.locator("#story-learning .story-place[data-state=visited]").count() == 1
+    page.locator("#story-learning .story-album summary").click()
+    assert page.locator("#story-learning .story-album-marks li").count() == 1
     assert page.locator("#balance-learning-summary").is_visible()
     page.locator("#balance-learning-summary summary").click()
     assert "Den senaste avslutade stationen" in page.locator("#balance-learning-note").inner_text()
@@ -51,6 +58,7 @@ def main(browser):
     assert stored()["results"] == before["results"]
     assert stored()["practiceBalance"] == ["discover"]
     assert stored()["adventureChallenge"] == after["adventureChallenge"]
+    assert stored()["storyProgress"] == {before["settings"]["adventure"]: 1}
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
     assert not errors, errors
     page.close()

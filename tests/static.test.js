@@ -219,11 +219,26 @@ test('adventure pacing is offline, completion-only, and re-plans just the remain
   assert.ok(html.indexOf('./js/adventure-challenge.js')>=0&&html.indexOf('./js/adventure-challenge.js')<html.indexOf('./js/app.js'));
   assert.ok(worker.includes("'./js/adventure-challenge.js'"));
   assert.ok(html.includes('id="next-journey-pacing"'));
-  assert.ok(app.includes('chooseNext:(rows,steps)=>Challenge.pick(rows,steps,'));
+  assert.ok(app.includes('const baseline=Challenge.pick(rows,steps,'));
   assert.ok(app.includes('Journey.continuation(journey)')&&app.includes('Journey.replan(journey,remaining.steps)'));
   assert.ok(app.includes('Challenge.record(history.adventureChallenge,step,journeyOutcomes.get(step)'));
   assert.ok(app.includes('adventureChallenge:history.adventureChallenge'));
   assert.ok(app.includes('history.adventureChallenge=Challenge.sanitize(null)'));
   for(const mode of ['focus','recall','aha','detector','concept','bridge','workshop'])assert.ok(app.includes("noteJourneyOutcome('"+mode+"'"));
   assert.ok(app.includes("if(gentle&&journey&&plan.item.kind==='word'"));
+});
+
+test('story quest collection is local, finite, optional and uses only ready opening activities',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/story-quests.js')>=0&&html.indexOf('./js/story-quests.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/story-quests.js'"));
+  for(const id of ['story-home','story-learning','story-results','story-journey','story-earned','next-journey-stations'])
+    assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(app.includes('Story.finish(history.storyProgress,journeyStory,journey)'));
+  assert.ok(app.includes('Story.prefer(rows,baseline,options.preferredMode)'));
+  assert.ok(app.includes("renderStoryOptions('results')"));
+  assert.ok(app.includes('storyProgress:history.storyProgress'));
+  assert.ok(app.includes('history.storyProgress=Story.sanitize(null)'));
+  assert.ok(app.includes('stop.dataset.storyStop'));
+  assert.ok(app.includes("if(typeof preferredMode==='string'&&plan.steps[0]?.mode!==preferredMode)"));
 });
