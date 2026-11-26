@@ -39,13 +39,14 @@
   const Challenge = window.OrdjaktenChallenge;
   const Story = window.OrdjaktenStory;
   const Camp = window.OrdjaktenCamp;
+  const Theatre = window.OrdjaktenTheatre;
   const WorldMissions = window.OrdjaktenWorldMissions;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -84,7 +85,7 @@
   let conceptMap=null;
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
-  let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null;
+  let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -745,7 +746,7 @@
     }
     if(!plan.steps.length){journey=null;journeyStory=null;journeyKeepsake=null;renderJourneySummary();return;}
     if(screen==='results')game=null;
-    if(screen==='camp')campRiddle=null;
+    if(screen==='camp'){campRiddle=null;campTheatre=null;}
     journey=Journey.start(plan.steps);
     const story=Story.model(history.storyProgress,settings.adventure);
     journeyStory=story.chapter;journeyKeepsake=null;
@@ -1765,7 +1766,44 @@
       'Välj ett föremål eller en tom plats.';
     $('camp-remove').disabled=!selected||!layout.slots.includes(selected.id);
     $('camp-cancel').disabled=!selected&&campTarget===null;
-    if(refreshWorlds){renderCampWorlds();renderCampRiddle();}
+    if(refreshWorlds){renderCampWorlds();renderCampRiddle();renderCampTheatre();}
+  }
+  function renderCampTheatre(focus=false){
+    const model=Theatre.model(campTheatre);
+    $('camp-theatre-start').hidden=!!model;
+    $('camp-theatre-play').hidden=!model;
+    if(!model){
+      $('camp-theatre-choices').replaceChildren();$('camp-theatre-panels').replaceChildren();
+      if(focus)$('camp-theatre-start').focus();
+      return;
+    }
+    const finished=model.panels.length>0;
+    $('camp-theatre-stage').textContent=model.heading;
+    $('camp-theatre-step').textContent=finished?'Din egen berättelse':'Val '+model.step+' av 3';
+    $('camp-theatre-selected').textContent=model.selected.join(' · ');
+    $('camp-theatre-selected').hidden=!model.selected.length;
+    $('camp-theatre-choices').hidden=finished;
+    $('camp-theatre-ending').hidden=!finished;
+    $('camp-theatre-back').hidden=!model.canBack;
+    const options=$('camp-theatre-choices');options.replaceChildren();
+    for(const choice of model.choices){
+      const btn=element('button','camp-theatre-choice');btn.type='button';btn.dataset.theatreChoice=choice.id;
+      const icon=element('span','camp-theatre-icon',choice.emoji);icon.setAttribute('aria-hidden','true');
+      btn.append(icon,element('strong','',choice.label));options.append(btn);
+    }
+    $('camp-theatre-story-title').textContent=model.title;
+    const panels=$('camp-theatre-panels');panels.replaceChildren();
+    for(const panel of model.panels){
+      const card=element('li','camp-theatre-card');
+      const icon=element('span','camp-theatre-picture',panel.emoji);icon.setAttribute('aria-hidden','true');
+      card.append(icon,element('h4','',panel.title),element('p','',panel.text));panels.append(card);
+    }
+    if(focus)$('camp-theatre-stage').focus();
+  }
+  function startCampTheatre(){
+    if(screen!=='camp')return;
+    campTheatre=Theatre.start(history.campLayout,campInventory(),settings.companion);
+    renderCampTheatre(true);
   }
   function renderCampRiddle(){
     const task=campRiddle&&campRiddles[campRiddle.index];
@@ -1859,7 +1897,7 @@
     renderCamp();
   }
   function openCampWithMark(mark=null){
-    campSelected=mark;campTarget=null;campChat=0;campPrompt=0;campMessage='';campRiddle=null;
+    campSelected=mark;campTarget=null;campChat=0;campPrompt=0;campMessage='';campRiddle=null;campTheatre=null;
     goNav('camp');$('camp-title').focus({preventScroll:true});
   }
   function openCamp(earned=false){
@@ -3075,7 +3113,7 @@
     clearLearningExercise();
     if(journey){journey=null;resetJourneyControls();}
     journeyStory=null;journeyKeepsake=null;
-    if(screen==='camp')campRiddle=null;
+    if(screen==='camp'){campRiddle=null;campTheatre=null;}
     if(screen==='world-mission'){worldMission=null;worldMissionEarned=null;}
     if(screen==='play'&&!leaveGame())return;
     if(screen==='results'){game=null;}
@@ -3194,6 +3232,20 @@
   });
   $('world-mission-adaptive').addEventListener('click',()=>{
     if(screen==='world-mission'&&worldMission?.stage==='ending'){goNav('learning');startJourney();}
+  });
+  $('camp-theatre-start').addEventListener('click',startCampTheatre);
+  $('camp-theatre-again').addEventListener('click',startCampTheatre);
+  $('camp-theatre-back').addEventListener('click',()=>{
+    if(screen==='camp'&&campTheatre){campTheatre=Theatre.back(campTheatre);renderCampTheatre(true);}
+  });
+  $('camp-theatre-close').addEventListener('click',()=>{
+    if(screen==='camp'){campTheatre=null;renderCampTheatre(true);}
+  });
+  $('camp-theatre-choices').addEventListener('click',event=>{
+    const btn=event.target.closest('button[data-theatre-choice]');
+    if(screen!=='camp'||!btn||btn.disabled||!$('camp-theatre-choices').contains(btn))return;
+    const next=Theatre.choose(campTheatre,btn.dataset.theatreChoice);
+    if(next!==campTheatre){campTheatre=next;renderCampTheatre(true);}
   });
   $('camp-travel-jump').addEventListener('click',()=>{if(screen==='camp')$('camp-travel-title').focus();});
   $('camp-riddle-start').addEventListener('click',()=>{if(screen==='camp')startCampRiddle();});

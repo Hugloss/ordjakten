@@ -163,3 +163,24 @@ html[data-contrast='high'] .adventure-svg .map-stop-back{stroke-width:5}
   .adventure-journey .journey-stop .stop-step{font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.adventure-svg .map-road-done{transition:none}}
+
+/* Sagoteatern — three choices become a small illustrated story. */
+.camp-theatre{border-top:4px solid var(--world-color);margin-bottom:16px}
+.camp-theatre-heading{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.camp-theatre-heading>span{font-size:clamp(38px,8vw,58px);line-height:1.2;flex-shrink:0}
+.camp-theatre-heading h2{margin:0 0 4px}
+.camp-theatre-heading p{margin:0;line-height:1.5}
+.camp-theatre-choices,.camp-theatre-panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.camp-theatre-choices[hidden]{display:none}
+.camp-theatre-choice{background:var(--surface);color:var(--text);border:2px solid var(--border);border-radius:16px;min-height:112px;padding:12px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;cursor:pointer;overflow-wrap:anywhere;font:inherit;text-align:center}
+.camp-theatre-choice:focus-visible{outline:3px solid var(--world-color);outline-offset:3px}
+@media(hover:hover){.camp-theatre-choice:hover{border-color:var(--world-color);background:var(--world-wash)}}
+.camp-theatre-icon{font-size:42px;line-height:1.2}
+.camp-theatre-panels{padding:0;list-style:none}
+.camp-theatre-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;min-width:0;padding:12px}
+.camp-theatre-picture{display:flex;align-items:center;justify-content:center;min-height:88px;background:var(--world-wash);border-radius:12px;font-size:clamp(25px,5vw,42px);line-height:1.6;text-align:center}
+.camp-theatre-card h4{margin:12px 0 4px;font-size:17px}
+.camp-theatre-card p{font-size:17px;line-height:1.55;margin:0}
+.camp-theatre-controls{margin-top:14px}
+@media(max-width:570px){.camp-theatre-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.camp-theatre-panels{grid-template-columns:1fr}.camp-theatre-picture{font-size:42px}.camp-theatre-choice{min-height:100px}}
+@media(prefers-reduced-motion:no-preference){.camp-theatre-card{animation:camp-story-arrive .22s ease-out both}@keyframes camp-story-arrive{from{opacity:.65;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}}

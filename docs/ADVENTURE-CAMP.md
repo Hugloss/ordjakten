@@ -11,3 +11,10 @@ Världsväljaren visar alla tolv världar med deras verkliga kapitelframsteg. At
 `campLayout` lagrar endast ett av fyra miljö-ID:n och högst sex kända, unika föremåls-ID:n. Både generell historiksanering och platsens egen validering kontrollerar ägande mot sparade berättelsekapitel. Export och radering omfattar platsen. Ordkompisen och värld använder tidigare lokala inställningar. Inga nätanrop, konton, personuppgifter eller nya paket. Alla val är reversibla och inga dagliga krav eller förlorade föremål införs.
 
 `npm run check` kontrollerar lagring, ägande, placering, flyttning, världar, gåtor och integration med befintliga vyer. Frivilligt `python tests/browser_camp.py` använder samma Chromium-harness. CSS-bakgrunder och emoji är avsiktligt lätta och fungerar offline; full visuell granskning och barnprovspelning återstår.
+
+## Sagoteatern
+En frivillig skapandelek ovanför inredningen. Barnet väljer en av tre ordkompisar som huvudperson, ett föremål från sin äventyrsplats (fria föremål fyller ut till tre val när platsen är tom eller glest möblerad) och en av tre händelser: ett mysterium, en vänlig hjälp eller en tokig föreställning. Den valda miljön, huvudpersonen och saken syns i en berättelse med tre illustrerade kort. Varje händelse har ett eget avslut. Barnet kan ändra sitt senaste val, börja en ny saga eller avsluta när som helst.
+
+Sagans rekvisita utgår från ett ögonblicksfoto av platsen vid start; leken flyttar eller förbrukar ingenting. Den är tillgänglig från början, även utan några upptäckta minnesmärken. Inget facit, ingen tidtagning och inga poäng. Ingen ny lagring, ingen fri text eller ny nätåtkomst. En pågående saga lämnas när barnet går till en annan vy. Den befintliga adaptiva ordträningen påverkas inte.
+
+Automatiska logiktester täcker 108 kombinationer (fyra miljöer, tre huvudpersoner, tre föremål och tre handlingar), backning, ägande, ogiltiga val och oförändrade indata. Det frivilliga webbläsartestet i `tests/browser_camp.py` omfattar även ändrade sagoval och oförändrad lokal historik. Barnprovspelning behövs för att avgöra om aktiviteten faktiskt ökar spelglädjen.

@@ -39,6 +39,19 @@ def main(browser):
     page.locator("#camp-prompt-next").click()
     assert page.locator("#camp-creative-prompt").inner_text() != prompt
     before = stored()
+    page.locator("#camp-theatre-start").click()
+    page.locator('[data-theatre-choice="owl"]').click()
+    assert page.locator('[data-theatre-choice="mark-space-0"]').is_visible()
+    page.locator('[data-theatre-choice="mark-space-0"]').click()
+    page.locator('[data-theatre-choice="mystery"]').click()
+    assert page.locator("#camp-theatre-panels li").count() == 3
+    assert "Ulla" in page.locator("#camp-theatre-panels").inner_text()
+    page.locator("#camp-theatre-back").click()
+    page.locator('[data-theatre-choice="show"]').click()
+    assert "knasiga" in page.locator("#camp-theatre-story-title").inner_text()
+    page.locator("#camp-theatre-close").click()
+    assert page.locator("#camp-theatre-start").is_visible()
+    assert stored() == before
     page.locator("#camp-riddle-start").click()
     page.locator('[data-camp-riddle="sv-0001"]').click()
     assert page.locator("#camp-riddle-hint").is_visible()
