@@ -20,10 +20,11 @@
   const REASONS=Object.freeze({
     need:'En ny chans att öva något som varit klurigt.',
     review:'Ett återbesök som är redo.',
+    related:'Prova ett annat sätt att öva något som varit klurigt.',
     extend:'Prova ett nytt sätt med ord du har mött.',
     discover:'Upptäck något nytt i din egen takt.'
   });
-  const RANK={need:0,review:1,extend:2,discover:3};
+  const RANK={need:0,review:1,related:2,extend:3,discover:4};
   const ID=/^(?:sv|ut)-\d{4,}$/;
   const ts=n=>Number.isFinite(n)&&n>=0?n:0;
   const unique=items=>[...new Set(items.filter(id=>typeof id==='string'&&ID.test(id)))];
@@ -41,6 +42,7 @@
       return RANK[A.reason]-RANK[B.reason]||
         ts(usage[A.mode])-ts(usage[B.mode])||
         (A.reason==='need'||A.reason==='review'?ts(A.dueAt)-ts(B.dueAt):0)||
+        ts(B.profileWeight)-ts(A.profileWeight)||
         // Start a new child with a familiar ordinary word question.
         (A.reason==='discover'?order.indexOf(A.mode)-order.indexOf(B.mode)||ts(A.discoveryTier)-ts(B.discoveryTier):0)||
         a.draw-b.draw||order.indexOf(A.mode)-order.indexOf(B.mode)||A.key.localeCompare(B.key);
@@ -56,7 +58,7 @@
     return {steps,maxTasks:steps.reduce((n,row)=>n+row.cost,0)};
   }
   function build({catalog,history={},focusTypes,pairFor,knownIds=new Set(),aha,recall,detector,concept,bridge,
-    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={}}){
+    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null}){
     const byId=new Map(catalog.map(item=>[item.id,item]));
     const candidates=[],known=new Set([...knownIds].filter(id=>byId.has(id)));
     const encountered=new Set(known);
@@ -140,7 +142,8 @@
       if(known.has(id)&&!workshopSeen.has(id)&&item.example&&item.definition)
         add('workshop','workshop:'+id,pair?[pair.left,pair.right]:[id],'extend',3,{id});
     }
-    return select(candidates,{usage,random});
+    const ranked=typeof decorate==='function'?candidates.map(decorate):candidates;
+    return select(ranked,{usage,random});
   }
   // Pure transitions prevent duplicate Done clicks and distinguish a skip
   // from finishing an exercise. Individual engines retain their observations.
