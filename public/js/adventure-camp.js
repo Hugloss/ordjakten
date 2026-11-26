@@ -190,6 +190,7 @@
   function riddles(words,data=RIDDLES){
     const byId=new Map(words.map(word=>[word.id,word]));
     const seen=new Set(),tasks=[];
+    if(!Array.isArray(data))return tasks;
     for(const row of data){
       if(!row||!/^camp-\d{2}$/.test(row.id)||seen.has(row.id)||
         !['emoji','title','story','hint','why'].every(key=>typeof row[key]==='string'&&row[key].trim())||
@@ -212,7 +213,7 @@
   }
   function answer(task,id,attempts){
     if(!Number.isInteger(attempts)||attempts<0||attempts>1)return null;
-    const option=task?.options.find(row=>row.id===id);
+    const option=task?.options?.find(row=>row.id===id);
     if(!option)return null;
     return option.correct?'solved':attempts===0?'hint':'explain';
   }

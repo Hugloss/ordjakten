@@ -614,7 +614,7 @@
       <section id="view-camp" class="view" aria-labelledby="camp-title" hidden>
         <header class="camp-header">
           <div><span class="eyebrow">🎨 DIN EGEN VÄRLD</span><h1 id="camp-title" tabindex="-1">Min äventyrsplats</h1><p>Inred din plats, lek med orden och välj vart du vill resa. Den är din även när du tar en paus.</p></div>
-          <button type="button" class="secondary-button" data-nav="learning">Klar för nu – Min ordstig</button>
+          <div class="camp-choice-row"><button id="camp-travel-jump" type="button" class="primary-button">🗺️ Välj nästa äventyr</button><button type="button" class="secondary-button" data-nav="learning">Klar för nu – Min ordstig</button></div>
         </header>
         <section class="panel camp-editor" aria-label="Dekorera äventyrsplatsen">
           <div class="camp-scene-controls"><h2>Välj miljö</h2><div id="camp-scenes" class="camp-choice-row" role="group" aria-label="Miljö">
@@ -633,7 +633,7 @@
             <button id="camp-cancel" type="button" class="secondary-button" disabled>Avbryt valet</button>
           </div>
           <p id="camp-notice" class="camp-notice" role="status"></p>
-          <h2>🎒 Mina föremål</h2><p class="muted">Välj ett föremål och sedan en plats. Flytta och kombinera hur du vill.</p>
+          <h2>🎒 Mina föremål</h2><p class="muted">Välj ett föremål och en plats, i vilken ordning du vill. Flytta och kombinera!</p>
           <div id="camp-inventory" class="camp-inventory" role="group" aria-label="Dina föremål"></div>
         </section>
         <section class="panel camp-companion" aria-labelledby="camp-friend-title">
@@ -672,7 +672,7 @@
           </div>
         </section>
         <section class="panel camp-travel" aria-labelledby="camp-travel-title">
-          <h2 id="camp-travel-title">🗺️ Vart vill du resa?</h2>
+          <h2 id="camp-travel-title" tabindex="-1">🗺️ Vart vill du resa?</h2>
           <p id="camp-world-note" class="muted"></p>
           <div id="camp-worlds" class="camp-worlds" role="group" aria-label="Äventyrsvärldar"></div>
           <button id="camp-go" type="button" class="primary-button full-button">Ut på äventyr →</button>

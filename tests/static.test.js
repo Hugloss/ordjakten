@@ -242,3 +242,19 @@ test('story quest collection is local, finite, optional and uses only ready open
   assert.ok(app.includes('stop.dataset.storyStop'));
   assert.ok(app.includes("if(typeof preferredMode==='string'&&plan.steps[0]?.mode!==preferredMode)"));
 });
+
+test('adventure camp is offline, reachable after discovery and isolated from educational scores',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/adventure-camp.js')>=0&&html.indexOf('./js/adventure-camp.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/adventure-camp.js'"));
+  for(const id of ['view-camp','camp-slots','camp-inventory','camp-worlds','camp-riddle-start','story-decorate'])
+    assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(app.includes("if(name==='camp')renderCamp(true)"));
+  assert.ok(app.includes('Camp.inventory(history.storyProgress,Story,A)'));
+  assert.ok(app.includes('Camp.place(history.campLayout,item.id,index,items)'));
+  assert.ok(app.includes('campLayout:history.campLayout'));
+  assert.ok(app.includes('history.campLayout=Camp.sanitize(null,campInventory())'));
+  assert.ok(app.includes("if(screen==='camp')startJourney()"));
+  const riddle=app.slice(app.indexOf('  function renderCampRiddle('),app.indexOf('  function renderCampWorlds('));
+  assert.ok(!riddle.includes('saveHistory(')&&!riddle.includes('history.'));
+});

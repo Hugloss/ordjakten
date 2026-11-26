@@ -82,7 +82,7 @@
   let detectorRound = null;
   let conceptMap=null;
   let journey=null,journeyStory=null,journeyKeepsake=null;
-  let campSelected=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null;
+  let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -1742,7 +1742,7 @@
       const item=byId.get(id),button=element('button','camp-slot');
       button.type='button';button.dataset.campSlot=String(index);
       button.setAttribute('aria-label',Camp.SLOTS[index]+': '+(item?.name||'tom plats'));
-      button.setAttribute('aria-pressed',String(!!item&&item.id===campSelected));
+      button.setAttribute('aria-pressed',String((!!item&&item.id===campSelected)||campTarget===index));
       const symbol=element('span','camp-slot-symbol',item?.emoji||'+');symbol.setAttribute('aria-hidden','true');
       button.append(symbol,element('span','camp-slot-label',item?.name||'Placera här'));
       slots.append(button);
@@ -1758,9 +1758,10 @@
     }
     const selected=byId.get(campSelected);
     $('camp-selection').textContent=selected?'Valt: '+selected.emoji+' '+selected.name+'. Välj var det ska stå.':
-      'Välj ett föremål i samlingen eller på platsen.';
+      campTarget!==null?'Vald plats: '+Camp.SLOTS[campTarget].toLocaleLowerCase('sv-SE')+'. Välj ett föremål.':
+      'Välj ett föremål eller en tom plats.';
     $('camp-remove').disabled=!selected||!layout.slots.includes(selected.id);
-    $('camp-cancel').disabled=!selected;
+    $('camp-cancel').disabled=!selected&&campTarget===null;
     if(refreshWorlds){renderCampWorlds();renderCampRiddle();}
   }
   function renderCampRiddle(){
@@ -1828,27 +1829,29 @@
   function selectCampItem(id){
     const item=campInventory().find(row=>row.id===id);
     if(!item)return;
-    campSelected=id;campMessage='';renderCamp();
+    campSelected=id;campMessage='';
+    if(campTarget!==null){useCampSlot(campTarget);return;}
+    renderCamp();
   }
   function useCampSlot(index){
     if(!Number.isInteger(index)||index<0||index>=Camp.SLOTS.length)return;
     const items=campInventory(),layout=Camp.sanitize(history.campLayout,items);
     if(!campSelected){
       if(layout.slots[index])selectCampItem(layout.slots[index]);
-      else campNotice('Välj först ett föremål i samlingen.');
+      else{campTarget=index;campMessage='';renderCamp();}
       return;
     }
     const item=items.find(row=>row.id===campSelected);
     if(!item)return;
     const next=Camp.place(history.campLayout,item.id,index,items);
     if(next!==history.campLayout){history.campLayout=next;saveHistory();}
-    campSelected=null;
+    campSelected=null;campTarget=null;
     campMessage=item.emoji+' '+item.name+' finns på platsen.';
     renderCamp();
   }
   function openCamp(earned=false){
     const mark=earned&&journeyKeepsake?'mark-'+journeyKeepsake.id+'-'+journeyKeepsake.index:null;
-    campSelected=mark;campChat=0;campPrompt=0;campMessage='';campRiddle=null;
+    campSelected=mark;campTarget=null;campChat=0;campPrompt=0;campMessage='';campRiddle=null;
     goNav('camp');$('camp-title').focus({preventScroll:true});
   }
   function renderStoryOptions(location){
@@ -3064,19 +3067,20 @@
   }
   $('story-decorate').addEventListener('click',()=>{if(screen==='journey'&&journeyKeepsake)openCamp(true);});
   $('camp-go').addEventListener('click',()=>{if(screen==='camp')startJourney();});
+  $('camp-travel-jump').addEventListener('click',()=>{if(screen==='camp')$('camp-travel-title').focus();});
   $('camp-riddle-start').addEventListener('click',()=>{if(screen==='camp')startCampRiddle();});
   $('camp-riddle-next').addEventListener('click',()=>{if(screen==='camp'&&campRiddle?.stage==='feedback')startCampRiddle(campRiddle.index+1);});
   $('camp-riddle-reveal').addEventListener('click',()=>{if(screen==='camp')finishCampRiddle(false);});
   $('camp-riddle-again').addEventListener('click',()=>{if(screen==='camp'&&campRiddle?.stage==='finished')startCampRiddle();});
   $('camp-chat').addEventListener('click',()=>{if(screen==='camp'){campChat++;renderCamp();}});
   $('camp-prompt-next').addEventListener('click',()=>{if(screen==='camp'){campPrompt++;renderCamp();}});
-  $('camp-cancel').addEventListener('click',()=>{if(screen==='camp'){campSelected=null;campMessage='';renderCamp();}});
+  $('camp-cancel').addEventListener('click',()=>{if(screen==='camp'){campSelected=null;campTarget=null;campMessage='';renderCamp();}});
   $('camp-remove').addEventListener('click',()=>{
     if(screen!=='camp'||!campSelected)return;
     const index=history.campLayout.slots.indexOf(campSelected);
     const next=Camp.remove(history.campLayout,index,campInventory());
     if(next!==history.campLayout){history.campLayout=next;saveHistory();}
-    campSelected=null;campMessage='Föremålet ligger kvar i din samling.';renderCamp();focusCamp('#camp-selection');
+    campSelected=null;campTarget=null;campMessage='Föremålet ligger kvar i din samling.';renderCamp();focusCamp('#camp-selection');
   });
   $('view-camp').addEventListener('click',event=>{
     if(screen!=='camp')return;
@@ -3430,7 +3434,7 @@
   $('clear-history').addEventListener('click',()=>{
     if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor, upptäckter och din äventyrsplats? Detta går inte att ångra.'))return;
     for(const key of Object.keys(journeyUsage))delete journeyUsage[key];journeyWorkshopSeen.clear();
-    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());campSelected=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
+    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());campSelected=null;campTarget=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   createAdventureChoices();renderSetup();show('home');
   if ('serviceWorker' in navigator && window.isSecureContext) {
