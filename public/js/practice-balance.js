@@ -42,7 +42,7 @@
   // Feasible rows arrive sorted by the coordinator's existing priorities.
   // Recompute a shortfall after each provisional choice, including eviction
   // of the oldest category when the rolling window is full. No stored debt.
-  function pick(ordered,raw,selected=[]){
+  function pick(ordered,raw,selected=[],{continuing=false}={}){
     if(!ordered.length)return null;
     const recent=sanitize(raw);
     let pool=ordered;
@@ -50,7 +50,7 @@
     // follow-up (2) precedes opening another alternative (1).
     const urgent=ordered.filter(row=>Number.isFinite(row.feedbackPriority)&&row.feedbackPriority>0);
     if(urgent.length)return urgent.reduce((best,row)=>row.feedbackPriority>best.feedbackPriority?row:best);
-    if(!selected.length){
+    if(!selected.length&&!continuing){
       // Preserve the familiar easy-word launch for a brand-new child.
       if(!recent.length)return ordered[0];
       // Reserve the first feasible station for observed need or a due

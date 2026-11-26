@@ -31,7 +31,7 @@
   const available=plan=>plan?.available||plan?.round||[];
   const weak=card=>!!card&&card.wrong>0&&card.streak<2;
   const supported=card=>card?.last==='supported';
-  function select(candidates,{usage={},limit=LIMIT,budget=BUDGET,random=Math.random,chooseNext=null}={}){
+  function select(candidates,{usage={},limit=LIMIT,budget=BUDGET,random=Math.random,chooseNext=null,used=[]}={}){
     const rows=candidates.filter(row=>Object.hasOwn(MODES,row?.mode)&&Object.hasOwn(RANK,row.reason)&&
       typeof row.key==='string'&&row.key&&Number.isInteger(row.cost)&&row.cost>=1&&row.cost<=BUDGET&&
       Array.isArray(row.words)&&row.words.length&&row.words.every(id=>typeof id==='string'&&ID.test(id))&&
@@ -48,7 +48,7 @@
         (A.reason==='discover'?order.indexOf(A.mode)-order.indexOf(B.mode)||ts(A.discoveryTier)-ts(B.discoveryTier):0)||
         a.draw-b.draw||order.indexOf(A.mode)-order.indexOf(B.mode)||A.key.localeCompare(B.key);
     });
-    const steps=[],words=new Set(),methods=new Set(),keys=new Set();
+    const steps=[],words=new Set(used.flatMap(row=>row.words)),methods=new Set(used.map(row=>row.mode)),keys=new Set(used.map(row=>row.key));
     let remaining=Math.min(BUDGET,Math.max(0,Number.isInteger(budget)?budget:BUDGET));
     const cap=Math.min(LIMIT,Math.max(0,Number.isInteger(limit)?limit:LIMIT));
     while(steps.length<cap){
@@ -62,7 +62,7 @@
     return {steps,maxTasks:steps.reduce((n,row)=>n+row.cost,0)};
   }
   function build({catalog,history={},focusTypes,pairFor,knownIds=new Set(),aha,recall,detector,concept,bridge,
-    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null,adjust=null,chooseNext=null}){
+    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null,adjust=null,chooseNext=null,used=[],limit=LIMIT,budget=BUDGET}){
     const byId=new Map(catalog.map(item=>[item.id,item]));
     const candidates=[],known=new Set([...knownIds].filter(id=>byId.has(id)));
     const encountered=new Set(known);
@@ -149,7 +149,7 @@
         add('workshop','workshop:'+id,pair?[pair.left,pair.right]:[id],'extend',3,{id});
     }
     const ranked=typeof decorate==='function'?candidates.map(decorate):candidates;
-    return select(typeof adjust==='function'?adjust(ranked):ranked,{usage,random,chooseNext});
+    return select(typeof adjust==='function'?adjust(ranked):ranked,{usage,random,chooseNext,used,limit,budget});
   }
   // Pure transitions prevent duplicate Done clicks and distinguish a skip
   // from finishing an exercise. Individual engines retain their observations.
@@ -163,5 +163,23 @@
     const step=state.steps[state.index],index=state.index+1;
     return {...state,index,finished:index===state.steps.length,[status]:state[status].concat(step.mode)};
   }
-  return {DAY,LIMIT,BUDGET,MODES,REASONS,select,build,start,advance};
+  function continuation(state){
+    const used=state.steps.slice(0,state.index);
+    return {used,limit:Math.max(0,state.steps.length-state.index),
+      budget:Math.max(0,BUDGET-used.reduce((sum,row)=>sum+row.cost,0))};
+  }
+  function replan(state,remaining){
+    if(!state||state.finished||!Array.isArray(remaining))return state;
+    const {used,limit,budget}=continuation(state);
+    if(remaining.length>limit||remaining.reduce((n,row)=>n+row.cost,0)>budget)return state;
+    const words=new Set(used.flatMap(row=>row.words)),modes=new Set(used.map(row=>row.mode)),keys=new Set(used.map(row=>row.key));
+    for(const row of remaining){
+      if(!Object.hasOwn(MODES,row.mode)||!Number.isInteger(row.cost)||row.cost<1||
+        !row.words.length||row.words.some(id=>words.has(id))||modes.has(row.mode)||keys.has(row.key))return state;
+      row.words.forEach(id=>words.add(id));modes.add(row.mode);keys.add(row.key);
+    }
+    const steps=used.concat(remaining);
+    return {...state,steps,finished:state.index===steps.length};
+  }
+  return {DAY,LIMIT,BUDGET,MODES,REASONS,select,build,start,advance,continuation,replan};
 });
