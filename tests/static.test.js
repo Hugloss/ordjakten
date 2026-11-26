@@ -131,5 +131,7 @@ test('concept map works offline and stores only separate relation observations',
   assert.ok(!flow.includes('history.results'));
   assert.ok(!flow.includes('history.skillProgress='));
   assert.ok(!flow.includes('history.readingProgress='));
-  assert.ok(flow.includes('conceptMap.exposed.has(task.groupId)'));
+  assert.ok(flow.includes('round.previewed=conceptMap.exposed.has(task.groupId)'));
+  assert.ok(flow.includes('exposeConceptGroup(task.groupId)'));
+  assert.ok(flow.includes('Concepts.outcome(task,id,round.attempts,round.previewed)'));
 });

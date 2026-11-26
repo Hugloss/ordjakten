@@ -129,3 +129,15 @@ test('relation practice never adds quiz points or marks other word dimensions as
   assert.equal(profile.facets.find(row=>row.id==='meaning').state,'new');
   assert.equal(E.score({[first.answer]:'right'},1).right,1);
 });
+
+test('exposure propagates only to relation groups sharing a displayed word',()=>{
+  const ids=C.exposedGroups(content,'bk-03');
+  assert.ok(ids.includes('bk-03'));
+  assert.ok(ids.includes('bk-17'));
+  assert.ok(ids.includes('bk-18'));
+  assert.ok(!ids.includes('bk-04'));
+  assert.deepEqual(C.exposedGroups(content,'missing'),[]);
+  const group=content.groups.find(g=>g.id==='bk-03');
+  const visible=new Set(group.words.map(w=>w.id));
+  assert.ok(ids.every(id=>content.groups.find(g=>g.id===id).words.some(w=>visible.has(w.id))));
+});

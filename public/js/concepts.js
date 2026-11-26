@@ -770,10 +770,16 @@
       ready:tasks.some(task=>!clean[task.id]||clean[task.id].lastAt+DAY<=now)};
   }
   function forWord(content,id){return content.groups.filter(group=>group.words.some(word=>word.id===id));}
+  function exposedGroups(content,id){
+    const source=content.groups.find(group=>group.id===id);
+    if(!source)return [];
+    const words=new Set(source.words.map(word=>word.id));
+    return content.groups.filter(group=>group.words.some(word=>words.has(word.id))).map(group=>group.id);
+  }
   function shuffle(items,random=Math.random){
     const copy=items.slice();
     for(let i=copy.length-1;i>0;i--){const j=Math.min(i,Math.max(0,Math.floor(random()*(i+1))));[copy[i],copy[j]]=[copy[j],copy[i]];}
     return copy;
   }
-  return {DAY,LIMIT,TYPES,GROUPS,catalog,sanitize,plan,record,outcome,summary,forWord,shuffle};
+  return {DAY,LIMIT,TYPES,GROUPS,catalog,sanitize,plan,record,outcome,summary,forWord,exposedGroups,shuffle};
 });

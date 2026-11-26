@@ -602,18 +602,22 @@
       history.recallProgress[item.id]).map(item=>item.id));
     return Concepts.plan(conceptCatalog,history.conceptProgress,known,Date.now(),random,groupId,conceptMap?.wordId,conceptMap?.filter||'all');
   }
+  function exposeConceptGroup(id){
+    if(!conceptMap)return;
+    for(const groupId of Concepts.exposedGroups(conceptCatalog,id))conceptMap.exposed.add(groupId);
+  }
   function openConceptMap(id=null){
     if(id&&!Concepts.forWord(conceptCatalog,id).length)return;
     conceptMap={wordId:id,returnId:id,filter:'all',exposed:new Set(),round:null};
     // The word card already exposed a word and definition, so do not turn
     // a word-specific visit into independent semantic evidence.
-    if(id)for(const group of Concepts.forWord(conceptCatalog,id))conceptMap.exposed.add(group.id);
+    if(id)for(const group of Concepts.forWord(conceptCatalog,id))exposeConceptGroup(group.id);
     show('concepts');renderConceptMap();
     $('concepts-title').focus({preventScroll:true});
   }
   function renderConceptMap(){
     if(!conceptMap)return;
-    for(const card of $('concepts-list').querySelectorAll('details[open]'))conceptMap.exposed.add(card.dataset.conceptGroup);
+    for(const card of $('concepts-list').querySelectorAll('details[open]'))exposeConceptGroup(card.dataset.conceptGroup);
     conceptMap.round=null;
     $('concepts-map').hidden=false;$('concepts-question').hidden=true;
     $('concepts-feedback').hidden=true;$('concepts-finished').hidden=true;
@@ -655,7 +659,7 @@
       card.append(body);
       const currentMap=conceptMap;
       card.addEventListener('toggle',()=>{
-        if(card.open&&conceptMap===currentMap&&screen==='concepts')currentMap.exposed.add(group.id);
+        if(card.open&&conceptMap===currentMap&&screen==='concepts')exposeConceptGroup(group.id);
       });
       $('concepts-list').append(card);
     }
@@ -663,8 +667,8 @@
   function startConceptRound(groupId=null){
     if(!conceptMap||conceptMap.round)return;
     // A targeted group or an opened explanation is intentionally previewed.
-    if(groupId)conceptMap.exposed.add(groupId);
-    for(const card of $('concepts-list').querySelectorAll('details[open]'))conceptMap.exposed.add(card.dataset.conceptGroup);
+    if(groupId)exposeConceptGroup(groupId);
+    for(const card of $('concepts-list').querySelectorAll('details[open]'))exposeConceptGroup(card.dataset.conceptGroup);
     const plan=getConceptPlan(groupId,Math.random);
     if(!plan.round.length){renderConceptMap();return;}
     conceptMap.round={items:plan.round,index:0,stage:'question',attempts:0};
@@ -674,6 +678,9 @@
   function renderConceptQuestion(){
     const round=conceptMap.round,task=conceptTask();
     round.stage='question';round.attempts=0;
+    // Capture the starting state: reading help after a miss must remain a
+    // supported attempt, not be rewritten as an initially previewed attempt.
+    round.previewed=conceptMap.exposed.has(task.groupId)||!!conceptMap.wordId;
     $('concepts-map').hidden=true;$('concepts-feedback').hidden=true;$('concepts-finished').hidden=true;
     $('concepts-question').hidden=false;
     $('concepts-progress').textContent='Samband '+(round.index+1)+' av '+round.items.length;
@@ -694,7 +701,7 @@
   function answerConcept(id){
     const round=conceptMap?.round,task=conceptTask();
     if(round?.stage!=='question')return;
-    const result=Concepts.outcome(task,id,round.attempts,conceptMap.exposed.has(task.groupId)||!!conceptMap.wordId);
+    const result=Concepts.outcome(task,id,round.attempts,round.previewed);
     if(!result)return;
     round.attempts++;
     if(result.step==='retry'){
@@ -702,6 +709,7 @@
       $('concepts-answer-help').hidden=false;
       const group=conceptCatalog.groups.find(group=>group.id===task.groupId);
       $('concepts-answer-help').textContent=group.explanation;
+      exposeConceptGroup(task.groupId);
       drawConceptOptions();$('concepts-prompt').focus({preventScroll:true});return;
     }
     finishConcept(result.outcome,result.step==='complete');
@@ -717,6 +725,7 @@
     $('concepts-correct').textContent=task.options.find(option=>option.correct).label;
     $('concepts-why').textContent=task.why;
     $('concepts-explanation').textContent=conceptCatalog.groups.find(group=>group.id===task.groupId).explanation;
+    exposeConceptGroup(task.groupId);
     $('concepts-next').textContent=round.index+1===round.items.length?'Klar med rundan →':'Nästa samband →';
     $('concepts-feedback-title').focus({preventScroll:true});scrollTop();
   }
@@ -2357,7 +2366,7 @@
   });
   $('concepts-reveal').addEventListener('click',()=>{
     const task=conceptTask();
-    if(task)finishConcept(conceptMap.exposed.has(task.groupId)||conceptMap.wordId?'previewed':'supported');
+    if(task)finishConcept(conceptMap.round.previewed?'previewed':'supported');
   });
   $('concepts-next').addEventListener('click',advanceConcept);
   $('concepts-done').addEventListener('click',()=>{renderConceptMap();$('concepts-title').focus({preventScroll:true});scrollTop();});
