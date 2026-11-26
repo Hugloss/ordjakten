@@ -578,7 +578,7 @@
       chosen.push(row.task);pairs.add(row.task.pairId);
       if(chosen.length===(target?1:LIMIT))break;
     }
-    return {round:chosen,ready:ready.length,waiting:rows.length-ready.length};
+    return {round:chosen,available:ready.map(row=>row.task),ready:ready.length,waiting:rows.length-ready.length};
   }
   function shuffle(items,random=Math.random){
     const copy=items.slice();

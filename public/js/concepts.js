@@ -745,7 +745,7 @@
     // kinds of relations rather than drilling only one type.
     take(ready.filter(row=>row.card?.last==='supported'));
     take(ready,true);take(ready);
-    return {round:chosen,ready:ready.length,waiting:rows.length-ready.length};
+    return {round:chosen,available:ready.map(row=>row.task),ready:ready.length,waiting:rows.length-ready.length};
   }
   function record(raw,tasks,id,outcome,now=Date.now()){
     const task=tasks.find(row=>row.id===id),at=time(now);

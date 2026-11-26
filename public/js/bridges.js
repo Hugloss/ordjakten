@@ -483,7 +483,7 @@
       }
     }
     take(ready.filter(row=>row.card?.last==='supported'));take(ready,true);take(ready);
-    return {round,ready:ready.length,waiting:rows.length-ready.length};
+    return {round,available:ready.map(row=>row.task),ready:ready.length,waiting:rows.length-ready.length};
   }
   function solutionLines(task){
     if(task.kind==='sort')return task.bins.map((bin,index)=>bin+': '+task.cards.filter((_,i)=>task.solution[i]===index).map(id=>task.labels[id]).join(', '));
