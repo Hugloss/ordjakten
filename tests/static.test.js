@@ -349,3 +349,10 @@ test('reactive mystery art is shared, prefix-scoped and has a visual for every a
   assert.ok(css.includes('prefers-reduced-motion:no-preference'));
   assert.ok(!css.includes('animation-iteration-count:infinite'));
 });
+
+test('opened treasure is painted above the lifted chest lid',()=>{
+  const html=read('index.html');
+  const chest=html.slice(html.indexOf('class="quest-object quest-object-chest"'),html.indexOf('class="quest-arch"'));
+  assert.ok(chest.indexOf('class="quest-chest-lid"')>=0);
+  assert.ok(chest.indexOf('class="quest-chest-treasure"')>chest.indexOf('class="quest-chest-lid"'));
+});
