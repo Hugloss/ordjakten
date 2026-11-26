@@ -35,12 +35,13 @@
   const Journey = window.OrdjaktenJourney;
   const Knowledge = window.OrdjaktenKnowledge;
   const Feedback = window.OrdjaktenFeedback;
+  const Balance = window.OrdjaktenBalance;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -79,6 +80,7 @@
   let conceptMap=null;
   let journey=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
+  const recordedJourneySteps=new WeakSet();
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -94,6 +96,7 @@
   history.clueProgress=T.sanitize(history.clueProgress,clues);
   history.retentionProgress=U.sanitize(history.retentionProgress,contrastHistoryData);
   history.feedbackProgress=Feedback.seed(history.feedbackProgress,feedbackCatalog,history);
+  history.practiceBalance=Balance.sanitize(history.practiceBalance);
   const reducedMotion = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   // Optional Swedish speech assistance. Nothing is spoken automatically or sent
   // to our servers. Browser/OS voice availability can vary by device.
@@ -622,9 +625,12 @@
     history.feedbackProgress=Feedback.observe(history.feedbackProgress,feedbackCatalog,{key,outcome,now,evidence});
   }
   function completePracticeFeedback(step){
-    const before=history.feedbackProgress;
+    const before=history.feedbackProgress,balance=history.practiceBalance;
     const after=Feedback.complete(before,feedbackCatalog,step);
-    if(after!==before){history.feedbackProgress=after;saveHistory();}
+    const nextBalance=Balance.recordCompletion(balance,step,journeyStepFinished(step.mode),recordedJourneySteps);
+    if(after!==before||nextBalance!==balance){
+      history.feedbackProgress=after;history.practiceBalance=nextBalance;saveHistory();
+    }
   }
   function getKnowledgeProfile(now=Date.now()){
     return Knowledge.analyze({catalog:learningCatalog,history,detectorTasks:detectorCatalog,
@@ -637,6 +643,7 @@
     return Journey.build({catalog:learningCatalog,history,knownIds,now,random,usage:journeyUsage,
       workshopSeen:journeyWorkshopSeen,decorate:row=>Knowledge.decorate(knowledge,row),
       adjust:rows=>Feedback.adjust(rows,history.feedbackProgress,feedbackCatalog,now),
+      chooseNext:(rows,steps)=>Balance.pick(rows,history.practiceBalance,steps),
       focusTypes:item=>F.supported(F.findItem(item.id,bank,expressions),curation,contexts,missions,K,contrasts),
       pairFor:item=>K.findPair(item.id,contrasts),
       aha:AhaPlan.plan(history.readingProgress,{bank,expressions,contexts,surprises,missions,reading:B,now,random}),
@@ -1653,11 +1660,23 @@
     }
     list.hidden=!preview.steps.length;
     $('knowledge-empty').hidden=!!preview.steps.length;
+    renderBalancePreview();
     const progress=Feedback.summary(history.feedbackProgress,feedbackCatalog,knowledge.now);
     $('feedback-learning-summary').hidden=!progress.pending&&!progress.checked;
     $('feedback-learning-note').textContent=(progress.pending?'Vi väntar på '+progress.pending+(progress.pending===1?' återbesök. ':' återbesök. '):'')+
       (progress.checked?progress.checked+' uppföljningar efter annan övning: '+progress.direct+' svar direkt och '+progress.supported+' med stöd. ':'')+
       'Vi provar olika sätt att öva, inte ett betyg.';
+  }
+  function renderBalancePreview(){
+    const mix=Balance.summary(history.practiceBalance);
+    $('balance-learning-summary').hidden=!mix.total;
+    $('balance-learning-note').textContent='De senaste '+mix.total+' avslutade stationerna i Mitt nästa äventyr.';
+    const list=$('balance-learning-list');list.replaceChildren();
+    for(const [key,label] of Object.entries(Balance.LABELS)){
+      const row=element('li','balance-mix-row');
+      row.append(element('span','',label),element('strong','',String(mix.counts[key])));
+      list.append(row);
+    }
   }
   function renderWordKnowledge(item,knowledge){
     const notes=Knowledge.notes(knowledge,item.id);
@@ -2707,7 +2726,7 @@
     });
   }
   function exportHistory() {
-    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
+    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -3074,7 +3093,7 @@
   $('clear-history').addEventListener('click',()=>{
     if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor och uppdragsstjärnor? Detta går inte att ångra.'))return;
     for(const key of Object.keys(journeyUsage))delete journeyUsage[key];journeyWorkshopSeen.clear();
-    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
+    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   createAdventureChoices();renderSetup();show('home');
   if ('serviceWorker' in navigator && window.isSecureContext) {

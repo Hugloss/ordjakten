@@ -161,3 +161,7 @@
 .knowledge-word-body{display:grid;gap:8px;margin-top:10px}
 
 #feedback-learning-summary p{margin:8px 0;font-size:16px;line-height:1.5}
+
+.balance-mix-list{list-style:none;display:grid;gap:6px;padding:0;margin:10px 0}
+.balance-mix-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:8px;background:var(--surface-2);line-height:1.45}
+.balance-mix-row strong{min-width:2ch;text-align:right}

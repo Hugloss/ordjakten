@@ -29,6 +29,11 @@
     if(!category)return raw;
     return sanitize(raw).concat(category).slice(-WINDOW);
   }
+  function recordCompletion(raw,row,finished,seen){
+    if(!finished||!kind(row)||seen.has(row))return raw;
+    seen.add(row);
+    return record(raw,row);
+  }
   function summary(raw){
     const recent=sanitize(raw),counts={develop:0,review:0,discover:0,creative:0};
     for(const key of recent)counts[key]++;
@@ -66,5 +71,5 @@
     }
     return best||pool[0];
   }
-  return {WINDOW,TARGET,LABELS,kind,sanitize,record,summary,pick};
+  return {WINDOW,TARGET,LABELS,kind,sanitize,record,recordCompletion,summary,pick};
 });
