@@ -205,11 +205,25 @@ test('practice balance is local, completion-only and uses the existing feasible 
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js'),engine=read('js/engine.js');
   assert.ok(html.indexOf('./js/practice-balance.js')>=0&&html.indexOf('./js/practice-balance.js')<html.indexOf('./js/app.js'));
   assert.ok(worker.includes("'./js/practice-balance.js'"));
-  assert.ok(app.includes('chooseNext:(rows,steps)=>Balance.pick(rows,history.practiceBalance,steps)'));
+  assert.ok(app.includes('balancePick:(pool,selected)=>Balance.pick(pool,history.practiceBalance,selected,{continuing})'));
   assert.ok(app.includes('Balance.recordCompletion(balance,step,journeyStepFinished(step.mode),recordedJourneySteps)'));
   assert.ok(app.includes('if(finished)completePracticeFeedback(step)'));
   assert.ok(app.includes('practiceBalance:history.practiceBalance'));
   assert.ok(app.includes('history.practiceBalance=Balance.sanitize(null)'));
   assert.ok(engine.includes('practiceBalance'));
   assert.ok(html.includes('id="balance-learning-summary"'));
+});
+
+test('adventure pacing is offline, completion-only, and re-plans just the remaining stations',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/adventure-challenge.js')>=0&&html.indexOf('./js/adventure-challenge.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/adventure-challenge.js'"));
+  assert.ok(html.includes('id="next-journey-pacing"'));
+  assert.ok(app.includes('chooseNext:(rows,steps)=>Challenge.pick(rows,steps,'));
+  assert.ok(app.includes('Journey.continuation(journey)')&&app.includes('Journey.replan(journey,remaining.steps)'));
+  assert.ok(app.includes('Challenge.record(history.adventureChallenge,step,journeyOutcomes.get(step)'));
+  assert.ok(app.includes('adventureChallenge:history.adventureChallenge'));
+  assert.ok(app.includes('history.adventureChallenge=Challenge.sanitize(null)'));
+  for(const mode of ['focus','recall','aha','detector','concept','bridge','workshop'])assert.ok(app.includes("noteJourneyOutcome('"+mode+"'"));
+  assert.ok(app.includes("if(gentle&&journey&&plan.item.kind==='word'"));
 });

@@ -24,6 +24,8 @@ def main(browser):
     after = stored()
     assert after["skillProgress"]
     assert after["practiceBalance"] == ["discover"]
+    assert len(after["adventureChallenge"]) == 1
+    assert after["adventureChallenge"][0]["mode"] == "focus"
     assert after["results"] == before["results"]
     assert after["settings"] == before["settings"]
     page.locator("#focus-done").click()
@@ -48,6 +50,7 @@ def main(browser):
     assert page.locator("#next-journey-banner").is_hidden()
     assert stored()["results"] == before["results"]
     assert stored()["practiceBalance"] == ["discover"]
+    assert stored()["adventureChallenge"] == after["adventureChallenge"]
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
     assert not errors, errors
     page.close()

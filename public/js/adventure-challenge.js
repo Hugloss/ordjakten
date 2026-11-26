@@ -107,7 +107,7 @@
     const phase=pace(raw,now,selected);
     const first=!continuing&&!selected.length;
     const core=first&&['need','review'].includes(baseline.reason);
-    const pool=core?rows.filter(row=>category(row)===category(baseline)):rows;
+    const pool=core?rows.filter(row=>['need','review'].includes(row.reason)&&category(row)===category(baseline)):rows;
     if(phase==='gentle'){
       // Prefer a known concrete task or actual built-in scaffold. Do not
       // force an unrelated easy task at the expense of a protected review.

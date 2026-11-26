@@ -148,7 +148,12 @@
       if(known.has(id)&&!workshopSeen.has(id)&&item.example&&item.definition)
         add('workshop','workshop:'+id,pair?[pair.left,pair.right]:[id],'extend',3,{id});
     }
-    const ranked=typeof decorate==='function'?candidates.map(decorate):candidates;
+    // In a continuation, the feedback layer also sees only unused feasible
+    // candidates. A consumed method must not open a phantom alternative.
+    const pastWords=new Set(used.flatMap(row=>row.words)),pastModes=new Set(used.map(row=>row.mode)),pastKeys=new Set(used.map(row=>row.key));
+    const eligible=candidates.filter(row=>row.cost<=budget&&!pastModes.has(row.mode)&&!pastKeys.has(row.key)&&
+      !row.words.some(id=>pastWords.has(id)));
+    const ranked=typeof decorate==='function'?eligible.map(decorate):eligible;
     return select(typeof adjust==='function'?adjust(ranked):ranked,{usage,random,chooseNext,used,limit,budget});
   }
   // Pure transitions prevent duplicate Done clicks and distinguish a skip
@@ -171,11 +176,14 @@
   function replan(state,remaining){
     if(!state||state.finished||!Array.isArray(remaining))return state;
     const {used,limit,budget}=continuation(state);
-    if(remaining.length>limit||remaining.reduce((n,row)=>n+row.cost,0)>budget)return state;
+    if(remaining.length>limit||remaining.some(row=>!row||!Number.isInteger(row.cost)||row.cost<1)||
+      remaining.reduce((n,row)=>n+row.cost,0)>budget)return state;
     const words=new Set(used.flatMap(row=>row.words)),modes=new Set(used.map(row=>row.mode)),keys=new Set(used.map(row=>row.key));
     for(const row of remaining){
       if(!Object.hasOwn(MODES,row.mode)||!Number.isInteger(row.cost)||row.cost<1||
-        !row.words.length||row.words.some(id=>words.has(id))||modes.has(row.mode)||keys.has(row.key))return state;
+        typeof row.key!=='string'||!row.key||!Array.isArray(row.words)||!row.words.length||
+        new Set(row.words).size!==row.words.length||row.words.some(id=>typeof id!=='string'||!ID.test(id)||words.has(id))||
+        modes.has(row.mode)||keys.has(row.key))return state;
       row.words.forEach(id=>words.add(id));modes.add(row.mode);keys.add(row.key);
     }
     const steps=used.concat(remaining);
