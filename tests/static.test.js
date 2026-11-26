@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v52-material-experiments'));
+  assert.ok(worker.includes('v53-magical-materials'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -398,4 +398,16 @@ test('material experiment scenes expose their own visual controls without changi
  }
  assert.ok(app.includes("art.dataset.sticky=String(model.sticky)"));
  assert.ok(app.includes("'--action-bounce-y':model.bounceY+'px'"));
+});
+
+test('magical material artwork is wired and only the active scene is cloned',()=>{
+ const html=read('index.html'),css=read('css/reading-flow.css'),app=read('js/app.js');
+ const flow=app.slice(app.indexOf('  function renderActionArt('),app.indexOf('  function resetActionExperiment('));
+ assert.ok(flow.includes('source.cloneNode(false)')&&flow.includes('scene.cloneNode(true)'));
+ assert.ok(!flow.includes('content.cloneNode(true)'));
+ for(const name of ['action-glitter-beam','action-foam-bubble','action-jelly','action-magnifier','action-growth-shape','action-cloud-water','action-tube-cover','action-flying-butterfly']){
+   assert.ok(html.includes(name));assert.ok(css.includes(name));
+ }
+ assert.ok(app.includes("'--action-flight-y':model.flightY+'px'"));
+ assert.ok(app.includes("'--action-foam-count':model.foam"));
 });

@@ -283,7 +283,15 @@
 .quest-action-art[data-action='bounce'] .action-bounce,
 .quest-action-art[data-action='slide'] .action-slide,
 .quest-action-art[data-action='sponge'] .action-sponge,
-.quest-action-art[data-action='sticky'] .action-sticky{display:inline}
+.quest-action-art[data-action='sticky'] .action-sticky,
+.quest-action-art[data-action='glitter'] .action-glitter,
+.quest-action-art[data-action='foam'] .action-foam,
+.quest-action-art[data-action='wobble'] .action-wobble,
+.quest-action-art[data-action='rough'] .action-rough,
+.quest-action-art[data-action='lush'] .action-lush,
+.quest-action-art[data-action='cloudy'] .action-cloudy,
+.quest-action-art[data-action='hollow'] .action-hollow,
+.quest-action-art[data-action='flight'] .action-flight{display:inline}
 .quest-action-solution{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--border);border-radius:16px;margin:12px 0;background:var(--surface)}
 .quest-action-solution .quest-action-art{width:clamp(120px,33vw,240px);flex-shrink:0;border-radius:12px;overflow:hidden}
 .quest-action-solution h3{margin:4px 0;font-size:20px;line-height:1.3}
@@ -348,3 +356,21 @@
 .quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-4,
 .quest-action-art[data-experiment='true'][data-sticky='2'] .action-sticky-4,
 .quest-action-art[data-experiment='true'][data-sticky='3'] .action-sticky-4{transform:translate(0,0)}
+
+/* Magical materials: reversible illustrations, not calibrated simulations. */
+.action-glitter-beam{transform:translateX(calc(53px + var(--action-light-x,194px)))}
+.quest-action-art[data-experiment='true'] .action-glint{opacity:.1}
+.quest-action-art[data-experiment='true'][data-glitter='0'] .action-glint-0,
+.quest-action-art[data-experiment='true'][data-glitter='1'] .action-glint-1,
+.quest-action-art[data-experiment='true'][data-glitter='2'] .action-glint-2,
+.quest-action-art[data-experiment='true'][data-glitter='3'] .action-glint-3,
+.quest-action-art[data-experiment='true'][data-glitter='4'] .action-glint-4{opacity:1}
+.action-foam-bubble{opacity:clamp(0,calc(var(--action-foam-count,12) - var(--action-index) + 1),1)}
+.action-cloud-particle{opacity:clamp(0,calc(var(--action-particle-count,16) - var(--action-index) + 1),1)}
+.action-jelly{transform-box:view-box;transform-origin:150px 153px;transform:skewX(var(--action-wobble,0deg))}
+.action-magnifier{transform:translateX(var(--action-scan-x,184px))}
+.action-growth-shape{transform-box:view-box;transform-origin:0 0;transform:scale(var(--action-growth,1))}
+.action-cloud-water{opacity:var(--action-cloud,.88)}
+.action-tube-cover{opacity:calc(1 - var(--action-cutaway,1))}
+.action-marble{transform:translateX(var(--action-marble-x,236px))}
+.action-flying-butterfly{transform:translate(var(--action-flight-x,200px),var(--action-flight-y,0px))}

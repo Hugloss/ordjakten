@@ -474,6 +474,255 @@
       ]
     ]
   }
+,
+  {
+    "word": "sv-0007",
+    "id": "glitter",
+    "title": "Kristallens hemliga sken",
+    "prompt": "Vi vill ha ett glittrigt föremål i ljusstrålen. Vad passar bäst?",
+    "target": "Välj föremål till ljusstrålen",
+    "why": "Kristallens blanka ytor reflekterar ljus i olika riktningar och kan ge glittrande ljuspunkter.",
+    "answer": "crystal",
+    "options": [
+      [
+        "crystal",
+        "💎",
+        "Slipad kristall"
+      ],
+      [
+        "wood",
+        "🪵",
+        "Matt träbit"
+      ],
+      [
+        "cloth",
+        "🧣",
+        "Matt tygbit"
+      ],
+      [
+        "clay",
+        "🟤",
+        "Matt lerklump"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0029",
+    "id": "foam",
+    "title": "Bubbelgrytan",
+    "prompt": "En låtsasgryta ska innehålla skummande vatten. Vilken blandning kan ge mycket skum när vi rör om?",
+    "target": "Välj blandning till grytan",
+    "why": "Tvålvatten kan bilda många små luftbubblor när det rörs om. Många bubblor tillsammans bildar skum.",
+    "answer": "soap",
+    "options": [
+      [
+        "soap",
+        "🫧",
+        "Vatten med lite tvål"
+      ],
+      [
+        "sand",
+        "🏖️",
+        "Vatten med sand"
+      ],
+      [
+        "stone",
+        "🪨",
+        "Torra stenar"
+      ],
+      [
+        "paper",
+        "📄",
+        "Torrt papper"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0038",
+    "id": "wobble",
+    "title": "Det dallrande bordet",
+    "prompt": "Vi stöter försiktigt till ett bord. Vilket mjukt föremål kan dallra fram och tillbaka?",
+    "target": "Välj föremål till bordet",
+    "why": "Mjuk gelé kan gunga och skaka fram och tillbaka när underlaget rör sig. Den dallrar.",
+    "answer": "jelly",
+    "options": [
+      [
+        "jelly",
+        "🍮",
+        "Mjuk gelé"
+      ],
+      [
+        "brick",
+        "🧱",
+        "Stel tegelsten"
+      ],
+      [
+        "wood",
+        "🪵",
+        "Stel träkloss"
+      ],
+      [
+        "metal",
+        "🔩",
+        "Stel metallskruv"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0001",
+    "id": "rough",
+    "title": "Stenens hemliga yta",
+    "prompt": "Du letar efter en skrovlig yta till en stenmur. Vilken av sakerna passar bäst?",
+    "target": "Undersök stenytan",
+    "why": "En grov, obehandlad sten har ojämnheter och små upphöjningar. Den kan kännas skrovlig.",
+    "answer": "rock",
+    "options": [
+      [
+        "rock",
+        "🪨",
+        "Grov, ojämn sten"
+      ],
+      [
+        "glass",
+        "🪟",
+        "Slätt fönsterglas"
+      ],
+      [
+        "polished",
+        "🔮",
+        "Slät, polerad kula"
+      ],
+      [
+        "ice",
+        "🧊",
+        "Slät isyta"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0030",
+    "id": "lush",
+    "title": "Trädgårdens gömda kraft",
+    "prompt": "Vi ska hitta en frodig plats där den lilla fågeln kan söka skydd bland växterna. Vart ska den flyga?",
+    "target": "Välj en plats åt fågeln",
+    "why": "En trädgård med riklig, kraftig växtlighet är frodig.",
+    "answer": "garden",
+    "options": [
+      [
+        "garden",
+        "🌳",
+        "Trädgård med täta gröna buskar och många växter"
+      ],
+      [
+        "sand",
+        "🏜️",
+        "Öppen sandplan utan växter"
+      ],
+      [
+        "stones",
+        "🪨",
+        "Kal stenig plats"
+      ],
+      [
+        "bare",
+        "🪴",
+        "Tom kruka med torr jord"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0044",
+    "id": "cloudy",
+    "title": "Det försvunna bottentecknet",
+    "prompt": "Ett tecken ligger i botten av ett glas. Vilken vätska är grumlig så att tecknet blir svårare att se?",
+    "target": "Välj vätska till glaset",
+    "why": "Små lerpartiklar kan sväva i vatten och göra det grumligt. Då syns tecknet bakom vätskan sämre.",
+    "answer": "clay",
+    "options": [
+      [
+        "clay",
+        "🌫️",
+        "Vatten med fin lera i"
+      ],
+      [
+        "water",
+        "💧",
+        "Klart rent vatten"
+      ],
+      [
+        "clear",
+        "🫙",
+        "Klar sockerlösning"
+      ],
+      [
+        "oil",
+        "🟡",
+        "Klar genomskinlig matolja"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0024",
+    "id": "hollow",
+    "title": "Röret med den hemliga kulan",
+    "prompt": "En kula ska rulla genom ett föremål. Vilket är ihåligt med en öppning genom hela föremålet?",
+    "target": "Välj ett föremål som kulan kan passera genom",
+    "why": "Ett tomt rör har ett hålrum inuti. Det är ihåligt. Om båda ändarna är öppna kan kulan passera.",
+    "answer": "tube",
+    "options": [
+      [
+        "tube",
+        "🧻",
+        "Tomt öppet papprör"
+      ],
+      [
+        "solid",
+        "🪵",
+        "Massiv träcylinder"
+      ],
+      [
+        "stone",
+        "🪨",
+        "Massiv sten"
+      ],
+      [
+        "brick",
+        "🧱",
+        "Massiv kloss utan hål"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0054",
+    "id": "flight",
+    "title": "Fjärilens blomsterstig",
+    "prompt": "En liten kompis ska ta sig genom luften från blomma till blomma. Vilken är flygande?",
+    "target": "Hjälp den till nästa blomma",
+    "why": "En fjäril kan röra sig genom luften med sina vingar. När den gör det är den flygande.",
+    "answer": "butterfly",
+    "options": [
+      [
+        "butterfly",
+        "🦋",
+        "Fjäril som flyger"
+      ],
+      [
+        "snail",
+        "🐌",
+        "Snigel som kryper"
+      ],
+      [
+        "fish",
+        "🐟",
+        "Fisk som simmar"
+      ],
+      [
+        "rabbit",
+        "🐇",
+        "Kanin som går på marken"
+      ]
+    ]
+  }
 ];
  const byWord=new Map(DATA.map(row=>[row.word,row]));
  function eligible(settings,q){
@@ -515,7 +764,15 @@
    bounce:{label:'Följ bollens studs',instruction:'Flytta reglaget framåt och bakåt i tiden. Se hur gummibollen faller, träffar golvet och studsar upp igen.',low:'Bollen är högt upp före fallet.',mid:'Bollen faller eller studsar upp igen.',high:'De allt mindre studsarna har stannat.'},
    slide:{label:'Jämför två ytor',instruction:'Dra fram tiden efter att två likadana klossar fått en lika stor knuff. Se hur långt de glider på is och sträv matta.',low:'Klossarna börjar på samma plats.',mid:'Klossen på isen glider längre.',high:'Klossen på den hala isen har glidit längst.'},
    sponge:{label:'Följ vattnet in i svampen',instruction:'Dra över bilden eller använd reglaget. De öppna håligheterna i svampen fylls med vatten i vår förenklade bild.',low:'Svampen är torr. Håligheterna är tomma.',mid:'Vatten kommer in i några av porerna.',high:'Svampen har tagit upp vatten.'},
-   sticky:{label:'Fäst pappersstjärnorna',instruction:'Dra över bilden för att föra stjärnorna till den klibbiga limytan. Se hur de fastnar på kortet.',low:'Stjärnorna ligger bredvid kortet.',mid:'Några stjärnor har fastnat på limytan.',high:'Alla stjärnorna sitter på kortet.'}
+   sticky:{label:'Fäst pappersstjärnorna',instruction:'Dra över bilden för att föra stjärnorna till den klibbiga limytan. Se hur de fastnar på kortet.',low:'Stjärnorna ligger bredvid kortet.',mid:'Några stjärnor har fastnat på limytan.',high:'Alla stjärnorna sitter på kortet.'},
+   glitter:{"label":"Flytta ljuset över kristallen","instruction":"Dra över bilden. Se hur kristallen glimmar på olika ställen när ljuset flyttas.","low":"Ljuset träffar den vänstra delen.","mid":"Ljuset träffar andra blanka ytor.","high":"Ljuset glimmar på kristallens högra sida."},
+   foam:{"label":"Rör om i bubbelgrytan","instruction":"Dra fram tiden i den illustrerade grytan. Luft blandas in i tvålvattnet.","low":"Tvålvattnet har inga synliga skumbubblor.","mid":"Många nya bubblor bildas.","high":"Nu syns ett lager skum."},
+   wobble:{"label":"Följ geléns dallring","instruction":"Dra tiden framåt eller bakåt. Gelén böjer sig åt båda hållen och kommer sedan till ro.","low":"Gelén står stilla före stöten.","mid":"Gelén gungar fram och tillbaka.","high":"Gelén står stilla igen."},
+   rough:{"label":"Undersök den skrovliga stenen","instruction":"Dra förstoringsglaset längs ytan. Följ den blå linjens ojämna kontur.","low":"Undersök stenens vänstra kant.","mid":"Stenen har små ojämnheter.","high":"Hela den skrovliga kanten har undersökts."},
+   lush:{"label":"Låt trädgården växa","instruction":"Dra fram tiden i vår låtsasträdgård. Här har växterna ljus, vatten och plats att växa.","low":"Några små plantor syns.","mid":"Blad och grenar växer.","high":"Trädgården har riklig, kraftig växtlighet."},
+   cloudy:{"label":"Blanda lerpartiklar i vattnet","instruction":"Dra reglaget. Fler små partiklar gör att tecknet syns allt sämre. Dra tillbaka för att jämföra.","low":"Vattnet är klart.","mid":"Vattnet blir grumligare.","high":"Vattnet är grumligt och tecknet svårt att se."},
+   hollow:{"label":"Titta in i röret","instruction":"Dra över bilden. Först visas en genomskärning av röret, sedan rullar kulan genom det tomma utrymmet.","low":"Rörets vägg täcker hålrummet i bilden.","mid":"Hålrummet blir synligt.","high":"Kulan har passerat genom röret."},
+   flight:{"label":"Flyg mellan blommorna","instruction":"Dra fjärilen längs blomsterstigen. Reglaget och tangentbordet följer samma stig.","low":"Fjärilen är vid den första blomman.","mid":"Fjärilen flyger genom luften.","high":"Fjärilen har nått den sista blomman."}
  });
  function experiment(id,value=100){
    if(!Object.hasOwn(EXPERIMENTS,id))return null;
@@ -527,6 +784,7 @@
    else for(const [start,end,height] of [[.25,.6,62],[.6,.85,25],[.85,1,9]]){
      if(f>=start&&f<=end){const t=(f-start)/(end-start);bounceY=106-height*4*t*(1-t);break;}
    }
+   const wobble=n===0||n===100?0:Math.sin(f*6*Math.PI)*18*(1-f);
    return {id,value:n,label:meta.label,instruction:meta.instruction,
      message:n===0?meta.low:n===100?meta.high:meta.mid,
      stretch:.38+.62*f,magnetX:80*f,ringX:f<=.6?0:-Math.min(75,(f-.6)/.4*75),
@@ -534,7 +792,11 @@
      tangle:f<.34?0:f<.67?1:2,
      mirrorX:68*f,mirrorImageX:-68*f||0,bounceY,
      iceX:194*(1-(1-f)**2),matX:76*(1-(1-Math.min(1,2*f))**2),
-     water:f,sticky:Math.floor(f*4)};
+     water:f,sticky:Math.floor(f*4),
+     lightX:194*f,glitter:Math.min(4,Math.floor(f*5)),foam:Math.floor(f*12),
+     wobble,scanX:184*f,growth:.25+.75*f,cloud:.88*f,particles:Math.floor(f*16),
+     cutaway:Math.min(1,f*2),marbleX:236*Math.max(0,2*f-1),
+     flightX:200*f,flightY:n===0||n===100?0:-78*Math.sin(Math.PI*f)-22*Math.sin(2*Math.PI*f)};
  }
  function pointerValue(rect,x){
    if(!rect||!Number.isFinite(rect.left)||!Number.isFinite(rect.width)||rect.width<=0||!Number.isFinite(x))return null;

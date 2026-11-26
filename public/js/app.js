@@ -2983,7 +2983,13 @@
     svg.append(covers);
   }
   function renderActionArt(host,action,solved=false){
-    if(!host.firstElementChild)host.append($('quest-action-template').content.cloneNode(true));
+    if(host.dataset.action!==action.id||!host.firstElementChild){
+      // Only clone the illustration in use, not every scene in the template.
+      const source=$('quest-action-template').content.querySelector('svg');
+      const scene=[...source.children].find(node=>node.classList.contains('action-'+action.id));
+      if(!scene){host.replaceChildren();host.hidden=true;return;}
+      const svg=source.cloneNode(false);svg.append(scene.cloneNode(true));host.replaceChildren(svg);
+    }
     host.dataset.action=action.id;
     host.dataset.solved=String(solved);
     host.hidden=false;
@@ -3001,6 +3007,7 @@
     $('quest-action-experiment-status').textContent='';
     $('quest-action-experiment-announcement').textContent='';
     art.removeAttribute('data-sticky');
+    art.removeAttribute('data-glitter');
   }
   function renderActionExperiment(value,announce=false){
     if(!actionExperiment||screen!=='play'||!game?.feedback)return;
@@ -3009,13 +3016,20 @@
     actionExperiment=model;
     const art=$('quest-action-solution-art');
     art.dataset.experiment='true';art.dataset.tangle=String(model.tangle);art.dataset.sticky=String(model.sticky);
+    art.dataset.glitter=String(model.glitter);
     for(const [name,v] of Object.entries({
       '--action-stretch':model.stretch,'--action-magnet-x':model.magnetX+'px',
       '--action-ring-x':model.ringX+'px','--action-rotation':model.rotation+'deg',
       '--action-wilt-angle':model.wiltAngle+'deg','--action-wilt-opacity':model.wiltOpacity,
       '--action-mirror-x':model.mirrorX+'px','--action-reflection-x':model.mirrorImageX+'px',
       '--action-bounce-y':model.bounceY+'px','--action-ice-x':model.iceX+'px',
-      '--action-mat-x':model.matX+'px','--action-water':model.water
+      '--action-mat-x':model.matX+'px','--action-water':model.water,
+      '--action-light-x':model.lightX+'px','--action-wobble':model.wobble+'deg',
+      '--action-scan-x':model.scanX+'px','--action-growth':model.growth,
+      '--action-cloud':model.cloud,'--action-cutaway':model.cutaway,
+      '--action-foam-count':model.foam,'--action-particle-count':model.particles,
+      '--action-marble-x':model.marbleX+'px','--action-flight-x':model.flightX+'px',
+      '--action-flight-y':model.flightY+'px'
     }))art.style.setProperty(name,String(v));
     $('quest-action-range').value=String(model.value);
     $('quest-action-range').setAttribute('aria-valuetext',model.message);

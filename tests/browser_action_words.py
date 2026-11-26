@@ -75,6 +75,14 @@ def material_experiments(browser):
         ('sv-0005','easy','slide','Slät is','.action-ice-block','--action-ice-x'),
         ('sv-0040','medium','sponge','Tvättsvamp med öppna porer','.action-pore-water','--action-water'),
         ('sv-0011','medium','sticky','Kort med vått pyssellim','.action-sticky-1',None),
+        ('sv-0007','easy','glitter','Slipad kristall','.action-glitter-beam','--action-light-x'),
+        ('sv-0029','medium','foam','Vatten med lite tvål','.action-foam-bubble','--action-foam-count'),
+        ('sv-0038','medium','wobble','Mjuk gelé','.action-jelly','--action-wobble'),
+        ('sv-0001','medium','rough','Grov, ojämn sten','.action-magnifier','--action-scan-x'),
+        ('sv-0030','medium','lush','Trädgård med täta gröna buskar och många växter','.action-growth-shape','--action-growth'),
+        ('sv-0044','medium','cloudy','Vatten med fin lera i','.action-cloud-water','--action-cloud'),
+        ('sv-0024','medium','hollow','Tomt öppet papprör','.action-tube-cover','--action-cutaway'),
+        ('sv-0054','easy','flight','Fjäril som flyger','.action-flying-butterfly','--action-flight-x'),
     ]
     for word_id, level, action, answer, visual, variable in cases:
         page, errors = make_page(browser, {"width":390,"height":800})
@@ -84,13 +92,20 @@ def material_experiments(browser):
         assert page.locator('#quest-action-art').get_attribute('data-action') == action
         page.locator('.answer-option').filter(has_text=answer).click()
         art = page.locator('#quest-action-solution-art')
-        assert art.locator(visual).is_visible()
+        assert art.locator(visual).first.is_visible()
+        assert art.locator('.quest-action-scene').count() == 1
+        assert page.locator('#quest-action-art .quest-action-scene').count() == 1
         assert page.locator('#quest-action-experiment').is_visible()
         page.locator('#quest-action-reset').click()
         initial = art.get_attribute('style')
         if action == 'sticky':
             assert art.get_attribute('data-sticky') == '0'
         page.locator('#quest-action-range').focus()
+        if action == 'wobble':
+            for _ in range(8):
+                page.keyboard.press('ArrowRight')
+            assert page.locator('#quest-action-range').input_value() == '8'
+            assert art.get_attribute('style') != initial
         page.keyboard.press('End')
         assert page.locator('#quest-action-range').input_value() == '100'
         if variable:
