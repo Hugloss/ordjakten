@@ -23,6 +23,7 @@ def main(browser):
     assert page.locator("#focus-other-skill").is_hidden()
     after = stored()
     assert after["skillProgress"]
+    assert after["practiceBalance"] == ["discover"]
     assert after["results"] == before["results"]
     assert after["settings"] == before["settings"]
     page.locator("#focus-done").click()
@@ -36,12 +37,17 @@ def main(browser):
     assert stored() == after
     page.locator("#next-journey-back").click()
     assert page.locator("#view-learning").is_visible()
+    assert page.locator("#balance-learning-summary").is_visible()
+    page.locator("#balance-learning-summary summary").click()
+    assert "Den senaste avslutade stationen" in page.locator("#balance-learning-note").inner_text()
+    assert page.locator("#balance-learning-list li").count() == 4
     page.locator("#next-journey-learning-start").click()
     assert page.locator("#next-journey-banner").is_visible()
     page.locator("#next-journey-stop").click()
     assert page.locator("#view-learning").is_visible()
     assert page.locator("#next-journey-banner").is_hidden()
     assert stored()["results"] == before["results"]
+    assert stored()["practiceBalance"] == ["discover"]
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
     assert not errors, errors
     page.close()

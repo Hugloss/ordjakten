@@ -46,10 +46,11 @@
     if(!ordered.length)return null;
     const recent=sanitize(raw);
     let pool=ordered;
+    // Preserve feasible feedback stations throughout the round. A pending
+    // follow-up (2) precedes opening another alternative (1).
+    const urgent=ordered.filter(row=>Number.isFinite(row.feedbackPriority)&&row.feedbackPriority>0);
+    if(urgent.length)return urgent.reduce((best,row)=>row.feedbackPriority>best.feedbackPriority?row:best);
     if(!selected.length){
-      // Protect a selected alternative or pending follow-up before balance.
-      const urgent=ordered.filter(row=>Number.isFinite(row.feedbackPriority)&&row.feedbackPriority>0);
-      if(urgent.length)return urgent[0];
       // Preserve the familiar easy-word launch for a brand-new child.
       if(!recent.length)return ordered[0];
       // Reserve the first feasible station for observed need or a due

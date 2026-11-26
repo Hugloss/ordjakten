@@ -1670,7 +1670,8 @@
   function renderBalancePreview(){
     const mix=Balance.summary(history.practiceBalance);
     $('balance-learning-summary').hidden=!mix.total;
-    $('balance-learning-note').textContent='De senaste '+mix.total+' avslutade stationerna i Mitt nästa äventyr.';
+    $('balance-learning-note').textContent=mix.total===1?'Den senaste avslutade stationen i Mitt nästa äventyr.':
+      'De senaste '+mix.total+' avslutade stationerna i Mitt nästa äventyr.';
     const list=$('balance-learning-list');list.replaceChildren();
     for(const [key,label] of Object.entries(Balance.LABELS)){
       const row=element('li','balance-mix-row');

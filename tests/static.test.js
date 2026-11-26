@@ -200,3 +200,16 @@ test('practice feedback uses explicit completed tasks, real observations and the
   assert.ok(app.includes('history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog)'));
   assert.ok(html.includes('id="feedback-learning-summary"'));
 });
+
+test('practice balance is local, completion-only and uses the existing feasible journey picker',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js'),engine=read('js/engine.js');
+  assert.ok(html.indexOf('./js/practice-balance.js')>=0&&html.indexOf('./js/practice-balance.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/practice-balance.js'"));
+  assert.ok(app.includes('chooseNext:(rows,steps)=>Balance.pick(rows,history.practiceBalance,steps)'));
+  assert.ok(app.includes('Balance.recordCompletion(balance,step,journeyStepFinished(step.mode),recordedJourneySteps)'));
+  assert.ok(app.includes('if(finished)completePracticeFeedback(step)'));
+  assert.ok(app.includes('practiceBalance:history.practiceBalance'));
+  assert.ok(app.includes('history.practiceBalance=Balance.sanitize(null)'));
+  assert.ok(engine.includes('practiceBalance'));
+  assert.ok(html.includes('id="balance-learning-summary"'));
+});
