@@ -82,10 +82,11 @@
   let detectorRound = null;
   let conceptMap=null;
   let journey=null,journeyStory=null,journeyKeepsake=null;
-  let campSelected=null,campChat=0,campPrompt=0,campMessage='';
+  let campSelected=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
+  const campRiddles=Camp.riddles(learningCatalog);
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -741,6 +742,7 @@
     }
     if(!plan.steps.length){journey=null;journeyStory=null;journeyKeepsake=null;renderJourneySummary();return;}
     if(screen==='results')game=null;
+    if(screen==='camp')campRiddle=null;
     journey=Journey.start(plan.steps);
     const story=Story.model(history.storyProgress,settings.adventure);
     journeyStory=story.chapter;journeyKeepsake=null;
@@ -1759,7 +1761,48 @@
       'Välj ett föremål i samlingen eller på platsen.';
     $('camp-remove').disabled=!selected||!layout.slots.includes(selected.id);
     $('camp-cancel').disabled=!selected;
-    if(refreshWorlds)renderCampWorlds();
+    if(refreshWorlds){renderCampWorlds();renderCampRiddle();}
+  }
+  function renderCampRiddle(){
+    const task=campRiddle&&campRiddles[campRiddle.index];
+    $('camp-riddle-start').hidden=!!campRiddle||!campRiddles.length;
+    $('camp-riddle-question').hidden=campRiddle?.stage!=='question';
+    $('camp-riddle-feedback').hidden=campRiddle?.stage!=='feedback';
+    $('camp-riddle-finish').hidden=campRiddle?.stage!=='finished';
+    if(!task)return;
+    $('camp-riddle-counter').textContent='Gåta '+(campRiddle.index+1)+' av '+campRiddles.length;
+    $('camp-riddle-title').textContent=task.emoji+' '+task.title;
+    $('camp-riddle-story').textContent=task.story;
+    const box=$('camp-riddle-options');box.replaceChildren();
+    for(const option of campRiddle.options){
+      const button=element('button','reading-option',option.label);
+      button.type='button';button.dataset.campRiddle=option.id;box.append(button);
+    }
+    $('camp-riddle-hint').hidden=!campRiddle.attempts;
+    $('camp-riddle-hint').textContent=task.hint;
+    $('camp-riddle-verdict').textContent=campRiddle.solved?'🌟 Tack för hjälpen!':'💡 Så här hänger orden ihop';
+    $('camp-riddle-why').textContent=task.why;
+    $('camp-riddle-next').textContent=campRiddle.index+1===campRiddles.length?'Se avslutningen →':'En ny gåta →';
+  }
+  function startCampRiddle(index=0){
+    const task=campRiddles[index];
+    if(!task){campRiddle={stage:'finished'};renderCampRiddle();$('camp-riddle-finish-title').focus({preventScroll:true});return;}
+    campRiddle={index,stage:'question',attempts:0,options:Camp.shuffleOptions(task)};
+    renderCampRiddle();$('camp-riddle-title').focus({preventScroll:true});
+  }
+  function finishCampRiddle(solved){
+    if(campRiddle?.stage!=='question')return;
+    campRiddle.stage='feedback';campRiddle.solved=solved;
+    renderCampRiddle();$('camp-riddle-verdict').focus({preventScroll:true});
+  }
+  function chooseCampRiddle(id){
+    if(campRiddle?.stage!=='question')return;
+    const result=Camp.answer(campRiddles[campRiddle.index],id,campRiddle.attempts);
+    if(!result)return;
+    if(result==='hint'){
+      campRiddle.attempts=1;renderCampRiddle();$('camp-riddle-hint').focus({preventScroll:true});return;
+    }
+    finishCampRiddle(result==='solved');
   }
   function renderCampWorlds(){
     const list=$('camp-worlds');list.replaceChildren();
@@ -1775,7 +1818,7 @@
     }
     const world=A.world(settings.adventure),preview=getJourneyPlan(Date.now(),()=>.37);
     $('camp-go').disabled=!preview.steps.length;
-    $('camp-go').textContent='🧭 Ut på äventyr i '+world.short+' →';
+    $('camp-go').textContent='🧭 Utforska '+world.title+' →';
     $('camp-world-note').textContent=preview.steps.length?'Välj en värld. Starta ett äventyr när du vill.':
       'Inga lämpliga övningar är redo just nu. Du kan fortfarande dekorera och välja värld.';
   }
@@ -1805,7 +1848,7 @@
   }
   function openCamp(earned=false){
     const mark=earned&&journeyKeepsake?'mark-'+journeyKeepsake.id+'-'+journeyKeepsake.index:null;
-    campSelected=mark;campChat=0;campPrompt=0;campMessage='';
+    campSelected=mark;campChat=0;campPrompt=0;campMessage='';campRiddle=null;
     goNav('camp');$('camp-title').focus({preventScroll:true});
   }
   function renderStoryOptions(location){
@@ -2924,6 +2967,7 @@
     clearLearningExercise();
     if(journey){journey=null;resetJourneyControls();}
     journeyStory=null;journeyKeepsake=null;
+    if(screen==='camp')campRiddle=null;
     if(screen==='play'&&!leaveGame())return;
     if(screen==='results'){game=null;}
     if(name==='home')renderSetup();
@@ -3020,6 +3064,10 @@
   }
   $('story-decorate').addEventListener('click',()=>{if(screen==='journey'&&journeyKeepsake)openCamp(true);});
   $('camp-go').addEventListener('click',()=>{if(screen==='camp')startJourney();});
+  $('camp-riddle-start').addEventListener('click',()=>{if(screen==='camp')startCampRiddle();});
+  $('camp-riddle-next').addEventListener('click',()=>{if(screen==='camp'&&campRiddle?.stage==='feedback')startCampRiddle(campRiddle.index+1);});
+  $('camp-riddle-reveal').addEventListener('click',()=>{if(screen==='camp')finishCampRiddle(false);});
+  $('camp-riddle-again').addEventListener('click',()=>{if(screen==='camp'&&campRiddle?.stage==='finished')startCampRiddle();});
   $('camp-chat').addEventListener('click',()=>{if(screen==='camp'){campChat++;renderCamp();}});
   $('camp-prompt-next').addEventListener('click',()=>{if(screen==='camp'){campPrompt++;renderCamp();}});
   $('camp-cancel').addEventListener('click',()=>{if(screen==='camp'){campSelected=null;campMessage='';renderCamp();}});
@@ -3034,7 +3082,8 @@
     if(screen!=='camp')return;
     const btn=event.target.closest('button');if(!btn||btn.disabled)return;
     const data=btn.dataset;
-    if(data.campItem){selectCampItem(data.campItem);focusCamp('[data-camp-item="'+data.campItem+'"]');}
+    if(data.campRiddle){chooseCampRiddle(data.campRiddle);}
+    else if(data.campItem){selectCampItem(data.campItem);focusCamp('[data-camp-item="'+data.campItem+'"]');}
     else if(data.campSlot!==undefined){const index=Number(data.campSlot);useCampSlot(index);focusCamp('[data-camp-slot="'+index+'"]');}
     else if(data.campScene){
       const next=Camp.changeScene(history.campLayout,data.campScene,campInventory());

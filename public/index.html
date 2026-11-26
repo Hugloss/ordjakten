@@ -647,6 +647,29 @@
           <button id="camp-chat" type="button" class="secondary-button full-button">💬 Prata med ordkompisen</button>
           <div class="camp-prompt"><h3>📖 Hitta på tillsammans</h3><p id="camp-creative-prompt" aria-live="polite"></p><small>Berätta högt, eller bara tänk ut din idé. Inget svar bedöms eller sparas.</small>
             <button id="camp-prompt-next" type="button" class="secondary-button full-button">En annan idé →</button></div>
+          <div class="camp-riddle-box">
+            <h3>🕵️ Ordkompisens små gåtor</h3>
+            <p class="muted">Hjälp ordkompisen att hitta ord som passar. Sex små gåtor, utan poäng.</p>
+            <button id="camp-riddle-start" type="button" class="primary-button full-button">Lös en ordgåta →</button>
+            <div id="camp-riddle-question" hidden>
+              <p id="camp-riddle-counter" class="eyebrow"></p>
+              <h4 id="camp-riddle-title" tabindex="-1"></h4>
+              <p id="camp-riddle-story" class="workshop-reading"></p>
+              <div id="camp-riddle-options" class="camp-riddle-options"></div>
+              <p id="camp-riddle-hint" class="camp-selection" tabindex="-1" hidden></p>
+              <button id="camp-riddle-reveal" type="button" class="secondary-button full-button">Visa och förklara ordet</button>
+            </div>
+            <div id="camp-riddle-feedback" hidden>
+              <h4 id="camp-riddle-verdict" tabindex="-1"></h4>
+              <p id="camp-riddle-why" class="workshop-reading"></p>
+              <button id="camp-riddle-next" type="button" class="primary-button full-button">En ny gåta →</button>
+            </div>
+            <div id="camp-riddle-finish" hidden>
+              <h4 id="camp-riddle-finish-title" tabindex="-1">🎉 Ordkompisens gåtor är klara!</h4>
+              <p>Tack för att du klurade tillsammans med mig. Nu kan du leka vidare eller välja ett äventyr.</p>
+              <button id="camp-riddle-again" type="button" class="secondary-button full-button">Prova gåtorna igen</button>
+            </div>
+          </div>
         </section>
         <section class="panel camp-travel" aria-labelledby="camp-travel-title">
           <h2 id="camp-travel-title">🗺️ Vart vill du resa?</h2>

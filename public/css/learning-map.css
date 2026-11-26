@@ -256,3 +256,9 @@
 #story-decorate{margin-top:12px}
 @media(max-width:480px){.camp-slots{gap:6px}.camp-slot{padding:8px 3px;min-height:104px}.camp-slot-label{font-size:12px}.camp-scene{padding:24px 7px 12px}.camp-inventory{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(forced-colors:active){.camp-scene{background:Canvas}.camp-landscape{display:none}}
+
+.camp-riddle-box{display:grid;gap:10px;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2)}
+.camp-riddle-box h3,.camp-riddle-box h4{margin:0;font-size:21px;line-height:1.4}
+.camp-riddle-box p{margin:6px 0;line-height:1.5}
+.camp-riddle-options{display:grid;gap:8px;margin:12px 0}
+.camp-riddle-options button{min-height:48px}
