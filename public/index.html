@@ -69,6 +69,7 @@
   <script src="./js/adventure-camp.js" defer></script>
   <script src="./js/camp-theatre.js" defer></script>
   <script src="./js/camp-living.js" defer></script>
+  <script src="./js/camp-minigames.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -654,6 +655,32 @@
           <div><span class="eyebrow">🎨 DIN EGEN VÄRLD</span><h1 id="camp-title" tabindex="-1">Min äventyrsplats</h1><p>Inred din plats, lek med orden och välj vart du vill resa. Den är din även när du tar en paus.</p></div>
           <div class="camp-choice-row"><button id="camp-travel-jump" type="button" class="primary-button">🗺️ Välj nästa äventyr</button><button type="button" class="secondary-button" data-nav="learning">Klar för nu – Min ordstig</button></div>
         </header>
+        <section class="panel camp-minigames" aria-labelledby="camp-mini-title">
+          <header class="camp-theatre-heading"><span aria-hidden="true">🎮</span><div>
+            <h2 id="camp-mini-title" tabindex="-1">Minispel</h2>
+            <p>Välj något kul att spela!</p>
+          </div></header>
+          <div id="camp-mini-menu" class="camp-mini-menu" role="group" aria-label="Välj ett minispel">
+            <button type="button" class="camp-mini-game" data-mini-game="dragon"><span aria-hidden="true">🐉</span><strong>Mata draken</strong><small>Duka en picknick</small></button>
+            <button type="button" class="camp-mini-game" data-mini-game="lab"><span aria-hidden="true">🪄</span><strong>Magiska labbet</strong><small>Kombinera två saker</small></button>
+            <button type="button" class="camp-mini-game" data-mini-game="treasure"><span aria-hidden="true">🗺️</span><strong>Skattjakten</strong><small>Utforska kartan</small></button>
+          </div>
+          <div id="camp-mini-play" class="camp-mini-play" hidden>
+            <div class="camp-mini-head"><h3 id="camp-mini-name"></h3><p id="camp-mini-step" class="eyebrow"></p></div>
+            <div class="camp-mini-stage">
+              <span id="camp-mini-visual" class="camp-mini-visual" aria-hidden="true"></span>
+              <h3 id="camp-mini-prompt" tabindex="-1"></h3>
+            </div>
+            <div id="camp-mini-selection" class="camp-mini-selection" role="group" aria-label="Maskinens två val" hidden></div>
+            <div id="camp-mini-options" class="camp-mini-options" role="group"></div>
+            <p id="camp-mini-feedback" class="camp-selection camp-mini-feedback" role="status" hidden></p>
+            <button id="camp-mini-mix" type="button" class="primary-button full-button" hidden>✨ Kör den magiska maskinen!</button>
+            <button id="camp-mini-help" type="button" class="secondary-button full-button">💡 Lös det tillsammans</button>
+            <button id="camp-mini-next" type="button" class="primary-button full-button" hidden>Nästa uppdrag →</button>
+            <button id="camp-mini-close" type="button" class="secondary-button full-button">Klar för nu – välj spel</button>
+          </div>
+          <p class="story-small">Fyra små uppdrag i varje spel. Inga poäng eller tidtagning. Du kan sluta när du vill.</p>
+        </section>
         <section class="panel camp-living" aria-labelledby="camp-live-title">
           <header class="camp-theatre-heading"><span aria-hidden="true">🪄</span><div>
             <h2 id="camp-live-title">Lek på din plats</h2>

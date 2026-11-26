@@ -41,13 +41,14 @@
   const Camp = window.OrdjaktenCamp;
   const Theatre = window.OrdjaktenTheatre;
   const Living = window.OrdjaktenLiving;
+  const Mini = window.OrdjaktenMiniGames;
   const WorldMissions = window.OrdjaktenWorldMissions;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -87,7 +88,7 @@
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
-  let campLiving=Living.start(),campToneUntil=0;
+  let campLiving=Living.start(),campToneUntil=0,campMini=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -1769,9 +1770,62 @@
     $('camp-remove').disabled=!selected||!layout.slots.includes(selected.id);
     $('camp-cancel').disabled=!selected&&campTarget===null;
     renderCampLiving();
-    if(refreshWorlds){renderCampWorlds();renderCampRiddle();renderCampTheatre();renderCampStoryBook();}
+    if(refreshWorlds){renderCampWorlds();renderCampRiddle();renderCampTheatre();renderCampStoryBook();renderCampMini();}
+  }
+  function renderCampMini(focus=false,choiceId=null){
+    const m=Mini.model(campMini);
+    $('camp-mini-menu').hidden=!!m;
+    $('camp-mini-play').hidden=!m;
+    if(!m){
+      $('camp-mini-options').replaceChildren();$('camp-mini-selection').replaceChildren();
+      if(focus)$('camp-mini-title').focus();
+      return;
+    }
+    const playing=m.stage==='play',finished=m.stage==='finished',lab=m.game==='lab';
+    $('camp-mini-name').textContent=m.meta.emoji+' '+m.meta.title;
+    $('camp-mini-step').textContent=finished?'Spelet är klart!':'Uppdrag '+(m.index+1)+' av '+m.total;
+    $('camp-mini-prompt').textContent=finished?m.meta.end:playing?m.prompt:m.helped?'Tillsammans hittade vi lösningen!':'Så där! Du hjälpte till!';
+    $('camp-mini-visual').textContent=finished?'🎉 '+m.meta.emoji:playing?m.meta.emoji:m.result;
+    $('camp-mini-play').dataset.game=m.game;
+    $('camp-mini-play').dataset.stage=m.stage;
+    $('camp-mini-feedback').textContent=finished?'Du kan välja ett annat spel eller ta en paus.':m.feedback;
+    $('camp-mini-feedback').hidden=!finished&&!m.feedback;
+    $('camp-mini-options').hidden=!playing;
+    $('camp-mini-options').classList.toggle('mini-map',m.game==='treasure');
+    $('camp-mini-options').setAttribute('aria-label',m.game==='treasure'?'Skattkarta med tre rader och tre kolumner':'Välj föremål');
+    const options=$('camp-mini-options');options.replaceChildren();
+    if(playing)for(const [i,item] of m.options.entries()){
+      const btn=element('button','camp-mini-tile');btn.type='button';btn.dataset.miniChoice=item.id;
+      const icon=element('span','camp-mini-icon',item.emoji);icon.setAttribute('aria-hidden','true');
+      btn.append(icon,element('strong','',item.label));
+      if(lab)btn.setAttribute('aria-pressed',String(m.selected.includes(item.id)));
+      if(m.game==='treasure')btn.setAttribute('aria-label','Rad '+(Math.floor(i/3)+1)+', kolumn '+(i%3+1)+': '+item.label);
+      options.append(btn);
+    }
+    const tray=$('camp-mini-selection');tray.replaceChildren();tray.hidden=!(lab&&playing);
+    if(lab&&playing)for(let i=0;i<2;i++){
+      const item=m.selection[i],slot=element('span','camp-mini-slot',item?item.emoji+' '+item.label:'＋ Välj en sak');
+      tray.append(slot);
+    }
+    $('camp-mini-mix').hidden=!(lab&&playing);$('camp-mini-mix').disabled=!m.canMix;
+    $('camp-mini-help').hidden=!playing;
+    $('camp-mini-next').hidden=m.stage!=='solved';
+    $('camp-mini-next').textContent=m.index+1===m.total?'Se avslutningen →':'Nästa uppdrag →';
+    $('camp-mini-close').textContent=finished?'Välj ett minispel':'Klar för nu – välj spel';
+    if(focus){
+      if(choiceId&&playing){
+        const target=[...options.querySelectorAll('button')].find(btn=>btn.dataset.miniChoice===choiceId);
+        if(target){target.focus({preventScroll:true});return;}
+      }
+      $('camp-mini-prompt').focus();
+    }
+  }
+  function applyCampMini(next,choiceId=null){
+    if(screen!=='camp'||next===campMini)return;
+    campMini=next;renderCampMini(true,choiceId);
   }
   function resetCampLiving(){
+    campMini=null;
     campLiving=Living.start();
     for(const icon of $('camp-live-scene').querySelectorAll('.camp-live-icon')){
       if(typeof icon.getAnimations==='function')for(const anim of icon.getAnimations())anim.cancel();
@@ -3338,6 +3392,19 @@
   $('world-mission-adaptive').addEventListener('click',()=>{
     if(screen==='world-mission'&&worldMission?.stage==='ending'){goNav('learning');startJourney();}
   });
+  $('camp-mini-menu').addEventListener('click',event=>{
+    const btn=event.target.closest('button[data-mini-game]');
+    if(screen==='camp'&&btn&&$('camp-mini-menu').contains(btn))applyCampMini(Mini.start(btn.dataset.miniGame));
+  });
+  $('camp-mini-options').addEventListener('click',event=>{
+    const btn=event.target.closest('button[data-mini-choice]');
+    if(screen==='camp'&&btn&&$('camp-mini-options').contains(btn))
+      applyCampMini(Mini.choose(campMini,btn.dataset.miniChoice),btn.dataset.miniChoice);
+  });
+  $('camp-mini-mix').addEventListener('click',()=>applyCampMini(Mini.mix(campMini)));
+  $('camp-mini-help').addEventListener('click',()=>applyCampMini(Mini.help(campMini)));
+  $('camp-mini-next').addEventListener('click',()=>applyCampMini(Mini.next(campMini)));
+  $('camp-mini-close').addEventListener('click',()=>applyCampMini(null));
   $('camp-live-scene').addEventListener('click',event=>{
     const btn=event.target.closest('button[data-live-action]');
     if(btn&&$('camp-live-scene').contains(btn))reactCampLiving(btn);

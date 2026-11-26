@@ -25,3 +25,14 @@ Lekplatsen visas högst upp på äventyrsplatsen. Sex tydligt namngivna knappar 
 Barnet kan spara en färdig saga i Min sagobok, läsa den igen och uttryckligen ta bort den. Boken har 24 platser; en full bok förlorar aldrig gamla sagor automatiskt. Dubbletter sparas inte. Historiken innehåller endast fyra validerade ID:n per saga (miljö, huvudperson, föremål, handling), inga fria texter, tidsstämplar eller personuppgifter. Ägande av minnesmärken kontrolleras vid återläsning. Sagor är oberoende av nuvarande inredning och påverkar inga kunskapsmått. Export och radering av historik omfattar också sagoboken. Om webbläsarens lagring inte fungerar visas ett tydligt meddelande.
 
 Nya logiktester täcker samtliga lekobjekt, tillståndsväxling, notföljd, återläsning av sagor, ägande, dubbletter och full bok. Befintligt frivilligt webbläsartest utökas med klick, sparning, omladdning, läsning och borttagning. Inga nya CI-jobb eller externa beroenden. Barnprovspelning och visuell/akustisk verifiering behövs fortfarande.
+
+## Minispel
+Tre frivilliga spel högst upp på äventyrsplatsen, tillgängliga utan tidigare upptäckter. Varje spel har fyra redaktionellt skrivna uppdrag, med ord-ID:n i den befintliga ordbanken.
+
+- Mata draken: barnet väljer mat utifrån en egenskap (knaprig, saftig, fluffig eller avlång). Endast mat visas som alternativ.
+- Magiska labbet: barnet väljer två föremål, kan byta ett val och kör en låtsasmaskin. Valordningen spelar ingen roll. Varje korrekt kombination visar en fantasifull skapelse och varför föremålen passar.
+- Skattjakten: en karta med 3 × 3 namngivna rutor. Barnet hittar en sak utifrån både en egenskap och en position relativt ett landmärke (ovan, höger, nedan, vänster). Ledtrådar beskriver samma karta; ingen tidtagning eller dold slump.
+
+Alla uppdrag kan lösas med stöd. Felval ger en ledtråd och fria omförsök; barnet kan också välja att lösa uppdraget tillsammans. Resultatet förklarar ordet och barnet väljer aktivt att gå vidare. Efter fyra uppdrag visas ett avslut, inte automatisk omstart. Inga provpoäng, kunskapsobservationer, nya minnesmärken eller nya lagringsposter. Speltillståndet lämnas när barnet går till en annan vy. Använd stora knappar, tangentbordsfokus, textalternativ för kartans rader och kolumner, och en kort effekt som respekterar reducerad rörelse.
+
+`tests/camp-minigames.test.js` kontrollerar innehåll, alla tolv lösningar, kartgeometri, kombinationsordning, stöd, ändliga avslut och ogiltiga val. `tests/browser_camp.py` har frivilliga interaktionstester för alla tre mekaniker och oförändrad lokal historik. Ingen ny CI-körningstyp eller externa beroenden. Visuell granskning och barnprovspelning återstår.

@@ -286,3 +286,14 @@ test('living camp and favourite stories work offline with bounded local persiste
   assert.ok(!living.includes('saveHistory(')&&!living.includes('history.results')&&!living.includes('history.storyProgress='));
   assert.ok(living.includes('settings.sound')&&living.includes('reducedMotion'));
 });
+
+test('minigames are linked, offline and independent of learning and storage',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/camp-minigames.js')>=0&&html.indexOf('./js/camp-minigames.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/camp-minigames.js'"));
+  for(const game of ['dragon','lab','treasure'])assert.ok(html.includes('data-mini-game="'+game+'"'));
+  const flow=app.slice(app.indexOf('  function renderCampMini('),app.indexOf('  function resetCampLiving('));
+  assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('setSettings('));
+  assert.ok(app.includes('renderCampStoryBook();renderCampMini();'));
+  assert.ok(app.includes('campMini=null;\n    campLiving=Living.start();'));
+});
