@@ -326,7 +326,7 @@
       "sv-0015",
       "Enhörningen vill ha något mjukt under sin bok. Vad väljer vi?",
       [
-        "En mjuk filt som ger efter",
+        "En filt som ger efter när man trycker på den",
         "En hård sten",
         "En platta av metall"
       ],
@@ -398,7 +398,7 @@
     ],
     [
       "sv-0011",
-      "Lite färg har torkat och blivit klibbig. Hur märks det?",
+      "Färg som ännu inte torkat helt har blivit klibbig. Hur märks det?",
       [
         "Den känns klistrig och fastnar lätt",
         "Den rinner som vatten",

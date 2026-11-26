@@ -65,6 +65,7 @@
   <script src="./js/practice-balance.js" defer></script>
   <script src="./js/adventure-challenge.js" defer></script>
   <script src="./js/story-quests.js" defer></script>
+  <script src="./js/world-missions.js" defer></script>
   <script src="./js/adventure-camp.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
@@ -611,6 +612,41 @@
         </section>
       </section>
 
+      <section id="view-world-mission" class="view" aria-labelledby="world-mission-title" hidden>
+        <section class="panel world-mission-panel">
+          <div class="mission-scene">
+            <div class="mission-scene-icons" aria-hidden="true"><span id="world-mission-icon"></span><span id="world-mission-buddy"></span></div>
+            <div class="mission-scene-text"><p id="world-mission-location" class="eyebrow"></p><h1 id="world-mission-title" tabindex="-1"></h1><p id="world-mission-intro" class="mission-reading"></p></div>
+          </div>
+          <div id="world-mission-question" class="mission-question">
+            <h2>Hjälp ordkompisen!</h2>
+            <p id="world-mission-prompt" class="mission-reading"></p>
+            <div id="world-mission-options" class="mission-actions" role="group" aria-label="Vad vill du göra?"></div>
+            <p id="world-mission-hint" class="camp-selection" tabindex="-1" role="status" hidden></p>
+            <button id="world-mission-reveal" type="button" class="secondary-button full-button">Lös det tillsammans med ordkompisen</button>
+          </div>
+          <div id="world-mission-explanation" class="mission-question" hidden>
+            <h2 id="world-mission-verdict" tabindex="-1"></h2>
+            <p id="world-mission-definition" class="mission-word"></p>
+            <p id="world-mission-solution" class="mission-reading"></p>
+            <p id="world-mission-why" class="mission-reading"></p>
+            <button id="world-mission-finish" type="button" class="primary-button full-button">Fortsätt berättelsen →</button>
+          </div>
+          <div id="world-mission-ending" class="mission-question" hidden>
+            <h2 id="world-mission-ending-title" tabindex="-1">🌟 Berättelsens slut</h2>
+            <p id="world-mission-ending-text" class="mission-reading"></p>
+            <div id="world-mission-earned" class="story-earned mission-earned" hidden><div><p class="eyebrow">Ny upptäckt!</p><h2 id="world-mission-mark"></h2><button id="world-mission-decorate" type="button" class="secondary-button full-button">🏕️ Placera mitt minnesmärke →</button></div></div>
+            <p id="world-mission-revisit-note" class="muted"></p>
+            <div id="world-mission-map"></div>
+            <button id="world-mission-next" type="button" class="primary-button full-button">Nästa plats →</button>
+            <button id="world-mission-adaptive" type="button" class="secondary-button full-button">🎯 Gör ett ordäventyr</button>
+          </div>
+          <button type="button" class="secondary-button full-button" data-nav="camp">🏕️ Till min äventyrsplats</button>
+          <button type="button" class="secondary-button full-button" data-nav="learning">Klar för nu – Min ordstig</button>
+          <p class="story-small">En frivillig ordgåta i berättelsen. Inga provpoäng, timer eller krav på rätt svar.</p>
+        </section>
+      </section>
+
       <section id="view-camp" class="view" aria-labelledby="camp-title" hidden>
         <header class="camp-header">
           <div><span class="eyebrow">🎨 DIN EGEN VÄRLD</span><h1 id="camp-title" tabindex="-1">Min äventyrsplats</h1><p>Inred din plats, lek med orden och välj vart du vill resa. Den är din även när du tar en paus.</p></div>
@@ -675,7 +711,9 @@
           <h2 id="camp-travel-title" tabindex="-1">🗺️ Vart vill du resa?</h2>
           <p id="camp-world-note" class="muted"></p>
           <div id="camp-worlds" class="camp-worlds" role="group" aria-label="Äventyrsvärldar"></div>
-          <button id="camp-go" type="button" class="primary-button full-button">Ut på äventyr →</button>
+          <div id="camp-chapters"></div>
+          <button id="camp-mission" type="button" class="primary-button full-button">📖 Spela berättelsen →</button>
+          <button id="camp-go" type="button" class="secondary-button full-button">Ordäventyr →</button>
         </section>
       </section>
 
