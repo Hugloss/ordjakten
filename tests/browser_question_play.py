@@ -18,6 +18,10 @@ def main(browser):
     page.locator("#quick-contexts").click()
     assert page.locator("#quest-mystery").is_visible()
     assert page.locator("#quest-mystery-progress li").count() == 4
+    picture = page.locator("#quest-picture")
+    assert picture.get_attribute("data-done") == "0"
+    total = int(picture.get_attribute("data-total"))
+    assert picture.locator(".quest-picture-cover").count() == total
     assert not page.locator("#play-score-details").evaluate("(el) => el.open")
     assert page.locator("#question-portal").is_hidden()
     assert page.locator("#question-egg").is_hidden()
@@ -56,6 +60,14 @@ def main(browser):
     if page.locator("#story-reveal").is_visible():
         page.locator("#story-reveal").click()
     assert page.locator("#question-portal").get_attribute("data-steps") == "1"
+    assert picture.get_attribute("data-done") == "1"
+    assert picture.locator(".quest-picture-cover").count() == total - 1
+    assert page.locator("#question-egg").get_attribute("data-helper") == "crystal"
+    assert page.locator("#question-egg .quest-crystal-art").is_visible()
+    page.locator("#question-egg").click()
+    assert page.locator("#question-egg .quest-crystal-light").is_visible()
+    assert page.locator("#question-egg-hint").is_visible()
+    assert page.locator("#answer-options").get_attribute("data-card-style") == "butterfly"
     assert not errors, errors
     page.close()
 
@@ -89,6 +101,8 @@ def main(browser):
     assert finale.get_attribute("data-complete") == "true"
     assert finale.get_attribute("data-treasure") == "sprout"
     assert finale.locator(".quest-treasure-sprout").is_visible()
+    assert page.locator("#quest-finale-picture").get_attribute("data-done") == "5"
+    assert page.locator("#quest-finale-picture .quest-picture-cover").count() == 0
     assert page.evaluate("new Set([...document.querySelectorAll('[id]')].map(el=>el.id)).size===document.querySelectorAll('[id]').length")
     assert not errors, errors
     page.close()

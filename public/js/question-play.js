@@ -191,6 +191,36 @@
     const fraction=steps/total;
     return {scene:WORLDS[id].scene,artifact:chapter.id,treasure:TREASURES[id],steps,total,fraction,complete:steps===total};
   }
+  const PICTURE_NAMES=Object.freeze({
+    forest:'Den förtrollade skogsgläntan',space:'Den hemliga stjärnvägen',
+    ocean:'Den gömda undervattensvärlden',castle:'Det magiska sagolandskapet'
+  });
+  // Every submitted question uncovers exactly one rectangular piece. Use
+  // balanced rows of possibly different lengths to tile the entire picture.
+  // The reveal order is fixed, not a lottery and not a correctness signal.
+  function picture(settings,answered,total){
+    if(!Number.isInteger(total)||total<1||total>100)return null;
+    const done=Number.isInteger(answered)?Math.max(0,Math.min(total,answered)):0;
+    const scene=WORLDS[worldId(settings)].scene;
+    const rows=Math.max(1,Math.round(Math.sqrt(total*210/300)));
+    const cells=[];
+    for(let row=0;row<rows;row++){
+      const count=Math.floor(total/rows)+(row<total%rows?1:0);
+      for(let col=0;col<count;col++){
+        cells.push({id:cells.length,x:300*col/count,y:210*row/rows,
+          width:300/count,height:210/rows});
+      }
+    }
+    // Reveal the centre first, then work outward, with a stable tie-break.
+    const ordered=cells.slice().sort((a,b)=>{
+      const dist=p=>Math.hypot((p.x+p.width/2-150)/300,(p.y+p.height/2-105)/210);
+      return dist(a)-dist(b)||a.id-b.id;
+    });
+    const visible=new Set(ordered.slice(0,done).map(cell=>cell.id));
+    return {scene,title:PICTURE_NAMES[scene],done,total,finished:done===total,
+      cells:cells.map(cell=>({...cell,revealed:visible.has(cell.id)}))};
+  }
+  const CARD_STYLES=Object.freeze(['leaf','butterfly','crystal','scroll']);
   function mystery(settings,answered,total){
     if(!settings||!['train','test'].includes(settings.mode)||settings.timerMode!=='off'||settings.difficulty==='exam'||
       !Number.isInteger(total)||total<1||total>100)return null;
@@ -204,7 +234,7 @@
     const completed=chapters.filter(ch=>done>=ch.threshold).length;
     const finished=done===total,index=Math.min(completed,chapters.length-1),chapter=chapters[index];
     return {title:story[0],intro:story[1],ending:story[6],done,total,chapters,completed,finished,chapter,
-      visual:visual(settings,chapters,index,done),step:index+1};
+      visual:visual(settings,chapters,index,done),picture:picture(settings,done,total),step:index+1};
   }
   function discovery(settings,answered,total){
     const current=mystery(settings,answered,total);
@@ -214,7 +244,7 @@
     return {artifact:prior.chapter.id,emoji:prior.chapter.emoji,
       title:reached?prior.chapter.title+' – upptäckt!':'Ett nytt spår',
       text:current.finished?current.ending:reached?prior.chapter.reveal:prior.chapter.partial,
-      reached,finished:current.finished,visual:visual(settings,prior.chapters,prior.step-1,current.done)};
+      reached,finished:current.finished,visual:visual(settings,prior.chapters,prior.step-1,current.done),picture:current.picture};
   }
   function plan(settings,q,index=0){
     const world=Object.hasOwn(WORLDS,settings?.adventure)?WORLDS[settings.adventure]:WORLDS.forest;
@@ -224,7 +254,10 @@
       q?.taskType==='sentence'?'sentence':q?.kind==='expression'?'expression':q?.picture?'picture':'meaning';
     // Explicitly timed rounds keep a compact, ordinary answer interaction.
     const interactive=enabled&&settings.timerMode==='off';
+    const turn=Number.isInteger(index)&&index>=0?index:0;
+    const helper=turn%2===0?'egg':'crystal';
     return {enabled:interactive,egg:interactive&&settings.mode==='train',world,hatchling:HATCHLINGS[world.scene],hint:HINTS[kind],
+      helper,cardStyle:CARD_STYLES[turn%CARD_STYLES.length],messageStyle:turn%2===0?'letter':'scroll',
       caption:index%2===0?'För svaret genom porten!':'Vilket svar tar dig vidare?'};
   }
   function moved(x0,y0,x,y){return Math.hypot(x-x0,y-y0)>=8;}
@@ -234,5 +267,5 @@
     return !!drag&&drag.token===token&&drag.moved===true&&
       Number.isInteger(drag.index)&&drag.index>=0&&drag.index<optionCount&&inside(rect,x,y);
   }
-  return {WORLDS,HINTS,MYSTERIES,PHASES,HATCHLINGS,TREASURES,plan,mystery,discovery,moved,inside,validDrop};
+  return {WORLDS,HINTS,MYSTERIES,PHASES,HATCHLINGS,TREASURES,PICTURE_NAMES,CARD_STYLES,plan,mystery,discovery,picture,moved,inside,validDrop};
 });

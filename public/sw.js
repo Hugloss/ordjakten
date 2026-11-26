@@ -1,5 +1,5 @@
 /* Offline-only enhancement. App works fully without service workers. */
-const CACHE_NAME = 'ordjakten-static-v48-reactive-mysteries'; // Increment on each content release.
+const CACHE_NAME = 'ordjakten-static-v49-secret-picture'; // Increment on each content release.
 const ICON_FILES = [
   "./assets/story-icons/1f305.png",
   "./assets/story-icons/1f31f.png",

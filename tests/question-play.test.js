@@ -134,3 +134,53 @@ test('twelve world endings select authored treasure art and four optional hatchl
   assert.equal(eggs.size,4);assert.equal(treasures.size,10);
   assert.equal(P.plan({...settings,mode:'test'},q).egg,false);
 });
+
+test('secret picture uncovers exactly one of n pieces on each completed question',()=>{
+  for(const adventure of Object.keys(P.WORLDS))for(let total=1;total<=25;total++){
+    const cfg={...settings,adventure};
+    let last=new Set();
+    for(let done=0;done<=total;done++){
+      const model=P.mystery(cfg,done,total).picture;
+      assert.equal(model.cells.length,total);
+      const visible=new Set(model.cells.filter(c=>c.revealed).map(c=>c.id));
+      assert.equal(visible.size,done);
+      assert.ok([...last].every(id=>visible.has(id)));
+      assert.equal(model.finished,done===total);
+      assert.ok(model.cells.every(c=>c.x>=0&&c.y>=0&&c.width>0&&c.height>0&&c.x+c.width<=300.00001&&c.y+c.height<=210.00001));
+      assert.ok(Math.abs(model.cells.reduce((sum,c)=>sum+c.width*c.height,0)-63000)<.0001);
+      if(done)assert.deepEqual(P.discovery(cfg,done,total).picture,model);
+      last=visible;
+    }
+  }
+});
+test('picture is bounded, deterministic and independent of question scores',()=>{
+  assert.equal(P.picture(settings,0,0),null);
+  assert.equal(P.picture(settings,0,101),null);
+  assert.equal(P.picture(settings,999,5).done,5);
+  assert.equal(P.picture(settings,-2,5).done,0);
+  for(let done=0;done<=25;done++){
+    const a=P.picture({...settings,score:0},done,25);
+    const b=P.picture({...settings,mode:'test',score:25},done,25);
+    assert.deepEqual(a,b);
+    assert.equal(new Set(a.cells.map(c=>c.id)).size,25);
+    for(const x of a.cells)for(const y of a.cells){
+      if(x.id===y.id)continue;
+      const overlapX=Math.min(x.x+x.width,y.x+y.width)-Math.max(x.x,y.x);
+      const overlapY=Math.min(x.y+x.height,y.y+y.height)-Math.max(x.y,y.y);
+      assert.ok(overlapX<.00001||overlapY<.00001);
+    }
+  }
+});
+test('helpers and card designs vary by position, never by correctness or answer content',()=>{
+  const a={...q,options:[{label:'secret',correct:true},{label:'other',correct:false}]};
+  const b={...q,options:[{label:'different',correct:false},{label:'another',correct:true}]};
+  const plans=Array.from({length:8},(_,i)=>P.plan(settings,a,i));
+  assert.deepEqual(plans.map(p=>p.helper),['egg','crystal','egg','crystal','egg','crystal','egg','crystal']);
+  assert.deepEqual(plans.slice(0,4).map(p=>p.cardStyle),P.CARD_STYLES);
+  assert.equal(new Set(plans.map(p=>p.messageStyle)).size,2);
+  for(let i=0;i<8;i++){
+    assert.deepEqual(P.plan(settings,a,i),P.plan(settings,b,i));
+    assert.equal(P.plan({...settings,mode:'test'},a,i).egg,false);
+    assert.equal(P.plan({...settings,timerMode:'total'},a,i).enabled,false);
+  }
+});

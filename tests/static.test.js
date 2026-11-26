@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v48-reactive-mysteries'));
+  assert.ok(worker.includes('v49-secret-picture'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -355,4 +355,16 @@ test('opened treasure is painted above the lifted chest lid',()=>{
   const chest=html.slice(html.indexOf('class="quest-object quest-object-chest"'),html.indexOf('class="quest-arch"'));
   assert.ok(chest.indexOf('class="quest-chest-lid"')>=0);
   assert.ok(chest.indexOf('class="quest-chest-treasure"')>chest.indexOf('class="quest-chest-lid"'));
+});
+
+test('secret picture and crystal are integrated into ordinary question and discovery views',()=>{
+  const html=read('index.html'),app=read('js/app.js'),css=read('css/reading-flow.css');
+  for(const id of ['quest-picture','quest-discovery-picture','quest-finale-picture','quest-message-label'])assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(html.includes('class="quest-crystal-art"'));
+  assert.ok(app.includes("renderMysteryPicture($('quest-picture'),model.picture,'qq-')"));
+  assert.ok(app.includes("renderMysteryPicture($('quest-discovery-picture'),model.picture,'qdp-')"));
+  assert.ok(app.includes("renderMysteryPicture($('quest-finale-picture'),model.picture,'qfp-')"));
+  assert.ok(app.includes("$('question-egg').dataset.helper=questionPresentation.helper"));
+  assert.ok(css.includes(".quest-picture-art .quest-arch,.quest-picture-art .quest-object{display:none}"));
+  assert.ok(css.includes("prefers-reduced-motion:no-preference"));
 });

@@ -2934,6 +2934,7 @@
     $('quest-mystery-title').textContent=model.title;
     $('quest-mystery-chapter').textContent='Del '+model.step+' av '+model.chapters.length+' · '+model.chapter.title;
     $('quest-mystery-story').textContent=(model.done===0?model.intro+' ':'')+model.chapter.sceneText;
+    renderMysteryPicture($('quest-picture'),model.picture,'qq-');
     const progress=$('quest-mystery-progress');progress.replaceChildren();
     for(const [i,chapter] of model.chapters.entries()){
       const item=element('li','quest-mystery-step');
@@ -2948,6 +2949,34 @@
     }
     if(storyVisible)$('story-reveal').textContent='🔎 Jag har läst – visa spåren →';
     $('answer-step').querySelector('strong').textContent='🔎 VÄLJ DITT SPÅR';
+  }
+  function renderMysteryPicture(host,model,prefix){
+    if(!model)return;
+    // Reuse only the authored scenic background. No answer-dependent art,
+    // chest contents or hidden text are exposed by uncovering a tile.
+    const art=host.querySelector('.quest-picture-art');
+    ensureMysteryIllustration(art,prefix);
+    const svg=art.querySelector('svg');
+    art.dataset.scene=model.scene;
+    art.dataset.artifact='picture';
+    host.dataset.done=String(model.done);host.dataset.total=String(model.total);
+    host.querySelector('.quest-picture-count').textContent=model.done===model.total?'Hela bilden är upptäckt!':
+      model.done+' av '+model.total+' bildbitar';
+    host.querySelector('.quest-picture-name').textContent=model.finished?model.title:'Den hemliga bilden';
+    // SVG user units match the illustration viewBox. The covers meet at
+    // their boundaries; each cell disappears after one completed question.
+    svg.querySelector('.quest-picture-covers')?.remove();
+    const ns='http://www.w3.org/2000/svg',covers=document.createElementNS(ns,'g');
+    covers.setAttribute('class','quest-picture-covers');
+    for(const cell of model.cells){
+      if(cell.revealed)continue;
+      const rect=document.createElementNS(ns,'rect');
+      for(const key of ['x','y','width','height'])rect.setAttribute(key,String(cell[key]));
+      rect.setAttribute('class','quest-picture-cover');
+      rect.dataset.piece=String(cell.id);
+      covers.append(rect);
+    }
+    svg.append(covers);
   }
   function renderMysteryArt(host,visual){
     if(!visual)return;
@@ -2984,6 +3013,7 @@
     $('quest-mystery-discovery').dataset.artifact=model.artifact;
     const art=$('quest-discovery-art');
     ensureMysteryIllustration(art,'qd-');renderMysteryArt(art,model.visual);
+    renderMysteryPicture($('quest-discovery-picture'),model.picture,'qdp-');
     $('quest-mystery-discovery-icon').textContent=model.emoji;
     $('quest-mystery-discovery-title').textContent=model.title;
     $('quest-mystery-discovery-text').textContent=model.text;
@@ -2994,6 +3024,7 @@
     if(!model?.finished)return;
     const art=$('quest-finale-artwork');
     ensureMysteryIllustration(art,'qf-');renderMysteryArt(art,model.visual);
+    renderMysteryPicture($('quest-finale-picture'),model.picture,'qfp-');
     $('quest-mystery-finale-title').textContent=model.title+' – upplöst!';
     $('quest-mystery-finale-text').textContent=model.ending;
   }
@@ -3013,6 +3044,10 @@
     $('question-egg').setAttribute('aria-expanded','false');
     $('question-egg').dataset.open='false';$('question-egg-hint').hidden=true;
     $('question-egg-hint').textContent='';
+    $('question-egg').dataset.helper='egg';
+    $('answer-options').removeAttribute('data-card-style');
+    $('reading-story').removeAttribute('data-message-style');
+    $('quest-message-label').hidden=true;
   }
   function questionReady(){
     return screen==='play'&&game&&!game.finished&&!game.feedback&&questionToken&&
@@ -3036,6 +3071,12 @@
     $('question-portal').dataset.artifact=mystery?.chapter.id||'portal';
     if(mystery)renderMysteryArt($('question-portal'),mystery.visual);
     $('question-egg').dataset.hatchling=questionPresentation.hatchling.id;
+    $('question-egg').dataset.helper=questionPresentation.helper;
+    $('question-egg-label').textContent=questionPresentation.helper==='crystal'?'Titta i kristallkulan':'Öppna ledtrådsägget';
+    $('answer-options').dataset.cardStyle=questionPresentation.cardStyle;
+    $('reading-story').dataset.messageStyle=questionPresentation.messageStyle;
+    $('quest-message-label').hidden=false;
+    $('quest-message-label').textContent=questionPresentation.messageStyle==='scroll'?'✦ En hemlig pergamentrulle':'✦ Ett meddelande från mysteriet';
     $('question-portal-title').textContent=mystery?.chapter.title||world.name;
     $('question-portal-caption').textContent=mystery?.chapter.action||caption;
     $('question-portal-symbol').textContent=mystery?.chapter.emoji||world.target;
@@ -3045,7 +3086,7 @@
   function openQuestionEgg(){
     if(!questionReady()||!questionPresentation?.egg||$('question-egg').dataset.open==='true')return;
     $('question-egg').dataset.open='true';$('question-egg').setAttribute('aria-expanded','true');
-    $('question-egg-label').textContent=questionPresentation.hatchling.name+' tittar fram!';
+    $('question-egg-label').textContent=questionPresentation.helper==='crystal'?'En tanke glimmar i kulan!':questionPresentation.hatchling.name+' tittar fram!';
     $('question-egg-hint').hidden=false;
   }
   function startQuestionDrag(event){

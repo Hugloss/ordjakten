@@ -360,10 +360,10 @@
             <h2 id="quest-mystery-title"></h2>
             <ol id="quest-mystery-progress" class="quest-mystery-progress" aria-label="Berättelsens delar"></ol>
             <p id="quest-mystery-chapter" class="quest-mystery-chapter"></p>
-            <p id="quest-mystery-story"></p>
+            <div class="quest-mystery-story-row"><p id="quest-mystery-story"></p><figure id="quest-picture" class="quest-picture"><div class="quest-picture-art" aria-hidden="true"></div><figcaption><strong class="quest-picture-name"></strong><span class="quest-picture-count"></span></figcaption></figure></div>
           </section>
           <p id="reading-stage" class="reading-stage" role="status" aria-live="polite">📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå</p>
-          <div id="reading-story" class="question-card"><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
+          <div id="reading-story" class="question-card"><span id="quest-message-label" class="quest-message-label" hidden></span><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1></div>
           <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
           <button id="listen-story" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på texten</button>
           <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
@@ -410,6 +410,16 @@
                   </g>
                   <path d="M14 69l13-10 12 12 13-13 11 11 13-12 10 12Q85 96 50 96T14 69Z" fill="url(#quest-egg-shell)" stroke="#6951aa" stroke-width="3"/>
                 </g>
+              </svg>
+              <svg class="quest-crystal-art" viewBox="0 0 100 105" aria-hidden="true">
+                <defs><radialGradient id="quest-crystal-glass" cx=".35" cy=".25" r=".8"><stop stop-color="#f8eaff"/><stop offset=".55" stop-color="#a0bde8"/><stop offset="1" stop-color="#6760a2"/></radialGradient></defs>
+                <ellipse cx="50" cy="95" rx="31" ry="6" fill="#39304d" opacity=".24"/>
+                <path d="M34 74h32l10 18H24Z" fill="#bd8e57" stroke="#785b62" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M26 88h48" stroke="#f2d39a" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="50" cy="45" r="36" fill="url(#quest-crystal-glass)" stroke="#73649f" stroke-width="3"/>
+                <path d="M22 42Q25 20 47 17" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/>
+                <g class="quest-crystal-cloud"><path d="M22 57q12-17 24-6t22-6t9 8q-5 22-29 21T22 57Z" fill="#f0d7f2" opacity=".7"/><path d="M38 44q12-9 24 1" fill="none" stroke="#e9edff" stroke-width="4" stroke-linecap="round"/></g>
+                <g class="quest-crystal-light"><circle cx="50" cy="45" r="26" fill="#fff6cd" opacity=".5"/><path d="M50 24l6 14 16 2-12 10 4 16-14-8-14 8 4-16-12-10 16-2Z" fill="#ffdf83" stroke="#bd8d4e" stroke-width="2"/><path d="M24 30l3 6 7 2-7 2-3 6-2-6-7-2 7-2Zm51 22 3 7 7 2-7 2-3 7-2-7-7-2 7-2Z" fill="#fff4bc"/></g>
               </svg>
               <span><strong id="question-egg-label">Öppna ledtrådsägget</strong><small>En liten tankeledtråd – frivilligt</small></span>
             </button>
@@ -594,7 +604,7 @@
         <section id="quest-mystery-discovery" class="quest-mystery-discovery" aria-labelledby="quest-mystery-discovery-title" hidden>
           <div id="quest-discovery-art" class="quest-discovery-art" aria-hidden="true"></div>
           <span id="quest-mystery-discovery-icon" class="quest-mystery-reveal-icon" aria-hidden="true" hidden></span>
-          <div><p class="eyebrow">✦ ETT SPÅR I MYSTERIET</p><h2 id="quest-mystery-discovery-title"></h2><p id="quest-mystery-discovery-text"></p></div>
+          <div><p class="eyebrow">✦ ETT SPÅR I MYSTERIET</p><h2 id="quest-mystery-discovery-title"></h2><p id="quest-mystery-discovery-text"></p><figure id="quest-discovery-picture" class="quest-picture"><div class="quest-picture-art" aria-hidden="true"></div><figcaption><strong class="quest-picture-name"></strong><span class="quest-picture-count"></span></figcaption></figure></div>
         </section>
         <div class="play-footer"><button type="button" id="next" class="primary-button big-button" hidden>Nästa ord →</button><p id="test-footnote" class="subtle-note" hidden>Du får se facit när testet är klart.</p></div>
       </section>
@@ -602,7 +612,7 @@
       <section id="view-results" class="view" aria-labelledby="results-title" hidden>
         <section id="quest-mystery-finale" class="panel quest-mystery-finale" aria-labelledby="quest-mystery-finale-title" hidden>
           <div id="quest-finale-artwork" class="quest-finale-artwork" aria-hidden="true"></div>
-          <div><p class="eyebrow">✦ BERÄTTELSENS SLUT</p><h2 id="quest-mystery-finale-title"></h2><p id="quest-mystery-finale-text"></p><p class="story-small">Du har utforskat mysteriet. Här nedanför finns omgångens kunskapsresultat.</p></div>
+          <div><p class="eyebrow">✦ BERÄTTELSENS SLUT</p><h2 id="quest-mystery-finale-title"></h2><p id="quest-mystery-finale-text"></p><p class="story-small">Du har utforskat mysteriet. Här nedanför finns omgångens kunskapsresultat.</p><figure id="quest-finale-picture" class="quest-picture"><div class="quest-picture-art" aria-hidden="true"></div><figcaption><strong class="quest-picture-name"></strong><span class="quest-picture-count"></span></figcaption></figure></div>
         </section>
         <div class="results-hero panel"><div id="results-companion" class="results-companion" aria-hidden="true">🦊</div><div class="trophy" aria-hidden="true">🏆</div><h1 id="results-title">Ordjakten är klar!</h1><div id="results-percent" class="results-percent">80 %</div><p id="results-descriptor" class="muted"></p><p id="results-cheer" class="results-cheer"></p></div>
         <section class="panel adventure-finale" aria-labelledby="finale-title"><div id="finale-emoji" aria-hidden="true">🌲</div><div><h2 id="finale-title">Mystiska skogen</h2><p id="finale-text">Du har utforskat hela skogen!</p><p id="finale-stops" class="subtle-note"></p></div></section>
