@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v51-word-experiments'));
+  assert.ok(worker.includes('v52-material-experiments'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -389,4 +389,13 @@ test('optional direct word experiments do not submit answers or persist history'
  assert.ok(!flow.includes('submit(')&&!flow.includes('history.')&&!flow.includes('saveHistory('));
  assert.ok(flow.includes('ActionWords.pointerValue')&&flow.includes('game?.feedback'));
  assert.ok(css.includes('touch-action:pan-y'));
+});
+
+test('material experiment scenes expose their own visual controls without changing scoring',()=>{
+ const html=read('index.html'),css=read('css/reading-flow.css'),app=read('js/app.js');
+ for(const name of ['action-mirror-star','action-mirror-reflection','action-bounce-ball','action-ice-block','action-mat-block','action-pore-water','action-sticky-piece']){
+   assert.ok(html.includes(name));assert.ok(css.includes(name)||name==='action-sticky-piece');
+ }
+ assert.ok(app.includes("art.dataset.sticky=String(model.sticky)"));
+ assert.ok(app.includes("'--action-bounce-y':model.bounceY+'px'"));
 });

@@ -318,6 +318,162 @@
       ]
     ]
   }
+,
+  {
+    "word": "sv-0037",
+    "id": "mirror",
+    "title": "Spegelns hemlighet",
+    "prompt": "En liten stjärna står framför en vägg. Välj något speglande så att vi kan se en bild av stjärnan.",
+    "target": "Välj material till väggen",
+    "why": "En spegel reflekterar ljus och kan återge en bild av föremålet framför den.",
+    "answer": "mirror",
+    "options": [
+      [
+        "mirror",
+        "🪞",
+        "Blank spegel"
+      ],
+      [
+        "paper",
+        "📄",
+        "Matt papper"
+      ],
+      [
+        "cloth",
+        "🧣",
+        "Matt tyg"
+      ],
+      [
+        "wood",
+        "🪵",
+        "Obehandlad träskiva"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0008",
+    "id": "bounce",
+    "title": "Den studsande stjärnbollen",
+    "prompt": "Vi ska få en leksak att vara studsande när den släpps på ett hårt golv. Vad passar bäst?",
+    "target": "Välj en leksak att släppa",
+    "why": "En studsboll hoppar upp igen efter att den träffat golvet. Det är en studsande rörelse.",
+    "answer": "ball",
+    "options": [
+      [
+        "ball",
+        "🏀",
+        "Studsboll av gummi"
+      ],
+      [
+        "pillow",
+        "🛏️",
+        "Mjuk kudde"
+      ],
+      [
+        "cloth",
+        "🧣",
+        "Tygbit"
+      ],
+      [
+        "clay",
+        "🟤",
+        "Mjuk modellera"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0005",
+    "id": "slide",
+    "title": "Isbanans gåta",
+    "prompt": "En liten figur på en träkloss ska glida. Vilken yta är halast?",
+    "target": "Välj en bana för klossen",
+    "why": "Slät is kan vara hal. På den glider klossen i detta exempel längre än på en sträv matta.",
+    "answer": "ice",
+    "options": [
+      [
+        "ice",
+        "🧊",
+        "Slät is"
+      ],
+      [
+        "mat",
+        "🧶",
+        "Sträv gummimatta"
+      ],
+      [
+        "sand",
+        "🏖️",
+        "Grov sand"
+      ],
+      [
+        "gravel",
+        "🪨",
+        "Grovt grus"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0040",
+    "id": "sponge",
+    "title": "Den törstiga svampen",
+    "prompt": "En vattenpöl behöver torkas upp. Välj en porös sak som har små hål och kan suga upp vatten.",
+    "target": "Välj föremål till vattenpölen",
+    "why": "En porös tvättsvamp har många små håligheter. Vatten kan komma in i svampens öppna porer.",
+    "answer": "sponge",
+    "options": [
+      [
+        "sponge",
+        "🧽",
+        "Tvättsvamp med öppna porer"
+      ],
+      [
+        "glass",
+        "🪟",
+        "Massiv glasskiva"
+      ],
+      [
+        "metal",
+        "🔩",
+        "Massiv stålplåt"
+      ],
+      [
+        "plastic",
+        "🧱",
+        "Tät plastkloss"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0011",
+    "id": "sticky",
+    "title": "Stjärnorna som fastnar",
+    "prompt": "Små pappersstjärnor ska fästas på ett kort. Vilken klibbig yta passar bäst?",
+    "target": "Välj yta för pappersstjärnorna",
+    "why": "Den klibbiga limytan gör att pappersstjärnorna kan fastna.",
+    "answer": "glue",
+    "options": [
+      [
+        "glue",
+        "🧴",
+        "Kort med vått pyssellim"
+      ],
+      [
+        "dry",
+        "📄",
+        "Torrt papper utan lim"
+      ],
+      [
+        "glass",
+        "🪟",
+        "Torr glasskiva"
+      ],
+      [
+        "wood",
+        "🪵",
+        "Torr träskiva"
+      ]
+    ]
+  }
 ];
  const byWord=new Map(DATA.map(row=>[row.word,row]));
  function eligible(settings,q){
@@ -354,17 +510,31 @@
    magnet:{label:'Flytta magneten',instruction:'Dra magneten närmare järnringen. Se när ringen följer med.',low:'Magneten är långt från ringen.',mid:'Magneten närmar sig ringen.',high:'Magneten drar till sig järnringen!'},
    whirl:{label:'Snurra löven',instruction:'Dra över bilden eller flytta reglaget för att snurra löven runt mitten.',low:'Löven vilar.',mid:'Löven rör sig runt mitten.',high:'Löven har virvlat ett helt varv!'},
    wilt:{label:'Låt tiden gå efter vattning',instruction:'Dra fram tiden i vår låtsasbild. En levande, törstig växt kan återhämta sig gradvis efter vattning.',low:'Bladen hänger. Jorden har fått vatten.',mid:'Blomman börjar räta på sig.',high:'I berättelsen har blomman återhämtat sig.'},
-   tangle:{label:'Red ut garnet',instruction:'Dra försiktigt över bilden och följ hur slingorna försvinner.',low:'Garnet är trassligt.',mid:'Några slingor har lossnat.',high:'Tråden är utredd!'}
+   tangle:{label:'Red ut garnet',instruction:'Dra försiktigt över bilden och följ hur slingorna försvinner.',low:'Garnet är trassligt.',mid:'Några slingor har lossnat.',high:'Tråden är utredd!'},
+   mirror:{label:'Flytta stjärnan framför spegeln',instruction:'Dra över bilden eller flytta reglaget. Följ hur stjärnans spegelbild rör sig på andra sidan spegellinjen.',low:'Stjärnan och spegelbilden är långt från spegellinjen.',mid:'Spegelbilden följer stjärnans rörelse.',high:'Båda är nära spegellinjen.'},
+   bounce:{label:'Följ bollens studs',instruction:'Flytta reglaget framåt och bakåt i tiden. Se hur gummibollen faller, träffar golvet och studsar upp igen.',low:'Bollen är högt upp före fallet.',mid:'Bollen faller eller studsar upp igen.',high:'De allt mindre studsarna har stannat.'},
+   slide:{label:'Jämför två ytor',instruction:'Dra fram tiden efter att två likadana klossar fått en lika stor knuff. Se hur långt de glider på is och sträv matta.',low:'Klossarna börjar på samma plats.',mid:'Klossen på isen glider längre.',high:'Klossen på den hala isen har glidit längst.'},
+   sponge:{label:'Följ vattnet in i svampen',instruction:'Dra över bilden eller använd reglaget. De öppna håligheterna i svampen fylls med vatten i vår förenklade bild.',low:'Svampen är torr. Håligheterna är tomma.',mid:'Vatten kommer in i några av porerna.',high:'Svampen har tagit upp vatten.'},
+   sticky:{label:'Fäst pappersstjärnorna',instruction:'Dra över bilden för att föra stjärnorna till den klibbiga limytan. Se hur de fastnar på kortet.',low:'Stjärnorna ligger bredvid kortet.',mid:'Några stjärnor har fastnat på limytan.',high:'Alla stjärnorna sitter på kortet.'}
  });
  function experiment(id,value=100){
    if(!Object.hasOwn(EXPERIMENTS,id))return null;
    const n=Number.isFinite(value)?Math.max(0,Math.min(100,Math.round(value))):0;
    const f=n/100,meta=EXPERIMENTS[id];
+   // Piecewise, diminishing bounces (illustrative time, not calibrated physics).
+   let bounceY=106;
+   if(f<.25)bounceY=106*(f/.25)**2;
+   else for(const [start,end,height] of [[.25,.6,62],[.6,.85,25],[.85,1,9]]){
+     if(f>=start&&f<=end){const t=(f-start)/(end-start);bounceY=106-height*4*t*(1-t);break;}
+   }
    return {id,value:n,label:meta.label,instruction:meta.instruction,
      message:n===0?meta.low:n===100?meta.high:meta.mid,
-     stretch:.38+.62*f,magnetX:80*f,ringX:-Math.max(0,(f-.6)/.4)*75,
+     stretch:.38+.62*f,magnetX:80*f,ringX:f<=.6?0:-Math.min(75,(f-.6)/.4*75),
      rotation:360*f,wiltAngle:38*(1-f),wiltOpacity:.55+.45*f,
-     tangle:f<.34?0:f<.67?1:2};
+     tangle:f<.34?0:f<.67?1:2,
+     mirrorX:68*f,mirrorImageX:-68*f||0,bounceY,
+     iceX:194*(1-(1-f)**2),matX:76*(1-(1-Math.min(1,2*f))**2),
+     water:f,sticky:Math.floor(f*4)};
  }
  function pointerValue(rect,x){
    if(!rect||!Number.isFinite(rect.left)||!Number.isFinite(rect.width)||rect.width<=0||!Number.isFinite(x))return null;

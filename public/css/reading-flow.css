@@ -278,7 +278,12 @@
 .quest-action-art[data-action='share'] .action-share,
 .quest-action-art[data-action='care'] .action-care,
 .quest-action-art[data-action='wilt'] .action-wilt,
-.quest-action-art[data-action='tangle'] .action-tangle{display:inline}
+.quest-action-art[data-action='tangle'] .action-tangle,
+.quest-action-art[data-action='mirror'] .action-mirror,
+.quest-action-art[data-action='bounce'] .action-bounce,
+.quest-action-art[data-action='slide'] .action-slide,
+.quest-action-art[data-action='sponge'] .action-sponge,
+.quest-action-art[data-action='sticky'] .action-sticky{display:inline}
 .quest-action-solution{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--border);border-radius:16px;margin:12px 0;background:var(--surface)}
 .quest-action-solution .quest-action-art{width:clamp(120px,33vw,240px);flex-shrink:0;border-radius:12px;overflow:hidden}
 .quest-action-solution h3{margin:4px 0;font-size:20px;line-height:1.3}
@@ -320,3 +325,26 @@
 .quest-action-art[data-experiment='true'][data-tangle='1'] .action-yarn-1,
 .quest-action-art[data-experiment='true'][data-tangle='2'] .action-yarn-2{display:inline}
 @media(max-width:520px){.quest-action-experiment .camp-choice-row{flex-wrap:wrap}}
+
+/* Five more scrubbable examples. SVG user coordinates are deliberately
+   illustrative, never used as scientific measurements or scored gestures. */
+.action-mirror-star{transform:translateX(var(--action-mirror-x,68px))}
+.action-mirror-reflection{transform:translateX(var(--action-reflection-x,-68px))}
+.action-bounce-ball{transform:translateY(var(--action-bounce-y,106px))}
+.action-ice-block{transform:translateX(var(--action-ice-x,194px))}
+.action-mat-block{transform:translateX(var(--action-mat-x,76px))}
+.action-pore-water{opacity:var(--action-water,1)}
+.quest-action-art[data-solved='true'] .action-sticky-1{transform:translate(142px,0)}
+.quest-action-art[data-solved='true'] .action-sticky-2{transform:translate(136px,0)}
+.quest-action-art[data-solved='true'] .action-sticky-3{transform:translate(142px,0)}
+.quest-action-art[data-solved='true'] .action-sticky-4{transform:translate(136px,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-1{transform:translate(0,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-2,
+.quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-2{transform:translate(0,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-3,
+.quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-3,
+.quest-action-art[data-experiment='true'][data-sticky='2'] .action-sticky-3{transform:translate(0,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-4,
+.quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-4,
+.quest-action-art[data-experiment='true'][data-sticky='2'] .action-sticky-4,
+.quest-action-art[data-experiment='true'][data-sticky='3'] .action-sticky-4{transform:translate(0,0)}

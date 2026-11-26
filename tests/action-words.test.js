@@ -5,8 +5,8 @@ const A=require('../public/js/action-words'),E=require('../public/js/engine'),D=
 const bank=require('../public/data/ordbank.json'),contexts=require('../public/data/word-contexts.json');
 const settings={mode:'train',difficulty:'medium',timerMode:'off',adventure:'forest'};
 const q=(id,picture=false)=>{const w=bank.words.find(w=>w.id===id);return {id,kind:'word',word:w.word,definition:w.definition,example:w.example,picture,options:[{label:w.definition,correct:true},{label:'Annan definition',correct:false}]};};
-test('ten authored actions use existing words and exactly one keyed choice',()=>{
- assert.deepEqual(A.validate(bank),[]);assert.equal(A.DATA.length,10);
+test('fifteen authored actions use existing words and exactly one keyed choice',()=>{
+ assert.deepEqual(A.validate(bank),[]);assert.equal(A.DATA.length,15);
  for(const row of A.DATA){
    const original=q(row.word),out=A.adapt(settings,original,()=>.4);
    assert.equal(out.id,original.id);assert.equal(out.word,original.word);assert.equal(out.definition,original.definition);
@@ -52,8 +52,8 @@ test('strategy clues and presentation never identify an answer',()=>{
  }
 });
 
-test('five reversible experiments are bounded, deterministic and independent of knowledge outcomes',()=>{
- assert.equal(Object.keys(A.EXPERIMENTS).length,5);
+test('ten reversible experiments are bounded, deterministic and independent of knowledge outcomes',()=>{
+ assert.equal(Object.keys(A.EXPERIMENTS).length,10);
  for(const id of Object.keys(A.EXPERIMENTS)){
    const low=A.experiment(id,0),mid=A.experiment(id,50),high=A.experiment(id,100);
    assert.equal(low.value,0);assert.equal(high.value,100);
@@ -80,4 +80,37 @@ test('pointer position maps to the accessible range with safe edge handling',()=
  assert.equal(A.pointerValue({left:0,width:0},10),null);
  assert.equal(A.pointerValue(rect,NaN),null);
  assert.equal(A.pointerValue(null,10),null);
+});
+
+test('zero displacement is canonical positive zero, including the real Node strict assertion',()=>{
+ assert.equal(A.experiment('magnet',0).ringX,0);
+ assert.equal(A.experiment('magnet',60).ringX,0);
+ assert.equal(A.experiment('mirror',0).mirrorImageX,0);
+});
+test('mirrored motion stays symmetric and the ball hits the floor before rising again',()=>{
+ for(let n=0;n<=100;n++){
+   const a=A.experiment('mirror',n);
+   assert.equal(a.mirrorX+a.mirrorImageX,0);
+   assert.ok(a.bounceY>=0&&a.bounceY<=106);
+ }
+ assert.equal(A.experiment('bounce',0).bounceY,0);
+ assert.equal(A.experiment('bounce',25).bounceY,106);
+ assert.ok(A.experiment('bounce',42).bounceY<A.experiment('bounce',25).bounceY);
+ assert.equal(A.experiment('bounce',60).bounceY,106);
+ assert.ok(A.experiment('bounce',73).bounceY<106);
+ assert.equal(A.experiment('bounce',100).bounceY,106);
+});
+test('slippery and rough surfaces diverge, pores fill, and paper stars attach in four stages',()=>{
+ let lastIce=0,lastMat=0,lastWater=0;
+ for(let n=0;n<=100;n++){
+   const a=A.experiment('slide',n);
+   assert.ok(a.iceX>=lastIce&&a.matX>=lastMat&&a.water>=lastWater);
+   assert.equal(a.sticky,Math.floor(n/25));
+   assert.ok(a.iceX<=194&&a.matX<=76&&a.water<=1);
+   lastIce=a.iceX;lastMat=a.matX;lastWater=a.water;
+ }
+ const end=A.experiment('slide',100);
+ assert.ok(end.iceX>end.matX);
+ assert.equal(A.experiment('sponge',100).water,1);
+ assert.deepEqual([0,25,50,75,100].map(n=>A.experiment('sticky',n).sticky),[0,1,2,3,4]);
 });

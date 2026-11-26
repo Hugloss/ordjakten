@@ -4,12 +4,12 @@ from playwright.sync_api import sync_playwright
 from browser_smoke import make_page
 from browser_question_play import drag
 
-def force_question(page):
-    page.evaluate("""() => {
+def force_question(page, word_id='sv-0025', level='medium'):
+    page.evaluate("""([id, level]) => {
       const E=window.OrdjaktenEngine,bank=window.ORDJAKTEN_WORDS;
-      E.generateRound=()=>[E.makeQuestion(bank.words.find(w=>w.id==='sv-0025'),
-        bank,window.ORDJAKTEN_CURATION,'medium',()=>.4)];
-    }""")
+      E.generateRound=()=>[E.makeQuestion(bank.words.find(w=>w.id===id),
+        bank,window.ORDJAKTEN_CURATION,level,()=>.4)];
+    }""", [word_id, level])
 
 def main(browser):
     page,errors=make_page(browser,{"width":1100,"height":1000})
@@ -68,9 +68,44 @@ def main(browser):
     assert not errors,errors
     page.close()
 
+def material_experiments(browser):
+    cases = [
+        ('sv-0037','easy','mirror','Blank spegel','.action-mirror-star','--action-mirror-x'),
+        ('sv-0008','medium','bounce','Studsboll av gummi','.action-bounce-ball','--action-bounce-y'),
+        ('sv-0005','easy','slide','Slät is','.action-ice-block','--action-ice-x'),
+        ('sv-0040','medium','sponge','Tvättsvamp med öppna porer','.action-pore-water','--action-water'),
+        ('sv-0011','medium','sticky','Kort med vått pyssellim','.action-sticky-1',None),
+    ]
+    for word_id, level, action, answer, visual, variable in cases:
+        page, errors = make_page(browser, {"width":390,"height":800})
+        force_question(page,word_id,level)
+        page.locator('[data-level="'+level+'"]').click()
+        page.locator('#start').click()
+        assert page.locator('#quest-action-art').get_attribute('data-action') == action
+        page.locator('.answer-option').filter(has_text=answer).click()
+        art = page.locator('#quest-action-solution-art')
+        assert art.locator(visual).is_visible()
+        assert page.locator('#quest-action-experiment').is_visible()
+        page.locator('#quest-action-reset').click()
+        initial = art.get_attribute('style')
+        if action == 'sticky':
+            assert art.get_attribute('data-sticky') == '0'
+        page.locator('#quest-action-range').focus()
+        page.keyboard.press('End')
+        assert page.locator('#quest-action-range').input_value() == '100'
+        if variable:
+            assert variable in art.get_attribute('style')
+            assert art.get_attribute('style') != initial
+        if action == 'sticky':
+            assert art.get_attribute('data-sticky') == '4'
+        assert page.locator('#stat-right').text_content() == '1'
+        assert not errors, errors
+        page.close()
+
 if __name__=='__main__':
     with sync_playwright() as p:
         browser=p.chromium.launch(headless=True,executable_path=shutil.which('chromium') or None,args=['--no-sandbox'])
         main(browser)
+        material_experiments(browser)
         browser.close()
     print('✓ semantic actions, original score, Aha gate and test isolation')

@@ -2999,6 +2999,8 @@
     $('quest-action-experiment').hidden=true;
     $('quest-action-range').value='100';
     $('quest-action-experiment-status').textContent='';
+    $('quest-action-experiment-announcement').textContent='';
+    art.removeAttribute('data-sticky');
   }
   function renderActionExperiment(value,announce=false){
     if(!actionExperiment||screen!=='play'||!game?.feedback)return;
@@ -3006,11 +3008,14 @@
     if(!model)return;
     actionExperiment=model;
     const art=$('quest-action-solution-art');
-    art.dataset.experiment='true';art.dataset.tangle=String(model.tangle);
+    art.dataset.experiment='true';art.dataset.tangle=String(model.tangle);art.dataset.sticky=String(model.sticky);
     for(const [name,v] of Object.entries({
       '--action-stretch':model.stretch,'--action-magnet-x':model.magnetX+'px',
       '--action-ring-x':model.ringX+'px','--action-rotation':model.rotation+'deg',
-      '--action-wilt-angle':model.wiltAngle+'deg','--action-wilt-opacity':model.wiltOpacity
+      '--action-wilt-angle':model.wiltAngle+'deg','--action-wilt-opacity':model.wiltOpacity,
+      '--action-mirror-x':model.mirrorX+'px','--action-reflection-x':model.mirrorImageX+'px',
+      '--action-bounce-y':model.bounceY+'px','--action-ice-x':model.iceX+'px',
+      '--action-mat-x':model.matX+'px','--action-water':model.water
     }))art.style.setProperty(name,String(v));
     $('quest-action-range').value=String(model.value);
     $('quest-action-range').setAttribute('aria-valuetext',model.message);
