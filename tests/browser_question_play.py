@@ -30,6 +30,7 @@ def main(browser):
     page.locator("#question-egg").click()
     assert page.locator("#question-egg-hint").is_visible()
     assert page.locator("#question-egg").get_attribute("aria-expanded") == "true"
+    assert page.locator("#question-egg .quest-hatchling-fox").is_visible()
     drag(page, page.locator(".quest-drag-grip").first, page.locator("#question-portal"))
     assert page.locator("#feedback-area").is_visible()
     assert page.locator("#question-portal").is_hidden()
@@ -45,6 +46,16 @@ def main(browser):
             break
     assert page.locator("#next").is_visible()
     assert page.locator("#quest-mystery-discovery").is_visible()
+    art = page.locator("#quest-discovery-art")
+    assert art.locator("svg").count() == 1
+    assert art.get_attribute("data-steps") == "1"
+    assert art.get_attribute("data-artifact") == "map"
+    assert art.locator(".quest-route-ink").is_visible()
+    assert page.evaluate("new Set([...document.querySelectorAll('[id]')].map(el=>el.id)).size===document.querySelectorAll('[id]').length")
+    page.locator("#next").click()
+    if page.locator("#story-reveal").is_visible():
+        page.locator("#story-reveal").click()
+    assert page.locator("#question-portal").get_attribute("data-steps") == "1"
     assert not errors, errors
     page.close()
 
@@ -74,6 +85,11 @@ def main(browser):
     page.locator(".answer-option").first.click()
     assert page.locator("#view-results").is_visible()
     assert page.locator("#quest-mystery-finale").is_visible()
+    finale = page.locator("#quest-finale-artwork")
+    assert finale.get_attribute("data-complete") == "true"
+    assert finale.get_attribute("data-treasure") == "sprout"
+    assert finale.locator(".quest-treasure-sprout").is_visible()
+    assert page.evaluate("new Set([...document.querySelectorAll('[id]')].map(el=>el.id)).size===document.querySelectorAll('[id]').length")
     assert not errors, errors
     page.close()
 

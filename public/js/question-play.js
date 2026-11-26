@@ -174,6 +174,23 @@
     "reveal": "Kistan öppnas! Mysteriet har fått sitt slut."
   }
 ];
+  const HATCHLINGS=Object.freeze({
+    forest:{id:'fox',name:'Lövkompisen'},space:{id:'star',name:'Stjärnkompisen'},
+    ocean:{id:'turtle',name:'Bubbelkompisen'},castle:{id:'dragon',name:'Sagokompis-draken'}
+  });
+  const TREASURES=Object.freeze({
+    forest:'sprout',space:'star',castle:'melody',pirate:'map',ocean:'pearl',dinosaurs:'egg',
+    garden:'flower',unicorn:'star',animals:'book',rainbow:'rainbow',horses:'shoe',music:'melody'
+  });
+  function worldId(settings){return Object.hasOwn(WORLDS,settings?.adventure)?settings.adventure:'forest';}
+  // Both question and discovery artwork use the same within-chapter progress.
+  // No question content, correctness, streak or score is consulted.
+  function visual(settings,chapters,index,done){
+    const id=worldId(settings),chapter=chapters[index],start=index===0?0:chapters[index-1].threshold;
+    const total=chapter.threshold-start,steps=Math.max(0,Math.min(total,done-start));
+    const fraction=steps/total;
+    return {scene:WORLDS[id].scene,artifact:chapter.id,treasure:TREASURES[id],steps,total,fraction,complete:steps===total};
+  }
   function mystery(settings,answered,total){
     if(!settings||!['train','test'].includes(settings.mode)||settings.timerMode!=='off'||settings.difficulty==='exam'||
       !Number.isInteger(total)||total<1||total>100)return null;
@@ -185,9 +202,9 @@
     const chapters=order.map((id,i)=>({...PHASES[id],sceneText:story[id+2],
       threshold:Math.ceil((i+1)*total/order.length)}));
     const completed=chapters.filter(ch=>done>=ch.threshold).length;
-    const finished=done===total,chapter=chapters[Math.min(completed,chapters.length-1)];
+    const finished=done===total,index=Math.min(completed,chapters.length-1),chapter=chapters[index];
     return {title:story[0],intro:story[1],ending:story[6],done,total,chapters,completed,finished,chapter,
-      step:Math.min(completed+1,chapters.length)};
+      visual:visual(settings,chapters,index,done),step:index+1};
   }
   function discovery(settings,answered,total){
     const current=mystery(settings,answered,total);
@@ -197,7 +214,7 @@
     return {artifact:prior.chapter.id,emoji:prior.chapter.emoji,
       title:reached?prior.chapter.title+' – upptäckt!':'Ett nytt spår',
       text:current.finished?current.ending:reached?prior.chapter.reveal:prior.chapter.partial,
-      reached,finished:current.finished};
+      reached,finished:current.finished,visual:visual(settings,prior.chapters,prior.step-1,current.done)};
   }
   function plan(settings,q,index=0){
     const world=Object.hasOwn(WORLDS,settings?.adventure)?WORLDS[settings.adventure]:WORLDS.forest;
@@ -207,7 +224,7 @@
       q?.taskType==='sentence'?'sentence':q?.kind==='expression'?'expression':q?.picture?'picture':'meaning';
     // Explicitly timed rounds keep a compact, ordinary answer interaction.
     const interactive=enabled&&settings.timerMode==='off';
-    return {enabled:interactive,egg:interactive&&settings.mode==='train',world,hint:HINTS[kind],
+    return {enabled:interactive,egg:interactive&&settings.mode==='train',world,hatchling:HATCHLINGS[world.scene],hint:HINTS[kind],
       caption:index%2===0?'För svaret genom porten!':'Vilket svar tar dig vidare?'};
   }
   function moved(x0,y0,x,y){return Math.hypot(x-x0,y-y0)>=8;}
@@ -217,5 +234,5 @@
     return !!drag&&drag.token===token&&drag.moved===true&&
       Number.isInteger(drag.index)&&drag.index>=0&&drag.index<optionCount&&inside(rect,x,y);
   }
-  return {WORLDS,HINTS,MYSTERIES,PHASES,plan,mystery,discovery,moved,inside,validDrop};
+  return {WORLDS,HINTS,MYSTERIES,PHASES,HATCHLINGS,TREASURES,plan,mystery,discovery,moved,inside,validDrop};
 });

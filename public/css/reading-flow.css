@@ -114,7 +114,7 @@
 .question-portal[hidden]{display:none}
 .quest-portal-art{display:block;width:100%;height:auto;aspect-ratio:300/210}
 .quest-scene{display:none}
-.question-portal[data-scene='forest'] .quest-scene-forest,.question-portal[data-scene='space'] .quest-scene-space,.question-portal[data-scene='ocean'] .quest-scene-ocean,.question-portal[data-scene='castle'] .quest-scene-castle{display:block}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-scene='forest'] .quest-scene-forest,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-scene='space'] .quest-scene-space,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-scene='ocean'] .quest-scene-ocean,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-scene='castle'] .quest-scene-castle{display:block}
 .quest-portal-copy{padding:12px;line-height:1.4}
 #question-portal-symbol{font-size:25px;margin-right:5px}
 #question-portal-title{font-size:18px}
@@ -159,8 +159,8 @@
 .quest-mystery-chapter{font-size:13px;font-weight:900;color:var(--muted);margin:0 0 5px}
 #quest-mystery-story{font-size:18px;line-height:1.5;font-weight:700;margin:0}
 .quest-object{display:none}
-.question-portal[data-artifact='map'] .quest-object-map,.question-portal[data-artifact='lock'] .quest-object-lock,.question-portal[data-artifact='lantern'] .quest-object-lantern,.question-portal[data-artifact='chest'] .quest-object-chest{display:block}
-.question-portal[data-artifact='map'] .quest-arch,.question-portal[data-artifact='lock'] .quest-arch,.question-portal[data-artifact='lantern'] .quest-arch,.question-portal[data-artifact='chest'] .quest-arch{display:none}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='map'] .quest-object-map,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lock'] .quest-object-lock,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lantern'] .quest-object-lantern,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='chest'] .quest-object-chest{display:block}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='map'] .quest-arch,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lock'] .quest-arch,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lantern'] .quest-arch,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='chest'] .quest-arch{display:none}
 .quest-mystery-discovery,.quest-mystery-finale{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:18px;background:var(--surface);margin:16px 0}
 .quest-mystery-reveal-icon{font-size:52px;line-height:1.2;flex:0 0 auto}
 .quest-mystery-discovery h2,.quest-mystery-finale h2{font-size:clamp(19px,3.5vw,25px);line-height:1.3;margin:4px 0}
@@ -170,3 +170,54 @@
 @media(max-width:520px){.quest-mystery{padding:12px}.quest-mystery-step{flex-direction:column;gap:2px;font-size:11px}.quest-mystery-step[data-state='found']::after{display:none}.quest-mystery-step-icon{font-size:24px}.quest-mystery-finale{align-items:flex-start;gap:8px}.quest-mystery-finale .quest-finale-art{width:86px}.quest-mystery-reveal-icon{font-size:40px}}
 @media(prefers-reduced-motion:no-preference){.quest-mystery-discovery:not([hidden]) .quest-mystery-reveal-icon{animation:mystery-reveal .42s ease-out both}@keyframes mystery-reveal{from{transform:scale(.8);opacity:.5}70%{transform:scale(1.1)}to{transform:scale(1);opacity:1}}}
 @media(forced-colors:active){.quest-mystery-step[data-state='current']{outline:2px solid Highlight}}
+
+/* Reactive illustrations: the next question continues at the exact visual
+   progress of the previous discovery. A finite reveal, never a delay. */
+.quest-hatchling,.quest-treasure{display:none}
+.quest-egg-button[data-hatchling='fox'] .quest-hatchling-fox,
+.quest-egg-button[data-hatchling='star'] .quest-hatchling-star,
+.quest-egg-button[data-hatchling='turtle'] .quest-hatchling-turtle,
+.quest-egg-button[data-hatchling='dragon'] .quest-hatchling-dragon{display:block}
+.quest-egg-art{width:76px;height:80px;flex-basis:76px}
+.quest-route-ink{stroke-dasharray:var(--quest-route,0) 100;opacity:var(--quest-fraction,0)}
+.quest-map-mark{opacity:var(--quest-fraction,0)}
+.quest-door-panel{transform-box:fill-box;transform-origin:left center}
+.quest-key-motion{transform-box:fill-box;transform-origin:center;transform:rotate(var(--quest-turn,0deg))}
+.quest-lantern-glow{opacity:var(--quest-glow,.06)}
+.quest-lantern-flame{opacity:var(--quest-fraction,0);transform-box:fill-box;transform-origin:center bottom;transform:scale(var(--quest-flame,.35))}
+.quest-chest-treasure{opacity:0}
+.quest-chest-lid{transform-box:fill-box;transform-origin:left bottom}
+.quest-chest-seal{filter:drop-shadow(0 0 calc(var(--quest-fraction,0) * 5px) #fff1a6)}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-complete='true'] .quest-door-panel{transform:scaleX(.18)}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-complete='true'] .quest-chest-lid{transform:translate(-3px,-40px) rotate(-9deg)}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-complete='true'] .quest-chest-treasure{opacity:1}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='sprout'] .quest-treasure-sprout,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='star'] .quest-treasure-star,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='melody'] .quest-treasure-melody,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='map'] .quest-treasure-map,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='pearl'] .quest-treasure-pearl,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='egg'] .quest-treasure-egg,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='flower'] .quest-treasure-flower,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='book'] .quest-treasure-book,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='rainbow'] .quest-treasure-rainbow,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='shoe'] .quest-treasure-shoe{display:block}
+.quest-discovery-art,.quest-finale-artwork{width:clamp(120px,34vw,260px);flex:0 0 auto;overflow:hidden;border:1px solid var(--border);border-radius:15px}
+.quest-mystery-discovery>div:last-child,.quest-mystery-finale>div:last-child{min-width:0;flex:1}
+.quest-discovery-art .quest-portal-art,.quest-finale-artwork .quest-portal-art{width:100%;height:auto}
+@media(max-width:520px){.quest-mystery-discovery,.quest-mystery-finale{flex-direction:column;align-items:stretch}.quest-discovery-art,.quest-finale-artwork{width:100%;max-width:290px;align-self:center}.quest-egg-art{width:66px;height:70px;flex-basis:66px}}
+@media(prefers-reduced-motion:no-preference){
+ .quest-mystery-discovery:not([hidden]) .quest-route-ink{animation:quest-ink .55s ease-out both}
+ .quest-mystery-discovery:not([hidden]) .quest-key-motion{animation:quest-key-turn .45s ease-out both}
+ .quest-mystery-discovery:not([hidden]) [data-complete='true'] .quest-door-panel{animation:quest-door-open .6s .15s ease-out both}
+ .quest-mystery-discovery:not([hidden]) .quest-lantern-glow{animation:quest-glow-in .55s ease-out both}
+ .quest-mystery-discovery:not([hidden]) [data-complete='true'] .quest-chest-lid,
+ .quest-mystery-finale:not([hidden]) .quest-chest-lid{animation:quest-open-chest .55s ease-out both}
+ .quest-mystery-discovery:not([hidden]) [data-complete='true'] .quest-chest-treasure,
+ .quest-mystery-finale:not([hidden]) .quest-chest-treasure{animation:quest-treasure-show .55s .18s ease-out both}
+ @keyframes quest-ink{from{stroke-dasharray:0 100;opacity:.4}to{stroke-dasharray:var(--quest-route) 100;opacity:var(--quest-fraction)}}
+ @keyframes quest-key-turn{from{transform:rotate(0deg)}to{transform:rotate(var(--quest-turn))}}
+ @keyframes quest-door-open{from{transform:scaleX(1)}to{transform:scaleX(.18)}}
+ @keyframes quest-glow-in{from{opacity:.06}to{opacity:var(--quest-glow)}}
+ @keyframes quest-open-chest{from{transform:translate(0,0) rotate(0deg)}to{transform:translate(-3px,-40px) rotate(-9deg)}}
+ @keyframes quest-treasure-show{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+}

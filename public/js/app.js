@@ -2949,12 +2949,41 @@
     if(storyVisible)$('story-reveal').textContent='🔎 Jag har läst – visa spåren →';
     $('answer-step').querySelector('strong').textContent='🔎 VÄLJ DITT SPÅR';
   }
+  function renderMysteryArt(host,visual){
+    if(!visual)return;
+    host.dataset.scene=visual.scene;
+    host.dataset.artifact=visual.artifact;
+    host.dataset.treasure=visual.treasure;
+    host.dataset.complete=String(visual.complete);
+    host.dataset.steps=String(visual.steps);
+    host.dataset.total=String(visual.total);
+    host.style.setProperty('--quest-fraction',String(visual.fraction));
+    host.style.setProperty('--quest-route',String(visual.fraction*100));
+    host.style.setProperty('--quest-glow',String(.06+.58*visual.fraction));
+    host.style.setProperty('--quest-flame',String(.35+.65*visual.fraction));
+    host.style.setProperty('--quest-turn',(visual.fraction*65)+'deg');
+  }
+  function ensureMysteryIllustration(host,prefix){
+    if(host.firstElementChild)return;
+    // Share one authored SVG. Prefix its local IDs and references on each
+    // copy so gradients and symbols never collide across question/results.
+    const svg=$('question-portal').querySelector('svg').cloneNode(true);
+    for(const node of svg.querySelectorAll('*')){
+      if(node.id.startsWith('qp-'))node.id=prefix+node.id.slice(3);
+      for(const attr of [...node.attributes]){
+        if(attr.value.includes('#qp-'))node.setAttribute(attr.name,attr.value.replaceAll('#qp-','#'+prefix));
+      }
+    }
+    host.append(svg);
+  }
   function renderMysteryDiscovery(){
     const done=game?Object.keys(game.answers).length:0;
     const model=game?.settings.mode==='train'?QuestionPlay.discovery(game.settings,done,game.questions.length):null;
     $('quest-mystery-discovery').hidden=!model;
     if(!model)return;
     $('quest-mystery-discovery').dataset.artifact=model.artifact;
+    const art=$('quest-discovery-art');
+    ensureMysteryIllustration(art,'qd-');renderMysteryArt(art,model.visual);
     $('quest-mystery-discovery-icon').textContent=model.emoji;
     $('quest-mystery-discovery-title').textContent=model.title;
     $('quest-mystery-discovery-text').textContent=model.text;
@@ -2963,6 +2992,8 @@
     const model=mysteryForRound(game?Object.keys(game.answers).length:0);
     $('quest-mystery-finale').hidden=!model?.finished;
     if(!model?.finished)return;
+    const art=$('quest-finale-artwork');
+    ensureMysteryIllustration(art,'qf-');renderMysteryArt(art,model.visual);
     $('quest-mystery-finale-title').textContent=model.title+' – upplöst!';
     $('quest-mystery-finale-text').textContent=model.ending;
   }
@@ -3003,6 +3034,8 @@
     $('question-portal').dataset.scene=world.scene;
     const mystery=mysteryForRound();
     $('question-portal').dataset.artifact=mystery?.chapter.id||'portal';
+    if(mystery)renderMysteryArt($('question-portal'),mystery.visual);
+    $('question-egg').dataset.hatchling=questionPresentation.hatchling.id;
     $('question-portal-title').textContent=mystery?.chapter.title||world.name;
     $('question-portal-caption').textContent=mystery?.chapter.action||caption;
     $('question-portal-symbol').textContent=mystery?.chapter.emoji||world.target;
@@ -3012,7 +3045,7 @@
   function openQuestionEgg(){
     if(!questionReady()||!questionPresentation?.egg||$('question-egg').dataset.open==='true')return;
     $('question-egg').dataset.open='true';$('question-egg').setAttribute('aria-expanded','true');
-    $('question-egg-label').textContent='Ägget är öppnat!';
+    $('question-egg-label').textContent=questionPresentation.hatchling.name+' tittar fram!';
     $('question-egg-hint').hidden=false;
   }
   function startQuestionDrag(event){

@@ -98,3 +98,39 @@ test('timed and exam rounds have no mystery overlay; invalid round sizes fail sa
   assert.equal(P.mystery(settings,999,5).done,5);
   assert.equal(P.mystery(settings,-8,5).done,0);
 });
+
+test('each chapter advances visually and the discovery matches the next question before a chapter changes',()=>{
+  for(const adventure of Object.keys(P.WORLDS))for(let total=1;total<=25;total++){
+    const cfg={...settings,adventure};
+    for(let done=0;done<total;done++){
+      const before=P.mystery(cfg,done,total).visual;
+      const found=P.discovery(cfg,done+1,total);
+      const after=found.visual;
+      assert.equal(after.artifact,before.artifact);
+      assert.equal(after.steps,before.steps+1);
+      assert.equal(after.total,before.total);
+      assert.equal(after.fraction,after.steps/after.total);
+      assert.equal(after.complete,found.reached);
+      assert.ok(after.fraction>before.fraction&&after.fraction<=1);
+      const upcoming=P.mystery(cfg,done+1,total).visual;
+      if(!found.reached)assert.deepEqual(upcoming,after);
+      else if(!found.finished)assert.equal(upcoming.steps,0);
+      else assert.deepEqual(upcoming,after);
+    }
+  }
+});
+test('twelve world endings select authored treasure art and four optional hatchlings without answer clues',()=>{
+  const eggs=new Set(),treasures=new Set();
+  for(const adventure of Object.keys(P.WORLDS)){
+    const cfg={...settings,adventure};
+    const plan=P.plan(cfg,q);
+    eggs.add(plan.hatchling.id);
+    assert.ok(plan.hatchling.name);
+    const end=P.mystery(cfg,5,5).visual;
+    assert.equal(end.artifact,'chest');assert.equal(end.complete,true);
+    assert.ok(end.treasure);treasures.add(end.treasure);
+    assert.deepEqual(P.mystery({...cfg,mode:'test',score:0},5,5).visual,end);
+  }
+  assert.equal(eggs.size,4);assert.equal(treasures.size,10);
+  assert.equal(P.plan({...settings,mode:'test'},q).egg,false);
+});

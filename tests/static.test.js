@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v47-mystery-rounds'));
+  assert.ok(worker.includes('v48-reactive-mysteries'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -333,4 +333,19 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   assert.ok(app.includes('renderMysteryQuestion(storyVisible);'));
   assert.ok(app.includes('renderMysteryFinale();'));
   assert.ok(app.includes('suppressQuestionClick'));
+});
+
+test('reactive mystery art is shared, prefix-scoped and has a visual for every authored ending',()=>{
+  const html=read('index.html'),app=read('js/app.js'),css=read('css/reading-flow.css');
+  const play=require('../public/js/question-play');
+  for(const item of Object.values(play.HATCHLINGS)){
+    assert.ok(html.includes('quest-hatchling-'+item.id));assert.ok(css.includes('quest-hatchling-'+item.id));
+  }
+  for(const id of new Set(Object.values(play.TREASURES))){
+    assert.ok(html.includes('quest-treasure-'+id));assert.ok(css.includes('quest-treasure-'+id));
+  }
+  assert.ok(app.includes("ensureMysteryIllustration(art,'qd-')")&&app.includes("ensureMysteryIllustration(art,'qf-')"));
+  assert.ok(app.includes("renderMysteryArt(art,model.visual)")&&app.includes("renderMysteryArt($('question-portal'),mystery.visual)"));
+  assert.ok(css.includes('prefers-reduced-motion:no-preference'));
+  assert.ok(!css.includes('animation-iteration-count:infinite'));
 });
