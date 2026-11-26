@@ -52,8 +52,8 @@ test('strategy clues and presentation never identify an answer',()=>{
  }
 });
 
-test('eighteen reversible experiments are bounded, deterministic and independent of knowledge outcomes',()=>{
- assert.equal(Object.keys(A.EXPERIMENTS).length,18);
+test('twenty reversible experiments are bounded, deterministic and independent of knowledge outcomes',()=>{
+ assert.equal(Object.keys(A.EXPERIMENTS).length,20);
  for(const id of Object.keys(A.EXPERIMENTS)){
    const low=A.experiment(id,0),mid=A.experiment(id,50),high=A.experiment(id,100);
    assert.equal(low.value,0);assert.equal(high.value,100);
@@ -143,4 +143,25 @@ test('water clarity, cutaway, marble passage and flight endpoints are reversible
  assert.equal(b.marbleX,0);assert.equal(c.marbleX,236);
  assert.equal(a.flightY,0);assert.equal(c.flightY,0);assert.ok(b.flightY<0);
  assert.equal(a.flightX,0);assert.equal(c.flightX,200);assert.deepEqual(A.experiment('cloudy',0),a);
+});
+
+test('four combined word actions retain one scored primary word and a valid related word',()=>{
+ assert.equal(Object.keys(A.COMBINATIONS).length,4);
+ for(const [id,other] of Object.entries(A.COMBINATIONS)){
+   const row=A.DATA.find(x=>x.id===id),original=q(row.word);
+   const out=A.adapt(settings,original,()=>.4);
+   assert.equal(out.id,original.id);
+   assert.deepEqual(out.action.related,other);
+   assert.equal(bank.words.find(w=>w.id===other.id).word,other.word);
+   assert.ok(out.id!==other.id);
+   assert.equal(out.options.filter(o=>o.correct).length,1);
+   assert.equal(Object.keys(D.record({},out,'right',1000)).length,1);
+ }
+});
+test('light and cushioning experiments are reversible and bounded',()=>{
+ const lo=A.experiment('window',0),hi=A.experiment('window',100);
+ assert.equal(lo.beamPower,0);assert.equal(hi.beamPower,1);
+ assert.equal(lo.eggY,0);assert.equal(hi.eggY,32);
+ assert.equal(lo.pillowScale,1);
+ assert.ok(hi.pillowScale>=.8&&hi.pillowScale<1);
 });

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "25 frivilliga miniuppdrag med NYA situationer som visar överförd förståelse. Öppnas efter inlärning, aldrig under prov.",
+  "description": "31 frivilliga miniuppdrag med nya situationer och bildliga uttryck. Öppnas efter inlärning, aldrig under prov.",
   "challenges": [
     {
       "id": "ut-0001",
@@ -376,6 +376,96 @@
         }
       ],
       "explanation": "Att vända blad är att släppa det som varit och gå vidare."
+    },
+    {
+      "id": "ut-0026",
+      "prompt": "Vilken NY situation passar uttrycket ”skogens konung”?",
+      "options": [
+        {
+          "label": "En stor älgtjur står bland granarna. Guiden kallar den skogens konung.",
+          "correct": true
+        },
+        {
+          "label": "En hare hoppar över stigen. Guiden menar att haren brukar kallas skogens konung.",
+          "correct": false
+        }
+      ],
+      "explanation": "I dagens svenska används skogens konung ofta om älgen. Förr har även björnen fått det namnet."
+    },
+    {
+      "id": "ut-0027",
+      "prompt": "Vilken NY situation passar uttrycket ”djurens konung”?",
+      "options": [
+        {
+          "label": "En bok visar ett lejon med stor man och kallar det djurens konung.",
+          "correct": true
+        },
+        {
+          "label": "En bok visar en giraff och förklarar att giraffen brukar kallas djurens konung.",
+          "correct": false
+        }
+      ],
+      "explanation": "Djurens konung syftar på lejonet, inte på att lejon verkligen bestämmer över alla andra djur."
+    },
+    {
+      "id": "ut-0028",
+      "prompt": "Vilken NY situation passar uttrycket ”öknens skepp”?",
+      "options": [
+        {
+          "label": "En resenär lastar sin packning på en kamel och kallar den öknens skepp.",
+          "correct": true
+        },
+        {
+          "label": "En resenär ser en isbjörn och kallar den det vanliga uttrycket öknens skepp.",
+          "correct": false
+        }
+      ],
+      "explanation": "Öknens skepp är en metafor för kamelen. En dromedar hör också till kameldjuren."
+    },
+    {
+      "id": "ut-0029",
+      "prompt": "Vilken NY situation passar uttrycket ”havets enhörning”?",
+      "options": [
+        {
+          "label": "En narval simmar i Arktis. Berättaren kallar den havets enhörning på grund av tanden.",
+          "correct": true
+        },
+        {
+          "label": "En säl ligger på isen och berättaren säger att sälen brukar kallas havets enhörning.",
+          "correct": false
+        }
+      ],
+      "explanation": "Havets enhörning syftar på narvalen, som ibland har en lång tand som liknar ett sagohorn."
+    },
+    {
+      "id": "ut-0030",
+      "prompt": "Vilken NY situation passar uttrycket ”människans bästa vän”?",
+      "options": [
+        {
+          "label": "På hundutställningen förklarar en guide talesättet människans bästa vän.",
+          "correct": true
+        },
+        {
+          "label": "På en fiskutställning säger en guide att guldfisken är djuret som traditionellt avses med människans bästa vän.",
+          "correct": false
+        }
+      ],
+      "explanation": "Talesättet syftar på hunden. Det betyder inte att alla måste tycka bäst om hundar."
+    },
+    {
+      "id": "ut-0031",
+      "prompt": "Vilken NY situation passar uttrycket ”naturens ingenjör”?",
+      "options": [
+        {
+          "label": "En bäver har byggt en damm som ändrar vattennivån. Guiden kallar bävern naturens ingenjör.",
+          "correct": true
+        },
+        {
+          "label": "En gädda simmar förbi. Guiden förklarar att gäddan byggde dammen och är naturens ingenjör här.",
+          "correct": false
+        }
+      ],
+      "explanation": "Bävern kallas ofta naturens ingenjör. Uttrycket är bildligt och kan även användas om andra djur."
     }
   ]
 }

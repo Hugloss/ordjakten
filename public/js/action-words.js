@@ -42,9 +42,9 @@
     "word": "sv-0003",
     "id": "window",
     "title": "Fönstret till hemligheten",
-    "prompt": "En ledtråd ligger bakom fönstret. Välj ett genomskinligt material till rutan.",
+    "prompt": "Vi har en lysande ficklampa och en ledtråd bakom fönstret. Välj ett genomskinligt material till rutan.",
     "target": "Sätt materialet i fönstret",
-    "why": "Ljus passerar genom den klara glasskivan. Du kan se tecknet bakom den.",
+    "why": "Ljus från ficklampan passerar genom den klara glasskivan. Du kan se tecknet bakom den.",
     "answer": "glass",
     "options": [
       [
@@ -73,9 +73,9 @@
     "word": "sv-0068",
     "id": "magnet",
     "title": "Den försvunna järnringen",
-    "prompt": "Järnringen ligger utom räckhåll. Välj ett magnetiskt föremål för att få tag i den.",
+    "prompt": "En järnring ligger på hal is. Välj ett magnetiskt föremål för att dra ringen närmare utan att först röra den.",
     "target": "För föremålet mot järnringen",
-    "why": "Magneten drar till sig järnringen utan att först behöva röra vid den.",
+    "why": "Magneten drar till sig järnringen. Den hala isen gör det lättare för ringen att glida.",
     "answer": "magnet",
     "options": [
       [
@@ -104,7 +104,7 @@
     "word": "sv-0012",
     "id": "nest",
     "title": "Det sköra ägget",
-    "prompt": "Ett skört ägg behöver flyttas till boet. Hur gör du?",
+    "prompt": "Ett skört ägg behöver flyttas till boet. Vilket sätt skyddar ägget med något mjukt?",
     "target": "Flytta ägget till boet",
     "why": "Ett skört skal kan lätt gå sönder. En mjuk korg skyddar det när du bär det försiktigt.",
     "answer": "nest",
@@ -260,9 +260,9 @@
     "word": "sv-0027",
     "id": "wilt",
     "title": "Blomman som hänger",
-    "prompt": "En vissnad blomma hänger ner och jorden är torr. Vad kan hjälpa den att återhämta sig?",
+    "prompt": "Den tidigare frodiga trädgården har vissnat av vattenbrist. Växterna lever fortfarande. Vad kan hjälpa dem att återhämta sig?",
     "target": "Hjälp blomman i krukan",
-    "why": "En vissnad växt har tappat sin spänst. Om den har vissnat av vattenbrist kan vatten och tid hjälpa den att återhämta sig, om den fortfarande lever.",
+    "why": "En vissnad växt har tappat sin spänst. Om den har vissnat av vattenbrist kan vatten och tid hjälpa den att återhämta sig, om den fortfarande lever. Med goda växtförhållanden kan trädgården åter bli frodig.",
     "answer": "water",
     "options": [
       [
@@ -725,6 +725,28 @@
   }
 ];
  const byWord=new Map(DATA.map(row=>[row.word,row]));
+ const COMBINATIONS=Object.freeze({
+  "magnet": {
+    "id": "sv-0005",
+    "word": "Hal",
+    "explanation": "En hal yta är lätt att glida på. Magneten drar järnringen, medan den hala isen gör det lättare för ringen att glida."
+  },
+  "window": {
+    "id": "sv-0018",
+    "word": "Lysande",
+    "explanation": "En tänd ficklampa är lysande. Det genomskinliga glaset släpper igenom ljus så att tecknet bakom blir synligt."
+  },
+  "nest": {
+    "id": "sv-0015",
+    "word": "Mjuk",
+    "explanation": "En mjuk kudde ger efter när ägget läggs ner. Den kan skydda det sköra skalet mot stötar."
+  },
+  "wilt": {
+    "id": "sv-0030",
+    "word": "Frodig",
+    "explanation": "Vissna, levande växter som fått för lite vatten kan ibland återhämta sig. Med tid och goda växtförhållanden kan en hel trädgård bli frodig."
+  }
+});
  function eligible(settings,q){
    return !!q&&q.kind==='word'&&typeof q.picture==='boolean'&&
      (!q.taskType||q.taskType==='meaning')&&settings?.mode==='train'&&
@@ -739,7 +761,7 @@
      [options[i],options[j]]=[options[j],options[i]];
    }
    // Keep the selected recognition skill; no context scene index is invented.
-   return {...q,taskType:'action',options,stem:row.prompt,action:{id:row.id,title:row.title,prompt:row.prompt,target:row.target,why:row.why}};
+   return {...q,taskType:'action',options,stem:row.prompt,action:{id:row.id,title:row.title,prompt:row.prompt,target:row.target,why:row.why,related:COMBINATIONS[row.id]||null}};
  }
  function adaptRound(settings,questions,random=Math.random){return questions.map(q=>adapt(settings,q,random));}
  function validate(bank){
@@ -750,15 +772,21 @@
        row.options.filter(o=>o[0]===row.answer).length!==1||!row.options.every(o=>o.length===3&&o.every(v=>typeof v==='string'&&v.trim())))errors.push(row.word);
      seen.add(row.word);seen.add(row.id);
    }
+   for(const [id,other] of Object.entries(COMBINATIONS)){
+     const row=DATA.find(x=>x.id===id),word=bank.words.find(x=>x.id===other.id);
+     if(!row||!word||row.word===other.id||word.word!==other.word||!other.explanation)errors.push('Ogiltigt ordpar '+id);
+   }
    return errors;
  }
  // Optional, reversible experiments after a worked example. They are not
  // answers, do not measure dexterity, and never change a learning record.
  const EXPERIMENTS=Object.freeze({
+   window:{label:'Lys genom fönstret',instruction:'Dra för att tända ficklampan. Se hur ljuset passerar genom det genomskinliga glaset i vår bild.',low:'Ficklampan är släckt.',mid:'Ficklampan lyser genom glaset.',high:'Den lysande ficklampan avslöjar tecknet genom glaset.'},
+   nest:{label:'Lägg ägget på den mjuka kudden',instruction:'Dra över bilden för att sänka ägget långsamt. Kudden ger efter lite i vår förenklade illustration.',low:'Ägget hålls ovanför kudden.',mid:'Ägget sänks försiktigt.',high:'Det sköra ägget vilar mjukt i korgen.'},
    stretch:{label:'Dra i gummibandet',instruction:'Dra över bilden eller använd reglaget. Prova att sträcka bandet och låta det dra ihop sig igen.',low:'Bandet är avslappnat.',mid:'Bandet sträcks ut.',high:'Bandet är längre. Prova att låta det dra ihop sig igen.'},
-   magnet:{label:'Flytta magneten',instruction:'Dra magneten närmare järnringen. Se när ringen följer med.',low:'Magneten är långt från ringen.',mid:'Magneten närmar sig ringen.',high:'Magneten drar till sig järnringen!'},
+   magnet:{label:'Flytta magneten',instruction:'Dra magneten närmare järnringen. Se när ringen glider över den hala isen.',low:'Magneten är långt från ringen.',mid:'Magneten närmar sig ringen.',high:'Magneten har dragit järnringen över den hala isen!'},
    whirl:{label:'Snurra löven',instruction:'Dra över bilden eller flytta reglaget för att snurra löven runt mitten.',low:'Löven vilar.',mid:'Löven rör sig runt mitten.',high:'Löven har virvlat ett helt varv!'},
-   wilt:{label:'Låt tiden gå efter vattning',instruction:'Dra fram tiden i vår låtsasbild. En levande, törstig växt kan återhämta sig gradvis efter vattning.',low:'Bladen hänger. Jorden har fått vatten.',mid:'Blomman börjar räta på sig.',high:'I berättelsen har blomman återhämtat sig.'},
+   wilt:{label:'Låt tiden gå efter vattning',instruction:'Dra fram tiden i vår låtsasbild. En levande, törstig växt kan återhämta sig gradvis efter vattning.',low:'Bladen hänger. Jorden har fått vatten.',mid:'Blomman börjar räta på sig.',high:'I berättelsen har trädgården återhämtat sig och blivit frodig.'},
    tangle:{label:'Red ut garnet',instruction:'Dra försiktigt över bilden och följ hur slingorna försvinner.',low:'Garnet är trassligt.',mid:'Några slingor har lossnat.',high:'Tråden är utredd!'},
    mirror:{label:'Flytta stjärnan framför spegeln',instruction:'Dra över bilden eller flytta reglaget. Följ hur stjärnans spegelbild rör sig på andra sidan spegellinjen.',low:'Stjärnan och spegelbilden är långt från spegellinjen.',mid:'Spegelbilden följer stjärnans rörelse.',high:'Båda är nära spegellinjen.'},
    bounce:{label:'Följ bollens studs',instruction:'Flytta reglaget framåt och bakåt i tiden. Se hur gummibollen faller, träffar golvet och studsar upp igen.',low:'Bollen är högt upp före fallet.',mid:'Bollen faller eller studsar upp igen.',high:'De allt mindre studsarna har stannat.'},
@@ -792,7 +820,7 @@
      tangle:f<.34?0:f<.67?1:2,
      mirrorX:68*f,mirrorImageX:-68*f||0,bounceY,
      iceX:194*(1-(1-f)**2),matX:76*(1-(1-Math.min(1,2*f))**2),
-     water:f,sticky:Math.floor(f*4),
+     water:f,sticky:Math.floor(f*4),beamPower:f,eggY:32*f,pillowScale:1-.18*Math.max(0,(f-.7)/.3),
      lightX:194*f,glitter:Math.min(4,Math.floor(f*5)),foam:Math.floor(f*12),
      wobble,scanX:184*f,growth:.25+.75*f,cloud:.88*f,particles:Math.floor(f*16),
      cutaway:Math.min(1,f*2),marbleX:236*Math.max(0,2*f-1),
@@ -802,5 +830,5 @@
    if(!rect||!Number.isFinite(rect.left)||!Number.isFinite(rect.width)||rect.width<=0||!Number.isFinite(x))return null;
    return Math.round(100*Math.max(0,Math.min(1,(x-rect.left)/rect.width)));
  }
- return {DATA,eligible,adapt,adaptRound,validate,EXPERIMENTS,experiment,pointerValue};
+ return {DATA,COMBINATIONS,eligible,adapt,adaptRound,validate,EXPERIMENTS,experiment,pointerValue};
 });

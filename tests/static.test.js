@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v53-magical-materials'));
+  assert.ok(worker.includes('v54-animal-expressions'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -410,4 +410,16 @@ test('magical material artwork is wired and only the active scene is cloned',()=
  }
  assert.ok(app.includes("'--action-flight-y':model.flightY+'px'"));
  assert.ok(app.includes("'--action-foam-count':model.foam"));
+});
+
+test('animal metaphors have a shared illustration and combined actions explain related words',()=>{
+ const html=read('index.html'),app=read('js/app.js'),engine=read('js/engine.js'),comics=read('js/comics.js');
+ const expressions=require('../public/data/expressions.json').expressions;
+ const animals=expressions.filter(x=>x.animal);
+ assert.equal(animals.length,6);
+ for(const entry of animals)assert.ok(html.includes('data-animal="'+entry.animal+'"'));
+ assert.ok(engine.includes('animal:entry.animal'));
+ assert.ok(comics.includes('renderAnimal(art,expression)'));
+ assert.ok(app.includes("C.renderAnimal($('quest-animal-picture'),q)"));
+ assert.ok(app.includes('q.action.related.explanation'));
 });

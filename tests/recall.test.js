@@ -16,7 +16,7 @@ const fresh=(item,stage=1)=>({stage,matched:true,helped:false});
 const observation=(p,item,outcome,now=NOW)=>R.record(p,catalog,item.id,outcome,now);
 const known=item=>({skillProgress:D.record({},{
   id:item.id,kind:item.kind,taskType:'meaning'},'right',NOW-1)});
-test('all 146 targets have prompts with no exposed complete answer; exact authored examples only',()=>{
+test('all 152 targets have prompts with no exposed complete answer; exact authored examples only',()=>{
   let clozes=0;
   for(const item of catalog){
     const question=R.task(item);
@@ -35,7 +35,7 @@ test('all 146 targets have prompts with no exposed complete answer; exact author
     assert.equal(R.prompt(question,1).letters,'');
     assert.ok(R.prompt(question,0).letters);
   }
-  assert.equal(catalog.length,146);
+  assert.equal(catalog.length,152);
   assert.ok(clozes>0&&clozes<catalog.length);
   const inflected=catalog.find(item=>item.name==='Genomskinlig');
   assert.equal(R.task(inflected).cloze,'','Never rewrite the inflected example');

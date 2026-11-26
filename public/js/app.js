@@ -2795,7 +2795,7 @@
     const nExpressions=pool.length-nWords;
     $('pool-info').textContent=(settings.topic==='words'?`${nWords} ord`:settings.topic==='expressions'?`${nExpressions} uttryck`:`${nWords} ord och ${nExpressions} uttryck`)+'. Ingen fråga upprepas under omgången.';
     $('topic-help').textContent=settings.topic==='expressions'
-      ? '🎭 Små vardagsberättelser och en Aha-förklaring efter svaret. Alla 25 uttryck är skrivna för cirka 8–10 år.'
+      ? '🎭 Små vardagsberättelser och en Aha-förklaring efter svaret. Alla 31 uttryck är skrivna för cirka 8–10 år.'
       : settings.topic==='mixed'
         ? '🎲 En blandning av enstaka ord och vardagsuttryck. Varje uttryck har en liten berättelse.'
         : '🔤 Enstaka ord, med möjlighet att öva i små vardagsberättelser på medel och svårt.';
@@ -3029,7 +3029,8 @@
       '--action-cloud':model.cloud,'--action-cutaway':model.cutaway,
       '--action-foam-count':model.foam,'--action-particle-count':model.particles,
       '--action-marble-x':model.marbleX+'px','--action-flight-x':model.flightX+'px',
-      '--action-flight-y':model.flightY+'px'
+      '--action-flight-y':model.flightY+'px',
+      '--action-beam-power':model.beamPower,'--action-egg-y':model.eggY+'px','--action-pillow-scale':model.pillowScale
     }))art.style.setProperty(name,String(v));
     $('quest-action-range').value=String(model.value);
     $('quest-action-range').setAttribute('aria-valuetext',model.message);
@@ -3071,6 +3072,11 @@
     renderActionArt($('quest-action-solution-art'),q.action,true);
     $('quest-action-solution-title').textContent=q.action.title+' – så fungerar det';
     $('quest-action-solution-text').textContent=q.action.why;
+    $('quest-related-word').hidden=!q.action.related;
+    if(q.action.related){
+      $('quest-related-title').textContent='✦ Ord som samverkar: '+q.word+' + '+q.action.related.word;
+      $('quest-related-explanation').textContent=q.action.related.explanation;
+    }
     startActionExperiment(q);
   }
   function renderMysteryArt(host,visual){
@@ -3147,6 +3153,7 @@
     $('quest-action-art').hidden=true;
     $('question-portal').removeAttribute('data-semantic');
     $('quest-action-solution').hidden=true;
+    $('quest-animal-art').hidden=true;
     resetActionExperiment();
   }
   function questionReady(){
@@ -3470,6 +3477,7 @@
       $('explanation-definition').textContent=q.definition;
       $('explanation-example').textContent='Exempel: '+q.example;
       renderActionSolution(q);
+      $('quest-animal-art').hidden=!C.renderAnimal($('quest-animal-picture'),q);
       $('context-aha').hidden=q.taskType!=='context';
       if(q.taskType==='context')$('context-reason').textContent=q.contextWhy;
       $('expression-reveal').hidden=q.kind!=='expression';

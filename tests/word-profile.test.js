@@ -32,7 +32,7 @@ const q=(item,type)=>({id:item.id,kind:item.kind,taskType:type,picture:type==='p
 const word=catalog.find(item=>item.name==='Grumlig');
 const easy=catalog.find(item=>types(item).includes('picture'));
 const phrase=catalog.find(item=>item.kind==='expression');
-test('all 146 concepts have five honest dimensions and playable actions, no fictional exercises',()=>{
+test('all 152 concepts have five honest dimensions and playable actions, no fictional exercises',()=>{
   let authored=0;
   for(const item of catalog){
     const p=profile(item);

@@ -119,7 +119,7 @@
   // Exam keeps five traditional definition alternatives for consistency.
   function makeExpressionQuestion(entry,difficulty,random=Math.random,taskType='meaning',missions=null){
     const base={id:entry.id,kind:'expression',word:entry.phrase,definition:entry.definition,
-      example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false};
+      example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false,...(entry.animal?{animal:entry.animal}:{})};
     const type=difficulty==='exam'?'meaning':taskType;
     const mission=missions&&Array.isArray(missions.missions)?missions.missions.find(x=>x.id===entry.id):null;
     if(type==='sentence'){

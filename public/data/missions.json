@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "25 uttryck x 2 nya uppdrag: välj rätt mening och sätt händelser i rätt ordning. Redaktionsskrivet för barn 8–10 år.",
+  "description": "31 uttryck med två redaktionellt skrivna uppdrag: välj rätt mening och sätt händelser i ordning.",
   "missions": [
     {
       "id": "ut-0001",
@@ -576,6 +576,144 @@
         "De bestämmer sig för att släppa bråket och börja på nytt."
       ],
       "hint": "Handlar det om att fastna i det gamla eller gå vidare?"
+    },
+    {
+      "id": "ut-0026",
+      "sentences": [
+        {
+          "label": "En älg går över myren, och guiden pekar ut skogens konung.",
+          "correct": true
+        },
+        {
+          "label": "Vi ser en räv vid vägen och säger att räven brukar kallas skogens konung.",
+          "correct": false
+        },
+        {
+          "label": "Vi ser en hare i gräset och säger att haren brukar kallas skogens konung.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Barnen får en gåta om skogens konung.",
+        "De ser en stor älgtjur bland träden.",
+        "Guiden förklarar varför älgen har fått smeknamnet."
+      ],
+      "hint": "Tänk på Sveriges stora hjortdjur och på hur horn kan likna en krona."
+    },
+    {
+      "id": "ut-0027",
+      "sentences": [
+        {
+          "label": "I berättelsen ryter lejonet som kallas djurens konung.",
+          "correct": true
+        },
+        {
+          "label": "I berättelsen säger man att giraffen brukar kallas djurens konung.",
+          "correct": false
+        },
+        {
+          "label": "I berättelsen säger man att haren brukar kallas djurens konung.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Barnen öppnar en saga om djurens konung.",
+        "I sagan möter de ett lejon på savannen.",
+        "De får veta att uttrycket syftar på lejonet."
+      ],
+      "hint": "Tänk på ett stort kattdjur som ofta förknippas med kunglighet."
+    },
+    {
+      "id": "ut-0028",
+      "sentences": [
+        {
+          "label": "Karavanens kameler bär packningen; de kallas öknens skepp.",
+          "correct": true
+        },
+        {
+          "label": "Vi kallar isbjörnen öknens skepp för att den går genom snön.",
+          "correct": false
+        },
+        {
+          "label": "Vi säger att strutsen är det djur som vanligtvis kallas öknens skepp.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En resenär behöver få sin packning genom öknen.",
+        "En kamel får bära packningen över sanden.",
+        "Resenären förstår jämförelsen med ett skepp."
+      ],
+      "hint": "Tänk på ett djur som människor länge använt för transport i torra områden."
+    },
+    {
+      "id": "ut-0029",
+      "sentences": [
+        {
+          "label": "Narvalen kallas ibland havets enhörning på grund av sin långa tand.",
+          "correct": true
+        },
+        {
+          "label": "Vi säger att blåvalen brukar kallas havets enhörning för att den är stor.",
+          "correct": false
+        },
+        {
+          "label": "Vi säger att sälen brukar kallas havets enhörning för att den vilar på isen.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Barnen läser en gåta om havets enhörning.",
+        "De får se en narval med en lång tand.",
+        "Guiden förklarar att tanden kan påminna om ett sagohorn."
+      ],
+      "hint": "Tänk på ett verkligt djur i Arktis, inte på en häst eller ett sagodjur."
+    },
+    {
+      "id": "ut-0030",
+      "sentences": [
+        {
+          "label": "Hunden brukar kallas människans bästa vän i ett gammalt talesätt.",
+          "correct": true
+        },
+        {
+          "label": "Vi säger att papegojan är djuret som traditionellt avses med människans bästa vän.",
+          "correct": false
+        },
+        {
+          "label": "Vi säger att hamstern är djuret som traditionellt avses med människans bästa vän.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "En klass besöker en utställning om husdjur.",
+        "En guide berättar hur hundar levt nära människor.",
+        "Klassen får höra talesättet människans bästa vän."
+      ],
+      "hint": "Tänk på ett vanligt husdjur som länge hjälpt och följt människor."
+    },
+    {
+      "id": "ut-0031",
+      "sentences": [
+        {
+          "label": "Bävern bygger en damm i bäcken, och guiden kallar den naturens ingenjör.",
+          "correct": true
+        },
+        {
+          "label": "Guiden säger att gäddan byggde bäverdämmet och är naturens ingenjör här.",
+          "correct": false
+        },
+        {
+          "label": "Guiden säger att rådjuret byggde bäverdämmet och är naturens ingenjör här.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Klassen följer en bäck och ser avgnagda grenar.",
+        "De hittar en bäverdamm som håller tillbaka vatten.",
+        "Guiden förklarar varför bävern kallas naturens ingenjör."
+      ],
+      "hint": "Tänk på en gnagare som bygger dammar i vattendrag."
     }
   ]
 }

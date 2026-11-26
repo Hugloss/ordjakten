@@ -21,19 +21,19 @@ const NOW=1795513200000;
 const card=(item,progress={},review={},missions={},mistakes={})=>L.detail(item,progress,review,missions,mistakes,NOW);
 const q=(item,type)=>({id:item.id,kind:item.kind,taskType:type,picture:type==='picture'});
 
-test('map contains 121 real words and 25 expressions, not guessed or generated entries',()=>{
-  assert.equal(catalog.length,146);
-  assert.equal(new Set(catalog.map(x=>x.id)).size,146);
+test('map contains 121 real words and 31 expressions, not guessed or generated entries',()=>{
+  assert.equal(catalog.length,152);
+  assert.equal(new Set(catalog.map(x=>x.id)).size,152);
   assert.equal(catalog.filter(x=>x.kind==='word').length,121);
-  assert.equal(catalog.filter(x=>x.kind==='expression').length,25);
+  assert.equal(catalog.filter(x=>x.kind==='expression').length,31);
   assert.equal(grumlig.hasContext,true);
   assert.ok(catalog.every(x=>x.definition&&x.example));
 });
 test('blank history does not pretend a child has mastered any word',()=>{
   const zero=L.entries(catalog);
-  assert.deepEqual(L.summary(zero),{total:146,discovered:0,recognised:0,applied:0,revisited:0,focus:0});
+  assert.deepEqual(L.summary(zero),{total:152,discovered:0,recognised:0,applied:0,revisited:0,focus:0});
   assert.equal(L.filter(zero).length,0);
-  assert.equal(L.filter(zero,{status:'all'}).length,146);
+  assert.equal(L.filter(zero,{status:'all'}).length,152);
   assert.deepEqual(card(grumlig).steps.map(x=>x.done),[false,false,false,false]);
 });
 test('a definition success and a context mistake are independent and never imply mastery',()=>{
@@ -119,7 +119,7 @@ test('filters and search are predictable and capped by the UI, not a server call
   const all=L.entries(catalog,progress);
   assert.deepEqual(L.filter(all,{query:'GRUMLIG',status:'all'}).map(x=>x.name),['Grumlig']);
   assert.equal(L.filter(all,{status:'practice'}).length,1);
-  assert.equal(L.filter(all,{kind:'expressions',status:'all'}).length,25);
+  assert.equal(L.filter(all,{kind:'expressions',status:'all'}).length,31);
   assert.equal(L.filter(all,{kind:'words',status:'all'}).length,121);
   assert.equal(L.filter(all,{status:'discovered'}).length,1);
 });

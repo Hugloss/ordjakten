@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Barnvänliga svenska uttryck med korta vardagsberättelser, egna svarsalternativ och Aha-förklaringar.",
+  "description": "Barnvänliga svenska uttryck, idiom och bildliga djurnamn med exempel, svar och förklaringar.",
   "expressions": [
     {
       "id": "ut-0001",
@@ -1001,6 +1001,252 @@
         }
       ],
       "review_status": "draft"
+    },
+    {
+      "id": "ut-0026",
+      "phrase": "Skogens konung",
+      "scene": "På en skylt i den svenska skogen står det: Här bor skogens konung. Vilket djur syftar skylten på?",
+      "definition": "Älgen. Det är ett bildligt namn för det stora skogsdjuret; älgtjurens horn kan likna en krona.",
+      "example": "På skogsturen såg vi skogens konung stå bland tallarna.",
+      "reveal": [
+        {
+          "title": "En gåtfull skylt",
+          "text": "Skogens konung är inget riktigt kunganamn. Det är en bildlig omskrivning."
+        },
+        {
+          "title": "Älgen i skogen",
+          "text": "Älgen är ett stort djur. Älgtjurens horn kan påminna om en kungakrona."
+        }
+      ],
+      "options": [
+        {
+          "label": "Älgen",
+          "correct": true
+        },
+        {
+          "label": "Lejonet",
+          "correct": false
+        },
+        {
+          "label": "Räven",
+          "correct": false
+        },
+        {
+          "label": "Vargen",
+          "correct": false
+        },
+        {
+          "label": "Haren",
+          "correct": false
+        }
+      ],
+      "review_status": "draft",
+      "animal": "moose"
+    },
+    {
+      "id": "ut-0027",
+      "phrase": "Djurens konung",
+      "scene": "I en gammal djursaga ska djurens konung vakta den gyllene porten. Vilket djur brukar kallas så?",
+      "definition": "Lejonet. Det är ett bildligt namn som förknippas med lejonets styrka och ståtliga utseende.",
+      "example": "I sagan vilar djurens konung under ett träd på savannen.",
+      "reveal": [
+        {
+          "title": "En kung utan krona",
+          "text": "Berättelsen använder ett kungligt namn för ett djur, inte en människa."
+        },
+        {
+          "title": "Lejonet",
+          "text": "Lejon har länge använts som symbol för styrka och kunglighet. Hanens man kan se ståtlig ut."
+        }
+      ],
+      "options": [
+        {
+          "label": "Lejonet",
+          "correct": true
+        },
+        {
+          "label": "Älgen",
+          "correct": false
+        },
+        {
+          "label": "Elefanten",
+          "correct": false
+        },
+        {
+          "label": "Giraffen",
+          "correct": false
+        },
+        {
+          "label": "Krokodilen",
+          "correct": false
+        }
+      ],
+      "review_status": "draft",
+      "animal": "lion"
+    },
+    {
+      "id": "ut-0028",
+      "phrase": "Öknens skepp",
+      "scene": "En resenär skriver att öknens skepp ska bära packningen genom sanden. Vad menar resenären?",
+      "definition": "Kamelen, även dromedaren. Uttrycket jämför djurets förmåga att bära människor och packning i öknen med ett skepp.",
+      "example": "Karavanen färdades genom öknen med öknens skepp.",
+      "reveal": [
+        {
+          "title": "Ett skepp på sanden",
+          "text": "Det står skepp, men i uttrycket handlar det inte om ett fartyg."
+        },
+        {
+          "title": "Kamelen bär packning",
+          "text": "Kameler kan färdas i torra miljöer och bära packning. De jämförs med skepp som transporterar saker."
+        }
+      ],
+      "options": [
+        {
+          "label": "Kamelen",
+          "correct": true
+        },
+        {
+          "label": "Hästen",
+          "correct": false
+        },
+        {
+          "label": "Elefanten",
+          "correct": false
+        },
+        {
+          "label": "Strutsen",
+          "correct": false
+        },
+        {
+          "label": "Isbjörnen",
+          "correct": false
+        }
+      ],
+      "review_status": "draft",
+      "animal": "camel"
+    },
+    {
+      "id": "ut-0029",
+      "phrase": "Havets enhörning",
+      "scene": "På en karta över Norra ishavet står det: Leta efter havets enhörning. Vilket verkligt djur söker vi?",
+      "definition": "Narvalen, en tandval som kan ha en lång spiralformad tand som liknar ett enhörningshorn.",
+      "example": "I en film om Arktis fick vi se havets enhörning.",
+      "reveal": [
+        {
+          "title": "En saga under vattnet",
+          "text": "Enhörningen är ett sagodjur, men här handlar det om ett verkligt havsdjur."
+        },
+        {
+          "title": "Narvalens långa tand",
+          "text": "Narvalens långa spiralformade utskott är egentligen en tand, inte ett riktigt horn."
+        }
+      ],
+      "options": [
+        {
+          "label": "Narvalen",
+          "correct": true
+        },
+        {
+          "label": "Delfinen",
+          "correct": false
+        },
+        {
+          "label": "Blåvalen",
+          "correct": false
+        },
+        {
+          "label": "Sälen",
+          "correct": false
+        },
+        {
+          "label": "Havsörnen",
+          "correct": false
+        }
+      ],
+      "review_status": "draft",
+      "animal": "narwhal"
+    },
+    {
+      "id": "ut-0030",
+      "phrase": "Människans bästa vän",
+      "scene": "På en utställning om husdjur står det att människans bästa vän har levt nära oss länge. Vilket djur syftar talesättet på?",
+      "definition": "Hunden. Talesättet handlar om hundens långa relation till människor som sällskap och hjälpare.",
+      "example": "Utställningen berättar om hunden, människans bästa vän.",
+      "reveal": [
+        {
+          "title": "Ett talesätt om vänskap",
+          "text": "Människor kan ha många bästa vänner. Det här är ett traditionellt uttryck om ett djur."
+        },
+        {
+          "title": "Hunden",
+          "text": "Hundar har länge levt nära människor, som sällskap och i olika arbetsuppgifter."
+        }
+      ],
+      "options": [
+        {
+          "label": "Hunden",
+          "correct": true
+        },
+        {
+          "label": "Katten",
+          "correct": false
+        },
+        {
+          "label": "Hamstern",
+          "correct": false
+        },
+        {
+          "label": "Kaninen",
+          "correct": false
+        },
+        {
+          "label": "Papegojan",
+          "correct": false
+        }
+      ],
+      "review_status": "draft",
+      "animal": "dog"
+    },
+    {
+      "id": "ut-0031",
+      "phrase": "Naturens ingenjör",
+      "scene": "Vid en damm står det att naturens ingenjör har förändrat vattendraget med grenar. Vilket djur brukar kallas så i den här miljön?",
+      "definition": "Bävern. Den kallas ofta naturens ingenjör eftersom den kan bygga dammar och förändra vattenmiljöer.",
+      "example": "Vi såg spår av naturens ingenjör vid bäckens fördämning.",
+      "reveal": [
+        {
+          "title": "Ett bygge i naturen",
+          "text": "En ingenjör kan bygga och lösa tekniska problem. I den här omskrivningen handlar det om ett djur."
+        },
+        {
+          "title": "Bävern bygger",
+          "text": "Bävrar kan bygga dammar med växtmaterial. Det kan skapa våtmarker där andra arter lever."
+        }
+      ],
+      "options": [
+        {
+          "label": "Bävern",
+          "correct": true
+        },
+        {
+          "label": "Uttern",
+          "correct": false
+        },
+        {
+          "label": "Rådjuret",
+          "correct": false
+        },
+        {
+          "label": "Gäddan",
+          "correct": false
+        },
+        {
+          "label": "Haren",
+          "correct": false
+        }
+      ],
+      "review_status": "draft",
+      "animal": "beaver"
     }
   ]
 }

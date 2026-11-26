@@ -374,3 +374,17 @@
 .action-tube-cover{opacity:calc(1 - var(--action-cutaway,1))}
 .action-marble{transform:translateX(var(--action-marble-x,236px))}
 .action-flying-butterfly{transform:translate(var(--action-flight-x,200px),var(--action-flight-y,0px))}
+
+/* Two-word connections and animal metaphors, visible after the answer. */
+.quest-related-word{border-left:4px solid var(--accent);background:var(--surface-2);border-radius:10px;padding:9px 11px;margin:10px 0}
+.quest-related-word[hidden],.quest-animal-art[hidden]{display:none}
+.quest-related-word h4{font-size:16px;margin:0 0 5px}
+.quest-animal-art{margin:12px auto;padding:8px;border:1px solid var(--border);border-radius:16px;max-width:340px;text-align:center;background:var(--surface)}
+.quest-animal-svg{width:100%;height:auto;display:block;border-radius:12px}
+.quest-animal-art figcaption{padding:5px;font-weight:800}
+.comic-icons .quest-animal-svg{max-width:220px}
+.action-window-star{opacity:calc(.14 + .86 * var(--action-beam-power,1))}
+.action-window-beam{opacity:var(--action-beam-power,1)}
+.quest-action-art[data-experiment='true'] .action-protected-egg{animation:none;transform:translateY(var(--action-egg-y,32px))}
+.action-soft-pillow{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(var(--action-pillow-scale,.82))}
+.action-garden-leaves{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(var(--action-growth,1));opacity:var(--action-wilt-opacity,1)}
