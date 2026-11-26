@@ -186,3 +186,17 @@ test('personal knowledge recommendations are derived, offline and never persiste
   assert.ok(app.includes('Knowledge.notes(knowledge,item.id)'));
   assert.ok(!app.includes('history.knowledgeProgress')&&!app.includes('history.knowledgeProfile'));
 });
+
+test('practice feedback uses explicit completed tasks, real observations and the existing offline storage lifecycle',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/practice-feedback.js')>=0&&html.indexOf('./js/practice-feedback.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/practice-feedback.js'"));
+  assert.ok(app.includes('adjust:rows=>Feedback.adjust(rows,history.feedbackProgress,feedbackCatalog,now)'));
+  assert.ok(app.includes('if(finished)completePracticeFeedback(step)'));
+  assert.ok(app.includes("observePracticeFeedback('recall:'+row.id,outcome,now)"));
+  assert.ok(app.includes("observePracticeFeedback('concept:'+task.id,outcome,now)"));
+  assert.ok(app.includes("observePracticeFeedback('aha:'+id,outcome==='first'?'direct':'supported',now,evidence)"));
+  assert.ok(app.includes('feedbackProgress:history.feedbackProgress'));
+  assert.ok(app.includes('history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog)'));
+  assert.ok(html.includes('id="feedback-learning-summary"'));
+});

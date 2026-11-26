@@ -132,19 +132,29 @@
     const progress=sanitize(raw,content,now);
     const byKey=new Map(candidates.map(row=>[row.key,row]));
     const replacements=new Map(),wait=new Set();
-    const sources=Object.entries(progress).sort((a,b)=>a[1].lastAt-b[1].lastAt||a[0].localeCompare(b[0]));
+    // Collect pending holds first, so an alternative linked to two
+    // objectives cannot bypass the other objective's observation window.
+    const sources=Object.entries(progress).sort((a,b)=>Number(!!b[1].pending)-Number(!!a[1].pending)||
+      a[1].lastAt-b[1].lastAt||a[0].localeCompare(b[0]));
     for(const [key,row] of sources){
       const source=byKey.get(key);
-      if(!source)continue; // No new queue, no bypass of an engine's readiness.
       if(row.pending){
-        if(now<row.pending.at+DAY)wait.add(key);
-        else replacements.set(key,{...source,feedbackPriority:2,explanation:'Prova samma mål efter en paus, så ser vi hur det går nu.'});
+        // Avoid scheduling more optional alternatives while a follow-up is
+        // pending, even when the original engine is not yet ready. Never
+        // block a different directly observed need or a deliberate manual visit.
+        for(const c of candidates)if(['related','extend','discover'].includes(c.reason)&&
+          content.methods[c.key]?.targets.includes(key))wait.add(c.key);
+        if(source){
+          if(now<row.pending.at+DAY)wait.add(key);
+          else replacements.set(key,{...source,feedbackPriority:2,explanation:'Prova samma mål efter en paus, så ser vi hur det går nu.'});
+        }
         continue;
       }
+      if(!source)continue; // No new queue, no bypass of an engine's readiness.
       if(row.last!=='supported'||row.streak<2||source.reason!=='need')continue;
       const alternatives=candidates.filter(c=>{
         const m=content.methods[c.key];
-        return m&&m.mode===c.mode&&m.targets.includes(key)&&!replacements.has(c.key)&&
+        return m&&m.mode===c.mode&&m.targets.includes(key)&&!replacements.has(c.key)&&!wait.has(c.key)&&
           ['related','extend','discover'].includes(c.reason)&&source.words.some(id=>c.words.includes(id));
       }).sort((a,b)=>methodRank(row,a.mode)-methodRank(row,b.mode)||
         Number(b.reason==='related')-Number(a.reason==='related')||a.key.localeCompare(b.key));
