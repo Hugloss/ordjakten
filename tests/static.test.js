@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v50-semantic-actions'));
+  assert.ok(worker.includes('v51-word-experiments'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -379,4 +379,14 @@ test('semantic actions integrate into ordinary training and reuse scored submiss
  assert.ok(app.includes('questions=ActionWords.adaptRound(roundSettings,questions)'));
  assert.ok(app.includes('renderActionSolution(q);'));
  assert.ok(app.includes("if(valid){event.preventDefault();submit(drag.index);}"));
+});
+
+test('optional direct word experiments do not submit answers or persist history',()=>{
+ const html=read('index.html'),app=read('js/app.js'),css=read('css/reading-flow.css');
+ for(const id of ['quest-action-experiment','quest-action-range','quest-action-reset','quest-action-step'])assert.ok(html.includes('id="'+id+'"'));
+ assert.ok(html.includes('id="quest-action-range" type="range"'));
+ const flow=app.slice(app.indexOf('  function resetActionExperiment('),app.indexOf('  function renderActionSolution('));
+ assert.ok(!flow.includes('submit(')&&!flow.includes('history.')&&!flow.includes('saveHistory('));
+ assert.ok(flow.includes('ActionWords.pointerValue')&&flow.includes('game?.feedback'));
+ assert.ok(css.includes('touch-action:pan-y'));
 });

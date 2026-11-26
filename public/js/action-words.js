@@ -255,6 +255,69 @@
       ]
     ]
   }
+,
+  {
+    "word": "sv-0027",
+    "id": "wilt",
+    "title": "Blomman som hänger",
+    "prompt": "En vissnad blomma hänger ner och jorden är torr. Vad kan hjälpa den att återhämta sig?",
+    "target": "Hjälp blomman i krukan",
+    "why": "En vissnad växt har tappat sin spänst. Om den har vissnat av vattenbrist kan vatten och tid hjälpa den att återhämta sig, om den fortfarande lever.",
+    "answer": "water",
+    "options": [
+      [
+        "water",
+        "💧",
+        "Vattna den torra jorden och ge blomman tid"
+      ],
+      [
+        "paper",
+        "📄",
+        "Lägga torrt papper på jorden"
+      ],
+      [
+        "pull",
+        "🍃",
+        "Dra i bladen"
+      ],
+      [
+        "hide",
+        "📦",
+        "Ställa blomman i en stängd låda"
+      ]
+    ]
+  },
+  {
+    "word": "sv-0043",
+    "id": "tangle",
+    "title": "Garnets hemliga knut",
+    "prompt": "Ett trassligt garnnystan har snott ihop sig i slingor och knutar. Hur får du fram en rakare tråd?",
+    "target": "Hjälp till att reda ut garnet",
+    "why": "När garnet är trassligt har trådarna snott ihop sig. Genom att försiktigt lossa slingorna och knutarna kan du reda ut det.",
+    "answer": "loosen",
+    "options": [
+      [
+        "loosen",
+        "🧶",
+        "Lossa slingorna och knutarna försiktigt"
+      ],
+      [
+        "tighten",
+        "🪢",
+        "Dra hårt i båda ändarna"
+      ],
+      [
+        "crush",
+        "📦",
+        "Trycka ihop nystanet i en liten låda"
+      ],
+      [
+        "twist",
+        "🌀",
+        "Snurra ihop tråden ännu mer"
+      ]
+    ]
+  }
 ];
  const byWord=new Map(DATA.map(row=>[row.word,row]));
  function eligible(settings,q){
@@ -284,5 +347,28 @@
    }
    return errors;
  }
- return {DATA,eligible,adapt,adaptRound,validate};
+ // Optional, reversible experiments after a worked example. They are not
+ // answers, do not measure dexterity, and never change a learning record.
+ const EXPERIMENTS=Object.freeze({
+   stretch:{label:'Dra i gummibandet',instruction:'Dra över bilden eller använd reglaget. Prova att sträcka bandet och låta det dra ihop sig igen.',low:'Bandet är avslappnat.',mid:'Bandet sträcks ut.',high:'Bandet är längre. Prova att låta det dra ihop sig igen.'},
+   magnet:{label:'Flytta magneten',instruction:'Dra magneten närmare järnringen. Se när ringen följer med.',low:'Magneten är långt från ringen.',mid:'Magneten närmar sig ringen.',high:'Magneten drar till sig järnringen!'},
+   whirl:{label:'Snurra löven',instruction:'Dra över bilden eller flytta reglaget för att snurra löven runt mitten.',low:'Löven vilar.',mid:'Löven rör sig runt mitten.',high:'Löven har virvlat ett helt varv!'},
+   wilt:{label:'Låt tiden gå efter vattning',instruction:'Dra fram tiden i vår låtsasbild. En levande, törstig växt kan återhämta sig gradvis efter vattning.',low:'Bladen hänger. Jorden har fått vatten.',mid:'Blomman börjar räta på sig.',high:'I berättelsen har blomman återhämtat sig.'},
+   tangle:{label:'Red ut garnet',instruction:'Dra försiktigt över bilden och följ hur slingorna försvinner.',low:'Garnet är trassligt.',mid:'Några slingor har lossnat.',high:'Tråden är utredd!'}
+ });
+ function experiment(id,value=100){
+   if(!Object.hasOwn(EXPERIMENTS,id))return null;
+   const n=Number.isFinite(value)?Math.max(0,Math.min(100,Math.round(value))):0;
+   const f=n/100,meta=EXPERIMENTS[id];
+   return {id,value:n,label:meta.label,instruction:meta.instruction,
+     message:n===0?meta.low:n===100?meta.high:meta.mid,
+     stretch:.38+.62*f,magnetX:80*f,ringX:-Math.max(0,(f-.6)/.4)*75,
+     rotation:360*f,wiltAngle:38*(1-f),wiltOpacity:.55+.45*f,
+     tangle:f<.34?0:f<.67?1:2};
+ }
+ function pointerValue(rect,x){
+   if(!rect||!Number.isFinite(rect.left)||!Number.isFinite(rect.width)||rect.width<=0||!Number.isFinite(x))return null;
+   return Math.round(100*Math.max(0,Math.min(1,(x-rect.left)/rect.width)));
+ }
+ return {DATA,eligible,adapt,adaptRound,validate,EXPERIMENTS,experiment,pointerValue};
 });

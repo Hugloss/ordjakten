@@ -93,6 +93,7 @@
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
   let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null,suppressQuestionClick=false;
+  let actionExperiment=null,actionPointer=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -2987,12 +2988,71 @@
     host.dataset.solved=String(solved);
     host.hidden=false;
   }
+  function resetActionExperiment(){
+    const pointer=actionPointer;actionPointer=null;actionExperiment=null;
+    const art=$('quest-action-solution-art');
+    if(pointer!==null&&typeof art.hasPointerCapture==='function'&&art.hasPointerCapture(pointer)){
+      try{art.releasePointerCapture(pointer);}catch{}
+    }
+    art.removeAttribute('data-experiment');
+    art.removeAttribute('data-tangle');
+    $('quest-action-experiment').hidden=true;
+    $('quest-action-range').value='100';
+    $('quest-action-experiment-status').textContent='';
+  }
+  function renderActionExperiment(value,announce=false){
+    if(!actionExperiment||screen!=='play'||!game?.feedback)return;
+    const model=ActionWords.experiment(actionExperiment.id,value);
+    if(!model)return;
+    actionExperiment=model;
+    const art=$('quest-action-solution-art');
+    art.dataset.experiment='true';art.dataset.tangle=String(model.tangle);
+    for(const [name,v] of Object.entries({
+      '--action-stretch':model.stretch,'--action-magnet-x':model.magnetX+'px',
+      '--action-ring-x':model.ringX+'px','--action-rotation':model.rotation+'deg',
+      '--action-wilt-angle':model.wiltAngle+'deg','--action-wilt-opacity':model.wiltOpacity
+    }))art.style.setProperty(name,String(v));
+    $('quest-action-range').value=String(model.value);
+    $('quest-action-range').setAttribute('aria-valuetext',model.message);
+    $('quest-action-experiment-status').textContent=model.message;
+    if(announce)$('quest-action-experiment-announcement').textContent=model.message;
+  }
+  function startActionExperiment(q){
+    resetActionExperiment();
+    const model=ActionWords.experiment(q.action?.id,100);
+    if(!model)return;
+    actionExperiment=model;
+    $('quest-action-experiment').hidden=false;
+    $('quest-action-experiment-label').textContent=model.label;
+    $('quest-action-experiment-instruction').textContent=model.instruction;
+    renderActionExperiment(100);
+  }
+  function moveActionPointer(event){
+    if(actionPointer!==event.pointerId||!actionExperiment||!game?.feedback||screen!=='play')return;
+    const value=ActionWords.pointerValue($('quest-action-solution-art').getBoundingClientRect(),event.clientX);
+    if(value!==null)renderActionExperiment(value);
+  }
+  function startActionPointer(event){
+    const art=$('quest-action-solution-art');
+    if(!actionExperiment||!game?.feedback||screen!=='play'||!event.isPrimary||event.button!==0||
+      typeof art.setPointerCapture!=='function')return;
+    try{art.setPointerCapture(event.pointerId);}catch{return;}
+    actionPointer=event.pointerId;moveActionPointer(event);
+  }
+  function endActionPointer(event){
+    if(actionPointer!==event.pointerId)return;
+    if(event.type==='pointerup')moveActionPointer(event);
+    actionPointer=null;
+    if(actionExperiment)$('quest-action-experiment-announcement').textContent=actionExperiment.message;
+  }
   function renderActionSolution(q){
+    resetActionExperiment();
     $('quest-action-solution').hidden=!q.action;
     if(!q.action)return;
     renderActionArt($('quest-action-solution-art'),q.action,true);
     $('quest-action-solution-title').textContent=q.action.title+' – så fungerar det';
     $('quest-action-solution-text').textContent=q.action.why;
+    startActionExperiment(q);
   }
   function renderMysteryArt(host,visual){
     if(!visual)return;
@@ -3068,6 +3128,7 @@
     $('quest-action-art').hidden=true;
     $('question-portal').removeAttribute('data-semantic');
     $('quest-action-solution').hidden=true;
+    resetActionExperiment();
   }
   function questionReady(){
     return screen==='play'&&game&&!game.finished&&!game.feedback&&questionToken&&
@@ -4089,6 +4150,16 @@
   $('order-reset').addEventListener('click',()=>{if(!game||game.feedback||game.finished)return;orderSelection=[];drawMainOrderSelection(game.questions[game.index]);});
   $('order-submit').addEventListener('click',()=>{if(orderSelection.length===3)submit(-2);});
   $('question-egg').addEventListener('click',openQuestionEgg);
+  $('quest-action-range').addEventListener('input',event=>renderActionExperiment(Number(event.target.value)));
+  $('quest-action-range').addEventListener('change',event=>renderActionExperiment(Number(event.target.value),true));
+  $('quest-action-reset').addEventListener('click',()=>renderActionExperiment(0,true));
+  $('quest-action-step').addEventListener('click',()=>{
+    if(actionExperiment)renderActionExperiment(actionExperiment.value>=100?0:Math.min(100,actionExperiment.value+25),true);
+  });
+  $('quest-action-solution-art').addEventListener('pointerdown',startActionPointer);
+  $('quest-action-solution-art').addEventListener('pointermove',moveActionPointer);
+  for(const type of ['pointerup','pointercancel','lostpointercapture'])
+    $('quest-action-solution-art').addEventListener(type,endActionPointer);
   $('answer-options').addEventListener('pointerdown',startQuestionDrag);
   $('answer-options').addEventListener('pointermove',moveQuestionDrag);
   $('answer-options').addEventListener('pointerup',endQuestionDrag);

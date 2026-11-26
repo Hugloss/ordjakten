@@ -5,8 +5,8 @@ const A=require('../public/js/action-words'),E=require('../public/js/engine'),D=
 const bank=require('../public/data/ordbank.json'),contexts=require('../public/data/word-contexts.json');
 const settings={mode:'train',difficulty:'medium',timerMode:'off',adventure:'forest'};
 const q=(id,picture=false)=>{const w=bank.words.find(w=>w.id===id);return {id,kind:'word',word:w.word,definition:w.definition,example:w.example,picture,options:[{label:w.definition,correct:true},{label:'Annan definition',correct:false}]};};
-test('eight authored actions use existing words and exactly one keyed choice',()=>{
- assert.deepEqual(A.validate(bank),[]);assert.equal(A.DATA.length,8);
+test('ten authored actions use existing words and exactly one keyed choice',()=>{
+ assert.deepEqual(A.validate(bank),[]);assert.equal(A.DATA.length,10);
  for(const row of A.DATA){
    const original=q(row.word),out=A.adapt(settings,original,()=>.4);
    assert.equal(out.id,original.id);assert.equal(out.word,original.word);assert.equal(out.definition,original.definition);
@@ -50,4 +50,34 @@ test('strategy clues and presentation never identify an answer',()=>{
    assert.deepEqual(P.plan(settings,a),P.plan(settings,b));assert.equal(P.plan(settings,a).enabled,true);
    assert.ok(!P.plan(settings,a).hint.includes(a.options.find(o=>o.correct).label));
  }
+});
+
+test('five reversible experiments are bounded, deterministic and independent of knowledge outcomes',()=>{
+ assert.equal(Object.keys(A.EXPERIMENTS).length,5);
+ for(const id of Object.keys(A.EXPERIMENTS)){
+   const low=A.experiment(id,0),mid=A.experiment(id,50),high=A.experiment(id,100);
+   assert.equal(low.value,0);assert.equal(high.value,100);
+   assert.equal(A.experiment(id,-10).value,0);assert.equal(A.experiment(id,150).value,100);
+   assert.equal(A.experiment(id,NaN).value,0);
+   assert.ok(low.label&&low.instruction&&low.message!==mid.message&&mid.message!==high.message);
+   assert.deepEqual(A.experiment(id,50),mid);
+ }
+ assert.equal(A.experiment('unknown',50),null);
+});
+test('stretch, magnet, rotation, plant and yarn have distinct reversible visual responses',()=>{
+ const a=A.experiment('stretch',0),b=A.experiment('stretch',100);
+ assert.ok(a.stretch<b.stretch);
+ assert.equal(A.experiment('magnet',50).ringX,0);
+ assert.equal(A.experiment('magnet',100).ringX,-75);
+ assert.equal(A.experiment('whirl',100).rotation,360);
+ assert.equal(A.experiment('wilt',100).wiltAngle,0);
+ assert.ok(A.experiment('wilt',0).wiltAngle>0);
+ assert.deepEqual([0,50,100].map(n=>A.experiment('tangle',n).tangle),[0,1,2]);
+});
+test('pointer position maps to the accessible range with safe edge handling',()=>{
+ const rect={left:100,width:200};
+ assert.deepEqual([0,100,150,200,300,500].map(x=>A.pointerValue(rect,x)),[0,0,25,50,100,100]);
+ assert.equal(A.pointerValue({left:0,width:0},10),null);
+ assert.equal(A.pointerValue(rect,NaN),null);
+ assert.equal(A.pointerValue(null,10),null);
 });

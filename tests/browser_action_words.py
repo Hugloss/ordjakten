@@ -24,6 +24,24 @@ def main(browser):
     assert page.locator('#feedback-area').is_visible()
     assert page.locator('#stat-right').text_content()=='1'
     assert page.locator('#quest-action-solution-art .action-rubber').is_visible()
+    assert page.locator('#quest-action-experiment').is_visible()
+    before=page.locator('#stat-right').text_content()
+    page.locator('#quest-action-reset').click()
+    assert page.locator('#quest-action-range').input_value()=='0'
+    page.locator('#quest-action-step').click()
+    assert page.locator('#quest-action-range').input_value()=='25'
+    page.locator('#quest-action-range').focus()
+    page.keyboard.press('End')
+    assert page.locator('#quest-action-range').input_value()=='100'
+    art=page.locator('#quest-action-solution-art')
+    art.scroll_into_view_if_needed()
+    box=art.bounding_box()
+    page.mouse.move(box['x']+box['width']*.75,box['y']+box['height']*.5)
+    page.mouse.down()
+    page.mouse.move(box['x']+box['width']*.25,box['y']+box['height']*.5,steps=8)
+    page.mouse.up()
+    assert 20<=int(page.locator('#quest-action-range').input_value())<=30
+    assert page.locator('#stat-right').text_content()==before
     assert page.locator('#next').is_hidden()
     for _ in range(2):
         page.locator('#reading-start').click()
@@ -46,6 +64,7 @@ def main(browser):
     page.locator('.answer-option').first.click()
     assert page.locator('#view-results').is_visible()
     assert page.locator('#quest-action-solution').is_hidden()
+    assert page.locator('#quest-action-experiment').is_hidden()
     assert not errors,errors
     page.close()
 
