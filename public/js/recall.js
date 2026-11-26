@@ -43,7 +43,7 @@
       out[id]={direct,assisted,stage:integer(card.stage,2),lastAt,
         last:card.last==='direct'&&direct?'direct':'assisted'};
       const memory=Memory.sanitize(card.memory,{maxAt:lastAt});
-      if(memory&&!memory.evidence&&((memory.outcome==='direct'&&out[id].last==='direct')||
+      if(memory&&!memory.evidence&&memory.lastAt===lastAt&&((memory.outcome==='direct'&&out[id].last==='direct')||
         (memory.outcome!=='direct'&&out[id].last==='assisted')))out[id].memory=memory;
     }
     return out;

@@ -149,7 +149,8 @@
         }
         if(type==='transfer'){
           const memory=Memory.sanitize(item.memory,{maxAt:card.lastAt,evidenceRequired:true});
-          if(memory&&memory.outcome!=='previewed'&&evidenceValid(id,memory.evidence))card.memory=memory;
+          if(memory&&memory.outcome!=='previewed'&&evidenceValid(id,memory.evidence)&&
+            (memory.outcome==='direct'?first>0:supported>0))card.memory=memory;
         }
         entry[type]=card;
       }

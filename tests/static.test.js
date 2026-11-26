@@ -164,3 +164,14 @@ test('unified next adventure is available offline with distinct DOM IDs and no n
   assert.ok(app.includes('if(journey){journey=null;resetJourneyControls();}'));
   for(const mode of ['focus','aha','recall','workshop','detector','concept','bridge'])assert.ok(app.includes("doneLearningExercise('"+mode+"'"));
 });
+
+test('shared memory loads offline before both learning engines and is displayed without separate storage',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  const script=html.indexOf('./js/spaced-memory.js');
+  assert.ok(script>=0&&script<html.indexOf('./js/reading-check.js')&&script<html.indexOf('./js/recall.js'));
+  assert.ok(worker.includes("'./js/spaced-memory.js'"));
+  assert.ok(html.includes('id="memory-learning-note"'));
+  assert.ok(html.includes('id="aha-memory-note"')&&html.includes('id="recall-memory-note"'));
+  assert.ok(app.includes('B.transferDueAt(')&&app.includes('Recall.dueAt('));
+  assert.ok(!app.includes('history.memoryProgress='));
+});
