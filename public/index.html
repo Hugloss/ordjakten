@@ -70,6 +70,7 @@
   <script src="./js/camp-theatre.js" defer></script>
   <script src="./js/camp-living.js" defer></script>
   <script src="./js/camp-minigames.js" defer></script>
+  <script src="./js/camp-builders.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -664,6 +665,9 @@
             <button type="button" class="camp-mini-game" data-mini-game="dragon"><span aria-hidden="true">🐉</span><strong>Mata draken</strong><small>Duka en picknick</small></button>
             <button type="button" class="camp-mini-game" data-mini-game="lab"><span aria-hidden="true">🪄</span><strong>Magiska labbet</strong><small>Kombinera två saker</small></button>
             <button type="button" class="camp-mini-game" data-mini-game="treasure"><span aria-hidden="true">🗺️</span><strong>Skattjakten</strong><small>Utforska kartan</small></button>
+            <button type="button" class="camp-mini-game" data-mini-game="world"><span aria-hidden="true">🏗️</span><strong>Bygg en värld</strong><small>Bygg en liten by</small></button>
+            <button type="button" class="camp-mini-game" data-mini-game="paint"><span aria-hidden="true">🎨</span><strong>Målarverkstaden</strong><small>Måla med former</small></button>
+            <button type="button" class="camp-mini-game" data-mini-game="robot"><span aria-hidden="true">🤖</span><strong>Robotverkstaden</strong><small>Sätt ihop en robot</small></button>
           </div>
           <div id="camp-mini-play" class="camp-mini-play" hidden>
             <div class="camp-mini-head"><h3 id="camp-mini-name"></h3><p id="camp-mini-step" class="eyebrow"></p></div>
@@ -679,7 +683,20 @@
             <button id="camp-mini-next" type="button" class="primary-button full-button" hidden>Nästa uppdrag →</button>
             <button id="camp-mini-close" type="button" class="secondary-button full-button">Klar för nu – välj spel</button>
           </div>
-          <p class="story-small">Fyra små uppdrag i varje spel. Inga poäng eller tidtagning. Du kan sluta när du vill.</p>
+          <div id="camp-build-play" class="camp-build-play" hidden>
+            <div class="camp-mini-head"><h3 id="camp-build-name"></h3><p id="camp-build-step" class="eyebrow"></p></div>
+            <h3 id="camp-build-prompt" class="camp-build-prompt" tabindex="-1"></h3>
+            <div id="camp-build-board" class="camp-build-board" role="group" aria-label="Ditt bygge"></div>
+            <p id="camp-build-instruction" class="camp-selection"></p>
+            <div id="camp-build-options" class="camp-build-options" role="group" aria-label="Välj en del"></div>
+            <p id="camp-build-feedback" class="camp-selection camp-mini-feedback" role="status" hidden></p>
+            <button id="camp-build-confirm" type="button" class="primary-button full-button" hidden>🔧 Sätt fast delen</button>
+            <button id="camp-build-help" type="button" class="secondary-button full-button">💡 Bygg tillsammans</button>
+            <button id="camp-build-next" type="button" class="primary-button full-button" hidden>Bygg nästa del →</button>
+            <button id="camp-build-free" type="button" class="primary-button full-button" hidden>🎨 Lek fritt med ditt bygge</button>
+            <button id="camp-build-close" type="button" class="secondary-button full-button">Klar för nu – välj spel</button>
+          </div>
+          <p class="story-small">Fyra små uppdrag i varje spel. Byggspelen har också fri lek efter avslutningen. Inga poäng eller tidtagning. Du kan sluta när du vill.</p>
         </section>
         <section class="panel camp-living" aria-labelledby="camp-live-title">
           <header class="camp-theatre-heading"><span aria-hidden="true">🪄</span><div>

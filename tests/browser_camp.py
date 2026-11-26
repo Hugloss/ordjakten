@@ -66,6 +66,42 @@ def main(browser):
     page.locator("#camp-mini-help").click()
     assert page.locator("#camp-mini-next").is_visible()
     page.locator("#camp-mini-close").click()
+    page.locator('[data-mini-game="world"]').click()
+    page.locator('[data-build-piece="bridge"]').click()
+    page.locator('[data-build-cell="0"]').click()
+    assert page.locator("#camp-build-feedback").is_visible()
+    page.locator('[data-build-cell="4"]').click()
+    assert page.locator("#camp-build-board [data-filled=true]").count() == 1
+    page.locator("#camp-build-next").click()
+    page.locator('[data-build-piece="house"]').click()
+    page.locator('[data-build-cell="1"]').click()
+    assert page.locator("#camp-build-board [data-filled=true]").count() == 2
+    for _ in range(2):
+        page.locator("#camp-build-next").click()
+        page.locator("#camp-build-help").click()
+    page.locator("#camp-build-next").click()
+    page.locator("#camp-build-free").click()
+    page.locator('[data-build-piece="flower"]').click()
+    page.locator('[data-build-cell="0"]').click()
+    assert page.locator("#camp-build-board [data-filled=true]").count() == 5
+    page.locator("#camp-build-close").click()
+    page.locator('[data-mini-game="paint"]').click()
+    page.locator('[data-build-piece="dots-circle"]').click()
+    assert page.locator("#camp-build-board [data-preview=true] [data-pattern=dots]").count() == 1
+    page.locator("#camp-build-confirm").click()
+    assert page.locator("#camp-build-feedback").is_visible()
+    page.locator('[data-build-piece="striped-circle"]').click()
+    page.locator("#camp-build-confirm").click()
+    assert page.locator("#camp-build-board [data-filled=true] [data-pattern=stripes]").count() == 1
+    page.locator("#camp-build-close").click()
+    page.locator('[data-mini-game="robot"]').click()
+    page.locator('[data-build-piece="round-head"]').click()
+    page.locator("#camp-build-confirm").click()
+    page.locator("#camp-build-next").click()
+    page.locator('[data-build-piece="square-body"]').click()
+    page.locator("#camp-build-confirm").click()
+    assert page.locator("#camp-build-board [data-filled=true]").count() == 2
+    page.locator("#camp-build-close").click()
     assert stored() == before
     for action in ("butterfly", "rocket", "music", "buddy"):
         page.locator(f'[data-live-action="{action}"]').click()

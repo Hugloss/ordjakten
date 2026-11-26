@@ -42,13 +42,14 @@
   const Theatre = window.OrdjaktenTheatre;
   const Living = window.OrdjaktenLiving;
   const Mini = window.OrdjaktenMiniGames;
+  const Builders = window.OrdjaktenBuilders;
   const WorldMissions = window.OrdjaktenWorldMissions;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -88,7 +89,7 @@
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
-  let campLiving=Living.start(),campToneUntil=0,campMini=null;
+  let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -1774,6 +1775,8 @@
   }
   function renderCampMini(focus=false,choiceId=null){
     const m=Mini.model(campMini);
+    if(campBuild){$('camp-mini-menu').hidden=true;$('camp-mini-play').hidden=true;renderCampBuilder(focus);return;}
+    $('camp-build-play').hidden=true;
     $('camp-mini-menu').hidden=!!m;
     $('camp-mini-play').hidden=!m;
     if(!m){
@@ -1824,7 +1827,74 @@
     if(screen!=='camp'||next===campMini)return;
     campMini=next;renderCampMini(true,choiceId);
   }
+  function buildPiece(item,base=''){
+    const visual=element('span','camp-build-art');
+    visual.setAttribute('aria-hidden','true');
+    if(item?.shape){
+      visual.dataset.shape=item.shape;visual.dataset.pattern=item.pattern;visual.dataset.color=item.color;
+      if(item.emoji)visual.append(element('span','camp-build-overlay',item.emoji));
+    }else visual.textContent=item?.emoji||base||'＋';
+    return visual;
+  }
+  function renderCampBuilder(focus=false,choiceId=null,cellIndex=null){
+    const m=Builders.model(campBuild);
+    $('camp-build-play').hidden=!m;
+    if(!m)return;
+    const playing=m.stage==='play',free=m.stage==='free',done=m.stage==='finished',solved=m.stage==='solved';
+    $('camp-build-play').dataset.game=m.game;
+    $('camp-build-play').dataset.stage=m.stage;
+    $('camp-build-name').textContent=m.emoji+' '+m.title;
+    $('camp-build-step').textContent=free?'Fri lek':done?'Bygget är färdigt!':'Del '+(m.index+1)+' av '+m.total;
+    $('camp-build-prompt').textContent=m.prompt;
+    $('camp-build-feedback').textContent=m.feedback;
+    $('camp-build-feedback').hidden=!m.feedback;
+    const board=$('camp-build-board');board.replaceChildren();board.dataset.game=m.game;
+    for(const cell of m.cells){
+      const btn=element(m.clickable?'button':'div','camp-build-cell');
+      if(m.clickable){btn.type='button';btn.dataset.buildCell=String(cell.index);}
+      btn.dataset.target=String(cell.target);btn.dataset.preview=String(cell.preview);btn.dataset.filled=String(!!cell.piece);
+      const label=cell.label+(cell.piece?': '+cell.piece.label:cell.base?': '+({'💧':'Bäck','🌲':'Träd','🌼':'Blommor','🌿':'Gräs'}[cell.base]||'Tom plats'):': Tom plats');
+      if(m.clickable)btn.setAttribute('aria-label',label);
+      btn.append(buildPiece(cell.piece,cell.base),element('span','camp-build-cell-label',cell.label),
+        element('small','camp-build-cell-detail',cell.piece?.label||(cell.base==='💧'?'Bäck':'')));
+      board.append(btn);
+    }
+    const palette=$('camp-build-options');palette.replaceChildren();palette.hidden=!(playing||free);
+    if(playing||free)for(const item of m.options){
+      const btn=element('button','camp-mini-tile camp-build-piece');btn.type='button';btn.dataset.buildPiece=item.id;
+      btn.setAttribute('aria-pressed',String(m.selected===item.id));
+      btn.append(buildPiece(item),element('strong','',item.label));palette.append(btn);
+    }
+    $('camp-build-instruction').hidden=!(playing||free);
+    $('camp-build-instruction').textContent=free||m.kind==='place'?
+      (m.selected?'Välj nu en plats på bygget.':'Välj först en sak.'):
+      'Prova en del. När du är nöjd med förhandsvisningen, sätt fast den.';
+    $('camp-build-confirm').hidden=!(playing&&m.kind==='preview');$('camp-build-confirm').disabled=!m.canConfirm;
+    $('camp-build-confirm').textContent=m.game==='paint'?'🎨 Måla klart den här delen':'🔧 Sätt fast delen';
+    $('camp-build-help').hidden=!playing;
+    $('camp-build-next').hidden=!solved;
+    $('camp-build-next').textContent=m.index+1===m.total?'Se ditt färdiga bygge →':'Bygg nästa del →';
+    $('camp-build-free').hidden=!done;
+    if(focus){
+      if(choiceId&&(playing||free)){
+        const target=[...palette.querySelectorAll('button')].find(btn=>btn.dataset.buildPiece===choiceId);
+        if(target){target.focus({preventScroll:true});return;}
+      }
+      if(cellIndex!==null&&m.clickable){
+        const target=[...board.querySelectorAll('button')].find(btn=>Number(btn.dataset.buildCell)===cellIndex);
+        if(target){target.focus({preventScroll:true});return;}
+      }
+      $('camp-build-prompt').focus();
+    }
+  }
+  function applyCampBuild(next,choiceId=null,cellIndex=null){
+    if(screen!=='camp'||next===campBuild)return;
+    campBuild=next;campMini=null;
+    if(next)renderCampBuilder(true,choiceId,cellIndex);
+    else renderCampMini(true);
+  }
   function resetCampLiving(){
+    campBuild=null;
     campMini=null;
     campLiving=Living.start();
     for(const icon of $('camp-live-scene').querySelectorAll('.camp-live-icon')){
@@ -3394,7 +3464,11 @@
   });
   $('camp-mini-menu').addEventListener('click',event=>{
     const btn=event.target.closest('button[data-mini-game]');
-    if(screen==='camp'&&btn&&$('camp-mini-menu').contains(btn))applyCampMini(Mini.start(btn.dataset.miniGame));
+    if(screen!=='camp'||!btn||!$('camp-mini-menu').contains(btn))return;
+    const game=btn.dataset.miniGame;
+    const build=Builders.start(game);
+    if(build){campBuild=build;campMini=null;renderCampMini(true);}
+    else {campBuild=null;applyCampMini(Mini.start(game));}
   });
   $('camp-mini-options').addEventListener('click',event=>{
     const btn=event.target.closest('button[data-mini-choice]');
@@ -3405,6 +3479,21 @@
   $('camp-mini-help').addEventListener('click',()=>applyCampMini(Mini.help(campMini)));
   $('camp-mini-next').addEventListener('click',()=>applyCampMini(Mini.next(campMini)));
   $('camp-mini-close').addEventListener('click',()=>applyCampMini(null));
+  $('camp-build-options').addEventListener('click',event=>{
+    const btn=event.target.closest('button[data-build-piece]');
+    if(screen==='camp'&&btn&&$('camp-build-options').contains(btn))
+      applyCampBuild(Builders.choose(campBuild,btn.dataset.buildPiece),btn.dataset.buildPiece);
+  });
+  $('camp-build-board').addEventListener('click',event=>{
+    const btn=event.target.closest('button[data-build-cell]');
+    if(screen==='camp'&&btn&&$('camp-build-board').contains(btn))
+      applyCampBuild(Builders.place(campBuild,Number(btn.dataset.buildCell)),null,Number(btn.dataset.buildCell));
+  });
+  $('camp-build-confirm').addEventListener('click',()=>applyCampBuild(Builders.confirm(campBuild)));
+  $('camp-build-help').addEventListener('click',()=>applyCampBuild(Builders.help(campBuild)));
+  $('camp-build-next').addEventListener('click',()=>applyCampBuild(Builders.next(campBuild)));
+  $('camp-build-free').addEventListener('click',()=>applyCampBuild(Builders.free(campBuild)));
+  $('camp-build-close').addEventListener('click',()=>applyCampBuild(null));
   $('camp-live-scene').addEventListener('click',event=>{
     const btn=event.target.closest('button[data-live-action]');
     if(btn&&$('camp-live-scene').contains(btn))reactCampLiving(btn);

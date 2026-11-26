@@ -36,3 +36,14 @@ Tre frivilliga spel högst upp på äventyrsplatsen, tillgängliga utan tidigare
 Alla uppdrag kan lösas med stöd. Felval ger en ledtråd och fria omförsök; barnet kan också välja att lösa uppdraget tillsammans. Resultatet förklarar ordet och barnet väljer aktivt att gå vidare. Efter fyra uppdrag visas ett avslut, inte automatisk omstart. Inga provpoäng, kunskapsobservationer, nya minnesmärken eller nya lagringsposter. Speltillståndet lämnas när barnet går till en annan vy. Använd stora knappar, tangentbordsfokus, textalternativ för kartans rader och kolumner, och en kort effekt som respekterar reducerad rörelse.
 
 `tests/camp-minigames.test.js` kontrollerar innehåll, alla tolv lösningar, kartgeometri, kombinationsordning, stöd, ändliga avslut och ogiltiga val. `tests/browser_camp.py` har frivilliga interaktionstester för alla tre mekaniker och oförändrad lokal historik. Ingen ny CI-körningstyp eller externa beroenden. Visuell granskning och barnprovspelning återstår.
+
+## Byggspel med fria skapelser
+Tre ytterligare minispel delar den befintliga spelmenyn (sex spel totalt). Varje spel har fyra redaktionellt skrivna uppdrag och ett synligt bygge som växer för varje avslutad del.
+
+- Bygg en värld: välj ett föremål, placera det i rätt ruta på en 3 × 3-karta. Föremål och positionsord måste båda passa instruktionen. En bro, ett hus, ett tält och en lykta bildar en liten by.
+- Målarverkstaden: prova en form eller ett mönster på tavlans aktuella panel. Ränder och prickar ritas med CSS; cirkel, triangel, kvadrat och avlång form har synliga konturer. Ändra förhandsvisningen innan du målar klart. Fyra paneler bildar mönstertavlan.
+- Robotverkstaden: prova delar i robotens kropp, huvud, armar och fötter. De synliga delarna byggs ihop med uttrycklig bekräftelse, inte ett automatiskt bildbyte efter varje svar.
+
+Felaktiga val ger ledtråd, inte förlust av tidigare delar. Det går att lösa varje uppdrag med stöd och aktivt välja nästa del. När bygget är klart kan barnet välja fri lek: byta ut delar utan rätt eller fel eller placera ytterligare föremål på kartan. Målningens och robotens delar hör till sina respektive paneler/kroppsdelar; det håller skapelsen begriplig. Ingen automatisk start, belöning, poäng eller historik. Bygget stannar i sessionen tills barnet lämnar aktiviteten. Allt är spelbart utan tidigare upptäckter och utan nya paket.
+
+Nya tester täcker samtliga tolv uppdrag, positionskrav, förhandsvisning, bekräftelse, bevarande av tidigare delar, stöd, fri lek och ogiltiga val. Befintlig frivillig webbläsarharness omfattar visuella tillstånd och oförändrad lagring. Ingen extra CI-jobbtyp. Barnprovspelning och riktig webbläsargranskning återstår.

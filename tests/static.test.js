@@ -297,3 +297,13 @@ test('minigames are linked, offline and independent of learning and storage',()=
   assert.ok(app.includes('renderCampStoryBook();renderCampMini();'));
   assert.ok(app.includes('campMini=null;\n    campLiving=Living.start();'));
 });
+
+test('creative builders share the minigame menu and are offline without history writes',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/camp-builders.js')>=0&&html.indexOf('./js/camp-builders.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/camp-builders.js'"));
+  for(const game of ['world','paint','robot'])assert.ok(html.includes('data-mini-game="'+game+'"'));
+  const flow=app.slice(app.indexOf('  function buildPiece('),app.indexOf('  function resetCampLiving('));
+  assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('setSettings('));
+  assert.ok(app.includes('campBuild=null;\n    campMini=null;'));
+});
