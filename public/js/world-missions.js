@@ -543,7 +543,7 @@
   }
   function answer(round,id){
     if(round?.stage!=='question')return round;
-    const selected=round.options.find(option=>option.id===id);
+    const selected=round.options?.find(option=>option.id===id);
     if(!selected)return round;
     if(selected.correct)return {...round,stage:'explanation',outcome:round.attempts?'supported':'direct'};
     if(round.attempts===0)return {...round,attempts:1};
@@ -556,7 +556,9 @@
     if(round?.stage!=='explanation'||!['direct','supported','guided'].includes(round.outcome))
       return {progress:raw,round,earned:null};
     const {chapter,task}=round;
-    if(!task||!chapter||task.key!==chapter.id+':'+chapter.index)return {progress:raw,round,earned:null};
+    if(!task||!chapter||task.world!==chapter.id||task.index!==chapter.index||task.key!==chapter.id+':'+chapter.index||
+      !story.validWorld(chapter.id)||chapter.index<0||chapter.index>=story.DATA[chapter.id].length||
+      chapter.index>(story.sanitize(raw)[chapter.id]||0))return {progress:raw,round,earned:null};
     const result=story.completeChapter(raw,chapter);
     return {...result,round:{...round,stage:'ending'}};
   }

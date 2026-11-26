@@ -258,3 +258,19 @@ test('adventure camp is offline, reachable after discovery and isolated from edu
   const riddle=app.slice(app.indexOf('  function renderCampRiddle('),app.indexOf('  function renderCampWorlds('));
   assert.ok(!riddle.includes('saveHistory(')&&!riddle.includes('history.'));
 });
+
+test('world missions are offline, map-linked, optional and isolated from educational scoring',()=>{
+  const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
+  assert.ok(html.indexOf('./js/world-missions.js')>=0&&html.indexOf('./js/world-missions.js')<html.indexOf('./js/app.js'));
+  assert.ok(worker.includes("'./js/world-missions.js'"));
+  for(const id of ['view-world-mission','world-mission-options','world-mission-hint','world-mission-explanation','world-mission-ending','camp-chapters','camp-mission'])
+    assert.ok(html.includes('id="'+id+'"'));
+  assert.ok(app.includes('WorldMissions.catalog(learningCatalog,Story)'));
+  assert.ok(app.includes('host.append(renderMissionPath(story))'));
+  assert.ok(app.includes('WorldMissions.complete(history.storyProgress,worldMission,Story)'));
+  assert.ok(app.includes("history.storyProgress=result.progress;saveHistory()"));
+  assert.ok(app.includes("openCampWithMark('mark-'+worldMissionEarned.id+'-'+worldMissionEarned.index)"));
+  const flow=app.slice(app.indexOf('  function startWorldMission('),app.indexOf('  function renderStoryOptions('));
+  assert.ok(!flow.includes('history.skillProgress')&&!flow.includes('history.results')&&!flow.includes('history.reviewProgress'));
+  assert.ok(!flow.includes('history.feedbackProgress')&&!flow.includes('history.practiceBalance'));
+});

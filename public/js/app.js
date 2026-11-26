@@ -1934,6 +1934,7 @@
       $('world-mission-next').textContent=story.complete?'':'🧭 Nästa plats: '+world.stops[next].name+' →';
       $('world-mission-next').dataset.nextChapter=String(next);
       $('world-mission-map').replaceChildren(renderMissionPath(story));
+      $('world-mission-adaptive').hidden=!getJourneyPlan(Date.now(),()=>.37).steps.length;
       $('world-mission-revisit-note').textContent=story.complete?'Hela världen är utforskad. Du kan återbesöka platserna eller välja en annan värld.':
         'Välj nästa plats när du vill. Du kan också återbesöka en plats du har utforskat.';
     }
@@ -1979,6 +1980,7 @@
     host.append(renderMissionPath(story));
     if(!story.complete&&worldMissionContent.tasks[story.id+':'+story.count])
       host.append(missionButton(story,story.count,'📖 Spela berättelsen: '+world.stops[story.count].name+' →'));
+    else if(story.complete)host.append(element('p','story-small','Tryck på en besökt plats för att spela berättelsen igen.'));
     if(location==='home'||location==='learning'){
       const album=element('details','story-album');
       album.append(element('summary','','🎒 Din upptäckarbok · '+story.collected+' minnesmärken'));
