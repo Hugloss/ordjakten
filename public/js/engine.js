@@ -15,7 +15,7 @@
     companion:'fox', adventure:'forest', sound:false,
     timerMode: 'off', timerSeconds: 180, timerScope: 'total', reviewOnly: false,
     expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true
-  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},retentionProgress:{}});
+  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,retentionProgress:{}});
 
   function shuffle(input, random = Math.random) {
     const result = input.slice();
@@ -316,7 +316,7 @@
     };
   }
   function sanitizeHistory(history) {
-    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},confusionProgress:{},clueProgress:{},retentionProgress:{}};
+    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,confusionProgress:{},clueProgress:{},retentionProgress:{}};
     const rawResults = Array.isArray(history.results)?history.results:[];
     const results = rawResults.filter(x => x && typeof x==='object' && Number.isFinite(x.finishedAt))
       .slice(-50).map(x => ({finishedAt:x.finishedAt,level:String(x.level||''),mode:String(x.mode||''),
@@ -367,6 +367,21 @@
     for(const id of ['forest','space','castle','pirate','ocean','dinosaurs','garden','unicorn','animals','rainbow','horses','music']){
       const n=history.storyProgress?.[id];if(Number.isInteger(n)&&n>0)storyProgress[id]=Math.min(4,n);
     }
+    let campLayout=null;
+    if(history.campLayout&&typeof history.campLayout==='object'&&!Array.isArray(history.campLayout)){
+      const value=history.campLayout,used=new Set();
+      const source=Array.isArray(value.slots)?value.slots:['free-tent',null,'free-lantern',null,'free-book',null];
+      const slots=Array.from({length:6},(_,i)=>{
+        const id=source[i];
+        if(typeof id!=='string'||used.has(id))return null;
+        const match=/^mark-(forest|space|castle|pirate|ocean|dinosaurs|garden|unicorn|animals|rainbow|horses|music)-([0-3])$/.exec(id);
+        const owned=/^free-(book|tent|lantern|flower|blanket|telescope)$/.test(id)||
+          !!(match&&(storyProgress[match[1]]||0)>Number(match[2]));
+        if(!owned)return null;
+        used.add(id);return id;
+      });
+      campLayout={scene:['glade','space','coast','garden'].includes(value.scene)?value.scene:'glade',slots};
+    }
     const adventureChallenge=Array.isArray(history.adventureChallenge)?history.adventureChallenge.slice(-8).filter(row=>row&&
       ['focus','aha','recall','workshop','detector','concept','bridge'].includes(row.mode)&&['direct','supported','neutral'].includes(row.outcome)&&
       [1,2,3].includes(row.demand)&&Number.isSafeInteger(row.at)&&row.at>0&&row.at<=4102444800000)
@@ -379,7 +394,7 @@
     const detectorProgress=history.detectorProgress&&typeof history.detectorProgress==='object'&&!Array.isArray(history.detectorProgress)?history.detectorProgress:{};
     const recallProgress=history.recallProgress&&typeof history.recallProgress==='object'&&!Array.isArray(history.recallProgress)?history.recallProgress:{};
     const skillProgress=history.skillProgress&&typeof history.skillProgress==='object'&&!Array.isArray(history.skillProgress)?history.skillProgress:{};
-    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,confusionProgress,clueProgress,retentionProgress};
+    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,confusionProgress,clueProgress,retentionProgress};
   }
   function applyOutcome(mistakes,id,outcome) {
     const updated={...mistakes};

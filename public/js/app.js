@@ -38,12 +38,13 @@
   const Balance = window.OrdjaktenBalance;
   const Challenge = window.OrdjaktenChallenge;
   const Story = window.OrdjaktenStory;
+  const Camp = window.OrdjaktenCamp;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -81,6 +82,7 @@
   let detectorRound = null;
   let conceptMap=null;
   let journey=null,journeyStory=null,journeyKeepsake=null;
+  let campSelected=null,campChat=0,campPrompt=0,campMessage='';
   const journeyUsage=Object.create(null),journeyWorkshopSeen=new Set();
   const recordedJourneySteps=new WeakSet(),journeyOutcomes=new WeakMap();
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
@@ -102,6 +104,7 @@
   history.practiceBalance=Balance.sanitize(history.practiceBalance);
   history.adventureChallenge=Challenge.sanitize(history.adventureChallenge);
   history.storyProgress=Story.sanitize(history.storyProgress);
+  history.campLayout=Camp.sanitize(history.campLayout,Camp.inventory(history.storyProgress,Story,A));
   const reducedMotion = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   // Optional Swedish speech assistance. Nothing is spoken automatically or sent
   // to our servers. Browser/OS voice availability can vary by device.
@@ -507,7 +510,7 @@
   function show(name) {
     if(name!=='play') stopReadAloud();
     screen = name;
-    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector','concepts','journey']) $('view-'+view).hidden = view!==name;
+    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector','concepts','journey','camp']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
       const chosen=btn.dataset.nav===(name==='play'||name==='results'?'home':name);
       if(chosen)btn.setAttribute('aria-current','page'); else btn.removeAttribute('aria-current');
@@ -516,6 +519,7 @@
     if(name==='book')renderBook();
     if(name==='history')renderHistory();
     if(name==='learning')renderLearning();
+    if(name==='camp')renderCamp(true);
     scrollTop();
   }
   function setPressed(selector, key, value) {
@@ -728,7 +732,7 @@
       'Se hur äventyret gick →':'Nästa äventyrssteg →';
   }
   function startJourney(preferredMode=null){
-    if((journey&&!journey.finished)||!['home','learning','journey','results'].includes(screen))return;
+    if((journey&&!journey.finished)||!['home','learning','journey','results','camp'].includes(screen))return;
     const now=Date.now(),plan=getJourneyPlan(now,Math.random,getKnowledgeProfile(now),
       {preferredMode:typeof preferredMode==='string'?preferredMode:null});
     if(typeof preferredMode==='string'&&plan.steps[0]?.mode!==preferredMode){
@@ -1713,6 +1717,97 @@
         ready+' återbesök redo · '+waiting.length+' övningar vilar.'+(next?' '+Memory.note(next,now):'');
     }
   }
+  function campInventory(){return Camp.inventory(history.storyProgress,Story,A);}
+  function campNotice(text){campMessage=text;$('camp-notice').textContent=text;}
+  function renderCamp(refreshWorlds=false){
+    const items=campInventory(),byId=new Map(items.map(item=>[item.id,item]));
+    const layout=Camp.sanitize(history.campLayout,items);
+    if(!byId.has(campSelected))campSelected=null;
+    const scene=Camp.SCENES[layout.scene],buddy=P.companion(settings.companion);
+    $('camp-scene').dataset.scene=layout.scene;
+    $('camp-sky').textContent=scene.sky;$('camp-edge').textContent=scene.edge;$('camp-ground').textContent=scene.ground;
+    $('camp-buddy-icon').textContent=buddy.emoji;
+    $('camp-buddy-name').textContent=buddy.name+' säger:';
+    $('camp-buddy-line').textContent=Camp.dialogue(settings.companion,campChat);
+    $('camp-creative-prompt').textContent=Camp.prompt(layout,items,campPrompt);
+    $('camp-notice').textContent=campMessage;
+    for(const btn of $('camp-scenes').querySelectorAll('[data-camp-scene]'))
+      btn.setAttribute('aria-pressed',String(btn.dataset.campScene===layout.scene));
+    for(const btn of $('camp-buddies').querySelectorAll('[data-camp-buddy]'))
+      btn.setAttribute('aria-pressed',String(btn.dataset.campBuddy===settings.companion));
+    const slots=$('camp-slots');slots.replaceChildren();
+    layout.slots.forEach((id,index)=>{
+      const item=byId.get(id),button=element('button','camp-slot');
+      button.type='button';button.dataset.campSlot=String(index);
+      button.setAttribute('aria-label',Camp.SLOTS[index]+': '+(item?.name||'tom plats'));
+      button.setAttribute('aria-pressed',String(!!item&&item.id===campSelected));
+      const symbol=element('span','camp-slot-symbol',item?.emoji||'+');symbol.setAttribute('aria-hidden','true');
+      button.append(symbol,element('span','camp-slot-label',item?.name||'Placera här'));
+      slots.append(button);
+    });
+    const bag=$('camp-inventory');bag.replaceChildren();
+    for(const item of items){
+      const button=element('button','camp-item');button.type='button';button.dataset.campItem=item.id;
+      button.setAttribute('aria-pressed',String(campSelected===item.id));
+      const icon=element('span','camp-item-icon',item.emoji);icon.setAttribute('aria-hidden','true');
+      button.append(icon,element('strong','',item.name),
+        element('small','',layout.slots.includes(item.id)?'På platsen':item.source));
+      bag.append(button);
+    }
+    const selected=byId.get(campSelected);
+    $('camp-selection').textContent=selected?'Valt: '+selected.emoji+' '+selected.name+'. Välj var det ska stå.':
+      'Välj ett föremål i samlingen eller på platsen.';
+    $('camp-remove').disabled=!selected||!layout.slots.includes(selected.id);
+    $('camp-cancel').disabled=!selected;
+    if(refreshWorlds)renderCampWorlds();
+  }
+  function renderCampWorlds(){
+    const list=$('camp-worlds');list.replaceChildren();
+    for(const world of Camp.worlds(history.storyProgress,settings.adventure,Story,A)){
+      const button=element('button','camp-world');button.type='button';button.dataset.campWorld=world.id;
+      button.setAttribute('aria-pressed',String(world.current));
+      const emoji=element('span','camp-world-icon',world.emoji);emoji.setAttribute('aria-hidden','true');
+      const copy=element('div','camp-world-copy');
+      copy.append(element('strong','',world.title),element('small','',world.complete?'Utforskad · återbesök':world.chapter));
+      const count=element('span','camp-world-count',world.count+' / '+world.total);
+      count.setAttribute('aria-label',world.count+' av '+world.total+' platser utforskade');
+      button.append(emoji,copy,count);list.append(button);
+    }
+    const world=A.world(settings.adventure),preview=getJourneyPlan(Date.now(),()=>.37);
+    $('camp-go').disabled=!preview.steps.length;
+    $('camp-go').textContent='🧭 Ut på äventyr i '+world.short+' →';
+    $('camp-world-note').textContent=preview.steps.length?'Välj en värld. Starta ett äventyr när du vill.':
+      'Inga lämpliga övningar är redo just nu. Du kan fortfarande dekorera och välja värld.';
+  }
+  function focusCamp(selector){
+    $('view-camp').querySelector(selector)?.focus({preventScroll:true});
+  }
+  function selectCampItem(id){
+    const item=campInventory().find(row=>row.id===id);
+    if(!item)return;
+    campSelected=id;campMessage='';renderCamp();
+  }
+  function useCampSlot(index){
+    if(!Number.isInteger(index)||index<0||index>=Camp.SLOTS.length)return;
+    const items=campInventory(),layout=Camp.sanitize(history.campLayout,items);
+    if(!campSelected){
+      if(layout.slots[index])selectCampItem(layout.slots[index]);
+      else campNotice('Välj först ett föremål i samlingen.');
+      return;
+    }
+    const item=items.find(row=>row.id===campSelected);
+    if(!item)return;
+    const next=Camp.place(history.campLayout,item.id,index,items);
+    if(next!==history.campLayout){history.campLayout=next;saveHistory();}
+    campSelected=null;
+    campMessage=item.emoji+' '+item.name+' finns på platsen.';
+    renderCamp();
+  }
+  function openCamp(earned=false){
+    const mark=earned&&journeyKeepsake?'mark-'+journeyKeepsake.id+'-'+journeyKeepsake.index:null;
+    campSelected=mark;campChat=0;campPrompt=0;campMessage='';
+    goNav('camp');$('camp-title').focus({preventScroll:true});
+  }
   function renderStoryOptions(location){
     const host=$('story-'+location);
     const story=Story.model(history.storyProgress,settings.adventure);
@@ -1750,6 +1845,8 @@
       }
       if(!story.collected)collected.append(element('p','muted','Här får dina upptäckter plats när du har utforskat en berättelse.'));
       album.append(collected);host.append(album);
+      const camp=element('button','secondary-button full-button','🏕️ Besök min äventyrsplats →');
+      camp.type='button';camp.dataset.campOpen='true';host.append(camp);
       return;
     }
     let openings=[];
@@ -1777,7 +1874,8 @@
     switcher.append(prompt,select);host.append(switcher);
     const stop=element('button','secondary-button full-button','Klar för nu – till min ordstig');
     stop.type='button';stop.dataset.storyStop='true';
-    host.append(stop,element('p','story-small','Dina upptäckter finns kvar. Du kan komma tillbaka när du vill.'));
+    const camp=element('button','secondary-button full-button','🏕️ Besök min äventyrsplats →');camp.type='button';camp.dataset.campOpen='true';
+    host.append(camp,stop,element('p','story-small','Dina upptäckter finns kvar. Du kan komma tillbaka när du vill.'));
   }
   function renderKnowledgePreview(knowledge=getKnowledgeProfile()){
     // A deterministic example preview, not a promise to repeat precisely
@@ -2870,7 +2968,7 @@
     });
   }
   function exportHistory() {
-    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,adventureChallenge:history.adventureChallenge,storyProgress:history.storyProgress,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
+    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,adventureChallenge:history.adventureChallenge,storyProgress:history.storyProgress,campLayout:history.campLayout,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -2915,6 +3013,39 @@
   $('next-journey-skip').addEventListener('click',()=>{if(journey&&!journey.finished)advanceJourney('skipped',journey.steps[journey.index].mode);});
   $('next-journey-stop').addEventListener('click',()=>goNav('learning'));
   $('next-journey-back').addEventListener('click',()=>goNav('learning'));
+  for(const location of ['home','learning','results','journey']){
+    $('story-'+location).addEventListener('click',event=>{
+      if(screen===location&&event.target.closest('button[data-camp-open]'))openCamp();
+    });
+  }
+  $('story-decorate').addEventListener('click',()=>{if(screen==='journey'&&journeyKeepsake)openCamp(true);});
+  $('camp-go').addEventListener('click',()=>{if(screen==='camp')startJourney();});
+  $('camp-chat').addEventListener('click',()=>{if(screen==='camp'){campChat++;renderCamp();}});
+  $('camp-prompt-next').addEventListener('click',()=>{if(screen==='camp'){campPrompt++;renderCamp();}});
+  $('camp-cancel').addEventListener('click',()=>{if(screen==='camp'){campSelected=null;campMessage='';renderCamp();}});
+  $('camp-remove').addEventListener('click',()=>{
+    if(screen!=='camp'||!campSelected)return;
+    const index=history.campLayout.slots.indexOf(campSelected);
+    const next=Camp.remove(history.campLayout,index,campInventory());
+    if(next!==history.campLayout){history.campLayout=next;saveHistory();}
+    campSelected=null;campMessage='Föremålet ligger kvar i din samling.';renderCamp();focusCamp('#camp-selection');
+  });
+  $('view-camp').addEventListener('click',event=>{
+    if(screen!=='camp')return;
+    const btn=event.target.closest('button');if(!btn||btn.disabled)return;
+    const data=btn.dataset;
+    if(data.campItem){selectCampItem(data.campItem);focusCamp('[data-camp-item="'+data.campItem+'"]');}
+    else if(data.campSlot!==undefined){const index=Number(data.campSlot);useCampSlot(index);focusCamp('[data-camp-slot="'+index+'"]');}
+    else if(data.campScene){
+      const next=Camp.changeScene(history.campLayout,data.campScene,campInventory());
+      if(next!==history.campLayout){history.campLayout=next;saveHistory();}
+      renderCamp();focusCamp('[data-camp-scene="'+data.campScene+'"]');
+    }else if(data.campBuddy&&Object.hasOwn(P.COMPANIONS,data.campBuddy)){
+      setSettings({companion:data.campBuddy});campChat=0;renderCamp();focusCamp('[data-camp-buddy="'+data.campBuddy+'"]');
+    }else if(data.campWorld&&A.isWorld(data.campWorld)){
+      setSettings({adventure:data.campWorld});renderCamp(true);focusCamp('[data-camp-world="'+data.campWorld+'"]');
+    }
+  });
   for(const location of ['results','journey']){
     $('story-'+location).addEventListener('click',event=>{
       if(screen!==location)return;
@@ -3248,9 +3379,9 @@
   $('more-words').addEventListener('click',()=>{wordListLimit+=24;renderWordList();});
   $('export-history').addEventListener('click',exportHistory);
   $('clear-history').addEventListener('click',()=>{
-    if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor och uppdragsstjärnor? Detta går inte att ångra.'))return;
+    if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor, upptäckter och din äventyrsplats? Detta går inte att ångra.'))return;
     for(const key of Object.keys(journeyUsage))delete journeyUsage[key];journeyWorkshopSeen.clear();
-    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
+    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());campSelected=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   createAdventureChoices();renderSetup();show('home');
   if ('serviceWorker' in navigator && window.isSecureContext) {

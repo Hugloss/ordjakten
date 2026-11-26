@@ -65,6 +65,7 @@
   <script src="./js/practice-balance.js" defer></script>
   <script src="./js/adventure-challenge.js" defer></script>
   <script src="./js/story-quests.js" defer></script>
+  <script src="./js/adventure-camp.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
@@ -603,10 +604,55 @@
         <section class="panel journey-finish">
           <h1 id="next-journey-title" tabindex="-1">✨ Mitt nästa äventyr</h1>
           <p id="next-journey-summary" class="workshop-reading" role="status"></p>
-          <div id="story-earned" class="story-earned" hidden><span id="story-earned-icon" class="story-keepsake-icon" aria-hidden="true"></span><div><p class="eyebrow">Ny upptäckt i din bok!</p><h2 id="story-earned-title"></h2><p id="story-earned-ending"></p></div></div>
+          <div id="story-earned" class="story-earned" hidden><span id="story-earned-icon" class="story-keepsake-icon" aria-hidden="true"></span><div><p class="eyebrow">Ny upptäckt i din bok!</p><h2 id="story-earned-title"></h2><p id="story-earned-ending"></p><button id="story-decorate" class="secondary-button full-button" type="button">🏕️ Placera mitt nya minnesmärke →</button></div></div>
           <div id="story-journey" class="story-card" aria-label="Nästa berättelseäventyr"></div>
           <ul id="next-journey-summary-list" class="journey-summary-list"></ul>
           <button id="next-journey-back" type="button" class="secondary-button full-button">🗺️ Klar för nu – till min ordstig</button>
+        </section>
+      </section>
+
+      <section id="view-camp" class="view" aria-labelledby="camp-title" hidden>
+        <header class="camp-header">
+          <div><span class="eyebrow">🎨 DIN EGEN VÄRLD</span><h1 id="camp-title" tabindex="-1">Min äventyrsplats</h1><p>Inred din plats, lek med orden och välj vart du vill resa. Den är din även när du tar en paus.</p></div>
+          <button type="button" class="secondary-button" data-nav="learning">Klar för nu – Min ordstig</button>
+        </header>
+        <section class="panel camp-editor" aria-label="Dekorera äventyrsplatsen">
+          <div class="camp-scene-controls"><h2>Välj miljö</h2><div id="camp-scenes" class="camp-choice-row" role="group" aria-label="Miljö">
+            <button type="button" class="secondary-button" data-camp-scene="glade" aria-pressed="false">🌲 Skogsglänta</button>
+            <button type="button" class="secondary-button" data-camp-scene="space" aria-pressed="false">🌙 Stjärnhimmel</button>
+            <button type="button" class="secondary-button" data-camp-scene="coast" aria-pressed="false">🌊 Strand</button>
+            <button type="button" class="secondary-button" data-camp-scene="garden" aria-pressed="false">🌸 Sagoträdgård</button>
+          </div></div>
+          <div id="camp-scene" class="camp-scene" data-scene="glade">
+            <div class="camp-landscape" aria-hidden="true"><span id="camp-sky"></span><span id="camp-edge"></span><span id="camp-ground"></span></div>
+            <div id="camp-slots" class="camp-slots" role="group" aria-label="Sex platser för föremål"></div>
+          </div>
+          <p id="camp-selection" class="camp-selection" tabindex="-1"></p>
+          <div class="camp-choice-row">
+            <button id="camp-remove" type="button" class="secondary-button" disabled>🧺 Lägg tillbaka</button>
+            <button id="camp-cancel" type="button" class="secondary-button" disabled>Avbryt valet</button>
+          </div>
+          <p id="camp-notice" class="camp-notice" role="status"></p>
+          <h2>🎒 Mina föremål</h2><p class="muted">Välj ett föremål och sedan en plats. Flytta och kombinera hur du vill.</p>
+          <div id="camp-inventory" class="camp-inventory" role="group" aria-label="Dina föremål"></div>
+        </section>
+        <section class="panel camp-companion" aria-labelledby="camp-friend-title">
+          <h2 id="camp-friend-title">Min ordkompis</h2>
+          <div id="camp-buddies" class="camp-choice-row" role="group" aria-label="Välj ordkompis">
+            <button type="button" class="secondary-button" data-camp-buddy="fox" aria-pressed="false">🦊 Roffe</button>
+            <button type="button" class="secondary-button" data-camp-buddy="owl" aria-pressed="false">🦉 Ulla</button>
+            <button type="button" class="secondary-button" data-camp-buddy="dragon" aria-pressed="false">🐉 Dino</button>
+          </div>
+          <div class="camp-dialogue"><span id="camp-buddy-icon" aria-hidden="true"></span><div><strong id="camp-buddy-name"></strong><p id="camp-buddy-line" aria-live="polite"></p></div></div>
+          <button id="camp-chat" type="button" class="secondary-button full-button">💬 Prata med ordkompisen</button>
+          <div class="camp-prompt"><h3>📖 Hitta på tillsammans</h3><p id="camp-creative-prompt" aria-live="polite"></p><small>Berätta högt, eller bara tänk ut din idé. Inget svar bedöms eller sparas.</small>
+            <button id="camp-prompt-next" type="button" class="secondary-button full-button">En annan idé →</button></div>
+        </section>
+        <section class="panel camp-travel" aria-labelledby="camp-travel-title">
+          <h2 id="camp-travel-title">🗺️ Vart vill du resa?</h2>
+          <p id="camp-world-note" class="muted"></p>
+          <div id="camp-worlds" class="camp-worlds" role="group" aria-label="Äventyrsvärldar"></div>
+          <button id="camp-go" type="button" class="primary-button full-button">Ut på äventyr →</button>
         </section>
       </section>
 

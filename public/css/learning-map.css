@@ -211,3 +211,48 @@
 .story-album-world{padding:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px}
 .story-album-marks{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:5px;margin:8px 0 0;padding:0}
 .story-album-marks li{font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+
+/* Min äventyrsplats – a calm, keyboard-operable creative scene. */
+.camp-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
+.camp-header h1{margin:6px 0;font-size:clamp(32px,6vw,46px)}
+.camp-header p{max-width:55ch;font-size:18px;line-height:1.5;margin:0}
+.camp-editor,.camp-companion,.camp-travel{display:grid;gap:14px;margin-bottom:18px}
+.camp-editor h2,.camp-companion h2,.camp-travel h2,.camp-editor p,.camp-travel p{margin:0}
+.camp-choice-row{display:flex;gap:8px;flex-wrap:wrap}
+.camp-choice-row button{min-height:44px}
+#view-camp button[aria-pressed='true']{border-color:var(--accent-line);box-shadow:inset 0 0 0 1px var(--accent-line);background:var(--accent-soft)}
+.camp-scene{position:relative;isolation:isolate;overflow:hidden;padding:clamp(24px,5vw,45px) 14px 18px;border-radius:18px;border:1px solid var(--border);
+  background:linear-gradient(170deg,#a6daee 0 39%,#b9dba2 39% 57%,#6b9a64 57% 100%)}
+.camp-scene[data-scene='space']{background:radial-gradient(circle at 77% 16%,#cbb4ed 0 2%,transparent 3%),linear-gradient(160deg,#293155 0 57%,#74649b 57% 100%)}
+.camp-scene[data-scene='coast']{background:linear-gradient(172deg,#bce4ec 0 40%,#67afc7 40% 57%,#e8cb96 57% 100%)}
+.camp-scene[data-scene='garden']{background:linear-gradient(170deg,#ffe1ed 0 39%,#b0dba7 39% 61%,#84b576 61% 100%)}
+.camp-landscape{position:absolute;inset:0;pointer-events:none;z-index:-1;font-size:clamp(30px,8vw,76px)}
+#camp-sky{position:absolute;top:2%;right:6%}
+#camp-edge{position:absolute;bottom:17%;left:2%}
+#camp-ground{position:absolute;bottom:2%;right:2%}
+.camp-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:680px;margin:0 auto}
+.camp-slot{display:grid;align-content:center;justify-items:center;gap:4px;min-width:0;min-height:126px;padding:12px 6px;border:2px dashed var(--border);border-radius:18px;background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.camp-slot-symbol{font-size:clamp(34px,7vw,58px);line-height:1.25}
+.camp-slot-label{font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.camp-selection{padding:12px;border-radius:10px;background:var(--accent-soft);line-height:1.5;font-weight:700}
+.camp-notice{font-size:15px;line-height:1.4;min-height:1.4em}
+.camp-inventory{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,125px),1fr));gap:9px}
+.camp-item{display:grid;justify-items:center;align-content:start;gap:4px;min-height:104px;min-width:0;padding:9px 6px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);overflow-wrap:anywhere;text-align:center}
+.camp-item-icon{font-size:34px;line-height:1.2}
+.camp-item strong{font-size:15px;line-height:1.3}
+.camp-item small,.camp-world small{color:var(--muted);font-size:12px;line-height:1.4}
+.camp-dialogue{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:16px;background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:14px}
+#camp-buddy-icon{font-size:clamp(44px,10vw,72px)}
+.camp-dialogue p,.camp-prompt p{font-size:19px;line-height:1.55;margin:6px 0}
+.camp-prompt{padding:14px;border:1px solid var(--border);background:var(--surface-2);border-radius:14px}
+.camp-prompt h3{margin:0;font-size:21px}
+.camp-prompt small{display:block;color:var(--muted);line-height:1.4;margin-bottom:10px}
+.camp-worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:10px}
+.camp-world{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px;padding:12px;border:1px solid var(--border);border-radius:13px;min-height:76px;background:var(--surface-2);color:var(--text);text-align:left}
+.camp-world-icon{font-size:32px}
+.camp-world-copy{min-width:0;display:grid;gap:4px;overflow-wrap:anywhere}
+.camp-world-count{font-size:13px;white-space:nowrap}
+#camp-go{min-height:54px;font-size:18px}
+#story-decorate{margin-top:12px}
+@media(max-width:480px){.camp-slots{gap:6px}.camp-slot{padding:8px 3px;min-height:104px}.camp-slot-label{font-size:12px}.camp-scene{padding:24px 7px 12px}.camp-inventory{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(forced-colors:active){.camp-scene{background:Canvas}.camp-landscape{display:none}}

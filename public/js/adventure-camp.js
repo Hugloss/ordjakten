@@ -46,7 +46,7 @@
       if(typeof id!=='string'||!VALID_ID.test(id)||used.has(id))return null;
       used.add(id);return id;
     });
-    return {scene:Object.hasOwn(SCENES,value.scene)?value.scene:'glade',slots};
+    return {scene:typeof value.scene==='string'&&Object.hasOwn(SCENES,value.scene)?value.scene:'glade',slots};
   }
   function sanitize(raw,items){
     const value=shape(raw),owned=new Set(items.map(item=>item.id));
@@ -81,12 +81,13 @@
       'Tänk att en vän kommer hit. Vad skulle ni kunna göra tillsammans?'
     ][n%2];
     const item=placed[n%placed.length],other=placed[(n+1)%placed.length];
+    const name='”'+item.name+'”',otherName='”'+other.name+'”';
     const prompts=[
-      'Titta på '+item.name.toLocaleLowerCase('sv-SE')+'. Hitta tre ord som beskriver den eller bilden av den.',
-      'Tänk att '+item.name.toLocaleLowerCase('sv-SE')+' finns med i en saga. Vad händer först?',
-      other!==item?'Hitta på en mening där '+item.name.toLocaleLowerCase('sv-SE')+' och '+other.name.toLocaleLowerCase('sv-SE')+' båda finns med.':
-        'Vilken annan sak skulle passa tillsammans med '+item.name.toLocaleLowerCase('sv-SE')+'? Berätta varför.',
-      'Beskriv platsen för någon som inte ser den. Var finns '+item.name.toLocaleLowerCase('sv-SE')+'?'
+      'Titta på föremålet '+name+'. Hitta tre ord som beskriver det.',
+      'Tänk att '+name+' finns med i en saga. Vad händer först?',
+      other!==item?'Hitta på en mening där föremålen '+name+' och '+otherName+' båda finns med.':
+        'Vilken annan sak skulle passa tillsammans med '+name+'? Berätta varför.',
+      'Beskriv platsen för någon som inte ser den. Var finns '+name+'?'
     ];
     return prompts[n%prompts.length];
   }
