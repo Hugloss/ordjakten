@@ -40,6 +40,7 @@
     rows.sort((a,b)=>{
       const A=a.row,B=b.row;
       return RANK[A.reason]-RANK[B.reason]||
+        ts(B.feedbackPriority)-ts(A.feedbackPriority)||
         ts(usage[A.mode])-ts(usage[B.mode])||
         (A.reason==='need'||A.reason==='review'?ts(A.dueAt)-ts(B.dueAt):0)||
         ts(B.profileWeight)-ts(A.profileWeight)||
@@ -58,7 +59,7 @@
     return {steps,maxTasks:steps.reduce((n,row)=>n+row.cost,0)};
   }
   function build({catalog,history={},focusTypes,pairFor,knownIds=new Set(),aha,recall,detector,concept,bridge,
-    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null}){
+    conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null,adjust=null}){
     const byId=new Map(catalog.map(item=>[item.id,item]));
     const candidates=[],known=new Set([...knownIds].filter(id=>byId.has(id)));
     const encountered=new Set(known);
@@ -143,7 +144,7 @@
         add('workshop','workshop:'+id,pair?[pair.left,pair.right]:[id],'extend',3,{id});
     }
     const ranked=typeof decorate==='function'?candidates.map(decorate):candidates;
-    return select(ranked,{usage,random});
+    return select(typeof adjust==='function'?adjust(ranked):ranked,{usage,random});
   }
   // Pure transitions prevent duplicate Done clicks and distinguish a skip
   // from finishing an exercise. Individual engines retain their observations.
