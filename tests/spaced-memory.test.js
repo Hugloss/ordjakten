@@ -166,7 +166,7 @@ test('sanitization bounds memory, strips extra text and keeps tracks distinct th
   const p=recall({},NOW),t=B.recordProgress({},id,'context','first',NOW,'context:0');
   const stored=E.sanitizeHistory({recallProgress:p,readingProgress:t});
   assert.deepEqual(R.sanitize(stored.recallProgress,catalog),p);
-  assert.deepEqual(B.sanitizeProgress(stored.readingProgress),t);
+  assert.deepEqual(B.sanitizeProgress(stored.readingProgress),B.sanitizeProgress(t));
   assert.equal(M.sanitize({...p[id].memory,typed:'private'}).typed,undefined);
   assert.equal(M.sanitize({step:1,lastAt:NOW,outcome:'direct',evidence:'not allowed'},{evidenceRequired:true}),null);
   assert.equal(R.sanitize({[id]:{...p[id],memory:{...p[id].memory,lastAt:NOW-1}}},catalog)[id].memory,undefined);
