@@ -165,3 +165,5 @@
 .balance-mix-list{list-style:none;display:grid;gap:6px;padding:0;margin:10px 0}
 .balance-mix-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:8px;background:var(--surface-2);line-height:1.45}
 .balance-mix-row strong{min-width:2ch;text-align:right}
+
+.journey-pacing{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--muted)}
