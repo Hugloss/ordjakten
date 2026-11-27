@@ -11,6 +11,7 @@ on:
       - 'public/js/engine.js'
       - 'public/index.html'
       - 'public/css/treasure-hunt.css'
+      - 'public/css/style.css'
       - 'tests/browser_treasure_mysteries.py'
       - 'tests/browser_smoke.py'
       - '.github/workflows/browser-treasure.yml'
