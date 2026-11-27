@@ -23,7 +23,7 @@
   }
   function catalog(data){
     const stories={},ids=[],errors=[];
-    if(!Array.isArray(data?.STORIES)||data.STORIES.length<12||data.STORIES.length>40)
+    if(!Array.isArray(data?.STORIES)||data.STORIES.length<12||data.STORIES.length>64)
       return {stories,ids,errors:['story-count']};
     for(const row of data.STORIES){
       const id=row?.id,stages=row?.stages;
