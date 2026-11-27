@@ -42,6 +42,12 @@ på köpta manus, trycksaker eller skyddade figurer.
 | Riddarskola | Riddarskolans fredsflagga | Riddarens fredsmärke |
 | Hemlig älvskog | Älvskogens borttappade lyktor | Älvornas sagolykta |
 
+För att 32 teman ska vara lätta att hitta på en smal skärm kan barnet
+välja **Alla (32)**, **Mysterier (6)**, **Fantasivärldar (8)**,
+**Upptäcktsresor (10)** eller **Skapa och klura (8)**. Kategorierna
+ändrar bara vilka äventyrskort som visas; alla avklarade fynd finns
+kvar. Valet går att göra med tangentbord och sparas inte som prestation.
+
 Alla världar är valbara från början. Varje berättelse har tre
 sammanhängande steg: orientering, en ny situation och en avslutande
 upptäckt. Barnet får en kort scen, **två synliga ledtrådar** och tre
