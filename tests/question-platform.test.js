@@ -120,6 +120,17 @@ test('invalid answers and incomplete rounds never turn into learning or rewards'
   assert.equal('reward' in session.snapshot(),false);
   assert.equal('mastery' in session.snapshot(),false);
 });
+test('shared runtime and legacy engine must not depend on a concrete subject bank',()=>{
+  for(const file of ['public/js/engine.js','public/js/question-platform.js',
+    'public/js/question-session.js']){
+    const text=fs.readFileSync(path.join(root,file),'utf8');
+    assert.doesNotMatch(text,/require\(['"]\.\/banks\/svenska['"]\)/,file);
+    assert.doesNotMatch(text,/OrdjaktenSvenskaBank/,file);
+  }
+  const app=fs.readFileSync(path.join(root,'public/js/app.js'),'utf8');
+  assert.match(app,/SvenskaBank\.fromLegacyExpressions\(expressions\)/);
+  assert.match(app,/bankRegistry\.assess\(ref,selected\.id\)/);
+});
 test('legacy engine meaning questions still keep the original facit and counts',()=>{
   for(const entry of source.expressions){
     const quiz=Engine.makeExpressionQuestion(entry,'exam',()=>0.72,'meaning');
