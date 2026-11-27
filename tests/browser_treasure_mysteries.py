@@ -115,7 +115,7 @@ def exercise_voluntary_transfer(page):
     assert transfer.locator('[data-treasure-mystery-transfer="0"]').is_disabled()
     feedback = transfer.locator(".treasure-mystery-feedback")
     assert feedback.get_attribute("role") == "status"
-    assert "hittegodslåda" in feedback.inner_text().lower()
+    assert author["wrong"][0] in feedback.inner_text(), "Feedback must explain the selected partial match"
     assert page.evaluate("document.activeElement.id") == "treasure-transfer-title"
     after_wrong = saved(page)
     assert after_wrong["treasureHunt"]["worlds"]["forest"]["mystery"]["transferWrong"] == [0]
