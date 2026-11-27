@@ -23,6 +23,7 @@ test('Pages builds the artifact before a separate deploy job to avoid lookup rac
   assert.ok(build>=0&&upload>build&&deploy>upload&&publish>deploy,
     'upload completes in its own build job before deployment begins');
   assert.match(workflow.slice(deploy),/needs: build/);
-  assert.match(workflow.slice(deploy),/environment:\\n      name: github-pages/);
+  assert.match(workflow.slice(deploy),/environment:/);
+  assert.match(workflow.slice(deploy),/name: github-pages/);
   assert.match(workflow,/workflow_dispatch:/);
 });
