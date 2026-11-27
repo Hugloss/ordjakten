@@ -234,7 +234,7 @@
     if(!$('word-teaching').hidden)chunks.push(...[...$('word-teaching').querySelectorAll('h4,p')]
       .filter(node=>!node.closest('details:not([open])')).map(node=>node.textContent));
     if(!$('school-feedback').hidden){
-      chunks.push($('school-feedback-correction').textContent,$('school-feedback-explanation').textContent);
+      chunks.push($('school-feedback-correction').textContent,$('school-feedback-clue').textContent,$('school-feedback-explanation').textContent);
       if($('school-feedback-more').open)chunks.push($('school-feedback-connection').textContent,$('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
     }
     return chunks.filter(Boolean).join('. ');
@@ -344,9 +344,10 @@
     target.replaceChildren();
     const data=S.getChallenge(surprises,id),task=Q.get(missions,id);
     if(!data||!task)return;
-    const category=expressions.expressions.find(e=>e.id===id)?.category;
+    const entry=expressions.expressions.find(e=>e.id===id),category=entry?.category;
     const school=category==='school-instruction',everyday=category==='everyday-instruction';
     const instruction=school||everyday;
+    const contextPractice=Array.isArray(task.contextScenes)&&task.contextScenes.length>0;
     const mode=missionMode(id),completed=history.missionProgress[id]||[];
     const wrap=element('section','bonus-question');wrap.dataset.expressionId=id;wrap.dataset.missionMode=mode;
     wrap.append(element('h4','','🎯 Välj ett litet uppdrag'));
@@ -356,7 +357,7 @@
       const btn=element('button','mission-mode-choice');btn.type='button';btn.dataset.missionChoice=type;
       btn.setAttribute('aria-pressed',String(mode===type));
       btn.append(element('span','mission-mode-icon',type==='meaning'?'🧠':type==='sentence'?'💬':'🧩'),
-        element('span','',type==='meaning'?'Förstå':type==='sentence'?(school?'Gör uppgiften':everyday?'Vad menas?':'Rätt mening'):'Ordna'),
+        element('span','',type==='meaning'?'Förstå':type==='sentence'?(school?'Gör uppgiften':everyday||contextPractice?'Vad menas?':'Rätt mening'):'Ordna'),
         element('span','mission-check',completed.includes(type)?'⭐ Klarat':'Inte klart'));
       menu.append(btn);
     }
@@ -370,8 +371,10 @@
       presented.options.forEach((opt,i)=>{const b=element('button','mission-choice',opt.displayLabel||opt.label);b.type='button';b.dataset.missionAnswer=String(i);buttons.append(b);});
       wrap.append(buttons);
     }else if(mode==='sentence'){
-      wrap.append(element('p','mission-instructions',instruction?task.prompt:'Vilken mening visar den betydelse du har övat på?'));
-      const choices=E.shuffle(B.formatSchoolAnswers(task.sentences,instruction).options.map((row,index)=>({row,index})));
+      const question=contextPractice?E.makeExpressionQuestion(entry,'medium',Math.random,'sentence',missions):null;
+      if(question)wrap._contextQuestion=question;
+      wrap.append(element('p','mission-instructions',question?question.scene:instruction?task.prompt:'Vilken mening visar den betydelse du har övat på?'));
+      const choices=E.shuffle(B.formatSchoolAnswers(question?.options||task.sentences,instruction||!!question).options.map((row,index)=>({row,index})));
       const buttons=element('div','mission-buttons');
       for(const choice of choices){const b=element('button','mission-choice',choice.row.displayLabel||choice.row.label);b.type='button';b.dataset.missionSentence=String(choice.index);buttons.append(b);}
       wrap.append(buttons);
@@ -393,7 +396,7 @@
     }
     if(settings.missionHints){
       const hint=element('button','mission-hint-button','💡 Visa ledtråd');hint.type='button';hint.dataset.missionHint='';hint.setAttribute('aria-expanded','false');
-      const hintText=element('p','mission-hint',mode==='meaning'?'Tänk på vad uttrycket betyder i en verklig vardagssituation.':task.hint);
+      const hintText=element('p','mission-hint',wrap._contextQuestion?'Läs hela berättelsen. Vad får vi veta, och är det något vi behöver fråga om?':mode==='meaning'?'Tänk på vad uttrycket betyder i en verklig vardagssituation.':task.hint);
       hintText.hidden=true;hintText.dataset.hintText='';wrap.append(hint,hintText);
     }
     const message=element('p','bonus-message');message.setAttribute('role','status');message.setAttribute('aria-live','polite');wrap.append(message);
@@ -466,9 +469,13 @@
       correction=task.orderExplanation?'Titta på hur stegen hör ihop: '+task.orderExplanation:'';
     }else if(mode==='sentence'&&button.hasAttribute('data-mission-sentence')){
       const index=Number(button.dataset.missionSentence);
-      right=task.sentences[index]&&task.sentences[index].correct===true;
-      explanation=task.explanation?[task.explanation,task.connection].filter(Boolean).join(' '):'Du kan använda uttrycket i en ny mening.';
-      correction=task.sentences[index]?.feedback||'';
+      const question=wrap._contextQuestion,option=(question?.options||task.sentences)[index];
+      if(!option)return;
+      right=option.correct===true;
+      const lesson=question?Q.instructionFeedback(question,option.label,missions):null;
+      explanation=lesson?[lesson.clue?'Ledtråden i berättelsen: ”'+lesson.clue+'”.':'',lesson.explanation,lesson.connection,lesson.rule].filter(Boolean).join('\n\n'):
+        task.explanation?[task.explanation,task.connection].filter(Boolean).join(' '):'Du kan använda uttrycket i en ny mening.';
+      correction=lesson?.correction||option.feedback||'';
     }else if(mode==='meaning'&&button.hasAttribute('data-mission-answer')){
       right=S.checkAnswer(surprises,id,Number(button.dataset.missionAnswer));
       explanation=data.explanation;
@@ -504,8 +511,9 @@
     if(!entry || !history.surprises.unlocked.includes(entry.id)){$('book-detail').hidden=true;return;}
     $('book-detail').hidden=false;
     $('book-phrase').textContent=entry.phrase;
-    $('book-context').textContent=entry.scene;
-    $('book-definition').textContent='💡 '+entry.definition;
+    const contextReading=Q.get(missions,entry.id)?.contextReading;
+    $('book-context').textContent=(contextReading?'I den här bildserien: ':'')+entry.scene;
+    $('book-definition').textContent='💡 '+(contextReading||entry.definition);
     C.render($('book-comic'),entry,comics);
     makeBonus($('book-bonus'),entry.id);
   }
@@ -1735,8 +1743,9 @@
     ahaRound.stage='read';
     $('aha-round-progress').textContent='Berättelse '+(ahaRound.index+1)+' av '+ahaRound.items.length;
     $('aha-round-word').textContent=row.word;
-    $('aha-round-definition').textContent=row.definition;
-    $('aha-round-read-note').textContent=message||(row.check.everydayInstruction?
+    $('aha-round-definition').textContent=row.check.contextReading||row.definition;
+    $('aha-round-read-note').textContent=message||(row.check.contextReading?
+      'Läs sedan hela situationen och välj det som passar just där.':row.check.everydayInstruction?
       'Läs betydelsen du ska öva på. Samma uttryck kan betyda något annat i en annan situation.':
       'Läs vad ordet eller uttrycket betyder.');
     $('aha-round-read').hidden=false;
@@ -1768,7 +1777,8 @@
     ahaRound.attempts=result.attempts;
     if(result.step==='reread'){
       row.check.options.push(row.check.options.shift());
-      renderAhaStep('Det var klurigt! Läs betydelsen igen. Du får ett nytt försök.');
+      renderAhaStep(row.check.contextReading?'Det var klurigt! Läs om de olika betydelserna. Titta sedan efter ledtrådar i hela situationen.':
+        'Det var klurigt! Läs betydelsen igen. Du får ett nytt försök.');
       return;
     }
     // Save completed checkpoints exactly once, without normal quiz scores.
@@ -1780,7 +1790,10 @@
     $('aha-round-feedback').hidden=false;
     $('aha-round-feedback-title').textContent=result.step==='guided'?'📖 Vi lär oss tillsammans!':
       row.check.everydayInstruction||row.check.schoolInstruction?'🌟 Du hittade rätt svar!':'🌟 Du hittade rätt berättelse!';
-    $('aha-round-correct').textContent=row.check.options.find(option=>option.correct).label;
+    const correct=row.check.options.find(option=>option.correct);
+    $('aha-round-correct').textContent=correct.displayLabel||correct.label;
+    $('aha-round-clue').hidden=!row.check.clue;
+    $('aha-round-clue').textContent=row.check.clue?'Ledtråden i berättelsen: ”'+row.check.clue+'”.':'';
     $('aha-round-why').textContent=row.check.why||'Jämför berättelsen med betydelsen du läste.';
     $('aha-memory-note').textContent=Memory.note(B.transferDueAt(history.readingProgress[row.id]?.transfer));
     $('aha-round-next').textContent=ahaRound.index+1===ahaRound.items.length?'Klar med rundan →':'Nästa berättelse →';
@@ -2578,7 +2591,10 @@
       const triedLabel=profile.tried===1?'1 sätt provat':profile.tried+' sätt provade';
       pebbles.append(element('span','learning-word-count',triedLabel+(history.recallProgress[item.id]?' · 🔤 Skrivövning':'')));button.append(pebbles);
       const detail=element('div','learning-word-detail');detail.id='learning-detail-'+item.id;detail.hidden=true;
-      detail.append(element('p','learning-definition',item.definition),element('p','learning-example','Exempel: '+item.example));
+      const contextReading=item.kind==='expression'?Q.get(missions,item.id)?.contextReading:'';
+      detail.append(element('p','learning-definition',contextReading||item.definition));
+      if(!contextReading)detail.append(element('p','learning-example','Exempel: '+item.example));
+      else detail.append(element('p','learning-example','Öva på olika situationer: ibland är betydelsen tydlig, ibland behöver vi fråga.'));
       detail.append(element('h3','learning-profile-title','Fem sätt att förstå'));
       const track=element('ul','learning-steps learning-profile');track.setAttribute('aria-label','Olika sätt att öva ordförståelse');
       for(const facet of profile.facets){
@@ -2738,7 +2754,8 @@
       before:{right:prior?.right||0,wrong:prior?.wrong||0,attempts:prior?.attempts||0}};
     $('focus-title').textContent=plan.pairLabel||plan.item.name;
     $('focus-buddy').textContent=P.companion(settings.companion).emoji;
-    $('focus-description').textContent=plan.chosen==='contrast'
+    $('focus-description').textContent=plan.questions.every(question=>question.contextSceneId)?
+      'Samma uttryck i tre situationer. Läs hela berättelsen, leta efter ledtrådar och fråga när något är oklart.':plan.chosen==='contrast'
       ? `Fyra olika berättelser från flera platser – båda orden är rätt två gånger. ${plan.clueSupported?T.LABELS[plan.clueLevel]+' · ':''}Tänk på varför ett ord passar bättre än det andra.`
       : `${F.LABELS[plan.chosen]} · ${plan.questions.length} små uppgifter i din egen takt, utan tidspress.`;
     show('focus');
@@ -2841,10 +2858,12 @@
     $('focus-correct').textContent=right?'Du hittade rätt svar!':
       q.taskType==='contrast'?`Du valde ${option.label}. Här passar ${solution} bättre.`:`Rätt svar: ${solution}`;
     $('focus-explain-word').textContent=q.word;
+    $('focus-explain-label').textContent=q.contextClarification?'💬 HÄR BEHÖVER VI FRÅGA':
+      q.contextSceneId?'📖 UTTRYCKET I DEN HÄR SITUATIONEN':'📖 AHA! DET HÄR BETYDER ORDET';
     $('focus-definition').textContent=q.definition;
     $('focus-example').textContent='Exempel: '+q.example;
     $('focus-example').hidden=!!instructionLesson;
-    const why=instructionLesson?[instructionLesson.correction,instructionLesson.explanation,instructionLesson.connection,instructionLesson.rule].filter(Boolean).join('\n\n'):
+    const why=instructionLesson?[instructionLesson.correction,instructionLesson.clue?'Ledtråden i berättelsen: ”'+instructionLesson.clue+'”.':'',instructionLesson.explanation,instructionLesson.connection,instructionLesson.rule].filter(Boolean).join('\n\n'):
       q.taskType==='contrast'?'⚖️ Aha! Därför passar ordet: '+q.contextWhy+(q.contrastClue?' Ledtråden: '+q.contrastClue:''):
       q.taskType==='context'?'💡 Varför passar ordet? '+q.contextWhy:
       q.kind==='expression'&&q.reveal?.length===2?
@@ -3547,7 +3566,9 @@
     $('reading-why').hidden=true;
     $('reading-reread').hidden=true;
     $('listen-reading-check').hidden=true;
-    $('reading-launch-prompt').textContent='📖 Läs betydelsen och exemplet ovan. Sedan får du visa vad du förstått.';
+    $('reading-launch-prompt').textContent=check?.contextReading?
+      check.contextReading+' I nästa situation kan en annan betydelse passa. Läs hela berättelsen.':
+      '📖 Läs betydelsen och exemplet ovan. Sedan får du visa vad du förstått.';
     $('reading-start').textContent=mysteryForRound()?'🔎 Jag har läst – undersök spåret →':'🧠 Jag har läst – prova mig →';
     $('feedback-reading-stage').textContent='📖 Läs först – 🧠 prova sedan';
     $('reading-options').replaceChildren();
@@ -3555,7 +3576,7 @@
     check.attempts=0;
     game.readingMetrics.offered++;
     $('reading-check-title').textContent=check.prompt;
-    $('reading-instruction').textContent=check.source==='meaning'
+    $('reading-instruction').textContent=check.contextReading?'Vad menas här? Ta hjälp av det som händer i den nya situationen.':check.source==='meaning'
       ? 'Vilken betydelse är rätt? Tänk på förklaringen du just läste.'
       : 'Vilket nytt exempel passar? Använd det du just läste.';
     renderReadingOptions(check);
@@ -3629,7 +3650,8 @@
       $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
       $('reading-response').textContent=readingCheck.source==='meaning'
         ? '🌟 Du hittade rätt betydelse!':'🌟 Du hittade rätt i den nya berättelsen!';
-      $('reading-why').textContent=readingCheck.why ? 'Därför passar det: '+readingCheck.why :
+      $('reading-why').textContent=readingCheck.clue?'Ledtråden i berättelsen: ”'+readingCheck.clue+'”.\n\n'+readingCheck.why:
+        readingCheck.why ? 'Därför passar det: '+readingCheck.why :
         'Det här exemplet passar med betydelsen du läste.';
       $('reading-why').hidden=false;
       $('reading-reread').hidden=true;
@@ -3642,7 +3664,9 @@
       $('feedback-reading-stage').textContent='📖 Ta en ny titt på förklaringen';
       $('reading-check').hidden=true;
       $('reading-launch').hidden=false;
-      $('reading-launch-prompt').textContent='Det var klurigt! Läs förklaringen och exemplet igen. Du får ett nytt försök utan minuspoäng.';
+      $('reading-launch-prompt').textContent=readingCheck.contextReading?readingCheck.contextReading+
+        ' Titta sedan efter ledtrådar i Aha-situationen. Du får ett nytt försök.':
+        'Det var klurigt! Läs förklaringen och exemplet igen. Du får ett nytt försök utan minuspoäng.';
       $('reading-start').textContent='🔎 Jag har läst igen – prova →';
       readingCheck.options.push(readingCheck.options.shift());
       renderReadingOptions(readingCheck);
@@ -3659,10 +3683,11 @@
       $('feedback-reading-stage').textContent='📖 Du fick hjälp med förklaringen';
       $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
       const correct=readingCheck.options.find(item=>item.correct);
-      const correctLabel=correct.label.trim();
+      const correctLabel=(correct.displayLabel||correct.label).trim();
       $('reading-response').textContent='Det här var svårt. Ingen fara – vi övar mer på det senare.';
-      $('reading-why').textContent=(readingCheck.source==='meaning'?'Rätt betydelse: ':'Rätt exempel: ')+correctLabel+
+      $('reading-why').textContent=(readingCheck.source==='meaning'?'Rätt betydelse: ':readingCheck.contextReading?'Rätt svar: ':'Rätt exempel: ')+correctLabel+
         (/[.!?…]$/.test(correctLabel)?' ':'. ')+
+        (readingCheck.clue?'\n\nLedtråden i berättelsen: ”'+readingCheck.clue+'”.\n\n':'')+
         (readingCheck.why||'Jämför med betydelsen ovan.');
       $('reading-why').hidden=false;
       $('reading-reread').hidden=true;
@@ -3724,9 +3749,11 @@
       if(outcome==='right')playSound('right');
       // Keep visual rewards out of the reading step until the Aha check is done.
       else if(outcome==='wrong')playSound('wrong');
-      const correct=q.taskType==='order'?q.correctOrder.join(' → '):q.options.find(item=>item.correct).label;
+      const lesson=q.schoolInstruction||q.everydayInstruction?Q.instructionFeedback(q,option?.label,missions):null;
+      const correct=q.taskType==='order'?q.correctOrder.join(' → '):lesson?.answer||q.options.find(item=>item.correct).label;
       $('feedback-correct').textContent=outcome==='right'?'Bra jobbat!':q.taskType==='order'?'Rätt ordning: '+correct:'Rätt svar: '+correct;
       $('explanation-word').textContent=q.word;
+      $('explanation-label').textContent=q.contextClarification?'💬 HÄR BEHÖVER VI FRÅGA':'📖 LÄS FÖRKLARINGEN';
       $('explanation-definition').textContent=q.definition;
       $('explanation-example').textContent='Exempel: '+q.example;
       $('explanation-example').hidden=!!(q.schoolInstruction||q.everydayInstruction||q.contextWhy||q.action);
@@ -3738,9 +3765,11 @@
       $('school-feedback').hidden=!(q.schoolInstruction||q.everydayInstruction);
       $('school-feedback-more').open=false;
       if(q.schoolInstruction||q.everydayInstruction){
-        const lesson=Q.instructionFeedback(q,option?.label,missions);
+        $('school-feedback-title').textContent=q.contextClarification?'💬 Därför behöver vi fråga':'💡 Så hänger det ihop';
         $('instruction-feedback-reminder').textContent=q.everydayInstruction?'💬 När orden kan betyda olika saker':'🎒 Kom ihåg när läraren frågar';
         $('school-feedback-correction').textContent=lesson.correction||'';
+        $('school-feedback-clue').hidden=!lesson.clue;
+        $('school-feedback-clue').textContent=lesson.clue?'Ledtråden i berättelsen: ”'+lesson.clue+'”.':'';
         $('school-feedback-explanation').textContent=lesson.explanation||'';
         $('school-feedback-connection').textContent=lesson.connection||'';
         $('school-feedback-connection').parentElement.hidden=!lesson.connection;
@@ -3754,6 +3783,7 @@
       $('expression-open').hidden=false;
       $('expression-open').setAttribute('aria-expanded','false');
       $('expression-open').textContent='🎁 Öppna luckan';
+      $('expression-comic-title').textContent=q.contextSceneId?'🎬 En annan berättelse med samma uttryck':'🎬 Aha! En liten bildserie';
       if(q.kind==='expression' && outcome!=='unanswered')changeDoor('unlocked',q.id);
       $('question-area').hidden=true;
       $('feedback-area').hidden=false;
@@ -3923,7 +3953,7 @@
       if(outcome==='wrong'){
         const chosen=document.createElement('p');chosen.textContent='Ditt svar: '+game.selected[q.id];el.append(chosen);
       }
-      const def=document.createElement('p');def.textContent='Betydelse: '+q.definition;
+      const def=document.createElement('p');def.textContent=(q.contextClarification?'Vad vi kan veta här: ':'Betydelse: ')+q.definition;
       const example=document.createElement('p');example.textContent='Exempel: '+q.example;
       el.append(def,example);
       const wordLesson=E.wordFeedback(bank,q,game.selected[q.id]);
@@ -3937,14 +3967,14 @@
       }
       if(q.schoolInstruction||q.everydayInstruction){
         const lesson=Q.instructionFeedback(q,game.selected[q.id],missions);
-        for(const text of [lesson.correction,lesson.explanation,lesson.connection,lesson.rule].filter(Boolean))
+        for(const text of [lesson.correction,lesson.clue?'Ledtråden i berättelsen: ”'+lesson.clue+'”.':'',lesson.explanation,lesson.connection,lesson.rule].filter(Boolean))
           el.append(element('p','context-review-why',text));
       }
       if(q.kind==='expression'){
         const comicToggle=element('details','comic-review');
-        const summary=element('summary','','🎁 Öppna luckan – serie och miniuppdrag');
+        const summary=element('summary','',q.contextSceneId?'🎁 En annan berättelse – serie och miniuppdrag':'🎁 Öppna luckan – serie och miniuppdrag');
         const comic=element('div','comic-strip');
-        C.render(comic,q,comics);
+        C.render(comic,q.contextSceneId?expressions.expressions.find(entry=>entry.id===q.id):q,comics);
         const bonus=element('div','review-bonus');makeBonus(bonus,q.id);
         comicToggle.append(summary,comic,bonus);
         comicToggle.addEventListener('toggle',()=>{
@@ -3998,6 +4028,21 @@
     if(more&&more.children.length>1)host.append(more);
   }
   function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
+  function renderExpressionContexts(card,task){
+    if(!task?.contextReading||!Array.isArray(task.contextScenes)||!task.contextScenes.length)return false;
+    card.append(element('p','',task.contextReading));
+    const details=element('details','word-teaching-details');
+    details.append(element('summary','','💬 Samma uttryck – olika situationer'));
+    for(const [index,scene] of task.contextScenes.entries()){
+      const part=element('section','word-teaching-part');
+      part.append(element('h3','',scene.kind==='clarify'?'När vi behöver fråga':'Situation '+(index+1)),
+        element('p','expression-scene-mini',scene.prompt),element('p','',scene.definition),
+        element('p','','Ledtråden i berättelsen: ”'+scene.clue+'”.'),element('p','',scene.explanation));
+      if(scene.kind==='clarify')part.append(element('p','',scene.rule));
+      details.append(part);
+    }
+    card.append(details);return true;
+  }
   function renderWordList() {
     const query=$('word-search').value.trim().toLocaleLowerCase('sv-SE');
     const filter=$('word-filter').value;
@@ -4008,7 +4053,7 @@
     const words=type==='expressions'?[]:bank.words.filter(w=>inScope(w)&&(filter==='all'||w.difficulty===filter)&&
       matches(w.word+' '+w.definition+' '+w.example)).map(entry=>({kind:'word',entry}));
     const phrases=type==='words'||filter!=='all'?[]:expressions.expressions.filter(e=>inScope(e)&&
-      matches(e.phrase+' '+e.scene+' '+e.definition+' '+e.example)).map(entry=>({kind:'expression',entry}));
+      matches(e.phrase+' '+e.scene+' '+e.definition+' '+e.example+' '+(Q.get(missions,e.id)?.contextReading||''))).map(entry=>({kind:'expression',entry}));
     const entries=words.concat(phrases);
     const list=$('word-list');list.replaceChildren();
     for(const item of entries.slice(0,wordListLimit)){
@@ -4017,9 +4062,12 @@
       const h=element('h2','',item.kind==='expression'?entry.phrase:entry.word);
       const badge=element('span','difficulty-badge',!E.isEveryday(entry,curation)?'📚 Fördjupning':item.kind==='expression'?'💬 Uttryck':labels[entry.difficulty]);
       row.append(h,badge);card.append(row);
-      if(item.kind==='expression')card.append(element('p','expression-scene-mini',entry.scene));
-      card.append(element('p','',entry.definition),element('p','word-sample',entry.example));
-      if(entry.category==='everyday-instruction'){
+      const hasContexts=item.kind==='expression'&&renderExpressionContexts(card,Q.get(missions,entry.id));
+      if(!hasContexts){
+        if(item.kind==='expression')card.append(element('p','expression-scene-mini',entry.scene));
+        card.append(element('p','',entry.definition),element('p','word-sample',entry.example));
+      }
+      if(entry.category==='everyday-instruction'&&!hasContexts){
         const details=element('details','word-teaching-details');
         details.append(element('summary','','💬 Vad menas här?'));
         for(const panel of entry.reveal){details.append(element('h3','',panel.title),element('p','',panel.text));}
@@ -4436,7 +4484,7 @@
     const body=$('expression-surprise-body');
     if(body.hidden){
       changeDoor('opened',q.id);
-      if(!$('expression-comic').children.length){C.render($('expression-comic'),q,comics);makeBonus($('expression-bonus'),q.id);}
+      if(!$('expression-comic').children.length){C.render($('expression-comic'),q.contextSceneId?expressions.expressions.find(entry=>entry.id===q.id):q,comics);makeBonus($('expression-bonus'),q.id);}
       body.hidden=false;
       $('expression-open').setAttribute('aria-expanded','true');
       $('expression-open').textContent='📖 Stäng luckan';
@@ -4538,7 +4586,9 @@
     $('reading-launch').hidden=false;
     $('feedback-area').dataset.readingStage='reread';
     $('feedback-reading-stage').textContent='📖 Läs gärna en gång till';
-    $('reading-launch-prompt').textContent='Läs igen i din egen takt. När du vill kan du gå tillbaka till Aha-frågan.';
+    $('reading-launch-prompt').textContent=readingCheck.contextReading?readingCheck.contextReading+
+      ' Titta sedan efter ledtrådar i Aha-situationen.':
+      'Läs igen i din egen takt. När du vill kan du gå tillbaka till Aha-frågan.';
     $('reading-start').textContent='🧠 Tillbaka till Aha-frågan →';
     $('explanation-word').focus({preventScroll:true});
     if(typeof $('explanation-word').scrollIntoView==='function')

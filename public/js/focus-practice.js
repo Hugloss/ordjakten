@@ -74,13 +74,13 @@
         item.entry.difficulty==='easy'&&!Array.isArray(curation.easy?.[id])?'medium':item.entry.difficulty : 'medium';
     const make=(type,sceneIndex=null)=>{
       let q;
-      if(item.kind==='expression')q=engine.makeExpressionQuestion(item.entry,'medium',random,type,missions);
+      if(item.kind==='expression')q=engine.makeExpressionQuestion(item.entry,'medium',random,type,missions,sceneIndex);
       else if(type==='context')q=engine.makeContextQuestion(item.entry,bank,contexts,random,sceneIndex);
       else if(type==='reverse')q=engine.makeReverseQuestion(item.entry,bank,curation,difficulty,random);
       else if(type==='picture')q=engine.makeQuestion(item.entry,bank,curation,'easy',random);
       else q=engine.makeQuestion(item.entry,bank,curation,difficulty==='easy'?'medium':difficulty,random);
       return {...q,kind:item.kind,taskType:type==='picture'?'picture':type,
-        focusKey:`${id}:${type}:${sceneIndex===null?'one':sceneIndex}`};
+        focusKey:`${id}:${type}:${q.contextSceneId|| (sceneIndex===null?'one':sceneIndex)}`};
     };
     function storyOrder(){
       const record=contexts.wordContexts.find(x=>x.id===id),scenes=record.scenes;
@@ -92,7 +92,13 @@
       const start=Number.isInteger(last)&&last>=0&&last<scenes.length ? (last+1)%scenes.length : Math.floor(random()*scenes.length);
       return scenes.map((_,i)=>(start+i)%scenes.length);
     }
-    if(chosen==='context'){
+    const expressionScenes=item.kind==='expression'&&chosen==='sentence'?
+      engine.expressionContextScenes(missions?.missions?.find(m=>m.id===id)):[];
+    if(expressionScenes.length){
+      // One expression, three distinct contexts. The uncertain situation
+      // teaches a clarifying question, never a guessed intended meaning.
+      for(const scene of shuffle(expressionScenes,random))questions.push(make('sentence',scene.id));
+    }else if(chosen==='context'){
       for(const index of storyOrder())questions.push(make('context',index));
     }else{
       questions.push(make(chosen));

@@ -52,6 +52,13 @@ for(const [emoji,image] of Object.entries(comics.iconPaths)) {
 }
 if(expressionBank.expressions.length!==73)issues.push('Expected 73 curated expressions');
 if(expressionBank.expressions.filter(e=>e.category==='school-instruction').length!==14)issues.push('Expected 14 core school instructions');
+const contextExpressions=missions.missions.filter(m=>Object.hasOwn(m,'contextScenes'));
+const expressionScenes=contextExpressions.flatMap(m=>m.contextScenes||[]);
+if(contextExpressions.length!==6||expressionScenes.length!==18)issues.push('Expected 18 context-dependent scenes for six existing expressions');
+for(const mission of contextExpressions){
+  const expression=expressionBank.expressions.find(entry=>entry.id===mission.id);
+  if(!E.isEveryday(expression,curation))issues.push('Context-dependent expression missing from everyday selection: '+mission.id);
+}
 if(JSON.stringify(expressionBank)!==JSON.stringify(browserExpressions))issues.push('Expression JS/JSON bank diverged');
 function fail(msg){issues.push(msg);}
 if(bank.words.length!==121)fail(`Expected 121 historical words, found ${bank.words.length}`);
@@ -86,4 +93,4 @@ for(const level of ['easy','medium','hard','exam']){
  }
 }
 if(issues.length){process.stderr.write(issues.map(x=>'✗ '+x).join('\n')+'\n');process.exitCode=1;}
-else process.stdout.write(`✓ ${bank.words.length} words with complete lessons + ${expressionBank.expressions.length} expressions + ${wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)} everyday scenes with reviewed Aha alternatives + 96 comparisons + 64 inference scenes across four pairs + ${Object.keys(comics.stories).length} comics and ${missions.missions.length*Missions.TYPES.length} task variations validated.\n`);
+else process.stdout.write(`✓ ${bank.words.length} words with complete lessons + ${expressionBank.expressions.length} expressions + ${wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)} everyday word scenes with reviewed Aha alternatives + ${expressionScenes.length} context-dependent expression scenes + 96 comparisons + 64 inference scenes across four pairs + ${Object.keys(comics.stories).length} comics and ${missions.missions.length*Missions.TYPES.length} base task variations validated.\n`);

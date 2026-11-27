@@ -181,7 +181,47 @@
   }
   // Three independently authored ways to practise an expression.
   // Exam keeps five traditional definition alternatives for consistency.
-  function makeExpressionQuestion(entry,difficulty,random=Math.random,taskType='meaning',missions=null){
+  function validateExpressionContexts(mission){
+    if(!mission||!Object.hasOwn(mission,'contextScenes'))
+      return mission&&Object.hasOwn(mission,'contextReading')?['Saknar situationer till sammanhangsläsningen: '+mission.id]:[];
+    const issues=[],scenes=mission.contextScenes,id=mission.id;
+    const fail=message=>issues.push(message+': '+id);
+    if(typeof mission.contextReading!=='string'||mission.contextReading.trim().length<25)
+      fail('Saknar neutral läsning om sammanhanget');
+    if(!Array.isArray(scenes)||scenes.length!==3){fail('Kräver tre skrivna sammanhang');return issues;}
+    if(scenes.filter(s=>s?.kind==='meaning').length!==2||scenes.filter(s=>s?.kind==='clarify').length!==1)
+      fail('Kräver två betydelser och en situation där barnet behöver fråga');
+    const ids=new Set(),prompts=new Set();
+    for(const scene of scenes){
+      if(!scene||typeof scene!=='object'){fail('Trasigt sammanhang');continue;}
+      const suffix=typeof scene.id==='string'&&scene.id.startsWith(id+'-')?scene.id.slice(id.length+1):'';
+      if(!/^[a-z][a-z0-9-]{1,30}$/.test(suffix)||ids.has(scene.id))fail('Felaktigt eller dubblerat sammanhangs-ID');
+      ids.add(scene.id);
+      for(const [key,min] of Object.entries({prompt:25,definition:15,clue:3,explanation:25,connection:20,rule:20}))
+        if(typeof scene[key]!=='string'||scene[key].trim().length<min)fail('Ofullständigt sammanhang, saknar '+key);
+      if(typeof scene.prompt==='string'){
+        const normalized=scene.prompt.trim().toLocaleLowerCase('sv-SE');
+        if(prompts.has(normalized)||scene.prompt.includes('” – '))fail('Dubblerad eller felaktigt avgränsad situation');
+        prompts.add(normalized);
+        if(typeof scene.clue==='string'&&!scene.prompt.includes(scene.clue))fail('Ledtråden finns inte i den synliga situationen');
+      }
+      const options=scene.options;
+      if(!Array.isArray(options)||options.length!==3||options.filter(o=>o?.correct===true).length!==1||
+        options.some(o=>!o||typeof o.label!=='string'||o.label.trim().length<8||typeof o.correct!=='boolean')||
+        new Set((options||[]).map(o=>o?.label?.trim().toLocaleLowerCase('sv-SE'))).size!==3)
+        fail('Sammanhanget behöver tre olika svar och exakt ett rätt');
+      if(Array.isArray(options)&&options.some(o=>o?.correct===false&&(typeof o.feedback!=='string'||o.feedback.trim().length<15)))
+        fail('Sammanhanget saknar förklaring till ett felaktigt svar');
+    }
+    return issues;
+  }
+  function expressionContextScenes(mission){
+    if(!mission||!Object.hasOwn(mission,'contextScenes'))return [];
+    const issues=validateExpressionContexts(mission);
+    if(issues.length)throw new Error(issues[0]);
+    return mission.contextScenes;
+  }
+  function makeExpressionQuestion(entry,difficulty,random=Math.random,taskType='meaning',missions=null,contextSceneId=null){
     const base={id:entry.id,kind:'expression',word:entry.phrase,definition:entry.definition,
       example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false,...(entry.animal?{animal:entry.animal}:{}),
       ...(entry.category==='school-instruction'?{schoolInstruction:true,schoolRule:entry.schoolRule}:{}),
@@ -190,6 +230,19 @@
     const mission=missions&&Array.isArray(missions.missions)?missions.missions.find(x=>x.id===entry.id):null;
     if(type==='sentence'){
       if(!mission)throw new Error('Saknar skrivna meningsalternativ: '+entry.id);
+      const scenes=expressionContextScenes(mission);
+      if(scenes.length){
+        const scene=contextSceneId===null?scenes[Math.min(scenes.length-1,Math.max(0,Math.floor(random()*scenes.length)))]:scenes.find(row=>row.id===contextSceneId);
+        if(!scene)throw new Error('Saknar det skrivna sammanhanget: '+contextSceneId);
+        return {...base,taskType:type,everydayInstruction:true,scene:scene.prompt,
+          definition:scene.definition,example:scene.prompt,
+          reveal:[{title:scene.kind==='clarify'?'Här behöver vi fråga':'Ledtråden hjälper oss',text:scene.explanation},
+            {title:'I en annan situation',text:scene.connection}],instructionRule:scene.rule,
+          contextSceneId:scene.id,contextClarification:scene.kind==='clarify',contextClue:scene.clue,
+          contextReading:mission.contextReading,
+          options:shuffle(scene.options.map(o=>({label:'”'+scene.prompt+'” – '+o.label,correct:o.correct})),random)};
+      }
+      if(contextSceneId!==null)throw new Error('Saknar det skrivna sammanhanget: '+contextSceneId);
       return {...base,taskType:type,
         ...((base.schoolInstruction||base.everydayInstruction)&&mission.prompt?{scene:mission.prompt}:{}),
         options:shuffle(mission.sentences.map(s=>({label:s.label,correct:s.correct})),random)};
@@ -515,6 +568,6 @@
     if (outcome==='right'&&updated[id]) {updated[id]-=1;if(updated[id]===0)delete updated[id];}
     return updated;
   }
-  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,validateSelection,isEveryday,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
+  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,validateSelection,validateExpressionContexts,expressionContextScenes,isEveryday,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
     practiceGoalForRound,generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

@@ -33,10 +33,10 @@ test('six everyday instructions have complete authored content and remain separa
       const q=E.makeExpressionQuestion(entry,'medium',()=>.42,type,missions);
       assert.equal(q.everydayInstruction,true,entry.id);
       assert.equal(q.schoolInstruction,undefined);
-      assert.equal(q.instructionRule,entry.instructionRule);
+      assert.equal(q.instructionRule,q.contextSceneId?Q.contextScene(missions,entry.id,q.contextSceneId).rule:entry.instructionRule);
       assert.equal(q.taskType,type);
       if(type==='sentence'){
-        assert.equal(q.scene,task.prompt);
+        assert.equal(q.scene,q.contextSceneId?Q.contextScene(missions,entry.id,q.contextSceneId).prompt:task.prompt);
         assert.equal(sceneOf(q.options),q.scene,'all answers refer to the visible situation');
         const displayed=B.formatSchoolAnswers(q.options).options;
         assert.ok(displayed.every(option=>option.displayLabel&&!option.displayLabel.includes(q.scene)));
@@ -52,8 +52,8 @@ test('six everyday instructions have complete authored content and remain separa
     const focus=F.create(entry.id,'sentence',bank,{},expressions,missions,contexts,E,{},()=>.42);
     assert.ok(focus.questions.every(question=>question.everydayInstruction&&!question.schoolInstruction));
     const focusedSentence=focus.questions.find(question=>question.taskType==='sentence');
-    assert.equal(focusedSentence.scene,task.prompt);
-    assert.equal(sceneOf(focusedSentence.options),task.prompt);
+    assert.equal(focusedSentence.scene,focusedSentence.contextSceneId?Q.contextScene(missions,entry.id,focusedSentence.contextSceneId).prompt:task.prompt);
+    assert.equal(sceneOf(focusedSentence.options),focusedSentence.scene);
   }
 });
 
@@ -61,17 +61,19 @@ test('instruction feedback explains the displayed main, sentence or order situat
   for(const entry of everyday){
     const task=Q.get(missions,entry.id);
     const q=E.makeExpressionQuestion(entry,'medium',()=>.73,'sentence',missions);
+    const scene=q.contextSceneId?Q.contextScene(missions,entry.id,q.contextSceneId):null;
     const answer=q.options.find(option=>option.correct);
     const feedback=Q.instructionFeedback(q,answer.label,missions);
-    assert.equal(feedback.explanation,task.explanation);
-    assert.equal(feedback.connection,task.connection);
-    assert.equal(feedback.rule,entry.instructionRule);
+    assert.equal(feedback.explanation,scene?.explanation||task.explanation);
+    assert.equal(feedback.connection,scene?.connection||task.connection);
+    assert.equal(feedback.rule,scene?.rule||entry.instructionRule);
     assert.equal(feedback.correction,'');
     assert.equal(feedback.answer,B.formatSchoolAnswers(q.options).options.find(option=>option.correct).displayLabel);
     assert.equal(Q.schoolFeedback(q,answer.label,missions),null,'everyday tasks do not become school tasks');
     for(const option of q.options.filter(option=>!option.correct)){
       assert.equal(Q.instructionFeedback(q,option.label,missions).correction,
-        task.sentences.find(sentence=>sentence.label===option.label).feedback);
+        scene?scene.options.find(answer=>'”'+scene.prompt+'” – '+answer.label===option.label).feedback:
+          task.sentences.find(sentence=>sentence.label===option.label).feedback);
     }
     const meaning=E.makeExpressionQuestion(entry,'medium',()=>.42,'meaning',missions);
     assert.equal(Q.instructionFeedback(meaning,null,missions).explanation,entry.reveal[0].text);
@@ -107,10 +109,19 @@ test('everyday Aha shows one new situation and three answers without school word
     assert.notEqual(sceneOf(check.options),q.scene);
     assert.ok(check.options.every(option=>!q.options.some(shown=>shown.label===option.label)));
     const challenge=S.getChallenge(surprises,entry.id),task=Q.get(missions,entry.id);
+    if(task.contextScenes){
+      const scene=Q.contextScene(missions,entry.id,check.contextSceneId);
+      assert.equal(scene.kind,'meaning');
+      assert.equal(check.evidence,'expression:context:'+scene.id);
+      assert.equal(check.definition,scene.definition);
+      assert.equal(check.contextReading,task.contextReading);
+      assert.ok(check.why.includes(scene.explanation));
+    }else{
     const right=check.options.find(option=>option.correct).label;
     const fromChallenge=challenge.options.some(option=>option.correct&&option.label===right);
     assert.equal(check.evidence,fromChallenge?'expression:challenge':'expression:mission');
     assert.equal(check.why,fromChallenge?challenge.explanation:task.explanation);
+    }
     check.options.forEach((option,index)=>assert.equal(B.isCorrect(check,index),option.correct));
     assert.equal(JSON.stringify(q),before);
   }
@@ -136,7 +147,10 @@ test('standalone Aha and per-word learning cards preserve everyday meaning witho
     assert.ok(item,entry.id);
     assert.equal(item.check.everydayInstruction,true);
     assert.equal(item.check.schoolInstruction,undefined);
-    assert.equal(item.check.evidence,'expression:mission','the already seen Aha scene is not repeated');
+    if(Q.contextScenes(missions,entry.id).length){
+      assert.equal(Q.contextScene(missions,entry.id,item.check.contextSceneId).kind,'meaning');
+      assert.equal(item.check.evidence,'expression:context:'+item.check.contextSceneId);
+    }else assert.equal(item.check.evidence,'expression:mission','the already seen Aha scene is not repeated');
   }
 });
 

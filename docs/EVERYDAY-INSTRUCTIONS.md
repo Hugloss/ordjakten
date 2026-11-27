@@ -23,6 +23,75 @@ Uppgifterna ska inte kräva att barnet gissar en vuxens outtalade avsikt.
 Kontrasterande exempel och frågor som ”Menar du att jag ska kliva ner?”
 hjälper barnet att skilja situationerna åt.
 
+## Samma uttryck kan betyda olika saker
+
+Nästa steg använder sex **befintliga** uttryck. De får 18 ytterligare,
+redaktionellt skrivna situationer. För varje uttryck finns två berättelser
+med olika tydliga betydelser och en där informationen inte räcker för att
+välja betydelse. Alla sex hör till vardagsurvalet.
+
+| Uttryck | Två betydelser som barnet får skilja åt |
+| --- | --- |
+| Häng med | Följa med till en plats eller förstå en förklaring. |
+| Hoppa över | Göra ett hopp över något eller låta en uppgift vara och gå vidare. |
+| Hoppa ner från pallen | Kliva ner när det beskrivs så, eller göra ett hopp när det uttryckligen är uppgiften. |
+| Vända blad | Bläddra i en bok eller lämna något bakom sig och börja om. |
+| Tappa tråden | Tappa en riktig tråd eller glömma vad man höll på att säga. |
+| Få kalla fötter | Frysa om fötterna eller bli tveksam inför något man tänkt göra. |
+
+I meningsövningen visas en situation och tre korta svar. Förklaringen efter
+svaret använder den aktuella situationens betydelse. Den pekar ut en exakt
+ledtråd ur berättelsen och förklarar vad den hjälper oss att förstå. Barnet
+ska kunna säga **varför** en betydelse passar här.
+
+I de oklara situationerna är rätt svar en konkret fråga som skiljer de två
+möjligheterna åt. Frågan bygger på den information barnet faktiskt har fått.
+Vi väljer inte en betydelse utifrån en vuxens outtalade avsikt, och ger inte
+en påhittad bokstavlig betydelse till ett uttryck som saknar en sådan.
+
+### Befintliga övningar och synliga förklaringar
+
+**Min ordstig → Alla ord → välj uttrycket → Förstå i en berättelse**
+använder alla tre situationerna en gång i den korta fokusövningen. Vanliga
+meningsfrågor och luckbokens meningsuppgift använder samma skrivna innehåll.
+Ordsamlingen har en frivillig fördjupning med de olika situationerna.
+
+Fristående Aha börjar med en neutral beskrivning av uttryckets möjliga
+betydelser. Den avslöjar inte vilken betydelse som gäller i nästa fråga.
+Aha väljer en annan tydlig situation än den som nyss visades. Det är bara
+de två tydliga betydelsesituationerna som kan bli Aha-underlag. Ett bra
+förtydligande i en oklar situation är värdefull övning, men visar inte att
+barnet har identifierat en bestämd avsikt som berättelsen inte anger.
+
+En befintlig serie illustrerar sin ursprungliga berättelse. När den visas
+efter en annan betydelse presenteras den som **en annan berättelse**, med
+sin egen text och sina egna bilder. Den aktuella frågans text läggs inte
+ovanpå en serie som föreställer något annat.
+
+### Innehållsformat och kontroll
+
+De sex posterna i `missions.json` får `contextReading` och `contextScenes`.
+Varje scen har ett stabilt ID, en situation, en betydelse, en citerad
+ledtråd, en förklaring, en jämförelse, hjälp att fråga och tre egna svar.
+`kind: meaning` kräver en bestämd betydelse; `kind: clarify` betyder att
+barnet behöver mer information. Alla felalternativ har egen återkoppling.
+
+Valideringen kräver två betydelsescener och en förtydligandescen per
+uttryck, unika scen-ID:n och svar, en korrekt lösning samt en ledtråd som
+faktiskt finns i situationen. Ofullständiga scener får inte ersättas med
+en gammal förklaring till en annan betydelse.
+
+Aha:s nya scen-ID:n är knutna till rätt uttryck. Äldre observationsnycklar
+bevaras. Uppföljning av frivillig träning använder de aktuella scenerna och
+deras svar; ändrat innehåll får inte jämföras som om det vore samma uppgift.
+Det tillkommer inget separat betyg eller antagande om barnets språkförmåga.
+
+Logik- och presentationstester ska kontrollera motsatta betydelser, oklara
+fall, uppgiftsspecifik återkoppling, nya Aha-situationer och fortsatt stöd
+för gamla sparade övningar. Faktisk webbläsarverifiering dokumenteras i PR:n.
+Barnprovspelning behöver särskilt undersöka om barnet kan hitta ledtråden
+med egna ord och be om förtydligande utan att känna att det har gjort fel.
+
 ## Samma tydlighet genom hela spelet
 
 De sex uttrycken har stabila ID:n `ut-0070`–`ut-0075`. De ingår i det

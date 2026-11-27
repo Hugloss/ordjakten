@@ -2,10 +2,11 @@
  * episodes. Later observations are associations, never causal effects.
  * Do not duplicate the engines' spacing or assess free-form sentences. */
 (function(root,factory){
-  const api=factory();
+  const missions=typeof module!=='undefined'&&module.exports?require('./missions'):root.OrdjaktenMissions;
+  const api=factory(missions);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.OrdjaktenFeedback=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Missions){
   'use strict';
   const DAY=86400000,WINDOW=60*DAY,LIMIT=4,MAX_TIME=4102444800000;
   const time=n=>Number.isSafeInteger(n)&&n>0&&n<=MAX_TIME;
@@ -37,8 +38,17 @@
       }else{
         const challenge=surprises?.challenges?.find(x=>x.id===id);
         const mission=missions?.missions?.find(x=>x.id===id);
-        const a=challenge?.options?.find(x=>x.correct)?.label,b=mission?.sentences?.find(x=>x.correct)?.label;
-        if(a&&b&&a!==b)scenes=[['expression:challenge',a],['expression:mission',b]];
+        if(mission&&Object.hasOwn(mission,'contextScenes')){
+          const reviewed=Missions.contextScenes(missions,id).filter(scene=>scene.kind==='meaning');
+          scenes=reviewed.map(scene=>['expression:context:'+scene.id,scene.prompt]);
+          // Asking for missing information is useful practice, but is not
+          // evidence of identifying one intended meaning. A changed scene,
+          // explanation or wrong answer also invalidates pending comparisons.
+          alternatives=[mission.contextReading,reviewed];
+        }else{
+          const a=challenge?.options?.find(x=>x.correct)?.label,b=mission?.sentences?.find(x=>x.correct)?.label;
+          if(a&&b&&a!==b)scenes=[['expression:challenge',a],['expression:mission',b]];
+        }
       }
       if(scenes.length>=2)objectives['aha:'+id]={stamp:stamp(alternatives?[version,scenes,alternatives]:[version,scenes]),mode:'aha',id,evidence:scenes.map(s=>s[0])};
       const pair=contrasts?.pairs?.find(p=>[p.left,p.right].includes(id));

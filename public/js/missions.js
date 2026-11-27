@@ -1,12 +1,20 @@
 /* Three learning paths for each expression; all data remains local. */
 (function(root,factory){
-  const api=factory();
+  const engine=typeof module!=='undefined'&&module.exports?require('./engine'):root.OrdjaktenEngine;
+  const api=factory(engine);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.OrdjaktenMissions=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Engine){
   'use strict';
   const TYPES=Object.freeze(['meaning','sentence','order']);
   function get(data,id){return data&&Array.isArray(data.missions)?data.missions.find(m=>m.id===id)||null:null;}
+  // Invalid optional lessons are unavailable at runtime; validation reports
+  // them before publication. Never substitute a canonical, different meaning.
+  function contextScenes(data,id){
+    const task=get(data,id);
+    return task&&Object.hasOwn(task,'contextScenes')&&Engine.validateExpressionContexts(task).length===0?task.contextScenes:[];
+  }
+  function contextScene(data,id,sceneId){return contextScenes(data,id).find(scene=>scene.id===sceneId)||null;}
   function validate(data,expressions){
     if(!data||!Array.isArray(data.missions)||!expressions||!Array.isArray(expressions.expressions))return ['Uppdragsbanken saknas.'];
     const issues=[],available=new Set(expressions.expressions.map(e=>e.id)),seen=new Set();
@@ -14,6 +22,8 @@
       if(!m||!available.has(m.id)||seen.has(m.id)){issues.push('Felaktigt eller dubblerat ID: '+(m&&m.id));continue;}
       seen.add(m.id);
       const category=expressions.expressions.find(e=>e.id===m.id)?.category;
+      issues.push(...Engine.validateExpressionContexts(m));
+      if(category==='school-instruction'&&Object.hasOwn(m,'contextScenes'))issues.push('Skoluppgift får inte byta till vardagssammanhang: '+m.id);
       if(category==='school-instruction'||category==='everyday-instruction'){
         const name=category==='school-instruction'?'Skoluppgift':'Vardagsuppgift';
         if(typeof m.prompt!=='string'||m.prompt.trim().length<25)issues.push(name+' saknar instruktion: '+m.id);
@@ -47,6 +57,15 @@
   // never by its position in the shuffled choices.
   function instructionFeedback(question,selectedLabel,data){
     if(!question?.schoolInstruction&&!question?.everydayInstruction)return null;
+    if(question.contextSceneId){
+      const scene=contextScene(data,question.id,question.contextSceneId);
+      if(!scene||scene.prompt!==question.scene||question.taskType!=='sentence')return null;
+      const prefix='”'+scene.prompt+'” – ';
+      const selected=scene.options.find(o=>prefix+o.label===selectedLabel);
+      return {clue:scene.clue,explanation:scene.explanation,connection:scene.connection,
+        correction:selected?.correct===false?selected.feedback:'',rule:scene.rule,
+        answer:scene.options.find(o=>o.correct===true).label};
+    }
     const task=get(data,question.id),practical=question.taskType==='sentence',ordered=question.taskType==='order';
     const selected=practical?task?.sentences?.find(s=>s.label===selectedLabel):null;
     const model={
@@ -103,5 +122,5 @@
       sequence.every(Number.isInteger)&&new Set(sequence).size===3&&
       sequence.every((value,index)=>value===index);
   }
-  return {TYPES,get,validate,instructionFeedback,schoolFeedback,sanitizeProgress,complete,nextType,checkOrder};
+  return {TYPES,get,contextScenes,contextScene,validate,instructionFeedback,schoolFeedback,sanitizeProgress,complete,nextType,checkOrder};
 });

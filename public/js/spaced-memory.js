@@ -9,15 +9,21 @@
   'use strict';
   const DAY=86400000,MAX_TIME=4102444800000;
   const DAYS=Object.freeze([1,3,7,14,30]);
-  const EVIDENCE=/^(?:context:[012]|expression:(?:challenge|mission))$/;
+  const EVIDENCE=/^(?:context:[012]|expression:(?:challenge|mission|context:ut-\d{4,}-[a-z][a-z0-9-]{1,30}))$/;
+  function validEvidence(value,expressionId=''){
+    if(typeof value!=='string'||!EVIDENCE.test(value))return false;
+    if(!expressionId)return true;
+    if(value.startsWith('expression:context:'))return value.startsWith('expression:context:'+expressionId+'-');
+    return value.startsWith('context:')?expressionId.startsWith('sv-'):expressionId.startsWith('ut-');
+  }
   const validTime=value=>Number.isSafeInteger(value)&&value>0&&value<=MAX_TIME;
-  function sanitize(value,{maxAt=MAX_TIME,evidenceRequired=false}={}){
+  function sanitize(value,{maxAt=MAX_TIME,evidenceRequired=false,expressionId=''}={}){
     if(!value||typeof value!=='object'||Array.isArray(value)||
       !Number.isInteger(value.step)||value.step<0||value.step>=DAYS.length||
       !validTime(value.lastAt)||value.lastAt>maxAt||
       !['direct','supported','previewed'].includes(value.outcome)||
       (value.outcome==='supported'&&value.step!==0))return null;
-    const evidence=typeof value.evidence==='string'&&EVIDENCE.test(value.evidence)?value.evidence:'';
+    const evidence=validEvidence(value.evidence,expressionId)?value.evidence:'';
     if(evidenceRequired&&!evidence)return null;
     return {step:value.step,lastAt:value.lastAt,outcome:value.outcome,...(evidence?{evidence}:{})};
   }
@@ -25,10 +31,10 @@
     const card=sanitize(value);
     return card?Math.min(MAX_TIME,card.lastAt+DAYS[card.step]*DAY):0;
   }
-  function observe(raw,{outcome,now=Date.now(),lastExposureAt=0,evidence='',different=true,requiresEvidence=false}={}){
-    const prior=sanitize(raw,{evidenceRequired:requiresEvidence});
+  function observe(raw,{outcome,now=Date.now(),lastExposureAt=0,evidence='',different=true,requiresEvidence=false,expressionId=''}={}){
+    const prior=sanitize(raw,{evidenceRequired:requiresEvidence,expressionId});
     if(!validTime(now)||!['direct','supported','previewed'].includes(outcome)||
-      (requiresEvidence&&!(typeof evidence==='string'&&EVIDENCE.test(evidence)))||
+      (requiresEvidence&&!validEvidence(evidence,expressionId))||
       (prior&&now<prior.lastAt))return prior;
     const event=(step)=>({step,lastAt:now,outcome,...(requiresEvidence?{evidence}:{})});
     // A real supported attempt reopens short review even in ordinary practice.
