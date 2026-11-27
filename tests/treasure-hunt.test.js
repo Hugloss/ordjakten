@@ -194,3 +194,15 @@ test('transition methods preserve caller state and invalid catalog entries canno
   const incomplete=Treasure.catalog(missingHelp,A,Story,missions);
   assert.ok(incomplete.errors.includes('forest:0'));assert.equal(incomplete.worlds.forest,undefined);
 });
+
+test('letter reveals only finds, persists, and never rewards a wrong destination',()=>{
+ let state=fresh();assert.equal(view(state).letter.fragments.length,0);
+ state=finish(choose(visit(state,0)));assert.equal(view(state).letter.fragments.length,0);
+ assert.equal(view(state).finderTotal,0);
+ state=finish(choose(visit(back(state),2)));assert.deepEqual(view(state).letter.fragments,Data.LETTER_FRAGMENTS.forest.slice(0,1));
+ state=reload(state);assert.equal(view(state).letter.fragments.length,1);
+ for(const idx of Treasure.ORDER.slice(1))state=finish(choose(visit(back(state),idx)));
+ assert.deepEqual(view(state).letter.fragments,Data.LETTER_FRAGMENTS.forest);
+ assert.equal(view(state).finderTotal,4);
+ assert.deepEqual(view(reload(state)).letter,view(state).letter);
+});

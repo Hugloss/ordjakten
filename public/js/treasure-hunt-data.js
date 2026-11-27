@@ -369,6 +369,81 @@
       }
     ]
   };
+  // Four earned story fragments in each world.
+  const LETTER_FRAGMENTS={
+  "forest": [
+    "Ett brev har gömts bland skogens träd.",
+    "En fågel lämnade ett spår, men glömde att säga var.",
+    "Ugglan visste att två ledtrådar kan hjälpa mer än en.",
+    "Nu har du hittat alla fyra platser. Skogens hemliga brev är ditt!"
+  ],
+  "space": [
+    "Ett meddelande väntar bland stjärnorna.",
+    "Roboten såg något ovanligt och skrev ner två kännetecken.",
+    "När beskrivningarna jämförs går det att välja rätt väg.",
+    "Uppdrag slutfört! Du har hittat hela rymdmeddelandet."
+  ],
+  "castle": [
+    "I slottet finns ett brev med fyra delar.",
+    "En vakt såg nycklar och flaggor men visste inte vad han letade efter.",
+    "Han lärde sig att läsa ledtråden en gång till.",
+    "Nu kan slottets hemliga brev läsas från början till slut!"
+  ],
+  "pirate": [
+    "En pirat har gömt ett brev på fyra platser.",
+    "Kaptenen följde inte bara ett kryss på kartan.",
+    "Hon jämförde också vad hon såg med orden i ledtråden.",
+    "Alla fyra brevdelarna är hittade. Vilken skattletare du är!"
+  ],
+  "ocean": [
+    "Ett brev har färdats under vågorna.",
+    "En delfin fann ett spår vid en liten båt.",
+    "Ett annat spår visade vad som fanns i vattnet.",
+    "Nu har du samlat havets hemliga meddelande!"
+  ],
+  "dinosaurs": [
+    "Ett gammalt meddelande låg gömt i marken.",
+    "Någon hade sett stora spår men visste inte vems de var.",
+    "Fler kännetecken hjälpte letaren att förstå platsen.",
+    "Nu har du hittat alla delarna i dinosauriernas brev!"
+  ],
+  "garden": [
+    "Någon har lämnat ett hemligt brev i trädgården.",
+    "Ett litet frö kan vara svårt att hitta utan en beskrivning.",
+    "När du tittar efter två saker blir valet tydligare.",
+    "Du hittade alla fyra platser. Trädgårdsbrevet är komplett!"
+  ],
+  "unicorn": [
+    "Ett glittrande brev väntar i sagolandet.",
+    "En vän såg ett märkligt spår men stannade upp och tänkte.",
+    "Orden i ledtråden hjälpte henne att välja bland platserna.",
+    "Alla fyra delarna är samlade. Sagobrevet är ditt!"
+  ],
+  "animals": [
+    "Djuren har skrivit ett brev tillsammans.",
+    "Ett djur såg en ledtråd, ett annat såg något mer.",
+    "Tillsammans kunde de beskriva platsen tydligare.",
+    "Nu har du läst djurens hemliga brev i fyra delar!"
+  ],
+  "rainbow": [
+    "Ett färgglatt brev har delats i fyra bitar.",
+    "Det räcker inte alltid att bara titta på färgen.",
+    "Vad som händer på platsen är också en viktig ledtråd.",
+    "Du hittade alla bitar. Regnbågsbrevet är färdigt!"
+  ],
+  "horses": [
+    "Ett meddelande väntar vid hästarnas gård.",
+    "Någon såg ett spår och försökte beskriva det för en vän.",
+    "När vännen lyssnade på alla detaljer hittade de rätt.",
+    "Nu har du samlat hela brevet från hästgården!"
+  ],
+  "music": [
+    "Ett hemligt brev ligger bland musikinstrumenten.",
+    "En ton kan vara stark, men den säger inte var man är.",
+    "Fler ord behövs för att skilja scenen från övningsrummet.",
+    "Du har hittat hela musikbrevet. Bra ledtrådsarbete!"
+  ]
+};
   const SMALL_FINDS={
     forest:{emoji:'🪵',name:'Liten vedbit'},
     space:{emoji:'📎',name:'Robotens gem'},
@@ -387,5 +462,6 @@
     rows.forEach(row=>{Object.freeze(row.lookFor);Object.freeze(row);});Object.freeze(rows);
   }
   for(const item of Object.values(SMALL_FINDS))Object.freeze(item);
-  return Object.freeze({DATA:Object.freeze(DATA),SMALL_FINDS:Object.freeze(SMALL_FINDS)});
+  for(const parts of Object.values(LETTER_FRAGMENTS))Object.freeze(parts);
+  return Object.freeze({DATA:Object.freeze(DATA),SMALL_FINDS:Object.freeze(SMALL_FINDS),LETTER_FRAGMENTS:Object.freeze(LETTER_FRAGMENTS)});
 });

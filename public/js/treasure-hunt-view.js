@@ -152,6 +152,20 @@
       'Följ en ledtråd i taget. Du får tänka och prova igen utan tidspress.'));
     return trail;
   }
+  function secretLetter(el,model){
+    const fragments=Array.isArray(model.letter?.fragments)?model.letter.fragments:[];
+    const total=number(model.letter?.total)||4,box=el('section','treasure-letter');
+    box.setAttribute('aria-label','Hemliga brevet');
+    box.append(el('h2','','✉️ Det hemliga brevet'),
+      el('p','',fragments.length===total?'Hela brevet är hittat! Läs det från början till slut.':'Varje rätt plats ger en ny del av brevet. Läs det du har hittat hittills.'));
+    const list=el('ol','treasure-letter-parts');
+    for(let i=0;i<total;i++){
+      const unlocked=i<fragments.length,line=el('li','treasure-letter-part'+(unlocked?' treasure-letter-open':''));
+      line.append(el('span','treasure-letter-symbol',unlocked?'✉️':'🔒'),el('span','',unlocked?fragments[i]:'Brevrad '+(i+1)+' är fortfarande gömd.'));
+      list.append(line);
+    }
+    box.append(list);return box;
+  }
   function mapView(host,el,model,options,wordStars){
     const intro=el('header','treasure-map-heading');
     const copy=el('div');
@@ -165,7 +179,7 @@
       for(const world of worlds){const option=el('option','',`${world.emoji} ${world.title} · ${world.count} av ${world.total} skatter`);option.value=world.id;option.selected=world.id===model.id;select.append(option);}
       picker.append(label,select);intro.append(picker);
     }
-    host.append(intro,scoreStrip(el,model,wordStars),treasureTrail(el,model));
+    host.append(intro,scoreStrip(el,model,wordStars),treasureTrail(el,model),secretLetter(el,model));
     const clue=el('section','treasure-clue');clue.setAttribute('aria-labelledby','treasure-clue-title');
     if(model.clue){
       const heading=el('h2','',`Ledtråd ${number(model.count)+1} av ${number(model.total)}`);heading.id='treasure-clue-title';
@@ -249,7 +263,11 @@
       const mark=el('span','treasure-reward-icon',reward.emoji||'🎒');mark.setAttribute('aria-hidden','true');
       const heading=el('h2','',reward.newItem?(reward.kind==='treasure'?'Din nya skatt: ':'Ditt nya fynd: ')+reward.name:reward.kind==='treasure'?'Skatten finns i din samling':'Du har besökt platsen igen');heading.id='treasure-reward-title';
       box.append(mark,heading);
-      if(reward.finderAdded)box.append(el('p','treasure-finder-earned','🧭 +1 sakletarpoäng. Du hittade platsen med hjälp av ledtråden.'));
+      if(reward.finderAdded){
+        box.append(el('p','treasure-finder-earned','🧭 +1 sakletarpoäng. Du hittade platsen med hjälp av ledtråden.'));
+        const fragment=model.letter?.fragments?.at(-1);
+        if(fragment)box.append(el('p','treasure-letter-unlocked','✉️ Ny del av brevet: '+fragment));
+      }
       else if(model.clue&&!visit.matched)box.append(el('p','','Det lilla fyndet ger ingen sakletarpoäng. Läs ledtråden igen och leta efter platsen som passar.'));
       else box.append(el('p','','Det här besöket ger ingen ny sakletarpoäng. Dina tidigare fynd finns kvar.'));
       if(reward.kind==='small'&&!reward.newItem)box.append(el('p','',reward.name+' från den här platsen finns redan i din samling.'));
