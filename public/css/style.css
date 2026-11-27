@@ -187,3 +187,10 @@ h2 { letter-spacing:-.5px; }
 @media(max-width:370px){.site-wrap{padding:0 10px}.nav-btn{font-size:11px;padding:8px 5px}.brand{font-size:19px}.brand-icon{font-size:22px}.hero-badges{gap:5px}.theme-choice,.timer-choice{font-size:11px}.stat>span{font-size:11px}}
 @media(hover:hover) and (pointer:fine){.primary-button:not(:disabled):hover{border-color:var(--accent)} .answer-option:hover{border-color:var(--accent-line);background:var(--accent-soft)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:0s!important;animation-duration:0s!important}}
+
+/* Keep the three main navigation choices usable at 320 CSS pixels.
+   The logo and nav cannot fit side by side with normal readable labels. */
+@media(max-width:360px){
+  .site-header{flex-wrap:wrap;justify-content:center;gap:.35rem;padding-top:.6rem;padding-bottom:.6rem}
+  .top-nav{width:100%;justify-content:center;flex-wrap:wrap}
+}
