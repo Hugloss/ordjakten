@@ -10,6 +10,8 @@
   const bank = window.ORDJAKTEN_WORDS;
   const curation = window.ORDJAKTEN_CURATION;
   const expressions = window.ORDJAKTEN_EXPRESSIONS;
+  const QuestionPlatform = window.OrdjaktenQuestionPlatform;
+  const SvenskaBank = window.OrdjaktenSvenskaBank;
   const comics = window.ORDJAKTEN_COMICS;
   const C = window.OrdjaktenComics;
   const S = window.OrdjaktenSurprises;
@@ -64,12 +66,16 @@
     $('global-error').textContent='Kunde inte läsa in stjärnsamlingen. Försök ladda om sidan.';
     $('global-error').hidden=false;return;
   }
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !G || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !ActionWords || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || E.validateSelection(curation,bank,expressions,contexts).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length || ActionWords.validate(bank).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !QuestionPlatform || !SvenskaBank || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !G || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !ActionWords || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || E.validateSelection(curation,bank,expressions,contexts).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length || ActionWords.validate(bank).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
     return;
   }
+
+  // Each subject owns its source data. The game uses a bank-scoped adapter.
+  const bankRegistry=QuestionPlatform.createRegistry();
+  bankRegistry.register(SvenskaBank.fromLegacyExpressions(expressions));
 
   const systemTheme = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   const labels = {easy:'🌱 Lätt',medium:'🧩 Medel',hard:'🔥 Svårt',exam:'📚 Fördjupning',expert:'Fördjupning'};
@@ -4013,6 +4019,16 @@
     }
     if($('reading-check').dataset.complete==='true')renderMysteryDiscovery();
   }
+  function gradeBankMeaning(q,option){
+    const ref={bankId:'svenska',id:'meaning-'+q.id,revision:1};
+    const canonical=bankRegistry.resolve(ref);
+    const selected=canonical.responseSpec.options.find(row=>row.label===option.label);
+    if(!selected)throw new Error('Expression answer not in Swedish bank: '+q.id);
+    const result=bankRegistry.assess(ref,selected.id);
+    if(result.status!=='correct'&&result.status!=='incorrect')
+      throw new Error('Unusable assessment from Swedish bank: '+q.id);
+    return result.status==='correct'?'right':'wrong';
+  }
   function submit(index) {
     if(!game||game.finished||game.feedback)return;
     if(guidedActive && index!==null)return;
@@ -4029,7 +4045,9 @@
     const option=(index===null||isOrder)?null:q.options[index];
     if(index!==null&&!isOrder&&!option)return;
     if(isOrder&&index!==null&&orderSelection.length!==3)return;
-    const outcome=index===null?'unanswered':isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):(option.correct?'right':'wrong');
+    const outcome=index===null?'unanswered':isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):
+      q.kind==='expression'&&q.taskType==='meaning'?gradeBankMeaning(q,option):
+      (option.correct?'right':'wrong');
     clearQuestionPlay();
     game.answers[q.id]=outcome;
     game.selected[q.id]=isOrder&&index!==null?orderSelection.map(key=>q.correctOrder[key]).join(' → '):option?option.label:null;
