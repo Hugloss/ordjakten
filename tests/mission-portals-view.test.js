@@ -23,11 +23,11 @@ const render=(state,id=null,opt={})=>{
   View.render(host,Model.model(state,id,content),opt);
   return host;
 };
-test('gallery displays 32 unique unlocked story cards and no challenge answer',()=>{
+test('gallery shows twelve of 52 unlocked adventures initially and no challenge answer',()=>{
   const host=render({});
-  assert.equal(buttons(host,'portalOpen').length,32);
+  assert.equal(buttons(host,'portalOpen').length,12);
   assert.match(text(host),/Upptäckarklubben/);
-  assert.match(text(host),/32/);
+  assert.match(text(host),/52/);
   assert.ok(!text(host).includes(Data.STORIES[0].stages[0].why));
   for(const btn of buttons(host,'portalOpen')){
     assert.equal(btn.tag,'button');assert.equal(btn.type,'button');
@@ -40,14 +40,38 @@ test('the catalog can be filtered by theme without changing completed progress',
   assert.equal(groupButtons.length,5);
   assert.equal(groupButtons[0].dataset.portalFilter,'all');
   assert.equal(groupButtons[0].attributes['aria-pressed'],'true');
-  for(const [category,count] of [['mystery',6],['fantasy',8],['explore',10],['creative',8]]){
+  for(const [category,count] of [['mystery',11],['fantasy',13],['explore',15],['creative',13]]){
     const host=render({},null,{category});
-    assert.equal(buttons(host,'portalOpen').length,count,category);
-    assert.match(text(host),new RegExp('Visar '+count+' av 32 äventyr'));
+    assert.equal(buttons(host,'portalOpen').length,Math.min(12,count),category);
+    assert.match(text(host),new RegExp('Visar '+Math.min(12,count)+' av '+count+' äventyr i kategorin \\(52 totalt\\)'));
     assert.equal(buttons(host,'portalFilter').find(x=>x.dataset.portalFilter===category).attributes['aria-pressed'],'true');
     assert.ok(buttons(host,'portalOpen').every(x=>content.stories[x.dataset.portalOpen].group===category));
+    assert.equal(buttons(host,'portalMore').length,count>12?1:0);
+    const expanded=render({},null,{category,visibleCount:24});
+    assert.equal(buttons(expanded,'portalOpen').length,count);
+    assert.equal(buttons(expanded,'portalMore').length,0);
   }
-  assert.equal(buttons(render({},null,{category:'invalid'}),'portalOpen').length,32);
+  assert.equal(buttons(render({},null,{category:'invalid'}),'portalOpen').length,12);
+});
+
+test('show-more pages 52 original cards without reordering stories or altering rewards',()=>{
+  const original=render({},null,{visibleCount:12});
+  const middle=render({},null,{visibleCount:24});
+  const all=render({},null,{visibleCount:64});
+  assert.equal(buttons(original,'portalOpen').length,12);
+  assert.equal(buttons(middle,'portalOpen').length,24);
+  assert.equal(buttons(all,'portalOpen').length,52);
+  assert.equal(buttons(original,'portalMore').length,1);
+  assert.equal(buttons(middle,'portalMore').length,1);
+  assert.equal(buttons(all,'portalMore').length,0);
+  assert.deepEqual(buttons(middle,'portalOpen').slice(0,12).map(b=>b.dataset.portalOpen),
+    buttons(original,'portalOpen').map(b=>b.dataset.portalOpen));
+  assert.deepEqual(buttons(all,'portalOpen').map(b=>b.dataset.portalOpen),content.ids);
+  assert.equal(buttons(all,'portalOpen').at(-1).id,'portal-card-photo-club');
+  assert.match(text(original),/Visar 12 av 52 äventyr/);
+  assert.match(text(all),/Visar 52 av 52 äventyr/);
+  const weird=render({},null,{visibleCount:-500});
+  assert.equal(buttons(weird,'portalOpen').length,12);
 });
 
 test('new stage has two visible clues, three choices and a separate optional hint',()=>{
