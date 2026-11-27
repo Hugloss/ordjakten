@@ -39,6 +39,7 @@ function speechHarness({supported=true}={}){
       options:[{label:'Det första exemplet',correct:false},{label:'Det andra exemplet',correct:true},{label:'Det tredje exemplet',correct:false}]},
     guidedActive:false,guidedParts:[],guidedIndex:0,B,
     resetQuestionDrag(){},saveAhaOutcome(){},showBurst(){},renderMysteryDiscovery(){},
+    awardGameStar(){return {added:0,milestones:[]};},
     renderReadingOptions(check){$('reading-options').children=check.options.map(()=>node());}};
   $('reading-check').hidden=false;
   $('reading-check').dataset.complete='false';

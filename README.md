@@ -30,6 +30,8 @@ npm run check
 - Sex befintliga uttryck har dessutom 18 situationer där sammanhanget
   avgör betydelsen eller visar att barnet behöver fråga vad personen menar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
+- Sparad stjärnsamling med sex samlingsmärken, en synlig stjärnrad och
+  frivilliga nya chanser utan timer för de stjärnor som återstår.
 - Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.
 - Anpassad träning, Min ordstig, Ledtrådstrappan, Förväxlingskompassen
   och frivilliga återbesök över tid.
@@ -82,8 +84,16 @@ Snabbstarten börjar med fem lätta ord utan timer. Fler exempel, motexempel
 och egna tankefrågor öppnas frivilligt under förklaringen. När webbläsaren
 har talstöd går även Aha-frågan och dess svarsalternativ att lyssna på.
 Frågan bygger på skrivna vardagsberättelser eller på granskade definitioner;
-den ger **inga ytterligare provpoäng eller stjärnor**. Separata observationer
-av Aha-svar används för att välja frivilliga återbesök.
+den ger **inga ytterligare provpoäng**. Ett eget rätt Aha-svar kan tända
+ordets saknade stjärna om huvudfrågan blev fel. Varje fråga ger högst en
+stjärna i samma rad, och ett visat facit ger ingen stjärna. Separata
+observationer av Aha-svar används för att välja frivilliga återbesök.
+
+Stjärnorna sparas när de delas ut. Efter en runda eller omladdning går det
+att ge radens återstående ord en ny chans med skrivna vardagssituationer.
+Den övningen har ingen timer och ändrar inte tidigare resultat. En ny vanlig
+omgång börjar en ny rad; alla samlade stjärnor finns kvar. Se
+[stjärnor och lekfull återkoppling](docs/PLAYFUL.md).
 
 I **Testa dig** och fördjupningsprovet finns ingen förklaringsfråga
 under själva provet: facit och förklaringar visas först efteråt.

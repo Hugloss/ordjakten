@@ -32,10 +32,12 @@ test('stage markers never skip or exceed the total count', () => {
   assert.deepEqual(P.milestones(0),[]);
 });
 
-test('encouragement supports right, wrong and timed out without revealing future answers', () => {
+test('encouragement gives the same star for a right answer regardless of streak', () => {
   const right=P.encouragement('right',2,3);
-  assert.match(right.reward,/3 rätt i rad/);
+  assert.equal(right.reward,'⭐ +1 stjärna!');
   assert.match(right.title,/rätt/);
+  assert.deepEqual(right,P.encouragement('right',2,0));
+  assert.deepEqual(right,P.encouragement('right',2,25));
   const wrong=P.encouragement('wrong',3,0);
   assert.equal(wrong.reward,'');
   assert.ok(wrong.message.length > 10);
@@ -43,13 +45,34 @@ test('encouragement supports right, wrong and timed out without revealing future
   assert.equal(timed.reward,'');
 });
 
-test('achievement thresholds reward effort and mastery without penalizing mistakes', () => {
+test('legacy rounds retain factual achievements and full stars without a streak or mastery badge', () => {
   assert.equal(P.achievements({total:0}).length,0);
   assert.deepEqual(P.achievements({right:0,total:5}).map(x=>x.title),['Ordspanare']);
   assert.ok(P.achievements({right:4,total:5,bestStreak:3}).some(x=>x.title==='Stjärnletare'));
-  const titles=P.achievements({right:5,total:5,bestStreak:5}).map(x=>x.title);
-  assert.ok(titles.includes('Ordmästare'));
-  assert.ok(titles.includes('Tre i rad'));
+  const full=P.achievements({right:5,total:5,bestStreak:5});
+  assert.deepEqual(full.map(x=>x.title),['Ordspanare','Stjärnletare','Alla stjärnor']);
+  assert.deepEqual(full,P.achievements({right:5,total:5,bestStreak:0}));
+});
+
+test('a completed star row celebrates successful practice without changing first-attempt counts', () => {
+  const partial=P.achievements({right:3,total:5,stars:4,practised:1});
+  assert.equal(partial.find(x=>x.title==='Alla stjärnor'),undefined);
+  assert.equal(partial.find(x=>x.title==='Övade vidare').text,'Du samlade 1 stjärna i fortsatt träning.');
+  const recovered=P.achievements({right:3,total:5,stars:5,practised:2});
+  assert.equal(recovered.find(x=>x.title==='Stjärnletare'),undefined);
+  assert.equal(recovered.find(x=>x.title==='Övade vidare').text,'Du samlade 2 stjärnor i fortsatt träning.');
+  assert.match(recovered.find(x=>x.title==='Alla stjärnor').text,/öva vidare/);
+  const fourDirect=P.achievements({right:4,total:5,stars:5,practised:1});
+  assert.equal(fourDirect.find(x=>x.title==='Stjärnletare').text,'Du svarade rätt direkt på 4 av 5 frågor!');
+});
+
+test('incomplete or invalid star counts cannot claim a completed collection', () => {
+  for(const stars of [0,3,4,6,-1,NaN,Infinity,'5']){
+    const earned=P.achievements({right:3,total:5,stars});
+    assert.equal(earned.find(x=>x.title==='Alla stjärnor'),undefined);
+  }
+  assert.equal(P.achievements({right:0,total:5,stars:0,practised:1}).find(x=>x.title==='Övade vidare'),undefined);
+  assert.equal(P.achievements({right:6,total:5,stars:6}).find(x=>x.title==='Stjärnletare'),undefined);
 });
 
 test('Stjärnletare reports actual question counts and keeps the 80 percent threshold at every round length', () => {
@@ -58,9 +81,9 @@ test('Stjärnletare reports actual question counts and keeps the 80 percent thre
     const badge=right=>P.achievements({right,total}).find(item=>item.title==='Stjärnletare');
     assert.equal(badge(threshold-1),undefined,`${threshold-1} of ${total} must not earn the badge`);
     for(const right of new Set([threshold,threshold+1,total])){
-      assert.equal(badge(right)?.text,`Du svarade rätt på ${right} av ${total} frågor!`);
+      assert.equal(badge(right)?.text,`Du svarade rätt direkt på ${right} av ${total} frågor!`);
     }
   }
   assert.equal(P.achievements({right:1,total:1}).find(item=>item.title==='Stjärnletare').text,
-    'Du svarade rätt på 1 av 1 fråga!');
+    'Du svarade rätt direkt på 1 av 1 fråga!');
 });
