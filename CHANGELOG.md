@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Pågående – tydligare förklaringar efter PR #10
+
+- 18 befintliga ord får tydligare undervisning, vardagsscener eller säkrare felalternativ. Överlappande ord hålls isär i frågor som annars kan få flera försvarbara svar.
+- 12 vardagsuttryck får konkreta betydelsekopplingar och mer precisa motexempel. Alla 14 skolord får en egen förklaring till ordningsuppgiftens arbetssteg.
+- Återkopplingen i skolans ordningsfrågor följer nu den aktuella arbetsgången i träning, fokus, facit och bonus, med samma skrivna förklaring som hjälp efter fel.
+- 25 jämförelsescener och 22 befintliga speluppdrag förtydligar vilken egenskap frågan gäller och varför svaret passar. Begreppskartan och Ordbroar förklarar överlapp utan falska motsatser.
+- Samma vardagsurval och antal ord. Offlinecache v64. Se [granskningen och kvarvarande kontroller](docs/CLEARER-EXPLANATIONS.md).
+
 ## Berättelsespåret (nästa uppdatering)
 
 - Sparar vilka redaktionellt skrivna vardagsberättelser som faktiskt prövats. Ordfrågor och Aha efter förklaring visas separat.

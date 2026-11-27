@@ -15,7 +15,7 @@
       seen.add(m.id);
       if(expressions.expressions.find(e=>e.id===m.id)?.category==='school-instruction'){
         if(typeof m.prompt!=='string'||m.prompt.trim().length<25)issues.push('Skoluppgift saknar instruktion: '+m.id);
-        for(const key of ['explanation','connection']){
+        for(const key of ['explanation','connection','orderExplanation']){
           if(typeof m[key]!=='string'||m[key].trim().length<30)issues.push('Skoluppgift saknar konkret '+key+': '+m.id);
         }
         if(!Array.isArray(m.sentences)||m.sentences.some(s=>s?.correct===false&&(typeof s.feedback!=='string'||s.feedback.trim().length<15)))
@@ -37,11 +37,11 @@
   // never by its position in the shuffled choices.
   function schoolFeedback(question,selectedLabel,data){
     if(!question?.schoolInstruction)return null;
-    const task=get(data,question.id),practical=question.taskType==='sentence';
+    const task=get(data,question.id),practical=question.taskType==='sentence',ordered=question.taskType==='order';
     const selected=practical?task?.sentences?.find(s=>s.label===selectedLabel):null;
     const model={
-      explanation:practical?task?.explanation:question.reveal?.[0]?.text,
-      connection:practical?task?.connection:question.reveal?.[1]?.text,
+      explanation:ordered?task?.orderExplanation||'':practical?task?.explanation:question.reveal?.[0]?.text,
+      connection:ordered?'':practical?task?.connection:question.reveal?.[1]?.text,
       correction:selected?.correct===false?selected.feedback:'',
       rule:question.schoolRule||task?.hint||'',
       answer:practical?task?.sentences?.find(s=>s.correct===true)?.label:question.taskType==='order'?question.correctOrder?.join(' → '):''

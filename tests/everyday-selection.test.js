@@ -49,6 +49,25 @@ function legacyHistory(){
 const history=legacyHistory();
 const ahaOptions={bank,expressions,contexts,missions,surprises,reading:Reading,curation,now:NOW};
 
+test('overlapping surface and uncertainty words do not compete in bare definition questions',()=>{
+  for(const pair of [['sv-0019','sv-0041'],['sv-0075','sv-0078']]){
+    assert.ok(curation.nearSynonyms.some(blocked=>pair.every(id=>blocked.includes(id))));
+    for(const id of pair){
+      const target=bank.words.find(word=>word.id===id);
+      const other=bank.words.find(word=>word.id===pair.find(candidate=>candidate!==id));
+      for(let seed=1;seed<=30;seed++){
+        const meaning=E.makeQuestion(target,bank,curation,'medium',random(seed));
+        assert.ok(!meaning.options.some(option=>option.label===other.definition));
+        const reverse=E.makeReverseQuestion(target,bank,curation,'medium',random(seed));
+        assert.ok(!reverse.options.some(option=>option.label===other.word));
+      }
+      const context=contexts.wordContexts.find(row=>row.id===id);
+      assert.ok(!context.distractors.includes(other.id));
+      assert.ok(!context.readingDistractors.includes(other.id));
+    }
+  }
+});
+
 test('the child selection covers 101 words and 59 expressions while all extension content stays addressable',()=>{
   assert.deepEqual(E.validateSelection(curation,bank,expressions,contexts),[]);
   assert.equal(catalog.length,188);

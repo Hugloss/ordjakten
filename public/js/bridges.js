@@ -228,12 +228,12 @@
       "sv-0055"
     ],
     "slots": [
-      "Flickan springer fram till bassängen.",
-      "Bollen studsar mot marken.",
-      "Flickan tar sig fram genom vattnet."
+      "Flickan tar snabba löpsteg över gräset till badplatsen.",
+      "Hon släpper en boll som träffar marken och far upp igen.",
+      "Sedan tar hon sig fram i vattnet med armtag och bensparkar."
     ],
     "hint": "Läs varje steg; orden beskriver olika rörelser.",
-    "why": "Springande betyder att springa, studsande betyder att hoppa upp efter kontakt med ett underlag, simmande betyder att simma."
+    "why": "Löpstegen visar springande. Bollen är studsande när den träffar marken och far tillbaka upp. Sedan simmar flickan genom att ta armtag och sparka med benen."
   },
   {
     "id": "ob-12",
@@ -328,19 +328,19 @@
     "id": "ob-17",
     "groupId": "bk-07",
     "kind": "explain",
-    "prompt": "Vad är skillnaden mellan varsam och försiktig?",
+    "prompt": "Vilken förklaring passar orden varsam och försiktig?",
     "cards": [
       "sv-0088",
       "sv-0094"
     ],
     "choices": [
-      "Varsam handlar om att hantera utan att skada; försiktig om att tänka på risker.",
-      "Varsam handlar främst om att tänka på risker i förväg; försiktig om att hantera något utan att skada det.",
+      "Båda kan handla om att undvika skador. Varsam beskriver särskilt hur du hanterar något.",
+      "Varsam beskriver en sak som lätt går sönder. Försiktig beskriver en sak med vassa kanter.",
       "Orden betyder alltid att någon är rädd och inte vågar prova något nytt."
     ],
     "answer": 0,
     "hint": "En person kan vara både varsam och försiktig.",
-    "why": "Varsam och försiktig överlappar, men betonar hantering respektive risker."
+    "why": "Du är varsam när du sätter ner ett glas mjukt så att det inte får en stöt. Du är försiktig när du går långsamt på ett halt golv för att inte ramla. Orden kan passa samtidigt."
   },
   {
     "id": "ob-18",
@@ -358,7 +358,7 @@
     ],
     "answer": 0,
     "hint": "Tänk på hur ofta något händer jämfört med hur länge det varar.",
-    "why": "Ovanlig handlar om frekvens, tillfällig om varaktighet. De kan beskriva samma händelse."
+    "why": "Om biblioteket nästan aldrig stänger under sina vanliga öppettider är en sådan stängning ovanlig. Om det öppnar igen i morgon är stängningen också tillfällig. Det ena ordet handlar om hur ofta, det andra om hur länge."
   },
   {
     "id": "ob-19",

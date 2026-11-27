@@ -15,7 +15,7 @@
           "correct": false
         }
       ],
-      "explanation": "Något som brukar vara ovanligt händer just den här gången."
+      "explanation": "Leo brukar inte kunna följa med. Just i dag kan han. Det är ett undantag från hur det brukar vara, och därför passar för en gångs skull."
     },
     {
       "id": "ut-0002",
@@ -30,7 +30,7 @@
           "correct": true
         }
       ],
-      "explanation": "I sista stund betyder att man hinner precis innan det är för sent."
+      "explanation": "Uppgiften skickas innan tiden går ut, men det är nästan ingen tid kvar. Därför hinner vi i sista stund. Flera dagar tidigare hade varit i god tid."
     },
     {
       "id": "ut-0003",
@@ -45,29 +45,29 @@
           "correct": false
         }
       ],
-      "explanation": "Att ha is i magen är att behålla lugnet och inte skynda fram ett beslut."
+      "explanation": "Sara väntar lugnt och tänker efter innan hon väljer. Det är lugnet i situationen som gör att uttrycket passar; att bara vänta räcker inte."
     },
     {
       "id": "ut-0004",
       "prompt": "Vilken NY situation passar uttrycket ”hålla tummarna”?",
       "options": [
         {
-          "label": "Vi vet redan säkert att matchen är vunnen.",
+          "label": "Vi vet redan säkert att utflykten är slut och att vädret var soligt.",
           "correct": false
         },
         {
-          "label": "Vi hoppas att storasysters match ska gå bra.",
+          "label": "Vi hoppas att det blir fint väder när klassen ska på utflykt nästa vecka.",
           "correct": true
         }
       ],
-      "explanation": "Man håller tummarna när man hoppas på något bra."
+      "explanation": "Utflykten har inte varit än och vi vet inte hur vädret blir. Vi vill att det ska bli fint. Därför passar hålla tummarna: vi hoppas på något som ännu inte är avgjort."
     },
     {
       "id": "ut-0005",
       "prompt": "Vilken NY situation passar uttrycket ”ta det med en nypa salt”?",
       "options": [
         {
-          "label": "Jag hörde ett rykte men vet inte om det stämmer.",
+          "label": "Jag hör ett osäkert rykte och väntar med att tro på det tills jag har tagit reda på mer.",
           "correct": true
         },
         {
@@ -75,37 +75,37 @@
           "correct": false
         }
       ],
-      "explanation": "Man tar något med en nypa salt när man inte tror på allt direkt."
+      "explanation": "Ryktet är inte kontrollerat. Jag väntar med att tro på det som säkert och försöker ta reda på mer. Det är att ta det med en nypa salt."
     },
     {
       "id": "ut-0006",
       "prompt": "Vilken NY situation passar uttrycket ”hålla ett öga på”?",
       "options": [
         {
-          "label": "Jag lånar väskan och tar med den till mitt hem.",
+          "label": "Jag lämnar kaninen ensam och går därifrån utan att titta till den.",
           "correct": false
         },
         {
-          "label": "Jag tittar till väskan medan min vän hämtar vatten.",
+          "label": "Jag tittar till kaninen medan min vän gör rent dess bur.",
           "correct": true
         }
       ],
-      "explanation": "Att hålla ett öga på något är att hålla koll på det."
+      "explanation": "Jag tittar till kaninen medan min vän är upptagen, så att jag kan märka om något händer med den. Det är det som menas med att hålla ett öga på den."
     },
     {
       "id": "ut-0007",
       "prompt": "Vilken NY situation passar uttrycket ”det var nära ögat”?",
       "options": [
         {
-          "label": "Bollen flög bara några centimeter från fönstret, men rutan klarade sig.",
+          "label": "Glaset gled mot bordskanten, men jag hann fånga det innan det föll.",
           "correct": true
         },
         {
-          "label": "Bollen träffade fönstret och krossade rutan.",
+          "label": "Glaset föll till golvet och gick sönder.",
           "correct": false
         }
       ],
-      "explanation": "Det var nära ögat när något dåligt nästan hände men inte gjorde det."
+      "explanation": "Glaset var nära att falla och gå sönder, men fångades innan det hände. Det dåliga undveks precis. Därför var det nära ögat."
     },
     {
       "id": "ut-0008",
@@ -127,7 +127,7 @@
       "prompt": "Vilken NY situation passar uttrycket ”lägga benen på ryggen”?",
       "options": [
         {
-          "label": "Vi skyndade oss hem när det började ösregna.",
+          "label": "Vi sprang så fort vi kunde till gömställena när leken började.",
           "correct": true
         },
         {
@@ -135,7 +135,7 @@
           "correct": false
         }
       ],
-      "explanation": "Att lägga benen på ryggen betyder att springa eller skynda sig."
+      "explanation": "Leken börjar och vi springer snabbt iväg till gömställena. Det snabba springandet gör att uttrycket lägga benen på ryggen passar."
     },
     {
       "id": "ut-0010",
@@ -187,15 +187,15 @@
       "prompt": "Vilken NY situation passar uttrycket ”vara på vippen”?",
       "options": [
         {
-          "label": "Liam var precis på väg att somna i soffan.",
+          "label": "Liam höll nästan på att börja skratta under den tysta leken, men knep ihop munnen och lyckades vara tyst.",
           "correct": true
         },
         {
-          "label": "Liam hade sovit gott i flera timmar.",
+          "label": "Liam hade redan skrattat högt i flera minuter.",
           "correct": false
         }
       ],
-      "explanation": "På vippen betyder att något nästan händer."
+      "explanation": "Liam är mycket nära att börja skratta, men gör det inte. Därför passar på vippen. Uttrycket säger hur nära något är, inte att det säkert händer."
     },
     {
       "id": "ut-0014",
@@ -232,15 +232,15 @@
       "prompt": "Vilken NY situation passar uttrycket ”dra sitt strå till stacken”?",
       "options": [
         {
-          "label": "En person fick göra allt medan de andra tittade på.",
+          "label": "Vi bestämde oss för att göra en tidning tillsammans, men ingen skrev någon del av den.",
           "correct": false
         },
         {
-          "label": "Alla i klassen hjälpte till med en liten uppgift var.",
+          "label": "När vi gjorde en gemensam tidning skrev alla i gruppen en liten del var.",
           "correct": true
         }
       ],
-      "explanation": "Att dra sitt strå till stacken betyder att bidra med sin del."
+      "explanation": "Gruppen gör en tidning tillsammans och varje person skriver en del. Varje bidrag hjälper den gemensamma tidningen att bli klar. Då drar personerna sitt strå till stacken."
     },
     {
       "id": "ut-0017",
@@ -266,11 +266,11 @@
           "correct": false
         },
         {
-          "label": "Han tänkte lugnt trots att alla omkring honom blev stressade.",
+          "label": "Trots att de andra blev stressade när tornet rasade tänkte Sam lugnt ut hur de kunde bygga upp det igen.",
           "correct": true
         }
       ],
-      "explanation": "Att hålla huvudet kallt är att förbli lugn och tänka klart."
+      "explanation": "Tornet har rasat och de andra blir stressade. Sam tänker ändå lugnt ut hur de kan bygga vidare. Därför håller han huvudet kallt."
     },
     {
       "id": "ut-0019",
@@ -356,11 +356,11 @@
           "correct": false
         },
         {
-          "label": "Det började som ett roligt skämt men blev för mycket.",
+          "label": "Vi började skämta, men fortsatte fast någon blev ledsen och bad oss att sluta.",
           "correct": true
         }
       ],
-      "explanation": "När något går över styr blir det för mycket eller svårt att styra."
+      "explanation": "Skämtet fortsätter fast någon säger stopp och blir ledsen. Det som började som något roligt har gått för långt. Därför passar gå över styr."
     },
     {
       "id": "ut-0025",
@@ -922,7 +922,7 @@
           "correct": false
         }
       ],
-      "explanation": "Äpple och banan är två konkreta frukter. Det var just två exempel som efterfrågades.",
+      "explanation": "Frågan ber om två frukter. Äpple är den ena och banan den andra. Bara ett äpple ger ett exempel, så då saknas det ett till.",
       "ahaDistractor": "”Ge två exempel på frukter.” – Ett äpple är en frukt."
     },
     {
@@ -954,7 +954,7 @@
           "correct": false
         }
       ],
-      "explanation": "Fyra av fem tillfrågade elever ville leka ute. Det är de flesta i den lilla gruppen. Vi har inte frågat resten av skolan.",
+      "explanation": "Fyra av fem tillfrågade elever ville leka ute. Fyra är fler än hälften av fem, så de flesta i den gruppen ville det. Vi vet inte vad resten av skolan tycker.",
       "ahaDistractor": "”Dra en slutsats: Gruppen frågade fem elever; fyra ville leka ute.” – Det var fem elever som fick frågan, men jag säger inte vad någon svarade."
     },
     {
@@ -1010,16 +1010,16 @@
       "prompt": "Vilket svar följer instruktionen ”undersök”?",
       "options": [
         {
-          "label": "”Undersök vilken av tre pennor som går att sudda ut.” – Rita en linje med varje penna, prova suddet på varje linje och anteckna resultatet.",
+          "label": "”Undersök vilka av tre pennor som ger streck som går att sudda ut.” – Rita en linje med varje penna, prova samma sudd på varje linje och anteckna vilka streck som försvinner.",
           "correct": true
         },
         {
-          "label": "”Undersök vilken av tre pennor som går att sudda ut.” – Bestäm dig i förväg för att alla pennor går att sudda ut utan att testa dem.",
+          "label": "”Undersök vilka av tre pennor som ger streck som går att sudda ut.” – Bestäm dig i förväg för att alla streck går att sudda ut utan att testa dem.",
           "correct": false
         }
       ],
-      "explanation": "Dra en linje med varje penna och prova att sudda ut dem. Anteckna vilka som försvann. Då vet du vad som hände i stället för att gissa.",
-      "ahaDistractor": "”Undersök vilken av tre pennor som går att sudda ut.” – Pennorna har olika färger och ligger på bordet."
+      "explanation": "Det är strecken på papperet som ska suddas bort. Rita en linje med varje penna och prova samma sudd på alla tre. Skriv upp vilka streck som försvinner. Då bygger svaret på det du faktiskt provat.",
+      "ahaDistractor": "”Undersök vilka av tre pennor som ger streck som går att sudda ut.” – Pennorna har olika färger och ligger på bordet."
     }
   ]
 }

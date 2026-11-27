@@ -11,11 +11,11 @@
       "reveal": [
         {
           "title": "📅 Så brukar det vara",
-          "text": "Pappa kan oftast inte skjutsa till hockeyn."
+          "text": "Pappa kan oftast inte skjutsa till hockeyn. Det är så det brukar vara inför träningen."
         },
         {
           "title": "🚗 Men den här gången",
-          "text": "Nu kunde han skjutsa! Det var ovanligt."
+          "text": "Nu kunde pappa skjutsa den här gången. Det är ett undantag från hur det brukar vara. Uttrycket säger inte att han aldrig har skjutsat förut."
         }
       ],
       "options": [
@@ -51,11 +51,11 @@
       "reveal": [
         {
           "title": "⏳ Nästan för sent",
-          "text": "Bussen är på väg att åka."
+          "text": "Bussen ska strax åka och dörrarna är på väg att stängas. Om vi kommer senare missar vi den."
         },
         {
           "title": "🏃 Precis i tid",
-          "text": "Vi hinner ombord innan den går."
+          "text": "Vi hinner kliva på precis innan dörrarna stängs. Det är nästan ingen tid kvar, men vi hinner. Därför passar i sista stund."
         }
       ],
       "options": [
@@ -86,21 +86,21 @@
       "id": "ut-0003",
       "phrase": "Ha is i magen",
       "scene": "Det var en minut kvar av matchen, men tränaren sa: ”Ha is i magen!”",
-      "definition": "Att behålla lugnet och inte förhasta sig.",
+      "definition": "Att behålla lugnet och tänka efter innan man gör något.",
       "example": "Jag hade is i magen medan jag väntade på resultatet.",
       "reveal": [
         {
           "title": "😰 Det känns pirrigt",
-          "text": "Man vill göra något direkt."
+          "text": "Det är bara en minut kvar av matchen. Då kan det kännas bråttom att bestämma vad man ska göra."
         },
         {
           "title": "😌 Vad uttrycket menar",
-          "text": "Var lugn och tänk efter först."
+          "text": "Tränaren ber spelarna att vara lugna och tänka efter innan de väljer. Det är lugnet som ha is i magen handlar om, inte riktig is."
         }
       ],
       "options": [
         {
-          "label": "Att behålla lugnet och inte förhasta sig.",
+          "label": "Att behålla lugnet och tänka efter innan man gör något.",
           "correct": true
         },
         {
@@ -131,11 +131,11 @@
       "reveal": [
         {
           "title": "🤞 Det man gör",
-          "text": "Man håller tummarna som en lyckogest."
+          "text": "Systern vill att det ska bli mål, men vet ännu inte hur det kommer att gå."
         },
         {
           "title": "💛 Det man menar",
-          "text": "Jag hoppas verkligen att det går bra!"
+          "text": "När systern säger att hon håller tummarna visar hon att hon hoppas på mål. Hon önskar att det går bra, men kan inte bestämma resultatet."
         }
       ],
       "options": [
@@ -166,21 +166,21 @@
       "id": "ut-0005",
       "phrase": "Ta det med en nypa salt",
       "scene": "”Man blir bäst i världen på en dag!” sa en kompis. ”Ta det med en nypa salt”, svarade jag.",
-      "definition": "Att inte tro på allt någon säger utan tänka kritiskt.",
+      "definition": "Att inte tro på ett påstående direkt, utan fundera på om det stämmer.",
       "example": "Jag tog ryktet med en nypa salt.",
       "reveal": [
         {
           "title": "🗣️ Någon påstår något",
-          "text": "Det låter kanske överdrivet."
+          "text": "Kompisen säger att man blir bäst i världen på en dag. Det är ett stort påstående som låter överdrivet."
         },
         {
           "title": "🧠 Vad uttrycket menar",
-          "text": "Fundera: stämmer det verkligen?"
+          "text": "Jag väntar med att tro på påståendet och funderar på om det verkligen kan stämma. Att ta det med en nypa salt betyder här att inte tro på allt direkt."
         }
       ],
       "options": [
         {
-          "label": "Att inte tro på allt någon säger utan tänka kritiskt.",
+          "label": "Att inte tro på ett påstående direkt, utan fundera på om det stämmer.",
           "correct": true
         },
         {
@@ -206,21 +206,21 @@
       "id": "ut-0006",
       "phrase": "Hålla ett öga på",
       "scene": "”Kan du hålla ett öga på min cykel medan jag går in?”",
-      "definition": "Att passa eller hålla uppsikt över något.",
+      "definition": "Att titta till något eller någon så att man märker om något händer.",
       "example": "Jag höll ett öga på hunden i parken.",
       "reveal": [
         {
           "title": "🚲 Något lämnas en stund",
-          "text": "Cykeln står utanför affären."
+          "text": "Min kompis går in och lämnar cykeln utanför en stund. Kompisen vill att jag ska passa den."
         },
         {
           "title": "👀 Uppdraget",
-          "text": "Titta till cykeln så att allt är okej."
+          "text": "Jag stannar där jag kan se cykeln och tittar till den. Då kan jag märka om något händer med den. Det är det som hålla ett öga på betyder här."
         }
       ],
       "options": [
         {
-          "label": "Att passa eller hålla uppsikt över något.",
+          "label": "Att titta till något eller någon så att man märker om något händer.",
           "correct": true
         },
         {
@@ -251,11 +251,11 @@
       "reveal": [
         {
           "title": "⚽ Det kunde ha gått illa",
-          "text": "Fönstret var nästan träffat."
+          "text": "Bollen flyger alldeles intill fönstret. Om den träffar rutan kan rutan gå sönder."
         },
         {
           "title": "😮 Men det gick bra",
-          "text": "Bollen missade! Vilken tur."
+          "text": "Bollen missar och fönstret förblir helt. Det dåliga var mycket nära att hända men gjorde inte det. Därför passar nära ögat, fast berättelsen handlar om ett fönster."
         }
       ],
       "options": [
@@ -331,11 +331,11 @@
       "reveal": [
         {
           "title": "🌧️ Något händer plötsligt",
-          "text": "Det börjar ösregna."
+          "text": "Regnet börjar ösa ner och vi vill komma under tak i huset."
         },
         {
           "title": "🏃 Vad vi gör",
-          "text": "Vi springer snabbt till skydd."
+          "text": "Vi springer snabbt mot huset för att komma undan regnet. Det snabba springandet är det som lägga benen på ryggen beskriver. Benen sitter kvar som vanligt."
         }
       ],
       "options": [
@@ -490,12 +490,12 @@
       "example": "Hon var på vippen att vinna loppet.",
       "reveal": [
         {
-          "title": "😴 Jag är jättetrött",
-          "text": "Ögonen vill falla igen."
+          "title": "🥱 Jag blir sömnig",
+          "text": "Jag blir mycket trött medan filmen närmar sig slutet. Mina ögon håller på att falla igen."
         },
         {
-          "title": "💤 Nästan",
-          "text": "Jag kommer snart att somna."
+          "title": "⏳ Nära att somna",
+          "text": "Jag är fortfarande vaken, men mycket nära att somna. Det är det som på vippen beskriver. Jag kan fortfarande piggna till, så uttrycket lovar inte att jag sedan somnar."
         }
       ],
       "options": [
@@ -611,11 +611,11 @@
       "reveal": [
         {
           "title": "🧹 Ett stort jobb",
-          "text": "Hela klassen ska städa."
+          "text": "Klassen har ett gemensamt arbete: att få klassrummet rent. Det finns flera saker att göra."
         },
         {
           "title": "🤝 Min lilla del",
-          "text": "Jag gör något som hjälper alla."
+          "text": "Jag plockar papper från golvet medan andra hjälper till med resten. Min del hjälper klassen att bli klar. Därför drar jag mitt strå till stacken."
         }
       ],
       "options": [
@@ -686,21 +686,21 @@
       "id": "ut-0018",
       "phrase": "Hålla huvudet kallt",
       "scene": "Det blev rörigt under matchen, men målvakten höll huvudet kallt.",
-      "definition": "Att tänka lugnt och klokt även när det blir stressigt.",
+      "definition": "Att fortsätta tänka lugnt när det blir stressigt.",
       "example": "Jag höll huvudet kallt när jag glömde min väska.",
       "reveal": [
         {
           "title": "😵 Många saker händer",
-          "text": "Det är stressigt på planen."
+          "text": "Det blir rörigt under matchen. Målvakten behöver fortfarande följa spelet och välja vad som ska göras."
         },
         {
-          "title": "🧠 Det smarta valet",
-          "text": "Målvakten håller sig lugn och fokuserad."
+          "title": "😌 Tänka lugnt",
+          "text": "Målvakten fortsätter att tänka lugnt trots röran. Stressen får inte styra besluten. Hålla huvudet kallt handlar här om tankarna, inte om huvudets temperatur."
         }
       ],
       "options": [
         {
-          "label": "Att tänka lugnt och klokt även när det blir stressigt.",
+          "label": "Att fortsätta tänka lugnt när det blir stressigt.",
           "correct": true
         },
         {
@@ -931,11 +931,11 @@
       "reveal": [
         {
           "title": "💦 Det börjar som lek",
-          "text": "Alla skvätter lite vatten."
+          "text": "Vattenleken börjar lugnt och barnen skvätter lite vatten för skojs skull."
         },
         {
           "title": "🌊 Men det blir för mycket",
-          "text": "Leken spårar ur och någon får nog."
+          "text": "Barnen skvätter allt mer och fortsätter fast någon säger stopp. Till slut måste leken avbrytas. Den har blivit svår att hålla inom reglerna och har gått över styr."
         }
       ],
       "options": [
@@ -2383,12 +2383,12 @@
       "phrase": "Resonera",
       "category": "school-instruction",
       "scene": "Läraren frågar: ”Resonera kring fördelar och nackdelar med att cykla till skolan.” Vad ska ett sådant svar innehålla?",
-      "definition": "Tänk vidare och visa hur saker hänger ihop. Berätta vad som kan hända sedan.",
+      "definition": "Utveckla dina tankar och visa hur de hänger ihop med skäl eller exempel.",
       "example": "Att cykla ger motion. Men om vägen är isig kan det vara svårt. Då behöver vi tänka på hur vi tar oss till skolan säkert.",
       "reveal": [
         {
           "title": "Så fungerar det",
-          "text": "Börja med en tanke: att cykla ger motion. Tänk sedan vidare: vad händer om vägen är hal? Nu har du kopplat ihop flera tankar, inte bara sagt vad du tycker."
+          "text": "Att cykla ger kroppen rörelse, vilket är en fördel. En isig väg kan göra cyklingen svårare. Du kopplar ihop hur vägen är med hur det är att cykla där."
         },
         {
           "title": "Tänk på något du känner igen",
@@ -2397,7 +2397,7 @@
       ],
       "options": [
         {
-          "label": "Tänk vidare och visa hur saker hänger ihop. Berätta vad som kan hända sedan.",
+          "label": "Utveckla dina tankar och visa hur de hänger ihop med skäl eller exempel.",
           "correct": true
         },
         {
@@ -2418,7 +2418,7 @@
         }
       ],
       "review_status": "draft",
-      "schoolRule": "Resonera betyder att utveckla tankarna och koppla samman dem, inte bara skriva ett kort ja eller nej."
+      "schoolRule": "Utveckla en tanke genom att berätta varför, ge ett exempel eller visa en möjlig följd."
     },
     {
       "id": "ut-0063",
@@ -2686,7 +2686,7 @@
         },
         {
           "title": "Tänk på något du känner igen",
-          "text": "Om du undrar vilken mössa som är varmast kan du jämföra dem när det är kallt och berätta vad du märker."
+          "text": "Om du vill veta vilka barn som vill leka kurragömma kan du fråga dem och skriva upp svaren. Då undersöker du frågan genom att samla information."
         }
       ],
       "options": [

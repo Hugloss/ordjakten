@@ -92,6 +92,8 @@ Innehållsgenomgången och dess kvarvarande granskningsbehov beskrivs i
 [Förstå orden](docs/WORD-UNDERSTANDING.md). Den efterföljande granskningen av
 ordurval, entydiga speluppgifter och skolfrågor finns i
 [Post-review: vardagsord och tydliga frågor](docs/POST-REVIEW-EVERYDAY.md).
+Nästa genomgång behandlar [tydligare frågor och förklaringar](docs/CLEARER-EXPLANATIONS.md),
+med särskilt fokus på överlappande betydelser och återkoppling till rätt uppgift.
 
 Fortsatt utveckling: se [färdplan](docs/ROADMAP.md),
 [produktbeslut](docs/PRODUCT.md) och

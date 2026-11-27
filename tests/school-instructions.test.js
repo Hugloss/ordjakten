@@ -99,6 +99,26 @@ test('ice explanation teaches heat transfer and connects to the snowman',()=>{
  assert.match(lesson.explanation,/vattenånga/);
  assert.match(lesson.connection,/vattenpöl/);
 });
+
+test('school step ordering explains the chosen workflow instead of borrowing a different example',()=>{
+ for(const entry of school){
+   const task=M.get(missions,entry.id);
+   const q=E.makeExpressionQuestion(entry,'medium',()=>.42,'order',missions);
+   q.reveal=[{text:'A different main-scene explanation.'},{text:'An unrelated everyday example.'}];
+   const before=JSON.stringify(q);
+   const feedback=M.schoolFeedback(q,null,missions);
+   assert.ok(task.orderExplanation.length>=30,entry.id);
+   assert.equal(feedback.explanation,task.orderExplanation);
+   assert.equal(feedback.connection,'');
+   assert.equal(feedback.answer,task.order.join(' → '));
+   assert.equal(feedback.correction,'');
+   assert.equal(feedback.rule,entry.schoolRule);
+   assert.equal(JSON.stringify(q),before);
+   const missing={...missions,missions:missions.missions.map(m=>m.id===entry.id?{...m,orderExplanation:''}:m)};
+   assert.ok(M.validate(missing,expressions).some(message=>message.includes('orderExplanation')&&message.includes(entry.id)));
+   assert.equal(M.schoolFeedback(q,null,missing).explanation,'','missing teaching must not fall back to another situation');
+ }
+});
 test('content checks reject missing concrete explanations and choice-specific feedback',()=>{
  const id=school[0].id;
  const invalid={...missions,missions:missions.missions.map(m=>m.id===id?{...m,explanation:'',connection:'',sentences:m.sentences.map(s=>({...s,feedback:''}))}:m)};

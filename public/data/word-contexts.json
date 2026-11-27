@@ -163,17 +163,17 @@
         {
           "title": "I blomrabatten",
           "text": "En humla flyger förbi Noa och ger ifrån sig ett jämnt brummande ljud.",
-          "why": "Humlans vingar skapar ett ihållande brum."
+          "why": "Ljudet fortsätter som ett jämnt brum medan humlan flyger förbi. Ett sådant bzzzz-ljud kallas surrande."
         },
         {
           "title": "Från leksaken",
           "text": "Den lilla leksaksdrönaren låter bzzzzz när den håller sig i luften.",
-          "why": "Motorn ger ett jämnt brummande ljud."
+          "why": "Drönarens bzzzzz fortsätter medan den svävar. Det är ett surrande ljud, inte en enda kort smäll."
         },
         {
           "title": "Vid fönstret",
           "text": "En mygga flyger nära örat och låter zzzzz en lång stund.",
-          "why": "Myggan ger ifrån sig ett långdraget surr."
+          "why": "Myggans zzzzz fortsätter nära örat en stund. Det långdragna ljudet är ett surr."
         }
       ],
       "readingDistractors": [
@@ -193,17 +193,17 @@
         {
           "title": "I lövhögen",
           "text": "När Ida går genom torra löv hörs små rasslande ljud under skorna.",
-          "why": "De torra löven ger ett lätt rasslande ljud."
+          "why": "Löven rör sig mot varandra och skorna. Då hörs många små, torra rassel: löven är prassliga."
         },
         {
           "title": "En present",
           "text": "Presentpappret ger ifrån sig lätta, torra rassel när paketet flyttas och pappret veckas.",
-          "why": "Pappret rasslar lätt när det rör sig."
+          "why": "Det tunna pappret låter när det böjs och veckas. De lätta, torra ljuden gör att vi kallar det prassligt."
         },
         {
           "title": "En godispåse",
           "text": "Påsen låter frss-frss när Amir försöker öppna den tyst.",
-          "why": "Plasten ger ett lätt rasslande ljud."
+          "why": "När Amir drar i den tunna påsen rör sig plasten och låter frss-frss. Det är det ljudet som ordet prasslig beskriver."
         }
       ],
       "readingDistractors": [
@@ -222,18 +222,18 @@
       "scenes": [
         {
           "title": "Med honung",
-          "text": "När Mira doppar fingret i honung fastnar det vid skeden.",
-          "why": "Honung är klistrig och fastnar lätt."
+          "text": "Lite honung hamnar på fatet. Mira lägger skeden där, och när hon lyfter den håller honungen kvar skeden en aning.",
+          "why": "Honungen fastnar vid både skeden och fatet, så skeden gör lite motstånd när den lyfts. Honungen är klibbig."
         },
         {
           "title": "Ett klistermärke",
           "text": "Limmet på baksidan fastnar på handen när Teo pillar bort skyddspappret.",
-          "why": "Limmet känns klistrigt och fastnar."
+          "why": "Limmet håller kvar fingret lite när Teo vill dra bort handen. Det visar vad klibbig betyder: att lätt fastna."
         },
         {
           "title": "Saft på bordet",
-          "text": "Efter ett utspillt glas saft fastnar tröjärmen lite mot bordet.",
-          "why": "Sockret i saften gör bordet klistrigt."
+          "text": "Saft med socker har spillts på bordet och börjat torka. När Lo lägger armen där fastnar tröjärmen lite mot ytan.",
+          "why": "När saften torkar blir sockret kvar på bordet. Det gör ytan klibbig, så tröjärmen fastnar lite."
         }
       ],
       "readingDistractors": [
@@ -304,7 +304,7 @@
     {
       "id": "sv-0019",
       "distractors": [
-        "sv-0041",
+        "sv-0039",
         "sv-0036",
         "sv-0021",
         "sv-0043"
@@ -313,17 +313,17 @@
         {
           "title": "Apelsinskal",
           "text": "Vera känner små jämna upphöjningar när hon håller apelsinen i handen.",
-          "why": "Skalet har många små upphöjningar."
+          "why": "De små upphöjningarna sitter ovanpå skalets yta och känns under fingrarna. Det är dem ordet knottrig beskriver."
         },
         {
           "title": "På bollen",
           "text": "En liten massageboll har massor av små upphöjningar över hela ytan.",
-          "why": "Bollen är täckt av små knottror."
+          "why": "På bollen finns många små delar som höjer sig över resten av ytan. Därför är ytan knottrig, inte bara ett platt prickmönster."
         },
         {
           "title": "Ett papper",
           "text": "Konstpappret har massor av små upphöjningar som känns under fingrarna.",
-          "why": "Det finns många små knottror i ytan."
+          "why": "Upphöjningarna går att känna med fingrarna. De är verkliga små höjder i pappret, inte bara målade prickar."
         }
       ],
       "readingDistractors": [
@@ -373,7 +373,7 @@
         {
           "title": "En rulle",
           "text": "Inne i den tomma toarullen finns plats för en penna hela vägen igenom.",
-          "why": "Rullen har ett tomt utrymme i mitten."
+          "why": "Pennan får plats i det tomma utrymmet inuti rullen. Pappen bildar en vägg runt hålet; det är inte pappen man ser igenom."
         },
         {
           "title": "En trädstam",
@@ -467,8 +467,8 @@
         },
         {
           "title": "En varm dag",
-          "text": "En liten planta i solen har hängt med både stjälk och blad hela eftermiddagen.",
-          "why": "Värmen och vattenbristen gör att plantan tappar spänsten."
+          "text": "På morgonen stod plantan upprätt. Efter en varm dag utan vatten är jorden torr, och både blad och stjälk har blivit slappa och hänger.",
+          "why": "Plantan har fått för lite vatten och kan inte hålla blad och stjälk uppe som tidigare. Det visar att den har vissnat."
         },
         {
           "title": "På köksbordet",
@@ -492,18 +492,18 @@
       "scenes": [
         {
           "title": "Ett bubbelbad",
-          "text": "När barnen häller i badskum täcks vattenytan av massor av små bubblor.",
-          "why": "Vattnet bildar ett tjockt lager av bubblor."
+          "text": "Barnen rör om i badvattnet med händerna. Medlet i vattnet hjälper små luftbubblor att hålla ihop i ett tjockt lager på ytan.",
+          "why": "När vattnet rörs kommer luft in i det. Bubblorna samlas i ett lager av skum, så vattnet är skummande."
         },
         {
           "title": "Diskhon",
-          "text": "När Moa diskar blir det ett vitt lager med små bubblor ovanpå vattnet.",
-          "why": "Diskmedlet gör att bubblor bildas."
+          "text": "Moa häller diskmedel i vattnet och rör runt med borsten. Små luftbubblor samlas i ett vitt lager ovanpå vattnet.",
+          "why": "Borsten rör in luft i vattnet, och diskmedlet hjälper bubblorna att hålla ihop. Många bubblor tillsammans bildar skum."
         },
         {
           "title": "Vid vattenfallet",
           "text": "Där vattnet faller ner bildas ett vitt täcke av bubblor.",
-          "why": "Det virvlande vattnet bildar skum."
+          "why": "När vattnet slår ner blandas luft in i det. De många små luftbubblorna bildar det vita täcket av skum."
         }
       ],
       "readingDistractors": [
@@ -727,23 +727,23 @@
         "sv-0021",
         "sv-0036",
         "sv-0001",
-        "sv-0019"
+        "sv-0039"
       ],
       "scenes": [
         {
           "title": "En burk",
           "text": "Burken har blivit intryckt på flera ställen efter att någon trampat på den.",
-          "why": "Metallen har fått flera gropar och intryckningar."
+          "why": "Trampet har tryckt in delar av metallen. De intryckta delarna gör burkens tidigare jämna form bucklig."
         },
         {
           "title": "En cykelskärm",
           "text": "Efter en vurpa är skärmen intryckt och har två tydliga gropar.",
-          "why": "Cykelskärmen är ojämn av intryckningarna."
+          "why": "Vid vurpan trycktes skärmen in på två ställen. Det är de ändringarna i formen som gör den bucklig."
         },
         {
           "title": "En gammal gryta",
           "text": "Grytan har ramlat i golvet och kanten är nu intryckt på ena sidan.",
-          "why": "Kanten har fått en buckla efter slaget."
+          "why": "Smällen mot golvet har tryckt in kanten. Formen är ojämn där den tidigare var jämn; grytan är bucklig."
         }
       ],
       "readingDistractors": [
@@ -795,17 +795,17 @@
         {
           "title": "I hörlurarna",
           "text": "Sladdarna har snott in sig i varandra och blivit fulla av knutar.",
-          "why": "Sladdarna har snott ihop sig i knutar."
+          "why": "Sladdarna sitter fast i varandras slingor och knutar. Därför behöver de redas ut innan de går att lägga var för sig."
         },
         {
           "title": "Ett garnnystan",
           "text": "Katten har dragit ut garnet. Trådarna har snott sig runt varandra i knutar som inte går att dra isär direkt.",
-          "why": "Garnets trådar har snott ihop sig och fastnat i knutar."
+          "why": "Knutarna håller ihop garntrådarna så att de inte går att dra isär direkt. Det är så trasslet märks."
         },
         {
           "title": "Efter duschen",
           "text": "Det långa håret har snott ihop sig och kammen fastnar hela tiden.",
-          "why": "Hårstråna har snott ihop sig i knutar."
+          "why": "Hårstrånas knutar hindrar kammen från att glida igenom. Håret är trassligt och behöver redas ut."
         }
       ],
       "readingDistractors": [
@@ -927,9 +927,9 @@
           "why": "Han gör det han har lovat."
         },
         {
-          "title": "Låna en bok",
-          "text": "Sam lånar en bok och lämnar tillbaka den på överenskommen dag.",
-          "why": "Sam håller överenskommelsen."
+          "title": "Klockan i köket",
+          "text": "Familjen använder köksklockan när de ska hinna till bussen. När de kontrollerar tiden stämmer den, dag efter dag.",
+          "why": "Klockan brukar visa rätt tid, så familjen kan lita på den. Därför kan också en sak vara pålitlig."
         }
       ],
       "readingDistractors": [
@@ -1004,7 +1004,7 @@
       "id": "sv-0078",
       "distractors": [
         "sv-0086",
-        "sv-0075",
+        "sv-0062",
         "sv-0095",
         "sv-0074"
       ],
@@ -1021,8 +1021,8 @@
         },
         {
           "title": "En ny sport",
-          "text": "Ida vet inte riktigt hur reglerna fungerar och vågar knappt börja.",
-          "why": "Hon känner tvekan inför det okända."
+          "text": "Ida har hört två olika regler för när man får dra ett nytt kort. Hon vet inte vilken som gäller och frågar innan hon väljer.",
+          "why": "Ida vet ännu inte vilken regel som är rätt. Därför är hon osäker, och en fråga kan hjälpa henne att få klarhet."
         }
       ],
       "readingDistractors": [
@@ -1078,8 +1078,8 @@
         },
         {
           "title": "En liten figur",
-          "text": "Lea håller den tunna glasfiguren mycket lätt så att den inte går sönder.",
-          "why": "Lea håller med lätta händer för att skydda det tunna glaset."
+          "text": "Lea stöder den tunna glasfiguren med båda händerna och sätter ner den mjukt på bordet, utan att stöta i något.",
+          "why": "Lea ger figuren stöd och undviker stötar när hon sätter ner den. Det är ett varsamt sätt att hantera det tunna glaset."
         },
         {
           "title": "På museet",
@@ -1088,8 +1088,8 @@
         }
       ],
       "readingDistractors": [
-        "sv-0073",
-        "sv-0103"
+        "sv-0049",
+        "sv-0059"
       ]
     },
     {
@@ -1144,7 +1144,7 @@
         {
           "title": "I ett sms",
           "text": "Det står ”Jag såg henne med kikaren”. Det kan betyda att jag använde kikaren eller att hon hade den.",
-          "why": "Meningen har två möjliga betydelser."
+          "why": "Det framgår inte vem som hade kikaren. Antingen såg jag genom den, eller så var det hon jag såg som höll den. Därför är meningen tvetydig."
         }
       ],
       "readingDistractors": [
@@ -1268,8 +1268,8 @@
         }
       ],
       "readingDistractors": [
-        "sv-0073",
-        "sv-0103"
+        "sv-0049",
+        "sv-0059"
       ]
     },
     {
@@ -1322,9 +1322,9 @@
           "why": "Alva accepterar att växten behöver tid och väntar lugnt."
         },
         {
-          "title": "En virkad mössa",
-          "text": "Mira lär sig virka med en vuxen. När en maska blir fel tar hon det lugnt och försöker på nytt.",
-          "why": "Hon blir inte stressad av att det tar tid att lära sig."
+          "title": "Att lära sig knyta",
+          "text": "Mira lär sig knyta skorna med en vuxen. När knuten blir fel tar hon det lugnt och försöker på nytt, även om det tar en stund.",
+          "why": "Det tar tid att få knuten rätt, men Mira låter övningen ta den tiden och försöker igen. Det visar tålamod."
         }
       ],
       "readingDistractors": [
@@ -1662,8 +1662,8 @@
         }
       ],
       "readingDistractors": [
-        "sv-0073",
-        "sv-0103"
+        "sv-0049",
+        "sv-0059"
       ]
     },
     {
@@ -3427,8 +3427,8 @@
         }
       ],
       "readingDistractors": [
-        "sv-0103",
-        "sv-0073"
+        "sv-0049",
+        "sv-0059"
       ]
     },
     {

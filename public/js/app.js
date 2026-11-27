@@ -423,7 +423,8 @@
     if(mode==='order'&&button.hasAttribute('data-mission-check')){
       if(wrap._selected.length!==3)return;
       right=Q.checkOrder(wrap._selected);
-      explanation=task.explanation?task.hint:'Du såg hur händelserna hör ihop i tid.';
+      explanation=task.orderExplanation||'Du såg hur händelserna hör ihop i tid.';
+      correction=task.orderExplanation?'Titta på hur stegen hör ihop: '+task.orderExplanation:'';
     }else if(mode==='sentence'&&button.hasAttribute('data-mission-sentence')){
       const index=Number(button.dataset.missionSentence);
       right=task.sentences[index]&&task.sentences[index].correct===true;
@@ -3673,6 +3674,7 @@
         $('school-feedback-correction').textContent=lesson.correction||'';
         $('school-feedback-explanation').textContent=lesson.explanation||'';
         $('school-feedback-connection').textContent=lesson.connection||'';
+        $('school-feedback-connection').parentElement.hidden=!lesson.connection;
         $('school-feedback-rule').textContent=lesson.rule||'';
         $('school-feedback-answer').textContent=lesson.answer?(q.taskType==='order'?'Arbetssteg: ':'Exempelsvar: ')+lesson.answer:'';
       }

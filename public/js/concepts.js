@@ -230,7 +230,7 @@
       "sv-0088",
       "sv-0094"
     ],
-    "explanation": "Varsam betonar hur man hanterar något utan att skada det. Försiktig betonar att tänka på risker. Samma person kan vara både varsam och försiktig.",
+    "explanation": "När du lyfter en glasfigur stadigt och sätter ner den mjukt är du varsam med den. När du ser ett halt golv och går långsamt för att inte ramla är du försiktig. Orden överlappar: samma handling kan vara både varsam och försiktig.",
     "questions": [
       {
         "id": "bk-07-1",
@@ -241,18 +241,18 @@
           "sv-0092",
           "sv-0086"
         ],
-        "why": "Varsam handlar särskilt om hur något hanteras."
+        "why": "Till exempel: du håller stadigt och sätter ner föremålet mjukt så att det inte får en stöt. Då hanterar du det varsamt."
       },
       {
         "id": "bk-07-2",
-        "prompt": "Vilket ord betonar att tänka på riskerna innan du går ut på hal is?",
+        "prompt": "Golvet är vått. Du går långsamt för att inte ramla. Vilket ord beskriver att du tänker på risken?",
         "answer": "sv-0094",
         "options": [
           "sv-0094",
           "sv-0076",
           "sv-0071"
         ],
-        "why": "Försiktig handlar om att ta hänsyn till risker."
+        "why": "Det våta golvet kan vara halt. Du anpassar hur du går för att minska risken att ramla. Det är att vara försiktig."
       }
     ]
   },
@@ -435,7 +435,7 @@
           "sv-0052",
           "sv-0026"
         ],
-        "why": "Avlång beskriver proportionerna hos en form."
+        "why": "Tänk på en gurka: längden är mycket större än bredden. Det är den skillnaden som gör formen avlång."
       }
     ]
   },
@@ -462,7 +462,7 @@
           "sv-0069",
           "sv-0024"
         ],
-        "why": "Simmande betyder att ta sig fram genom vatten."
+        "why": "En simmare rör armar och ben för att ta sig fram i vattnet. Simmande beskriver hur kroppen rör sig."
       },
       {
         "id": "bk-13-2",
@@ -541,14 +541,14 @@
       },
       {
         "id": "bk-15-2",
-        "prompt": "Små lerpartiklar flyter i vattenglaset. Vilket ord beskriver vätskan?",
+        "prompt": "Lera har blandats i vattnet. Nu är vattnet så oklart att du inte ser pennan på andra sidan glaset. Vilket ord beskriver vattnet?",
         "answer": "sv-0044",
         "options": [
           "sv-0044",
           "sv-0050",
           "sv-0003"
         ],
-        "why": "Grumlig beskriver en vätska där små partiklar försämrar sikten."
+        "why": "Små korn av lera finns i vattnet och skymmer pennan. Därför är vattnet grumligt. Dimmig handlar här om luften, inte om vattnet i glaset."
       }
     ]
   },
@@ -627,7 +627,7 @@
   {
     "id": "bk-18",
     "type": "context",
-    "title": "Två uttryck med hålla",
+    "title": "Uttryck med hålla",
     "starter": true,
     "words": [
       "ut-0004",
