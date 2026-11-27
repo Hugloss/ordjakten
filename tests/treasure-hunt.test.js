@@ -308,7 +308,11 @@ test('transfer saves fail closed when corrupted while keeping found treasures',(
   bad.worlds.forest.mystery.transferLast=3;
   const clean=reload(bad);
   assert.equal(view(clean).count,1,'a bad transfer record cannot erase a real find');
-  assert.equal(view(clean).mystery.transfer,null,'invalid transfer record cannot unlock a puzzle');
+  assert.equal(view(clean).mystery.solved,true,'bad transfer must not erase the solved original mystery');
+  assert.equal(view(clean).mystery.proof.done,true,'bad transfer must not erase earned evidence');
+  assert.equal(view(clean).mystery.transfer.done,false,'bad transfer must not create a completed case');
+  assert.deepEqual(view(clean).mystery.transfer.wrong,[]);
+  assert.equal(view(clean).mystery.transfer.feedback,null,'just the new attempt is reset');
   state=visit(state,0);
   const before=clone(state);
   assert.equal(Treasure.mysteryTransfer(state,'forest',Data.TRANSFERS.forest.target,catalog),state,
