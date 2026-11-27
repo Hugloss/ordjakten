@@ -118,7 +118,7 @@
       const choices=node(doc,'div','portal-choices');choices.setAttribute('role','group');
       choices.setAttribute('aria-label','Välj det svar som passar båda ledtrådarna');
       for(const row of stage.choices){
-        const choice=button(doc,row.label+(row.tried?' – redan provat':''),'portalAnswer',row.index);
+        const choice=button(doc,(row.position+1)+'. '+row.label+(row.tried?' – redan provat':''),'portalAnswer',row.index);
         choice.classList.add('portal-choice');
         choice.disabled=row.tried;choices.append(choice);
       }
