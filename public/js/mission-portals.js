@@ -20,6 +20,7 @@
       if(!/^[a-z][a-z0-9-]*$/.test(id||'')||Object.hasOwn(stories,id)||
         !line(row.title)||!line(row.intro)||!line(row.ending)||
         !line(row.keepsake?.name)||!row.keepsake?.emoji||!row.emoji||
+        !['mystery','fantasy','explore','creative'].includes(row.group)||
         !Array.isArray(stages)||stages.length!==3){
         errors.push(id||'missing-id');continue;
       }
@@ -62,7 +63,7 @@
   function model(raw,id,content){
     const state=sanitize(raw,content),entries=content.ids.map(key=>{
       const row=content.stories[key],progress=state[key]||fresh();
-      return {id:key,emoji:row.emoji,title:row.title,intro:row.intro,
+      return {id:key,group:row.group,emoji:row.emoji,title:row.title,intro:row.intro,
         count:Math.min(3,progress.step+(progress.solved&&progress.step<3?1:0)),
         total:3,done:progress.step===3,keepsake:progress.step===3?{...row.keepsake}:null};
     });
