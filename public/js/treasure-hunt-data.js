@@ -656,243 +656,243 @@
   const TRANSFERS={
     "forest": {
       "title": "Sams försvunna vantar",
-      "intro": "Sam tappade sina vantar på skolan. Var ska Sam leta?",
+      "intro": "Sam har tappat bort sina vantar på skolan. Var kan de finnas?",
       "clues": [
         "Här finns kläder som någon har glömt.",
-        "Det finns en låda med skylten hittegods."
+        "Här står en låda med texten Hittegods."
       ],
       "choices": [
         "I omklädningsrummet ligger glömda mössor på en bänk, men där finns ingen hittegodslåda.",
-        "På fritids ligger kvarglömda vantar i en låda märkt hittegods.",
-        "I leksaksförrådet står en låda märkt hittegods, men där ligger bara leksaker."
+        "På fritids ligger några kvarglömda vantar i en låda märkt Hittegods.",
+        "I leksaksförrådet står en låda märkt Hittegods, men i den ligger bara leksaker."
       ],
       "target": 1,
       "wrong": [
-        "Det finns glömda kläder där, men inte någon låda med skylten hittegods.",
+        "Här finns glömda kläder, men ingen låda med texten Hittegods.",
         null,
-        "Lådan har rätt skylt, men där finns inga kvarglömda kläder."
+        "På lådan står det Hittegods, men där finns inga kläder."
       ],
-      "why": "På fritids finns både glömda vantar och en låda märkt hittegods. Båda spåren stämmer."
+      "why": "På fritids ligger glömda vantar i lådan märkt Hittegods. Både kläderna och texten på lådan stämmer."
     },
     "space": {
-      "title": "Rätt buss till badhuset",
+      "title": "Klassens bussresa",
       "intro": "Klassen ska åka på utflykt. Vilken buss ska de kliva på?",
       "clues": [
-        "Det ska stå nummer 4 på bussen.",
-        "På skylten ska det stå att bussen går till badhuset."
+        "Bussen ska ha nummer 4.",
+        "På skylten ska det stå Badhuset."
       ],
       "choices": [
-        "Buss 4 med skylten Badhuset.",
-        "Buss 4 med skylten Centrum.",
-        "Buss 6 med skylten Badhuset."
+        "Buss 4. På skylten står det Badhuset.",
+        "Buss 4. På skylten står det Centrum.",
+        "Buss 6. På skylten står det Badhuset."
       ],
       "target": 0,
       "wrong": [
         null,
-        "Numret är rätt, men bussen åker till centrum och inte badhuset.",
-        "Bussen åker till badhuset, men den har nummer 6 och inte 4."
+        "Numret 4 stämmer, men på skylten står det Centrum i stället för Badhuset.",
+        "Badhuset står på skylten, men bussen har nummer 6 i stället för 4."
       ],
-      "why": "Buss 4 har både rätt nummer och rätt destination på skylten."
+      "why": "Bussen har nummer 4, och på skylten står det Badhuset. Båda ledtrådarna stämmer."
     },
     "castle": {
-      "title": "Idrott i rätt sal",
-      "intro": "Kim har idrott idag. Vilket rum beskriver läraren?",
+      "title": "Kims idrottslektion",
+      "intro": "Kim ska ha idrott. Vilken plats menar läraren?",
       "clues": [
-        "Samlingen ska vara inomhus.",
-        "Det sitter en basketkorg på väggen."
+        "Lektionen ska vara inomhus.",
+        "Där finns en basketkorg på väggen."
       ],
       "choices": [
-        "Matsalen ligger inomhus men har ingen basketkorg.",
-        "Basketplanen har korgar men ligger utomhus.",
-        "Gymnastiksalen ligger inomhus och har en basketkorg på väggen."
+        "Matsalen är inomhus, men där finns ingen basketkorg.",
+        "På skolgården sitter en basketkorg på väggen, men där är man utomhus.",
+        "I gymnastiksalen finns en basketkorg på väggen. Lektionen är inomhus."
       ],
       "target": 2,
       "wrong": [
-        "Matsalen är inomhus, men där finns ingen basketkorg.",
-        "Basketplanen har basketkorgar, men är inte inomhus.",
+        "Matsalen är inomhus, men där finns ingen basketkorg på väggen.",
+        "Här sitter en korg på väggen, men platsen är utomhus.",
         null
       ],
-      "why": "Gymnastiksalen är inomhus och har en basketkorg. Båda ledtrådarna stämmer."
+      "why": "Gymnastiksalen är inomhus och har en basketkorg på väggen. Båda ledtrådarna stämmer."
     },
     "pirate": {
-      "title": "Miras väg över vattnet",
-      "intro": "Mira ska ta sig över till andra sidan med sin cykel. Vad ska hon välja?",
+      "title": "Miras väg till andra sidan",
+      "intro": "Mira ska ta sig över till andra sidan med sin cykel. Vad kan hon åka med?",
       "clues": [
-        "Färden går över vatten.",
-        "Det finns plats att ta med en cykel."
+        "Färden går över vattnet.",
+        "Cykeln måste få följa med."
       ],
       "choices": [
-        "Roddbåten går över vattnet, men har ingen plats för cykeln.",
-        "Färjan går över vattnet och tar med både människor och cyklar.",
-        "Cykelbussen har plats för cyklar, men åker på vägen."
+        "En liten roddbåt åker över vattnet, men där får cykeln inte plats.",
+        "En färja tar Mira och hennes cykel över vattnet.",
+        "En buss har plats för cyklar, men den åker på vägen över land."
       ],
       "target": 1,
       "wrong": [
-        "Roddbåten går på vattnet, men cykeln får inte plats.",
+        "Roddbåten åker över vattnet, men cykeln får inte plats.",
         null,
-        "Cykelbussen tar cyklar, men färden går inte över vatten."
+        "Cykeln får följa med på bussen, men bussen åker på land."
       ],
-      "why": "Färjan går över vatten och har plats för cykeln. Den passar båda spåren."
+      "why": "Färjan tar Mira och hennes cykel över vattnet. Den passar båda ledtrådarna."
     },
     "ocean": {
       "title": "Var är simlektionen?",
-      "intro": "Noa ska på simlektion. Vilken plats är rätt?",
+      "intro": "Noa ska på simlektion. Vilken plats passar ledtrådarna?",
       "clues": [
-        "Det finns en bassäng där man kan simma.",
-        "En vuxen leder en lektion för barn."
+        "Här finns en bassäng där barn kan simma.",
+        "Här håller en vuxen lektion för barn."
       ],
       "choices": [
         "I simhallen finns en bassäng och en simlärare som leder lektionen.",
-        "Vid hotellpoolen finns en bassäng, men ingen lektion idag.",
-        "I gymnastiksalen leder en vuxen idrott, men det finns ingen bassäng."
+        "Vid hotellpoolen finns en bassäng, men det är ingen lektion där i dag.",
+        "I gymnastiksalen håller en vuxen en idrottslektion, men där finns ingen bassäng."
       ],
       "target": 0,
       "wrong": [
         null,
-        "Det finns en bassäng, men ingen leder en lektion där idag.",
-        "En vuxen leder idrott där, men det finns ingen bassäng."
+        "Det finns en bassäng, men ingen håller lektion där i dag.",
+        "En vuxen håller lektion där, men det finns ingen bassäng att simma i."
       ],
-      "why": "Simhallen har en bassäng och en simlärare som leder lektionen. Båda spåren stämmer."
+      "why": "I simhallen finns en bassäng där barnen kan simma. En simlärare leder lektionen. Båda spåren stämmer."
     },
     "dinosaurs": {
       "title": "Hitta rätt utställning",
-      "intro": "Livia vill se hur man lär sig om gamla djur. Vilken plats passar?",
+      "intro": "Livia vill lära sig om djur som levde för länge sedan. Vilken plats passar?",
       "clues": [
         "Här visas gamla djurben bakom glas.",
-        "Skyltar berättar vad forskare har tagit reda på."
+        "Skyltar berättar vad forskarna har hittat."
       ],
       "choices": [
-        "I skolans samling visas gamla djurben bakom glas, men ingen skylt förklarar fynden.",
-        "På bildutställningen berättar skyltar om forskarnas fynd, men inga djurben visas bakom glas.",
-        "På museet visas gamla djurben bakom glas med skyltar som förklarar fynden."
+        "I skolans samling visas gamla djurben bakom glas, men inga skyltar berättar om dem.",
+        "På en fotoutställning berättar skyltar vad forskare har hittat, men där finns inga djurben.",
+        "På museet visas gamla djurben bakom glas. Skyltar berättar vad forskarna har hittat."
       ],
       "target": 2,
       "wrong": [
-        "Skolans samling visar djurben bakom glas, men ingen skylt förklarar vad forskarna hittat.",
-        "Bildutställningen har förklarande skyltar, men visar inga gamla djurben bakom glas.",
+        "Här visas gamla djurben, men skyltarna som förklarar fynden saknas.",
+        "Här finns skyltar om forskarnas fynd, men inga djurben bakom glas.",
         null
       ],
-      "why": "Museet visar djurben bakom glas och har skyltar som förklarar fynden. Båda spåren stämmer."
+      "why": "På museet visas gamla djurben bakom glas. Skyltarna förklarar vad forskarna har hittat. Båda spåren stämmer."
     },
     "garden": {
       "title": "Plantorna som ska växa",
       "intro": "Klassen ska ta hand om sina små plantor. Vilken plats passar ledtrådarna?",
       "clues": [
-        "Platsen får ljus under dagen.",
-        "Någon vattnar jorden varje dag."
+        "Plantorna får dagsljus under dagen.",
+        "Någon vattnar jorden när den blir torr."
       ],
       "choices": [
-        "I ett mörkt förråd vattnas krukan varje dag, men den får inget dagsljus.",
-        "På fönsterbrädan får krukan dagsljus och vatten varje dag.",
-        "På en ljus hylla står krukan i solen, men ingen vattnar den."
+        "I ett mörkt förråd vattnar någon jorden när den blir torr, men plantorna får inget dagsljus.",
+        "På fönsterbrädan får plantorna dagsljus. Någon vattnar när jorden blir torr.",
+        "På en ljus hylla får plantorna dagsljus, men ingen vattnar jorden när den blir torr."
       ],
       "target": 1,
       "wrong": [
-        "Krukan får vatten, men inget dagsljus i det mörka förrådet.",
+        "Jorden får vatten, men plantorna står mörkt och får inget dagsljus.",
         null,
-        "Krukan får ljus, men den får inte vatten varje dag."
+        "Plantorna får dagsljus, men jorden vattnas inte när den blir torr."
       ],
-      "why": "På fönsterbrädan får plantorna både dagsljus och vatten. Det hjälper dem att växa."
+      "why": "På fönsterbrädan får plantorna dagsljus och lagom mycket vatten. Det hjälper dem att växa."
     },
     "unicorn": {
       "title": "Vägen över bäcken",
-      "intro": "Elsa ska gå över en bäck och vill hålla i sig. Vilken väg passar?",
+      "intro": "Elsa vill gå över en bäck och kunna hålla i sig. Vilken väg passar?",
       "clues": [
-        "Man kan ta sig över vattnet där.",
+        "Vägen leder över vattnet.",
         "Det finns ett räcke att hålla i."
       ],
       "choices": [
-        "Stenarna ligger över bäcken, men där finns inget räcke.",
-        "Trappan har ett räcke, men går inte över vattnet.",
-        "Gångbron går över bäcken och har ett räcke på sidan."
+        "Stenar leder över bäcken, men där finns inget räcke.",
+        "En trappa har ett räcke, men den leder inte över vattnet.",
+        "Gångbron går över bäcken och har ett räcke att hålla i."
       ],
       "target": 2,
       "wrong": [
-        "Stenarna leder över bäcken, men du har inget räcke att hålla i.",
-        "Trappan har räcke, men den leder inte över bäcken.",
+        "Stenarna leder över bäcken, men där finns inget räcke att hålla i.",
+        "Trappan har ett räcke, men den leder inte över bäcken.",
         null
       ],
-      "why": "Gångbron går över vattnet och har ett räcke. Där finns båda sakerna Elsa söker."
+      "why": "På gångbron kan Elsa gå över bäcken och hålla i räcket. Båda spåren passar."
     },
     "animals": {
       "title": "Var vilar katten?",
       "intro": "Malte letar efter platsen där katten brukar vila. Vilken hörna passar?",
       "clues": [
         "Där ligger en mjuk filt.",
-        "En matskål står precis bredvid."
+        "Där står också en matskål."
       ],
       "choices": [
-        "I kattens hörna ligger en filt med en matskål bredvid.",
-        "På soffan ligger en mjuk filt, men ingen matskål.",
-        "I köket står en matskål, men där ligger ingen filt."
+        "I kattens hörna ligger en mjuk filt. Där står också en matskål.",
+        "På soffan ligger en mjuk filt, men där står ingen matskål.",
+        "I köket står en matskål, men där finns ingen filt."
       ],
       "target": 0,
       "wrong": [
         null,
-        "På soffan finns filten, men ingen matskål bredvid.",
-        "I köket finns matskålen, men ingen mjuk filt."
+        "Här ligger filten, men det finns ingen matskål.",
+        "Här står en matskål, men det finns ingen mjuk filt."
       ],
-      "why": "I kattens hörna finns både en mjuk filt och en matskål. Det är båda ledtrådarna."
+      "why": "I kattens hörna finns både en mjuk filt och en matskål. Därför passar båda spåren."
     },
     "rainbow": {
       "title": "Var målar klassen?",
-      "intro": "Alma ska hitta klassens arbetsplats för bild. Vilken plats passar?",
+      "intro": "Alma ska hitta platsen där klassen målar. Vilken plats passar?",
       "clues": [
-        "Färdiga teckningar hänger på tork.",
-        "På ett bord finns penslar och vattenfärger."
+        "Där hänger teckningar på tork.",
+        "På ett bord ligger penslar och vattenfärger."
       ],
       "choices": [
-        "I korridoren hänger teckningar på tork, men inga penslar står framme.",
-        "I målarhörnan står penslar och färger, men inga bilder hänger på tork.",
-        "I bildsalen hänger bilder på tork och penslar med vattenfärg står på bordet."
+        "I korridoren hänger teckningar på tork, men inga penslar eller färger finns där.",
+        "I målarhörnan ligger penslar och vattenfärger på ett bord, men inga teckningar hänger på tork.",
+        "I bildsalen hänger teckningar på tork. På ett bord ligger penslar och vattenfärger."
       ],
       "target": 2,
       "wrong": [
-        "Där hänger teckningar, men penslarna och vattenfärgerna saknas.",
-        "Där finns penslar och färg, men inga bilder hänger på tork.",
+        "Teckningarna hänger på tork, men penslarna och vattenfärgerna på bordet saknas.",
+        "Penslarna och färgerna finns på bordet, men inga teckningar hänger på tork.",
         null
       ],
-      "why": "I bildsalen finns både teckningar på tork och penslar med färg. Båda spåren passar."
+      "why": "I bildsalen hänger teckningar på tork. På bordet ligger penslar och vattenfärger. Båda spåren stämmer."
     },
     "horses": {
       "title": "Rätt skylt före ridningen",
-      "intro": "Ellen ska hitta en skylt före sin ridlektion. Vilken är det?",
+      "intro": "Ellen letar efter en skylt inför ridlektionen. Vilken skylt menar hon?",
       "clues": [
-        "Skylten sitter vid ingången till ridhuset.",
-        "På skylten står orden Hjälm på."
+        "Skylten sitter vid ridhusets ingång.",
+        "På skylten står det Hjälm på."
       ],
       "choices": [
-        "Vid ingången till ridhuset sitter skylten Tyst i stallet.",
-        "Vid ingången till ridhuset sitter skylten Hjälm på.",
-        "Vid sadelkammaren sitter skylten Hjälm på."
+        "Vid ridhusets ingång sitter en skylt där det står Tyst i stallet.",
+        "Vid ridhusets ingång sitter en skylt där det står Hjälm på.",
+        "Vid sadelkammaren sitter en skylt där det står Hjälm på."
       ],
       "target": 1,
       "wrong": [
-        "Platsen är rätt, men skylten har andra ord.",
+        "Platsen är rätt, men på skylten står det Tyst i stallet i stället för Hjälm på.",
         null,
-        "Orden är rätt, men skylten sitter vid sadelkammaren och inte vid ridhuset."
+        "Texten Hjälm på stämmer, men skylten sitter vid sadelkammaren i stället för vid ridhusets ingång."
       ],
-      "why": "Skylten sitter vid ridhuset och har texten Hjälm på. Båda detaljerna stämmer."
+      "why": "Skylten sitter vid ridhusets ingång och har orden Hjälm på. Båda detaljerna stämmer."
     },
     "music": {
       "title": "Körens övningsplats",
-      "intro": "Skolans kör ska träna inför avslutningen. Vilket rum passar?",
+      "intro": "Skolans kör ska öva inför avslutningen. Vilken plats passar?",
       "clues": [
-        "En hel grupp barn kan stå bredvid varandra.",
-        "Det finns mikrofoner som gör sången lättare att höra."
+        "Hela kören får plats tillsammans.",
+        "Det finns mikrofoner och högtalare här."
       ],
       "choices": [
-        "I aulan får hela kören plats och där finns mikrofoner.",
-        "I klassrummet får många barn plats, men där finns inga mikrofoner.",
-        "I det lilla inspelningsbåset finns mikrofon, men bara en person får plats."
+        "I aulan får hela kören plats. Där finns också mikrofoner och högtalare.",
+        "I klassrummet får hela kören plats, men där finns inga mikrofoner eller högtalare.",
+        "I ett litet inspelningsrum finns mikrofoner och högtalare, men bara en person får plats."
       ],
       "target": 0,
       "wrong": [
         null,
-        "Gruppen får plats, men det finns inga mikrofoner.",
-        "Mikrofonen finns där, men kören får inte plats tillsammans."
+        "Kören får plats, men här finns inga mikrofoner eller högtalare.",
+        "Det finns mikrofoner och högtalare, men kören får inte plats tillsammans."
       ],
-      "why": "I aulan får hela kören plats och där finns mikrofoner. Båda spåren stämmer."
+      "why": "I aulan får hela kören plats. Där finns också mikrofoner och högtalare. Båda spåren stämmer."
     }
   };
   const SMALL_FINDS={
