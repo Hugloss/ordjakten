@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Skattboken – tydligare hjälp och nästa steg
+
+- Alla 48 ledtrådar har två korta hållpunkter. De visas vid frivillig extra hjälp och tillsammans med den valda platsens beskrivning efter en avstickare.
+- Skattboken visar de tolv kartornas skatter och ordstjärnor. Fyra hittade platser ger kartans samlingsmärke, även när ordfrågor behöver mer övning. En färdig karta visar vägen till saknade ordstjärnor eller nästa karta.
+- Kartmärken räknas från redan sparade fynd och ger inga extra poäng. Alla kartor är fortsatt öppna och ingen belöning beror på tid.
+- Förklaringssteget leder vidare till det utlovade fyndet. En fördröjd knapptryckning från frågan kan inte längre kasta bort ett besvarat besök.
+- Uppläsningen tar med synlig hjälp efter ett felsvar. Efter fel plats kan barnet också lyssna på ledtråden, hållpunkterna och platsbeskrivningen. Offlinecache v74.
+
 ## Skattkartan – hitta platsen med ledtrådar
 
 - En valbar skattkarta har fyra klickbara platser i var och en av de tolv befintliga världarna. 48 skrivna ledtrådar kopplas till konkreta platsbeskrivningar; varje plats använder sin befintliga orduppgift.

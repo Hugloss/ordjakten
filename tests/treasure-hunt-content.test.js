@@ -18,8 +18,9 @@ test('every existing map place has its own clue, visible description, help and e
     const places=A.world(world).stops,rows=Treasure.DATA[world];
     assert.equal(rows.length,places.length,world);
     rows.forEach((row,index)=>{
-      assert.deepEqual(Object.keys(row),['description','clue','hint','why']);
-      for(const [field,text] of Object.entries(row)){
+      assert.deepEqual(Object.keys(row),['description','clue','lookFor','hint','why']);
+      for(const field of ['description','clue','hint','why']){
+        const text=row[field];
         assert.equal(typeof text,'string',world+':'+index+':'+field);
         assert.ok(text.trim().length>=20,world+':'+index+':'+field);
         assert.ok(text.length<=200,world+':'+index+':'+field+' should fit a short reading step');
@@ -33,6 +34,34 @@ test('every existing map place has its own clue, visible description, help and e
   assert.equal(descriptions.length,48);
   assert.equal(new Set(descriptions).size,48);
   assert.equal(new Set(clues).size,48);
+});
+
+test('every clue offers two short comparison features without naming a destination',()=>{
+  let count=0;
+  for(const world of A.WORLD_IDS){
+    const destinationNames=A.world(world).stops.map(place=>place.name.toLocaleLowerCase('sv'));
+    const pairs=new Set();
+    Treasure.DATA[world].forEach((row,index)=>{
+      const key=world+':'+index;
+      assert.ok(Array.isArray(row.lookFor),key);
+      assert.equal(row.lookFor.length,2,key+' should split the clue into two reading steps');
+      const normalized=row.lookFor.map(feature=>{
+        assert.equal(typeof feature,'string',key);
+        assert.equal(feature,feature.trim(),key);
+        assert.ok(feature.length>=3&&feature.length<=60,key+' comparison phrase length');
+        assert.ok(!/[.!?\n]/u.test(feature),key+' should remain a short phrase');
+        const text=feature.toLocaleLowerCase('sv');
+        for(const name of destinationNames)
+          assert.ok(!text.includes(name),key+' comparison should describe rather than name a place');
+        return text;
+      });
+      assert.equal(new Set(normalized).size,2,key+' needs two different features');
+      pairs.add([...normalized].sort().join('|'));
+      count++;
+    });
+    assert.equal(pairs.size,4,world+' needs a distinct pair for each destination');
+  }
+  assert.equal(count,48);
 });
 
 test('every clue destination reuses a valid existing word task and keepsake',()=>{
@@ -69,6 +98,10 @@ test('similar music locations expose the distinction used by their clues',()=>{
   assert.match(rows[0].clue,/ensam.*noter/);
   assert.match(rows[3].description,/grupp musiker.*mikrofon/);
   assert.match(rows[3].clue,/grupp musiker.*mikrofon/);
+  assert.ok(rows[0].lookFor.some(feature=>feature.includes('ensam musiker')));
+  assert.ok(rows[0].lookFor.some(feature=>feature.includes('noter')));
+  assert.ok(rows[3].lookFor.some(feature=>feature.includes('grupp musiker')));
+  assert.ok(rows[3].lookFor.some(feature=>feature.includes('mikrofon')));
   assert.ok(!rows[3].description.includes('ensam'));
   assert.ok(!rows[0].description.includes('mikrofon'));
 });
@@ -80,4 +113,6 @@ test('the offline browser export contains the same immutable authored content',(
   assert.ok(Object.isFrozen(Treasure.DATA));
   assert.ok(Object.isFrozen(Treasure.DATA.forest));
   assert.ok(Object.isFrozen(Treasure.DATA.forest[0]));
+  for(const rows of Object.values(Treasure.DATA))
+    for(const row of rows)assert.ok(Object.isFrozen(row.lookFor));
 });

@@ -167,6 +167,7 @@
     'listen-explanation':'🔊 Lyssna på förklaringen',
     'listen-reading-check':'🔊 Lyssna på frågan och svaren',
     'treasure-listen-clue':'🔊 Lyssna på ledtråden och platserna',
+    'treasure-listen-arrival':'🔊 Lyssna på ledtråden och platsen',
     'treasure-listen-task':'🔊 Lyssna på uppgiften',
     'treasure-listen-explanation':'🔊 Lyssna på förklaringen'
   };
@@ -2343,13 +2344,18 @@
   // Treasure navigation has its own finite findings. Word stars do not replace
   // the ordinary star row or manufacture a scored/adaptive learning result.
   function treasureModel(){return Treasure.model(history.treasureHunt,treasureWorld,treasureContent);}
+  function treasureWorldProgress(model){
+    const earned=new Set(history.starCollection.activities||[]);
+    return model.worlds.map(world=>({...world,
+      starCount:[0,1,2,3].filter(index=>earned.has('treasure:'+world.id+':'+index)).length}));
+  }
   function renderTreasureHunt(focus='treasure-stage-title'){
     const model=treasureModel();
     const wordStars=model.places.filter(place=>history.starCollection.activities?.includes('treasure:'+model.id+':'+place.index))
       .map(place=>place.index);
     TreasureView.render($('treasure-content'),model,{companion:P.companion(settings.companion),
       totalStars:history.starCollection.total,wordStars,starReward:treasureStarReward,canReadAloud,
-      worlds:A.WORLD_IDS.map(id=>({id,...A.world(id)}))});
+      worlds:treasureWorldProgress(model)});
     if(focus)$(focus)?.focus();
   }
   function openTreasureHunt(){
@@ -2416,11 +2422,18 @@
     const model=treasureModel(),visit=model.visit;
     if(kind==='clue'&&model.phase==='map'){
       const clue=model.clue;
-      return [clue?.text,clue?.hintShown?clue.hint:'','Platserna på kartan:',
+      return [clue?.text,clue?.hintShown?clue.hint:'',
+        clue?.hintShown?'Leta efter båda: '+clue.lookFor.join('. '):'','Platserna på kartan:',
         ...model.places.map(place=>place.name+'. '+place.description)].filter(Boolean).join(' ');
     }
+    if(kind==='arrival'&&visit&&!visit.matched&&model.clue){
+      const place=model.places.find(row=>row.index===visit.index);
+      return ['Ledtråden säger: '+model.clue.text,'Leta efter båda: '+model.clue.lookFor.join('. '),
+        'Här, vid '+visit.name+': '+place.description].join(' ');
+    }
     if(kind==='task'&&visit?.stage==='question')
-      return [visit.task.prompt,...visit.options.map((option,i)=>'Alternativ '+'ABC'[i]+': '+option.label)].join('. ');
+      return [visit.task.prompt,visit.attempts?'Läs hjälpen och prova igen. '+visit.task.word+' – '+visit.task.definition:'',
+        ...visit.options.map((option,i)=>'Alternativ '+'ABC'[i]+': '+option.label)].filter(Boolean).join('. ');
     if(kind==='explanation'&&['explanation','reward'].includes(visit?.stage))
       return [visit.task.word,visit.task.definition,visit.task.why].join('. ');
     return '';
@@ -2435,7 +2448,8 @@
       if(visit&&serial!==visit.serial)return;
       speakReadAloud(treasureReadAloudText(data.treasureListen),button);return;
     }
-    if(Object.hasOwn(data,'treasurePlace'))visitTreasurePlace(Number(data.treasurePlace));
+    if(Object.hasOwn(data,'treasureWorldChoice'))switchTreasureWorld(data.treasureWorldChoice);
+    else if(Object.hasOwn(data,'treasurePlace'))visitTreasurePlace(Number(data.treasurePlace));
     else if(Object.hasOwn(data,'treasureAnswer'))answerTreasureQuestion(serial,data.treasureAnswer);
     else if(Object.hasOwn(data,'treasureExplain'))explainTreasureQuestion(serial);
     else if(Object.hasOwn(data,'treasureFinish'))finishTreasureVisit(serial);

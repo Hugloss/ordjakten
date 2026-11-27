@@ -32,6 +32,8 @@
       rows.forEach((row,index)=>{
         const key=id+':'+index,task=missions?.tasks?.[key],chapter=chapters[index],stop=world.stops[index];
         if(!object(row)||!['description','clue','hint','why'].every(field=>text(row[field]))||
+          !Array.isArray(row.lookFor)||row.lookFor.length!==2||new Set(row.lookFor).size!==2||
+          row.lookFor.some(part=>!text(part)||part.length>100)||
           !task||task.key!==key||task.world!==id||task.index!==index||!text(task.target)||
           !text(task.prompt)||!text(task.word)||!text(task.definition)||!text(task.why)||
           !Array.isArray(task.options)||task.options.length!==3||
@@ -41,7 +43,7 @@
           errors.push(key);return;
         }
         places.push({index,key,name:stop.name,emoji:stop.emoji,
-          description:row.description,clue:row.clue,hint:row.hint,why:row.why,
+          description:row.description,clue:row.clue,hint:row.hint,why:row.why,lookFor:[...row.lookFor],
           treasure:{emoji:chapter[3],name:chapter[4]},
           task:{...task,options:task.options.map(option=>({...option}))}});
       });
@@ -136,7 +138,8 @@
       count:state.worlds[row.id]?.found.length||0,total:4}));
     return {id,title:world.title,emoji:world.emoji,phase:active?.stage||'map',count:progress.found.length,total:4,
       complete:progress.found.length===4,finderTotal:worlds.reduce((sum,row)=>sum+row.count,0),worlds,
-      clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,hintShown:progress.hints.includes(target)}:null,
+      clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,
+        lookFor:[...cluePlace.lookFor],hintShown:progress.hints.includes(target)}:null,
       places,collection:progress.found.map(index=>({index,place:world.places[index].name,...world.places[index].treasure})),
       smallFinds:progress.smallFinds.map(index=>({index,place:world.places[index].name,...world.smallFind})),visit};
   }
@@ -189,7 +192,9 @@
 
   function back(raw,serial,content){
     const state=sanitize(raw,content);
-    return state.active?.serial===serial?{...state,active:null}:raw;
+    // A delayed question-stage cancel must not discard an answered visit and
+    // its promised find. Collect the find before returning from explanation.
+    return state.active?.serial===serial&&state.active.stage!=='explanation'?{...state,active:null}:raw;
   }
 
   function hint(raw,worldId,content){

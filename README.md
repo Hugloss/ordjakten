@@ -32,6 +32,8 @@ npm run check
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
 - **Skattkartan**: läs en ledtråd, välj en plats och lös dess orduppgift.
   48 skrivna ledtrådar ger separata sakletarfynd och ordstjärnor i egen takt.
+  Två korta hållpunkter hjälper barnet att jämföra platser. Skattboken samlar
+  kartmärken och visar vilka skatter och ordstjärnor som finns kvar.
 - Sparad stjärnsamling med sex samlingsmärken, en synlig stjärnrad och
   frivilliga nya chanser utan timer för de stjärnor som återstår.
 - Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.

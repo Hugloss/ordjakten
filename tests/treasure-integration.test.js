@@ -189,11 +189,13 @@ test('read-aloud uses the currently visible clue or task and reveals explanation
     assert.ok(!text.includes(place.task.why),'a map clue must not read a future task solution');
   }
   assert.ok(!text.includes(map.clue.hint),'optional help is read only after requesting it');
+  assert.ok(!text.includes('Leta efter båda:'),'split clue support is read only when visible');
   assert.ok(!text.includes(map.clue.why),'the destination explanation must not be read before choosing');
   assert.equal(h.context.treasureReadAloudText('task'),'');
   assert.equal(h.context.treasureReadAloudText('explanation'),'');
   h.click({treasureHint:''});
   assert.ok(h.context.treasureReadAloudText('clue').includes(map.clue.hint));
+  assert.ok(h.context.treasureReadAloudText('clue').includes('Leta efter båda: '+map.clue.lookFor.join('. ')));
   h.visit(target);
   const visit=h.model().visit;
   text=h.context.treasureReadAloudText('task');
@@ -208,12 +210,68 @@ test('read-aloud uses the currently visible clue or task and reveals explanation
   const spokenCount=h.spoken.length;
   h.click({treasureListen:'task',treasureSerial:String(visit.serial-1)});
   assert.equal(h.spoken.length,spokenCount,'a stale listen button cannot speak the next visit');
+  h.answer(false);
+  text=h.context.treasureReadAloudText('task');
+  assert.ok(text.includes(visit.task.word+' – '+visit.task.definition),'the first wrong answer makes its visible help available to listen to');
+  assert.ok(!text.includes(visit.task.why),'the final explanation is still hidden');
   h.answer(true);
   text=h.context.treasureReadAloudText('explanation');
   for(const part of [visit.task.word,visit.task.definition,visit.task.why])assert.ok(text.includes(part));
   assert.equal(h.context.treasureReadAloudText('task'),'');
   h.context.screen='home';
   assert.equal(h.context.treasureReadAloudText('explanation'),'');
+});
+
+test('a wrong-place comparison can be read aloud without naming the hidden destination',()=>{
+  const h=harness(),clue=h.model().clue,target=h.model().places[clue.index];
+  assert.equal(h.context.treasureReadAloudText('arrival'),'');
+  h.visit(0);
+  const place=h.model().places[0],serial=h.model().visit.serial;
+  const text=h.context.treasureReadAloudText('arrival');
+  assert.ok(text.includes(clue.text));
+  for(const part of clue.lookFor)assert.ok(text.includes(part));
+  assert.ok(text.includes(place.name));assert.ok(text.includes(place.description));
+  assert.ok(!text.includes(target.name));assert.ok(!text.includes(clue.why));
+  h.click({treasureListen:'arrival',treasureSerial:String(serial)});
+  assert.equal(h.spoken.at(-1).text,text);
+  h.context.screen='home';
+  assert.equal(h.context.treasureReadAloudText('arrival'),'');
+});
+
+test('completed-map progress and world choices preserve word stars and the ordinary row',()=>{
+  const h=harness(),before=clone(h.context.history);
+  for(const index of [0,2])h.context.history.starCollection=Stars.awardActivity(h.context.history.starCollection,'treasure:forest:'+index).collection;
+  h.context.renderTreasureHunt();
+  let forest=h.rendered.at(-1).options.worlds.find(world=>world.id==='forest');
+  assert.equal(forest.count,0,'word stars alone cannot complete a map');assert.equal(forest.starCount,2);
+  for(const index of Treasure.ORDER){
+    h.visit(index);h.click({treasureExplain:'',treasureSerial:String(h.model().visit.serial)});h.finish();h.back();
+  }
+  forest=h.rendered.at(-1).options.worlds.find(world=>world.id==='forest');
+  assert.equal(forest.count,4);assert.equal(forest.total,4);assert.equal(forest.starCount,2);
+  assert.equal(h.rendered.at(-1).options.worlds.filter(world=>world.count===world.total).length,1);
+  const settled=clone(h.context.history.treasureHunt),stars=clone(h.context.history.starCollection);
+  h.click({treasureWorldChoice:'space'});
+  assert.equal(h.model().id,'space');assert.equal(h.context.settings.adventure,'space');
+  assert.deepEqual(clone(h.context.history.treasureHunt),settled);
+  assert.deepEqual(clone(h.context.history.starCollection),stars);
+  assert.deepEqual(clone(h.context.history.starCollection.active),before.starCollection.active);
+  h.visit(2);const pending=clone(h.context.history.treasureHunt);
+  h.click({treasureWorldChoice:'forest'});
+  assert.equal(h.model().id,'space','a stale book choice must not replace a pending visit');
+  assert.deepEqual(clone(h.context.history.treasureHunt),pending);
+});
+
+test('a delayed cancel after an answer preserves the find until it is collected',()=>{
+  const h=harness();h.visit(h.model().clue.index);
+  const serial=h.model().visit.serial;h.answer(true);
+  const answered=clone(h.context.history),saved=h.saved.length;
+  h.click({treasureBack:'',treasureSerial:String(serial)});
+  assert.equal(h.model().phase,'explanation');assert.equal(h.saved.length,saved);
+  assert.deepEqual(clone(h.context.history),answered);
+  h.finish();h.back();
+  assert.equal(h.model().phase,'map');assert.equal(h.model().count,1);
+  assert.equal(h.model().collection.length,1);
 });
 
 test('disabled, unrelated and hidden-view clicks do not move the map or grant rewards',()=>{
