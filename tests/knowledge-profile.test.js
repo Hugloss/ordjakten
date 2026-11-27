@@ -27,7 +27,7 @@ const candidate=(mode,payload,reason='extend',words=[payload.id],cost=1)=>({mode
 const id='sv-0044',item=word(id);
 test('empty history stays unobserved and never invents a remedial need',()=>{
   const p=profile();
-  assert.equal(Object.keys(p.words).length,162);
+  assert.equal(Object.keys(p.words).length,174);
   for(const w of Object.values(p.words)){
     assert.equal(w.meaning,false);
     assert.equal(w.recognition,false);

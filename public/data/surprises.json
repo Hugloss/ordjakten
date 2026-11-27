@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "41 frivilliga miniuppdrag med nya vardagssituationer. Öppnas efter inlärning, aldrig under prov.",
+  "description": "53 frivilliga miniuppdrag med nya vardagssituationer. Öppnas efter inlärning, aldrig under prov.",
   "challenges": [
     {
       "id": "ut-0001",
@@ -616,6 +616,186 @@
         }
       ],
       "explanation": "Köpa grisen i säcken betyder att köpa något utan att veta vad man får. Det handlar inte om att köpa en riktig gris."
+    },
+    {
+      "id": "ut-0044",
+      "prompt": "Vilken NY situation passar uttrycket ”tappa tråden”?",
+      "options": [
+        {
+          "label": "Lo ska förklara en spelregel men glömmer vad hon tänkte säga när någon ringer på dörren.",
+          "correct": true
+        },
+        {
+          "label": "Lo förklarar hela spelregeln lugnt och minns precis vad hon vill säga.",
+          "correct": false
+        }
+      ],
+      "explanation": "Tappa tråden handlar om att förlora sammanhanget i det man tänker eller berättar, inte om att tappa ett snöre."
+    },
+    {
+      "id": "ut-0045",
+      "prompt": "Vilken NY situation passar uttrycket ”ha koll på läget”?",
+      "options": [
+        {
+          "label": "Inför träningen vet Sam vilken hall laget ska till och när alla ska samlas.",
+          "correct": true
+        },
+        {
+          "label": "Sam vet varken var träningen är eller när den börjar och har inte frågat någon.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ha koll på läget är ett vardagligt sätt att säga att man förstår situationen och har överblick."
+    },
+    {
+      "id": "ut-0046",
+      "prompt": "Vilken NY situation passar uttrycket ”ta sig vatten över huvudet”?",
+      "options": [
+        {
+          "label": "Lo lovar att göra hela gruppens stora projekt själv på en kväll och märker att uppgiften är för omfattande.",
+          "correct": true
+        },
+        {
+          "label": "Lo delar upp projektet med gruppen och väljer en uppgift som hon hinner göra.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ta sig vatten över huvudet är att försöka göra mer än man klarar. Det är bra att märka det och anpassa planen."
+    },
+    {
+      "id": "ut-0047",
+      "prompt": "Vilken NY situation passar uttrycket ”slå två flugor i en smäll”?",
+      "options": [
+        {
+          "label": "När Sam hämtar ett paket på vägen till affären får han båda ärendena gjorda på samma tur.",
+          "correct": true
+        },
+        {
+          "label": "Sam går till affären och glömmer paketet, så han måste göra en ny resa en annan dag.",
+          "correct": false
+        }
+      ],
+      "explanation": "Slå två flugor i en smäll betyder att lösa två uppgifter eller få två fördelar samtidigt."
+    },
+    {
+      "id": "ut-0048",
+      "prompt": "Vilken NY situation passar uttrycket ”ha något på hjärtat”?",
+      "options": [
+        {
+          "label": "Lo ber sin kompis att sätta sig en stund eftersom hon vill berätta något som betyder mycket för henne.",
+          "correct": true
+        },
+        {
+          "label": "Lo hämtar ett glas vatten och har ingenting särskilt hon vill prata om.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ha något på hjärtat betyder att vilja säga något som känns viktigt för en själv."
+    },
+    {
+      "id": "ut-0049",
+      "prompt": "Vilken NY situation passar uttrycket ”ge en hjälpande hand”?",
+      "options": [
+        {
+          "label": "Sam märker att Lo behöver hjälp att förstå en instruktion och förklarar den på ett lugnt sätt.",
+          "correct": true
+        },
+        {
+          "label": "Sam ser att Lo behöver hjälp men går därifrån utan att erbjuda någon hjälp.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ge en hjälpande hand betyder att erbjuda eller ge någon hjälp. Hjälpen behöver inte handla om händer."
+    },
+    {
+      "id": "ut-0050",
+      "prompt": "Vilken NY situation passar uttrycket ”få kalla fötter”?",
+      "options": [
+        {
+          "label": "Mira har anmält sig till talangshowen men börjar plötsligt tveka precis innan hon ska delta.",
+          "correct": true
+        },
+        {
+          "label": "Mira känner sig trygg med sitt beslut och längtar efter att få delta i talangshowen.",
+          "correct": false
+        }
+      ],
+      "explanation": "Få kalla fötter betyder att börja tveka inför något man planerat. Man får alltid ändra sig om man behöver."
+    },
+    {
+      "id": "ut-0051",
+      "prompt": "Vilken NY situation passar uttrycket ”trivas som fisken i vattnet”?",
+      "options": [
+        {
+          "label": "I sin nya ritgrupp känner Alex sig trygg, tycker om att skapa bilder och längtar till nästa träff.",
+          "correct": true
+        },
+        {
+          "label": "Alex känner sig obekväm i ritgruppen och vill helst inte gå tillbaka.",
+          "correct": false
+        }
+      ],
+      "explanation": "Trivas som fisken i vattnet betyder att trivas mycket bra. En fisk i vatten används som bild för att känna sig hemma."
+    },
+    {
+      "id": "ut-0052",
+      "prompt": "Vilken NY situation passar uttrycket ”sätta myror i huvudet”?",
+      "options": [
+        {
+          "label": "En klurig rebus med oväntade ledtrådar får Mira att fundera länge på hur den ska lösas.",
+          "correct": true
+        },
+        {
+          "label": "Mira får en enkel instruktion som hon genast förstår och behöver inte fundera vidare.",
+          "correct": false
+        }
+      ],
+      "explanation": "Sätta myror i huvudet betyder att göra någon förbryllad. Bilden av myror som rör sig liknar tankar som snurrar."
+    },
+    {
+      "id": "ut-0053",
+      "prompt": "Vilken NY situation passar uttrycket ”ha huvudet i molnen”?",
+      "options": [
+        {
+          "label": "Lo drömmer sig bort till sommarlovet och märker inte att kompisen frågar henne något.",
+          "correct": true
+        },
+        {
+          "label": "Lo lyssnar uppmärksamt på kompisen och svarar direkt på frågan.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ha huvudet i molnen betyder att vara försjunken i tankar eller dagdrömmar. Det kan vara härligt att fantisera, men ibland behöver man lyssna."
+    },
+    {
+      "id": "ut-0054",
+      "prompt": "Vilken NY situation passar uttrycket ”gå på nerverna”?",
+      "options": [
+        {
+          "label": "Ett ihållande pip gör Noor alltmer irriterad när hon försöker göra ett pussel.",
+          "correct": true
+        },
+        {
+          "label": "Det lugna ljudet av regn hjälper Noor att slappna av och hon tycker om det.",
+          "correct": false
+        }
+      ],
+      "explanation": "Gå på nerverna betyder att något irriterar eller stör. Man kan förklara vad som stör utan att vara elak."
+    },
+    {
+      "id": "ut-0055",
+      "prompt": "Vilken NY situation passar uttrycket ”tur i oturen”?",
+      "options": [
+        {
+          "label": "Lo glömmer sin matsäck, men skolan har en extra lunch som hon får äta.",
+          "correct": true
+        },
+        {
+          "label": "Lo har med sig allt hon behöver och dagen går precis som planerat utan något problem.",
+          "correct": false
+        }
+      ],
+      "explanation": "Tur i oturen betyder att det finns en lycklig vändning trots att något olyckligt har hänt."
     }
   ]
 }

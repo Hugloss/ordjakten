@@ -1645,6 +1645,486 @@
         }
       ],
       "review_status": "draft"
+    },
+    {
+      "id": "ut-0044",
+      "phrase": "Tappa tråden",
+      "scene": "Milo berättar om sin helg. Mitt i berättelsen blir han avbruten av telefonen. När han ska fortsätta säger han: Nu tappade jag tråden!",
+      "definition": "Att glömma vad man höll på att säga eller tänka på.",
+      "example": "Jag tappade tråden när någon avbröt mig mitt i berättelsen.",
+      "reveal": [
+        {
+          "title": "Mitt i berättelsen",
+          "text": "Milo håller på att berätta vad som hände under helgen."
+        },
+        {
+          "title": "Var var jag?",
+          "text": "Efter avbrottet minns han inte längre var han var i berättelsen."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att glömma vad man höll på att säga eller tänka på.",
+          "correct": true
+        },
+        {
+          "label": "Att prata så tyst att ingen hör.",
+          "correct": false
+        },
+        {
+          "label": "Att avsluta sin berättelse precis som planerat.",
+          "correct": false
+        },
+        {
+          "label": "Att komma på en ny idé utan att glömma den gamla.",
+          "correct": false
+        },
+        {
+          "label": "Att berätta något från början till slut utan att bli avbruten.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0045",
+      "phrase": "Ha koll på läget",
+      "scene": "Klassen ska åka på utflykt. Noor har läst schemat, vet när bussen går och har packat det hon behöver. Läraren säger att Noor har koll på läget.",
+      "definition": "Att veta vad som händer och vad man behöver göra.",
+      "example": "Jag har koll på läget och vet vilken tid vi ska mötas.",
+      "reveal": [
+        {
+          "title": "En utflykt planeras",
+          "text": "Klassen behöver veta tider och vad som ska packas."
+        },
+        {
+          "title": "Noor är förberedd",
+          "text": "Hon känner till planen och vet vad hon behöver göra. Hon har koll."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att veta vad som händer och vad man behöver göra.",
+          "correct": true
+        },
+        {
+          "label": "Att vara osäker på allt som ska hända.",
+          "correct": false
+        },
+        {
+          "label": "Att låta någon annan sköta allt utan att veta något själv.",
+          "correct": false
+        },
+        {
+          "label": "Att alltid bestämma över alla andra.",
+          "correct": false
+        },
+        {
+          "label": "Att vara sen och ha glömt sina saker.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0046",
+      "phrase": "Ta sig vatten över huvudet",
+      "scene": "Ari lovar att baka till klassfesten, göra två stora affischer och ordna alla lekar samma kväll. När han inser att tiden inte räcker säger han att han tagit sig vatten över huvudet.",
+      "definition": "Att ta på sig mer än man klarar av.",
+      "example": "Jag tog mig vatten över huvudet när jag lovade att hinna med alla uppgifter på en timme.",
+      "reveal": [
+        {
+          "title": "Många stora löften",
+          "text": "Ari vill hjälpa till och lovar väldigt mycket."
+        },
+        {
+          "title": "Mer än han hinner med",
+          "text": "Han märker att uppgifterna tillsammans är för stora. Då kan han be om hjälp eller ändra planen."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att ta på sig mer än man klarar av.",
+          "correct": true
+        },
+        {
+          "label": "Att klara en lagom svår uppgift utan problem.",
+          "correct": false
+        },
+        {
+          "label": "Att be om hjälp innan man börjar något svårt.",
+          "correct": false
+        },
+        {
+          "label": "Att vila när man är färdig med sitt arbete.",
+          "correct": false
+        },
+        {
+          "label": "Att börja simma i en bassäng.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0047",
+      "phrase": "Slå två flugor i en smäll",
+      "scene": "På vägen till biblioteket lämnar Mira också tillbaka kompisens bok. Hon säger att hon slog två flugor i en smäll.",
+      "definition": "Att få två saker gjorda genom en och samma handling.",
+      "example": "Jag handlade på vägen hem från träningen och slog två flugor i en smäll.",
+      "reveal": [
+        {
+          "title": "Två saker att ordna",
+          "text": "Mira behöver gå till biblioteket och lämna tillbaka en bok till sin kompis."
+        },
+        {
+          "title": "En gemensam resa",
+          "text": "Hon gör båda sakerna under samma promenad. Det sparar en extra tur."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att få två saker gjorda genom en och samma handling.",
+          "correct": true
+        },
+        {
+          "label": "Att göra samma sak två gånger i onödan.",
+          "correct": false
+        },
+        {
+          "label": "Att göra två saker men misslyckas med båda.",
+          "correct": false
+        },
+        {
+          "label": "Att lämna en uppgift till en annan dag.",
+          "correct": false
+        },
+        {
+          "label": "Att försöka lösa ett problem utan att lyckas.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0048",
+      "phrase": "Ha något på hjärtat",
+      "scene": "Efter middagen vill Alex prata med pappa. Alex säger: Jag har något på hjärtat. Det är något som Alex har tänkt på länge.",
+      "definition": "Att ha något viktigt som man vill berätta eller prata om.",
+      "example": "Har du något på hjärtat? Du får gärna berätta när du känner dig redo.",
+      "reveal": [
+        {
+          "title": "En viktig tanke",
+          "text": "Alex har funderat länge på något."
+        },
+        {
+          "title": "Dags att prata",
+          "text": "Alex vill dela tanken med någon som kan lyssna, men behöver inte berätta förrän det känns bra."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att ha något viktigt som man vill berätta eller prata om.",
+          "correct": true
+        },
+        {
+          "label": "Att vara hungrig och vilja ha mer middag.",
+          "correct": false
+        },
+        {
+          "label": "Att inte ha något särskilt man vill säga.",
+          "correct": false
+        },
+        {
+          "label": "Att vara på väg att gå ut och springa.",
+          "correct": false
+        },
+        {
+          "label": "Att ha glömt vilken dag det är.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0049",
+      "phrase": "Ge en hjälpande hand",
+      "scene": "Kim försöker bära in alla böcker från klassrummet. En kompis frågar: Vill du att jag ger dig en hjälpande hand?",
+      "definition": "Att hjälpa någon med det som personen behöver göra.",
+      "example": "Jag gav min kompis en hjälpande hand när hon skulle bära böckerna.",
+      "reveal": [
+        {
+          "title": "Många böcker",
+          "text": "Kim behöver flytta fler böcker än det är lätt att bära."
+        },
+        {
+          "title": "En kompis hjälper till",
+          "text": "Kompisen erbjuder hjälp så att arbetet blir lättare."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att hjälpa någon med det som personen behöver göra.",
+          "correct": true
+        },
+        {
+          "label": "Att låta någon annan göra allt själv.",
+          "correct": false
+        },
+        {
+          "label": "Att be någon skynda sig utan att hjälpa till.",
+          "correct": false
+        },
+        {
+          "label": "Att vinka när någon går förbi.",
+          "correct": false
+        },
+        {
+          "label": "Att ta över en uppgift utan att fråga vad personen behöver.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0050",
+      "phrase": "Få kalla fötter",
+      "scene": "Sam har bestämt sig för att sjunga solo. Precis innan det är dags börjar Sam tvivla och vill helst hoppa över framträdandet. Sam har fått kalla fötter.",
+      "definition": "Att plötsligt bli osäker inför något man planerat att göra och kanske vilja dra sig ur.",
+      "example": "Jag fick kalla fötter strax innan jag skulle ställa mig på scenen.",
+      "reveal": [
+        {
+          "title": "En plan att sjunga",
+          "text": "Sam har tidigare tänkt att det ska bli roligt att sjunga."
+        },
+        {
+          "title": "Tvivlet kommer",
+          "text": "Precis innan framträdandet blir Sam osäker och funderar på om han vill genomföra det."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att plötsligt bli osäker inför något man planerat att göra och kanske vilja dra sig ur.",
+          "correct": true
+        },
+        {
+          "label": "Att bli modigare och mer säker på sin plan.",
+          "correct": false
+        },
+        {
+          "label": "Att glädja sig åt något som redan är avslutat.",
+          "correct": false
+        },
+        {
+          "label": "Att vara trött efter ett långt arbete.",
+          "correct": false
+        },
+        {
+          "label": "Att frysa om fötterna när man är ute i snön.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0051",
+      "phrase": "Trivas som fisken i vattnet",
+      "scene": "När Noor börjar på sin nya teatergrupp tycker hon genast om både lekarna och kompisarna. Hon trivs som fisken i vattnet.",
+      "definition": "Att känna sig mycket bekväm och trivas riktigt bra i en miljö eller med en aktivitet.",
+      "example": "Min syster trivs som fisken i vattnet i sin nya dansgrupp.",
+      "reveal": [
+        {
+          "title": "En ny grupp",
+          "text": "Noor provar en aktivitet som hon är nyfiken på."
+        },
+        {
+          "title": "Här passar jag in",
+          "text": "Hon känner sig hemma i gruppen och tycker om att vara där."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att känna sig mycket bekväm och trivas riktigt bra i en miljö eller med en aktivitet.",
+          "correct": true
+        },
+        {
+          "label": "Att känna sig obekväm och helst vilja gå därifrån.",
+          "correct": false
+        },
+        {
+          "label": "Att bara tycka om aktiviteter som handlar om vatten.",
+          "correct": false
+        },
+        {
+          "label": "Att känna sig mycket trött och vilja vila.",
+          "correct": false
+        },
+        {
+          "label": "Att vara hungrig och längta efter lunch.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0052",
+      "phrase": "Sätta myror i huvudet",
+      "scene": "Läraren berättar om en gåta som verkar ha två helt olika lösningar. Den sätter myror i huvudet på Lo, som inte kan sluta fundera.",
+      "definition": "Att göra någon förbryllad så att personen börjar fundera mycket.",
+      "example": "Den mystiska ledtråden satte myror i huvudet på mig.",
+      "reveal": [
+        {
+          "title": "En märklig gåta",
+          "text": "Det finns ledtrådar som är svåra att få ihop."
+        },
+        {
+          "title": "Många funderingar",
+          "text": "Lo blir förbryllad och försöker förstå vad ledtrådarna betyder."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att göra någon förbryllad så att personen börjar fundera mycket.",
+          "correct": true
+        },
+        {
+          "label": "Att göra en svår sak alldeles tydlig direkt.",
+          "correct": false
+        },
+        {
+          "label": "Att få någon att somna utan att tänka.",
+          "correct": false
+        },
+        {
+          "label": "Att få någon att springa väldigt snabbt.",
+          "correct": false
+        },
+        {
+          "label": "Att hjälpa någon att glömma ett problem helt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0053",
+      "phrase": "Ha huvudet i molnen",
+      "scene": "När läraren berättar vad klassen ska göra sitter Milo och fantiserar om en resa till rymden. Han hör knappt instruktionen. Milo har huvudet i molnen.",
+      "definition": "Att dagdrömma eller vara så upptagen av sina tankar att man inte märker vad som händer runt omkring.",
+      "example": "Jag hade huvudet i molnen och glömde lyssna när kompisen berättade något.",
+      "reveal": [
+        {
+          "title": "En instruktion i klassrummet",
+          "text": "Läraren förklarar vad barnen ska göra."
+        },
+        {
+          "title": "Tankarna flyger iväg",
+          "text": "Milo fantiserar om något helt annat och missar en del av det som sägs."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att dagdrömma eller vara så upptagen av sina tankar att man inte märker vad som händer runt omkring.",
+          "correct": true
+        },
+        {
+          "label": "Att vara helt uppmärksam på det någon säger.",
+          "correct": false
+        },
+        {
+          "label": "Att vara rädd för höga platser.",
+          "correct": false
+        },
+        {
+          "label": "Att snabbt lösa en uppgift utan att drömma sig bort.",
+          "correct": false
+        },
+        {
+          "label": "Att veta vad alla i rummet håller på med.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0054",
+      "phrase": "Gå på nerverna",
+      "scene": "När Alex försöker läsa knackar en kompis med pennan om och om igen. Till slut säger Alex: Det där ljudet börjar gå mig på nerverna.",
+      "definition": "Att irritera eller störa någon så att personen blir less eller besvärad.",
+      "example": "Det höga pipet gick mig på nerverna när jag försökte koncentrera mig.",
+      "reveal": [
+        {
+          "title": "Alex försöker läsa",
+          "text": "Ett upprepat knackande stör koncentrationen."
+        },
+        {
+          "title": "Ljudet irriterar",
+          "text": "Alex blir less på ljudet och kan be kompisen att sluta på ett vänligt sätt."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att irritera eller störa någon så att personen blir less eller besvärad.",
+          "correct": true
+        },
+        {
+          "label": "Att få någon att bli lugn och avkopplad.",
+          "correct": false
+        },
+        {
+          "label": "Att göra någon glad genom en trevlig överraskning.",
+          "correct": false
+        },
+        {
+          "label": "Att göra någon hungrig före middagen.",
+          "correct": false
+        },
+        {
+          "label": "Att hjälpa någon att koncentrera sig bättre.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0055",
+      "phrase": "Tur i oturen",
+      "scene": "Mira tappar sin vattenflaska på väg till skolan. En kompis hittar den strax efteråt. Vilken tur i oturen, säger Mira.",
+      "definition": "Att något lyckligt händer mitt i en situation där något har gått fel.",
+      "example": "Jag missade bussen men fick skjuts hem av en granne. Det var tur i oturen.",
+      "reveal": [
+        {
+          "title": "Flaskan försvinner",
+          "text": "Mira råkar tappa något som hon behöver."
+        },
+        {
+          "title": "En lycklig vändning",
+          "text": "Kompisen hittar flaskan. Det som gick fel fick ändå ett bra inslag."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att något lyckligt händer mitt i en situation där något har gått fel.",
+          "correct": true
+        },
+        {
+          "label": "Att allt går bra utan att något först har gått fel.",
+          "correct": false
+        },
+        {
+          "label": "Att flera dåliga saker händer utan någon ljuspunkt.",
+          "correct": false
+        },
+        {
+          "label": "Att göra en plan som alltid fungerar perfekt.",
+          "correct": false
+        },
+        {
+          "label": "Att ge upp för att något är svårt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
     }
   ]
 }

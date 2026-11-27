@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "41 uttryck med två redaktionellt skrivna uppdrag: välj rätt mening och sätt händelser i ordning.",
+  "description": "53 uttryck med två redaktionellt skrivna uppdrag: välj rätt mening och sätt händelser i ordning.",
   "missions": [
     {
       "id": "ut-0001",
@@ -944,6 +944,282 @@
         "Pappa förklarar att ett köp utan att veta innehållet är en risk."
       ],
       "hint": "Fundera på vad köparen får veta om varan innan den betalas."
+    },
+    {
+      "id": "ut-0044",
+      "sentences": [
+        {
+          "label": "Jag tappade tråden när det plötsligt blev ett avbrott mitt i min redovisning.",
+          "correct": true
+        },
+        {
+          "label": "Jag tappade tråden eftersom jag kom ihåg varje steg och berättade allt utan problem.",
+          "correct": false
+        },
+        {
+          "label": "Han tappade tråden betyder att han talade så lågt att ingen kunde höra honom.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Milo börjar berätta om helgens utflykt.",
+        "Telefonen ringer mitt i berättelsen.",
+        "Efter avbrottet har Milo glömt var han var i berättelsen."
+      ],
+      "hint": "Tänk på vad som händer när en tanke eller berättelse avbryts."
+    },
+    {
+      "id": "ut-0045",
+      "sentences": [
+        {
+          "label": "Jag skrev upp tiderna och packade väskan, så nu har jag koll på läget.",
+          "correct": true
+        },
+        {
+          "label": "Jag har koll på läget eftersom jag inte vet vad som händer eller vad jag ska göra.",
+          "correct": false
+        },
+        {
+          "label": "Hon har koll på läget betyder att hon måste bestämma över alla i gruppen.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läraren skickar ut planen för klassens utflykt.",
+        "Noor läser tiderna och packar sin ryggsäck.",
+        "Noor kan nu förklara var och när klassen ska samlas."
+      ],
+      "hint": "Fundera på hur bra personen känner till planen och situationen."
+    },
+    {
+      "id": "ut-0046",
+      "sentences": [
+        {
+          "label": "När jag lovade att ordna hela festen ensam tog jag mig vatten över huvudet.",
+          "correct": true
+        },
+        {
+          "label": "Jag tog mig vatten över huvudet eftersom jag valde en uppgift som var lätt och lagom stor.",
+          "correct": false
+        },
+        {
+          "label": "Han tog sig vatten över huvudet betyder att han blev färdig i god tid med allt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Ari lovar att göra flera stora uppgifter samma kväll.",
+        "Han börjar arbeta och märker att tiden inte räcker.",
+        "Han inser att han behöver dela upp arbetet eller be om hjälp."
+      ],
+      "hint": "Tänk på skillnaden mellan vad någon lovar att göra och vad personen faktiskt kan hinna med."
+    },
+    {
+      "id": "ut-0047",
+      "sentences": [
+        {
+          "label": "Vi gick till biblioteket och lämnade in brevet på vägen, så vi slog två flugor i en smäll.",
+          "correct": true
+        },
+        {
+          "label": "Jag slog två flugor i en smäll genom att glömma båda mina ärenden.",
+          "correct": false
+        },
+        {
+          "label": "Hon slog två flugor i en smäll betyder att hon gjorde samma uppgift två gånger utan anledning.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Mira behöver ordna två olika ärenden.",
+        "Hon märker att båda platserna ligger längs samma väg.",
+        "Under en och samma promenad blir båda ärendena klara."
+      ],
+      "hint": "Fundera på om en enda insats kan ge två användbara resultat."
+    },
+    {
+      "id": "ut-0048",
+      "sentences": [
+        {
+          "label": "Jag har något på hjärtat som jag gärna vill berätta för dig när vi kan prata i lugn och ro.",
+          "correct": true
+        },
+        {
+          "label": "Jag har något på hjärtat betyder att jag inte har någonting jag vill säga.",
+          "correct": false
+        },
+        {
+          "label": "Han hade något på hjärtat eftersom han ville springa ett varv runt huset men inte prata.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Alex funderar på något som känns viktigt.",
+        "Alex väntar tills pappa har tid att lyssna.",
+        "Alex frågar om de kan prata en stund."
+      ],
+      "hint": "Tänk på att vilja dela en viktig tanke eller känsla med någon."
+    },
+    {
+      "id": "ut-0049",
+      "sentences": [
+        {
+          "label": "Jag gav en hjälpande hand när min kompis skulle förstå den svåra spelregeln.",
+          "correct": true
+        },
+        {
+          "label": "Jag gav en hjälpande hand genom att lämna min kompis ensam med allt arbete.",
+          "correct": false
+        },
+        {
+          "label": "Hon gav en hjälpande hand betyder att hon bara vinkade och sedan gick sin väg.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Kim upptäcker att det finns många böcker att bära.",
+        "Kompisen frågar om Kim vill ha hjälp.",
+        "De delar på böckerna och bär in dem tillsammans."
+      ],
+      "hint": "Fundera på om någon gör det lättare för en annan att klara en uppgift."
+    },
+    {
+      "id": "ut-0050",
+      "sentences": [
+        {
+          "label": "Han hade tänkt hålla ett tal men fick kalla fötter när det snart var hans tur.",
+          "correct": true
+        },
+        {
+          "label": "Hon fick kalla fötter eftersom hon blev allt säkrare på att hon ville delta.",
+          "correct": false
+        },
+        {
+          "label": "Han fick kalla fötter betyder att han redan hade avslutat sitt framträdande och var nöjd.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Sam anmäler sig till ett framträdande.",
+        "När det snart är Sams tur börjar han tveka.",
+        "Sam funderar på om han verkligen vill sjunga solo."
+      ],
+      "hint": "Tänk på hur känslan kan förändras precis före något man redan bestämt sig för att göra."
+    },
+    {
+      "id": "ut-0051",
+      "sentences": [
+        {
+          "label": "Hon trivs som fisken i vattnet i kören där hon får sjunga med sina vänner.",
+          "correct": true
+        },
+        {
+          "label": "Han trivs som fisken i vattnet eftersom han känner sig obekväm och bara vill gå hem.",
+          "correct": false
+        },
+        {
+          "label": "Hon trivs som fisken i vattnet betyder att hon måste vara i en bassäng för att uttrycket ska passa.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Noor går till sin första träff i teatergruppen.",
+        "Hon märker att hon tycker om lekarna och känner sig trygg.",
+        "Efter träffen längtar hon redan till nästa gång."
+      ],
+      "hint": "Tänk på var personen känner sig hemma och gärna vill vara."
+    },
+    {
+      "id": "ut-0052",
+      "sentences": [
+        {
+          "label": "Det märkliga meddelandet satte myror i huvudet på oss när vi försökte förstå det.",
+          "correct": true
+        },
+        {
+          "label": "Den tydliga förklaringen satte myror i huvudet på mig eftersom allt genast blev lätt att förstå.",
+          "correct": false
+        },
+        {
+          "label": "Han satte myror i huvudet på mig betyder att han fick mig att sluta fundera helt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läraren visar en gåta med en märklig ledtråd.",
+        "Lo märker att det finns flera möjliga förklaringar.",
+        "Lo blir förbryllad och fortsätter tänka på gåtan."
+      ],
+      "hint": "Fundera på vad som händer när någon får något svårt eller märkligt att tänka på."
+    },
+    {
+      "id": "ut-0053",
+      "sentences": [
+        {
+          "label": "Jag hade huvudet i molnen när jag fantiserade om lovet och missade instruktionen.",
+          "correct": true
+        },
+        {
+          "label": "Jag hade huvudet i molnen eftersom jag lyssnade noga och hörde precis allt som sades.",
+          "correct": false
+        },
+        {
+          "label": "Hon har huvudet i molnen betyder att hon alltid vet exakt vad som händer runt omkring.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läraren börjar förklara dagens uppgift.",
+        "Milo försvinner in i en dagdröm om rymden.",
+        "När uppgiften börjar märker Milo att han missat instruktionen."
+      ],
+      "hint": "Tänk på skillnaden mellan att lyssna på det som händer och att drömma sig bort."
+    },
+    {
+      "id": "ut-0054",
+      "sentences": [
+        {
+          "label": "Det upprepade knackandet gick mig på nerverna när jag försökte göra läxan.",
+          "correct": true
+        },
+        {
+          "label": "Ljudet gick mig på nerverna eftersom det fick mig att känna mig helt lugn och nöjd.",
+          "correct": false
+        },
+        {
+          "label": "Hon gick mig på nerverna betyder att hon hjälpte mig att koncentrera mig bättre.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Alex sätter sig för att läsa en bok.",
+        "Kompisen knackar med pennan många gånger.",
+        "Alex blir störd av ljudet och ber kompisen att sluta."
+      ],
+      "hint": "Fundera på om något återkommande stör personen eller får den att bli irriterad."
+    },
+    {
+      "id": "ut-0055",
+      "sentences": [
+        {
+          "label": "Det började regna, men vi hann hitta ett tak att stå under. Det var tur i oturen.",
+          "correct": true
+        },
+        {
+          "label": "Det var tur i oturen eftersom ingenting alls hade gått fel och allt var precis som planerat.",
+          "correct": false
+        },
+        {
+          "label": "Han hade tur i oturen betyder att en dålig sak hände och ingenting blev bättre på något sätt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Mira upptäcker att vattenflaskan har försvunnit.",
+        "En kompis hittar flaskan längs skolvägen.",
+        "Mira får tillbaka den trots att hon hade tappat den."
+      ],
+      "hint": "Leta efter både något som gick fel och något lyckligt som hände i samma situation."
     }
   ]
 }

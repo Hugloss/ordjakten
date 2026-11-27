@@ -8,8 +8,8 @@ const base=path.resolve(__dirname,'../public');
 const comics=JSON.parse(fs.readFileSync(path.join(base,'data/comics.json'),'utf8'));
 const expressions=JSON.parse(fs.readFileSync(path.join(base,'data/expressions.json'),'utf8'));
 
-test('all 41 phrases have exactly three readable comic scenes',()=>{
-  assert.equal(Object.keys(comics.stories).length,41);
+test('all 53 phrases have exactly three readable comic scenes',()=>{
+  assert.equal(Object.keys(comics.stories).length,53);
   assert.deepEqual(api.validate(comics,expressions),[]);
   for(const expr of expressions.expressions){
     const story=comics.stories[expr.id];

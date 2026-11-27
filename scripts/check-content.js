@@ -46,7 +46,7 @@ for(const [emoji,image] of Object.entries(comics.iconPaths)) {
   const filepath=path.join(root,image.slice(2));
   if(!fs.existsSync(filepath) || !fs.readFileSync(filepath).subarray(1,4).equals(Buffer.from('PNG')))issues.push('Missing or invalid comic picture: '+emoji);
 }
-if(expressionBank.expressions.length!==41)issues.push('Expected 41 curated expressions');
+if(expressionBank.expressions.length!==53)issues.push('Expected 53 curated expressions');
 if(JSON.stringify(expressionBank)!==JSON.stringify(browserExpressions))issues.push('Expression JS/JSON bank diverged');
 function fail(msg){issues.push(msg);}
 if(bank.words.length!==121)fail(`Expected 121 historical words, found ${bank.words.length}`);
@@ -81,4 +81,4 @@ for(const level of ['easy','medium','hard','exam']){
  }
 }
 if(issues.length){process.stderr.write(issues.map(x=>'✗ '+x).join('\n')+'\n');process.exitCode=1;}
-else process.stdout.write('✓ 121 words + 41 expressions + 129 everyday scenes + 96 comparisons + 64 inference scenes across four pairs + 41 comics and 123 task variations validated.\n');
+else process.stdout.write('✓ 121 words + 53 expressions + 129 everyday scenes + 96 comparisons + 64 inference scenes across four pairs + 53 comics and 159 task variations validated.\n');

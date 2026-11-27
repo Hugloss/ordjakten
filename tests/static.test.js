@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v55-everyday-expressions'));
+  assert.ok(worker.includes('v56-everyday-language'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -429,7 +429,7 @@ test('everyday expressions replace niche animal nicknames without reusing retire
  const missions=require('../public/data/missions.json').missions;
  const surprises=require('../public/data/surprises.json').challenges;
  const comics=require('../public/data/comics.json').stories;
- assert.equal(entries.length,41);
+ assert.equal(entries.length,53);
  for(const id of ['ut-0029','ut-0031']){
    assert.ok(!entries.some(x=>x.id===id));
    assert.ok(!missions.some(x=>x.id===id));
@@ -440,4 +440,22 @@ test('everyday expressions replace niche animal nicknames without reusing retire
  for(const phrase of ['Ha fjärilar i magen','Tyst som en mus','Hungrig som en varg','Stark som en oxe','Envis som en åsna','Listig som en räv','Nattuggla','Bokmal','Arbetsmyra','Pigg som en mört','Ana ugglor i mossen','Köpa grisen i säcken'])
    assert.ok(phrases.includes(phrase));
  assert.equal(new Set(phrases).size,phrases.length);
+});
+
+test('the everyday-language expansion contains twelve new distinct fully authored entries',()=>{
+ const entries=require('../public/data/expressions.json').expressions;
+ const missions=require('../public/data/missions.json').missions;
+ const surprises=require('../public/data/surprises.json').challenges;
+ const comics=require('../public/data/comics.json').stories;
+ const phrases=['Tappa tråden','Ha koll på läget','Ta sig vatten över huvudet','Slå två flugor i en smäll','Ha något på hjärtat','Ge en hjälpande hand','Få kalla fötter','Trivas som fisken i vattnet','Sätta myror i huvudet','Ha huvudet i molnen','Gå på nerverna','Tur i oturen'];
+ for(const [i,phrase] of phrases.entries()){
+   const id='ut-'+String(44+i).padStart(4,'0');
+   const item=entries.find(x=>x.id===id);
+   assert.equal(item.phrase,phrase);
+   assert.ok(item.scene&&item.definition&&item.example);
+   assert.ok(comics[id]);
+   assert.ok(missions.some(x=>x.id===id));
+   assert.ok(surprises.some(x=>x.id===id));
+ }
+ assert.equal(new Set(entries.map(x=>x.phrase.toLocaleLowerCase('sv-SE'))).size,entries.length);
 });
