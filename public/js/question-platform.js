@@ -32,6 +32,33 @@
       }
     };
   }
+  function orderingEvaluator(){
+    return {
+      validate(question){
+        const options=question.responseSpec.options;
+        assert(Array.isArray(options)&&options.length>=2&&options.length<=12,
+          'ordering needs 2–12 options');
+        const ids=new Set();
+        for(const option of options){
+          assert(obj(option)&&validId(option.id)&&validText(option.label),'Invalid ordering option');
+          assert(!ids.has(option.id),'Duplicate ordering option ID');
+          ids.add(option.id);
+        }
+        const expected=question.assessmentSpec.correctOrder;
+        assert(question.assessmentSpec.kind==='ordering'&&Array.isArray(expected)&&
+          expected.length===options.length&&new Set(expected).size===ids.size&&
+          expected.every(id=>ids.has(id)),'Invalid ordering answer');
+      },
+      grade(question,response){
+        const expected=question.assessmentSpec.correctOrder;
+        const ids=new Set(question.responseSpec.options.map(row=>row.id));
+        if(!Array.isArray(response)||response.length!==expected.length||
+          new Set(response).size!==expected.length||response.some(id=>!ids.has(id)))
+          return {status:'invalid'};
+        return {status:response.every((id,index)=>id===expected[index])?'correct':'incorrect'};
+      }
+    };
+  }
   function numericEvaluator(){
     return {
       validate(question){
@@ -55,7 +82,8 @@
   }
   function createRegistry(){
     const banks=new Map();
-    const evaluators=new Map([['single-choice',choiceEvaluator()],['numeric',numericEvaluator()]]);
+    const evaluators=new Map([['single-choice',choiceEvaluator()],['numeric',numericEvaluator()],
+      ['ordering',orderingEvaluator()]]);
     function registerEvaluator(kind,evaluator){
       assert(validId(kind)&&obj(evaluator)&&typeof evaluator.validate==='function'&&
         typeof evaluator.grade==='function','Invalid evaluator');
@@ -128,9 +156,10 @@
     }
     function present(ref,{seed=0,instanceId=null}={}){
       const question=resolve(ref);
-      const response=question.responseSpec.kind==='single-choice'?
-        {kind:'single-choice',options:seededOrder(question.responseSpec.options,seed,question.ref)}:
-        {kind:question.responseSpec.kind};
+      const kind=question.responseSpec.kind;
+      const response=kind==='single-choice'||kind==='ordering'?
+        {kind,options:seededOrder(question.responseSpec.options,seed,question.ref)}:
+        {kind};
       return {
         instanceId:instanceId||question.ref.bankId+'/'+question.ref.id+'/'+question.ref.revision+'/'+seed,
         ref:{...question.ref},skillIds:[...question.skillIds],
