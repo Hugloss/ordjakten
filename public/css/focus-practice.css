@@ -28,7 +28,7 @@
 .focus-explain {border-left:5px solid var(--accent-line);line-height:1.65}
 .focus-explain h3 {font-size:26px;margin-bottom:9px;overflow-wrap:anywhere}
 .focus-explain p {line-height:1.7}
-.focus-why {background:var(--surface-2);border:1px solid var(--border);padding:13px;border-radius:10px}
+.focus-why {background:var(--surface-2);border:1px solid var(--border);padding:13px;border-radius:10px;white-space:pre-line}
 .focus-finish {text-align:center;display:grid;gap:13px}
 .focus-finish h2{font-size:28px;margin:0}
 .focus-finish p{line-height:1.6;margin:0}

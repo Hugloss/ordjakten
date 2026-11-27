@@ -1,5 +1,11 @@
 # Ordjakten – ändringslogg
 
+## Efter livekontroll – kortare och tydligare läsflöde
+
+- Fristående Aha säger **Välj svar**, även när alternativen är handlingar i samma berättelse. Vardagsuttryckens lässteg påminner om att samma uttryck kan betyda något annat i en annan situation.
+- Fokusövningens rättelse visar det korta svaret. Uppgiftens förklaring, motexempel och hjälp att fråga visas som separata stycken; ett extra exempel från grundberättelsen upprepas inte ovanför dem.
+- Offlinecache v69. Ändringarna följer den visuella kontrollen av PR #15 på den publicerade sidan.
+
 ## Vardagsuttryck och läsbara teman
 
 - Sex uttryck som barn kan höra i vardagen: Hoppa i overallen, Hoppa ner från pallen, Släng på dig jackan, Slå dig ner, Häng med och Hoppa över. Varje uttryck har skrivna situationer, förklaringar, motexempel, serie och tre uppgiftsvarianter.
