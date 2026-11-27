@@ -227,3 +227,15 @@ test('the treasure trail shows four legible steps without revealing future place
   assert.equal(finishedSteps.filter(node=>node.attributes['aria-current']==='step').length,0);
   assert.equal(finishedSteps.filter(node=>text(node).includes('Skatt hittad')).length,4);
 });
+
+test('secret letter hides unseen lines and reveals finished message',()=>{
+ const m=map();m.letter={count:0,total:4,fragments:[]};
+ const find=h=>descendants(h).find(n=>n.className==='treasure-letter');
+ let box=find(render(m));assert.equal(descendants(box).filter(n=>n.tag==='li').length,4);
+ assert.match(text(box),/Brevrad 4 är fortfarande gömd/);
+ m.letter={count:2,total:4,fragments:['Ett hemligt brev.','Vi måste läsa noga.']};
+ box=find(render(m));assert.match(text(box),/Vi måste läsa noga/);
+ assert.match(text(box),/Brevrad 3 är fortfarande gömd/);
+ m.letter={count:4,total:4,fragments:['Ett brev.','En ledtråd.','En plats.','Alla hittade!']};
+ box=find(render(m));assert.match(text(box),/Hela brevet är hittat/);assert.ok(!text(box).includes('fortfarande gömd'));
+});

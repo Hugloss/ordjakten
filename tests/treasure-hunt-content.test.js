@@ -116,3 +116,10 @@ test('the offline browser export contains the same immutable authored content',(
   for(const rows of Object.values(Treasure.DATA))
     for(const row of rows)assert.ok(Object.isFrozen(row.lookFor));
 });
+
+test('each map has four short authored letter fragments',()=>{
+ assert.deepEqual(Object.keys(Treasure.LETTER_FRAGMENTS),A.WORLD_IDS);
+ for(const id of A.WORLD_IDS){const parts=Treasure.LETTER_FRAGMENTS[id];assert.equal(parts.length,4);
+  for(const part of parts)assert.ok(part.length>=25&&part.length<=120&&!/[<>]/.test(part));
+  assert.equal(new Set(parts).size,4);}
+});

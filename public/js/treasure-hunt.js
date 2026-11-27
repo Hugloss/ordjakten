@@ -23,9 +23,10 @@
     const worlds={},errors=[];
     for(const id of adventures.WORLD_IDS){
       const world=adventures.world(id),rows=data?.DATA?.[id],chapters=story?.DATA?.[id];
-      const smallFind=data?.SMALL_FINDS?.[id];
+      const smallFind=data?.SMALL_FINDS?.[id],letter=data?.LETTER_FRAGMENTS?.[id];
       if(!Array.isArray(rows)||rows.length!==4||!Array.isArray(chapters)||chapters.length!==4||
-        world.stops.length!==4||!text(smallFind?.name)||!text(smallFind?.emoji)){
+        world.stops.length!==4||!text(smallFind?.name)||!text(smallFind?.emoji)||
+        !Array.isArray(letter)||letter.length!==4||letter.some(part=>!text(part)||part.length>120)){
         errors.push(id);continue;
       }
       const places=[];
@@ -51,7 +52,7 @@
       if(new Set(places.map(place=>place.clue)).size!==4||new Set(places.map(place=>place.description)).size!==4){
         errors.push(id+':duplicates');continue;
       }
-      worlds[id]={id,title:world.title,emoji:world.emoji,places,smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
+      worlds[id]={id,title:world.title,emoji:world.emoji,places,letter:[...letter],smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
     }
     return {worlds,errors};
   }
@@ -140,7 +141,8 @@
       complete:progress.found.length===4,finderTotal:worlds.reduce((sum,row)=>sum+row.count,0),worlds,
       clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,
         lookFor:[...cluePlace.lookFor],hintShown:progress.hints.includes(target)}:null,
-      places,collection:progress.found.map(index=>({index,place:world.places[index].name,...world.places[index].treasure})),
+      places,letter:{count:progress.found.length,total:4,fragments:world.letter.slice(0,progress.found.length)},
+      collection:progress.found.map(index=>({index,place:world.places[index].name,...world.places[index].treasure})),
       smallFinds:progress.smallFinds.map(index=>({index,place:world.places[index].name,...world.smallFind})),visit};
   }
 

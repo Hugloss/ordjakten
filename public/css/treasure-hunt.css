@@ -115,3 +115,12 @@ html[data-contrast='high'] .treasure-place,html[data-contrast='high'] .treasure-
 .treasure-journey-note{margin:.8rem 0 0;line-height:1.55}
 @media(max-width:440px){.treasure-journey-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(forced-colors:active){.treasure-journey-step,.treasure-journey-icon{border-color:CanvasText}.treasure-journey-current{outline:2px solid Highlight}}
+
+/* Story fragments have opaque, high-contrast reading surfaces. */
+.treasure-letter{margin:0 0 1rem;padding:1rem 1.1rem;border:2px solid var(--border);border-radius:1rem;background:var(--surface);color:var(--text)}
+.treasure-letter-parts{display:grid;gap:.55rem;padding:0;margin:.7rem 0 0;list-style:none}
+.treasure-letter-part{display:flex;align-items:flex-start;gap:.65rem;min-width:0;padding:.7rem .8rem;border:2px dashed var(--border);border-radius:.75rem;background:var(--surface-2);color:var(--text);line-height:1.55;overflow-wrap:anywhere}
+.treasure-letter-open{border-style:solid;border-color:var(--accent-line)}
+.treasure-letter-symbol{flex-shrink:0}
+.treasure-letter-unlocked{margin:.7rem 0;padding:.8rem;border:2px solid var(--accent-line);border-radius:.75rem;background:var(--surface);color:var(--text);text-align:left;font-weight:750}
+@media(forced-colors:active){.treasure-letter,.treasure-letter-part,.treasure-letter-unlocked{border-color:CanvasText}.treasure-letter-open{outline:2px solid Highlight}}
