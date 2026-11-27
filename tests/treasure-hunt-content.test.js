@@ -106,6 +106,32 @@ test('similar music locations expose the distinction used by their clues',()=>{
   assert.ok(!rows[0].description.includes('mikrofon'));
 });
 
+test('all twelve new cases have independent two-clue evidence and feedback for partial matches',()=>{
+  assert.deepEqual(Object.keys(Treasure.TRANSFERS),A.WORLD_IDS);
+  const titles=new Set(),intros=new Set();
+  for(const id of A.WORLD_IDS){
+    const task=Treasure.TRANSFERS[id];
+    assert.ok(task.title.length>=10&&task.title.length<=80,id);
+    assert.ok(task.intro.length>=20&&task.intro.length<=180,id);
+    assert.equal(task.clues.length,2,id);
+    assert.equal(new Set(task.clues).size,2,id);
+    assert.ok(task.clues.every(clue=>clue.length>=20&&clue.length<=140),id);
+    assert.equal(task.choices.length,3,id);
+    assert.equal(new Set(task.choices).size,3,id);
+    assert.ok(task.choices.every(choice=>choice.length>=20&&choice.length<=175),id);
+    assert.ok(Number.isInteger(task.target)&&task.target>=0&&task.target<3,id);
+    assert.equal(task.wrong.length,3,id);
+    task.wrong.forEach((feedback,index)=>{
+      if(index===task.target)assert.equal(feedback,null,id);
+      else assert.ok(feedback.length>=20&&feedback.length<=200,id);
+    });
+    assert.ok(task.why.length>=30&&task.why.length<=200,id);
+    assert.ok(Object.isFrozen(task.clues)&&Object.isFrozen(task.choices)&&Object.isFrozen(task.wrong),id);
+    titles.add(task.title);intros.add(task.intro);
+  }
+  assert.equal(titles.size,12);assert.equal(intros.size,12);
+});
+
 test('the offline browser export contains the same immutable authored content',()=>{
   const context=vm.createContext({});
   vm.runInContext(fs.readFileSync(require.resolve('../public/js/treasure-hunt-data'),'utf8'),context);
