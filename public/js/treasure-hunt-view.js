@@ -130,6 +130,28 @@
     }
     if(controls.children.length)box.append(controls);
   }
+  // The journey shows progress, not future destinations or answers.
+  function treasureTrail(el,model){
+    const trail=el('section','treasure-journey');
+    trail.setAttribute('aria-label','Din skattstig');
+    trail.append(el('h2','','Din skattstig'));
+    const list=el('ol','treasure-journey-steps');
+    for(let step=0;step<model.total;step++){
+      const done=step<model.count,now=!model.complete&&step===model.count;
+      const item=el('li','treasure-journey-step'+(done?' treasure-journey-done':now?' treasure-journey-current':''));
+      const icon=el('span','treasure-journey-icon',done?'✓':now?'🧭':'?');
+      icon.setAttribute('aria-hidden','true');
+      const label=done?'Skatt hittad':now?'Nästa ledtråd':'Inte hittad än';
+      item.append(icon,el('span','',`Steg ${step+1}: ${label}`));
+      if(now)item.setAttribute('aria-current','step');
+      list.append(item);
+    }
+    trail.append(list);
+    trail.append(el('p','treasure-journey-note',model.complete?
+      'Alla fyra skatter är hittade. Ditt kartmärke finns i skattboken.':
+      'Följ en ledtråd i taget. Du får tänka och prova igen utan tidspress.'));
+    return trail;
+  }
   function mapView(host,el,model,options,wordStars){
     const intro=el('header','treasure-map-heading');
     const copy=el('div');
@@ -143,7 +165,7 @@
       for(const world of worlds){const option=el('option','',`${world.emoji} ${world.title} · ${world.count} av ${world.total} skatter`);option.value=world.id;option.selected=world.id===model.id;select.append(option);}
       picker.append(label,select);intro.append(picker);
     }
-    host.append(intro,scoreStrip(el,model,wordStars));
+    host.append(intro,scoreStrip(el,model,wordStars),treasureTrail(el,model));
     const clue=el('section','treasure-clue');clue.setAttribute('aria-labelledby','treasure-clue-title');
     if(model.clue){
       const heading=el('h2','',`Ledtråd ${number(model.count)+1} av ${number(model.total)}`);heading.id='treasure-clue-title';
