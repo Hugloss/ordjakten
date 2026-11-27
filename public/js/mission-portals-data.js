@@ -1005,7 +1005,7 @@
           "scene": "Tre teckningar visar olika platser under vattnet.",
           "clues": [
             "Flera små fiskar simmar tillsammans.",
-            "Nedanför fiskarna växer koraller."
+            "Här växer koraller under vattnet."
           ],
           "choices": [
             "Flera fiskar nära en stor sten utan koraller.",
@@ -1321,7 +1321,7 @@
           "scene": "Tre dörrar har olika märken.",
           "clues": [
             "Dörren har ett fönster.",
-            "En liten stjärna finns på glaset."
+            "En liten stjärna finns på dörren."
           ],
           "choices": [
             "Fönster med måne på glaset.",
@@ -1503,7 +1503,7 @@
           "scene": "En tecknad bana visar tre olika vägar.",
           "clues": [
             "Vägen går förbi en bro.",
-            "Efter bron finns ett stort träd."
+            "På vägen finns också ett stort träd."
           ],
           "choices": [
             "Bro följd av ett stort träd.",
@@ -1799,7 +1799,7 @@
           "scene": "På en lapp finns två detaljer från resan.",
           "clues": [
             "Här finns snö på en hög bergstopp.",
-            "En klar sjö ligger nedanför berget."
+            "På platsen finns också en klar sjö."
           ],
           "choices": [
             "Snöigt berg med en klar sjö nedanför.",
@@ -1818,8 +1818,8 @@
           "title": "Vykortet från ön",
           "scene": "Nästa kort visar en plats vid havet.",
           "clues": [
-            "En liten fyr står på ön.",
-            "Runt ön syns blått hav."
+            "Här finns en liten fyr.",
+            "Platsen är en ö omgiven av hav."
           ],
           "choices": [
             "Fyr på en kulle långt från vatten.",
@@ -1838,8 +1838,8 @@
           "title": "Berättarens sista kort",
           "scene": "På sista kortet finns en stad från sagan.",
           "clues": [
-            "Ett torg har en fontän.",
-            "Bredvid fontänen växer ett stort träd."
+            "På torget finns en fontän.",
+            "Där finns också ett stort träd."
           ],
           "choices": [
             "Fontän på torg utan något träd.",
@@ -1893,7 +1893,7 @@
           "scene": "Vännerna ritar tre broar mellan två klosstorn.",
           "clues": [
             "Bron går från ett torn till ett annat.",
-            "Under bron finns en blå båge."
+            "På bilden syns en blå båge."
           ],
           "choices": [
             "En bro mellan torn utan blå båge.",
@@ -1967,7 +1967,7 @@
           "scene": "Nästa vän har lämnat en tecknad önskelapp.",
           "clues": [
             "Vännen vill leka med bollar.",
-            "Bollarna ska vara lila."
+            "Leksakerna ska vara lila."
           ],
           "choices": [
             "Röda bollar på ett lekbord.",
@@ -1986,8 +1986,8 @@
           "title": "Den nyfikna bokvännen",
           "scene": "Den sista varelsen vill hitta sin läsplats.",
           "clues": [
-            "Där finns en hylla med böcker.",
-            "En liten lykta lyser bredvid hyllan."
+            "Här finns en hylla med böcker.",
+            "En liten lykta lyser nära läsplatsen."
           ],
           "choices": [
             "Bokhylla utan lykta.",
