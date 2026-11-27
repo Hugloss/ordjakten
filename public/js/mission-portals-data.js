@@ -3619,7 +3619,7 @@
             "Meningen förklarar vad vännen tackar för."
           ],
           "choices": [
-            "TACK!",
+            "TACK så mycket!",
             "Du hjälpte mig med boken!",
             "TACK för att du hjälpte mig med boken!"
           ],
