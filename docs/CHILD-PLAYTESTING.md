@@ -58,6 +58,31 @@ Se `docs/READING-FLOW.md` för ett barnprovtest utan hjälp i svarssituationen. 
 ## Nytt provspelningstest
 Observera utan att vägleda: hittar barnet berättelsen på första skärmen, läser det betydelsen innan Aha-frågan och förstår det varför rätt exempel passar? Vid första fel ska förklaringen återkomma. Vid ett andra fel visas facit pedagogiskt, utan att ett gissat svar får räknas som självständig förståelse. Prova mobil, dator, ljus/mörk, lång berättelse och Testa dig. Ingen lästid lagras om barnet.
 
+## Provspelning av skattkartans nya mysterier
+
+Börja med **Följ skattkartan** och en skatt. Låt barnet själv hitta rätt
+plats i mysteriet, välja de två bevisen och berätta *varför* med egna ord.
+Öppna inte facit eller berätta det rätta svaret innan barnet fått fundera.
+
+Låt barnet därefter själv välja om det vill öppna **Prova ett nytt fall**.
+Exempel: bussen till badhuset. Fråga inte bara vilken buss som är rätt utan:
+
+- Vad gör att det andra bussvalet inte passar **båda** detaljerna?
+- Kan barnet formulera: ”Jag valde den därför att … **och** …”?
+- Förstår barnet varför ett alternativ som passar ett spår ändå är fel?
+- Efter ett fel, läser barnet återkopplingen och testar själv igen?
+- Hittar barnet uppläsning och hjälp? Är texten lättläst på mobil?
+- Förblir det frivilliga nya fallet stängt tills barnet öppnar det?
+
+Kontrollera i ljus/mörk/högkontrast, med tangentbord, 320 px mobil och
+utan ljud. Kontrollera omladdning efter ett felsvar och efter rätt svar.
+Skatter, ordstjärnor och ordresultat ska inte ändras av det nya fallet.
+
+Dokumentera observationer som *läser ledtrådarna, kombinerar två villkor,
+förklarar eget svar, förstår varför annat alternativ faller bort*.
+Automatiska tester verifierar funktion och tillstånd men kan inte visa
+att barnet faktiskt förstår resonemanget.
+
 ## Fördjupade ordförklaringar: fem ord åt gången
 
 Välj fem befintliga, vanliga ord, gärna från olika områden: exempelvis
