@@ -563,7 +563,9 @@
     // Validated by star-collection.js at startup, independently of the rolling
     // result list. Preserve absence so older saved rounds can migrate once.
     const starCollection=history.starCollection;
-    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,contextProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,campStories:sanitizeCampStories(history.campStories,storyProgress),confusionProgress,clueProgress,retentionProgress,starCollection};
+    // The treasure module validates its finite place IDs and resumable visit.
+    const treasureHunt=history.treasureHunt;
+    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,contextProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,campStories:sanitizeCampStories(history.campStories,storyProgress),confusionProgress,clueProgress,retentionProgress,starCollection,treasureHunt};
   }
   function applyOutcome(mistakes,id,outcome) {
     const updated={...mistakes};

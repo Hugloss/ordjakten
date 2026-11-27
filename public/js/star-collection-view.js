@@ -60,7 +60,7 @@
     const emblem=el('span','star-collection-emblem','★');emblem.setAttribute('aria-hidden','true');
     const heading=el('div','star-collection-heading');
     heading.append(el(compact?'h3':'h2','','Min stjärnsamling'),
-      el('p','star-collection-total',`${total} ${stars(total)} samlade`));
+      el('p','star-collection-total',`${total} ${stars(total)} ${total===1?'samlad':'samlade'}`));
     header.append(emblem,heading);host.append(header);
     if(!compact)host.append(el('p','star-collection-rules',
       'Ett rätt svar i ordjakten ger en stjärna. Varje fråga kan ge en stjärna, även när du övar vidare.'));

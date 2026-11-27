@@ -11,6 +11,12 @@
   const LIMIT=25;
   const MAX=Number.MAX_SAFE_INTEGER;
   const ID=/^(?:sv|ut)-\d{4,}$/;
+  // These finite task IDs belong to the authored treasure maps. Their stars
+  // join the collection without replacing a child's unfinished ordinary row.
+  const ACTIVITY_IDS=Object.freeze(['forest','space','castle','pirate','ocean','dinosaurs',
+    'garden','unicorn','animals','rainbow','horses','music'].flatMap(world=>
+      [0,1,2,3].map(index=>'treasure:'+world+':'+index)));
+  const activities=new Set(ACTIVITY_IDS);
   const MILESTONES=Object.freeze([
     {id:'spark',at:5,icon:'✨',title:'Första gnistan',description:'En liten stjärna lyser i din samling.'},
     {id:'flower',at:15,icon:'🌼',title:'Stjärnblomman',description:'En blomma av stjärnor har slagit ut.'},
@@ -48,12 +54,16 @@
     const total=count(raw.total)?raw.total:0;
     const serial=count(raw.serial)?raw.serial:0;
     const clean={version:1,total,serial,active:null};
+    const earnedActivities=raw.version===1&&Array.isArray(raw.activities)?
+      [...new Set(raw.activities.filter(id=>typeof id==='string'&&activities.has(id)))]:[];
+    if(earnedActivities.length&&earnedActivities.length<=total)clean.activities=earnedActivities;
     const active=raw.active;
     if(raw.version!==1||!object(active)||!count(raw.total)||!count(raw.serial)||
       serial===0||active.serial!==serial||typeof active.finished!=='boolean'||
       !Array.isArray(active.ids)||active.ids.length<1||active.ids.length>LIMIT||
       active.ids.some(id=>!validId(id))||new Set(active.ids).size!==active.ids.length||
-      !Array.isArray(active.earned)||active.earned.length>active.ids.length||active.earned.length>total)return clean;
+      !Array.isArray(active.earned)||active.earned.length>active.ids.length||
+      active.earned.length+(clean.activities?.length||0)>total)return clean;
     const ids=new Set(active.ids),seen=new Set();
     const earned=[];
     for(const row of active.earned){
@@ -104,6 +114,15 @@
     return {collection:updated,round:summarize(updated,roundId)};
   }
 
+  function awardActivity(raw,key,outcome='right'){
+    const collection=sanitize(raw),earned=collection.activities||[];
+    if(!activities.has(key)||outcome!=='right'||earned.includes(key)||collection.total===MAX)
+      return {collection,added:0,milestones:[]};
+    const total=collection.total+1;
+    return {collection:{...collection,total,activities:[...earned,key]},added:1,
+      milestones:MILESTONES.filter(row=>row.at>collection.total&&row.at<=total).map(row=>({...row,earned:true}))};
+  }
+
   function view(raw){
     const collection=sanitize(raw);
     const milestones=MILESTONES.map(row=>({...row,earned:collection.total>=row.at}));
@@ -113,5 +132,5 @@
       next:next?{...next,remaining:next.at-collection.total,progress:collection.total-previous,goal:next.at-previous}:null,
       completed:milestones.filter(row=>row.earned).length,goalCount:milestones.length};
   }
-  return {LIMIT,MILESTONES,sanitize,begin,award,finish,summarize,view};
+  return {LIMIT,MILESTONES,ACTIVITY_IDS,sanitize,begin,award,awardActivity,finish,summarize,view};
 });

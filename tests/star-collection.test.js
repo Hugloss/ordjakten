@@ -138,3 +138,48 @@ test('model operations do not mutate their callers or expose mutable milestone d
   const display=Stars.view(earned.collection);display.milestones[0].title='Changed';
   assert.notEqual(Stars.view(earned.collection).milestones[0].title,'Changed');
 });
+
+test('authored treasure task stars join the collection without replacing a pending word row',()=>{
+  const started=Stars.begin(Stars.sanitize(),questions);
+  let collection=Stars.award(started.collection,started.roundId,questions[0].id,'answer').collection;
+  const active=JSON.parse(JSON.stringify(collection.active));
+  const before=JSON.stringify(collection);
+  const result=Stars.awardActivity(collection,'treasure:forest:2');
+  assert.equal(JSON.stringify(collection),before);
+  assert.equal(result.added,1);
+  collection=reload(result.collection);
+  assert.equal(collection.total,2);
+  assert.deepEqual(collection.active,active);
+  assert.deepEqual(collection.activities,['treasure:forest:2']);
+  assert.equal(Stars.awardActivity(collection,'treasure:forest:2').added,0);
+  collection=Stars.finish(collection,started.roundId).collection;
+  collection=Stars.award(collection,started.roundId,questions[1].id,'practice').collection;
+  collection=Stars.begin(reload(collection),questions).collection;
+  assert.equal(collection.total,3);
+  assert.deepEqual(collection.activities,['treasure:forest:2']);
+  assert.equal(Stars.awardActivity(collection,'treasure:forest:2').added,0);
+  assert.equal(Stars.awardActivity(collection,'treasure:forest:0').added,1);
+});
+
+test('treasure task awards are finite, reject displayed solutions, and share named milestones',()=>{
+  assert.equal(Stars.ACTIVITY_IDS.length,48);
+  assert.equal(new Set(Stars.ACTIVITY_IDS).size,48);
+  let collection=Stars.sanitize(undefined,[{mode:'train',total:5,right:4,wrong:1,unanswered:0}]);
+  assert.equal(collection.total,4);
+  for(const key of ['treasure:missing:0','treasure:forest:4','treasure:forest:-1','sv-0001',null])
+    assert.equal(Stars.awardActivity(collection,key).added,0);
+  for(const outcome of ['wrong','guided',null,false])
+    assert.equal(Stars.awardActivity(collection,'treasure:forest:0',outcome).added,0);
+  const fifth=Stars.awardActivity(collection,'treasure:forest:0');
+  assert.equal(fifth.added,1);assert.equal(fifth.milestones[0].id,'spark');
+  collection=Stars.sanitize(reload(fifth.collection),[{mode:'train',total:5,right:5}]);
+  assert.equal(collection.total,5,'legacy results are not imported again');
+  for(const key of Stars.ACTIVITY_IDS)collection=Stars.awardActivity(collection,key).collection;
+  assert.equal(collection.total,52);
+  assert.equal(collection.activities.length,48);
+  const final=JSON.stringify(collection);
+  for(const key of Stars.ACTIVITY_IDS)collection=Stars.awardActivity(reload(collection),key).collection;
+  assert.equal(JSON.stringify(collection),final);
+  assert.deepEqual(Stars.sanitize({...collection,activities:['treasure:forest:0','treasure:forest:0','private']}).activities,
+    ['treasure:forest:0']);
+});

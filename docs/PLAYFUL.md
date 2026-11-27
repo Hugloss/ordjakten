@@ -25,7 +25,68 @@ radens återstående frågor även efter en sidomladdning.
 
 Fristående fokus, Aha, ordverkstad och berättelseuppdrag har kvar sina egna
 övnings- och minnesmärkesregler. Denna samling gäller huvudomgången,
-dess Aha-steg och den uttryckliga fortsättningen av stjärnraden.
+dess Aha-steg, den uttryckliga fortsättningen av stjärnraden och de
+egna rätta svaren på skattkartans orduppgifter.
+
+## Skattkartan: ledtråd, plats och orduppgift
+
+Startsidan har knappen **Följ skattkartan**. Kartan använder de tolv
+befintliga världarna med fyra platser vardera. Alla fyra platser går att
+välja från början. Varje plats har ett namn, en bildsymbol och en kort
+beskrivning av det som finns där. Barnet behöver inte tolka enbart färg,
+emoji eller okända karttecken.
+
+En ledtråd beskriver en bestämd plats utan att säga dess namn. Exempel:
+**Sök efter ett stort träd där en uggla håller ordning på böcker.** Barnet
+jämför ledtråden med platsernas beskrivningar och väljer en plats.
+En extra ledtråd är frivillig och minskar inte den möjliga belöningen.
+
+Besöket innehåller den orduppgift som redan är skriven för den platsen.
+Det finns två olika framsteg:
+
+| Händelse | Sakletare | Ordfrågan |
+| --- | --- | --- |
+| Barnet väljer platsen som passar ledtråden och avslutar besöket | En sakletarpoäng och ledtrådens skatt | Bedöms genom barnets eget svar |
+| Barnet väljer en annan plats och avslutar besöket | Ett vanligt litet fynd vid första besöket, ingen sakletarpoäng | Samma möjlighet att få en ordstjärna |
+| Eget rätt svar på ordfrågan, direkt eller efter en ny titt | Ändrar inte platsvalet | En stjärna för platsens uppgift |
+| Två fel eller uttrycklig hjälp visar lösningen | Rätt plats ger fortfarande sin skatt | Ingen stjärna för visat facit |
+| Återbesök där fynd eller stjärna redan samlats | Ingen extra poäng eller dubblett | Ingen extra stjärna |
+
+Efter en avstickare ligger den ursprungliga ledtråden kvar. Barnet kan
+leta vidare och få hela skatten när det hittar rätt plats. Vanliga fynd
+benämns som små fynd; spelet kallar dem inte dåliga eller barnet dålig på
+att leta. Varje karta har fyra sakletarpoäng och fyra möjliga ordstjärnor.
+När alla ledtrådar är lösta är kartan färdig, men platserna kan återbesökas.
+Det finns ingen timer, fartbonus, nedräkning eller förlust av tidigare fynd.
+
+Kartans fynd är en separat samling från berättelseuppdragens minnesmärken.
+Ordfrågornas stjärnor ökar den befintliga stjärnsamlingens total utan att
+byta ut en pågående vanlig stjärnrad. Varje plats har en beständig nyckel,
+så omladdning eller upprepade klick inte ger nya stjärnor. Orduppgifterna
+är övning och skriver inte om provresultat eller registrerar ett ord som
+inlärt. Platsvalet används inte som ett mått på ordkunskap.
+
+Fynd, ledtråd, använda hjälptexter och pågående besök sparas lokalt med
+övriga framsteg. Även svarsalternativens ordning och ett första felsvar
+finns kvar efter omladdning. **Till kartan** lämnar det aktuella besöket;
+**Till startsidan** låter barnet fortsätta besöket senare. Export och
+rensning omfattar också skattkartan.
+
+`treasure-hunt-data.js` innehåller de 48 ledtrådarna. `treasure-hunt.js`
+kopplar dem till de befintliga platserna och uppgifterna och håller
+besökets tillstånd. `treasure-hunt-view.js` visar karta, uppgift,
+förklaring och fynd med vanliga knappar och läsbara textytor. Färgerna
+följer ljust, mörkt och högkontrastläge. Uppläsning är frivillig och läser
+bara den aktuella ledtråden, synliga platsbeskrivningar eller uppgiften.
+
+Modell- och integrationstester kontrollerar skillnaden mellan platsval
+och ordsvar, sparande, ny chans, guidad hjälp, dubbletter och skyddet av
+tidigare resultat. I den lokala förhandsversionen kontrollerades fel plats
+med egen ordstjärna, rätt plats med guidad hjälp, återbesök utan dubbla
+belöningar och återupptagen uppgift efter omladdning. Kartan provades med
+tangentbord, i ljust och mörkt tema samt med extra hög kontrast. Vid
+337 CSS-pixlars bredd låg platserna i en kolumn utan horisontell
+överrullning. Faktisk barnprovspelning återstår.
 
 ## Samlingsmärken
 
