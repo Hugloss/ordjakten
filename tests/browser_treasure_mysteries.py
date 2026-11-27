@@ -140,10 +140,10 @@ def finish_after_reload(browser, state, author, viewport):
     assert transfer.locator("[data-treasure-mystery-transfer]").count() == 0
     assert "nya fallet" in transfer.locator(".treasure-mystery-success").inner_text()
     why = transfer.locator("details.treasure-transfer-why")
-    assert why.locator("p").is_hidden(), "Authored reason must stay opt-in"
+    assert why.locator("p.treasure-mystery-feedback").is_hidden(), "Authored reason must stay opt-in"
     assert author["why"] not in page.locator("#treasure-content").locator(".treasure-mystery").locator(".treasure-proof").inner_text(), "The proof panel cannot leak the new example"
     why.locator("summary").click()
-    assert author["why"] in why.locator("p").inner_text()
+    assert author["why"] in why.locator("p.treasure-mystery-feedback").inner_text()
     assert why.locator("[data-treasure-listen='transferExplanation']").count() == 1
     after = saved(page)
     mystery = after["treasureHunt"]["worlds"]["forest"]["mystery"]
