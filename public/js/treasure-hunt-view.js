@@ -23,7 +23,7 @@
   function speech(el,kind,enabled,serial=null){
     if(!enabled)return [];
     const id='treasure-listen-'+kind;
-    const labels={clue:'🔊 Lyssna på ledtråden och platserna',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen'};
+    const labels={clue:'🔊 Lyssna på ledtråden och platserna',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen'};
     const button=action(el,labels[kind], 'treasureListen',kind,serial);
     button.id=id;button.setAttribute('aria-pressed','false');
     const status=el('p','treasure-speech-status');status.id=id+'-status';
@@ -72,17 +72,75 @@
     }
     return box;
   }
+  function clueParts(el,clue){
+    const box=el('div','treasure-clue-parts');
+    if(!Array.isArray(clue?.lookFor)||clue.lookFor.length!==2)return box;
+    box.append(el('strong','','Leta efter båda:'));
+    const list=el('ul');
+    for(const part of clue.lookFor)list.append(el('li','',part));
+    box.append(list);return box;
+  }
+  function worldProgress(model,options,wordStars){
+    return (options.worlds||model.worlds||[]).map(world=>{
+      const saved=model.worlds?.find(row=>row.id===world.id),total=number(world.total??saved?.total)||4;
+      return {...world,total,count:Math.min(total,number(world.id===model.id?model.count:world.count??saved?.count)),
+        starCount:Math.min(total,world.id===model.id?wordStars.length:number(world.starCount))};
+    });
+  }
+  function mapBook(el,worlds,current){
+    const box=el('details','treasure-map-book'),earned=worlds.filter(world=>world.count===world.total).length;
+    box.append(el('summary','',`🧭 Min skattbok · ${earned} av ${worlds.length} kartmärken`),
+      el('p','','När du har hittat en kartas fyra skatter får du kartmärket. Du kan välja vilken karta du vill.'));
+    const list=el('ul','treasure-badge-list');list.setAttribute('aria-label','Dina kartmärken');
+    for(const world of worlds){
+      const collected=world.count===world.total,row=el('li');
+      const button=action(el,'','treasureWorldChoice',world.id);
+      button.className='treasure-map-badge'+(collected?' treasure-map-badge-earned':'');
+      if(world.id===current)button.setAttribute('aria-current','true');
+      const icon=el('span','treasure-badge-icon',world.emoji);icon.setAttribute('aria-hidden','true');
+      button.append(icon,el('strong','treasure-badge-name',world.title),
+        el('span','treasure-badge-state',collected?'✓ Kartmärke samlat':world.count?'Fortsätt leta':'Börja leta'),
+        el('span','treasure-badge-count',`${world.count} av ${world.total} skatter`),
+        el('span','treasure-badge-count',`⭐ ${world.starCount} av ${world.total} ordstjärnor`));
+      if(world.id===current)button.append(el('span','treasure-badge-current','Den här kartan'));
+      row.append(button);list.append(row);
+    }
+    box.append(list);return box;
+  }
+  function completeMap(el,box,model,worlds,wordStars){
+    box.className+=' treasure-complete';
+    const mark=el('div','treasure-complete-mark');
+    const icon=el('span','treasure-complete-icon',model.emoji);icon.setAttribute('aria-hidden','true');
+    const copy=el('div');copy.append(el('p','treasure-badge-label','Kartmärke samlat'),el('strong','treasure-complete-world',model.title));
+    mark.append(icon,copy);box.append(mark);
+    const heading=el('h2','','Alla skatter på kartan hittade!');heading.id='treasure-clue-title';
+    const earned=worlds.filter(world=>world.count===world.total).length;
+    box.append(heading,el('p','','Du har följt alla fyra ledtrådarna. Kartmärket finns i din skattbok.'));
+    if(worlds.length)box.append(el('p','treasure-complete-count',`${earned} av ${worlds.length} kartmärken samlade`));
+    const missing=model.places.filter(place=>!wordStars.includes(place.index)),controls=el('div','treasure-controls');
+    if(missing.length){
+      box.append(el('p','',missing.length===1?'Det finns 1 ordstjärna kvar på kartan.':`Det finns ${missing.length} ordstjärnor kvar på kartan.`));
+      controls.append(action(el,'Öva ordfrågan vid '+missing[0].name,'treasurePlace',missing[0].index,null,true));
+    }else box.append(el('p','','Du har också samlat alla fyra ordstjärnorna på kartan!'));
+    const next=worlds.find(world=>world.id!==model.id&&world.count<world.total);
+    if(next)controls.append(action(el,'Utforska '+next.title,'treasureWorldChoice',next.id,null,!missing.length));
+    else if(worlds.length&&earned===worlds.length){
+      box.append(el('p','treasure-all-maps','Alla kartmärken är samlade! Du kan besöka platserna igen när du vill.'));
+      if(worlds.some(world=>world.starCount<world.total))box.append(el('p','','I skattboken ser du vilka kartor som har ordstjärnor kvar.'));
+    }
+    if(controls.children.length)box.append(controls);
+  }
   function mapView(host,el,model,options,wordStars){
     const intro=el('header','treasure-map-heading');
     const copy=el('div');
     copy.append(el('p','treasure-world-name',model.emoji+' '+model.title));
     const title=el('h1','','Skattkartan');title.id='treasure-stage-title';title.tabIndex=-1;
-    copy.append(title,el('p','','Läs ledtråden. Välj platsen som passar.'));intro.append(copy);
-    const worlds=options.worlds||model.worlds||[];
+    copy.append(title,el('p','',model.complete?'Här finns dina hittade skatter. Du kan besöka platserna igen.':'Läs ledtråden. Välj platsen som passar.'));intro.append(copy);
+    const worlds=worldProgress(model,options,wordStars);
     if(worlds.length){
       const picker=el('div','treasure-world-picker'),label=el('label','','Byt karta');label.htmlFor='treasure-world';
       const select=el('select','field');select.id='treasure-world';select.dataset.treasureWorld='';
-      for(const world of worlds){const option=el('option','',world.emoji+' '+world.title);option.value=world.id;option.selected=world.id===model.id;select.append(option);}
+      for(const world of worlds){const option=el('option','',`${world.emoji} ${world.title} · ${world.count} av ${world.total} skatter`);option.value=world.id;option.selected=world.id===model.id;select.append(option);}
       picker.append(label,select);intro.append(picker);
     }
     host.append(intro,scoreStrip(el,model,wordStars));
@@ -93,10 +151,11 @@
       const controls=el('div','treasure-controls');
       const hint=action(el,'💡 En ledtråd till','treasureHint');hint.setAttribute('aria-expanded',String(!!model.clue.hintShown));hint.setAttribute('aria-controls','treasure-hint');
       controls.append(...speech(el,'clue',options.canReadAloud),hint);clue.append(controls);
-      const help=el('p','treasure-hint',model.clue.hintShown?model.clue.hint:'');help.id='treasure-hint';help.tabIndex=-1;help.setAttribute('role','status');help.hidden=!model.clue.hintShown;clue.append(help);
+      const help=el('div','treasure-hint');help.id='treasure-hint';help.tabIndex=-1;help.setAttribute('role','status');help.hidden=!model.clue.hintShown;
+      if(model.clue.hintShown)help.append(el('p','',model.clue.hint),clueParts(el,model.clue));
+      clue.append(help);
     }else{
-      const heading=el('h2','','Alla skatter på kartan hittade!');heading.id='treasure-clue-title';
-      clue.append(heading,el('p','','Du har följt alla fyra ledtrådarna. Besök en plats igen för att öva på ordfrågan, eller välj en annan karta.'));
+      completeMap(el,clue,model,worlds,wordStars);
     }
     host.append(clue);
     const map=el('section','treasure-map-board');map.setAttribute('aria-label','Välj en plats på kartan');
@@ -110,6 +169,7 @@
       map.append(button);
     }
     host.append(map,el('p','treasure-reassurance','Ta den tid du behöver. Dina fynd och stjärnor sparas här i webbläsaren.'),collection(el,model));
+    if(worlds.length)host.append(mapBook(el,worlds,model.id));
     const rules=el('details','treasure-rules');rules.append(el('summary','','Så fungerar skattjakten'),
       el('p','','När du hittar platsen som ledtråden beskriver får du en skatt och en sakletarpoäng efter uppgiften. Vid en annan plats finns en uppgift och ett litet fynd. Sedan kan du leta vidare.'),
       el('p','','Ett eget rätt svar på ordfrågan ger en stjärna. Du kan få hjälp och prova igen. Varje plats kan ge en ordstjärna, och varje ledtråd kan ge en sakletarpoäng. Inget beror på hur fort du svarar.'));
@@ -141,7 +201,7 @@
       const comparison=el('dl','treasure-comparison');
       comparison.append(el('dt','','Ledtråden säger'),el('dd','',model.clue.text),
         el('dt','','Här, vid '+visit.name),el('dd','',model.places.find(place=>place.index===visit.index)?.description||''));
-      arrival.append(comparison);
+      arrival.append(comparison,clueParts(el,model.clue),...speech(el,'arrival',options.canReadAloud,serial));
     }
     else arrival.append(el('h2','','Välkommen tillbaka!'),el('p','','Här kan du öva på ordfrågan igen. Dina hittade skatter finns kvar.'));
     host.append(arrival);
@@ -175,7 +235,7 @@
       const label=visit.matched?(model.complete?'Se den färdiga kartan':'Till kartan och nästa ledtråd'):model.clue?'Till kartan – leta vidare':'Till kartan';
       box.append(action(el,label,'treasureBack','',serial,true));host.append(box,collection(el,model));
     }
-    if(model.phase!=='reward')host.append(action(el,'Till kartan','treasureBack','',serial));
+    if(model.phase==='question')host.append(action(el,'Till kartan','treasureBack','',serial));
   }
   function render(host,model,options={}){
     if(!host)return;

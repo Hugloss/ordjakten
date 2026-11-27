@@ -40,6 +40,12 @@ En ledtråd beskriver en bestämd plats utan att säga dess namn. Exempel:
 **Sök efter ett stort träd där en uggla håller ordning på böcker.** Barnet
 jämför ledtråden med platsernas beskrivningar och väljer en plats.
 En extra ledtråd är frivillig och minskar inte den möjliga belöningen.
+Alla ledtrådar har dessutom två skrivna hållpunkter, exempelvis **ett stort
+träd** och **en uggla med böcker**. Under **Leta efter båda** delas ledtråden
+upp när barnet ber om hjälp. Efter en avstickare visas hållpunkterna
+tillsammans med ledtråden och den valda platsens beskrivning. Spelet
+namnger inte rätt plats i förväg eller antar att en sak saknas bara för
+att den inte står i en beskrivning.
 
 Besöket innehåller den orduppgift som redan är skriven för den platsen.
 Det finns två olika framsteg:
@@ -59,6 +65,23 @@ att leta. Varje karta har fyra sakletarpoäng och fyra möjliga ordstjärnor.
 När alla ledtrådar är lösta är kartan färdig, men platserna kan återbesökas.
 Det finns ingen timer, fartbonus, nedräkning eller förlust av tidigare fynd.
 
+### Kartmärken och nästa steg
+
+**Min skattbok** samlar de tolv kartorna med separata räknare för hittade
+skatter och ordstjärnor. Fyra avslutade rätta platsbesök ger kartans
+**kartmärke**, oavsett hur mycket hjälp ordfrågorna krävde. Samlingen
+räknas direkt från redan sparade fynd. Den har ingen ny poängräknare,
+ingen ny sparad märkeshistorik och inga låsta världar.
+
+En färdig karta visar sitt märke och hur många ordstjärnor som återstår.
+Barnet kan gå direkt till en plats vars ordstjärna saknas eller välja
+nästa karta som inte är färdig. När alla kartor är färdiga försvinner
+förslaget om en ny karta; de befintliga platserna är fortsatt öppna för
+ordövning. Ett kartmärke säger att barnet har följt kartans ledtrådar,
+inte att varje ord är inlärt.
+
+### Sparande och återkoppling
+
 Kartans fynd är en separat samling från berättelseuppdragens minnesmärken.
 Ordfrågornas stjärnor ökar den befintliga stjärnsamlingens total utan att
 byta ut en pågående vanlig stjärnrad. Varje plats har en beständig nyckel,
@@ -68,9 +91,12 @@ inlärt. Platsvalet används inte som ett mått på ordkunskap.
 
 Fynd, ledtråd, använda hjälptexter och pågående besök sparas lokalt med
 övriga framsteg. Även svarsalternativens ordning och ett första felsvar
-finns kvar efter omladdning. **Till kartan** lämnar det aktuella besöket;
-**Till startsidan** låter barnet fortsätta besöket senare. Export och
-rensning omfattar också skattkartan.
+finns kvar efter omladdning. **Till kartan** kan lämna en obesvarad uppgift.
+Efter ett svar leder **Titta på fyndet** vidare till belöningen, så barnet
+inte råkar lämna den utlovade skatten bakom sig. Även en fördröjd
+avbrytknapp från frågesteget ignoreras under förklaringen. Huvudmenyns
+**Spela** låter barnet fortsätta besöket senare. Export och rensning
+omfattar också skattkartan.
 
 `treasure-hunt-data.js` innehåller de 48 ledtrådarna. `treasure-hunt.js`
 kopplar dem till de befintliga platserna och uppgifterna och håller
@@ -78,6 +104,10 @@ besökets tillstånd. `treasure-hunt-view.js` visar karta, uppgift,
 förklaring och fynd med vanliga knappar och läsbara textytor. Färgerna
 följer ljust, mörkt och högkontrastläge. Uppläsning är frivillig och läser
 bara den aktuella ledtråden, synliga platsbeskrivningar eller uppgiften.
+Synliga hållpunkter och hjälpen efter ett första felsvar ingår också i
+uppläsningen. Vid en avstickare kan barnet lyssna på jämförelsen mellan
+ledtråden och den valda platsen. Ingen dold destinationsförklaring eller
+kommande lösning läses upp.
 
 Modell- och integrationstester kontrollerar skillnaden mellan platsval
 och ordsvar, sparande, ny chans, guidad hjälp, dubbletter och skyddet av

@@ -102,9 +102,18 @@ test('reload preserves the selected place, shuffled options and the first wrong 
   assert.equal(view(state).visit.outcome,'supported');
   assert.deepEqual(reload(state),state);
   assert.equal(Treasure.visit(state,'space',0,catalog),state,'a pending visit cannot be silently replaced');
-  const canceled=back(state);
+  assert.equal(back(state),state,'a delayed cancel must not discard an answered visit and its promised treasure');
+  const collected=back(finish(state));
+  assert.equal(view(collected).phase,'map');assert.equal(view(collected).count,1);
+  assert.equal(view(collected).clue.index,0);
+});
+
+test('leaving an unanswered visit returns to the same clue without creating a reward',()=>{
+  const state=choose(visit(fresh(),2),false),canceled=back(state);
   assert.equal(view(canceled).phase,'map');assert.equal(view(canceled).count,0);
-  assert.equal(view(canceled).clue.index,2,'leaving without finishing awards nothing');
+  assert.equal(view(canceled).clue.index,2);
+  assert.equal(view(canceled).collection.length,0);
+  assert.equal(view(canceled).smallFinds.length,0);
 });
 
 test('all four clues can be found without time pressure and replay cannot farm rewards',()=>{
@@ -181,4 +190,7 @@ test('transition methods preserve caller state and invalid catalog entries canno
   assert.equal(Treasure.visit(state,'forest',0,invalid),state);
   const duplicate=clone(Data);duplicate.DATA.space[1].clue=duplicate.DATA.space[0].clue;
   assert.ok(Treasure.catalog(duplicate,A,Story,missions).errors.includes('space:duplicates'));
+  const missingHelp=clone(Data);missingHelp.DATA.forest[0].lookFor=['bara en sak'];
+  const incomplete=Treasure.catalog(missingHelp,A,Story,missions);
+  assert.ok(incomplete.errors.includes('forest:0'));assert.equal(incomplete.worlds.forest,undefined);
 });
