@@ -72,7 +72,7 @@
     }
     host.append(grid);
     if(visible.length<shown.length){
-      const more=button(doc,'Visa 12 fler äventyr · '+(shown.length-visible.length)+' kvar','portalMore');
+      const more=button(doc,'Visa '+Math.min(12,shown.length-visible.length)+' fler äventyr · '+(shown.length-visible.length)+' kvar','portalMore');
       more.id='portal-more';more.classList.add('portal-more');host.append(more);
     }
     const info=node(doc,'p','portal-note','Det finns ingen timer eller poängjakt. Du kan be om hjälp, prova igen och fortsätta senare. Dina fynd sparas bara i den här webbläsaren.');
