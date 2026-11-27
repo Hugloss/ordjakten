@@ -1,0 +1,41 @@
+name: Browser check – Swedish question bank
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/js/question-platform.js'
+      - 'public/js/question-session.js'
+      - 'public/js/banks/**'
+      - 'public/js/app.js'
+      - 'public/js/engine.js'
+      - 'public/data/expressions.*'
+      - 'public/data/missions.*'
+      - 'public/index.html'
+      - 'tests/browser_question_bank.py'
+      - 'tests/browser_smoke.py'
+      - '.github/workflows/browser-question-bank.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ordjakten-question-bank-browser-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  bank-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install isolated Chromium browser
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Verify Swedish bank, sentence and ordering gameplay, exam privacy
+        run: python tests/browser_question_bank.py
