@@ -67,7 +67,7 @@
 
   function safeMystery(value,target){
     if(!object(value)||!Number.isInteger(value.revealed)||value.revealed<1||value.revealed>3||
-      typeof value.solved!==\'boolean\')return null;
+      typeof value.solved!=='boolean')return null;
     const attempted=indexes(value.attempted).filter(index=>index!==target);
     const last=value.last===null?null:placeIndex(value.last)?value.last:-1;
     if(last===-1||(value.solved&&(value.revealed!==3||last!==target))||
