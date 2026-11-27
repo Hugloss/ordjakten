@@ -1,0 +1,73 @@
+/* Upptäckarklubben: all state is visible in text and shape, never color alone. */
+.portal-world{font-size:1rem;line-height:1.6;color:var(--text);min-width:0}
+.portal-world h1{font-size:clamp(1.65rem,4vw,2.35rem);line-height:1.25;letter-spacing:-.035em;margin:.35rem 0 .8rem;overflow-wrap:anywhere}
+.portal-world h2{font-size:1.3rem;margin:0 0 .8rem;line-height:1.35}
+.portal-world h3{font-size:1.04rem;line-height:1.45;margin:1rem 0 .55rem}
+.portal-world p{margin:0 0 .85rem}
+.portal-intro{font-size:1.06rem;max-width:50rem;line-height:1.7}
+.portal-note{font-size:.94rem;color:var(--muted);margin:1rem 0}
+.portal-progress{font-weight:800;padding:.75rem 1rem;border:2px solid var(--border);border-radius:.9rem;background:var(--surface);color:var(--text);width:fit-content;max-width:100%}
+.portal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem;margin:1rem 0}
+.portal-card{min-width:0;width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;text-align:left;background:var(--surface);color:var(--text);border:2px solid var(--border);border-radius:1.1rem;padding:1rem;min-height:13rem;overflow-wrap:anywhere}
+.portal-card-icon{font-size:2.25rem;line-height:1.25}
+.portal-card-title{font-size:1.06rem;line-height:1.4}
+.portal-card-intro{font-size:.96rem;line-height:1.6}
+.portal-card-progress{margin-top:auto;font-size:.9rem;font-weight:800;color:var(--muted);padding-top:.5rem}
+.portal-card-done{border-color:var(--green-border)}
+.portal-card-done .portal-card-progress{color:var(--green-text);background:var(--green-bg);padding:.35rem .5rem;border-radius:.5rem}
+.portal-button{display:inline-flex;justify-content:center;align-items:center;max-width:100%;min-height:3.15rem;padding:.75rem 1.05rem;border:2px solid var(--border);border-radius:.85rem;background:var(--surface);color:var(--text);font:inherit;font-weight:750;line-height:1.5;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.portal-button:disabled{cursor:not-allowed;opacity:1;border-style:dashed;color:var(--muted);background:var(--surface-2)}
+.portal-button:focus-visible,.portal-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.portal-main-button{background:var(--primary);color:var(--on-primary);border-color:var(--primary);font-weight:850}
+.portal-back{margin-bottom:.95rem}
+.portal-header{display:flex;align-items:center;gap:1.2rem;min-width:0;padding:1rem 1.1rem;border:2px solid var(--border);border-radius:1rem;background:var(--surface);color:var(--text)}
+.portal-header-copy{min-width:0}
+.portal-eyebrow{font-weight:850;font-size:.82rem;letter-spacing:.07em;color:var(--muted)}
+.portal-hero-icon{font-size:3rem;flex:0 0 auto}
+.portal-journey{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:1rem 0;padding:0;list-style:none}
+.portal-journey-step{display:flex;align-items:center;justify-content:center;gap:.45rem;min-width:0;padding:.75rem .4rem;text-align:center;border:2px dashed var(--border);border-radius:.85rem;background:var(--surface);color:var(--text);font-size:.9rem;font-weight:750}
+.portal-step-symbol{display:grid;place-items:center;flex:0 0 2rem;width:2rem;height:2rem;border-radius:100%;border:2px solid var(--border);font-weight:850}
+.portal-journey-current{border-style:solid;border-color:var(--accent-line)}
+.portal-journey-finished{border-style:solid;border-color:var(--green-border);background:var(--green-bg);color:var(--green-text)}
+.portal-scene,.portal-finish{margin:1rem 0;padding:1.2rem;border:2px solid var(--border);border-radius:1.1rem;background:var(--surface);color:var(--text)}
+.portal-story{font-size:1.1rem;font-weight:750;max-width:48rem}
+.portal-clues{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;list-style:none;padding:0;margin:1rem 0}
+.portal-clue{min-width:0;display:flex;flex-direction:column;gap:.35rem;padding:1rem;border:2px solid var(--border);background:var(--surface-2);border-radius:.85rem;overflow-wrap:anywhere}
+.portal-clue strong{font-size:.89rem;color:var(--muted)}
+.portal-choices{display:grid;grid-template-columns:1fr;gap:.7rem;margin:.85rem 0 1rem}
+.portal-choice{width:100%;justify-content:flex-start;text-align:left;min-height:3.8rem;background:var(--surface-2)}
+.portal-feedback,.portal-hint{padding:1rem;border-left:4px solid var(--accent-line);border-radius:.5rem;background:var(--surface-2);color:var(--text);line-height:1.7}
+.portal-success,.portal-finish{border-color:var(--green-border);background:var(--green-bg);color:var(--green-text)}
+.portal-success{padding:1rem;border-radius:.85rem;margin:1rem 0}
+.portal-own-words{font-weight:750}
+.portal-finish{text-align:center;padding:1.65rem 1rem}
+.portal-finish-icon{display:block;font-size:3.5rem}
+.portal-keepsake{font-weight:850}
+.portal-speech-status{width:100%;color:var(--muted)}
+@media(hover:hover) and (pointer:fine){
+ .portal-button:not(:disabled):hover{border-color:var(--accent-line)}
+ .portal-main-button:not(:disabled):hover{filter:brightness(1.1)}
+}
+@media(max-width:800px){.portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){
+ .portal-grid,.portal-clues{grid-template-columns:minmax(0,1fr)}
+ .portal-header{align-items:flex-start;gap:.7rem;padding:.9rem}
+ .portal-hero-icon{font-size:2.3rem}
+ .portal-journey-step{flex-direction:column;font-size:.81rem;gap:.25rem}
+ .portal-journey{gap:.3rem}
+ .portal-scene{padding:1rem}
+ .portal-card{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){.portal-world *{animation:none!important;transition:none!important}}
+@media(forced-colors:active){.portal-card,.portal-header,.portal-journey-step,.portal-scene,.portal-button,.portal-clue,.portal-finish{border-color:CanvasText}.portal-journey-current,.portal-card-done{outline:2px solid Highlight}}
+
+
+/* At 32 themes, an accessible category choice keeps the mobile list manageable.
+   The chosen state is shown by text/outline as well as color. */
+.portal-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 .65rem}
+.portal-filter{min-height:3rem;border:2px solid var(--border);border-radius:.85rem;padding:.55rem .8rem;background:var(--surface);color:var(--text);font:inherit;font-size:.94rem;font-weight:800;line-height:1.45;text-align:left;cursor:pointer;overflow-wrap:anywhere}
+.portal-filter[aria-pressed='true']{border-color:var(--accent-line);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line);text-decoration:underline;text-underline-offset:.2em}
+.portal-filter:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.portal-filter-count{font-size:.94rem;font-weight:750;color:var(--muted);margin:.3rem 0 .6rem!important}
+@media(max-width:400px){.portal-filter{flex:1 1 9rem}}
+@media(forced-colors:active){.portal-filter{border-color:CanvasText}.portal-filter[aria-pressed='true']{outline:2px solid Highlight}}

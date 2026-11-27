@@ -1,5 +1,5 @@
 /* Offline-only enhancement. App works fully without service workers. */
-const CACHE_NAME = 'ordjakten-static-v80-mystery-language'; // Increment on each content release.
+const CACHE_NAME = 'ordjakten-static-v82-portals-32-stories'; // Increment on each content release.
 const ICON_FILES = [
   "./assets/story-icons/1f305.png",
   "./assets/story-icons/1f31f.png",
@@ -76,7 +76,7 @@ const ICON_FILES = [
   "./assets/story-icons/2b50.png"
 ];
 const FILES = [
-  './css/star-collection.css','./css/treasure-hunt.css','./js/treasure-hunt-data.js','./js/treasure-hunt.js','./js/treasure-hunt-view.js','./js/star-collection.js','./js/star-collection-view.js',
+  './css/star-collection.css','./css/treasure-hunt.css','./css/mission-portals.css','./js/mission-portals-data.js','./js/mission-portals.js','./js/mission-portals-view.js','./js/treasure-hunt-data.js','./js/treasure-hunt.js','./js/treasure-hunt-view.js','./js/star-collection.js','./js/star-collection-view.js',
   './','./index.html','./css/style.css','./css/playful.css','./css/adventures.css','./css/expressions.css','./css/comics.css','./css/surprises.css','./css/missions.css','./css/quests.css','./css/review.css','./css/contexts.css','./css/adaptive.css','./css/learning-map.css','./css/focus-practice.css','./css/contrast.css','./css/confusions.css','./css/clue-ladder.css','./css/retention.css','./css/reading-flow.css','./css/guided-reading.css','./js/adaptive.js','./js/learning-map.js','./js/focus-practice.js','./js/contrast.js','./js/confusions.js','./js/clue-ladder.js','./js/retention.js','./js/spaced-memory.js','./js/reading-check.js','./js/guided-reading.js','./js/aha-plan.js','./js/recall.js','./js/workshop.js','./js/detector.js','./js/concepts.js','./js/bridges.js','./js/knowledge-profile.js','./js/practice-feedback.js','./js/practice-balance.js','./js/adventure-challenge.js','./js/story-quests.js','./js/world-missions.js','./js/adventure-camp.js','./js/camp-theatre.js','./js/camp-living.js','./js/camp-minigames.js','./js/camp-builders.js','./js/question-play.js','./js/action-words.js','./js/next-adventure.js','./js/app.js','./js/engine.js','./js/playful.js','./js/adventures.js','./js/adventure-map.js','./js/comics.js','./js/surprises.js','./js/missions.js','./js/quests.js','./js/review.js',
   './data/wordbank.js','./data/ordbank.json','./data/curation.js','./data/expressions.js','./data/expressions.json','./data/comics.js','./data/comics.json','./data/surprises.js','./data/surprises.json','./data/missions.js','./data/missions.json','./data/word-contexts.js','./data/word-contexts.json','./data/contrasts.js','./data/contrasts.json','./data/clue-ladder.js','./data/clue-ladder.json',
   './manifest.webmanifest','./icons/icon.svg','./assets/story-icons/NOTO-EMOJI-LICENSE-AND-COPYRIGHT.txt'
