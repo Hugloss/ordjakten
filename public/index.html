@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="./css/clue-ladder.css">
   <link rel="stylesheet" href="./css/retention.css">
   <link rel="stylesheet" href="./css/reading-flow.css">
+  <link rel="stylesheet" href="./css/guided-reading.css">
   <title>Ordjakten – hitta ordens betydelse</title>
   <script src="./data/wordbank.js" defer></script>
   <script src="./data/curation.js" defer></script>
@@ -74,6 +75,7 @@
   <script src="./js/question-play.js" defer></script>
   <script src="./js/action-words.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
+  <script src="./js/guided-reading.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -390,9 +392,20 @@
               <label class="check-row"><input type="checkbox" id="high-contrast"><span>Extra hög kontrast</span></label>
             </section>
 
+            <section class="panel mini-panel" id="practice-goal-settings" aria-labelledby="practice-goal-title">
+              <div class="section-header"><h2 id="practice-goal-title">🎯 Vad vill du öva?</h2></div>
+              <div class="practice-goals" role="group" aria-label="Välj träningsmål">
+                <button type="button" data-practice-goal="mixed" aria-pressed="true"><strong>🎲 Blanda</strong><small>Lite av varje · <span id="goal-mixed-count">0</span></small></button>
+                <button type="button" data-practice-goal="discover" aria-pressed="false"><strong>🔎 Upptäck nytt</strong><small>Inte provade här · <span id="goal-discover-count">0</span></small></button>
+                <button type="button" data-practice-goal="focus" aria-pressed="false"><strong>🌱 Ge ord en ny chans</strong><small>Öva lite till · <span id="goal-focus-count">0</span></small></button>
+              </div>
+              <p id="practice-goal-help" class="subtle-note" aria-live="polite">Både nytt och sådant du har provat tidigare.</p>
+              <p class="subtle-note">Räknas ut från dina sparade övningar på den här enheten.</p>
+            </section>
+
             <section class="panel mini-panel" id="adaptive-settings">
               <div class="section-header"><h2>🧠 Smart träning</h2><span class="help-text">Frivilligt</span></div>
-              <label class="check-row"><input type="checkbox" id="adaptive-practice" checked><span><strong>Variera efter vad jag behöver öva</strong><small>Lite extra av svåra saker, men alltid plats för nytt</small></span></label>
+              <label class="check-row"><input type="checkbox" id="adaptive-practice" checked><span><strong>Variera efter vad jag behöver öva</strong><small>Spelet varierar frågetypen inom ditt valda träningsmål</small></span></label>
               <p id="adaptive-home-summary" class="subtle-note">Spelet lär känna vilka sorters frågor som behöver tränas.</p>
               <p class="subtle-note">Gäller bara Träna. I Testa dig får alla samma sorts blandade urval.</p>
             </section>
@@ -446,7 +459,17 @@
           </section>
           <p id="reading-stage" class="reading-stage" role="status" aria-live="polite">📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå</p>
           <div id="reading-story" class="question-card"><span id="quest-message-label" class="quest-message-label" hidden></span><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1><p id="quest-action-prompt" class="quest-action-prompt" hidden></p></div>
+          <section id="guided-reading" class="guided-reading" aria-label="Läs berättelsen i små delar" hidden>
+            <p id="guided-count" class="guided-count" aria-live="polite">Del 1 av 2</p>
+            <p id="guided-part" class="guided-part" tabindex="-1"></p>
+            <div class="guided-actions">
+              <button id="guided-previous" type="button" class="secondary-button" disabled>← Förra delen</button>
+              <button id="guided-next" type="button" class="primary-button">Nästa del →</button>
+            </div>
+            <button id="guided-full" type="button" class="text-button guided-full">Visa hela berättelsen</button>
+          </section>
           <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
+          <button id="guided-start" type="button" class="secondary-button guided-start" hidden>📖 Läs med mig – en del i taget</button>
           <button id="listen-story" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på texten</button>
           <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
           <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
@@ -683,6 +706,7 @@
             <p id="reading-why" class="reading-why" hidden></p>
             <button id="reading-reread" type="button" class="secondary-button" hidden>📖 Läs förklaringen igen</button>
           </section>
+          <section id="context-story-trail" class="story-trail" aria-label="Berättelsespåret" hidden></section>
           <div id="feedback-cheer" class="feedback-cheer"><span id="feedback-companion" aria-hidden="true">🦊</span><p id="feedback-message"></p></div>
           <div id="adaptive-feedback" class="adaptive-feedback" hidden><strong id="adaptive-feedback-title">🧠 Vi lär oss steg för steg</strong><p id="adaptive-feedback-text"></p></div>
           <div id="star-burst" class="star-burst" hidden aria-hidden="true">✦ ⭐ ✦</div>
@@ -1352,6 +1376,7 @@
         <section id="focus-finished" class="panel focus-finish" aria-live="polite" hidden>
           <div style="font-size:48px" aria-hidden="true">🌟</div><h2>Du vågade prova!</h2>
           <p id="focus-summary"></p><p id="focus-skill-insight" class="focus-skill-insight"></p><p id="focus-next-hint" class="muted"></p>
+          <section id="focus-story-trail" class="story-trail" aria-label="Berättelsespåret" hidden></section>
           <div class="focus-actions">
             <button id="focus-other-skill" type="button" class="primary-button full-button">🧩 Prova ett annat sätt</button>
             <button id="focus-done" type="button" class="secondary-button full-button">🗺️ Se min ordstig</button>

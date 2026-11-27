@@ -3,6 +3,10 @@
 27 november 2026. Bas: mergade PR #10, commit
 `c6b04d0e25fa880fc73d97bdcf0067d93813d208`.
 
+Före leverans har även de senare mergade PR #4 och #5 förenats med
+ändringarna. Den gemensamma versionen har kontrollerats med träningsmål,
+Berättelsespåret och guidad läsning på plats.
+
 Den här omgången minskar konkreta tolkningsproblem i befintliga uppgifter.
 Vardagsurvalet med 101 ord och 59 uttryck, inklusive 14 skolord, behålls.
 Hela banken har fortfarande 121 ord, 67 uttryck och 363 vardagsscener.
@@ -138,16 +142,22 @@ Tester kontrollerar att förbjudna ordpar inte konkurrerar i båda
 frågeriktningarna och att skolans ordningsfeedback använder rätt källa.
 De befintliga kontrollerna täcker JSON/JS-synk, ordurval, scenreferenser,
 detektivens ordagranna ledtrådar, balanserade jämförelser och statiska
-resurser. Offlinecachen uppdateras till v62.
+resurser. Offlinecachen uppdateras till v64 efter att även träningsmål,
+Berättelsespåret och guidad läsning har kommit in i huvudgrenen.
 
-`npm run check` passerar: samtliga 461 automatiska tester samt
-sidkontrollen med 69 HTML-resurser, 152 offline-sökvägar och 48 skript.
+`npm run check` passerar efter integrationen: samtliga 487 automatiska
+tester samt sidkontrollen med 71 HTML-resurser, 154 offline-sökvägar och
+49 skript.
 De två nya regressionstesterna skyddar mot överlappande felalternativ
 och skolåterkoppling från fel exempel.
 
 Ordens ID:n, scenindex, uppgiftsantal och facit bevaras. Befintlig
 innehållsversionskontroll kan göra att en ändrad detektiv- eller
-begreppsuppgift behöver övas igen; tidigare provresultat ändras inte.
+begreppsuppgift behöver övas igen. Berättelsespåret identifierar en
+vardagsscen med dess rubrik, text och förklaring. De 28 omskrivna
+scenerna får därför nya identiteter: eventuella detaljobservationer för
+deras äldre versioner räknas inte som försök på den nya texten.
+Tidigare provresultat och övergripande historik ändras inte.
 
 Ingen faktisk webbläsarkörning eller barnprovspelning har gjorts i den
 här omgången. Visuell kontroll av de längre förklaringarna på mobil och

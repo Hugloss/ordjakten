@@ -284,3 +284,13 @@
 .mission-earned{grid-template-columns:minmax(0,1fr)}
 .world-mission-panel button{min-height:44px}
 @media(max-width:480px){.mission-scene{grid-template-columns:minmax(0,1fr);gap:8px;padding:12px}.mission-scene-icons{display:flex;align-items:center;gap:12px}.mission-question{padding:10px}.mission-place-button,.mission-place-label{min-height:88px}.mission-actions button{font-size:17px}}
+
+/* One local trail per authored word; no additional score or level badge. */
+.story-trail {margin:14px 0;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);color:var(--text);text-align:left}
+.story-trail>strong {font-size:16px}
+.story-trail p {margin:8px 0;font-size:14px;line-height:1.55}
+.story-trail-list {list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px}
+.story-trail-list li {padding:8px 0;border-top:1px solid var(--border);display:grid;gap:3px;overflow-wrap:anywhere}
+.story-trail-list li strong {font-size:14px}
+.story-trail-list span,.story-trail-list small {font-size:13px;line-height:1.45}
+.story-trail-list small {color:var(--muted)}

@@ -6,7 +6,18 @@
 - 12 vardagsuttryck får konkreta betydelsekopplingar och mer precisa motexempel. Alla 14 skolord får en egen förklaring till ordningsuppgiftens arbetssteg.
 - Återkopplingen i skolans ordningsfrågor följer nu den aktuella arbetsgången i träning, fokus, facit och bonus, med samma skrivna förklaring som hjälp efter fel.
 - 25 jämförelsescener och 22 befintliga speluppdrag förtydligar vilken egenskap frågan gäller och varför svaret passar. Begreppskartan och Ordbroar förklarar överlapp utan falska motsatser.
-- Samma vardagsurval och antal ord. Offlinecache v62. Se [granskningen och kvarvarande kontroller](docs/CLEARER-EXPLANATIONS.md).
+- Samma vardagsurval och antal ord. Offlinecache v64. Se [granskningen och kvarvarande kontroller](docs/CLEARER-EXPLANATIONS.md).
+
+## Berättelsespåret (nästa uppdatering)
+
+- Sparar vilka redaktionellt skrivna vardagsberättelser som faktiskt prövats. Ordfrågor och Aha efter förklaring visas separat.
+- Nya och ännu inte lösta situationer får förtur i smart träning och fokuserade vardagsövningar. Min ordstig visar varje berättelse utan att utlova behärskning.
+
+## Träningsmål (nästa uppdatering)
+
+- Tre frivilliga träningsmål: Blanda, Upptäck nytt, Ge ord en ny chans. Tillgängliga frågor visas innan start; kortare omgångar fylls inte med fel sorts frågor.
+- Aha-stöd kan ge en ny chans även efter ett rätt huvudsvar. Repetitionspauser respekteras och provlägen/presets är oförändrade.
+- Rensning av lokal historik rensar nu även Aha-observationer.
 
 ## Pågående – post-review efter PR #9
 

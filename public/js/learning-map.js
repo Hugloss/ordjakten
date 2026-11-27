@@ -31,18 +31,18 @@
     }
     return items;
   }
-  function detail(item, skillProgress = {}, reviewProgress = {}, missionProgress = {}, mistakes = {}, now = Date.now()) {
+  function detail(item, skillProgress = {}, reviewProgress = {}, missionProgress = {}, mistakes = {}, now = Date.now(), contextInfo = null) {
     const skills = skillProgress?.[item.id]?.skills || {};
     const count = key => positive(skills[key]?.right);
     const attempts = Object.values(skills).reduce((sum,x)=>sum + positive(x?.attempts),0);
     const missions = item.kind==='expression' && Array.isArray(missionProgress?.[item.id])
       ? new Set(missionProgress[item.id]) : new Set();
     const review = reviewProgress?.[item.id];
-    const seen = attempts>0 || positive(review?.attempts)>0 || positive(review?.streak)>0 || positive(mistakes?.[item.id])>0 || missions.size>0;
+    const seen = positive(contextInfo?.tried)>0 || attempts>0 || positive(review?.attempts)>0 || positive(review?.streak)>0 || positive(mistakes?.[item.id])>0 || missions.size>0;
     const recognition = count('picture')>0 || count('meaning')>0 || missions.has('meaning');
     const application = item.kind==='expression'
       ? count('sentence')>0 || count('order')>0 || missions.has('sentence') || missions.has('order')
-      : count('context')>0 || count('reverse')>0 || count('contrast')>0;
+      : positive(contextInfo?.correct)>0 || count('context')>0 || count('reverse')>0 || count('contrast')>0;
     const typesWithCorrect = Object.values(skills).filter(x=>positive(x?.right)>0).length;
     const rightTotal = Object.values(skills).reduce((sum,x)=>sum+positive(x?.right),0);
     const revisit = positive(review?.streak)>=2 || (rightTotal>=3 && typesWithCorrect>=2) ||
@@ -50,7 +50,7 @@
     // The label must reflect WHAT was actually solved. A successful reverse
     // question is not evidence that a contextual scene was solved as well.
     const step3Label = item.kind==='expression' ? 'Prövat uttrycket på fler sätt'
-      : count('context')>0 ? 'Provat i vardagen'
+      : positive(contextInfo?.correct)>0 || count('context')>0 ? 'Provat i vardagen'
       : count('reverse')>0 ? 'Hittat ordet'
       : count('contrast')>0 ? 'Skilt på två ord'
       : item.hasContext ? 'Ord i vardagen' : 'Hitta rätt ord';
@@ -72,18 +72,21 @@
       const [skill] = difficult.sort((a,b)=>positive(b[1].wrong)-positive(a[1].wrong))[0];
       tip=`Nästa idé: ge ${names[skill]} en ny chans.`;
     } else if (due) tip='En ny repetitionsfråga är redo för dig!';
+    else if (positive(contextInfo?.needs)>0) tip='En berättelse kan få en ny chans. Prova ordet i vardagen!';
+    else if (positive(contextInfo?.tried)>0 && contextInfo.correct<contextInfo.total) tip='Prova ordet i en annan berättelse.';
     else if (!seen) tip='Möt ordet i en ordjakt för att upptäcka din första plats.';
     else if (!recognition) tip='Prova att hitta rätt bild eller betydelse.';
     else if (!application) tip=step3Info;
     else if (!revisit) tip='Härligt! Träffa gärna ordet igen i en annan omgång.';
     else tip='Du har övat på flera sätt. Välj gärna en ny utmaning!';
     return { ...item, steps, done:steps.filter(x=>x.done).length,
-      seen,recognition,application,revisit,needsPractice:difficult.length>0 || !!due,tip,
+      seen,recognition,application,revisit,needsPractice:difficult.length>0 || !!due || positive(contextInfo?.needs)>0,tip,
       skills: Object.entries(skills).filter(([key,entry])=>Object.hasOwn(names,key)&&positive(entry?.attempts)>0)
         .map(([key,entry])=>({label:names[key],right:positive(entry.right),wrong:positive(entry.wrong)}))};
   }
-  function entries(catalogItems, progress, reviews, missions, mistakes, now = Date.now()) {
-    return catalogItems.map(item=>detail(item,progress,reviews,missions,mistakes,now));
+  function entries(catalogItems, progress, reviews, missions, mistakes, now = Date.now(), contextInfo = null) {
+    return catalogItems.map(item=>detail(item,progress,reviews,missions,mistakes,now,
+      typeof contextInfo==='function'?contextInfo(item.id):null));
   }
   function summary(all) {
     return {

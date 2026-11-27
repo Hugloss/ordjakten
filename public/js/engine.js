@@ -14,8 +14,8 @@
     theme: 'dark', contrast: false, mode: 'train', difficulty: 'easy', topic: 'words', count: 10,
     companion:'fox', adventure:'forest', sound:false,
     timerMode: 'off', timerSeconds: 180, timerScope: 'total', reviewOnly: false,
-    expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true
-  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],retentionProgress:{}});
+    expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true, practiceGoal:'mixed'
+  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},contextProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],retentionProgress:{}});
 
   function shuffle(input, random = Math.random) {
     const result = input.slice();
@@ -289,12 +289,16 @@
     if(difficulty==='exam')return 'meaning'; // preserve five answers in exam mode
     return ({meaning:'sentence',sentence:'order',order:'meaning'})[lastVariant] || 'sentence';
   }
-  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null) {
+  function practiceGoalForRound(settings) {
+    return settings.mode==='train' && settings.difficulty!=='exam' && !settings.reviewOnly &&
+      !settings.contextOnly && !settings.schoolOnly && ['discover','focus'].includes(settings.practiceGoal)?settings.practiceGoal:'mixed';
+  }
+  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null, missionProgress = null, contextProgress = null, seenIds = null) {
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const pool=getTopicPool(bank,curation,expressions,settings);
     const schoolDrill=topic==='expressions'&&settings.schoolOnly===true&&settings.mode==='train'&&settings.difficulty!=='exam'&&!settings.reviewOnly&&!!missions;
     const count=VALID_COUNTS.includes(settings.count)?settings.count:10;
-    const candidates=settings.contextOnly&&!settings.reviewOnly&&settings.topic==='words'&&
+    let candidates=settings.contextOnly&&!settings.reviewOnly&&settings.topic==='words'&&
       settings.mode==='train'&&settings.difficulty!=='exam'?
       pool.filter(item=>item.kind==='word'&&getContextRecord(contexts,item.entry.id)):
       settings.reviewOnly?pool.filter(item=>reviewProgress===null?
@@ -303,14 +307,25 @@
     if(settings.contextOnly&&!settings.reviewOnly&&candidates.length<count)
       throw new Error('För få skrivna vardagssituationer på denna nivå. Välj färre frågor.');
     if(settings.reviewOnly && candidates.length===0)throw new Error('Det finns inga felaktiga ord eller uttryck att repetera.');
+    const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
+    const goal=practiceGoalForRound(settings);
+    const contextMemory=contextProgress&&settings.mode==='train'&&settings.difficulty!=='exam'?
+      {catalog:contexts,progress:contextProgress}:null;
+    if(goal!=='mixed'){
+      if(!adaptive?.trainingPools)throw new Error('Träningsmålet kunde inte laddas. Ladda om sidan.');
+      candidates=adaptive.trainingPools(candidates,settings,{progress:skillProgress,reviews:reviewProgress,
+        mistakes,readingProgress,missionProgress,contextIds,missionsAvailable:!!missions,now,contextMemory,seenIds})[goal];
+      if(!candidates.length)throw new Error(goal==='discover'?
+        'Inga oprövade ord eller uttryck på den här nivån. Välj Blanda eller en annan nivå.':
+        'Inget behöver en ny chans just nu. Välj Blanda eller Upptäck nytt.');
+    }
     const wanted=Math.min(count,candidates.length);
     let chosen;
     // Adaptation is opt-in and TRAINING ONLY. Tests, exam, and dedicated scene
     // drills preserve their original unbiased question generation.
     const adapt = adaptive && settings.adaptivePractice === true && settings.mode === 'train' &&
       settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly && !schoolDrill;
-    const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
-    if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,settings,contextIds,!!missions,now,random,readingProgress);
+    if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,{...settings,practiceGoal:goal},contextIds,!!missions,now,random,readingProgress,contextMemory);
     else if(topic==='mixed'){
       const words=shuffle(candidates.filter(x=>x.kind==='word'),random);
       const phrases=shuffle(candidates.filter(x=>x.kind==='expression'),random);
@@ -325,7 +340,7 @@
       if(item.kind!=='expression') {
         const hasContext=!!getContextRecord(contexts,item.entry.id)&&settings.difficulty!=='exam';
         const variant=adapt ? adaptive.choiceType(item,settings,skillProgress,
-          adaptive.availableTypes(item,settings,hasContext,!!missions),random,readingProgress) :
+          adaptive.availableTypes(item,settings,hasContext,!!missions),random,readingProgress,contextMemory) :
           settings.contextOnly&&hasContext?'context':
           settings.reviewOnly&&settings.mode!=='test'?nextReviewTask(
           reviewProgress?.[item.entry.id]?.lastVariant || 'meaning','word',settings.difficulty,hasContext):
@@ -336,7 +351,11 @@
           // Cards get different authored scenes on successive review visits.
           const prior=settings.reviewOnly?reviewProgress?.[item.entry.id]:null;
           const rotateScene=adaptive && settings.adaptivePractice===true && settings.mode==='train' && (adapt||settings.contextOnly);
-          const sceneIndex=rotateScene?adaptive.nextScene(skillProgress,item.entry.id,random):prior?prior.attempts: null;
+          const knownStories=contextMemory&&Object.keys(contextProgress[item.entry.id]||{}).length>0;
+          const sceneIndex=rotateScene&&knownStories&&adaptive.contextOrder?
+            adaptive.contextOrder(getContextRecord(contexts,item.entry.id),contextProgress,
+              {previous:skillProgress?.[item.entry.id]?.lastScene,random})[0]:
+            rotateScene?adaptive.nextScene(skillProgress,item.entry.id,random):prior?prior.attempts: null;
           return makeContextQuestion(item.entry,bank,contexts,random,sceneIndex);
         }
         return makeQuestion(item.entry,bank,curation,settings.difficulty,random);
@@ -380,7 +399,8 @@
       expressionTask:['mix','meaning','sentence','order'].includes(obj.expressionTask)?obj.expressionTask:'mix',
       missionHints:obj.missionHints!==false,
       contextMix:obj.contextMix!==false,
-      adaptivePractice:obj.adaptivePractice!==false
+      adaptivePractice:obj.adaptivePractice!==false,
+      practiceGoal:obj.reviewOnly!==true&&['mixed','discover','focus'].includes(obj.practiceGoal)?obj.practiceGoal:'mixed'
     };
   }
   const CAMP_STORY_LIMIT=24;
@@ -405,7 +425,7 @@
     return stories;
   }
   function sanitizeHistory(history) {
-    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],confusionProgress:{},clueProgress:{},retentionProgress:{}};
+    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},contextProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],confusionProgress:{},clueProgress:{},retentionProgress:{}};
     const rawResults = Array.isArray(history.results)?history.results:[];
     const results = rawResults.filter(x => x && typeof x==='object' && Number.isFinite(x.finishedAt))
       .slice(-50).map(x => ({finishedAt:x.finishedAt,level:String(x.level||''),mode:String(x.mode||''),
@@ -452,6 +472,7 @@
     // Separate, strictly validated by retention.js once curated scene IDs are available.
     const retentionProgress=history.retentionProgress&&typeof history.retentionProgress==='object'&&!Array.isArray(history.retentionProgress)?history.retentionProgress:{};
     const readingProgress=history.readingProgress&&typeof history.readingProgress==='object'&&!Array.isArray(history.readingProgress)?history.readingProgress:{};
+    const contextProgress=history.contextProgress&&typeof history.contextProgress==='object'&&!Array.isArray(history.contextProgress)?history.contextProgress:{};
     const storyProgress={};
     for(const id of ['forest','space','castle','pirate','ocean','dinosaurs','garden','unicorn','animals','rainbow','horses','music']){
       const n=history.storyProgress?.[id];if(Number.isInteger(n)&&n>0)storyProgress[id]=Math.min(4,n);
@@ -483,7 +504,7 @@
     const detectorProgress=history.detectorProgress&&typeof history.detectorProgress==='object'&&!Array.isArray(history.detectorProgress)?history.detectorProgress:{};
     const recallProgress=history.recallProgress&&typeof history.recallProgress==='object'&&!Array.isArray(history.recallProgress)?history.recallProgress:{};
     const skillProgress=history.skillProgress&&typeof history.skillProgress==='object'&&!Array.isArray(history.skillProgress)?history.skillProgress:{};
-    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,campStories:sanitizeCampStories(history.campStories,storyProgress),confusionProgress,clueProgress,retentionProgress};
+    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,contextProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,campStories:sanitizeCampStories(history.campStories,storyProgress),confusionProgress,clueProgress,retentionProgress};
   }
   function applyOutcome(mistakes,id,outcome) {
     const updated={...mistakes};
@@ -492,5 +513,5 @@
     return updated;
   }
   return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,validateSelection,isEveryday,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
-    generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
+    practiceGoalForRound,generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

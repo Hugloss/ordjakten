@@ -51,7 +51,7 @@
     return {instruction:parts[0].instruction,
       options:options.map((option,index)=>({...option,displayLabel:parts[index].displayLabel}))};
   }
-  function makeCheck(question,{bank,contexts,surprises,missions,readingProgress=null,random=Math.random}={}) {
+  function makeCheck(question,{bank,contexts,surprises,missions,readingProgress=null,random=Math.random,selectScene=null}={}) {
     if(!question||!question.id||!question.definition)return null;
     const word=question.word;
     const transfer=readingProgress?.[question.id]?.transfer;
@@ -106,7 +106,9 @@
       // possible. Store only its index, never the text or the child's answer.
       const unused=fresh.filter(({index})=>'context:'+index!==lastEvidence);
       const unproved=unused.filter(({index})=>!proofs.has('context:'+index));
-      const target=choose(unproved.length?unproved:unused.length?unused:fresh,random);
+      const eligible=unproved.length?unproved:unused.length?unused:fresh;
+      const preferred=typeof selectScene==='function'?selectScene(record,eligible.map(item=>item.index)):null;
+      const target=eligible.find(item=>item.index===preferred)||choose(eligible,random);
       // Only use the separately reviewed Aha allowlist. A wrong word for
       // this scene need not supply a wrong scene for this word.
       const ids=[...new Set(record.readingDistractors||[])].filter(id=>id!==record.id);
@@ -115,7 +117,7 @@
       const check=makeChallenge('Vilken ANNAN berättelse visar ordet ”'+word+'”?',
         target?.scene.text,wrong,'context',random,target?.scene.why,
         target?'context:'+target.index:'');
-      if(check?.options.length===3)return check;
+      if(check?.options.length===3)return {...check,sceneIndex:target.index};
     }
     const words=bank?.words||[];
     const safe=[];

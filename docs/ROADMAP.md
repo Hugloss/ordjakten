@@ -32,7 +32,7 @@
 - Visuell **Min ordstig** för alla ord och uttryck finns i 0.14. **🎯 Träna det här!** med riktade mikroövningar är implementerad i 0.15. Fortsätt testa om barn tolkar de fyra markörerna rätt och om förslag på nästa övning hjälper mer än de distraherar.
 
 - **Genomfört 0.16–0.18:** jämförelseövningar med närliggande ord och 96 redaktionellt skrivna scener för tolv par med olika vardagsmiljöer. Nästa steg: provspela med barn och granska om variationen leder till verklig begreppsförståelse.
-- Välj **nya ord / blandade ord / repetera fel** som tydligare spellägen.
+- **Genomfört:** välj Blanda / Upptäck nytt / Ge ord en ny chans i Träna. Urvalet visar tillgängliga frågor, respekterar repetitionspauser och påverkar inte Testa dig.
 - Schemalagd repetition finns i 0.11, 129 scenbaserade frågor för 43 ord i 0.12 och **färdighetsanpassad variation per frågetyp** finns i 0.13. Nästa steg: barnprovspela urvalsregler, tidsintervall, förklaringar och distraktorer; utöka scenbanken där barnen oftast fastnar.
 - Testa belöningar (nu implementerade) på riktiga barn 8–10 år och förenkla efter feedback.
 - Tolv äventyrsvärldar och deras SVG-stigar finns i 0.5. Barnprovspela framför allt mobilkartans tydlighet och hur delmål uppfattas.
