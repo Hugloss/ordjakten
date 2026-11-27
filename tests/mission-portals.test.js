@@ -11,9 +11,9 @@ const fresh=()=>Portals.sanitize(null,content);
 const view=(raw,id=null)=>Portals.model(raw,id,content);
 const clone=x=>JSON.parse(JSON.stringify(x));
 
-test('twelve original adventures offer 36 distinct, complete clue steps',()=>{
+test('thirty-two original adventures offer 96 distinct, complete clue steps',()=>{
   assert.deepEqual(content.errors,[]);
-  assert.equal(content.ids.length,12);
+  assert.equal(content.ids.length,32);
   const titles=new Set(),stories=new Set();
   for(const id of content.ids){
     const row=content.stories[id];
@@ -37,12 +37,12 @@ test('twelve original adventures offer 36 distinct, complete clue steps',()=>{
       assert.ok(stage.wrong.filter(Boolean).every(reason=>reason.length>=15));
     }
   }
-  assert.equal(titles.size,12);
+  assert.equal(titles.size,32);
 });
 
 test('all adventures open immediately and hidden solutions are not included in early models',()=>{
   const state=fresh(),list=view(state);
-  assert.equal(list.doneCount,0);assert.equal(list.entries.length,12);
+  assert.equal(list.doneCount,0);assert.equal(list.entries.length,32);
   assert.ok(list.entries.every(item=>item.count===0&&!item.done&&item.keepsake===null));
   for(const id of content.ids){
     const m=view(state,id).current,original=content.stories[id];
@@ -85,11 +85,11 @@ test('wrong choices give specific help, retries are optional, and completing one
   assert.equal(view(state,id).current.stage.feedback,null);
   assert.equal(view(state,id).current.stage.hint,false);
   assert.deepEqual(view(state,id).current.stage.wrong,[]);
-  assert.deepEqual(view(before).entries.map(x=>x.count),Array(12).fill(0));
+  assert.deepEqual(view(before).entries.map(x=>x.count),Array(32).fill(0));
   assert.notDeepEqual(state,prior);
 });
 
-test('all 36 stages can be completed, earning exactly one keepsake per adventure',()=>{
+test('all 96 stages can be completed, earning exactly one keepsake per adventure',()=>{
   let state=fresh();
   for(const id of content.ids){
     for(let step=0;step<3;step++){
@@ -108,8 +108,8 @@ test('all 36 stages can be completed, earning exactly one keepsake per adventure
     assert.equal(Portals.choose(state,id,0,content),state,'completed adventures are immutable');
     assert.deepEqual(Portals.sanitize(clone(state),content),state);
   }
-  assert.equal(view(state).doneCount,12);
-  assert.equal(view(state).entries.filter(row=>row.done&&row.keepsake).length,12);
+  assert.equal(view(state).doneCount,32);
+  assert.equal(view(state).entries.filter(row=>row.done&&row.keepsake).length,32);
 });
 
 test('malformed imported progress is rejected per story without erasing other discoveries',()=>{
