@@ -2463,12 +2463,16 @@
     }
     if(kind==='transfer'&&model.phase==='map'&&model.mystery?.transfer){
       const next=model.mystery.transfer;
+      // The worked explanation stays behind an optional details disclosure.
+      // A generic listening request must not reveal it before the child asks.
       return [next.title,next.intro,...next.clues,
-        next.done?'Berätta varför båda spåren passar.':
+        next.done?'Berätta varför båda spåren stämmer.':
           next.choices.filter(choice=>!next.wrong.includes(choice.id))
             .map((choice,index)=>'Alternativ '+(index+1)+': '+choice.label).join('. '),
-        next.done?next.feedback:'',!next.done?next.feedback:''].filter(Boolean).join('. ');
+        !next.done?next.feedback:''].filter(Boolean).join('. ');
     }
+    if(kind==='transferExplanation'&&model.phase==='map'&&model.mystery?.transfer?.done)
+      return model.mystery.transfer.feedback||'';
     if(kind==='arrival'&&visit&&!visit.matched&&model.clue){
       const place=model.places.find(row=>row.index===visit.index);
       return ['Ledtråden säger: '+model.clue.text,'Leta efter båda: '+model.clue.lookFor.join('. '),
