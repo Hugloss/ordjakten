@@ -23,7 +23,7 @@
   function speech(el,kind,enabled,serial=null){
     if(!enabled)return [];
     const id='treasure-listen-'+kind;
-    const labels={clue:'🔊 Lyssna på ledtråden och platserna',mystery:'🔊 Lyssna på mysteriet',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen',transfer:'🔊 Lyssna på det nya fallet'};
+    const labels={clue:'🔊 Lyssna på ledtråden och platserna',mystery:'🔊 Lyssna på mysteriet',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen',transfer:'🔊 Lyssna på det nya fallet',transferExplanation:'🔊 Lyssna på förklaringen'};
     const button=action(el,labels[kind], 'treasureListen',kind,serial);
     button.id=id;button.setAttribute('aria-pressed','false');
     const status=el('p','treasure-speech-status');status.id=id+'-status';
@@ -193,19 +193,19 @@
         const proof=el('div','treasure-proof');
         proof.append(el('h3','','🧩 Spårdetektivens bevis'));
         if(story.proof.done){
-          proof.append(el('p','treasure-proof-done','✓ Du hittade de två detaljer som passar platsen. Bra jämfört!'));
+          proof.append(el('p','treasure-proof-done','✓ Du hittade de två detaljer som passar platsen. Nu kan du förklara varför.'));
           // An optional spoken explanation practises reasoning, not speed or scoring.
           // The model reveals the authored evidence only after proof completion.
           if(Array.isArray(story.proof.evidence)&&story.proof.evidence.length===2){
             const [first,second]=story.proof.evidence;
             const reflect=el('div','treasure-proof-reflection');
             reflect.append(el('h4','','🗣️ Berätta som en detektiv'),
-              el('p','','Kan du berätta för någon varför platsen passar? Använd båda spåren.'),
+              el('p','','Kan du berätta varför platsen passar? Ta med båda spåren.'),
               el('p','','Börja gärna: ”Jag valde den här platsen därför att … och …”'));
             const example=el('details','treasure-proof-example');
             example.append(el('summary','','Visa ett exempel om du vill ha hjälp'),
               el('p','','Jag valde platsen därför att jag hittade '+first+' och '+second+'. Båda spåren passar.'));
-            reflect.append(example,el('p','','Du behöver inte skriva något. Berätta högt eller tänk tyst. Inga extra poäng behövs.'));
+            reflect.append(example,el('p','','Du kan berätta högt eller tänka för dig själv. Det är frivilligt och ger inga extra poäng.'));
             proof.append(reflect);
           }
         }else{
@@ -224,7 +224,7 @@
           if(story.proof.feedback){
             const feedback=el('p','treasure-mystery-feedback');
             feedback.setAttribute('role','status');
-            feedback.textContent='Nästan! '+story.proof.feedback+' Läs detaljerna och försök igen.';
+            feedback.textContent='Läs båda spåren igen. '+story.proof.feedback+' Prova ett annat bevispar.';
             proof.append(feedback);
           }
         }
@@ -236,22 +236,23 @@
         summary.id='treasure-transfer-title';summary.tabIndex=-1;
         if(next.done||next.wrong.length)transfer.setAttribute('open','');
         transfer.append(summary,el('p','treasure-transfer-intro',next.intro),
-          el('p','','Läs båda ledtrådarna. Vilket svar passar dem tillsammans?'));
+          el('p','','Läs båda spåren. Vilket svar stämmer med båda?'));
         const clues=el('ol','treasure-mystery-clues');
         for(const [index,clue] of next.clues.entries())
           clues.append(el('li','treasure-mystery-clue','Spår '+(index+1)+': '+clue));
         transfer.append(clues,...speech(el,'transfer',options.canReadAloud));
         if(next.done){
-          transfer.append(el('p','treasure-mystery-success','✓ Du hittade lösningen till det nya fallet!'),
-            el('p','','Kan du säga varför båda spåren passar? Berätta gärna med egna ord.'));
+          transfer.append(el('p','treasure-mystery-success','✓ Du löste det nya fallet!'),
+            el('p','','Kan du förklara ditt val? Börja gärna: ”Jag valde det här svaret därför att … och …”'));
           const help=el('details','treasure-transfer-why');
           help.append(el('summary','','Visa förklaringen om du vill'),
-            el('p','treasure-mystery-feedback',next.feedback||''));
+            el('p','treasure-mystery-feedback',next.feedback||''),
+            ...speech(el,'transferExplanation',options.canReadAloud));
           transfer.append(help);
         }else{
           const choices=el('div','treasure-proof-choices');
           choices.setAttribute('role','group');
-          choices.setAttribute('aria-label','Välj det svar som passar båda spåren');
+          choices.setAttribute('aria-label','Välj ett svar som stämmer med båda spåren');
           for(const choice of next.choices){
             const tried=next.wrong.includes(choice.id);
             const button=action(el,choice.label+(tried?' – redan provat':''),'treasureMysteryTransfer',choice.id);
@@ -263,18 +264,18 @@
           if(next.feedback){
             const feedback=el('p','treasure-mystery-feedback');
             feedback.setAttribute('role','status');
-            feedback.textContent='Titta på båda spåren. '+next.feedback+' Prova ett annat svar.';
+            feedback.textContent='Läs båda spåren igen. '+next.feedback+' Prova ett annat svar.';
             transfer.append(feedback);
           }
         }
-        transfer.append(el('p','treasure-mystery-note','Ett frivilligt nytt fall. Du får försöka igen i din egen takt. Inga skatter eller stjärnor påverkas.'));
+        transfer.append(el('p','treasure-mystery-note','Det här fallet är frivilligt. Du får prova igen. Dina skatter och stjärnor ligger kvar.'));
         box.append(transfer);
       }
     }else if(story.revealed<3){
-      box.append(el('p','','Du har '+story.revealed+' av 3 ledtrådar. Läs nästa för att få fler spår.'));
+      box.append(el('p','','Du har läst '+story.revealed+' av 3 ledtrådar. Vill du se nästa?'));
       box.append(action(el,'Visa ledtråd '+(story.revealed+1),'treasureMysteryReveal','',null,true));
     }else{
-      box.append(el('p','treasure-mystery-prompt','Nu har du tre ledtrådar. Vilken plats passar dem tillsammans?'));
+      box.append(el('p','treasure-mystery-prompt','Du har läst alla tre ledtrådarna. Vilken plats passar alla tre?'));
       const choices=el('div','treasure-mystery-choices');
       choices.setAttribute('role','group');choices.setAttribute('aria-label','Välj plats för mysteriet');
       for(const place of model.places){
