@@ -8,7 +8,7 @@
 .quest-card strong{font-size:16px;color:var(--text);overflow-wrap:anywhere}
 .quest-card small{font-size:12px;color:var(--muted);line-height:1.4}
 .quest-card .quest-count{color:var(--accent);font-size:12px;font-weight:850;margin-top:auto;line-height:1.35}
-.quest-card:disabled{opacity:.62}
+.quest-card:disabled{border-style:dashed}
 .quest-card:disabled .quest-count{color:var(--muted)}
 .quest-surprise{margin-top:12px}
 .quest-progress{background:var(--surface);border:2px solid var(--accent-line);border-radius:16px;padding:14px;margin:15px 0;color:var(--text)}
@@ -28,7 +28,7 @@
 .next-steps h2{font-size:21px;margin-bottom:6px}
 .next-step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
 .next-step-button{min-width:0;min-height:54px;padding:11px 7px;text-align:center;font-size:14px;font-weight:850;line-height:1.35;background:var(--accent-soft);border:2px solid var(--accent-line);color:var(--text);border-radius:12px}
-.next-step-button:disabled{background:var(--surface-2);border-color:var(--border);opacity:.6}
+.next-step-button:disabled{background:var(--surface-2);border-color:var(--border);border-style:dashed}
 @media (hover:hover) and (pointer:fine){.quest-card:not(:disabled):hover,.next-step-button:not(:disabled):hover{border-color:var(--accent);background:var(--accent-soft)}}
 @media (max-width:640px){.quest-grid{grid-template-columns:1fr}.quest-card{min-height:0;display:grid;grid-template-columns:43px minmax(0,1fr);grid-template-rows:auto auto auto;gap:3px 10px;padding:13px}.quest-card .quest-card-icon{grid-row:1/4;align-self:center}.quest-card .quest-count{margin-top:3px}.next-step-grid{grid-template-columns:1fr}.next-step-button{min-height:48px}}
 @media (prefers-reduced-motion:reduce){.quest-mini-track>div{transition:none}}

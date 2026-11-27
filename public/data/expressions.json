@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Barnvänliga svenska vardagsuttryck, idiom, liknelser och skolans uppgiftsord med konkreta exempel och förklaringar.",
+  "description": "Barnvänliga svenska vardagsuttryck, idiom, liknelser och skolans uppgiftsord med konkreta exempel och förklaringar av vad som menas i olika situationer.",
   "expressions": [
     {
       "id": "ut-0001",
@@ -2713,6 +2713,258 @@
       ],
       "review_status": "draft",
       "schoolRule": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
+    },
+    {
+      "id": "ut-0070",
+      "phrase": "Hoppa i overallen",
+      "scene": "Det snöar och vi ska gå ut. Overallen ligger framme i hallen. Pappa säger: ”Hoppa i overallen så går vi till pulkabacken.”",
+      "definition": "Ta på dig overallen så att du är klädd för att gå ut.",
+      "example": "Efter mellanmålet säger ledaren: ”Hoppa i overallen, så går vi ut på gården.”",
+      "reveal": [
+        {
+          "title": "Kläderna ska på",
+          "text": "Ni ska ut i snön och overallen ligger framme. Pappa ber dig att ta på den. Sätt benen i byxbenen och armarna i ärmarna. Du behöver inte göra något hopp."
+        },
+        {
+          "title": "Samma ord kan användas på olika sätt",
+          "text": "På gymnastiken kan ”hoppa upp och landa på mattan” betyda ett riktigt hopp. Men när pappa säger ”hoppa i overallen” handlar det om att klä på sig."
+        }
+      ],
+      "instructionRule": "Lyssna på vad ni ska göra. Om du undrar kan du fråga: ”Menar du att jag ska ta på mig overallen?”",
+      "category": "everyday-instruction",
+      "options": [
+        {
+          "label": "Ta på dig overallen så att du är klädd för att gå ut.",
+          "correct": true
+        },
+        {
+          "label": "Hoppa upp och ner medan du håller overallen i handen.",
+          "correct": false
+        },
+        {
+          "label": "Lägg overallen i väskan och gå ut utan den.",
+          "correct": false
+        },
+        {
+          "label": "Ta av dig overallen och stanna kvar i hallen.",
+          "correct": false
+        },
+        {
+          "label": "Lägg overallen på golvet och hoppa över den.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0071",
+      "phrase": "Hoppa ner från pallen",
+      "scene": "Lina står på en pall och har borstat tänderna. Pappa säger: ”Hoppa ner från pallen nu. Håll min hand och sätt en fot i taget på golvet.”",
+      "definition": "Här betyder det att kliva lugnt ner från pallen, med en fot i taget.",
+      "example": "När Sam har tvättat händerna säger mamma: ”Hoppa ner från pallen. Kliv ner lugnt, så håller jag din hand.”",
+      "reveal": [
+        {
+          "title": "Lyssna på hela meningen",
+          "text": "Pappa säger att Lina ska hålla hans hand och sätta ner en fot i taget. Det visar att han menar att hon ska kliva lugnt ner. Han ber henne inte att ta ett skutt."
+        },
+        {
+          "title": "Ibland menas ett riktigt hopp",
+          "text": "På gymnastiken kan ledaren säga: ”Hoppa ner från den låga lådan och landa med båda fötterna på mattan.” Då menas ett riktigt hopp. Orden runt omkring hjälper dig att förstå."
+        }
+      ],
+      "instructionRule": "Om du är osäker, fråga innan du gör något: ”Menar du att jag ska kliva ner?”",
+      "category": "everyday-instruction",
+      "options": [
+        {
+          "label": "Här betyder det att kliva lugnt ner från pallen, med en fot i taget.",
+          "correct": true
+        },
+        {
+          "label": "Ta ett skutt och landa med båda fötterna samtidigt.",
+          "correct": false
+        },
+        {
+          "label": "Kliva upp på pallen och börja borsta tänderna igen.",
+          "correct": false
+        },
+        {
+          "label": "Stå kvar på pallen och vänta på att pappa går därifrån.",
+          "correct": false
+        },
+        {
+          "label": "Sätta sig på pallen och låta fötterna hänga i luften.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0072",
+      "phrase": "Släng på dig jackan",
+      "scene": "Det är svalt ute och ni ska gå till affären. Mamma håller fram jackan och säger: ”Släng på dig jackan, så går vi.”",
+      "definition": "Ta på dig jackan innan ni går ut.",
+      "example": "”Släng på dig jackan, så går vi till lekplatsen”, säger pappa och tar fram sina skor.",
+      "reveal": [
+        {
+          "title": "Jackan ska värma dig",
+          "text": "Ni ska gå ut där det är svalt och mamma håller fram jackan. Hon ber dig att ta på den så att den sitter på kroppen."
+        },
+        {
+          "title": "Släng betyder olika saker här",
+          "text": "Under en bolllek kan ”släng bollen till mig” betyda att kasta bollen. Men ”släng på dig jackan” betyder att ta på jackan, inte kasta den genom luften."
+        }
+      ],
+      "instructionRule": "Titta på vad personen håller fram och lyssna på hela meningen. Du kan fråga: ”Menar du att jag ska ta på mig jackan?”",
+      "category": "everyday-instruction",
+      "options": [
+        {
+          "label": "Ta på dig jackan innan ni går ut.",
+          "correct": true
+        },
+        {
+          "label": "Kasta jackan genom hallen så att den landar på golvet.",
+          "correct": false
+        },
+        {
+          "label": "Häng upp jackan på kroken och gå ut utan den.",
+          "correct": false
+        },
+        {
+          "label": "Bär jackan i handen hela vägen i stället för att ta på den.",
+          "correct": false
+        },
+        {
+          "label": "Ta av dig jackan och lägg den i tvättkorgen.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0073",
+      "phrase": "Slå dig ner",
+      "scene": "Du kommer till farmor. Hon visar en ledig stol vid bordet och säger: ”Slå dig ner, så äter vi mellanmål.”",
+      "definition": "Sätt dig på platsen som personen visar.",
+      "example": "Bibliotekarien pekar på en ledig stol: ”Slå dig ner här, så visar jag boken.”",
+      "reveal": [
+        {
+          "title": "En plats att sitta på",
+          "text": "Farmor visar en ledig stol där ni ska äta mellanmål. Hon bjuder dig att sätta dig där. Du behöver inte slå på något."
+        },
+        {
+          "title": "Lyssna på hela uttrycket",
+          "text": "”Slå på trumman” handlar om att göra slag på en trumma. ”Slå dig ner” är ett annat uttryck och betyder att sätta sig."
+        }
+      ],
+      "instructionRule": "Se om personen visar en plats att sitta på. Om du undrar kan du fråga: ”Menar du att jag ska sätta mig här?”",
+      "category": "everyday-instruction",
+      "options": [
+        {
+          "label": "Sätt dig på platsen som personen visar.",
+          "correct": true
+        },
+        {
+          "label": "Slå med handen på stolen och fortsätt stå upp.",
+          "correct": false
+        },
+        {
+          "label": "Ställ undan stolen och stanna stående vid bordet.",
+          "correct": false
+        },
+        {
+          "label": "Lägg dig på golvet under bordet.",
+          "correct": false
+        },
+        {
+          "label": "Gå ut ur rummet och lämna stolen tom.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0074",
+      "phrase": "Häng med",
+      "scene": "Alva och Sam ska gå till lekplatsen. De vänder sig till Mira och säger: ”Häng med oss, så går vi tillsammans!”",
+      "definition": "Här betyder det att följa med någon.",
+      "example": "”Vi går till biblioteket. Vill du hänga med?” betyder här att du får följa med dit.",
+      "reveal": [
+        {
+          "title": "Vännerna bjuder med dig",
+          "text": "Alva och Sam ska till lekplatsen och vill gå tillsammans med Mira. ”Häng med” betyder här att följa med dem."
+        },
+        {
+          "title": "Andra ord ger andra ledtrådar",
+          "text": "”Hänger du med i förklaringen?” betyder i stället ”Förstår du?”. ”Häng i räcket” kan betyda att hålla i räcket och låta kroppen hänga. Lyssna på hela meningen."
+        }
+      ],
+      "instructionRule": "Ta hjälp av det som händer och av hela meningen. Du kan fråga: ”Menar du att jag ska följa med?”",
+      "category": "everyday-instruction",
+      "options": [
+        {
+          "label": "Här betyder det att följa med någon.",
+          "correct": true
+        },
+        {
+          "label": "Stanna hemma medan vännerna går till lekplatsen.",
+          "correct": false
+        },
+        {
+          "label": "Häng upp vännernas jackor på krokar i hallen.",
+          "correct": false
+        },
+        {
+          "label": "Häng i ett räcke medan vännerna går därifrån.",
+          "correct": false
+        },
+        {
+          "label": "Gå ensam till en annan plats utan vännerna.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0075",
+      "phrase": "Hoppa över",
+      "scene": "Ni spelar frågespel och fråga tre är svår. Ledaren säger: ”Hoppa över trean så länge och ta fyran. Vi tittar på trean tillsammans sedan.”",
+      "definition": "Låt den frågan eller delen vara och fortsätt med nästa.",
+      "example": "”Hoppa över den tomma sidan och fortsätt läsa på nästa”, säger läraren.",
+      "reveal": [
+        {
+          "title": "Gå vidare till nästa fråga",
+          "text": "Ledaren säger vilken fråga ni ska lämna och vilken ni ska ta sedan. Här betyder ”hoppa över” att inte svara på trean just nu. Ni kan komma tillbaka till den senare."
+        },
+        {
+          "title": "Ett riktigt hopp i en annan situation",
+          "text": "Om en lekledare säger ”hoppa över strecket på marken” kan det betyda ett riktigt hopp. I frågespelet ska du i stället gå vidare till en annan fråga."
+        }
+      ],
+      "instructionRule": "Lyssna på vad du ska hoppa över och vad som kommer sedan. Du kan fråga: ”Menar du att jag ska lämna den här och ta nästa?”",
+      "category": "everyday-instruction",
+      "options": [
+        {
+          "label": "Låt den frågan eller delen vara och fortsätt med nästa.",
+          "correct": true
+        },
+        {
+          "label": "Fortsätt bara med fråga tre och låt fråga fyra vara.",
+          "correct": false
+        },
+        {
+          "label": "Hoppa med kroppen över papperet med frågorna.",
+          "correct": false
+        },
+        {
+          "label": "Ta bort fråga tre så att ingen kan läsa den senare.",
+          "correct": false
+        },
+        {
+          "label": "Sluta spela och lämna alla frågor obesvarade.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
     }
   ]
 }

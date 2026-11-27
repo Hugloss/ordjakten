@@ -12,7 +12,7 @@ const grumlig=catalog.find(item=>item.name==='Grumlig');
 const phrase=catalog.find(item=>item.name==='För en gångs skull');
 const random=()=>.37;
 
-test('all 188 workshop plans end in ungraded reflection and only contain original examples',()=>{
+test('all 194 workshop plans end in ungraded reflection and only contain original examples',()=>{
   let builds=0,repairs=0;
   for(const item of catalog){
     for(const draw of [()=>0,random,()=>.9999]){
@@ -40,7 +40,7 @@ test('all 188 workshop plans end in ungraded reflection and only contain origina
     if(steps.some(step=>step.type==='build'))builds++;
     if(steps.some(step=>step.type==='repair'))repairs++;
   }
-  assert.equal(catalog.length,188);
+  assert.equal(catalog.length,194);
   assert.ok(builds>=121);
   assert.equal(repairs,contrasts.pairs.length*2);
 });

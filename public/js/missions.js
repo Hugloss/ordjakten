@@ -13,13 +13,23 @@
     for(const m of data.missions){
       if(!m||!available.has(m.id)||seen.has(m.id)){issues.push('Felaktigt eller dubblerat ID: '+(m&&m.id));continue;}
       seen.add(m.id);
-      if(expressions.expressions.find(e=>e.id===m.id)?.category==='school-instruction'){
-        if(typeof m.prompt!=='string'||m.prompt.trim().length<25)issues.push('Skoluppgift saknar instruktion: '+m.id);
+      const category=expressions.expressions.find(e=>e.id===m.id)?.category;
+      if(category==='school-instruction'||category==='everyday-instruction'){
+        const name=category==='school-instruction'?'Skoluppgift':'Vardagsuppgift';
+        if(typeof m.prompt!=='string'||m.prompt.trim().length<25)issues.push(name+' saknar instruktion: '+m.id);
         for(const key of ['explanation','connection','orderExplanation']){
-          if(typeof m[key]!=='string'||m[key].trim().length<30)issues.push('Skoluppgift saknar konkret '+key+': '+m.id);
+          if(typeof m[key]!=='string'||m[key].trim().length<30)issues.push(name+' saknar konkret '+key+': '+m.id);
         }
         if(!Array.isArray(m.sentences)||m.sentences.some(s=>s?.correct===false&&(typeof s.feedback!=='string'||s.feedback.trim().length<15)))
-          issues.push('Skoluppgift saknar svarsspecifik förklaring: '+m.id);
+          issues.push(name+' saknar svarsspecifik förklaring: '+m.id);
+      }
+      if(category==='everyday-instruction'){
+        const labels=Array.isArray(m.sentences)?m.sentences.map(s=>s?.label):[];
+        const first=labels[0],prefix=typeof first==='string'&&first.includes('” – ')?first.split('” – ')[0]+'” – ':'';
+        const situation=prefix.slice(0,-3).replace(/^[“”]|[“”]$/g,'').trim();
+        if(!prefix||!labels.every(label=>typeof label==='string'&&label.startsWith(prefix)&&label.slice(prefix.length).trim().length>=8)||
+          typeof m.prompt!=='string'||m.prompt.trim()!==situation)
+          issues.push('Vardagsuppgiftens svar måste höra till samma synliga situation: '+m.id);
       }
       if(!Array.isArray(m.sentences)||m.sentences.length!==3||
         m.sentences.filter(s=>s&&s.correct===true).length!==1||
@@ -35,18 +45,21 @@
   }
   // All teaching text is authored. Look up the selected option by its label,
   // never by its position in the shuffled choices.
-  function schoolFeedback(question,selectedLabel,data){
-    if(!question?.schoolInstruction)return null;
+  function instructionFeedback(question,selectedLabel,data){
+    if(!question?.schoolInstruction&&!question?.everydayInstruction)return null;
     const task=get(data,question.id),practical=question.taskType==='sentence',ordered=question.taskType==='order';
     const selected=practical?task?.sentences?.find(s=>s.label===selectedLabel):null;
     const model={
       explanation:ordered?task?.orderExplanation||'':practical?task?.explanation:question.reveal?.[0]?.text,
       connection:ordered?'':practical?task?.connection:question.reveal?.[1]?.text,
       correction:selected?.correct===false?selected.feedback:'',
-      rule:question.schoolRule||task?.hint||'',
+      rule:question.instructionRule||question.schoolRule||task?.hint||'',
       answer:practical?task?.sentences?.find(s=>s.correct===true)?.label:question.taskType==='order'?question.correctOrder?.join(' → '):''
     };
     return {...model,answer:practical?(model.answer||'').split('” – ').slice(1).join('” – ')||model.answer||'':model.answer||''};
+  }
+  function schoolFeedback(question,selectedLabel,data){
+    return question?.schoolInstruction?instructionFeedback(question,selectedLabel,data):null;
   }
   function sanitizeProgress(value,expressions,legacyMastered=[]){
     const valid=new Set(expressions&&Array.isArray(expressions.expressions)?expressions.expressions.map(x=>x.id):[]);
@@ -90,5 +103,5 @@
       sequence.every(Number.isInteger)&&new Set(sequence).size===3&&
       sequence.every((value,index)=>value===index);
   }
-  return {TYPES,get,validate,schoolFeedback,sanitizeProgress,complete,nextType,checkOrder};
+  return {TYPES,get,validate,instructionFeedback,schoolFeedback,sanitizeProgress,complete,nextType,checkOrder};
 });

@@ -60,21 +60,26 @@
     if(question.kind==='expression'){
       const challenge=surprises?.challenges?.find(x=>x.id===question.id);
       const mission=missions?.missions?.find(x=>x.id===question.id);
-      const school=question.schoolInstruction===true||typeof challenge?.ahaDistractor==='string';
+      // Standalone Aha catalogues contain only an id, name and definition.
+      // The authored challenge preserves the everyday category in that path.
+      const everyday=question.everydayInstruction===true||challenge?.category==='everyday-instruction';
+      const contextual=everyday||question.schoolInstruction===true||typeof challenge?.ahaDistractor==='string';
       const candidates=[];
       const surpriseRight=challenge?.options?.find(x=>x.correct===true)?.label;
       const sentenceRight=mission?.sentences?.find(x=>x.correct===true)?.label;
       if(surpriseRight)candidates.push({label:surpriseRight,key:'expression:challenge',why:challenge?.explanation});
       if(sentenceRight && sentenceRight!==surpriseRight)
-        candidates.push({label:sentenceRight,key:'expression:mission',why:school?(mission?.explanation||challenge?.explanation):(mission?.hint||challenge?.explanation)});
+        candidates.push({label:sentenceRight,key:'expression:mission',why:contextual?(mission?.explanation||challenge?.explanation):(mission?.hint||challenge?.explanation)});
       // Aha must not repeat the correct sentence already present among the
       // main question's answer choices. Prefer a genuinely NEW authored scene.
       const shown=new Set((question.options||[]).map(option=>option.label));
+      const shownScene=typeof question.scene==='string'?question.scene.trim():typeof question.stem==='string'?question.stem.trim():'';
       const novelHere=candidates.filter(c=>
-        !shown.has(c.label)&&c.label!==question.scene&&c.label!==question.stem);
-      // School answers must answer one shared task. Never reuse the task
-      // that was already shown merely to fill a missing alternative.
-      const eligible=school?novelHere:novelHere.length?novelHere:candidates;
+        !shown.has(c.label)&&c.label!==question.scene&&c.label!==question.stem&&
+        (!contextual||!shownScene||formatSchoolAnswers([c]).instruction.replace(/^[“”]|[“”]$/g,'').trim()!==shownScene));
+      // Contextual answers must belong to one shared situation. Do not reuse
+      // a shown situation merely to fill a missing alternative.
+      const eligible=contextual?novelHere:novelHere.length?novelHere:candidates;
       const fresh=eligible.filter(c=>c.key!==lastEvidence);
       const unproved=fresh.filter(c=>!proofs.has(c.key));
       const picked=choose(unproved.length?unproved:fresh.length?fresh:eligible,random);
@@ -82,19 +87,20 @@
       const challengeWrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
       const missionWrong=(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label);
       let wrong=challengeWrong.concat(missionWrong);
-      if(school){
+      if(contextual){
         wrong=picked.key==='expression:challenge'?challengeWrong.concat(challenge?.ahaDistractor||[]):missionWrong;
         const prefix=picked.label.split('” – ')[0]+'” – ';
         wrong=[...new Set(wrong)].filter(label=>typeof label==='string'&&label.startsWith(prefix)&&label!==picked.label&&!shown.has(label));
         if(wrong.length!==2)return null; // no invented or cross-task alternatives
       }
-      const prompt=school?'Vilket svar följer instruktionen ”'+word+'”?':'Vilken NY situation visar uttrycket ”'+word+'”?';
+      const prompt=everyday?'Vad betyder ”'+word+'” i den här nya situationen?':
+        contextual?'Vilket svar följer instruktionen ”'+word+'”?':'Vilken NY situation visar uttrycket ”'+word+'”?';
       const check=makeChallenge(prompt,picked.label,wrong,
         'expression',random,picked.why,picked.key);
-      if(!school||!check)return check;
+      if(!contextual||!check)return check;
       const formatted=formatSchoolAnswers(check.options);
       return {...check,prompt:formatted.instruction?check.prompt+'\n'+formatted.instruction:check.prompt,
-        options:formatted.options,schoolInstruction:true};
+        options:formatted.options,...(everyday?{everydayInstruction:true}:{schoolInstruction:true})};
     }
     if(question.kind!=='word')return null;
     const scenes=contexts?.wordContexts||[];

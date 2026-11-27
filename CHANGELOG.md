@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Vardagsuttryck och läsbara teman
+
+- Sex uttryck som barn kan höra i vardagen: Hoppa i overallen, Hoppa ner från pallen, Släng på dig jackan, Slå dig ner, Häng med och Hoppa över. Varje uttryck har skrivna situationer, förklaringar, motexempel, serie och tre uppgiftsvarianter.
+- Betydelsen kopplas till den aktuella situationen. ”Hoppa ner” kan också betyda ett riktigt hopp; barnet får hjälp att fråga när avsikten är oklar. Gemensam scen visas en gång före korta svar i träning, fokus, Aha och luckbok.
+- Återkopplingen följer den uppgift som besvarades. Definitionerna fungerar även när personer och platser ändras. Sex nya berättelseluckor ger 73 luckor och 219 uppgiftsvarianter; vardagsurvalet blir 101 ord och 65 uttryck.
+- Världstonade textytor får en ogenomskinlig bakgrund. Låsta kontroller behåller läsbar text, och högkontrastläget får företräde även i de ljusa världstemana. Dekorativa världsfärger behålls.
+- Nya regressioner kontrollerar de gemensamma scenerna, uppgiftsspecifika förklaringarna och textkontrasten i temana. Offlinecache v68. Se [innehåll och kontroller](docs/EVERYDAY-INSTRUCTIONS.md).
+
 ## Efter publicering – läsbarhet, uppläsningshjälp och offlinefiler
 
 - Låsta Aha-svar behåller full kontrast så att barnet kan läsa det rätta exemplet. Draggreppet på kristallkort följer valt färgtema; långa förklaringsrubriker och resultatetiketter kan radbrytas inom sitt kort.

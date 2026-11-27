@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "67 uttryck och uppgiftsord med två redaktionellt skrivna uppdrag: välj rätt svar och sätt händelser eller arbetssteg i ordning.",
+  "description": "73 uttryck och uppgiftsord med två redaktionellt skrivna uppdrag: välj rätt svar och sätt händelser eller arbetssteg i ordning.",
   "missions": [
     {
       "id": "ut-0001",
@@ -1626,6 +1626,180 @@
       "explanation": "Lägg ett föremål i vattnet och se om det flyter eller sjunker. Prova nästa föremål på samma sätt. Skriv upp resultaten så att du vet vilka som flöt.",
       "connection": "Tänk på att prova tre olika pennor. Skriv med varje penna och se vilka som fungerar. Då har du undersökt saken.",
       "orderExplanation": "Frågan hjälper dig att välja vad du ska prova eller ta reda på. Det du upptäcker blir innehållet i dina anteckningar, så att andra kan förstå resultatet."
+    },
+    {
+      "id": "ut-0070",
+      "prompt": "Ali är hos mormor. De ska gå ut och mata fåglarna i kylan. Mormor säger: Hoppa i overallen innan vi går.",
+      "sentences": [
+        {
+          "label": "”Ali är hos mormor. De ska gå ut och mata fåglarna i kylan. Mormor säger: Hoppa i overallen innan vi går.” – Ali tar på sig overallen och blir redo att gå ut.",
+          "correct": true
+        },
+        {
+          "label": "”Ali är hos mormor. De ska gå ut och mata fåglarna i kylan. Mormor säger: Hoppa i overallen innan vi går.” – Ali lägger overallen över armen och går ut utan att ta på den.",
+          "correct": false,
+          "feedback": "Att bära overallen över armen är inte att klä på sig. Här vill mormor att Ali har den på kroppen ute."
+        },
+        {
+          "label": "”Ali är hos mormor. De ska gå ut och mata fåglarna i kylan. Mormor säger: Hoppa i overallen innan vi går.” – Ali hoppar över overallen som ligger på golvet och lämnar den där.",
+          "correct": false,
+          "feedback": "Ali gör ett hopp, men tar inte på sig plagget som mormor ber om."
+        }
+      ],
+      "order": [
+        "Ali och mormor ska gå ut i kylan, men Ali har inte tagit på sig overallen.",
+        "Mormor ber Ali att ”hoppa i overallen” innan de går.",
+        "Ali tar på sig overallen och går sedan ut med mormor."
+      ],
+      "hint": "Fundera på vad Ali behöver ha på sig för att gå ut i kylan.",
+      "explanation": "Mormor säger att overallen ska på innan de går ut i kylan. Ali följer det hon menar genom att klä på sig den.",
+      "connection": "Om någon säger ”hoppa i stövlarna” när ni ska gå ut i regnet kan det också betyda att ta på sig något.",
+      "orderExplanation": "Först är Ali ännu inte klädd för kylan. Mormor ber honom ta på overallen. När han har gjort det går de ut tillsammans."
+    },
+    {
+      "id": "ut-0071",
+      "prompt": "Linn har ställt tillbaka en bok och står på en pall. Morfar säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.",
+      "sentences": [
+        {
+          "label": "”Linn har ställt tillbaka en bok och står på en pall. Morfar säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.” – Linn stannar på pallen och släpper morfars hand.",
+          "correct": false,
+          "feedback": "Morfar ber Linn att komma ner från pallen, inte att stanna kvar där."
+        },
+        {
+          "label": "”Linn har ställt tillbaka en bok och står på en pall. Morfar säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.” – Linn håller morfars hand och kliver ner en fot i taget.",
+          "correct": true
+        },
+        {
+          "label": "”Linn har ställt tillbaka en bok och står på en pall. Morfar säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.” – Linn tar ett skutt och landar med båda fötterna på en gång.",
+          "correct": false,
+          "feedback": "Ett skutt kan menas med ”hoppa ner” i en annan situation. Här säger morfar uttryckligen att en fot i taget ska ner på golvet."
+        }
+      ],
+      "order": [
+        "Linn har ställt tillbaka boken och står fortfarande på pallen.",
+        "Morfar ber Linn komma ner genom att sätta en fot i taget på golvet.",
+        "Linn håller morfars hand och kliver ner som han har beskrivit."
+      ],
+      "hint": "Läs hur morfar säger att Linn ska sätta ner fötterna.",
+      "explanation": "Morfar säger både ”hoppa ner” och hur Linn ska göra: hålla hans hand och sätta en fot i taget på golvet. Därför är det att kliva ner som passar just här.",
+      "connection": "På gymnastiken kan ”hoppa ner och landa med båda fötterna på mattan” betyda ett riktigt hopp. Om du undrar kan du fråga vad personen menar.",
+      "orderExplanation": "Först står Linn kvar på pallen efter att ha ställt tillbaka boken. Morfar beskriver sedan hur hon ska komma ner. Till sist följer Linn hans beskrivning och kliver ner."
+    },
+    {
+      "id": "ut-0072",
+      "prompt": "Efter träningen ska Noor gå hem i den kalla kvällen. Pappa håller fram hennes jacka och säger: Släng på dig jackan, så går vi.",
+      "sentences": [
+        {
+          "label": "”Efter träningen ska Noor gå hem i den kalla kvällen. Pappa håller fram hennes jacka och säger: Släng på dig jackan, så går vi.” – Noor kastar jackan mot dörren och lämnar den på golvet.",
+          "correct": false,
+          "feedback": "Ordet ”släng” kan betyda kasta, men här ska jackan på Noor inför promenaden i kylan."
+        },
+        {
+          "label": "”Efter träningen ska Noor gå hem i den kalla kvällen. Pappa håller fram hennes jacka och säger: Släng på dig jackan, så går vi.” – Noor stoppar jackan i väskan och går ut utan att ta på den.",
+          "correct": false,
+          "feedback": "Jackan i väskan värmer inte Noor. Pappa ber henne att ta på den innan de går."
+        },
+        {
+          "label": "”Efter träningen ska Noor gå hem i den kalla kvällen. Pappa håller fram hennes jacka och säger: Släng på dig jackan, så går vi.” – Noor tar på sig jackan och går sedan ut med pappa.",
+          "correct": true
+        }
+      ],
+      "order": [
+        "Noor ska gå hem från träningen, men har ännu inte jackan på sig.",
+        "Pappa håller fram jackan och ber Noor att ”slänga på sig” den.",
+        "Noor tar på sig jackan innan de går ut i den kalla kvällen."
+      ],
+      "hint": "Fundera på vad pappa vill att Noor ska ha på kroppen när de går ut.",
+      "explanation": "Pappa håller fram jackan eftersom de ska gå ut i kylan. Noor gör det han menar genom att ta på sig den innan de går.",
+      "connection": "”Släng på dig en tröja” kan också betyda att ta på sig plagget. När någon ber dig kasta en boll är det en annan användning av ordet släng.",
+      "orderExplanation": "Först är Noor fortfarande utan jacka. Pappa räcker fram den och ber henne ta på den. Sedan har hon jackan på sig när de går ut."
+    },
+    {
+      "id": "ut-0073",
+      "prompt": "Eli kommer till ett brädspel. Kompisen pekar på en ledig stol vid spelbordet och säger: Slå dig ner här.",
+      "sentences": [
+        {
+          "label": "”Eli kommer till ett brädspel. Kompisen pekar på en ledig stol vid spelbordet och säger: Slå dig ner här.” – Eli sätter sig på stolen bredvid spelbordet.",
+          "correct": true
+        },
+        {
+          "label": "”Eli kommer till ett brädspel. Kompisen pekar på en ledig stol vid spelbordet och säger: Slå dig ner här.” – Eli slår på stolen med handen men fortsätter stå upp.",
+          "correct": false,
+          "feedback": "Kompisen visar en plats där Eli kan sitta. ”Slå dig ner” betyder inte att slå på stolen."
+        },
+        {
+          "label": "”Eli kommer till ett brädspel. Kompisen pekar på en ledig stol vid spelbordet och säger: Slå dig ner här.” – Eli bär bort stolen och går ut ur rummet.",
+          "correct": false,
+          "feedback": "Kompisen bjuder Eli att sätta sig vid spelet, inte att ta bort sittplatsen."
+        }
+      ],
+      "order": [
+        "Eli kommer fram till brädspelet och står bredvid bordet.",
+        "Kompisen pekar på den lediga stolen och säger: ”Slå dig ner.”",
+        "Eli sätter sig på stolen som kompisen har visat."
+      ],
+      "hint": "Fundera på varför kompisen visar en ledig stol vid spelet.",
+      "explanation": "Kompisen pekar på en ledig stol vid spelbordet. Eli följer inbjudan genom att sätta sig där.",
+      "connection": "Man kan också säga ”slå dig ner” och visa en bänk eller en sittkudde. Då betyder det fortfarande att sätta sig.",
+      "orderExplanation": "Eli står först vid bordet. Kompisen visar sedan en sittplats. Efter inbjudan sätter sig Eli på just den platsen."
+    },
+    {
+      "id": "ut-0074",
+      "prompt": "Nora ska gå till matsalen och frågar Amir om han vill följa med: Häng med mig, så går vi tillsammans.",
+      "sentences": [
+        {
+          "label": "”Nora ska gå till matsalen och frågar Amir om han vill följa med: Häng med mig, så går vi tillsammans.” – Amir går ensam åt ett annat håll och lämnar Nora.",
+          "correct": false,
+          "feedback": "Nora bjuder Amir att gå med henne till matsalen. Att gå åt ett annat håll följer inte den inbjudan."
+        },
+        {
+          "label": "”Nora ska gå till matsalen och frågar Amir om han vill följa med: Häng med mig, så går vi tillsammans.” – Amir följer med Nora till matsalen.",
+          "correct": true
+        },
+        {
+          "label": "”Nora ska gå till matsalen och frågar Amir om han vill följa med: Häng med mig, så går vi tillsammans.” – Amir stannar kvar och hänger upp sin jacka medan Nora går.",
+          "correct": false,
+          "feedback": "Här handlar ”häng med” om att följa med Nora. Det handlar inte om att hänga upp kläder."
+        }
+      ],
+      "order": [
+        "Nora ska gå till matsalen och ser att Amir är kvar i klassrummet.",
+        "Nora bjuder med Amir och säger: ”Häng med mig.”",
+        "Amir tackar ja och följer med Nora till matsalen."
+      ],
+      "hint": "Titta på vart Nora ska gå och vad hon bjuder Amir att göra.",
+      "explanation": "Nora ska till matsalen och vill gå tillsammans med Amir. När han följer med henne gör han det hon bjuder in honom till.",
+      "connection": "”Hänger du med i spelreglerna?” kan däremot betyda ”Förstår du reglerna?”. Det är orden runt omkring som hjälper dig att välja betydelse.",
+      "orderExplanation": "Nora är först på väg till matsalen. Sedan bjuder hon med Amir. När Amir tackar ja går de dit tillsammans."
+    },
+    {
+      "id": "ut-0075",
+      "prompt": "Liv läser en bok. Nästa sida är helt tom. Pappa säger: Hoppa över den tomma sidan och fortsätt läsa på sidan efter den.",
+      "sentences": [
+        {
+          "label": "”Liv läser en bok. Nästa sida är helt tom. Pappa säger: Hoppa över den tomma sidan och fortsätt läsa på sidan efter den.” – Liv stannar vid den tomma sidan och slutar läsa.",
+          "correct": false,
+          "feedback": "Pappa ber Liv att fortsätta till sidan efter den tomma, inte att sluta läsa."
+        },
+        {
+          "label": "”Liv läser en bok. Nästa sida är helt tom. Pappa säger: Hoppa över den tomma sidan och fortsätt läsa på sidan efter den.” – Liv lägger boken på golvet och hoppar över den med kroppen.",
+          "correct": false,
+          "feedback": "Här handlar ”hoppa över” om vilken sida Liv ska läsa. Pappa har inte bett om ett riktigt hopp över boken."
+        },
+        {
+          "label": "”Liv läser en bok. Nästa sida är helt tom. Pappa säger: Hoppa över den tomma sidan och fortsätt läsa på sidan efter den.” – Liv bläddrar förbi den tomma sidan och fortsätter läsa på nästa.",
+          "correct": true
+        }
+      ],
+      "order": [
+        "Liv läser en bok och kommer till en sida som är helt tom.",
+        "Pappa ber Liv hoppa över den tomma sidan och läsa vidare.",
+        "Liv bläddrar till sidan efter den tomma och fortsätter läsa."
+      ],
+      "hint": "Fundera på vilken sida pappa vill att Liv ska läsa efter den tomma.",
+      "explanation": "Pappa säger att Liv ska fortsätta läsa på sidan efter den tomma. Hon följer instruktionen genom att bläddra förbi sidan utan text.",
+      "connection": "Man kan också hoppa över en fråga för stunden och ta nästa. Det betyder inte att frågan måste tas bort eller aldrig får besvaras.",
+      "orderExplanation": "Först upptäcker Liv den tomma sidan. Pappa berättar att hon kan gå vidare. Därefter bläddrar hon förbi sidan och fortsätter läsa."
     }
   ]
 }

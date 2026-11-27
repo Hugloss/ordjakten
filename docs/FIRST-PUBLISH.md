@@ -20,8 +20,9 @@ av starten, förklaringarna och läshjälpen.
 - Träningsmål utan tillgängliga frågor går inte att välja. Om ett sparat
   mål blivit tomt väljs Blanda och hjälpraden berättar vad som ändrats.
 
-Vardagsurvalet är fortsatt 101 ord och 59 uttryck, inklusive 14 skolord.
-Innehåll, facit och tidigare resultat påverkas inte av presentationen.
+Vid den första publiceringen omfattade vardagsurvalet 101 ord och 59 uttryck,
+inklusive 14 skolord. Sex efterföljande vardagsuttryck beskrivs i
+[Uttryck i vardagen och läsbara teman](EVERYDAY-INSTRUCTIONS.md).
 
 ## Automatiska kontroller
 

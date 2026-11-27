@@ -68,11 +68,11 @@ test('overlapping surface and uncertainty words do not compete in bare definitio
   }
 });
 
-test('the child selection covers 101 words and 59 expressions while all extension content stays addressable',()=>{
+test('the child selection covers 101 words and 65 expressions while all extension content stays addressable',()=>{
   assert.deepEqual(E.validateSelection(curation,bank,expressions,contexts),[]);
-  assert.equal(catalog.length,188);
+  assert.equal(catalog.length,194);
   assert.equal(catalog.filter(item=>item.kind==='word'&&item.everyday).length,101);
-  assert.equal(catalog.filter(item=>item.kind==='expression'&&item.everyday).length,59);
+  assert.equal(catalog.filter(item=>item.kind==='expression'&&item.everyday).length,65);
   assert.equal(curation.extensionWords.length,20);
   assert.equal(curation.extensionExpressions.length,8);
   assert.equal(curation.hardWords.length,25);
@@ -161,8 +161,8 @@ test('old mistakes and assisted recall do not put extension content back into au
   for(const seed of SEEDS){
     const recall=Recall.plan(catalog,history,NOW);
     const aha=Aha.plan(history.readingProgress,{...ahaOptions,random:random(seed)});
-    assert.equal(recall.ready.length,160);
-    assert.equal(aha.ready.length,160);
+    assert.equal(recall.ready.length,166);
+    assert.equal(aha.ready.length,166);
     assertEveryday(recall.ready.map(item=>item.id),'automatic recall');
     assertEveryday(aha.ready.map(item=>item.id),'automatic Aha');
   }

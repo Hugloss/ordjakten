@@ -25,17 +25,17 @@ npm run check
 - **Träna** med omedelbar återkoppling och **Testa dig** med dolt facit.
 - Lätt, medel, svårt och frivillig **Fördjupning**.
 - 121 ord med konkreta förklaringar, vardagsexempel, motexempel och egna tankefrågor.
-- 53 vardagsuttryck, 14 skolord, 363 vardagsscener, 96 jämförelsescener och
+- 59 uttryck, 14 skolord, 363 vardagsscener, 96 jämförelsescener och
   64 djupare berättelser för fyra jämförelsepar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
-- Uttrycksberättelser, 67 luckor, tre typer av miniuppdrag och serieillustrationer.
+- Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.
 - Anpassad träning, Min ordstig, Ledtrådstrappan, Förväxlingskompassen
   och frivilliga återbesök över tid.
 - Val av frågeantal och timer; mörkt, ljust och automatiskt tema.
 - Lokal resultathistorik utan konto eller backend.
 
 Vanliga omgångar och automatiska träningsförslag utgår från **101 ord och
-59 uttryck**, inklusive alla 14 skolord. Urvalet prioriterar användbara ord
+65 uttryck**, inklusive alla 14 skolord. Urvalet prioriterar användbara ord
 om saker, egenskaper, väder, känslor och samspel i barnets vardag. Ytterligare
 20 ord och 8 uttryck finns kvar i frivillig fördjupning och går att hitta
 i ordsamlingen. Urvalet är en redaktionell prioritering, ingen mätning av
@@ -103,6 +103,8 @@ ordurval, entydiga speluppgifter och skolfrågor finns i
 [Post-review: vardagsord och tydliga frågor](docs/POST-REVIEW-EVERYDAY.md).
 Nästa genomgång behandlar [tydligare frågor och förklaringar](docs/CLEARER-EXPLANATIONS.md),
 med särskilt fokus på överlappande betydelser och återkoppling till rätt uppgift.
+[Uttryck i vardagen och läsbara teman](docs/EVERYDAY-INSTRUCTIONS.md) beskriver
+sex nya vardagsuttryck och hur deras betydelse kopplas till en tydlig situation.
 
 Fortsatt utveckling: se [färdplan](docs/ROADMAP.md),
 [produktbeslut](docs/PRODUCT.md) och

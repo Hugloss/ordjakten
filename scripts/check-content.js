@@ -50,7 +50,7 @@ for(const [emoji,image] of Object.entries(comics.iconPaths)) {
   const filepath=path.join(root,image.slice(2));
   if(!fs.existsSync(filepath) || !fs.readFileSync(filepath).subarray(1,4).equals(Buffer.from('PNG')))issues.push('Missing or invalid comic picture: '+emoji);
 }
-if(expressionBank.expressions.length!==67)issues.push('Expected 67 curated expressions');
+if(expressionBank.expressions.length!==73)issues.push('Expected 73 curated expressions');
 if(expressionBank.expressions.filter(e=>e.category==='school-instruction').length!==14)issues.push('Expected 14 core school instructions');
 if(JSON.stringify(expressionBank)!==JSON.stringify(browserExpressions))issues.push('Expression JS/JSON bank diverged');
 function fail(msg){issues.push(msg);}
@@ -86,4 +86,4 @@ for(const level of ['easy','medium','hard','exam']){
  }
 }
 if(issues.length){process.stderr.write(issues.map(x=>'✗ '+x).join('\n')+'\n');process.exitCode=1;}
-else process.stdout.write(`✓ ${bank.words.length} words with complete lessons + 67 expressions + ${wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)} everyday scenes with reviewed Aha alternatives + 96 comparisons + 64 inference scenes across four pairs + 67 comics and 201 task variations validated.\n`);
+else process.stdout.write(`✓ ${bank.words.length} words with complete lessons + ${expressionBank.expressions.length} expressions + ${wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)} everyday scenes with reviewed Aha alternatives + 96 comparisons + 64 inference scenes across four pairs + ${Object.keys(comics.stories).length} comics and ${missions.missions.length*Missions.TYPES.length} task variations validated.\n`);
