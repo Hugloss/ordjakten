@@ -2490,13 +2490,13 @@
           ],
           "choices": [
             "Kort, lång, lång.",
-            "Lång, lång, kort.",
+            "Lång, kort, lång, lång.",
             "Kort, kort, lång."
           ],
           "answer": 0,
           "wrong": [
             null,
-            "Här är de långa blinkningarna först.",
+            "De två långa blinkningarna kommer, men signalen börjar inte med en kort.",
             "Här börjar det kort, men sedan kommer inte två långa blinkningar."
           ],
           "why": "Mönstret börjar med en kort blinkning och slutar med två långa."
@@ -2627,27 +2627,27 @@
             "Böckerna är sagor, men skylten är röd.",
             "Skylten är grön, men böckerna handlar om fakta."
           ],
-          "why": "Sagböckerna står under den gröna skylten."
+          "why": "Sagoböckerna står under den gröna skylten."
         },
         {
           "title": "Bokens beskrivning",
           "scene": "En liten lapp beskriver en bestämd bok.",
           "clues": [
-            "Boken handlar om ett vänligt djur.",
-            "Djuret hjälper någon att hitta hem."
+            "Berättelsen handlar om en vänlig räv.",
+            "En kanin får hjälp att hitta hem."
           ],
           "choices": [
-            "En vänlig räv dansar på en äng.",
-            "En vänlig räv hjälper en kanin hitta hem.",
-            "En busig räv gömmer en kanins mössa."
+            "En vänlig räv dansar på en äng medan kaninen leker.",
+            "En vänlig räv hjälper en kanin att hitta hem.",
+            "En grinig björn hjälper kaninen att hitta hem."
           ],
           "answer": 1,
           "wrong": [
-            "Räven är vänlig, men hjälper ingen att hitta hem.",
+            "Räven är vänlig, men kaninen får ingen hjälp att hitta hem.",
             null,
-            "Här finns en räv, men den hjälper inte någon att hitta hem."
+            "Kaninen får hjälp, men berättelsen handlar inte om en vänlig räv."
           ],
-          "why": "Den vänliga räven hjälper kaninen att hitta hem. Båda spåren passar."
+          "why": "En vänlig räv hjälper kaninen att hitta hem. Båda spåren stämmer."
         },
         {
           "title": "Bokmärket i berättelsen",
@@ -3004,7 +3004,7 @@
           "scene": "Havsvännerna skriver kort om hur de letar tillsammans.",
           "clues": [
             "Två vänner hjälper varandra.",
-            "De letar efter samma pärla."
+            "Någon letar efter en borttappad pärla."
           ],
           "choices": [
             "Två vänner hjälper varandra bära en väska.",
@@ -3013,9 +3013,9 @@
           ],
           "answer": 1,
           "wrong": [
-            "Två vänner hjälper till, men de letar inte efter pärlan.",
+            "Vännerna hjälps åt, men de letar inte efter en pärla.",
             null,
-            "Pärlan eftersöks, men bara en vän letar."
+            "En pärla söks, men ingen hjälper till med letandet."
           ],
           "why": "Två vänner letar tillsammans efter samma pärla."
         },
@@ -3343,7 +3343,7 @@
       "emoji": "🌋",
       "title": "Vulkanöns märkliga sten",
       "intro": "På ett museum finns en sagokarta över en vulkanö. Geologen Nova vill hitta ett gammalt stenprov.",
-      "ending": "Stenen ligger i en trygg glasmonter. Nova visar hur forskare kan jämföra bergarter.",
+      "ending": "Stenen ligger i en trygg glasmonter. Nova visar hur forskare kan jämföra olika stenar.",
       "keepsake": {
         "emoji": "🪨",
         "name": "Stenforskarens fynd"
@@ -3817,8 +3817,8 @@
           "title": "Vilken bildtext passar?",
           "scene": "En bild ska visa hur en vän hjälper en annan.",
           "clues": [
-            "Texten handlar om att ge hjälp.",
-            "Den berättar vem som blir hjälpt."
+            "Texten handlar om att hjälpa någon.",
+            "Den nämner Leo."
           ],
           "choices": [
             "Någon hjälper till i dag.",
@@ -3827,9 +3827,9 @@
           ],
           "answer": 1,
           "wrong": [
-            "Hjälp nämns, men inte vem som får hjälpen.",
+            "Hjälp nämns, men Leo finns inte i texten.",
             null,
-            "Båda vännerna nämns, men ingen hjälp beskrivs."
+            "Leo nämns, men ingen hjälp beskrivs."
           ],
           "why": "Bildtexten berättar att Sara hjälper Leo och vad hjälpen gäller."
         },
