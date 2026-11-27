@@ -153,19 +153,38 @@
       button.setAttribute('aria-pressed','false');
     }
   }
+  function clearSpeechStatuses() {
+    for(const id of Object.keys(speechLabels)){
+      const status=$(id+'-status');
+      if(!status)continue;
+      status.textContent='';
+      status.hidden=true;
+    }
+  }
+  function showSpeechError(button) {
+    const status=$(button.id+'-status');
+    if(!status)return;
+    status.textContent='Uppläsningen fungerar inte just nu. Läs själv eller be någon om hjälp.';
+    status.hidden=false;
+  }
   function stopReadAloud() {
+    // Invalidate the old request before cancel(), which may report an error
+    // immediately or after the next request has already started.
+    currentUtterance=null;
+    speakingButton=null;
     if (canReadAloud) {
       try { window.speechSynthesis.cancel(); } catch { /* Speech API optional. */ }
     }
-    currentUtterance=null;
-    speakingButton=null;
     resetSpeechButtons();
+    clearSpeechStatuses();
   }
   function speakReadAloud(text,button) {
     if (!canReadAloud || !text || !text.trim()) return;
     if (speakingButton===button) { stopReadAloud(); return; }
     stopReadAloud();
-    const utterance = new window.SpeechSynthesisUtterance(text.slice(0,1600));
+    let utterance;
+    try { utterance = new window.SpeechSynthesisUtterance(text.slice(0,1600)); }
+    catch { showSpeechError(button); return; }
     utterance.lang='sv-SE';
     utterance.rate=0.9;
     try {
@@ -185,10 +204,15 @@
         resetSpeechButtons();
       }
     };
+    const onError=event=>{
+      if(currentUtterance!==utterance)return;
+      onFinish();
+      if(!['canceled','interrupted'].includes(event?.error))showSpeechError(button);
+    };
     utterance.onend=onFinish;
-    utterance.onerror=onFinish;
+    utterance.onerror=onError;
     try { window.speechSynthesis.speak(utterance); }
-    catch { onFinish(); }
+    catch { onError(); }
   }
   function storyReadAloudText() {
     if(guidedActive && guidedParts[guidedIndex])return guidedParts[guidedIndex];

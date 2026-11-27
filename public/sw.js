@@ -1,5 +1,5 @@
 /* Offline-only enhancement. App works fully without service workers. */
-const CACHE_NAME = 'ordjakten-static-v66-published-feedback'; // Increment on each content release.
+const CACHE_NAME = 'ordjakten-static-v67-device-readiness'; // Increment on each content release.
 const ICON_FILES = [
   "./assets/story-icons/1f305.png",
   "./assets/story-icons/1f31f.png",
@@ -80,20 +80,32 @@ const FILES = [
   './data/wordbank.js','./data/ordbank.json','./data/curation.js','./data/expressions.js','./data/expressions.json','./data/comics.js','./data/comics.json','./data/surprises.js','./data/surprises.json','./data/missions.js','./data/missions.json','./data/word-contexts.js','./data/word-contexts.json','./data/contrasts.js','./data/contrasts.json','./data/clue-ladder.js','./data/clue-ladder.json',
   './manifest.webmanifest','./icons/icon.svg','./assets/story-icons/NOTO-EMOJI-LICENSE-AND-COPYRIGHT.txt'
 ].concat(ICON_FILES);
+const ROOT_URL = new URL(self.registration.scope);
+const INDEX_URL = new URL('./index.html', ROOT_URL);
+const FILE_URLS = new Set(FILES.map(file=>new URL(file, ROOT_URL).href));
+
 self.addEventListener('install',event=>{
-  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(FILES)));
-  self.skipWaiting();
+  // Install one complete release, bypassing any older browser HTTP cache.
+  event.waitUntil(caches.open(CACHE_NAME)
+    .then(cache=>cache.addAll([...FILE_URLS].map(url=>new Request(url,{cache:'reload'}))))
+    .then(()=>self.skipWaiting()));
 });
 self.addEventListener('activate',event=>{
-  event.waitUntil(caches.keys().then(names=>Promise.all(names.filter(n=>n.startsWith('ordjakten-static-')&&n!==CACHE_NAME).map(n=>caches.delete(n)))));
-  self.clients.claim();
+  event.waitUntil(caches.keys()
+    .then(names=>Promise.all(names.filter(n=>n.startsWith('ordjakten-static-')&&n!==CACHE_NAME).map(n=>caches.delete(n))))
+    .then(()=>self.clients.claim()));
 });
 self.addEventListener('fetch',event=>{
   const request=event.request;
-  if(request.method!=='GET'||new URL(request.url).origin!==self.location.origin)return;
-  if(!request.url.startsWith(self.registration.scope))return;
-  event.respondWith(fetch(request).then(response=>{
-    if(response.ok){const clone=response.clone();caches.open(CACHE_NAME).then(cache=>cache.put(request,clone)).catch(()=>{});}
-    return response;
-  }).catch(()=>caches.match(request).then(cached=>cached||Response.error())));
+  const url=new URL(request.url);
+  if(request.method!=='GET'||url.origin!==self.location.origin||!url.href.startsWith(ROOT_URL.href))return;
+  // Shared homepage links may have query parameters; other URLs must match exactly.
+  const homepage=request.mode==='navigate'&&(url.pathname===ROOT_URL.pathname||url.pathname===INDEX_URL.pathname);
+  const cacheURL=homepage?INDEX_URL.href:url.href;
+  if(!FILE_URLS.has(cacheURL))return;
+  // A cache miss can use the network without changing the installed cache.
+  event.respondWith(caches.open(CACHE_NAME)
+    .then(cache=>cache.match(cacheURL))
+    .catch(()=>undefined)
+    .then(cached=>cached||fetch(request)));
 });
