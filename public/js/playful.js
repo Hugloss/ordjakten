@@ -43,7 +43,7 @@
     if (!Number.isInteger(total) || total <= 0) return [];
     const earned=[{icon:'🎒',title:'Ordspanare',text:'Du gav dig ut på en ordjakt!'}];
     if(bestStreak>=3)earned.push({icon:'🔥',title:'Tre i rad',text:'Du lyckades med minst tre rätt i följd!'});
-    if(right/total>=.8)earned.push({icon:'🌟',title:'Stjärnletare',text:'Minst åtta av tio ord fick rätt svar!'});
+    if(right/total>=.8)earned.push({icon:'🌟',title:'Stjärnletare',text:`Du svarade rätt på ${right} av ${total} ${total===1?'fråga':'frågor'}!`});
     if(right===total)earned.push({icon:'👑',title:'Ordmästare',text:'Alla ord fick rätt svar!'});
     return earned;
   }

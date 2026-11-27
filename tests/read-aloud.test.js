@@ -167,6 +167,7 @@ test('Aha listening is user initiated, toggles stop, and resets when speech ends
 test('answering or rereading stops Aha speech, including guided and retry outcomes',()=>{
   for(const [attempts,index] of [[0,1],[0,0],[1,0]]){
     const {scope,$,calls,click}=speechHarness();
+    scope.readingCheck.options[1].label='Det andra exemplet.';
     scope.readingCheck.attempts=attempts;
     click('listen-reading-check');const before=calls.cancel;
     scope.answerReadingCheck(index);
@@ -174,6 +175,8 @@ test('answering or rereading stops Aha speech, including guided and retry outcom
     assert.equal($('listen-reading-check').attributes['aria-pressed'],'false');
     assert.equal($('listen-reading-check').hidden,true);
     assert.equal(scope.readingCheckReadAloudText(),'');
+    if(attempts===1&&index===0)
+      assert.equal($('reading-why').textContent,'Rätt exempel: Det andra exemplet. FACITFÖRKLARING');
   }
   const {scope,$,calls,click}=speechHarness();
   click('listen-reading-check');const before=calls.cancel;

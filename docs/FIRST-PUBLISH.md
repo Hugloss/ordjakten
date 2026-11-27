@@ -25,7 +25,7 @@ Innehåll, facit och tidigare resultat påverkas inte av presentationen.
 
 ## Automatiska kontroller
 
-`npm run check` passerar med 503 Node-tester, innehållsvalidering och
+`npm run check` passerar med 504 Node-tester, innehållsvalidering och
 kontroll av 71 HTML-resurser, 154 offline-sökvägar och 49 skript.
 Nya regressioner gäller:
 
@@ -35,6 +35,8 @@ Nya regressioner gäller:
   omblandning, utan att läsa facit eller dold fördjupning.
 - Att tomma träningsmål inte leder till en misslyckad start och att
   snabbstarten faktiskt skapar fem frågor.
+- Att resultatmärket använder omgångens verkliga antal frågor och
+  behåller samma gräns för belöningen.
 
 De befintliga valfria browser-testerna är uppdaterade för den kortare
 snabbstarten och de nedfällbara förklaringarna. De kräver en installerad
@@ -64,6 +66,32 @@ Följ senaste **Publish Ordjakten to GitHub Pages** och bekräfta att
 Anteckna vilka av dessa kontroller som faktiskt har körts i
 publicerings-PR:n. Ett godkänt automatiskt test ska inte beskrivas som
 en genomförd kontroll i webbläsare eller med barn.
+
+### Genomfört på den publicerade sidan, 27 november 2026
+
+PR #12 publicerades via GitHub Actions. Följande kontroller gjordes
+därefter i Chrome på den riktiga HTTPS-adressen:
+
+- En komplett snabbstart med fem ord: rätt och fel huvudsvar, öppning
+  av fler exempel, omläsning efter fel Aha-svar och guidning efter två
+  fel. Nästa ord börjar med fler exempel stängda. Resultatet blev
+  fyra rätt av fem, utan att Aha-stödet ändrade huvudpoängen.
+- En komplett femfrågorsomgång i Testa dig: facit doldes under alla
+  frågor och visades tillsammans med resultatet först efter sista svaret.
+- Skolordet Tolka: huvudförklaringen, frivilliga extra exempel och en
+  Aha-fråga där alla alternativ hör till samma nya uppgift.
+- Resultatet från snabbstarten fanns kvar i Resultat efter omladdning.
+- Startsidan granskades visuellt i datorvy. Inga fel eller varningar
+  från själva spelet noterades i webbläsarkonsolen under kontrollerna.
+
+Kontrollen upptäckte att Stjärnletare skrev ”åtta av tio” även efter
+fem frågor. Den följande rättningen använder omgångens faktiska antal.
+En dubbel punkt i den guidade Aha-förklaringen rättades också.
+
+Knappen för Aha-uppläsning visades och gick att aktivera, men faktiskt
+ljud och kvaliteten på en svensk röst har inte verifierats. Mobilvy,
+ljus bakgrund och spel med nätet frånkopplat återstår att prova på
+de enheter som ska användas. Inget barn har deltagit i dessa kontroller.
 
 ## Första korta testet med barn
 

@@ -51,3 +51,16 @@ test('achievement thresholds reward effort and mastery without penalizing mistak
   assert.ok(titles.includes('Ordmästare'));
   assert.ok(titles.includes('Tre i rad'));
 });
+
+test('Stjärnletare reports actual question counts and keeps the 80 percent threshold at every round length', () => {
+  for(const total of [5,10,15,20,25]){
+    const threshold=total*.8;
+    const badge=right=>P.achievements({right,total}).find(item=>item.title==='Stjärnletare');
+    assert.equal(badge(threshold-1),undefined,`${threshold-1} of ${total} must not earn the badge`);
+    for(const right of new Set([threshold,threshold+1,total])){
+      assert.equal(badge(right)?.text,`Du svarade rätt på ${right} av ${total} frågor!`);
+    }
+  }
+  assert.equal(P.achievements({right:1,total:1}).find(item=>item.title==='Stjärnletare').text,
+    'Du svarade rätt på 1 av 1 fråga!');
+});
