@@ -3616,7 +3616,7 @@
     $('adaptive-results').hidden=game.settings.mode!=='train'||!game.settings.adaptivePractice;
     if(!$('adaptive-results').hidden){
       const skills=D.summary(history.skillProgress);
-      $('adaptive-results-message').textContent=`Du har provat ${skills.practised} övningsmoment på ${skills.concepts} ord och uttryck. ${skills.needsPractice} moment kan behöva en ny chans. I nästa omgång får du både variation och hjälp med det som varit svårt.`;
+      $('adaptive-results-message').textContent=`Du har provat ${skills.practised} övningsmoment på ${skills.concepts} ord och uttryck. ${skills.needsPractice} moment kan behöva en ny chans. Nästa övning kan anpassas efter ditt träningsmål.`;
     }
     const reading=game.readingMetrics;
     $('results-reading').hidden=game.settings.mode!=='train'||!reading||reading.attempted===0;
