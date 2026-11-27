@@ -16,7 +16,10 @@
   ],
   "adapter": "public/js/banks/svenska.js",
   "supportedQuestionSets": [
-    "expression-meaning"
+    "expression-meaning",
+    "expression-sentence",
+    "expression-sequence",
+    "expression-context-sentence"
   ],
   "note": "This manifest references existing canonical Swedish sources; it does not duplicate questions or claim other subject banks."
 }

@@ -75,7 +75,7 @@
 
   // Each subject owns its source data. The game uses a bank-scoped adapter.
   const bankRegistry=QuestionPlatform.createRegistry();
-  bankRegistry.register(SvenskaBank.fromLegacyExpressions(expressions));
+  bankRegistry.register(SvenskaBank.fromLegacyExpressions(expressions,missions));
 
   const systemTheme = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   const labels = {easy:'🌱 Lätt',medium:'🧩 Medel',hard:'🔥 Svårt',exam:'📚 Fördjupning',expert:'Fördjupning'};
@@ -4019,12 +4019,30 @@
     }
     if($('reading-check').dataset.complete==='true')renderMysteryDiscovery();
   }
-  function gradeBankMeaning(q,option){
-    const ref={bankId:'svenska',id:'meaning-'+q.id,revision:1};
+  function gradeBankExpression(q,option,selectedOrder){
+    // Bank-scoped IDs preserve all legacy concept progress under q.id.
+    const type=q.taskType;
+    const id=type==='sentence'?
+      'sentence-'+(q.contextSceneId||q.id):
+      type==='order'?'order-'+q.id:'meaning-'+q.id;
+    const ref={bankId:'svenska',id,revision:1};
     const canonical=bankRegistry.resolve(ref);
-    const selected=canonical.responseSpec.options.find(row=>row.label===option.label);
-    if(!selected)throw new Error('Expression answer not in Swedish bank: '+q.id);
-    const result=bankRegistry.assess(ref,selected.id);
+    let answer;
+    if(type==='order'){
+      if(!Array.isArray(selectedOrder)||selectedOrder.length!==q.correctOrder.length)
+        throw new Error('Incomplete Swedish ordering answer: '+q.id);
+      answer=selectedOrder.map(index=>{
+        const label=q.correctOrder[index];
+        const row=canonical.responseSpec.options.find(item=>item.label===label);
+        if(!row)throw new Error('Unrecognized Swedish ordering step: '+q.id);
+        return row.id;
+      });
+    }else{
+      const selected=canonical.responseSpec.options.find(row=>row.label===option.label);
+      if(!selected)throw new Error('Expression answer not in Swedish bank: '+q.id);
+      answer=selected.id;
+    }
+    const result=bankRegistry.assess(ref,answer);
     if(result.status!=='correct'&&result.status!=='incorrect')
       throw new Error('Unusable assessment from Swedish bank: '+q.id);
     return result.status==='correct'?'right':'wrong';
@@ -4045,8 +4063,9 @@
     const option=(index===null||isOrder)?null:q.options[index];
     if(index!==null&&!isOrder&&!option)return;
     if(isOrder&&index!==null&&orderSelection.length!==3)return;
-    const outcome=index===null?'unanswered':isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):
-      q.kind==='expression'&&q.taskType==='meaning'?gradeBankMeaning(q,option):
+    const outcome=index===null?'unanswered':
+      q.kind==='expression'?gradeBankExpression(q,option,isOrder?orderSelection:null):
+      isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):
       (option.correct?'right':'wrong');
     clearQuestionPlay();
     game.answers[q.id]=outcome;

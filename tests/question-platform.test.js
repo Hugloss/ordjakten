@@ -128,8 +128,8 @@ test('shared runtime and legacy engine must not depend on a concrete subject ban
     assert.doesNotMatch(text,/OrdjaktenSvenskaBank/,file);
   }
   const app=fs.readFileSync(path.join(root,'public/js/app.js'),'utf8');
-  assert.match(app,/SvenskaBank\.fromLegacyExpressions\(expressions\)/);
-  assert.match(app,/bankRegistry\.assess\(ref,selected\.id\)/);
+  assert.match(app,/SvenskaBank\.fromLegacyExpressions\(expressions,missions\)/);
+  assert.match(app,/bankRegistry\.assess\(ref,answer\)/);
 });
 test('legacy engine meaning questions still keep the original facit and counts',()=>{
   for(const entry of source.expressions){
@@ -143,4 +143,97 @@ test('legacy engine meaning questions still keep the original facit and counts',
     assert.deepEqual(training.options.filter(x=>x.correct).map(x=>x.label),
       entry.options.filter(x=>x.correct).map(x=>x.label));
   }
+});
+
+const missionSource=JSON.parse(fs.readFileSync(path.join(root,'public/data/missions.json'),'utf8'));
+function makeFullRegistry(){
+  const registry=Platform.createRegistry();
+  registry.register(Svenska.fromLegacyExpressions(source,missionSource));
+  return registry;
+}
+test('the Swedish bank exposes independently identified meaning, sentence, sequence and context questions',()=>{
+  const registry=makeFullRegistry();
+  const all=registry.listQuestionRefs('svenska');
+  assert.equal(all.length,237);
+  assert.equal(new Set(all.map(ref=>ref.id)).size,237);
+  assert.equal(all.filter(ref=>ref.id.startsWith('meaning-')).length,73);
+  assert.equal(all.filter(ref=>ref.id.startsWith('order-')).length,73);
+  assert.equal(all.filter(ref=>ref.id.startsWith('sentence-')).length,91);
+  assert.ok(all.every(ref=>ref.bankId==='svenska'&&ref.revision===1));
+});
+test('all 73 authored expression sentence and ordering questions retain their source facit',()=>{
+  const registry=makeFullRegistry();
+  const entries=new Map(source.expressions.map(entry=>[entry.id,entry]));
+  for(const mission of missionSource.missions){
+    const entry=entries.get(mission.id);
+    const sref={bankId:'svenska',id:'sentence-'+mission.id,revision:1};
+    const question=registry.resolve(sref);
+    assert.deepEqual(question.responseSpec.options.map(row=>row.label),
+      mission.sentences.map(row=>row.label));
+    for(const [i,choice] of question.responseSpec.options.entries()){
+      assert.equal(registry.assess(sref,choice.id).status,
+        mission.sentences[i].correct?'correct':'incorrect',mission.id);
+    }
+    if(!mission.contextScenes){
+      const legacy=Engine.makeExpressionQuestion(entry,'medium',()=>0.48,'sentence',missionSource);
+      assert.deepEqual(legacy.options.map(row=>row.label).sort(),
+        question.responseSpec.options.map(row=>row.label).sort());
+    }
+    const oref={bankId:'svenska',id:'order-'+mission.id,revision:1};
+    const sequence=registry.resolve(oref);
+    assert.deepEqual(sequence.responseSpec.options.map(row=>row.label),mission.order);
+    const correct=sequence.assessmentSpec.correctOrder;
+    assert.deepEqual(registry.assess(oref,correct),{status:'correct'});
+    assert.deepEqual(registry.assess(oref,[correct[1],correct[0],correct[2]]),{status:'incorrect'});
+    assert.deepEqual(registry.assess(oref,[correct[0],correct[0],correct[2]]),{status:'invalid'});
+  }
+});
+test('18 special context scenes are distinct questions and preserve authored answer labels',()=>{
+  const registry=makeFullRegistry();
+  const entries=new Map(source.expressions.map(entry=>[entry.id,entry]));
+  let total=0;
+  for(const mission of missionSource.missions){
+    for(const scene of mission.contextScenes||[]){
+      total+=1;
+      const ref={bankId:'svenska',id:'sentence-'+scene.id,revision:1};
+      const q=registry.resolve(ref);
+      const expectedLabels=scene.options.map(row=>'”'+scene.prompt+'” – '+row.label);
+      assert.deepEqual(q.responseSpec.options.map(row=>row.label),expectedLabels);
+      for(const [i,choice] of q.responseSpec.options.entries())
+        assert.equal(registry.assess(ref,choice.id).status,
+          scene.options[i].correct?'correct':'incorrect',scene.id);
+      const legacy=Engine.makeExpressionQuestion(entries.get(mission.id),'medium',()=>.5,
+        'sentence',missionSource,scene.id);
+      assert.deepEqual(legacy.options.map(row=>row.label).sort(),expectedLabels.slice().sort());
+    }
+  }
+  assert.equal(total,18);
+});
+test('ordering presentations and test mode never expose the expected order',()=>{
+  const registry=makeFullRegistry();
+  const ref={bankId:'svenska',id:'order-ut-0001',revision:1};
+  const q=registry.resolve(ref);
+  const shown=registry.present(ref,{seed:113});
+  assert.equal(shown.responseSpec.kind,'ordering');
+  assert.equal(shown.responseSpec.options.length,3);
+  assert.equal(JSON.stringify(shown).includes('correctOrder'),false);
+  assert.deepEqual(shown.responseSpec.options.map(row=>row.id).sort(),
+    q.responseSpec.options.map(row=>row.id).sort());
+  assert.deepEqual(registry.present(ref,{seed:113}),shown);
+  const testSession=Sessions.create(registry,{mode:'test',refs:[ref],seed:113});
+  const correct=q.assessmentSpec.correctOrder;
+  assert.deepEqual(testSession.answer(correct),{accepted:true,feedback:null});
+  assert.equal(JSON.stringify(testSession.snapshot()).includes('correct'),false);
+  testSession.next();
+  assert.equal(testSession.finish().correct,1);
+  const training=Sessions.create(registry,{mode:'train',refs:[ref]});
+  assert.deepEqual(training.answer(correct),{accepted:true,feedback:{status:'correct'}});
+});
+test('bad cross-source references are rejected before bank registration',()=>{
+  const copy=JSON.parse(JSON.stringify(missionSource));
+  copy.missions[0].id='ut-9999';
+  assert.throws(()=>Svenska.fromLegacyExpressions(source,copy),/Unknown or duplicate Swedish mission/);
+  const missing=JSON.parse(JSON.stringify(missionSource));
+  missing.missions.pop();
+  assert.throws(()=>Svenska.fromLegacyExpressions(source,missing),/Missing Swedish missions/);
 });
