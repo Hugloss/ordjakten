@@ -1520,23 +1520,23 @@
         },
         {
           "title": "Sista meddelandet",
-          "scene": "Läraren lämnar tre meningar.",
+          "scene": "Ninjaläraren berättar hur klassen kan arbeta tillsammans.",
           "clues": [
-            "Meddelandet handlar om samarbete.",
-            "Det nämner att man hjälper en vän."
+            "Två personer hjälps åt.",
+            "De bär böcker tillsammans."
           ],
           "choices": [
-            "Vi väntar på vår tur.",
-            "Jag hjälper min vän men vill göra allt ensam.",
-            "Vi samarbetar och hjälper en vän tillsammans."
+            "Två vänner hjälps åt att bära en låda.",
+            "En vän bär böcker själv.",
+            "Två vänner bär böcker tillsammans."
           ],
           "answer": 2,
           "wrong": [
-            "Att vänta på sin tur kan vara bra, men här nämns ingen vän.",
-            "En vän får hjälp, men texten beskriver inte samarbete.",
+            "De hjälps åt, men de bär en låda och inte böcker.",
+            "Böckerna bärs, men bara en person hjälper till.",
             null
           ],
-          "why": "Den sista meningen handlar både om samarbete och att hjälpa en vän."
+          "why": "Båda vännerna hjälps åt att bära böckerna tillsammans."
         }
       ]
     },
@@ -1646,23 +1646,23 @@
         },
         {
           "title": "Måla med ord",
-          "scene": "Iris behöver ett kort till nästa teckning.",
+          "scene": "Iris ska märka upp tre teckningar. Vilken lapp passar bilden?",
           "clues": [
-            "Kortet beskriver ett ljus.",
-            "Det nämner att ljuset blinkar."
+            "På bilden syns en lampa.",
+            "Under bilden står ordet BLINKAR."
           ],
           "choices": [
-            "En lykta lyser hela natten utan att ändras.",
-            "En liten lampa blinkar med sitt ljus.",
-            "En dörr öppnas och stängs i vinden."
+            "En lampa med texten STILLA.",
+            "En lampa med texten BLINKAR.",
+            "En måne med texten BLINKAR."
           ],
           "answer": 1,
           "wrong": [
-            "Det är ett ljus, men det blinkar inte.",
+            "Lampan finns, men på lappen står STILLA.",
             null,
-            "Något ändras, men texten handlar inte om ljus."
+            "Ordet BLINKAR stämmer, men bilden visar en måne."
           ],
-          "why": "Lampan lyser och blinkar. Båda delarna står i beskrivningen."
+          "why": "Teckningen visar en lampa och under den står ordet BLINKAR."
         },
         {
           "title": "Galleriets sista tavla",
@@ -1725,15 +1725,15 @@
             "Sist ritar de ett bär ovanpå."
           ],
           "choices": [
-            "Bär, glasyr, tallrik.",
+            "Glasyr, bär, tallrik.",
             "Glasyr, tallrik, bär.",
-            "Tallrik, bär, glasyr."
+            "Tallrik, glasyr, bär."
           ],
           "answer": 1,
           "wrong": [
-            "Glasyren kommer efter bäret, inte först.",
+            "Glasyren kommer först, men bäret hamnar inte sist.",
             null,
-            "Bäret är inte sist och glasyren är inte först."
+            "Bäret är sist, men glasyren kommer inte först."
           ],
           "why": "Glasyren ritas först och bäret sist, precis som på kortet."
         },
@@ -2303,23 +2303,23 @@
         },
         {
           "title": "Den viskande stigen",
-          "scene": "En älva beskriver vägen till nästa lykta.",
+          "scene": "En älva beskriver stigen till nästa lykta.",
           "clues": [
-            "Vägen går förbi en blomma.",
-            "Blomman är lila och växer vid en bäck."
+            "Stigen går längs en bäck.",
+            "Vid stigen växer en lila blomma."
           ],
           "choices": [
-            "Gul blomma vid bäck.",
-            "Lila blomma vid bäck längs vägen.",
-            "Lila blomma på en äng utan bäck."
+            "En stig längs en bäck med gul blomma.",
+            "En stig längs en bäck med lila blomma.",
+            "En stig över en torr äng med lila blomma."
           ],
           "answer": 1,
           "wrong": [
-            "Bäcken finns, men blomman är gul.",
+            "Stigen följer bäcken, men blomman är gul.",
             null,
-            "Blomman är lila, men det finns ingen bäck."
+            "Blomman är lila, men stigen går inte längs en bäck."
           ],
-          "why": "Vägen passerar en lila blomma vid bäcken."
+          "why": "Stigen följer bäcken och där växer en lila blomma."
         },
         {
           "title": "Festens sista lykta",
