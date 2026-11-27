@@ -1,5 +1,7 @@
 # Ord- och frågekvalitet
 
+Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. Målarkitekturen för en gemensam frågebank över svenska, matematik, kemi, fysik och andra ämnen finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den nya strukturen är ännu inte implementerad; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
+
 ## Kanonisk ordbank
 
 `public/data/ordbank.json` innehåller 121 unika ord från tidigare konversationer. Alla har stabila ID:n och metadata.
