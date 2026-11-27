@@ -40,6 +40,22 @@ test('thirty-two original adventures offer 96 distinct, complete clue steps',()=
   assert.equal(titles.size,32);
 });
 
+test('all 32 adventures have one of four validated categories, including all new source themes',()=>{
+  const groups=['mystery','fantasy','explore','creative'];
+  assert.deepEqual(groups.map(group=>content.ids.filter(id=>content.stories[id].group===group).length),[6,8,10,8]);
+  const newIds=['hotel','underwater','animal-park','magic-exam','spy-school','space-exit',
+    'friendly-house','crystal-case','ninja','circus','neon','baking','world-postcards','blocks',
+    'creature-friends','gold-rush','slime-art','game-show','knights','fairy-forest'];
+  assert.equal(newIds.length,20);
+  for(const id of newIds){
+    assert.ok(content.stories[id],'missing requested new theme '+id);
+    assert.ok(groups.includes(content.stories[id].group));
+  }
+  const row={...Data.STORIES[0],group:'invalid'};
+  assert.ok(Portals.catalog({STORIES:[row,...Data.STORIES.slice(1)]}).errors.length,
+    'unknown categories fail closed');
+});
+
 test('all adventures open immediately and hidden solutions are not included in early models',()=>{
   const state=fresh(),list=view(state);
   assert.equal(list.doneCount,0);assert.equal(list.entries.length,32);
