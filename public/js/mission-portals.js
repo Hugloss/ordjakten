@@ -54,8 +54,7 @@
       const idx=source.step,answer=idx===3?null:story.stages[idx].answer;
       const wrong=source.wrong;
       if(new Set(wrong).size!==wrong.length||wrong.includes(answer)||
-        (idx===3&&(!source.solved||source.hint||wrong.length))||
-        (idx!==3&&source.solved&&source.hint===null))continue;
+        (idx===3&&(!source.solved||source.hint||wrong.length)))continue;
       clean[id]={rev:1,step:idx,solved:source.solved,wrong:[...wrong],hint:source.hint};
     }
     return clean;
