@@ -1,5 +1,11 @@
 # Ordjakten – ändringslogg
 
+## Efter provspelning – tydligare stjärnsamling
+
+- Historiken visar första svarens rätt, fel och obesvarade. Den gamla stjärnsiffran tas bort eftersom fler stjärnor kan samlas genom fortsatt träning. En kort text förklarar skillnaden.
+- Samlingsmärken visas i en kolumn på läsytor upp till 380 CSS-pixlar, så att långa namn får plats även med stor förstoring. Offlinecache v72.
+- Det publicerade spelet har provats från fel huvudsvar via Aha och guidad hjälp till omladdning och fortsatt träning. En rad med 3 rätt från början kunde fyllas till 5 stjärnor medan ursprungsresultatet låg kvar. Se [kontrollerna](docs/PLAYFUL.md).
+
 ## Stjärnor som finns kvar och nya chanser i egen takt
 
 - Stjärnor sparas direkt och visas på startsidan, i rundan och efteråt. Sex fasta samlingsmärken blir synliga vid 5, 15, 30, 50, 75 och 100 stjärnor.

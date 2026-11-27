@@ -4175,7 +4175,7 @@
       const adventure=result.adventure?' · '+A.world(result.adventure).short:'';
       const meta=element('small','',new Date(result.finishedAt).toLocaleDateString('sv-SE')+' · '+(result.mode==='test'?'Testa dig':'Träna')+' · '+result.total+' frågor · '+(topicLabels[result.topic]||'Ord')+adventure);
       const rate=element('strong','',Math.round(result.total?result.right/result.total*100:0)+' %');
-      const detail=element('small','',`⭐ ${result.right} · ${result.right} rätt · ${result.wrong} fel · ${result.unanswered} obesvarade`);
+      const detail=element('small','',`${result.right} rätt · ${result.wrong} fel · ${result.unanswered} obesvarade`);
       left.append(title,meta);const right=element('div');right.style.textAlign='right';right.append(rate,element('br'),detail);row.append(left,right);list.append(row);
     });
   }

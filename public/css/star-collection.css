@@ -40,5 +40,6 @@
 .star-round-mini .star-round-count{font-size:13px;margin-bottom:7px}
 .star-round-mini .star-round-slots{margin-bottom:0}
 @media(max-width:570px){.star-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.star-collection-header{gap:11px}.star-collection-emblem{width:56px;height:56px;font-size:42px;border-radius:18px}.star-collection-total{font-size:18px}.star-collection-item{padding:11px 7px}.star-collection-item strong{font-size:14px}}
+@media(max-width:380px){.star-collection-grid{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.star-collection *{animation:none!important;transition:none!important}}
 @media(forced-colors:active){.star-collection-emblem,.star-slot,.star-collection-total{color:CanvasText}.star-collection-earned{border-style:solid;border-color:CanvasText}.star-collection-meter{appearance:auto}}
