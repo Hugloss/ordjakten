@@ -20,6 +20,7 @@
       check.options.length<2||check.options.filter(x=>x.correct).length!==1)return null;
     const dueAt=reading.transferDueAt(card);
     return {...item,word:item.word||item.name,check,dueAt,
+      ...(check.contextReading?{definition:check.contextReading}:{}),
       reason:reading.needsReview(progress,item.id,'transfer')||card?.memory?.outcome==='supported'?'need':card?'review':'extend'};
   }
   function plan(raw,{bank,expressions,contexts,surprises,missions,reading,curation={},now=Date.now(),random=Math.random}){

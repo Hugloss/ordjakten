@@ -575,7 +575,88 @@
         "De pratar lugnt och reder ut vad som hänt.",
         "De bestämmer sig för att släppa bråket och börja på nytt."
       ],
-      "hint": "Handlar det om att fastna i det gamla eller gå vidare?"
+      "hint": "Handlar det om att fastna i det gamla eller gå vidare?",
+      "contextReading": "Att vända blad kan vara att bläddra i en bok eller att göra en ny början. Det som händer runt omkring hjälper oss att förstå. Ibland behöver vi fråga.",
+      "contextScenes": [
+        {
+          "id": "ut-0025-page",
+          "kind": "meaning",
+          "prompt": "Rami läser en bok och har läst färdigt sidan. Pappa pekar på nästa sida och säger: ”Vänd blad, så fortsätter vi läsa.”",
+          "definition": "Här betyder det att vända till nästa sida i boken.",
+          "clue": "nästa sida",
+          "explanation": "Rami läser en bok, och pappa pekar på sidan som kommer sedan. Därför handlar uttrycket här om att bläddra.",
+          "connection": "När någon talar om en ny början efter något som hänt kan ”vända blad” ha en annan betydelse.",
+          "rule": "Titta på vad personen pratar om. Om du undrar kan du fråga: ”Menar du en sida i boken?”",
+          "options": [
+            {
+              "label": "Att vända till nästa sida i boken.",
+              "correct": true
+            },
+            {
+              "label": "Att göra en ny början efter ett bråk.",
+              "correct": false,
+              "feedback": "Här läser Rami och pappa en bok. Pappa pekar på nästa sida; han pratar inte om ett bråk."
+            },
+            {
+              "label": "Att riva ut sidan ur boken.",
+              "correct": false,
+              "feedback": "Pappa vill fortsätta läsa på nästa sida. Han säger inte att någon sida ska rivas ut."
+            }
+          ]
+        },
+        {
+          "id": "ut-0025-new-start",
+          "kind": "meaning",
+          "prompt": "Fotbollslaget har pratat färdigt om en förlust. Tränaren säger: ”Nu vänder vi blad och provar igen på nästa träning.”",
+          "definition": "Här betyder det att göra en ny början efter det som hänt.",
+          "clue": "provar igen på nästa träning",
+          "explanation": "Laget har pratat om förlusten. Nu riktar tränaren tankarna mot nästa träning och en ny chans. Det är den nya början som menas.",
+          "connection": "När någon läser och pekar på nästa sida kan ”vända blad” i stället betyda att bläddra i en bok.",
+          "rule": "Lyssna på vad som ska hända sedan. Du kan fråga: ”Menar du att vi ska börja om?”",
+          "options": [
+            {
+              "label": "Att bläddra till nästa sida i en bok.",
+              "correct": false,
+              "feedback": "Tränaren pratar om förlusten och nästa träning. Ingen bok nämns i den här situationen."
+            },
+            {
+              "label": "Att göra en ny början och prova igen.",
+              "correct": true
+            },
+            {
+              "label": "Att sluta med fotboll för alltid.",
+              "correct": false,
+              "feedback": "Tränaren säger att laget ska prova igen på nästa träning. De ska fortsätta spela."
+            }
+          ]
+        },
+        {
+          "id": "ut-0025-ask",
+          "kind": "clarify",
+          "prompt": "Mormor sitter med en bok och har just berättat om en jobbig dag. Hon säger: ”Nu vänder vi blad.”",
+          "definition": "Här vet vi inte om mormor menar en sida i boken eller en ny början. Vi behöver fråga.",
+          "clue": "sitter med en bok och har just berättat om en jobbig dag",
+          "explanation": "Boken kan göra att mormor menar en riktig sida. Den jobbiga dagen kan göra att hon menar en ny början. Hon har inte sagt vilket.",
+          "connection": "”Läs nästa sida” pekar mot att bläddra. ”Vi provar på nytt i morgon” pekar mot en ny början.",
+          "rule": "Du kan fråga: ”Menar du en sida i boken eller att börja på nytt?”",
+          "options": [
+            {
+              "label": "Mormor menar säkert att bläddra i boken.",
+              "correct": false,
+              "feedback": "Boken gör det möjligt, men mormor har också pratat om en jobbig dag. Vi kan inte vara säkra ännu."
+            },
+            {
+              "label": "Mormor menar säkert att göra en ny början.",
+              "correct": false,
+              "feedback": "Den jobbiga dagen gör det möjligt, men mormor sitter också med en bok. Vi behöver veta mer."
+            },
+            {
+              "label": "Fråga om mormor menar boken eller en ny början.",
+              "correct": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ut-0026",
@@ -966,7 +1047,88 @@
         "Telefonen ringer mitt i berättelsen.",
         "Efter avbrottet har Milo glömt var han var i berättelsen."
       ],
-      "hint": "Tänk på vad som händer när en tanke eller berättelse avbryts."
+      "hint": "Tänk på vad som händer när en tanke eller berättelse avbryts.",
+      "contextReading": "Att tappa tråden kan handla om en riktig tråd eller om att glömma vad man tänkte säga. Lyssna på vad som händer. Fråga om båda betydelserna passar.",
+      "contextScenes": [
+        {
+          "id": "ut-0044-beads",
+          "kind": "meaning",
+          "prompt": "Rami trär pärlor på en tråd. Tråden glider ur fingrarna och hamnar på golvet. ”Jag tappade tråden”, säger Rami.",
+          "definition": "Här betyder det att en riktig tråd föll ur handen.",
+          "clue": "Tråden glider ur fingrarna och hamnar på golvet",
+          "explanation": "Rami arbetar med pärlor och en tråd. Vi får veta att tråden föll ur handen. Därför handlar orden här om något som faktiskt tappades.",
+          "connection": "Mitt i en berättelse kan ”tappa tråden” i stället betyda att glömma vad man skulle säga härnäst.",
+          "rule": "Titta på vad personen gjorde. Du kan fråga: ”Menar du tråden du höll i?”",
+          "options": [
+            {
+              "label": "Att glömma vad man tänkte berätta.",
+              "correct": false,
+              "feedback": "Rami håller på med pärlor. Situationen berättar att den riktiga tråden föll på golvet."
+            },
+            {
+              "label": "Att en riktig tråd faller ur handen.",
+              "correct": true
+            },
+            {
+              "label": "Att lägga undan tråden med flit.",
+              "correct": false,
+              "feedback": "Tråden glider ur Ramis fingrar. Han tappar den; han väljer inte att lägga undan den."
+            }
+          ]
+        },
+        {
+          "id": "ut-0044-story",
+          "kind": "meaning",
+          "prompt": "Lina berättar om sin hund. Ett annat barn ställer en fråga. Lina pausar och säger sedan: ”Nu tappade jag tråden. Vad var det jag höll på att berätta?”",
+          "definition": "Här betyder det att glömma vad man höll på att berätta.",
+          "clue": "Vad var det jag höll på att berätta?",
+          "explanation": "Lina vill fortsätta sin berättelse men minns inte var hon var. Hennes fråga visar att det är fortsättningen hon har tappat bort i tankarna.",
+          "connection": "När någon håller i en sytråd kan samma ord handla om att tråden faktiskt faller ur handen.",
+          "rule": "Lyssna på vad personen behöver hjälp med. Du kan fråga: ”Vill du att jag påminner dig om vad du berättade?”",
+          "options": [
+            {
+              "label": "Att glömma vad man höll på att berätta.",
+              "correct": true
+            },
+            {
+              "label": "Att tappa en sytråd på golvet.",
+              "correct": false,
+              "feedback": "Lina frågar vad hon höll på att berätta. Situationen handlar om en berättelse, inte om att sy."
+            },
+            {
+              "label": "Att ha berättat färdigt precis som planerat.",
+              "correct": false,
+              "feedback": "Lina frågar var hon var i berättelsen. Hon vill fortsätta, men behöver bli påmind."
+            }
+          ]
+        },
+        {
+          "id": "ut-0044-ask",
+          "kind": "clarify",
+          "prompt": "Mira syr samtidigt som hon berättar om helgen. Hon säger: ”Nu tappade jag tråden.” Du ser inte om hon tappade något.",
+          "definition": "Här vet vi inte om Mira tappade sytråden eller glömde vad hon skulle säga. Vi behöver fråga.",
+          "clue": "syr samtidigt som hon berättar om helgen",
+          "explanation": "Mira både syr och berättar. Därför kan orden gälla sytråden eller det hon tänkte säga. Vi har inte fått veta vilket.",
+          "connection": "En tråd på golvet hjälper oss att förstå den ena betydelsen. En fråga om berättelsens fortsättning hjälper oss att förstå den andra.",
+          "rule": "Du kan fråga: ”Menar du sytråden eller vad du tänkte berätta?”",
+          "options": [
+            {
+              "label": "Fråga om Mira menar sytråden eller berättelsen.",
+              "correct": true
+            },
+            {
+              "label": "Mira menar säkert att sytråden föll ur handen.",
+              "correct": false,
+              "feedback": "Mira syr, så det är möjligt. Men hon berättar också, och du såg inte om något föll."
+            },
+            {
+              "label": "Mira menar säkert att hon glömde berättelsens fortsättning.",
+              "correct": false,
+              "feedback": "Mira berättar, så det är möjligt. Men hon syr också och kan ha tappat en riktig tråd."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ut-0045",
@@ -1104,7 +1266,88 @@
         "När det snart är Sams tur börjar han tveka.",
         "Sam funderar på om han verkligen vill sjunga solo."
       ],
-      "hint": "Tänk på hur känslan kan förändras precis före något man redan bestämt sig för att göra."
+      "hint": "Tänk på hur känslan kan förändras precis före något man redan bestämt sig för att göra.",
+      "contextReading": "Fötter kan bli kalla på riktigt. Samma ord kan också betyda att någon blir osäker på något den tänkt göra. Sammanhanget hjälper oss, men ibland behöver vi fråga.",
+      "contextScenes": [
+        {
+          "id": "ut-0050-cold",
+          "kind": "meaning",
+          "prompt": "Milos strumpor har blivit blöta i snön. Han säger: ”Jag har fått kalla fötter. Jag behöver torra, varma strumpor.”",
+          "definition": "Här betyder det att Milo fryser om fötterna.",
+          "clue": "Jag behöver torra, varma strumpor",
+          "explanation": "Milos strumpor är blöta efter leken i snön. Han ber om varma strumpor till fötterna. Här handlar orden om att faktiskt frysa.",
+          "connection": "Inför något man planerat kan ”få kalla fötter” i stället betyda att börja tveka på om man vill göra det.",
+          "rule": "Lyssna på vad personen beskriver. Du kan fråga: ”Fryser du om fötterna?”",
+          "options": [
+            {
+              "label": "Att bli osäker på om man vill uppträda.",
+              "correct": false,
+              "feedback": "Milo beskriver blöta strumpor och behöver varma strumpor. Här handlar det om att frysa om fötterna."
+            },
+            {
+              "label": "Att bli varm om fötterna.",
+              "correct": false,
+              "feedback": "Milo vill ha varma strumpor eftersom fötterna är kalla. De har inte blivit varma ännu."
+            },
+            {
+              "label": "Att frysa om fötterna.",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "id": "ut-0050-doubt",
+          "kind": "meaning",
+          "prompt": "Lovis har planerat att visa sin dans. När det blir hennes tur börjar hon tveka och vill dra sig ur. ”Jag fick kalla fötter”, säger hon.",
+          "definition": "Här betyder det att bli osäker på om man vill göra det man planerat.",
+          "clue": "börjar hon tveka och vill dra sig ur",
+          "explanation": "Lovis hade en plan att dansa. Precis före dansen blir hon osäker och vill kanske avstå. Det är den ändrade känslan som orden beskriver.",
+          "connection": "Efter lek i snön kan samma ord betyda att fötterna faktiskt fryser. Då hjälper beskrivningen av kylan oss att förstå.",
+          "rule": "Du kan fråga: ”Menar du att du fryser, eller att du är osäker på att göra det?”",
+          "options": [
+            {
+              "label": "Att bli osäker på om man vill göra det man planerat.",
+              "correct": true
+            },
+            {
+              "label": "Att fötterna säkert behöver varmare strumpor.",
+              "correct": false,
+              "feedback": "Situationen säger att Lovis börjar tveka inför dansen. Den säger inte att hon fryser om fötterna."
+            },
+            {
+              "label": "Att känna sig helt säker och redo att börja.",
+              "correct": false,
+              "feedback": "Lovis vill kanske dra sig ur. Det visar osäkerhet, inte att hon känner sig helt redo."
+            }
+          ]
+        },
+        {
+          "id": "ut-0050-ask",
+          "kind": "clarify",
+          "prompt": "Ella står ute i snön och väntar på sin tur att läsa en dikt för gruppen. Hon säger: ”Nu har jag fått kalla fötter.”",
+          "definition": "Här kan Ella frysa, vara osäker inför dikten eller känna båda sakerna. Vi behöver fråga.",
+          "clue": "står ute i snön och väntar på sin tur att läsa en dikt",
+          "explanation": "Snön gör det möjligt att Ella fryser. Att snart läsa för gruppen gör det möjligt att hon är osäker. Hon har inte sagt vilken känsla hon menar.",
+          "connection": "”Jag behöver varma strumpor” förklarar kylan. ”Jag vet inte om jag vågar läsa” förklarar osäkerheten. Båda känslorna kan också finnas samtidigt.",
+          "rule": "Du kan fråga: ”Fryser du om fötterna, är du osäker på att läsa eller är det båda?”",
+          "options": [
+            {
+              "label": "Ella menar säkert bara att hon fryser.",
+              "correct": false,
+              "feedback": "Hon står i snön, så kyla är möjlig. Men hon ska också läsa inför gruppen och kan vara osäker."
+            },
+            {
+              "label": "Fråga om Ella fryser, är osäker eller känner båda sakerna.",
+              "correct": true
+            },
+            {
+              "label": "Ella menar säkert bara att hon inte vill läsa.",
+              "correct": false,
+              "feedback": "Det kan handla om osäkerhet, men vi vet inte om Ella vill avstå. Hon kan också frysa om fötterna."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ut-0051",
@@ -1683,7 +1926,88 @@
       "hint": "Läs hur morfar säger att Linn ska sätta ner fötterna.",
       "explanation": "Morfar säger både ”hoppa ner” och hur Linn ska göra: hålla hans hand och sätta en fot i taget på golvet. Därför är det att kliva ner som passar just här.",
       "connection": "På gymnastiken kan ”hoppa ner och landa med båda fötterna på mattan” betyda ett riktigt hopp. Om du undrar kan du fråga vad personen menar.",
-      "orderExplanation": "Först står Linn kvar på pallen efter att ha ställt tillbaka boken. Morfar beskriver sedan hur hon ska komma ner. Till sist följer Linn hans beskrivning och kliver ner."
+      "orderExplanation": "Först står Linn kvar på pallen efter att ha ställt tillbaka boken. Morfar beskriver sedan hur hon ska komma ner. Till sist följer Linn hans beskrivning och kliver ner.",
+      "contextReading": "”Hoppa ner” kan betyda att göra ett hopp eller att kliva ner. Orden runt omkring kan visa hur personen menar. Om det inte framgår behöver vi fråga.",
+      "contextScenes": [
+        {
+          "id": "ut-0071-step",
+          "kind": "meaning",
+          "prompt": "Viggo står på en pall och har hängt upp sin teckning. Mamma säger: ”Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.”",
+          "definition": "Här betyder det att kliva ner från pallen med en fot i taget.",
+          "clue": "sätt en fot i taget på golvet",
+          "explanation": "Mamma beskriver hur Viggo ska komma ner: hålla hennes hand och sätta ner en fot i taget. Därför menar hon att kliva ner i den här situationen.",
+          "connection": "På gymnastiken kan ”hoppa ner och landa med båda fötterna samtidigt på mattan” betyda ett riktigt hopp.",
+          "rule": "Lyssna på hur personen beskriver rörelsen. Om du undrar kan du fråga: ”Menar du att jag ska kliva ner?”",
+          "options": [
+            {
+              "label": "Att göra ett skutt och landa med båda fötterna samtidigt.",
+              "correct": false,
+              "feedback": "Mamma säger en fot i taget. Det beskriver att kliva ner, inte att landa med båda fötterna på en gång."
+            },
+            {
+              "label": "Att kliva ner med en fot i taget.",
+              "correct": true
+            },
+            {
+              "label": "Att kliva upp på pallen igen.",
+              "correct": false,
+              "feedback": "Viggo står redan på pallen. Mamma beskriver hur han ska komma ner till golvet."
+            }
+          ]
+        },
+        {
+          "id": "ut-0071-jump",
+          "kind": "meaning",
+          "prompt": "På gymnastiken står Inez på en låg, stadig pall vid en mjuk matta. Läraren säger: ”Hoppa ner från pallen och landa med båda fötterna samtidigt på mattan.”",
+          "definition": "Här betyder det att göra ett hopp ner på mattan.",
+          "clue": "landa med båda fötterna samtidigt på mattan",
+          "explanation": "Läraren beskriver en landning med båda fötterna samtidigt på mattan. Det visar att ett riktigt hopp menas i den här övningen.",
+          "connection": "Om personen i stället säger ”håll min hand och sätt en fot i taget på golvet” menas att kliva ner.",
+          "rule": "Lyssna på hela beskrivningen. Om du undrar kan du fråga: ”Menar du ett hopp med båda fötterna?”",
+          "options": [
+            {
+              "label": "Att göra ett hopp ner på mattan.",
+              "correct": true
+            },
+            {
+              "label": "Att kliva ner med en fot i taget.",
+              "correct": false,
+              "feedback": "En fot i taget beskriver att kliva. Här säger läraren att båda fötterna ska landa samtidigt på mattan."
+            },
+            {
+              "label": "Att stå kvar på pallen och börja en annan lek.",
+              "correct": false,
+              "feedback": "Läraren beskriver en rörelse ner på mattan. Orden handlar inte om att stå kvar på pallen."
+            }
+          ]
+        },
+        {
+          "id": "ut-0071-ask",
+          "kind": "clarify",
+          "prompt": "Noor står på en pall. Pappa säger: ”Hoppa ner från pallen.” Han säger inte om Noor ska kliva eller hoppa.",
+          "definition": "Här räcker orden inte för att veta hur pappa menar. Noor behöver fråga.",
+          "clue": "Han säger inte om Noor ska kliva eller hoppa",
+          "explanation": "Vi hör att pappa vill att Noor ska komma ner. Men han beskriver inte rörelsen. Vi kan därför inte veta om han menar att kliva eller göra ett hopp.",
+          "connection": "”En fot i taget” hjälper oss att förstå att kliva. ”Landa med båda fötterna samtidigt” hjälper oss att förstå ett hopp.",
+          "rule": "Noor kan fråga: ”Menar du att jag ska kliva ner eller göra ett hopp?”",
+          "options": [
+            {
+              "label": "Pappa menar säkert ett hopp med båda fötterna.",
+              "correct": false,
+              "feedback": "Ordet ”hoppa” kan betyda ett hopp, men används ibland om att kliva ner. Pappa har inte förklarat hur."
+            },
+            {
+              "label": "Pappa menar säkert att kliva med en fot i taget.",
+              "correct": false,
+              "feedback": "Det kan vara så, men pappa har inte sagt en fot i taget. Vi behöver fråga för att veta."
+            },
+            {
+              "label": "Fråga om pappa menar att kliva eller hoppa.",
+              "correct": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ut-0072",
@@ -1770,7 +2094,88 @@
       "hint": "Titta på vart Nora ska gå och vad hon bjuder Amir att göra.",
       "explanation": "Nora ska till matsalen och vill gå tillsammans med Amir. När han följer med henne gör han det hon bjuder in honom till.",
       "connection": "”Hänger du med i spelreglerna?” kan däremot betyda ”Förstår du reglerna?”. Det är orden runt omkring som hjälper dig att välja betydelse.",
-      "orderExplanation": "Nora är först på väg till matsalen. Sedan bjuder hon med Amir. När Amir tackar ja går de dit tillsammans."
+      "orderExplanation": "Nora är först på väg till matsalen. Sedan bjuder hon med Amir. När Amir tackar ja går de dit tillsammans.",
+      "contextReading": "”Häng med” kan handla om att följa med någon eller om att förstå det någon säger. Lyssna på hela meningen och se vad som händer. Fråga om det fortfarande är oklart.",
+      "contextScenes": [
+        {
+          "id": "ut-0074-follow",
+          "kind": "meaning",
+          "prompt": "Nora står i dörren och tar på sig skorna. ”Häng med mig till lekplatsen”, säger hon till Amir.",
+          "definition": "Här betyder det att följa med Nora till lekplatsen.",
+          "clue": "till lekplatsen",
+          "explanation": "Nora tar på sig skorna och säger vart hon ska gå. Hon bjuder Amir att följa med dit. Därför handlar ”häng med” om sällskap här.",
+          "connection": "När någon frågar ”Hänger du med i förklaringen?” kan orden i stället handla om att förstå.",
+          "rule": "Lyssna på vad personen bjuder in till. Om du undrar kan du fråga: ”Menar du att jag ska följa med?”",
+          "options": [
+            {
+              "label": "Att följa med Nora till lekplatsen.",
+              "correct": true
+            },
+            {
+              "label": "Att förstå reglerna till ett spel.",
+              "correct": false,
+              "feedback": "Nora säger vart hon ska gå och bjuder Amir med sig. Hon förklarar inga spelregler i den här situationen."
+            },
+            {
+              "label": "Att stanna kvar medan Nora går.",
+              "correct": false,
+              "feedback": "Nora bjuder Amir att följa med till lekplatsen. Hon ber honom inte att vänta kvar."
+            }
+          ]
+        },
+        {
+          "id": "ut-0074-understand",
+          "kind": "meaning",
+          "prompt": "Farfar visar hur brädspelet fungerar. Alla sitter kvar vid bordet. Han frågar Tilda: ”Hänger du med i reglerna, eller ska jag visa en gång till?”",
+          "definition": "Här frågar farfar om Tilda förstår reglerna.",
+          "clue": "i reglerna, eller ska jag visa en gång till",
+          "explanation": "Farfar förklarar spelet och erbjuder sig att visa igen. Hans fråga gäller därför om Tilda förstår förklaringen.",
+          "connection": "”Häng med mig till lekplatsen” är i stället en inbjudan att följa med till en plats.",
+          "rule": "Du kan säga: ”Jag förstår” eller be personen visa igen. Om du undrar vad frågan gäller kan du fråga: ”Menar du om jag förstår?”",
+          "options": [
+            {
+              "label": "Att Tilda ska följa med till en annan plats.",
+              "correct": false,
+              "feedback": "Alla sitter kvar vid spelbordet. Farfar frågar om reglerna och erbjuder sig att visa igen."
+            },
+            {
+              "label": "Att börja spela innan farfar har förklarat färdigt.",
+              "correct": false,
+              "feedback": "Farfar frågar om Tilda förstår och erbjuder sig att visa igen. Han säger inte att spelet ska börja innan förklaringen är klar."
+            },
+            {
+              "label": "Att farfar vill veta om Tilda förstår reglerna.",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "id": "ut-0074-ask",
+          "kind": "clarify",
+          "prompt": "Lo har berättat reglerna till en lek och står nu vid dörren. Hon frågar: ”Hänger du med?” Lo säger inget mer.",
+          "definition": "Här vet vi inte om Lo menar att följa med eller att förstå reglerna. Vi behöver fråga.",
+          "clue": "har berättat reglerna till en lek och står nu vid dörren",
+          "explanation": "Lo har förklarat regler, men står också vid dörren. Frågan kan gälla förståelse eller om du vill följa med. Hon behöver förklara vilken betydelse hon menar.",
+          "connection": "”Till lekplatsen” hjälper oss att förstå en inbjudan. ”I reglerna” hjälper oss att förstå en fråga om förklaringen.",
+          "rule": "Du kan fråga: ”Menar du att jag ska följa med, eller undrar du om jag förstår reglerna?”",
+          "options": [
+            {
+              "label": "Lo menar säkert att du ska följa med ut.",
+              "correct": false,
+              "feedback": "Dörren gör det möjligt, men Lo har också berättat reglerna. Hon kan fråga om du förstår dem."
+            },
+            {
+              "label": "Fråga om Lo menar att följa med eller att förstå reglerna.",
+              "correct": true
+            },
+            {
+              "label": "Lo frågar säkert bara om du förstår reglerna.",
+              "correct": false,
+              "feedback": "Reglerna gör det möjligt, men Lo står också vid dörren. Hon kan bjuda med dig. Vi behöver veta mer."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ut-0075",
@@ -1799,7 +2204,88 @@
       "hint": "Fundera på vilken sida pappa vill att Liv ska läsa efter den tomma.",
       "explanation": "Pappa säger att Liv ska fortsätta läsa på sidan efter den tomma. Hon följer instruktionen genom att bläddra förbi sidan utan text.",
       "connection": "Man kan också hoppa över en fråga för stunden och ta nästa. Det betyder inte att frågan måste tas bort eller aldrig får besvaras.",
-      "orderExplanation": "Först upptäcker Liv den tomma sidan. Pappa berättar att hon kan gå vidare. Därefter bläddrar hon förbi sidan och fortsätter läsa."
+      "orderExplanation": "Först upptäcker Liv den tomma sidan. Pappa berättar att hon kan gå vidare. Därefter bläddrar hon förbi sidan och fortsätter läsa.",
+      "contextReading": "”Hoppa över” kan betyda att göra ett hopp över något eller att lämna en del och gå vidare. Det som sägs runt omkring hjälper oss att förstå. Fråga när två betydelser passar.",
+      "contextScenes": [
+        {
+          "id": "ut-0075-skip",
+          "kind": "meaning",
+          "prompt": "Nora gör ett korsord. Ledaren säger: ”Hoppa över den svåra frågan så länge. Prova nästa, så hjälps vi åt med den svåra sedan.”",
+          "definition": "Här betyder det att lämna frågan för stunden och prova nästa.",
+          "clue": "Prova nästa, så hjälps vi åt med den svåra sedan",
+          "explanation": "Ledaren säger att Nora kan prova nästa fråga och komma tillbaka till den svåra. Därför betyder ”hoppa över” här att gå vidare för stunden.",
+          "connection": "När någon ber dig hoppa över ett rep och landa på andra sidan kan orden i stället beskriva ett riktigt hopp.",
+          "rule": "Lyssna på vad som ska lämnas och vad som kommer sedan. Du kan fråga: ”Menar du att jag ska ta nästa fråga?”",
+          "options": [
+            {
+              "label": "Att hoppa med kroppen över korsordet.",
+              "correct": false,
+              "feedback": "Ledaren pratar om vilken fråga Nora ska prova. Hon får veta att nästa fråga kommer före den svåra."
+            },
+            {
+              "label": "Att aldrig mer få svara på den svåra frågan.",
+              "correct": false,
+              "feedback": "Ledaren säger att de ska hjälpas åt med frågan sedan. Den lämnas bara för stunden."
+            },
+            {
+              "label": "Att lämna frågan för stunden och prova nästa.",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "id": "ut-0075-jump",
+          "kind": "meaning",
+          "prompt": "På skolgården ligger ett hopprep som ett streck på marken. Ledaren säger: ”Hoppa över repet och landa med båda fötterna på andra sidan.”",
+          "definition": "Här betyder det att göra ett riktigt hopp över repet.",
+          "clue": "landa med båda fötterna på andra sidan",
+          "explanation": "Ledaren beskriver var fötterna ska landa. Repet ligger på marken och ska passeras med ett hopp. Här menas en rörelse med kroppen.",
+          "connection": "I ett korsord kan ”hoppa över den frågan” betyda att lämna frågan och prova nästa i stället.",
+          "rule": "Lyssna på vad personen beskriver. Om du undrar kan du fråga: ”Menar du ett riktigt hopp över repet?”",
+          "options": [
+            {
+              "label": "Att lämna leken och gå till nästa aktivitet.",
+              "correct": false,
+              "feedback": "Ledaren säger hur fötterna ska landa på andra sidan repet. Det beskriver själva hoppet, inte att lämna leken."
+            },
+            {
+              "label": "Att göra ett riktigt hopp över repet.",
+              "correct": true
+            },
+            {
+              "label": "Att lägga repet i en låda.",
+              "correct": false,
+              "feedback": "Repet ligger på marken och ledaren beskriver ett hopp över det. Repet ska inte plockas undan i den här instruktionen."
+            }
+          ]
+        },
+        {
+          "id": "ut-0075-ask",
+          "kind": "clarify",
+          "prompt": "I hinderleken ligger en ring på marken vid nästa station. Ledaren pekar mot ringen och säger: ”Den här kan du hoppa över.” Det kommer ingen mer förklaring.",
+          "definition": "Här vet vi inte om ledaren menar att hoppa med kroppen eller att lämna stationen. Vi behöver fråga.",
+          "clue": "Den här kan du hoppa över",
+          "explanation": "Ringen kan vara något att hoppa över. Ledaren kan också mena att du får lämna den här stationen och gå vidare. Orden säger inte vilket.",
+          "connection": "”Landa på andra sidan” beskriver ett riktigt hopp. ”Gå vidare till nästa station” beskriver att lämna en del av leken.",
+          "rule": "Du kan fråga: ”Menar du att jag ska hoppa över ringen eller gå vidare till nästa station?”",
+          "options": [
+            {
+              "label": "Fråga om ledaren menar ett hopp eller att gå vidare.",
+              "correct": true
+            },
+            {
+              "label": "Ledaren menar säkert ett riktigt hopp över ringen.",
+              "correct": false,
+              "feedback": "Ringen gör ett hopp möjligt, men ledaren kan också låta dig lämna stationen. Vi behöver en tydligare förklaring."
+            },
+            {
+              "label": "Ledaren menar säkert att lämna stationen utan att prova.",
+              "correct": false,
+              "feedback": "Det är en möjlig betydelse, men ringen kan också vara något att hoppa över. Det framgår inte vilket ledaren menar."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

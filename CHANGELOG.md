@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Sammanhanget avgör betydelsen
+
+- Sex befintliga uttryck får 18 skrivna situationer: Häng med, Hoppa över, Hoppa ner från pallen, Vända blad, Tappa tråden och Få kalla fötter. Varje uttryck får två tydliga betydelser och en situation där en konkret fråga behövs.
+- Den befintliga meningsövningen använder situationens egen betydelse och återkoppling. Riktad träning visar alla tre situationerna; förklaringen pekar ut ledtråden i berättelsen och varför den hjälper.
+- Aha för dessa uttryck börjar med en neutral beskrivning av de möjliga betydelserna. En ny, tydlig situation används som förståelsekontroll. Att fråga i en oklar situation räknas inte som bevis för en bestämd betydelse i Aha.
+- Ordsamlingen visar olika betydelser tillsammans. Äldre serier visas uttryckligen som en annan berättelse så att bild och förklaring hör ihop.
+- Nya scen-ID:n hålls isär i återbesök och uppföljning. Befintliga ord, uttryck och tidigare sparade övningar bevaras. Offlinecache v70.
+
 ## Efter livekontroll – kortare och tydligare läsflöde
 
 - Fristående Aha säger **Välj svar**, även när alternativen är handlingar i samma berättelse. Vardagsuttryckens lässteg påminner om att samma uttryck kan betyda något annat i en annan situation.

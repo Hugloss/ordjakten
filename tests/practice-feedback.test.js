@@ -20,6 +20,42 @@ test('an Aha objective needs two separately reviewed scene sources',()=>{
     assert.ok(actual.objectives['recall:'+row.id]);
   }
 });
+test('contextual expressions use two real meaning scenes for Aha followups, never a clarification or an old scene',()=>{
+  const rows=missions.missions.filter(row=>row.contextScenes);
+  assert.equal(rows.length,6);
+  const now=1780000000000;
+  for(const row of rows){
+    const key='aha:'+row.id;
+    const meaning=row.contextScenes.filter(scene=>scene.kind==='meaning');
+    const clarify=row.contextScenes.find(scene=>scene.kind==='clarify');
+    assert.deepEqual(content.objectives[key].evidence,meaning.map(scene=>'expression:context:'+scene.id));
+    let progress=F.observe({},content,{key,outcome:'supported',now,evidence:'expression:context:'+meaning[0].id});
+    assert.equal(progress[key].streak,1);
+    for(const evidence of ['expression:context:'+clarify.id,'expression:challenge','expression:mission'])
+      assert.equal(F.observe(progress,content,{key,outcome:'direct',now:now+F.DAY,evidence}),progress);
+    progress=F.observe(progress,content,{key,outcome:'direct',now:now+F.DAY,evidence:'expression:context:'+meaning[1].id});
+    assert.equal(progress[key].last,'direct');
+    assert.equal(F.sanitize(progress,content,now+F.DAY)[key].evidence,'expression:context:'+meaning[1].id);
+  }
+});
+test('changed or incomplete contextual teaching invalidates Aha comparisons and preserves separate recall',()=>{
+  const row=missions.missions.find(item=>item.contextScenes);
+  assert.ok(row);
+  const key='aha:'+row.id,recallKey='recall:'+row.id,now=1780000000000;
+  const meaning=row.contextScenes.find(scene=>scene.kind==='meaning');
+  let progress=F.observe({},content,{key,outcome:'supported',now,evidence:'expression:context:'+meaning.id});
+  progress=F.observe(progress,content,{key:recallKey,outcome:'supported',now});
+  const wrongChanged={...row,contextScenes:row.contextScenes.map(scene=>scene.id!==meaning.id?scene:{...scene,
+    options:scene.options.map(option=>option.correct?option:{...option,label:option.label+' En annan handling.'})})};
+  const incomplete={...row,contextScenes:row.contextScenes.filter(scene=>scene.id!==meaning.id)};
+  for(const replacement of [wrongChanged,incomplete]){
+    const updated=F.catalog({...input,missions:{...missions,missions:missions.missions.map(item=>item.id===row.id?replacement:item)}});
+    assert.notEqual(updated.objectives[key]?.stamp,content.objectives[key].stamp);
+    const safe=F.sanitize(progress,updated,now+F.DAY);
+    assert.equal(safe[key],undefined);
+    assert.deepEqual(safe[recallKey],progress[recallKey]);
+  }
+});
 const NOW=1780000000000,DAY=F.DAY,random=()=>.37;
 const id='sv-0044',other='sv-0003',aha='aha:'+id,recall='recall:'+id;
 const detector=detectorTasks.find(t=>t.target===id&&t.level===1);

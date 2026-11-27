@@ -3,10 +3,11 @@
  * already vetted for the original multiple-choice question. */
 (function (root, factory) {
   const memory=typeof module!=='undefined'&&module.exports?require('./spaced-memory'):root.OrdjaktenMemory;
-  const api = factory(memory);
+  const missions=typeof module!=='undefined'&&module.exports?require('./missions'):root.OrdjaktenMissions;
+  const api = factory(memory,missions);
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.OrdjaktenReading = api;
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (Memory) {
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (Memory, Missions) {
   'use strict';
   function choose(items, random) {
     if (!items.length) return null;
@@ -60,6 +61,28 @@
     if(question.kind==='expression'){
       const challenge=surprises?.challenges?.find(x=>x.id===question.id);
       const mission=missions?.missions?.find(x=>x.id===question.id);
+      if(mission&&Object.hasOwn(mission,'contextScenes')){
+        // The authored context, not the expression's usual definition,
+        // determines this answer. Only resolved meanings count as transfer.
+        const shownScene=typeof question.scene==='string'?question.scene.trim():'';
+        const candidates=Missions.contextScenes(missions,question.id)
+          .filter(scene=>scene.kind==='meaning'&&scene.id!==question.contextSceneId&&scene.prompt.trim()!==shownScene)
+          .map(scene=>({scene,key:'expression:context:'+scene.id}));
+        const fresh=candidates.filter(row=>row.key!==lastEvidence);
+        const unproved=fresh.filter(row=>!proofs.has(row.key));
+        const picked=choose(unproved.length?unproved:fresh.length?fresh:candidates,random);
+        if(!picked)return null;
+        const {scene,key}=picked,prefix='”'+scene.prompt+'” – ';
+        const right=scene.options.find(o=>o.correct===true).label;
+        const wrong=scene.options.filter(o=>o.correct===false).map(o=>prefix+o.label);
+        const check=makeChallenge('Vad betyder ”'+word+'” i den här nya situationen?',prefix+right,wrong,
+          'expression',random,[scene.explanation,scene.connection,scene.rule].filter(Boolean).join('\n\n'),key);
+        if(!check||check.options.length!==3)return null;
+        const formatted=formatSchoolAnswers(check.options);
+        return {...check,prompt:check.prompt+'\n'+formatted.instruction,options:formatted.options,
+          everydayInstruction:true,contextSceneId:scene.id,contextReading:mission.contextReading,
+          clue:scene.clue,definition:scene.definition};
+      }
       // Standalone Aha catalogues contain only an id, name and definition.
       // The authored challenge preserves the everyday category in that path.
       const everyday=question.everydayInstruction===true||challenge?.category==='everyday-instruction';
@@ -160,10 +183,12 @@
   const DAY_MS=24*60*60*1000;
   const VALID_EVIDENCE={
     word:/^context:[012]$/,
-    expression:/^expression:(?:challenge|mission)$/
+    expression:/^expression:(?:challenge|mission)$/,
+    expressionContext:/^expression:context:ut-\d{4,}-[a-z][a-z0-9-]{1,30}$/
   };
   const evidenceValid=(id,key)=>typeof key==='string' &&
-    (id.startsWith('sv-')?VALID_EVIDENCE.word:VALID_EVIDENCE.expression).test(key);
+    (id.startsWith('sv-')?VALID_EVIDENCE.word.test(key):VALID_EVIDENCE.expression.test(key)||
+      VALID_EVIDENCE.expressionContext.test(key)&&key.startsWith('expression:context:'+id+'-'));
   const at=value=>Number.isFinite(value)&&value>=0&&value<=4102444800000?Math.floor(value):0;
   function sanitizeProgress(raw) {
     const out=Object.create(null);
@@ -193,7 +218,7 @@
           if(item.legacyMastered===true)card.legacyMastered=true;
         }
         if(type==='transfer'){
-          const memory=Memory.sanitize(item.memory,{maxAt:card.lastAt,evidenceRequired:true});
+          const memory=Memory.sanitize(item.memory,{maxAt:card.lastAt,evidenceRequired:true,expressionId:id});
           if(memory&&memory.outcome!=='previewed'&&evidenceValid(id,memory.evidence)&&
             (memory.outcome==='direct'?first>0:supported>0))card.memory=memory;
         }
@@ -244,13 +269,13 @@
       card.lastQualifiedAt=lastQualifiedAt;
       if(legacyMastered && first)card.legacyMastered=true;
       const memory=Memory.observe(before.memory,{outcome:first?'direct':'supported',now:timestamp,
-        lastExposureAt:before.lastAt,evidence,different:before.lastEvidence!==evidence,requiresEvidence:true});
+        lastExposureAt:before.lastAt,evidence,different:before.lastEvidence!==evidence,requiresEvidence:true,expressionId:id});
       if(memory)card.memory=memory;
     }else if(type==='transfer'&&before.memory){
       // An unkeyed legacy/fallback success cannot establish new evidence.
       // A supported answer still invalidates the earned interval.
       card.memory=first?before.memory:Memory.observe(before.memory,{outcome:'supported',now:timestamp,
-        evidence:before.memory.evidence,requiresEvidence:true});
+        evidence:before.memory.evidence,requiresEvidence:true,expressionId:id});
     }
     return {...cards,[id]:{...cards[id],[type]:card}};
   }

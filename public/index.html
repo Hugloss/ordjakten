@@ -688,6 +688,7 @@
             <section id="school-feedback" class="context-aha school-feedback" aria-labelledby="school-feedback-title" hidden>
               <strong id="school-feedback-title">💡 Så hänger det ihop</strong>
               <p id="school-feedback-correction" class="school-feedback-correction"></p>
+              <p id="school-feedback-clue" hidden></p>
               <p id="school-feedback-explanation"></p>
               <details id="school-feedback-more" class="teaching-more">
                 <summary>Fler exempel och hjälp med uppgiften</summary>
@@ -736,7 +737,7 @@
             <p class="comic-strip-subtitle">Öppna luckan när du vill. Du får en liten bildserie och ett extra uppdrag. Det ger inga extra testpoäng.</p>
             <button id="expression-open" type="button" class="secondary-button full-button" aria-expanded="false" aria-controls="expression-surprise-body">🎁 Öppna luckan</button>
             <div id="expression-surprise-body" hidden>
-              <h4 class="surprise-story-title">🎬 Aha! En liten bildserie</h4>
+              <h4 id="expression-comic-title" class="surprise-story-title">🎬 Aha! En liten bildserie</h4>
               <div id="expression-comic"></div>
               <p class="comic-footer">De färdiga bilderna är bara stöd – läs också texten!</p>
               <div id="expression-bonus"></div>
@@ -907,7 +908,7 @@
         </section>
         <section id="aha-round-feedback" class="panel focus-explain" hidden>
           <h2 id="aha-round-feedback-title" tabindex="-1"></h2>
-          <p id="aha-round-correct"></p><p id="aha-round-why" class="muted"></p>
+          <p id="aha-round-correct"></p><p id="aha-round-clue" class="focus-why" hidden></p><p id="aha-round-why" class="muted"></p>
           <p id="aha-memory-note" class="memory-feedback"></p>
           <button id="aha-round-next" type="button" class="primary-button full-button">Nästa berättelse →</button>
         </section>
@@ -1388,7 +1389,7 @@
         <section id="focus-feedback" class="focus-feedback" aria-live="polite" hidden>
           <div id="focus-verdict" class="focus-verdict" data-outcome="right"><div id="focus-verdict-icon" class="text-5xl">✅</div>
             <h2 id="focus-verdict-title">Rätt!</h2><p id="focus-correct"></p></div>
-          <div class="panel focus-explain"><p class="eyebrow">📖 AHA! DET HÄR BETYDER ORDET</p>
+          <div class="panel focus-explain"><p id="focus-explain-label" class="eyebrow">📖 AHA! DET HÄR BETYDER ORDET</p>
             <h3 id="focus-explain-word"></h3><p id="focus-definition"></p>
             <p id="focus-example" class="muted"></p><p id="focus-why" class="focus-why" hidden></p><section id="focus-word-teaching" class="word-teaching" aria-label="Så används ordet" hidden></section></div>
           <button id="focus-next" type="button" class="primary-button full-button">Nästa uppgift →</button>

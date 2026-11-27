@@ -27,6 +27,8 @@ npm run check
 - 121 ord med konkreta förklaringar, vardagsexempel, motexempel och egna tankefrågor.
 - 59 uttryck, 14 skolord, 363 vardagsscener, 96 jämförelsescener och
   64 djupare berättelser för fyra jämförelsepar.
+- Sex befintliga uttryck har dessutom 18 situationer där sammanhanget
+  avgör betydelsen eller visar att barnet behöver fråga vad personen menar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
 - Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.
 - Anpassad träning, Min ordstig, Ledtrådstrappan, Förväxlingskompassen
@@ -104,7 +106,7 @@ ordurval, entydiga speluppgifter och skolfrågor finns i
 Nästa genomgång behandlar [tydligare frågor och förklaringar](docs/CLEARER-EXPLANATIONS.md),
 med särskilt fokus på överlappande betydelser och återkoppling till rätt uppgift.
 [Uttryck i vardagen och läsbara teman](docs/EVERYDAY-INSTRUCTIONS.md) beskriver
-sex nya vardagsuttryck och hur deras betydelse kopplas till en tydlig situation.
+vardagsuttrycken, läsbarheten och hur samma uttryck övas med olika betydelser.
 
 Fortsatt utveckling: se [färdplan](docs/ROADMAP.md),
 [produktbeslut](docs/PRODUCT.md) och

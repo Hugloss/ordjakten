@@ -9,6 +9,7 @@ const contexts=require('../public/data/word-contexts.json');
 const expressions=require('../public/data/expressions.json');
 const surprises=require('../public/data/surprises.json');
 const missions=require('../public/data/missions.json');
+const Q=require('../public/js/missions');
 const DAY=86400000;
 const NOW=1780000000000;
 const check=(q,progress={},random=()=>.27)=>B.makeCheck(q,{bank,contexts,surprises,missions,readingProgress:progress,random});
@@ -35,21 +36,27 @@ test('Aha never reuses the correct sentence visible in the main expression quiz'
     const q=E.makeExpressionQuestion(expr,'medium',()=>.3,'sentence',missions);
     const mainCorrect=q.options.find(o=>o.correct).label;
     const aha=check(q);
-    assert.equal(aha.evidence,'expression:challenge');
+    const contextual=Q.contextScenes(missions,expr.id).length>0;
+    if(contextual){
+      assert.equal(Q.contextScene(missions,expr.id,aha.contextSceneId).kind,'meaning');
+      assert.equal(aha.evidence,'expression:context:'+aha.contextSceneId);
+      assert.notEqual(aha.contextSceneId,q.contextSceneId);
+    }else assert.equal(aha.evidence,'expression:challenge');
     assert.notEqual(aha.options.find(o=>o.correct).label,mainCorrect);
     const afterHelp=B.recordProgress({},expr.id,'expression','guided',NOW,aha.evidence);
     const item={kind:'expression',entry:{id:expr.id}};
-    assert.equal(D.choiceType(item,{difficulty:'medium',expressionTask:'mix'},
+    if(!contextual)assert.equal(D.choiceType(item,{difficulty:'medium',expressionTask:'mix'},
       {},['meaning','sentence','order'],()=>.4,afterHelp),'meaning');
     const nextQ=E.makeExpressionQuestion(expr,'medium',()=>.3,'meaning',missions);
     const nextAha=check(nextQ,afterHelp);
-    assert.equal(nextAha.evidence,'expression:mission');
+    if(contextual)assert.notEqual(nextAha.evidence,aha.evidence);
+    else assert.equal(nextAha.evidence,'expression:mission');
     const afterMission=B.recordProgress(afterHelp,expr.id,'expression','first',NOW+DAY,nextAha.evidence);
     assert.equal(D.choiceType(item,{difficulty:'medium',expressionTask:'mix'},
       {},['meaning','sentence','order'],()=>.4,afterMission),'sentence');
   }
 });
-test('all expressions alternate between authored surprise and mission examples',()=>{
+test('all expressions alternate between distinct authored Aha examples',()=>{
   for(const expr of expressions.expressions){
     const q=E.makeExpressionQuestion(expr,'medium',()=>.7,'meaning',missions);
     const first=check(q);
@@ -57,8 +64,11 @@ test('all expressions alternate between authored surprise and mission examples',
     assert.equal(first.options.length,3,expr.phrase);
     const progress=B.recordProgress({},expr.id,'expression','retry',NOW,first.evidence);
     const second=check(q,progress);
-    assert.ok(['expression:challenge','expression:mission'].includes(first.evidence));
-    assert.ok(['expression:challenge','expression:mission'].includes(second.evidence));
+    const contexts=Q.contextScenes(missions,expr.id);
+    const allowed=contexts.length?contexts.filter(scene=>scene.kind==='meaning').map(scene=>'expression:context:'+scene.id):
+      ['expression:challenge','expression:mission'];
+    assert.ok(allowed.includes(first.evidence));
+    assert.ok(allowed.includes(second.evidence));
     assert.notEqual(first.evidence,second.evidence,expr.phrase);
     assert.notEqual(first.options.find(o=>o.correct).label,second.options.find(o=>o.correct).label);
   }
