@@ -1612,6 +1612,736 @@
           "why": "Biljetten har ordet FINAL och ett gult band."
         }
       ]
+    },
+    {
+      "id": "neon",
+      "emoji": "🌈",
+      "title": "Ljusverkstadens färghemlighet",
+      "intro": "Konstnären Iris har ritat ett sagorum med lysande färger. Hjälp henne hitta teckningarna till utställningen.",
+      "ending": "Alla bilder är på rätt plats. Ljusverkstadens fantasigalleri är redo för en färgglad öppning.",
+      "keepsake": {
+        "emoji": "🎨",
+        "name": "Färgspiralen"
+      },
+      "stages": [
+        {
+          "title": "Den lysande skylten",
+          "scene": "Iris söker en bild som hör till utställningens början.",
+          "clues": [
+            "På bilden finns en grön våg.",
+            "Tre gula prickar ligger ovanför vågen."
+          ],
+          "choices": [
+            "Grön våg med tre gula prickar ovanför.",
+            "Grön våg med två gula prickar ovanför.",
+            "Blå våg med tre gula prickar ovanför."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Vågen är grön, men prickarna är bara två.",
+            "Prickarna stämmer, men vågen är blå."
+          ],
+          "why": "Både den gröna vågen och de tre gula prickarna finns där."
+        },
+        {
+          "title": "Måla med ord",
+          "scene": "Iris behöver ett kort till nästa teckning.",
+          "clues": [
+            "Kortet beskriver ett ljus.",
+            "Det nämner att ljuset blinkar."
+          ],
+          "choices": [
+            "En lykta lyser hela natten utan att ändras.",
+            "En liten lampa blinkar med sitt ljus.",
+            "En dörr öppnas och stängs i vinden."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Det är ett ljus, men det blinkar inte.",
+            null,
+            "Något ändras, men texten handlar inte om ljus."
+          ],
+          "why": "Lampan lyser och blinkar. Båda delarna står i beskrivningen."
+        },
+        {
+          "title": "Galleriets sista tavla",
+          "scene": "Tre tavlor väntar på väggen.",
+          "clues": [
+            "Tavlan har en svart ram.",
+            "Mitt på bilden finns en gul stjärna."
+          ],
+          "choices": [
+            "Svart ram med ett gult hjärta.",
+            "Vit ram med en gul stjärna.",
+            "Svart ram med en gul stjärna."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Ramen är svart, men bilden visar ett hjärta.",
+            "Stjärnan är gul, men ramen är vit.",
+            null
+          ],
+          "why": "Tavlan har svart ram och en gul stjärna på samma bild."
+        }
+      ]
+    },
+    {
+      "id": "baking",
+      "emoji": "🧁",
+      "title": "Bakverkstadens hemliga recept",
+      "intro": "Tre vänner ska dekorera fantasibakelser till kalaset. Receptkortet har hamnat bland andra lappar.",
+      "ending": "Vännerna hittar receptet och dekorerar sina låtsasbakelser. Alla får visa sin egen idé.",
+      "keepsake": {
+        "emoji": "🍰",
+        "name": "Receptstjärnan"
+      },
+      "stages": [
+        {
+          "title": "Hitta receptkortet",
+          "scene": "På bordet finns tre kort med olika bilder.",
+          "clues": [
+            "På kortet finns en jordgubbe.",
+            "Under bilden står ordet KAKA."
+          ],
+          "choices": [
+            "Jordgubbe och ordet KAKA.",
+            "Jordgubbe och ordet BRÖD.",
+            "Körsbär och ordet KAKA."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Jordgubben finns, men ordet är BRÖD.",
+            "Ordet KAKA finns, men bilden visar ett körsbär."
+          ],
+          "why": "Rätt kort har en jordgubbe och ordet KAKA."
+        },
+        {
+          "title": "Vilken ordning?",
+          "scene": "Vännerna ska dekorera en bild av en bakelse.",
+          "clues": [
+            "Först målar de glasyren.",
+            "Sist ritar de ett bär ovanpå."
+          ],
+          "choices": [
+            "Bär, glasyr, tallrik.",
+            "Glasyr, tallrik, bär.",
+            "Tallrik, bär, glasyr."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Glasyren kommer efter bäret, inte först.",
+            null,
+            "Bäret är inte sist och glasyren är inte först."
+          ],
+          "why": "Glasyren ritas först och bäret sist, precis som på kortet."
+        },
+        {
+          "title": "Kalasets fat",
+          "scene": "Tre fat står på bordet. Vilket är till de färdiga bilderna?",
+          "clues": [
+            "Fatet är blått.",
+            "På kanten finns fyra små stjärnor."
+          ],
+          "choices": [
+            "Blått fat med tre stjärnor.",
+            "Grönt fat med fyra stjärnor.",
+            "Blått fat med fyra stjärnor."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Fatet är blått, men stjärnorna är tre.",
+            "Stjärnorna är fyra, men fatet är grönt.",
+            null
+          ],
+          "why": "Fatet är blått och har fyra små stjärnor på kanten."
+        }
+      ]
+    },
+    {
+      "id": "world-postcards",
+      "emoji": "🌍",
+      "title": "Vykortens resa runt jorden",
+      "intro": "En resande berättare har blandat ihop sina vykort. Följ deras spår genom fjäll, öar och städer i fantasin.",
+      "ending": "Vykorten ligger i rätt ordning i albumet. Nu kan du hitta på ett eget vykort till någon du tycker om.",
+      "keepsake": {
+        "emoji": "🗺️",
+        "name": "Vykortspasset"
+      },
+      "stages": [
+        {
+          "title": "Vykortet från bergen",
+          "scene": "På en lapp finns två detaljer från resan.",
+          "clues": [
+            "Här finns snö på en hög bergstopp.",
+            "En klar sjö ligger nedanför berget."
+          ],
+          "choices": [
+            "Snöigt berg med en klar sjö nedanför.",
+            "Snöigt berg ovanför en grön äng utan sjö.",
+            "Klar sjö nedanför en låg sandkulle."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Berget har snö, men ingen sjö ligger nedanför.",
+            "Sjön finns, men inte den snöiga bergstoppen."
+          ],
+          "why": "Bergstoppen har snö och nedanför ligger en klar sjö."
+        },
+        {
+          "title": "Vykortet från ön",
+          "scene": "Nästa kort visar en plats vid havet.",
+          "clues": [
+            "En liten fyr står på ön.",
+            "Runt ön syns blått hav."
+          ],
+          "choices": [
+            "Fyr på en kulle långt från vatten.",
+            "En liten fyr på en ö omgiven av hav.",
+            "En ö i havet med ett träd, men utan fyr."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Fyren finns, men platsen ligger inte i havet.",
+            null,
+            "Ön ligger i havet, men fyren saknas."
+          ],
+          "why": "Den lilla fyren står på ön som omges av hav."
+        },
+        {
+          "title": "Berättarens sista kort",
+          "scene": "På sista kortet finns en stad från sagan.",
+          "clues": [
+            "Ett torg har en fontän.",
+            "Bredvid fontänen växer ett stort träd."
+          ],
+          "choices": [
+            "Fontän på torg utan något träd.",
+            "Stort träd bredvid ett torg utan fontän.",
+            "Fontän på torg med ett stort träd bredvid."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Torget har fontän, men inget träd står bredvid.",
+            "Trädet finns, men torget saknar fontän.",
+            null
+          ],
+          "why": "På torget finns både fontänen och det stora trädet."
+        }
+      ]
+    },
+    {
+      "id": "blocks",
+      "emoji": "🧱",
+      "title": "Blockbyggarnas fantasistad",
+      "intro": "I Byggarnas värld bygger vännerna ett bibliotek av färgade klossar. Hjälp dem läsa byggplanen.",
+      "ending": "Biblioteket är färdigt av klossar! Alla kan gå in i sagan och hitta på nya berättelser.",
+      "keepsake": {
+        "emoji": "🏗️",
+        "name": "Byggmästarmärket"
+      },
+      "stages": [
+        {
+          "title": "Husets första klossar",
+          "scene": "Byggplanen visar en trygg start.",
+          "clues": [
+            "Nedersta raden består av blå klossar.",
+            "Ovanpå står en grön kloss."
+          ],
+          "choices": [
+            "Blå klossar underst och grön kloss ovanpå.",
+            "Blå klossar underst och röd kloss ovanpå.",
+            "Röda klossar underst och grön kloss ovanpå."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Nedersta raden stämmer, men översta klossen är röd.",
+            "Klossen ovanpå är grön, men den blå raden saknas."
+          ],
+          "why": "Blå klossar bildar basen och en grön kloss står ovanpå."
+        },
+        {
+          "title": "Bron till läshuset",
+          "scene": "Vännerna ritar tre broar mellan två klosstorn.",
+          "clues": [
+            "Bron går från ett torn till ett annat.",
+            "Under bron finns en blå båge."
+          ],
+          "choices": [
+            "En bro mellan torn utan blå båge.",
+            "En bro mellan två torn med blå båge under.",
+            "En blå båge står vid ett enda torn."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Bron förbinder tornen, men den blå bågen saknas.",
+            null,
+            "Bågen är blå, men någon bro mellan två torn finns inte."
+          ],
+          "why": "Bron går mellan två torn och har en blå båge under sig."
+        },
+        {
+          "title": "Bibliotekets tak",
+          "scene": "Sista ritningen visar hur taket ska se ut.",
+          "clues": [
+            "Taket är format som en triangel.",
+            "På taket finns en liten gul flagga."
+          ],
+          "choices": [
+            "Triangeltak med grön flagga.",
+            "Platt tak med gul flagga.",
+            "Triangeltak med gul flagga."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Taket har rätt form, men flaggan är grön.",
+            "Flaggan är gul, men taket är platt.",
+            null
+          ],
+          "why": "Taket har triangelform och en gul flagga."
+        }
+      ]
+    },
+    {
+      "id": "creature-friends",
+      "emoji": "🐾",
+      "title": "Varelsevännernas upptäcktsstig",
+      "intro": "I fantasilandet finns vänliga små varelser med olika vanor. Lär känna dem genom att läsa spåren.",
+      "ending": "Du har lärt känna tre varelsevänner. De tackar för att du lyssnade och förstod vad de behövde.",
+      "keepsake": {
+        "emoji": "💚",
+        "name": "Vänskapsmärket"
+      },
+      "stages": [
+        {
+          "title": "Den blyga lövvännen",
+          "scene": "Ett kort berättar hur den lilla lövvännen trivs.",
+          "clues": [
+            "Varelsen vill sitta i skuggan.",
+            "Den tycker om en mjuk filt."
+          ],
+          "choices": [
+            "Skuggig hörna med mjuk filt.",
+            "Skuggig hörna med hårt stengolv.",
+            "Solig plats med mjuk filt."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Skuggan stämmer, men den mjuka filten saknas.",
+            "Filten är mjuk, men platsen är inte skuggig."
+          ],
+          "why": "Lövvännen får både skugga och en mjuk filt."
+        },
+        {
+          "title": "Den glada molnvännen",
+          "scene": "Nästa vän har lämnat en tecknad önskelapp.",
+          "clues": [
+            "Vännen vill leka med bollar.",
+            "Bollarna ska vara lila."
+          ],
+          "choices": [
+            "Röda bollar på ett lekbord.",
+            "Lila bollar på ett lekbord.",
+            "Lila kuber på ett lekbord."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Det är bollar, men färgen är inte lila.",
+            null,
+            "Färgen är lila, men formerna är kuber."
+          ],
+          "why": "Bollarna är både runda och lila, som vännen önskar."
+        },
+        {
+          "title": "Den nyfikna bokvännen",
+          "scene": "Den sista varelsen vill hitta sin läsplats.",
+          "clues": [
+            "Där finns en hylla med böcker.",
+            "En liten lykta lyser bredvid hyllan."
+          ],
+          "choices": [
+            "Bokhylla utan lykta.",
+            "Lykta bredvid en låda utan böcker.",
+            "Bokhylla med en liten lykta bredvid."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Böckerna finns, men ingen lykta står där.",
+            "Lyktan finns, men det saknas böcker.",
+            null
+          ],
+          "why": "Bokhyllan står bredvid den lilla lyktan."
+        }
+      ]
+    },
+    {
+      "id": "gold-rush",
+      "emoji": "🏜️",
+      "title": "Guldglittrets gömda karta",
+      "intro": "På en sagomarknad finns guldfärgade pappersstjärnor gömda i en lek. Hjälp upptäckarna hitta rätt karta.",
+      "ending": "Upptäckarna hittar lådan med glittrande pappersstjärnor. Alla får dela på upptäckarglädjen.",
+      "keepsake": {
+        "emoji": "⭐",
+        "name": "Guldglitterstjärnan"
+      },
+      "stages": [
+        {
+          "title": "Kartan vid floden",
+          "scene": "Du ser tre tecknade platser vid en sagoflod.",
+          "clues": [
+            "En bro går över floden.",
+            "På ena sidan står en stor kaktus."
+          ],
+          "choices": [
+            "Bro över flod med stor kaktus bredvid.",
+            "Bro över flod utan någon kaktus.",
+            "Stor kaktus vid en flod utan bro."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Bron finns, men kaktusen saknas.",
+            "Kaktusen finns, men ingen bro går över floden."
+          ],
+          "why": "Bron går över floden och en kaktus står bredvid."
+        },
+        {
+          "title": "Guldvaskarens lapp",
+          "scene": "En vuxen visar en teckning av låtsasguld.",
+          "clues": [
+            "På pappret finns tre gula stjärnor.",
+            "En blå cirkel är ritad runt dem."
+          ],
+          "choices": [
+            "Tre gula stjärnor med röd cirkel.",
+            "Tre gula stjärnor med blå cirkel.",
+            "Två gula stjärnor med blå cirkel."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Stjärnorna är tre, men cirkeln är röd.",
+            null,
+            "Cirkeln är blå, men stjärnorna är bara två."
+          ],
+          "why": "Tre gula stjärnor finns inuti den blå cirkeln."
+        },
+        {
+          "title": "Lådan på marknaden",
+          "scene": "Tre små lådor står på en hylla i lekboden.",
+          "clues": [
+            "På lådan står det GLITTER.",
+            "På locket finns ett grönt hjärta."
+          ],
+          "choices": [
+            "GLITTER med blått hjärta.",
+            "PAPPER med grönt hjärta.",
+            "GLITTER med grönt hjärta."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Texten stämmer, men hjärtat är blått.",
+            "Hjärtat är grönt, men texten är PAPPER.",
+            null
+          ],
+          "why": "På rätt låda står GLITTER och locket har ett grönt hjärta."
+        }
+      ]
+    },
+    {
+      "id": "slime-art",
+      "emoji": "🫙",
+      "title": "Slemskissernas färgverkstad",
+      "intro": "Konstnärerna har målat fantasibilder av mjuka slembollar. Hjälp dem ordna bilderna utan att blanda riktiga kemikalier.",
+      "ending": "Alla slembilder är sorterade. Nu kan konstnärerna visa sin fantasifulla samling.",
+      "keepsake": {
+        "emoji": "🖍️",
+        "name": "Slemskissmärket"
+      },
+      "stages": [
+        {
+          "title": "Den randiga slembilden",
+          "scene": "En av teckningarna ska hänga först.",
+          "clues": [
+            "Slembollen på bilden är grön.",
+            "Den har två rosa ränder."
+          ],
+          "choices": [
+            "Grön slemboll med två rosa ränder.",
+            "Grön slemboll med tre rosa ränder.",
+            "Blå slemboll med två rosa ränder."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Färgen är grön, men ränderna är tre.",
+            "Ränderna stämmer, men slembollen är blå."
+          ],
+          "why": "Den gröna slembollen har två rosa ränder."
+        },
+        {
+          "title": "Konstnärens färgord",
+          "scene": "På nästa lapp står hur den målade slembollen ser ut.",
+          "clues": [
+            "Färgen ska vara lila.",
+            "Den ska ha prickar, inte ränder."
+          ],
+          "choices": [
+            "Lila boll med gula ränder.",
+            "Lila boll med gula prickar.",
+            "Röd boll med gula prickar."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Bollen är lila, men den har ränder.",
+            null,
+            "Prickarna stämmer, men bollen är röd."
+          ],
+          "why": "Den lila bollen har prickar, så båda spåren stämmer."
+        },
+        {
+          "title": "Rätt utställningsbord",
+          "scene": "Tre bord har dekorerats för slembilderna.",
+          "clues": [
+            "Bordet har en gul duk.",
+            "Tre bilder står på bordet."
+          ],
+          "choices": [
+            "Gul duk med två bilder.",
+            "Blå duk med tre bilder.",
+            "Gul duk med tre bilder."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Duken är gul, men det finns bara två bilder.",
+            "Bilderna är tre, men duken är blå.",
+            null
+          ],
+          "why": "Bordet har gul duk och tre bilder."
+        }
+      ]
+    },
+    {
+      "id": "game-show",
+      "emoji": "🎤",
+      "title": "Frågefestens hemliga studio",
+      "intro": "I frågestudion ska alla hjälpas åt att ordna en vänlig frågefest. Ingen tävlar om att vara snabbast.",
+      "ending": "Studion är redo! Alla får ställa frågor och lyssna på varandras svar.",
+      "keepsake": {
+        "emoji": "📺",
+        "name": "Studiobrickan"
+      },
+      "stages": [
+        {
+          "title": "Studions skylt",
+          "scene": "Tre skyltar sitter ovanför olika dörrar.",
+          "clues": [
+            "På skylten finns en mikrofon.",
+            "Där står ordet FRÅGA."
+          ],
+          "choices": [
+            "Mikrofon och ordet FRÅGA.",
+            "Mikrofon och ordet PAUS.",
+            "Stjärna och ordet FRÅGA."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Mikrofonen finns, men ordet är PAUS.",
+            "Ordet FRÅGA stämmer, men bilden är en stjärna."
+          ],
+          "why": "Skylten visar mikrofonen och ordet FRÅGA."
+        },
+        {
+          "title": "Den vänliga frågan",
+          "scene": "Programledaren vill välja en bra fråga till alla.",
+          "clues": [
+            "Meningen börjar med Varför.",
+            "Den slutar med ett frågetecken."
+          ],
+          "choices": [
+            "Varför vi läser böcker.",
+            "Varför lyser stjärnor?",
+            "Hur hittar man hem?"
+          ],
+          "answer": 1,
+          "wrong": [
+            "Ordet Varför finns, men meningen har inget frågetecken.",
+            null,
+            "Meningen är en fråga, men börjar inte med Varför."
+          ],
+          "why": "Varför lyser stjärnor? börjar rätt och har frågetecken."
+        },
+        {
+          "title": "Finalens bakgrund",
+          "scene": "Tre tecknade bakgrunder finns i studion.",
+          "clues": [
+            "En regnbåge syns på bilden.",
+            "Två vita moln finns under regnbågen."
+          ],
+          "choices": [
+            "Regnbåge med tre vita moln.",
+            "Två vita moln under en sol.",
+            "Regnbåge med två vita moln under."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Regnbågen finns, men molnen är tre.",
+            "Molnen är två, men bilden har en sol.",
+            null
+          ],
+          "why": "Regnbågen har två vita moln under sig."
+        }
+      ]
+    },
+    {
+      "id": "knights",
+      "emoji": "🛡️",
+      "title": "Riddarskolans fredsflagga",
+      "intro": "Riddaren Lo ska ordna en vänskapsfest med en snäll drake. Först måste festflaggan hittas.",
+      "ending": "Fredsflaggan hissas vid slottet. Riddaren Lo och draken firar att alla är välkomna.",
+      "keepsake": {
+        "emoji": "🏰",
+        "name": "Riddarens fredsmärke"
+      },
+      "stages": [
+        {
+          "title": "Slottets första ledtråd",
+          "scene": "En skrivare har ritat tre torn på en karta.",
+          "clues": [
+            "Tornet har ett rött tak.",
+            "Bredvid tornet växer ett stort träd."
+          ],
+          "choices": [
+            "Torn med rött tak och stort träd.",
+            "Torn med rött tak utan träd.",
+            "Torn med blått tak och stort träd."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Taket är rött, men trädet saknas.",
+            "Trädet finns, men taket är blått."
+          ],
+          "why": "Det röda taket och det stora trädet finns vid samma torn."
+        },
+        {
+          "title": "Drakens brev",
+          "scene": "Den vänliga draken har skickat ett brev.",
+          "clues": [
+            "Brevet bjuder in till en fest.",
+            "Det nämner att alla får vara med."
+          ],
+          "choices": [
+            "Det blir fest bara för riddare.",
+            "Vi firar tillsammans och alla är välkomna!",
+            "Alla får komma till skolan i morgon."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Brevet handlar om fest, men inte alla är inbjudna.",
+            null,
+            "Alla nämns, men ingen fest finns i brevet."
+          ],
+          "why": "Brevet berättar om både fest och att alla är välkomna."
+        },
+        {
+          "title": "Hitta fredsflaggan",
+          "scene": "På borggården ligger tre flaggor.",
+          "clues": [
+            "Flaggan är vit.",
+            "Ett blått hjärta finns i mitten."
+          ],
+          "choices": [
+            "Vit flagga med grön stjärna.",
+            "Blå flagga med ett blått hjärta.",
+            "Vit flagga med ett blått hjärta."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Flaggan är vit, men bilden är en grön stjärna.",
+            "Hjärtat är blått, men flaggan är inte vit.",
+            null
+          ],
+          "why": "Den vita flaggan har ett blått hjärta."
+        }
+      ]
+    },
+    {
+      "id": "fairy-forest",
+      "emoji": "🧚",
+      "title": "Älvskogens borttappade lyktor",
+      "intro": "De små älvorna ska lysa upp vägen till sagofesten. Några tecknade lyktor har hamnat på fel plats.",
+      "ending": "Alla sagolyktor hänger på sina platser och älvorna kan börja sin vänskapsfest.",
+      "keepsake": {
+        "emoji": "🏮",
+        "name": "Älvornas sagolykta"
+      },
+      "stages": [
+        {
+          "title": "Spåret bland bladen",
+          "scene": "En liten karta visar den första lyktan.",
+          "clues": [
+            "Lyktan hänger i ett stort träd.",
+            "På grenen finns tre blå löv."
+          ],
+          "choices": [
+            "Lykta i stort träd med tre blå löv.",
+            "Lykta i stort träd med två blå löv.",
+            "Tre blå löv på en buske utan lykta."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Trädet och lyktan finns, men löven är två.",
+            "Löven är tre, men det finns ingen lykta i ett träd."
+          ],
+          "why": "Lyktan hänger i det stora trädet med tre blå löv."
+        },
+        {
+          "title": "Den viskande stigen",
+          "scene": "En älva beskriver vägen till nästa lykta.",
+          "clues": [
+            "Vägen går förbi en blomma.",
+            "Blomman är lila och växer vid en bäck."
+          ],
+          "choices": [
+            "Gul blomma vid bäck.",
+            "Lila blomma vid bäck längs vägen.",
+            "Lila blomma på en äng utan bäck."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Bäcken finns, men blomman är gul.",
+            null,
+            "Blomman är lila, men det finns ingen bäck."
+          ],
+          "why": "Vägen passerar en lila blomma vid bäcken."
+        },
+        {
+          "title": "Festens sista lykta",
+          "scene": "Tre lyktor väntar på att få hängas upp.",
+          "clues": [
+            "Lyktan är rund.",
+            "En liten måne finns på utsidan."
+          ],
+          "choices": [
+            "Rund lykta med en stjärna.",
+            "Fyrkantig lykta med en måne.",
+            "Rund lykta med en måne."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Lyktan är rund, men har en stjärna.",
+            "Månen finns, men lyktan är fyrkantig.",
+            null
+          ],
+          "why": "Den runda lyktan har en måne på utsidan."
+        }
+      ]
     }
   ];
   for(const story of STORIES){
