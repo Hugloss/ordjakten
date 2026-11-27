@@ -265,6 +265,7 @@ test('completed-map progress and world choices preserve word stars and the ordin
 test('extra mystery answers and read-aloud flow through real app handler without affecting scores',()=>{
   const h=harness();
   assert.equal(h.context.treasureReadAloudText('transfer'),'');
+  assert.equal(h.context.treasureReadAloudText('transferExplanation'),'');
   h.visit(h.model().clue.index);h.answer(true);h.finish();h.back();
   for(let i=0;i<2;i++)h.click({treasureMysteryReveal:''});
   h.click({treasureMysteryGuess:String(Data.MYSTERIES.forest.target)});
@@ -276,6 +277,7 @@ test('extra mystery answers and read-aloud flow through real app handler without
   assert.ok(speech.includes(task.title));
   for(const clue of task.clues)assert.ok(speech.includes(clue));
   assert.ok(!speech.includes(task.why),'read-aloud cannot reveal the right answer early');
+  assert.equal(h.context.treasureReadAloudText('transferExplanation'),'');
   h.click({treasureListen:'transfer'});
   assert.equal(h.spoken.at(-1).text,speech);
   const wrong=(task.target+1)%3;
@@ -287,7 +289,10 @@ test('extra mystery answers and read-aloud flow through real app handler without
   h.click({treasureMysteryTransfer:String(task.target)});
   assert.equal(h.model().mystery.transfer.done,true);
   assert.equal(h.focus.at(-1),'treasure-transfer-title');
-  assert.ok(h.context.treasureReadAloudText('transfer').includes(task.why));
+  assert.ok(!h.context.treasureReadAloudText('transfer').includes(task.why),
+    'listening to the case cannot read its collapsed explanation');
+  assert.equal(h.context.treasureReadAloudText('transferExplanation'),task.why,
+    'the deliberately requested explanation can be read aloud');
   assert.equal(h.model().finderTotal,Treasure.model(before.treasureHunt,'forest',treasureContent).finderTotal);
   assert.deepEqual(clone(h.context.history.starCollection),before.starCollection);
   assert.deepEqual(unrelated(h.context.history),unrelated(before));
