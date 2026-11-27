@@ -46,12 +46,13 @@
   const QuestionPlay = window.OrdjaktenQuestionPlay;
   const ActionWords = window.OrdjaktenActionWords;
   const WorldMissions = window.OrdjaktenWorldMissions;
+  const G = window.OrdjaktenGuidedReading;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !ActionWords || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || E.validateSelection(curation,bank,expressions,contexts).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length || ActionWords.validate(bank).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !G || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !ActionWords || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || E.validateSelection(curation,bank,expressions,contexts).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length || ActionWords.validate(bank).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -109,6 +110,9 @@
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
   const campRiddles=Camp.riddles(learningCatalog);
   const worldMissionContent=WorldMissions.catalog(learningCatalog,Story);
+  let guidedParts=[];
+  let guidedIndex=0;
+  let guidedActive=false;
   history.surprises=S.sanitizeCollection(history.surprises,expressions);
   history.missionProgress=Q.sanitizeProgress(history.missionProgress,expressions,history.surprises.mastered);
   history.questCounts=J.sanitizeCounts(history.questCounts);
@@ -186,6 +190,7 @@
     catch { onFinish(); }
   }
   function storyReadAloudText() {
+    if(guidedActive && guidedParts[guidedIndex])return guidedParts[guidedIndex];
     const q=game?.questions?.[game.index];
     if(!q || game?.feedback) return '';
     if(q.action)return q.word+'. '+q.action.prompt;
@@ -206,6 +211,66 @@
   }
 
 
+  // An optional, unscored aid: break the original story into readable
+  // pieces without changing question content, answers, or the timer.
+  function resetGuidedReading() {
+    guidedActive=false;
+    guidedParts=[];
+    guidedIndex=0;
+    $('guided-reading').hidden=true;
+    $('guided-start').hidden=true;
+    $('context-story').hidden=false;
+    $('expression-story').hidden=false;
+  }
+  function prepareGuidedReading(storyVisible,text) {
+    guidedParts=storyVisible && game.settings.mode==='train' ? G.partsFor(text) : [];
+    $('guided-start').hidden=guidedParts.length<2;
+  }
+  function updateGuidedReading() {
+    if(!guidedActive)return;
+    $('guided-count').textContent='📖 Del '+(guidedIndex+1)+' av '+guidedParts.length;
+    $('guided-part').textContent=guidedParts[guidedIndex];
+    $('guided-previous').disabled=guidedIndex===0;
+    $('guided-next').textContent=guidedIndex===guidedParts.length-1
+      ? 'Visa hela berättelsen →' : 'Nästa del →';
+    $('reading-stage').textContent='📖 Läs del '+(guidedIndex+1)+' av '+guidedParts.length;
+  }
+  function beginGuidedReading() {
+    if(!game || game.finished || game.feedback || guidedParts.length<2 ||
+       $('story-reveal').hidden)return;
+    stopReadAloud();
+    guidedActive=true;
+    guidedIndex=0;
+    $('guided-reading').hidden=false;
+    $('guided-start').hidden=true;
+    $('story-help').hidden=true;
+    $('story-reveal').hidden=true;
+    $('context-story').hidden=true;
+    $('expression-story').hidden=true;
+    updateGuidedReading();
+    $('guided-part').focus({preventScroll:true});
+  }
+  function endGuidedReading() {
+    if(!guidedActive)return;
+    stopReadAloud();
+    guidedActive=false;
+    $('guided-reading').hidden=true;
+    $('context-story').hidden=false;
+    $('expression-story').hidden=false;
+    $('guided-start').hidden=false;
+    $('story-help').hidden=false;
+    $('story-reveal').hidden=false;
+    $('reading-stage').textContent='📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå';
+    $('story-reveal').focus({preventScroll:true});
+  }
+  function moveGuidedReading(step) {
+    if(!guidedActive)return;
+    stopReadAloud();
+    if(step>0 && guidedIndex>=guidedParts.length-1){endGuidedReading();return;}
+    guidedIndex=Math.max(0,Math.min(guidedParts.length-1,guidedIndex+step));
+    updateGuidedReading();
+    $('guided-part').focus({preventScroll:true});
+  }
   function readHistory() {
     try { return E.sanitizeHistory(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')); }
     catch { return E.sanitizeHistory(null); }
@@ -3334,6 +3399,7 @@
   }
   function renderQuestion() {
     if(!game||game.finished)return;
+    resetGuidedReading();
     stopReadAloud();
     clearBurst();
     const q=game.questions[game.index];
@@ -3373,6 +3439,7 @@
     $('order-area').querySelector('.mission-order-hint').textContent=q.schoolInstruction?'💡 Tryck på det första arbetssteget, sedan nästa och sist det sista. Du kan ändra dig innan du svarar.':'💡 Tryck på den första händelsen, sedan den andra och sist den tredje. Du kan ändra dig innan du svarar.';
     $('expression-story').parentElement.hidden=q.kind!=='expression'||q.taskType==='order'||(game.settings.reviewOnly&&q.taskType==='sentence'&&!q.schoolInstruction);
     const storyVisible=!$('context-scene').hidden || !$('expression-story').parentElement.hidden;
+    prepareGuidedReading(storyVisible,q.taskType==='context'?q.stem:q.scene);
     if(storyVisible)$('question-prompt').textContent=q.schoolInstruction?'📖 STEG 1: LÄS UPPGIFTEN':'📖 STEG 1: LÄS BERÄTTELSEN';
     $('answer-step').querySelector('strong').textContent=storyVisible?'🎯 STEG 2: VÄLJ SVAR':'🎯 VÄLJ SVAR';
     $('reading-story').classList.toggle('is-story',storyVisible);
@@ -3531,6 +3598,7 @@
   }
   function submit(index) {
     if(!game||game.finished||game.feedback)return;
+    if(guidedActive && index!==null)return;
     stopReadAloud();
     // Check actual wall-clock time even if the interval callback was delayed.
     if(index!==null && game.deadline && Date.now()>=game.deadline){
@@ -4392,7 +4460,13 @@
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden){stopReadAloud();resetQuestionDrag();}
   });
+  $('guided-start').addEventListener('click',beginGuidedReading);
+  $('guided-previous').addEventListener('click',()=>moveGuidedReading(-1));
+  $('guided-next').addEventListener('click',()=>moveGuidedReading(1));
+  $('guided-full').addEventListener('click',endGuidedReading);
   $('story-reveal').addEventListener('click',()=>{
+    if(guidedActive)return;
+    $('guided-start').hidden=true;
     if(!game||game.finished||game.feedback)return;
     $('story-reveal').hidden=true;
     $('story-help').hidden=true;

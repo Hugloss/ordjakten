@@ -1,0 +1,22 @@
+/* Optional, focused reading for children 8–10. Supports existing themes. */
+.guided-reading{margin:15px 0 20px;padding:18px;border:3px solid var(--accent-line);
+  border-radius:18px;background:var(--surface);color:var(--text)}
+.guided-reading[hidden],.guided-start[hidden],
+#context-story[hidden],#expression-story[hidden]{display:none!important}
+.guided-count{font-size:17px;font-weight:900;color:var(--accent);margin:0 0 15px}
+.guided-part{font-size:clamp(24px,4.3vw,32px);line-height:1.55;font-weight:850;
+  color:var(--text);margin:0 0 18px;overflow-wrap:break-word}
+.guided-part:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.guided-actions{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.guided-actions button{min-width:0;min-height:50px;font-size:16px;font-weight:850;
+  padding:10px 12px;border-radius:10px}
+.guided-actions button:disabled{opacity:.45;cursor:default}
+.guided-full{display:block;margin:17px auto 0;font-size:16px;font-weight:800}
+.guided-start{display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;margin:10px 0 12px;padding:11px 17px;
+  border:2px solid var(--border);border-radius:10px;font-size:17px;font-weight:800}
+@media(max-width:560px){
+  .guided-reading{padding:16px 12px}
+  .guided-actions{grid-template-columns:1fr}
+  .guided-start{width:100%;text-align:center}
+}

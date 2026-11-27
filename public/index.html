@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="./css/clue-ladder.css">
   <link rel="stylesheet" href="./css/retention.css">
   <link rel="stylesheet" href="./css/reading-flow.css">
+  <link rel="stylesheet" href="./css/guided-reading.css">
   <title>Ordjakten – hitta ordens betydelse</title>
   <script src="./data/wordbank.js" defer></script>
   <script src="./data/curation.js" defer></script>
@@ -74,6 +75,7 @@
   <script src="./js/question-play.js" defer></script>
   <script src="./js/action-words.js" defer></script>
   <script src="./js/next-adventure.js" defer></script>
+  <script src="./js/guided-reading.js" defer></script>
   <script src="./js/app.js" defer></script>
 </head>
 <body>
@@ -457,7 +459,17 @@
           </section>
           <p id="reading-stage" class="reading-stage" role="status" aria-live="polite">📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå</p>
           <div id="reading-story" class="question-card"><span id="quest-message-label" class="quest-message-label" hidden></span><span id="question-prompt" class="eyebrow">📖 STEG 1: LÄS</span><div id="context-scene" class="context-scene" hidden><span class="context-scene-label">📖 BERÄTTELSEN</span><p id="context-story"></p></div><div id="expression-scene" class="expression-scene" hidden><span class="expression-scene-label">📖 BERÄTTELSEN</span><p id="expression-story"></p></div><h1 id="question-word">Nyfiken</h1><p id="quest-action-prompt" class="quest-action-prompt" hidden></p></div>
+          <section id="guided-reading" class="guided-reading" aria-label="Läs berättelsen i små delar" hidden>
+            <p id="guided-count" class="guided-count" aria-live="polite">Del 1 av 2</p>
+            <p id="guided-part" class="guided-part" tabindex="-1"></p>
+            <div class="guided-actions">
+              <button id="guided-previous" type="button" class="secondary-button" disabled>← Förra delen</button>
+              <button id="guided-next" type="button" class="primary-button">Nästa del →</button>
+            </div>
+            <button id="guided-full" type="button" class="text-button guided-full">Visa hela berättelsen</button>
+          </section>
           <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
+          <button id="guided-start" type="button" class="secondary-button guided-start" hidden>📖 Läs med mig – en del i taget</button>
           <button id="listen-story" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på texten</button>
           <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
           <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>

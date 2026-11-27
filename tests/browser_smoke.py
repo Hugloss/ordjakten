@@ -47,6 +47,7 @@ def make_page(browser, viewport, storage_seed=None):
     page.add_style_tag(content=(ROOT / "css/clue-ladder.css").read_text(encoding="utf-8"))
     page.add_style_tag(content=(ROOT / "css/retention.css").read_text(encoding="utf-8"))
     page.add_style_tag(content=(ROOT / "css/reading-flow.css").read_text(encoding="utf-8"))
+    page.add_style_tag(content=(ROOT / "css/guided-reading.css").read_text(encoding="utf-8"))
     # Use the production script order rather than a list that silently goes stale.
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     for name in re.findall(r'<script src="\./([^"]+)"[^>]*></script>', html):
