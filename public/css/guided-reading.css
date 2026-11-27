@@ -20,3 +20,6 @@
   .guided-actions{grid-template-columns:1fr}
   .guided-start{width:100%;text-align:center}
 }
+
+/* Only the active reading card is visible. The full story returns before answers. */
+#view-play[data-guided-reading='true'] #reading-story{display:none!important}

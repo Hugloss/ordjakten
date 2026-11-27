@@ -217,13 +217,14 @@
     guidedActive=false;
     guidedParts=[];
     guidedIndex=0;
+    $('view-play').dataset.guidedReading='false';
     $('guided-reading').hidden=true;
     $('guided-start').hidden=true;
     $('context-story').hidden=false;
     $('expression-story').hidden=false;
   }
-  function prepareGuidedReading(storyVisible,text) {
-    guidedParts=storyVisible && game.settings.mode==='train' ? G.partsFor(text) : [];
+  function prepareGuidedReading(storyVisible,text,protectedPhrase='') {
+    guidedParts=storyVisible && game.settings.mode==='train' ? G.partsFor(text,{protectedPhrase}) : [];
     $('guided-start').hidden=guidedParts.length<2;
   }
   function updateGuidedReading() {
@@ -241,6 +242,7 @@
     stopReadAloud();
     guidedActive=true;
     guidedIndex=0;
+    $('view-play').dataset.guidedReading='true';
     $('guided-reading').hidden=false;
     $('guided-start').hidden=true;
     $('story-help').hidden=true;
@@ -254,6 +256,7 @@
     if(!guidedActive)return;
     stopReadAloud();
     guidedActive=false;
+    $('view-play').dataset.guidedReading='false';
     $('guided-reading').hidden=true;
     $('context-story').hidden=false;
     $('expression-story').hidden=false;
@@ -261,7 +264,10 @@
     $('story-help').hidden=false;
     $('story-reveal').hidden=false;
     $('reading-stage').textContent='📖 1. Läs → 🎯 2. Välj → 💡 3. Förstå';
-    $('story-reveal').focus({preventScroll:true});
+    $('reading-story').setAttribute('tabindex','-1');
+    $('reading-story').focus({preventScroll:true});
+    if(typeof $('reading-story').scrollIntoView==='function')
+      $('reading-story').scrollIntoView({behavior:'auto',block:'start'});
   }
   function moveGuidedReading(step) {
     if(!guidedActive)return;
@@ -3439,7 +3445,8 @@
     $('order-area').querySelector('.mission-order-hint').textContent=q.schoolInstruction?'💡 Tryck på det första arbetssteget, sedan nästa och sist det sista. Du kan ändra dig innan du svarar.':'💡 Tryck på den första händelsen, sedan den andra och sist den tredje. Du kan ändra dig innan du svarar.';
     $('expression-story').parentElement.hidden=q.kind!=='expression'||q.taskType==='order'||(game.settings.reviewOnly&&q.taskType==='sentence'&&!q.schoolInstruction);
     const storyVisible=!$('context-scene').hidden || !$('expression-story').parentElement.hidden;
-    prepareGuidedReading(storyVisible,q.taskType==='context'?q.stem:q.scene);
+    prepareGuidedReading(storyVisible,q.taskType==='context'?q.stem:q.scene,
+      q.kind==='expression'?q.word:'');
     if(storyVisible)$('question-prompt').textContent=q.schoolInstruction?'📖 STEG 1: LÄS UPPGIFTEN':'📖 STEG 1: LÄS BERÄTTELSEN';
     $('answer-step').querySelector('strong').textContent=storyVisible?'🎯 STEG 2: VÄLJ SVAR':'🎯 VÄLJ SVAR';
     $('reading-story').classList.toggle('is-story',storyVisible);

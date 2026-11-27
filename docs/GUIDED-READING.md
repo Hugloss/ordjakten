@@ -28,3 +28,18 @@ textdelen** upp när man trycker på Lyssna. Inget spelas automatiskt.
   (kräver Playwright och Chromium).
 - Under manuell provspelning: kontrollera att barnet hittar knappen,
   kan gå bakåt, ser hela berättelsen före svaren och inte fastnar.
+
+## Barnvänlig textdelning
+
+Berättelser delas nu helst vid meningar och naturliga pauser.
+Korta meningar utan en bra paus visas som en enda helhet; knappen
+**Läs med mig** visas bara när det finns flera meningsfulla delar.
+
+Uttryck (t.ex. `för en gångs skull`) hålls alltid ihop i samma del.
+Under stegvis läsning döljs hela den vanliga frågerutan, så att den
+inte konkurrerar med texten som ska läsas. När barnet väljer
+**Visa hela berättelsen** återkommer originaltexten i fokus innan
+svaren kan visas.
+
+Automatiska innehållstester går genom alla 129 vanliga vardagsscener
+och 25 uttryck och kontrollerar att inga ord försvinner.
