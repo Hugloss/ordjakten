@@ -82,7 +82,8 @@ Samlingen finns på startsidan och i rundans resultat. Under träningen visas
 en kompakt stjärnrad. Märken och stjärnor har text som beskriver deras
 status, så att betydelsen inte beror på färg. Textytor använder befintliga
 kontrastfärger i ljust, mörkt och högkontrastläge. Korten radbryts på smala
-skärmar och respekterar minskad rörelse.
+skärmar och respekterar minskad rörelse. Under 380 CSS-pixlar får märkena
+en egen rad så att långa namn kan läsas utan olyckliga ordbrytningar.
 
 ## Kontroll före publicering
 
@@ -95,3 +96,28 @@ Prova även i den publicerade webbläsaren: fel huvudsvar följt av rätt Aha,
 guidad förklaring med kvarvarande stjärna, fortsättning av raden, omladdning,
 fullt samlingsmärke samt text vid stor förstoring. Barnprovspelning ska
 bedöma om målen känns roliga och om barnet använder förklaringarna.
+
+## Genomförd kontroll i publicerat spel
+
+PR #18 provspelades i den publicerade HTTPS-versionen:
+
+- En femfrågorsomgång fick 3 rätt i huvudfrågorna. Ett eget rätt Aha-svar
+  fyllde ytterligare en stjärna. Två fel följda av visat facit gav ingen
+  stjärna för det återstående ordet.
+- Samlingen ökade från 13 till 17 stjärnor. Stjärnblomman firades vid 15.
+  Efter omladdning fanns både totalen 17 och raden 4 av 5 kvar.
+- Fortsättningsknappen gav bara det återstående ordet, Snöig, i en ny
+  vardagssituation utan timer. Eget rätt svar fyllde raden till 5 av 5 och
+  ökade samlingen till 18. Rätt Aha efteråt gav ingen dubbel stjärna.
+- Den fyllda raden firades med **Övade vidare** och **Alla stjärnor**.
+  Texten angav **3 i första rundan · 2 i fortsatt träning**. Historiken
+  behöll samma fyra rader och det ursprungliga resultatet 3 rätt av 5.
+- Ljust och mörkt läge granskades visuellt. Vid 337 CSS-pixlar med
+  webbläsarförstoring fanns ingen horisontell överrullning. Inga egna
+  konsolfel eller varningar uppstod under flödet.
+
+Kontrollen ledde till att historikens gamla stjärnsiffra togs bort och
+märkena fick en kolumn på riktigt smala läsytor. Historiken förklarar nu
+att första svaren ligger kvar medan stjärnor kan samlas genom mer träning.
+Faktisk barnprovspelning återstår; den tekniska kontrollen mäter inte
+hur motiverande samlingen upplevs eller hur lätt barnen läser texterna.
