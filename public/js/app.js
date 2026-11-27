@@ -3626,8 +3626,10 @@
       $('feedback-reading-stage').textContent='📖 Du fick hjälp med förklaringen';
       $('reading-options').querySelectorAll('button').forEach(item=>item.disabled=true);
       const correct=readingCheck.options.find(item=>item.correct);
+      const correctLabel=correct.label.trim();
       $('reading-response').textContent='Det här var svårt. Ingen fara – vi övar mer på det senare.';
-      $('reading-why').textContent=(readingCheck.source==='meaning'?'Rätt betydelse: ':'Rätt exempel: ')+correct.label+'. '+
+      $('reading-why').textContent=(readingCheck.source==='meaning'?'Rätt betydelse: ':'Rätt exempel: ')+correctLabel+
+        (/[.!?…]$/.test(correctLabel)?' ':'. ')+
         (readingCheck.why||'Jämför med betydelsen ovan.');
       $('reading-why').hidden=false;
       $('reading-reread').hidden=true;

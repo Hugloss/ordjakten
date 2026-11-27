@@ -1,5 +1,11 @@
 # Ordjakten – ändringslogg
 
+## Efter publicering – korrekt resultattext
+
+- Stjärnletare beskriver antalet rätt av de frågor som faktiskt spelades, även i femfrågorsomgångar. Samma gräns för märket gäller som tidigare.
+- Aha-hjälpen efter två fel lägger inte till en extra punkt efter ett exempel som redan avslutas med skiljetecken. Offlinecache v66.
+- Träna, Testa dig, skolans frågeflöde och sparad historik har kontrollerats på den publicerade HTTPS-sidan. Se [genomförda kontroller och återstående provspelning](docs/FIRST-PUBLISH.md).
+
 ## Första publiceringen – kortare start och tydligare läsflöde
 
 - Snabbstarten spelar fem lätta ord utan timer. Tomma träningsmål är inaktiverade; ett sparat mål som blivit tomt återgår uttryckligen till Blanda.
