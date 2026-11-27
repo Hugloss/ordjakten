@@ -1,11 +1,9 @@
 /* Ordjakten: browser + Node-compatible, dependency-free quiz engine. */
 (function (root, factory) {
-  const svenska = typeof module !== 'undefined' && module.exports ?
-    require('./banks/svenska') : root.OrdjaktenSvenskaBank;
-  const api = factory(svenska);
+  const api = factory();
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.OrdjaktenEngine = api;
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (SvenskaBank) {
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
   const VALID_LEVELS = ['easy', 'medium', 'hard', 'exam'];
   const VALID_COUNTS = [5, 10, 15, 20, 25];
@@ -253,13 +251,8 @@
       if(!mission)throw new Error('Saknar skrivna händelser: '+entry.id);
       return {...base,taskType:type,options:[],steps:shuffle(mission.order.map((label,key)=>({label,key})),random),correctOrder:mission.order.slice()};
     }
-    // The Swedish bank adapter now owns the canonical meaning alternatives.
-    // Convert back to the legacy display shape until the remaining modes migrate.
-    const authored=SvenskaBank.questionFromEntry(entry);
-    const original=authored.responseSpec.options.map(option=>({label:option.label,
-      correct:option.id===authored.assessmentSpec.correctOptionId}));
-    const correct=original.filter(option=>option.correct===true);
-    const incorrect=shuffle(original.filter(option=>option.correct!==true),random);
+    const correct=entry.options.filter(option=>option.correct===true);
+    const incorrect=shuffle(entry.options.filter(option=>option.correct!==true),random);
     if(correct.length!==1||incorrect.length!==4)throw new Error('Uttryck med ogiltiga svar: '+entry.id);
     const options=shuffle(correct.concat(incorrect.slice(0,difficulty==='exam'?4:3)).map(option=>({label:option.label,correct:option.correct})),random);
     return {...base,taskType:'meaning',options};
