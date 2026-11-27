@@ -51,13 +51,16 @@
   const Treasure = window.OrdjaktenTreasure;
   const TreasureData = window.OrdjaktenTreasureData;
   const TreasureView = window.OrdjaktenTreasureView;
+  const PortalsData = window.OrdjaktenPortalsData;
+  const Portals = window.OrdjaktenPortals;
+  const PortalsView = window.OrdjaktenPortalsView;
   const G = window.OrdjaktenGuidedReading;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if(!Stars||!StarView||!Treasure||!TreasureData||!TreasureView){
+  if(!Stars||!StarView||!Treasure||!TreasureData||!TreasureView||!PortalsData||!Portals||!PortalsView){
     $('global-error').textContent='Kunde inte läsa in stjärnsamlingen. Försök ladda om sidan.';
     $('global-error').hidden=false;return;
   }
@@ -111,6 +114,7 @@
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
   let treasureWorld=settings.adventure,treasureStarReward=null;
+  let portalId=null;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
   let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null,suppressQuestionClick=false;
@@ -126,6 +130,12 @@
     $('global-error').hidden=false;return;
   }
   history.treasureHunt=Treasure.sanitize(history.treasureHunt,treasureContent);
+  const portalContent=Portals.catalog(PortalsData);
+  if(portalContent.errors.length){
+    $('global-error').textContent='Kunde inte läsa in Upptäckarklubben. Försök ladda om sidan.';
+    $('global-error').hidden=false;return;
+  }
+  history.discoveryPortals=Portals.sanitize(history.discoveryPortals,portalContent);
   let guidedParts=[];
   let guidedIndex=0;
   let guidedActive=false;
@@ -170,7 +180,8 @@
     'treasure-listen-mystery':'🔊 Lyssna på mysteriet',
     'treasure-listen-arrival':'🔊 Lyssna på ledtråden och platsen',
     'treasure-listen-task':'🔊 Lyssna på uppgiften',
-    'treasure-listen-explanation':'🔊 Lyssna på förklaringen'
+    'treasure-listen-explanation':'🔊 Lyssna på förklaringen',
+    'portal-listen':'🔊 Lyssna på scenen och spåren'
   };
   let speakingButton = null;
   let currentUtterance = null;
@@ -693,7 +704,7 @@
   function show(name) {
     if(name!=='play') stopReadAloud();
     screen = name;
-    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector','concepts','journey','camp','world-mission','treasure']) $('view-'+view).hidden = view!==name;
+    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector','concepts','journey','camp','world-mission','treasure','portals']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
       const chosen=btn.dataset.nav===(name==='play'||name==='results'?'home':name);
       if(chosen)btn.setAttribute('aria-current','page'); else btn.removeAttribute('aria-current');
@@ -2342,6 +2353,56 @@
     const mark=earned&&journeyKeepsake?'mark-'+journeyKeepsake.id+'-'+journeyKeepsake.index:null;
     openCampWithMark(mark);
   }
+  // Independent original adventures, not a new scored word quiz. Only
+  // bounded current-step metadata joins the existing local history export.
+  function portalModel(){return Portals.model(history.discoveryPortals,portalId,portalContent);}
+  function renderPortals(focus=null){
+    PortalsView.render($('portals-content'),portalModel(),{canReadAloud});
+    if(focus)$(focus)?.focus({preventScroll:true});
+  }
+  function openPortals(){
+    if(!['home','learning','results','camp','portals'].includes(screen))return;
+    portalId=null;
+    goNav('portals');renderPortals('portal-title');
+  }
+  function portalSpeakText(){
+    const stage=portalModel().current?.stage;
+    if(!stage)return '';
+    return [stage.title,stage.scene,...stage.clues,
+      stage.solved?'Du hittade lösningen. '+stage.feedback:
+        stage.choices.filter(row=>!row.tried).map((row,i)=>'Alternativ '+(i+1)+': '+row.label).join('. '),
+      !stage.solved?stage.feedback:'',
+      stage.hint?'Läs första spåret och hitta de svar där det stämmer. Läs sedan det andra spåret. Ett svar måste passa båda.':''
+    ].filter(Boolean).join('. ');
+  }
+  function updatePortal(next,focus){
+    if(next===history.discoveryPortals)return;
+    stopReadAloud();history.discoveryPortals=next;saveHistory();renderPortals(focus);
+  }
+  function handlePortalClick(event){
+    const host=$('portals-content'),button=event.target.closest('button');
+    if(screen!=='portals'||!button||button.disabled||!host.contains(button))return;
+    const data=button.dataset;
+    if(Object.hasOwn(data,'portalBack')){portalId=null;stopReadAloud();renderPortals('portal-title');return;}
+    if(Object.hasOwn(data,'portalOpen')){
+      if(!Object.hasOwn(portalContent.stories,data.portalOpen))return;
+      portalId=data.portalOpen;stopReadAloud();renderPortals('portal-title');return;
+    }
+    if(!portalId)return;
+    if(Object.hasOwn(data,'portalListen')){speakReadAloud(portalSpeakText(),button);return;}
+    if(Object.hasOwn(data,'portalAnswer')){
+      const answer=Number(data.portalAnswer),next=Portals.choose(history.discoveryPortals,portalId,answer,portalContent);
+      const updated=next!==history.discoveryPortals?Portals.model(next,portalId,portalContent).current:null;
+      updatePortal(next,updated?.stage?.feedback&&!updated.stage.solved?'portal-feedback':'portal-stage-title');
+    }else if(Object.hasOwn(data,'portalHint'))
+      updatePortal(Portals.hint(history.discoveryPortals,portalId,portalContent),'portal-stage-title');
+    else if(Object.hasOwn(data,'portalNext')){
+      const next=Portals.next(history.discoveryPortals,portalId,portalContent);
+      const updated=next!==history.discoveryPortals?Portals.model(next,portalId,portalContent).current:null;
+      updatePortal(next,updated?.done?'portal-title':'portal-stage-title');
+    }
+  }
+
   // Treasure navigation has its own finite findings. Word stars do not replace
   // the ordinary star row or manufacture a scored/adaptive learning result.
   function treasureModel(){return Treasure.model(history.treasureHunt,treasureWorld,treasureContent);}
@@ -3171,6 +3232,7 @@
   function renderSetup() {
     renderStarCollection('home');
     $('quick-treasure').textContent=history.treasureHunt.active?'🗺️ Fortsätt på skattkartan':'🗺️ Följ skattkartan';
+    $('quick-portals').textContent='✨ Upptäckarklubben · '+Portals.model(history.discoveryPortals,null,portalContent).doneCount+' av 12 äventyr klara';
     setPressed('[data-mode]','mode',settings.mode);
     setPressed('[data-topic]','topic',settings.topic);
     setPressed('[data-expression-task]','expressionTask',settings.expressionTask);
@@ -4346,6 +4408,7 @@
     const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,contextProgress:history.contextProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,adventureChallenge:history.adventureChallenge,storyProgress:history.storyProgress,campLayout:history.campLayout,campStories:history.campStories,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     data.starCollection=history.starCollection;
     data.treasureHunt=history.treasureHunt;
+    data.discoveryPortals=history.discoveryPortals;
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -4414,6 +4477,8 @@
   $('camp-chapters').addEventListener('click',event=>{if(screen==='camp')handleMissionLink(event);});
   $('camp-mission').addEventListener('click',event=>{if(screen==='camp')handleMissionLink(event);});
   $('quick-treasure').addEventListener('click',openTreasureHunt);
+  $('quick-portals').addEventListener('click',openPortals);
+  $('portals-content').addEventListener('click',handlePortalClick);
   $('treasure-content').addEventListener('click',handleTreasureClick);
   $('treasure-content').addEventListener('change',event=>{
     if(event.target.matches('select[data-treasure-world]'))switchTreasureWorld(event.target.value);
@@ -4919,10 +4984,11 @@
   $('more-words').addEventListener('click',()=>{wordListLimit+=24;renderWordList();});
   $('export-history').addEventListener('click',exportHistory);
   $('clear-history').addEventListener('click',()=>{
-    if(!window.confirm('Vill du radera sparade resultat, stjärnsamlingen, skattkartans fynd, repetitionsplan, öppnade luckor, upptäckter, din äventyrsplats och din sagobok? Detta går inte att ångra.'))return;
+    if(!window.confirm('Vill du radera sparade resultat, stjärnsamlingen, skattkartans fynd, Upptäckarklubbens äventyr, repetitionsplan, öppnade luckor, upptäckter, din äventyrsplats och din sagobok? Detta går inte att ångra.'))return;
     for(const key of Object.keys(journeyUsage))delete journeyUsage[key];journeyWorkshopSeen.clear();
     history.starCollection=Stars.sanitize(null);renderStarCollection('home');
     history.treasureHunt=Treasure.sanitize(null,treasureContent);treasureStarReward=null;
+    history.discoveryPortals=Portals.sanitize(null,portalContent);portalId=null;
     history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.contextProgress=D.sanitizeContextProgress(null,contexts);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());history.campStories=[];campTheatre=null;campSelected=null;campTarget=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;settings.practiceGoal='mixed';saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   saveHistory();createAdventureChoices();renderSetup();show('home');
