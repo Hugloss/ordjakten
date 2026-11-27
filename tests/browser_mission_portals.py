@@ -53,7 +53,12 @@ def one_story(page):
         page.locator("[data-portal-hint]").click()
         assert "Läs det första spåret" in page.locator(".portal-hint").inner_text()
         assert stored(page)["discoveryPortals"]["detective"]["hint"] is True
-        page.locator(f'[data-portal-answer="{stage["answer"]}"]').click()
+        correct=page.locator(f'[data-portal-answer="{stage["answer"]}"]')
+        if number==1:
+            correct.focus()
+            page.keyboard.press("Enter")
+        else:
+            correct.click()
         assert page.locator(".portal-choice").count()==0
         assert stage["why"] in page.locator(".portal-success").inner_text()
         assert page.locator("[data-portal-next]").count()==1
@@ -94,6 +99,14 @@ def restore(browser,viewport,saved,story):
     assert page.locator('[data-portal-answer="1"]').count()==1
     assert page.locator('[data-portal-answer="1"]').is_disabled()
     no_overflow(page)
+    if viewport["width"]==320:
+        page.on("dialog", lambda dialog: dialog.accept())
+        page.locator('[data-nav="history"]').click()
+        page.locator("#clear-history").click()
+        assert stored(page)["discoveryPortals"]=={}
+        page.locator('[data-nav="home"]').click()
+        page.locator("#quick-portals").click()
+        assert page.locator(".portal-card-done").count()==0
     assert not errors,errors
     page.close()
 
