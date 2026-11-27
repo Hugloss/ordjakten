@@ -205,3 +205,25 @@ test('collecting all twelve map badges celebrates the actual finish and keeps re
   assert.ok(!text(host).includes('+1 sakletarpoäng'));
   assert.ok(!text(host).includes('SECRET'));
 });
+
+test('the treasure trail shows four legible steps without revealing future places',()=>{
+  const first=render(map());
+  const trail=descendants(first).find(node=>node.className==='treasure-journey');
+  assert.equal(trail.attributes['aria-label'],'Din skattstig');
+  const steps=descendants(trail).filter(node=>node.tag==='li');
+  assert.equal(steps.length,4);
+  assert.match(text(steps[0]),/Steg 1: Nästa ledtråd/);
+  assert.equal(steps[0].attributes['aria-current'],'step');
+  assert.match(text(steps[1]),/Inte hittad än/);
+  assert.ok(!text(trail).includes('SECRET'));
+  const partial=map();partial.count=2;
+  const progress=render(partial),progressSteps=descendants(progress).filter(node=>node.className.startsWith('treasure-journey-step'));
+  assert.match(text(progressSteps[0]),/Skatt hittad/);
+  assert.match(text(progressSteps[1]),/Skatt hittad/);
+  assert.equal(progressSteps[2].attributes['aria-current'],'step');
+  const complete=map();complete.count=4;complete.complete=true;complete.clue=null;
+  const finished=render(complete);
+  const finishedSteps=descendants(finished).filter(node=>node.className.startsWith('treasure-journey-step'));
+  assert.equal(finishedSteps.filter(node=>node.attributes['aria-current']==='step').length,0);
+  assert.equal(finishedSteps.filter(node=>text(node).includes('Skatt hittad')).length,4);
+});
