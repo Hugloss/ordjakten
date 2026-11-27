@@ -27,7 +27,7 @@ Nya ord ska få nytt unikt `sv-####`-ID, nivå (`easy`, `medium`, `hard`, `exper
 
 `extensionWords` och `extensionExpressions` i `public/data/curation.js`
 markerar innehåll som kräver ett aktivt val av fördjupning. Det vanliga
-urvalet omfattar 101 ord och 59 uttryck, inklusive alla 14 skolord.
+urvalet omfattar 101 ord och 65 uttryck, inklusive alla 14 skolord.
 `hardWords` låter den svåra nivån också använda 25 användbara ord om
 känslor och samspel. Svårare träning behöver inte betyda ovanligare ord.
 
