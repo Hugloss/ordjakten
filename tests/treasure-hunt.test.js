@@ -248,3 +248,62 @@ test('mystery answers cannot be changed while an ordinary visit is active',()=>{
   assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
   assert.equal(Treasure.mysteryGuess(state,'forest',0,catalog),state);
 });
+
+test('evidence choices use authored place details in every world, not invented reasons',()=>{
+  for(const id of A.WORLD_IDS){
+    let state=fresh(),index=Data.MYSTERIES[id].target;
+    // The first normal map find unlocks the mystery, regardless of its target.
+    state=back(finish(choose(visit(state,2,id))));
+    for(let i=0;i<2;i++)state=Treasure.mysteryReveal(state,id,catalog);
+    state=Treasure.mysteryGuess(state,id,index,catalog);
+    const proof=view(state,id).mystery.proof;
+    assert.equal(proof.choices.length,3,id);
+    const ids=proof.choices.map(choice=>choice.id);
+    assert.equal(new Set(ids).size,3,id);
+    assert.ok(ids.includes(index),id);
+    for(const choice of proof.choices){
+      assert.equal(choice.label,catalog.worlds[id].places[choice.id].lookFor.join(' och '));
+    }
+    assert.equal(proof.done,false,id);
+  }
+});
+
+test('proof explanation is optional, preserves past mystery solves and persists without extra finder points',()=>{
+  let state=back(finish(choose(visit(fresh(),2))));
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=Treasure.mysteryGuess(state,'forest',2,catalog);
+  const previous=JSON.parse(JSON.stringify(state));
+  // Older persisted mystery records have no evidence fields.
+  delete previous.worlds.forest.mystery.proofWrong;
+  delete previous.worlds.forest.mystery.proofDone;
+  delete previous.worlds.forest.mystery.proofLast;
+  state=reload(previous);
+  assert.equal(view(state).mystery.solved,true);
+  assert.equal(view(state).mystery.proof.done,false);
+  const before=view(state).finderTotal;
+  const wrong=view(state).mystery.proof.choices.find(choice=>choice.id!==2).id;
+  const missing=[0,1,2,3].find(index=>!view(state).mystery.proof.choices.some(choice=>choice.id===index));
+  assert.equal(Treasure.mysteryProof(state,'forest',missing,catalog),state,'unoffered option ignored');
+  state=Treasure.mysteryProof(state,'forest',wrong,catalog);
+  assert.deepEqual(view(state).mystery.proof.wrong,[wrong]);
+  assert.equal(view(state).mystery.proof.done,false);
+  assert.ok(view(state).mystery.proof.feedback);
+  assert.equal(Treasure.mysteryProof(state,'forest',wrong,catalog),state,'wrong choice cannot repeat');
+  state=reload(state);
+  state=Treasure.mysteryProof(state,'forest',2,catalog);
+  assert.equal(view(state).mystery.proof.done,true);
+  assert.equal(view(state).finderTotal,before);
+  assert.equal(view(state).worlds.find(world=>world.id==='forest').mysteryProofDone,true);
+  assert.deepEqual(view(reload(state)).mystery.proof,view(state).mystery.proof);
+  assert.equal(Treasure.mysteryProof(state,'forest',wrong,catalog),state,'cannot farm completed proof');
+});
+
+test('proof cannot be attempted before locating the mystery or during another visit',()=>{
+  let state=fresh();
+  assert.equal(Treasure.mysteryProof(state,'forest',2,catalog),state);
+  state=visit(state,2);
+  assert.equal(Treasure.mysteryProof(state,'forest',2,catalog),state);
+  state=back(finish(choose(state)));
+  assert.equal(Treasure.mysteryProof(state,'forest',2,catalog),state,'need to find the mystery location first');
+});

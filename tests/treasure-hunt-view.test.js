@@ -262,3 +262,25 @@ test('mystery panel reveals clues gradually, never renders future clues or corre
   assert.match(text(host),/Mysteriet löst/);
   assert.match(text(host),/Ugglans träd har böcker/);
 });
+
+test('the mystery proof is a readable non-scoring choice with disabled previous wrong guesses',()=>{
+  const m=map();
+  m.mystery={available:true,title:'Ugglans försvunna bok',intro:'Var är boken?',
+    revealed:3,clues:['En bok saknas.','Boken är i ett träd.','Ugglan har fler böcker.'],
+    attempted:[],solved:true,last:2,feedback:'Ugglan har böcker i trädet.',
+    proof:{done:false,wrong:[0],feedback:'Vid skogsbrynet finns en skylt, inte böcker.',
+      choices:[{id:0,label:'en skylt och en fågel'},{id:2,label:'ett träd och en uggla med böcker'},
+        {id:1,label:'svampar och en sten'}]}};
+  let host=render(m,{canReadAloud:true});
+  const choices=byData(host,'treasureMysteryProof');
+  assert.equal(choices.length,3);
+  assert.equal(choices.find(button=>button.dataset.treasureMysteryProof==='0').disabled,true);
+  assert.match(text(host),/Vilka två detaljer/);
+  assert.match(text(host),/Vid skogsbrynet finns en skylt/);
+  assert.equal(byData(host,'treasureMysteryGuess').length,0);
+  assert.ok(!text(host).includes('SECRET'));
+  m.mystery.proof={...m.mystery.proof,done:true,feedback:m.mystery.feedback};
+  host=render(m);
+  assert.equal(byData(host,'treasureMysteryProof').length,0);
+  assert.match(text(host),/Du hittade de två detaljer som passar/);
+});

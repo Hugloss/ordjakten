@@ -139,3 +139,13 @@ html[data-contrast='high'] .treasure-place,html[data-contrast='high'] .treasure-
 @media(max-width:440px){.treasure-mystery-choices{grid-template-columns:minmax(0,1fr)}.treasure-mystery{padding:.85rem}}
 @media(hover:hover) and (pointer:fine){.treasure-mystery-choice:not(:disabled):hover{border-color:var(--accent-line)}}
 @media(forced-colors:active){.treasure-mystery,.treasure-mystery-clue,.treasure-mystery-choice,.treasure-mystery-success{border-color:CanvasText}}
+
+/* Optional evidence exercise after solving a mystery. Every cue has both words and shape. */
+.treasure-proof{margin-top:1rem;padding:1rem;border:2px solid var(--border);border-radius:1rem;background:var(--surface-2);color:var(--text)}
+.treasure-proof h3{margin:0 0 .55rem}
+.treasure-proof-choices{display:grid;gap:.65rem;margin:.85rem 0}
+.treasure-proof-choice{min-height:3.4rem;width:100%;padding:.8rem 1rem;border:2px solid var(--border);border-radius:.8rem;background:var(--surface);color:var(--text);text-align:left;line-height:1.6;font-weight:750;white-space:normal;overflow-wrap:anywhere}
+.treasure-proof-choice.treasure-mystery-tried:disabled{opacity:1;color:var(--text);background:var(--surface-2);border-style:dashed}
+.treasure-proof-done{border:2px solid var(--green-border);border-radius:.8rem;padding:.8rem;background:var(--green-bg);color:var(--green-text);font-weight:850}
+@media(hover:hover) and (pointer:fine){.treasure-proof-choice:not(:disabled):hover{border-color:var(--accent-line)}}
+@media(forced-colors:active){.treasure-proof,.treasure-proof-choice,.treasure-proof-done{border-color:CanvasText}}
