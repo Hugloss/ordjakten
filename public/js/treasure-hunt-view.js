@@ -23,7 +23,7 @@
   function speech(el,kind,enabled,serial=null){
     if(!enabled)return [];
     const id='treasure-listen-'+kind;
-    const labels={clue:'🔊 Lyssna på ledtråden och platserna',mystery:'🔊 Lyssna på mysteriet',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen'};
+    const labels={clue:'🔊 Lyssna på ledtråden och platserna',mystery:'🔊 Lyssna på mysteriet',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen',transfer:'🔊 Lyssna på det nya fallet'};
     const button=action(el,labels[kind], 'treasureListen',kind,serial);
     button.id=id;button.setAttribute('aria-pressed','false');
     const status=el('p','treasure-speech-status');status.id=id+'-status';
@@ -102,7 +102,7 @@
         el('span','treasure-badge-state',collected?'✓ Kartmärke samlat':world.count?'Fortsätt leta':'Börja leta'),
         el('span','treasure-badge-count',`${world.count} av ${world.total} skatter`),
         el('span','treasure-badge-count',`⭐ ${world.starCount} av ${world.total} ordstjärnor`),
-        el('span','treasure-badge-count',world.mysteryProofDone?'🧠 Spårbevis klart':
+        el('span','treasure-badge-count',world.mysteryTransferDone?'🧠 Nya fallet löst':world.mysteryProofDone?'🧠 Spårbevis klart':
           world.mysterySolved?'🔍 Platsen hittad · spårbevis kvar':'🔍 Mysterium kvar'));
       if(world.id===current)button.append(el('span','treasure-badge-current','Den här kartan'));
       row.append(button);list.append(row);
@@ -229,6 +229,44 @@
           }
         }
         box.append(proof);
+      }
+      if(story.proof?.done&&story.transfer){
+        const next=story.transfer,transfer=el('section','treasure-transfer');
+        transfer.append(el('h3','','🔎 Nytt fall: '+next.title),
+          el('p','treasure-transfer-intro',next.intro),
+          el('p','','Läs båda ledtrådarna. Vilket svar passar dem tillsammans?'));
+        const clues=el('ol','treasure-mystery-clues');
+        for(const [index,clue] of next.clues.entries())
+          clues.append(el('li','treasure-mystery-clue','Spår '+(index+1)+': '+clue));
+        transfer.append(clues,...speech(el,'transfer',options.canReadAloud));
+        if(next.done){
+          transfer.append(el('p','treasure-mystery-success','✓ Du hittade lösningen till det nya fallet!'),
+            el('p','','Kan du säga varför båda spåren passar? Berätta gärna med egna ord.'));
+          const help=el('details','treasure-transfer-why');
+          help.append(el('summary','','Visa förklaringen om du vill'),
+            el('p','treasure-mystery-feedback',next.feedback||''));
+          transfer.append(help);
+        }else{
+          const choices=el('div','treasure-proof-choices');
+          choices.setAttribute('role','group');
+          choices.setAttribute('aria-label','Välj det svar som passar båda spåren');
+          for(const choice of next.choices){
+            const tried=next.wrong.includes(choice.id);
+            const button=action(el,choice.label+(tried?' – redan provat':''),'treasureMysteryTransfer',choice.id);
+            button.className='treasure-proof-choice'+(tried?' treasure-mystery-tried':'');
+            button.disabled=tried;
+            choices.append(button);
+          }
+          transfer.append(choices);
+          if(next.feedback){
+            const feedback=el('p','treasure-mystery-feedback');
+            feedback.setAttribute('role','status');
+            feedback.textContent='Titta på båda spåren. '+next.feedback+' Prova ett annat svar.';
+            transfer.append(feedback);
+          }
+        }
+        transfer.append(el('p','treasure-mystery-note','Ett frivilligt nytt fall. Du får försöka igen i din egen takt. Inga skatter eller stjärnor påverkas.'));
+        box.append(transfer);
       }
     }else if(story.revealed<3){
       box.append(el('p','','Du har '+story.revealed+' av 3 ledtrådar. Läs nästa för att få fler spår.'));
