@@ -239,3 +239,26 @@ test('secret letter hides unseen lines and reveals finished message',()=>{
  m.letter={count:4,total:4,fragments:['Ett brev.','En ledtråd.','En plats.','Alla hittade!']};
  box=find(render(m));assert.match(text(box),/Hela brevet är hittat/);assert.ok(!text(box).includes('fortfarande gömd'));
 });
+
+test('mystery panel reveals clues gradually, never renders future clues or correct answer',()=>{
+  const m=map();m.mystery={available:false,title:'Försvunnen bok',intro:'Var finns boken?',revealed:0,clues:[],attempted:[],solved:false,last:null,feedback:null};
+  let host=render(m,{canReadAloud:true});
+  assert.match(text(host),/Ett mysterium väntar/);
+  assert.equal(byData(host,'treasureMysteryReveal').length,0);
+  m.mystery={...m.mystery,available:true,revealed:1,clues:['En fågel såg en bok.']};
+  host=render(m,{canReadAloud:true});
+  assert.match(text(host),/En fågel såg en bok/);
+  assert.equal(byData(host,'treasureMysteryReveal').length,1);
+  assert.equal(byData(host,'treasureMysteryGuess').length,0);
+  assert.equal(byData(host,'treasureListen').filter(node=>node.dataset.treasureListen==='mystery').length,1);
+  m.mystery={...m.mystery,revealed:3,clues:['En fågel såg en bok.','Den flög till ett träd.','Det fanns fler böcker.'],attempted:[0],last:0,feedback:'På skylten ligger ingen bok.'};
+  host=render(m);
+  const choices=byData(host,'treasureMysteryGuess');
+  assert.equal(choices.length,4);assert.equal(choices[0].disabled,true);
+  assert.match(text(host),/På skylten ligger ingen bok/);
+  m.mystery={...m.mystery,solved:true,last:2,feedback:'Ugglans träd har böcker.'};
+  host=render(m);
+  assert.equal(byData(host,'treasureMysteryGuess').length,0);
+  assert.match(text(host),/Mysteriet löst/);
+  assert.match(text(host),/Ugglans träd har böcker/);
+});

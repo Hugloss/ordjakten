@@ -167,6 +167,7 @@
     'listen-explanation':'🔊 Lyssna på förklaringen',
     'listen-reading-check':'🔊 Lyssna på frågan och svaren',
     'treasure-listen-clue':'🔊 Lyssna på ledtråden och platserna',
+    'treasure-listen-mystery':'🔊 Lyssna på mysteriet',
     'treasure-listen-arrival':'🔊 Lyssna på ledtråden och platsen',
     'treasure-listen-task':'🔊 Lyssna på uppgiften',
     'treasure-listen-explanation':'🔊 Lyssna på förklaringen'
@@ -2412,6 +2413,18 @@
     stopReadAloud();history.treasureHunt=next;
     saveHistory();renderTreasureHunt('treasure-hint');
   }
+  function revealTreasureMystery(){
+    if(screen!=='treasure')return;
+    const next=Treasure.mysteryReveal(history.treasureHunt,treasureWorld,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
+  }
+  function guessTreasureMystery(index){
+    if(screen!=='treasure')return;
+    const next=Treasure.mysteryGuess(history.treasureHunt,treasureWorld,index,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
+  }
   function switchTreasureWorld(id){
     if(screen!=='treasure'||!A.isWorld(id)||treasureModel().phase!=='map')return;
     stopReadAloud();treasureWorld=id;treasureStarReward=null;
@@ -2425,6 +2438,12 @@
       return [clue?.text,clue?.hintShown?clue.hint:'',
         clue?.hintShown?'Leta efter båda: '+clue.lookFor.join('. '):'','Platserna på kartan:',
         ...model.places.map(place=>place.name+'. '+place.description)].filter(Boolean).join(' ');
+    }
+    if(kind==='mystery'&&model.phase==='map'&&model.mystery?.available){
+      const story=model.mystery;
+      return [story.title,story.intro,...story.clues,
+        story.revealed===3&&!story.solved?'Välj en plats: '+model.places.map(place=>place.name+'. '+place.description).join('. '):'',
+        story.feedback||''].filter(Boolean).join('. ');
     }
     if(kind==='arrival'&&visit&&!visit.matched&&model.clue){
       const place=model.places.find(row=>row.index===visit.index);
@@ -2455,6 +2474,8 @@
     else if(Object.hasOwn(data,'treasureFinish'))finishTreasureVisit(serial);
     else if(Object.hasOwn(data,'treasureBack'))backToTreasureMap(serial);
     else if(Object.hasOwn(data,'treasureHint'))showTreasureHint();
+    else if(Object.hasOwn(data,'treasureMysteryReveal'))revealTreasureMystery();
+    else if(Object.hasOwn(data,'treasureMysteryGuess'))guessTreasureMystery(Number(data.treasureMysteryGuess));
   }
   function missionButton(story,index,label){
     const button=element('button','primary-button full-button',label);

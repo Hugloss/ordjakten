@@ -14,6 +14,7 @@
   const text=value=>typeof value==='string'&&value.trim().length>0&&value.length<=700;
   const placeIndex=value=>Number.isInteger(value)&&value>=0&&value<4;
   const emptyWorld=()=>({found:[],visited:[],smallFinds:[],hints:[]});
+  const freshMystery=()=>({revealed:1,attempted:[],last:null,solved:false});
   const empty=()=>({version:1,serial:0,worlds:{},active:null});
   const indexes=value=>Array.isArray(value)?[...new Set(value.filter(placeIndex))].sort((a,b)=>a-b):[];
   const knownWorld=(content,id)=>typeof id==='string'&&object(content?.worlds)&&Object.hasOwn(content.worlds,id);
@@ -23,7 +24,7 @@
     const worlds={},errors=[];
     for(const id of adventures.WORLD_IDS){
       const world=adventures.world(id),rows=data?.DATA?.[id],chapters=story?.DATA?.[id];
-      const smallFind=data?.SMALL_FINDS?.[id],letter=data?.LETTER_FRAGMENTS?.[id];
+      const smallFind=data?.SMALL_FINDS?.[id],letter=data?.LETTER_FRAGMENTS?.[id],mystery=data?.MYSTERIES?.[id];
       if(!Array.isArray(rows)||rows.length!==4||!Array.isArray(chapters)||chapters.length!==4||
         world.stops.length!==4||!text(smallFind?.name)||!text(smallFind?.emoji)||
         !Array.isArray(letter)||letter.length!==4||letter.some(part=>!text(part)||part.length>120)){
@@ -49,14 +50,30 @@
           task:{...task,options:task.options.map(option=>({...option}))}});
       });
       if(places.length!==4)continue;
+      if(!object(mystery)||!text(mystery.title)||!text(mystery.intro)||!text(mystery.why)||
+        !placeIndex(mystery.target)||!Array.isArray(mystery.clues)||mystery.clues.length!==3||
+        mystery.clues.some(clue=>!text(clue)||clue.length>140)||
+        !Array.isArray(mystery.wrong)||mystery.wrong.length!==4||
+        mystery.wrong.some((answer,index)=>index===mystery.target?answer!==null:!text(answer)||answer.length>200)){
+        errors.push(id+':mystery');continue;
+      }
       if(new Set(places.map(place=>place.clue)).size!==4||new Set(places.map(place=>place.description)).size!==4){
         errors.push(id+':duplicates');continue;
       }
-      worlds[id]={id,title:world.title,emoji:world.emoji,places,letter:[...letter],smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
+      worlds[id]={id,title:world.title,emoji:world.emoji,places,letter:[...letter],mystery:{...mystery,clues:[...mystery.clues],wrong:[...mystery.wrong]},smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
     }
     return {worlds,errors};
   }
 
+  function safeMystery(value,target){
+    if(!object(value)||!Number.isInteger(value.revealed)||value.revealed<1||value.revealed>3||
+      typeof value.solved!=='boolean')return null;
+    const attempted=indexes(value.attempted).filter(index=>index!==target);
+    const last=value.last===null?null:placeIndex(value.last)?value.last:-1;
+    if(last===-1||(value.solved&&(value.revealed!==3||last!==target))||
+      (!value.solved&&last!==null&&!attempted.includes(last)))return null;
+    return {revealed:value.revealed,attempted,last,solved:value.solved};
+  }
   function sanitize(raw,content){
     const clean=empty();
     if(!object(raw)||raw.version!==1)return clean;
@@ -71,8 +88,9 @@
       }
       const smallFinds=indexes(source.smallFinds).filter(index=>visited.includes(index));
       const hints=indexes(source.hints);
+      const mystery=found.length?safeMystery(source.mystery,content.worlds[id].mystery.target):null;
       if(found.length||visited.length||smallFinds.length||hints.length)
-        clean.worlds[id]={found,visited,smallFinds,hints};
+        clean.worlds[id]={found,visited,smallFinds,hints,...(mystery?{mystery}:{})};
     }
     const active=raw.active;
     if(!object(active)||!knownWorld(content,active.world)||!clean.serial||active.serial!==clean.serial||
@@ -136,12 +154,21 @@
         reward:active.reward?{...active.reward,...item}:null,activityKey:'treasure:'+id+':'+place.index};
     }
     const worlds=Object.values(content.worlds).map(row=>({id:row.id,title:row.title,emoji:row.emoji,
-      count:state.worlds[row.id]?.found.length||0,total:4}));
+      count:state.worlds[row.id]?.found.length||0,total:4,mysterySolved:state.worlds[row.id]?.mystery?.solved===true}));
+    const mysteryProgress=progress.mystery||freshMystery(),mysteryContent=world.mystery;
+    const mysteryAvailable=progress.found.length>0;
+    const mystery={available:mysteryAvailable,title:mysteryContent.title,intro:mysteryContent.intro,
+      revealed:mysteryAvailable?mysteryProgress.revealed:0,
+      clues:mysteryAvailable?mysteryContent.clues.slice(0,mysteryProgress.revealed):[],
+      attempted:mysteryAvailable?[...mysteryProgress.attempted]:[],
+      solved:mysteryAvailable&&mysteryProgress.solved,last:mysteryAvailable?mysteryProgress.last:null,
+      feedback:mysteryAvailable&&mysteryProgress.last!==null?
+        (mysteryProgress.solved?mysteryContent.why:mysteryContent.wrong[mysteryProgress.last]):null};
     return {id,title:world.title,emoji:world.emoji,phase:active?.stage||'map',count:progress.found.length,total:4,
       complete:progress.found.length===4,finderTotal:worlds.reduce((sum,row)=>sum+row.count,0),worlds,
       clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,
         lookFor:[...cluePlace.lookFor],hintShown:progress.hints.includes(target)}:null,
-      places,letter:{count:progress.found.length,total:4,fragments:world.letter.slice(0,progress.found.length)},
+      places,mystery,letter:{count:progress.found.length,total:4,fragments:world.letter.slice(0,progress.found.length)},
       collection:progress.found.map(index=>({index,place:world.places[index].name,...world.places[index].treasure})),
       smallFinds:progress.smallFinds.map(index=>({index,place:world.places[index].name,...world.smallFind})),visit};
   }
@@ -206,5 +233,26 @@
     if(target===null||progress.hints.includes(target))return raw;
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,hints:[...progress.hints,target].sort((a,b)=>a-b)}}};
   }
-  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint};
+  function mysteryReveal(raw,worldId,content){
+    const state=sanitize(raw,content);
+    if(state.active||!knownWorld(content,worldId))return raw;
+    const progress=state.worlds[worldId]||emptyWorld();
+    if(!progress.found.length)return raw;
+    const mystery=progress.mystery||freshMystery();
+    if(mystery.solved||mystery.revealed>=3)return raw;
+    return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:{...mystery,revealed:mystery.revealed+1}}}};
+  }
+  function mysteryGuess(raw,worldId,index,content){
+    const state=sanitize(raw,content);
+    if(state.active||!knownWorld(content,worldId)||!placeIndex(index))return raw;
+    const progress=state.worlds[worldId]||emptyWorld();
+    if(!progress.found.length)return raw;
+    const mystery=progress.mystery||freshMystery();
+    if(mystery.solved||mystery.revealed!==3||mystery.attempted.includes(index))return raw;
+    const correct=index===content.worlds[worldId].mystery.target;
+    const updated={...mystery,last:index,solved:correct,
+      attempted:correct?mystery.attempted:[...mystery.attempted,index].sort((a,b)=>a-b)};
+    return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
+  }
+  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint,mysteryReveal,mysteryGuess};
 });

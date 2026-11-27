@@ -124,3 +124,18 @@ html[data-contrast='high'] .treasure-place,html[data-contrast='high'] .treasure-
 .treasure-letter-symbol{flex-shrink:0}
 .treasure-letter-unlocked{margin:.7rem 0;padding:.8rem;border:2px solid var(--accent-line);border-radius:.75rem;background:var(--surface);color:var(--text);text-align:left;font-weight:750}
 @media(forced-colors:active){.treasure-letter,.treasure-letter-part,.treasure-letter-unlocked{border-color:CanvasText}.treasure-letter-open{outline:2px solid Highlight}}
+
+/* Mystery clues use opaque reading panels, never transparent text on scenery. */
+.treasure-mystery{padding:1.15rem;margin:1rem 0;border:2px solid var(--border);border-radius:1.2rem;background:var(--surface);color:var(--text)}
+.treasure-mystery-intro{font-size:1.08rem;font-weight:750}
+.treasure-mystery-clues{display:grid;gap:.65rem;padding:0;margin:.75rem 0 1rem;list-style:none}
+.treasure-mystery-clue{background:var(--surface-2);border:2px solid var(--border);padding:.75rem .9rem;border-radius:.8rem;line-height:1.7}
+.treasure-mystery-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin:.8rem 0}
+.treasure-mystery-choice{min-width:0;min-height:3.4rem;padding:.8rem;border:2px solid var(--border);border-radius:.85rem;background:var(--surface-2);color:var(--text);text-align:left;font-weight:750;white-space:normal}
+.treasure-mystery-tried:disabled{opacity:1;color:var(--text);background:var(--surface);border-style:dashed}
+.treasure-mystery-feedback{background:var(--surface-2);border-left:4px solid var(--accent-line);padding:.75rem 1rem;border-radius:.4rem;line-height:1.7}
+.treasure-mystery-success{font-weight:850;background:var(--green-bg);color:var(--green-text);border:2px solid var(--green-border);padding:.8rem;border-radius:.85rem}
+.treasure-mystery-note{font-size:.94rem;color:var(--muted);margin:1rem 0 0}
+@media(max-width:440px){.treasure-mystery-choices{grid-template-columns:minmax(0,1fr)}.treasure-mystery{padding:.85rem}}
+@media(hover:hover) and (pointer:fine){.treasure-mystery-choice:not(:disabled):hover{border-color:var(--accent-line)}}
+@media(forced-colors:active){.treasure-mystery,.treasure-mystery-clue,.treasure-mystery-choice,.treasure-mystery-success{border-color:CanvasText}}
