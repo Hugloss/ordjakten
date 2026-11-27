@@ -67,7 +67,9 @@ Automatiska tester verifierar ID:n, korrektsvar, dubbla etiketter, antal svar oc
 
 Inför redaktionell status per fråga (utkast/granskad/publicerad). För en skolversion bör svarsalternativen sparas som individuellt granskade uppgifter med fasta option-ID:n, snarare än väljas från genererade definitionsgrupper.
 
-## 25 vardagsuttryck (version 0.6)
+## Historik: de första 25 vardagsuttrycken (version 0.6)
+
+Detta avsnitt beskriver det tidigare införandet. Den **nuvarande** källfilen `public/data/expressions.json` innehåller 73 uttryck, varav 65 ingår i det vanliga urvalet och 8 är frivillig fördjupning. För inventering och framtida innehållsmodell, se [ARCHITECTURE.md](ARCHITECTURE.md).
 
 Uttryck med sammanhang ligger **inte** i `ordbank.json`. De har stabila `ut-####`-ID:n i `data/expressions.json` och en identisk browser-export i `data/expressions.js`.
 
