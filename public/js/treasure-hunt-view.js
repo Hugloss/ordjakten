@@ -231,9 +231,11 @@
         box.append(proof);
       }
       if(story.proof?.done&&story.transfer){
-        const next=story.transfer,transfer=el('section','treasure-transfer');
-        transfer.append(el('h3','','🔎 Nytt fall: '+next.title),
-          el('p','treasure-transfer-intro',next.intro),
+        const next=story.transfer,transfer=el('details','treasure-transfer');
+        const summary=el('summary','','🔎 Prova ett nytt fall: '+next.title);
+        summary.id='treasure-transfer-title';summary.tabIndex=-1;
+        if(next.done||next.wrong.length)transfer.setAttribute('open','');
+        transfer.append(summary,el('p','treasure-transfer-intro',next.intro),
           el('p','','Läs båda ledtrådarna. Vilket svar passar dem tillsammans?'));
         const clues=el('ol','treasure-mystery-clues');
         for(const [index,clue] of next.clues.entries())
