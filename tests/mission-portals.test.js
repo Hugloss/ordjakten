@@ -75,6 +75,32 @@ test('all adventures open immediately and hidden solutions are not included in e
   }
 });
 
+test('answer positions vary across all 96 stages yet stay stable after a wrong choice and reload',()=>{
+  const positions=[];
+  for(const id of content.ids){
+    let state={};
+    for(let step=0;step<3;step++){
+      const data=content.stories[id].stages[step],choices=view(state,id).current.stage.choices;
+      assert.deepEqual(choices.map(row=>row.position),[0,1,2],id+':'+step);
+      assert.deepEqual(choices.map(row=>row.index).slice().sort(),[0,1,2],id+':'+step);
+      assert.deepEqual(choices.map(row=>row.label),choices.map(row=>data.choices[row.index]));
+      const right=choices.find(row=>row.index===data.answer);
+      positions.push(right.position);
+      assert.ok(right,'authored correct choice has a visible position');
+      const before=clone(state),wrong=choices.find(row=>row.index!==data.answer).index;
+      state=Portals.choose(state,id,wrong,content);
+      assert.deepEqual(view(state,id).current.stage.choices.map(row=>row.index),choices.map(row=>row.index));
+      assert.deepEqual(view(clone(state),id).current.stage.choices,view(state,id).current.stage.choices);
+      assert.notDeepEqual(state,before);
+      state=Portals.choose(state,id,data.answer,content);
+      state=Portals.next(state,id,content);
+    }
+  }
+  assert.equal(positions.length,96);
+  assert.deepEqual([...new Set(positions)].sort(),[0,1,2],
+    'correct answers must not always occupy the same visible button');
+});
+
 test('wrong choices give specific help, retries are optional, and completing one stage is idempotent',()=>{
   let state=fresh(),id='agents',task=content.stories[id].stages[0],before=clone(state);
   const wrong=(task.answer+1)%3;
