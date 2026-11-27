@@ -113,11 +113,16 @@
     const transferDone=value.transferDone===true;
     const transferLast=value.transferLast===undefined||value.transferLast===null?null:
       transferIndex(value.transferLast)?value.transferLast:-1;
-    if(transferLast===-1||(transferDone&&(!proofDone||transferLast!==transferTarget))||
-      (!transferDone&&transferLast!==null&&!transferWrong.includes(transferLast))||
-      (!proofDone&&(transferWrong.length||transferDone||transferLast!==null)))return null;
+    const transferValid=transferLast!==-1&&
+      (!transferDone||(proofDone&&transferLast===transferTarget))&&
+      (transferDone||transferLast===null||transferWrong.includes(transferLast))&&
+      (proofDone||(!transferWrong.length&&!transferDone&&transferLast===null));
+    // A bad new exercise must not erase a previously solved mystery.
+    // Reset just its unscored attempt state and allow a fresh try.
     return {revealed:value.revealed,attempted,last,solved:value.solved,proofWrong,proofDone,proofLast,
-      transferWrong,transferDone,transferLast};
+      transferWrong:transferValid?transferWrong:[],
+      transferDone:transferValid?transferDone:false,
+      transferLast:transferValid?transferLast:null};
   }
   function sanitize(raw,content){
     const clean=empty();
