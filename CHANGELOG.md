@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Skattkartan – hitta platsen med ledtrådar
+
+- En valbar skattkarta har fyra klickbara platser i var och en av de tolv befintliga världarna. 48 skrivna ledtrådar kopplas till konkreta platsbeskrivningar; varje plats använder sin befintliga orduppgift.
+- Rätt plats ger ledtrådens skatt och en sakletarpoäng efter besöket. En annan plats har också en uppgift och ett enkelt litet fynd, men ger ingen sakletarpoäng. Barnet kan läsa samma ledtråd igen och hitta vidare.
+- Ett eget rätt svar på ordfrågan ger en ordstjärna, oavsett platsvalet. Varje plats kan ge en ordstjärna och varje ledtråd en sakletarpoäng. Hjälp med ordfrågan påverkar inte ett korrekt platsval.
+- Fynd, ledtråd och pågående besök sparas lokalt. Vanliga stjärnrader och provresultat bevaras. Kartan har inget tidskrav, inga minuspoäng och inga belöningar för upprepade klick.
+- Tydliga knappar, platsnamn och beskrivningar fungerar med tangentbord och på smala läsytor. Frivillig uppläsning finns för ledtråd, uppgift och förklaring. Offlinecache v73. Se [spelreglerna](docs/PLAYFUL.md).
+
 ## Efter provspelning – tydligare stjärnsamling
 
 - Historiken visar första svarens rätt, fel och obesvarade. Den gamla stjärnsiffran tas bort eftersom fler stjärnor kan samlas genom fortsatt träning. En kort text förklarar skillnaden.

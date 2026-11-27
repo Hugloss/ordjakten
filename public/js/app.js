@@ -48,13 +48,16 @@
   const QuestionPlay = window.OrdjaktenQuestionPlay;
   const ActionWords = window.OrdjaktenActionWords;
   const WorldMissions = window.OrdjaktenWorldMissions;
+  const Treasure = window.OrdjaktenTreasure;
+  const TreasureData = window.OrdjaktenTreasureData;
+  const TreasureView = window.OrdjaktenTreasureView;
   const G = window.OrdjaktenGuidedReading;
   const contrasts = window.ORDJAKTEN_CONTRASTS;
   const clues = window.ORDJAKTEN_CLUES;
   const contrastHistoryData = T?.enrich(contrasts,clues);
   const STORAGE_KEY = 'ordjakten-v1';
   const $ = id => document.getElementById(id);
-  if(!Stars||!StarView){
+  if(!Stars||!StarView||!Treasure||!TreasureData||!TreasureView){
     $('global-error').textContent='Kunde inte läsa in stjärnsamlingen. Försök ladda om sidan.';
     $('global-error').hidden=false;return;
   }
@@ -107,6 +110,7 @@
   let conceptMap=null;
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
+  let treasureWorld=settings.adventure,treasureStarReward=null;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
   let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null,suppressQuestionClick=false;
@@ -116,6 +120,12 @@
   const learningById=new Map(learningCatalog.map(item=>[item.id,item]));
   const campRiddles=Camp.riddles(learningCatalog);
   const worldMissionContent=WorldMissions.catalog(learningCatalog,Story);
+  const treasureContent=Treasure.catalog(TreasureData,A,Story,worldMissionContent);
+  if(treasureContent.errors.length){
+    $('global-error').textContent='Kunde inte läsa in skattkartan. Försök ladda om sidan.';
+    $('global-error').hidden=false;return;
+  }
+  history.treasureHunt=Treasure.sanitize(history.treasureHunt,treasureContent);
   let guidedParts=[];
   let guidedIndex=0;
   let guidedActive=false;
@@ -155,13 +165,17 @@
   const speechLabels = {
     'listen-story':'🔊 Lyssna på texten',
     'listen-explanation':'🔊 Lyssna på förklaringen',
-    'listen-reading-check':'🔊 Lyssna på frågan och svaren'
+    'listen-reading-check':'🔊 Lyssna på frågan och svaren',
+    'treasure-listen-clue':'🔊 Lyssna på ledtråden och platserna',
+    'treasure-listen-task':'🔊 Lyssna på uppgiften',
+    'treasure-listen-explanation':'🔊 Lyssna på förklaringen'
   };
   let speakingButton = null;
   let currentUtterance = null;
   function resetSpeechButtons() {
     for (const [id,label] of Object.entries(speechLabels)) {
       const button = $(id);
+      if(!button)continue;
       button.textContent=label;
       button.setAttribute('aria-pressed','false');
     }
@@ -677,7 +691,7 @@
   function show(name) {
     if(name!=='play') stopReadAloud();
     screen = name;
-    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector','concepts','journey','camp','world-mission']) $('view-'+view).hidden = view!==name;
+    for (const view of ['home','play','results','words','history','book','learning','focus','aha','recall','workshop','detector','concepts','journey','camp','world-mission','treasure']) $('view-'+view).hidden = view!==name;
     document.querySelectorAll('[data-nav]').forEach(btn=>{
       const chosen=btn.dataset.nav===(name==='play'||name==='results'?'home':name);
       if(chosen)btn.setAttribute('aria-current','page'); else btn.removeAttribute('aria-current');
@@ -2326,6 +2340,108 @@
     const mark=earned&&journeyKeepsake?'mark-'+journeyKeepsake.id+'-'+journeyKeepsake.index:null;
     openCampWithMark(mark);
   }
+  // Treasure navigation has its own finite findings. Word stars do not replace
+  // the ordinary star row or manufacture a scored/adaptive learning result.
+  function treasureModel(){return Treasure.model(history.treasureHunt,treasureWorld,treasureContent);}
+  function renderTreasureHunt(focus='treasure-stage-title'){
+    const model=treasureModel();
+    const wordStars=model.places.filter(place=>history.starCollection.activities?.includes('treasure:'+model.id+':'+place.index))
+      .map(place=>place.index);
+    TreasureView.render($('treasure-content'),model,{companion:P.companion(settings.companion),
+      totalStars:history.starCollection.total,wordStars,starReward:treasureStarReward,canReadAloud,
+      worlds:A.WORLD_IDS.map(id=>({id,...A.world(id)}))});
+    if(focus)$(focus)?.focus();
+  }
+  function openTreasureHunt(){
+    if(!['home','learning','results','camp','treasure'].includes(screen))return;
+    treasureWorld=history.treasureHunt.active?.world||settings.adventure;
+    if(settings.adventure!==treasureWorld)setSettings({adventure:treasureWorld});
+    treasureStarReward=null;
+    goNav('treasure');renderTreasureHunt();
+  }
+  function visitTreasurePlace(index){
+    if(screen!=='treasure')return;
+    const next=Treasure.visit(history.treasureHunt,treasureWorld,index,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;treasureStarReward=null;
+    saveHistory();renderTreasureHunt();
+  }
+  function answerTreasureQuestion(serial,id){
+    if(screen!=='treasure')return;
+    const next=Treasure.answer(history.treasureHunt,serial,id,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;
+    const visit=treasureModel().visit;
+    if(visit?.stage==='explanation'&&['direct','supported'].includes(visit.outcome)){
+      treasureStarReward=Stars.awardActivity(history.starCollection,visit.activityKey);
+      history.starCollection=treasureStarReward.collection;
+    }
+    saveHistory();renderTreasureHunt(visit?.stage==='question'?'treasure-hint':'treasure-stage-title');
+  }
+  function explainTreasureQuestion(serial){
+    if(screen!=='treasure')return;
+    const next=Treasure.explain(history.treasureHunt,serial,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;treasureStarReward=null;
+    saveHistory();renderTreasureHunt();
+  }
+  function finishTreasureVisit(serial){
+    if(screen!=='treasure')return;
+    const next=Treasure.finish(history.treasureHunt,serial,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;
+    saveHistory();renderTreasureHunt();
+  }
+  function backToTreasureMap(serial){
+    if(screen!=='treasure')return;
+    const next=Treasure.back(history.treasureHunt,serial,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;treasureStarReward=null;
+    saveHistory();renderTreasureHunt();
+  }
+  function showTreasureHint(){
+    if(screen!=='treasure')return;
+    const next=Treasure.hint(history.treasureHunt,treasureWorld,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;
+    saveHistory();renderTreasureHunt('treasure-hint');
+  }
+  function switchTreasureWorld(id){
+    if(screen!=='treasure'||!A.isWorld(id)||treasureModel().phase!=='map')return;
+    stopReadAloud();treasureWorld=id;treasureStarReward=null;
+    setSettings({adventure:id});renderTreasureHunt();
+  }
+  function treasureReadAloudText(kind){
+    if(screen!=='treasure')return '';
+    const model=treasureModel(),visit=model.visit;
+    if(kind==='clue'&&model.phase==='map'){
+      const clue=model.clue;
+      return [clue?.text,clue?.hintShown?clue.hint:'','Platserna på kartan:',
+        ...model.places.map(place=>place.name+'. '+place.description)].filter(Boolean).join(' ');
+    }
+    if(kind==='task'&&visit?.stage==='question')
+      return [visit.task.prompt,...visit.options.map((option,i)=>'Alternativ '+'ABC'[i]+': '+option.label)].join('. ');
+    if(kind==='explanation'&&['explanation','reward'].includes(visit?.stage))
+      return [visit.task.word,visit.task.definition,visit.task.why].join('. ');
+    return '';
+  }
+  function handleTreasureClick(event){
+    const button=event.target.closest('button'),host=$('treasure-content');
+    if(screen!=='treasure'||!button||button.disabled||!host.contains(button))return;
+    const data=button.dataset,serial=Number(data.treasureSerial);
+    if(data.nav==='home'){goNav('home');return;}
+    if(data.treasureListen){
+      const visit=treasureModel().visit;
+      if(visit&&serial!==visit.serial)return;
+      speakReadAloud(treasureReadAloudText(data.treasureListen),button);return;
+    }
+    if(Object.hasOwn(data,'treasurePlace'))visitTreasurePlace(Number(data.treasurePlace));
+    else if(Object.hasOwn(data,'treasureAnswer'))answerTreasureQuestion(serial,data.treasureAnswer);
+    else if(Object.hasOwn(data,'treasureExplain'))explainTreasureQuestion(serial);
+    else if(Object.hasOwn(data,'treasureFinish'))finishTreasureVisit(serial);
+    else if(Object.hasOwn(data,'treasureBack'))backToTreasureMap(serial);
+    else if(Object.hasOwn(data,'treasureHint'))showTreasureHint();
+  }
   function missionButton(story,index,label){
     const button=element('button','primary-button full-button',label);
     button.type='button';button.dataset.worldMission=String(index);
@@ -3008,6 +3124,7 @@
   }
   function renderSetup() {
     renderStarCollection('home');
+    $('quick-treasure').textContent=history.treasureHunt.active?'🗺️ Fortsätt på skattkartan':'🗺️ Följ skattkartan';
     setPressed('[data-mode]','mode',settings.mode);
     setPressed('[data-topic]','topic',settings.topic);
     setPressed('[data-expression-task]','expressionTask',settings.expressionTask);
@@ -4182,6 +4299,7 @@
   function exportHistory() {
     const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,contextProgress:history.contextProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,adventureChallenge:history.adventureChallenge,storyProgress:history.storyProgress,campLayout:history.campLayout,campStories:history.campStories,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     data.starCollection=history.starCollection;
+    data.treasureHunt=history.treasureHunt;
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -4249,6 +4367,11 @@
   $('camp-go').addEventListener('click',()=>{if(screen==='camp')startJourney();});
   $('camp-chapters').addEventListener('click',event=>{if(screen==='camp')handleMissionLink(event);});
   $('camp-mission').addEventListener('click',event=>{if(screen==='camp')handleMissionLink(event);});
+  $('quick-treasure').addEventListener('click',openTreasureHunt);
+  $('treasure-content').addEventListener('click',handleTreasureClick);
+  $('treasure-content').addEventListener('change',event=>{
+    if(event.target.matches('select[data-treasure-world]'))switchTreasureWorld(event.target.value);
+  });
   $('world-mission-options').addEventListener('click',event=>{
     const button=event.target.closest('button[data-mission-action]');
     if(button)chooseWorldAction(button.dataset.missionAction);
@@ -4750,9 +4873,10 @@
   $('more-words').addEventListener('click',()=>{wordListLimit+=24;renderWordList();});
   $('export-history').addEventListener('click',exportHistory);
   $('clear-history').addEventListener('click',()=>{
-    if(!window.confirm('Vill du radera sparade resultat, stjärnsamlingen, repetitionsplan, öppnade luckor, upptäckter, din äventyrsplats och din sagobok? Detta går inte att ångra.'))return;
+    if(!window.confirm('Vill du radera sparade resultat, stjärnsamlingen, skattkartans fynd, repetitionsplan, öppnade luckor, upptäckter, din äventyrsplats och din sagobok? Detta går inte att ångra.'))return;
     for(const key of Object.keys(journeyUsage))delete journeyUsage[key];journeyWorkshopSeen.clear();
     history.starCollection=Stars.sanitize(null);renderStarCollection('home');
+    history.treasureHunt=Treasure.sanitize(null,treasureContent);treasureStarReward=null;
     history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.contextProgress=D.sanitizeContextProgress(null,contexts);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());history.campStories=[];campTheatre=null;campSelected=null;campTarget=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;settings.practiceGoal='mixed';saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   saveHistory();createAdventureChoices();renderSetup();show('home');

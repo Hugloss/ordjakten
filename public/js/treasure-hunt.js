@@ -1,0 +1,203 @@
+/* Clue-led visits reuse the authored word tasks. Finding a place and solving
+ * its word task are separate achievements. Neither depends on a clock.
+ * Only bounded IDs and visit state are saved, never copied question content. */
+(function(root,factory){
+  const api=factory();
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;
+  root.OrdjaktenTreasure=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(){
+  'use strict';
+  const ORDER=Object.freeze([2,0,3,1]);
+  const MAX=Number.MAX_SAFE_INTEGER;
+  const object=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
+  const integer=value=>Number.isSafeInteger(value)&&value>=0;
+  const text=value=>typeof value==='string'&&value.trim().length>0&&value.length<=700;
+  const placeIndex=value=>Number.isInteger(value)&&value>=0&&value<4;
+  const emptyWorld=()=>({found:[],visited:[],smallFinds:[],hints:[]});
+  const empty=()=>({version:1,serial:0,worlds:{},active:null});
+  const indexes=value=>Array.isArray(value)?[...new Set(value.filter(placeIndex))].sort((a,b)=>a-b):[];
+  const knownWorld=(content,id)=>typeof id==='string'&&object(content?.worlds)&&Object.hasOwn(content.worlds,id);
+  const nextClue=world=>ORDER.find(index=>!world.found.includes(index))??null;
+
+  function catalog(data,adventures,story,missions){
+    const worlds={},errors=[];
+    for(const id of adventures.WORLD_IDS){
+      const world=adventures.world(id),rows=data?.DATA?.[id],chapters=story?.DATA?.[id];
+      const smallFind=data?.SMALL_FINDS?.[id];
+      if(!Array.isArray(rows)||rows.length!==4||!Array.isArray(chapters)||chapters.length!==4||
+        world.stops.length!==4||!text(smallFind?.name)||!text(smallFind?.emoji)){
+        errors.push(id);continue;
+      }
+      const places=[];
+      rows.forEach((row,index)=>{
+        const key=id+':'+index,task=missions?.tasks?.[key],chapter=chapters[index],stop=world.stops[index];
+        if(!object(row)||!['description','clue','hint','why'].every(field=>text(row[field]))||
+          !task||task.key!==key||task.world!==id||task.index!==index||!text(task.target)||
+          !text(task.prompt)||!text(task.word)||!text(task.definition)||!text(task.why)||
+          !Array.isArray(task.options)||task.options.length!==3||
+          new Set(task.options.map(option=>option.id)).size!==3||
+          task.options.some(option=>typeof option.id!=='string'||!text(option.label)||typeof option.correct!=='boolean')||
+          task.options.filter(option=>option.correct).length!==1||!text(chapter[3])||!text(chapter[4])){
+          errors.push(key);return;
+        }
+        places.push({index,key,name:stop.name,emoji:stop.emoji,
+          description:row.description,clue:row.clue,hint:row.hint,why:row.why,
+          treasure:{emoji:chapter[3],name:chapter[4]},
+          task:{...task,options:task.options.map(option=>({...option}))}});
+      });
+      if(places.length!==4)continue;
+      if(new Set(places.map(place=>place.clue)).size!==4||new Set(places.map(place=>place.description)).size!==4){
+        errors.push(id+':duplicates');continue;
+      }
+      worlds[id]={id,title:world.title,emoji:world.emoji,places,smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
+    }
+    return {worlds,errors};
+  }
+
+  function sanitize(raw,content){
+    const clean=empty();
+    if(!object(raw)||raw.version!==1)return clean;
+    clean.serial=integer(raw.serial)?raw.serial:0;
+    for(const id of Object.keys(content?.worlds||{})){
+      const source=object(raw.worlds)&&object(raw.worlds[id])?raw.worlds[id]:null;
+      if(!source)continue;
+      const visited=indexes(source.visited),found=[];
+      for(const index of ORDER){
+        if(!Array.isArray(source.found)||!source.found.includes(index)||!visited.includes(index))break;
+        found.push(index);
+      }
+      const smallFinds=indexes(source.smallFinds).filter(index=>visited.includes(index));
+      const hints=indexes(source.hints);
+      if(found.length||visited.length||smallFinds.length||hints.length)
+        clean.worlds[id]={found,visited,smallFinds,hints};
+    }
+    const active=raw.active;
+    if(!object(active)||!knownWorld(content,active.world)||!clean.serial||active.serial!==clean.serial||
+      !placeIndex(active.place)||!(active.clue===null||placeIndex(active.clue))||
+      !['question','explanation','reward'].includes(active.stage)||
+      !Number.isInteger(active.attempts)||active.attempts<0||active.attempts>2||
+      !Array.isArray(active.optionOrder)||active.optionOrder.length!==3||new Set(active.optionOrder).size!==3)return clean;
+    const world=clean.worlds[active.world]||emptyWorld(),place=content.worlds[active.world].places[active.place];
+    const options=place.task.options;
+    if(active.optionOrder.some(id=>!options.some(option=>option.id===id)))return clean;
+    const selected=options.find(option=>option.id===active.selected)||null;
+    if(active.selected!==null&&!selected)return clean;
+    if(active.stage==='question'){
+      if(active.outcome!==null||active.attempts>1||active.reward!==null||
+        (active.attempts===0&&active.selected!==null)||(active.attempts===1&&(!selected||selected.correct)))return clean;
+    }else{
+      if(!['direct','supported','guided'].includes(active.outcome))return clean;
+      if(active.outcome==='direct'&&(active.attempts!==0||!selected?.correct))return clean;
+      if(active.outcome==='supported'&&(active.attempts!==1||!selected?.correct))return clean;
+      if(active.outcome==='guided'&&((active.attempts===2&&(!selected||selected.correct))||
+        (active.attempts<2&&active.selected!==null)))return clean;
+    }
+    let reward=null;
+    if(active.stage==='reward'){
+      if(!object(active.reward)||typeof active.reward.newItem!=='boolean'||!world.visited.includes(active.place))return clean;
+      const matched=active.clue!==null&&active.place===active.clue;
+      if(matched){
+        if(active.clue!==world.found.at(-1)||active.reward.kind!=='treasure'||
+          active.reward.finderAdded!==1||active.reward.newItem!==true)return clean;
+      }else{
+        if(active.clue!==nextClue(world)||active.reward.finderAdded!==0)return clean;
+        const kind=active.clue===null?'revisit':'small';
+        if(active.reward.kind!==kind||(kind==='revisit'&&active.reward.newItem)||
+          (kind==='small'&&!world.smallFinds.includes(active.place)))return clean;
+      }
+      reward={kind:active.reward.kind,newItem:active.reward.newItem,finderAdded:active.reward.finderAdded};
+    }else if(active.clue!==nextClue(world)||active.reward!==null)return clean;
+    clean.active={world:active.world,place:active.place,clue:active.clue,serial:active.serial,
+      stage:active.stage,attempts:active.attempts,outcome:active.outcome,selected:active.selected,
+      optionOrder:[...active.optionOrder],reward};
+    return clean;
+  }
+
+  function model(raw,worldId,content){
+    const state=sanitize(raw,content);
+    const id=knownWorld(content,worldId)?worldId:Object.keys(content?.worlds||{})[0];
+    const world=content?.worlds?.[id];
+    if(!world)return null;
+    const progress=state.worlds[id]||emptyWorld();
+    const active=state.active?.world===id?state.active:null;
+    const target=active?active.clue:nextClue(progress),cluePlace=target===null?null:world.places[target];
+    const places=world.places.map(place=>({...place,visited:progress.visited.includes(place.index),
+      found:progress.found.includes(place.index),smallFound:progress.smallFinds.includes(place.index)}));
+    let visit=null;
+    if(active){
+      const place=places[active.place],item=active.reward?.kind==='small'?world.smallFind:place.treasure;
+      visit={serial:active.serial,index:place.index,name:place.name,emoji:place.emoji,
+        matched:active.clue!==null&&active.place===active.clue,task:place.task,
+        options:active.optionOrder.map(optionId=>({...place.task.options.find(option=>option.id===optionId)})),
+        stage:active.stage,attempts:active.attempts,outcome:active.outcome,
+        reward:active.reward?{...active.reward,...item}:null,activityKey:'treasure:'+id+':'+place.index};
+    }
+    const worlds=Object.values(content.worlds).map(row=>({id:row.id,title:row.title,emoji:row.emoji,
+      count:state.worlds[row.id]?.found.length||0,total:4}));
+    return {id,title:world.title,emoji:world.emoji,phase:active?.stage||'map',count:progress.found.length,total:4,
+      complete:progress.found.length===4,finderTotal:worlds.reduce((sum,row)=>sum+row.count,0),worlds,
+      clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,hintShown:progress.hints.includes(target)}:null,
+      places,collection:progress.found.map(index=>({index,place:world.places[index].name,...world.places[index].treasure})),
+      smallFinds:progress.smallFinds.map(index=>({index,place:world.places[index].name,...world.smallFind})),visit};
+  }
+
+  function visit(raw,worldId,index,content,random=Math.random){
+    const state=sanitize(raw,content);
+    if(state.active||!knownWorld(content,worldId)||!placeIndex(index)||state.serial===MAX)return raw;
+    const world=state.worlds[worldId]||emptyWorld(),options=content.worlds[worldId].places[index].task.options;
+    const optionOrder=options.map(option=>option.id);
+    for(let i=optionOrder.length-1;i>0;i--){
+      const value=random(),j=Math.max(0,Math.min(i,Math.floor((Number.isFinite(value)?value:0)*(i+1))));
+      [optionOrder[i],optionOrder[j]]=[optionOrder[j],optionOrder[i]];
+    }
+    const serial=state.serial+1;
+    return {...state,serial,active:{world:worldId,place:index,clue:nextClue(world),serial,stage:'question',attempts:0,
+      outcome:null,selected:null,optionOrder,reward:null}};
+  }
+
+  function answer(raw,serial,optionId,content){
+    const state=sanitize(raw,content),active=state.active;
+    if(!active||active.serial!==serial||active.stage!=='question')return raw;
+    const task=content.worlds[active.world].places[active.place].task;
+    const option=task.options.find(row=>row.id===optionId);
+    if(!option)return raw;
+    if(option.correct)return {...state,active:{...active,selected:optionId,stage:'explanation',
+      outcome:active.attempts?'supported':'direct'}};
+    const attempts=active.attempts+1;
+    return {...state,active:{...active,selected:optionId,attempts,
+      stage:attempts===2?'explanation':'question',outcome:attempts===2?'guided':null}};
+  }
+
+  function explain(raw,serial,content){
+    const state=sanitize(raw,content),active=state.active;
+    if(!active||active.serial!==serial||active.stage!=='question')return raw;
+    return {...state,active:{...active,stage:'explanation',outcome:'guided',selected:null}};
+  }
+
+  function finish(raw,serial,content){
+    const state=sanitize(raw,content),active=state.active;
+    if(!active||active.serial!==serial||active.stage!=='explanation')return raw;
+    const progress=state.worlds[active.world]||emptyWorld(),matched=active.clue!==null&&active.place===active.clue;
+    const visited=[...new Set([...progress.visited,active.place])].sort((a,b)=>a-b);
+    const found=matched?[...progress.found,active.clue]:progress.found;
+    const small=active.clue!==null&&!matched,newSmall=small&&!progress.smallFinds.includes(active.place);
+    const smallFinds=newSmall?[...progress.smallFinds,active.place].sort((a,b)=>a-b):progress.smallFinds;
+    const reward={kind:matched?'treasure':small?'small':'revisit',newItem:matched||newSmall,finderAdded:matched?1:0};
+    return {...state,worlds:{...state.worlds,[active.world]:{...progress,found,visited,smallFinds}},
+      active:{...active,stage:'reward',reward}};
+  }
+
+  function back(raw,serial,content){
+    const state=sanitize(raw,content);
+    return state.active?.serial===serial?{...state,active:null}:raw;
+  }
+
+  function hint(raw,worldId,content){
+    const state=sanitize(raw,content);
+    if(state.active||!knownWorld(content,worldId))return raw;
+    const progress=state.worlds[worldId]||emptyWorld(),target=nextClue(progress);
+    if(target===null||progress.hints.includes(target))return raw;
+    return {...state,worlds:{...state.worlds,[worldId]:{...progress,hints:[...progress.hints,target].sort((a,b)=>a-b)}}};
+  }
+  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint};
+});

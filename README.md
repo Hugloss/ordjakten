@@ -30,6 +30,8 @@ npm run check
 - Sex befintliga uttryck har dessutom 18 situationer där sammanhanget
   avgör betydelsen eller visar att barnet behöver fråga vad personen menar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
+- **Skattkartan**: läs en ledtråd, välj en plats och lös dess orduppgift.
+  48 skrivna ledtrådar ger separata sakletarfynd och ordstjärnor i egen takt.
 - Sparad stjärnsamling med sex samlingsmärken, en synlig stjärnrad och
   frivilliga nya chanser utan timer för de stjärnor som återstår.
 - Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.
