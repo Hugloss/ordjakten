@@ -620,7 +620,7 @@
             "Antennen är på taket, men flaggan saknas.",
             "Flaggan är blå, men antennen står inomhus."
           ],
-          "why": "Antennen står på taket med en blå flagga."
+          "why": "Både taket och den blå flaggan stämmer med ledtrådarna."
         },
         {
           "title": "Säg hej till en vän",
