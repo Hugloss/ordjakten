@@ -114,7 +114,7 @@
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
   let treasureWorld=settings.adventure,treasureStarReward=null;
-  let portalId=null;
+  let portalId=null,portalFilter='all';
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
   let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null,suppressQuestionClick=false;
@@ -2357,12 +2357,12 @@
   // bounded current-step metadata joins the existing local history export.
   function portalModel(){return Portals.model(history.discoveryPortals,portalId,portalContent);}
   function renderPortals(focus=null){
-    PortalsView.render($('portals-content'),portalModel(),{canReadAloud});
+    PortalsView.render($('portals-content'),portalModel(),{canReadAloud,category:portalFilter});
     if(focus)$(focus)?.focus({preventScroll:true});
   }
   function openPortals(){
     if(!['home','learning','results','camp','portals'].includes(screen))return;
-    portalId=null;
+    portalId=null;portalFilter='all';
     goNav('portals');renderPortals('portal-title');
   }
   function portalSpeakText(){
@@ -2370,7 +2370,7 @@
     if(!stage)return '';
     return [stage.title,stage.scene,...stage.clues,
       stage.solved?'Du hittade lösningen. '+stage.feedback:
-        stage.choices.filter(row=>!row.tried).map((row,i)=>'Alternativ '+(i+1)+': '+row.label).join('. '),
+        stage.choices.filter(row=>!row.tried).map(row=>'Alternativ '+(row.index+1)+': '+row.label).join('. '),
       !stage.solved?stage.feedback:'',
       stage.hint?'Läs första spåret och hitta de svar där det stämmer. Läs sedan det andra spåret. Ett svar måste passa båda.':''
     ].filter(Boolean).join('. ');
@@ -2383,6 +2383,10 @@
     const host=$('portals-content'),button=event.target.closest('button');
     if(screen!=='portals'||!button||button.disabled||!host.contains(button))return;
     const data=button.dataset;
+    if(Object.hasOwn(data,'portalFilter')&&!portalId){
+      if(!['all','mystery','fantasy','explore','creative'].includes(data.portalFilter))return;
+      portalFilter=data.portalFilter;renderPortals('portal-filter-'+portalFilter);return;
+    }
     if(Object.hasOwn(data,'portalBack')){portalId=null;stopReadAloud();renderPortals('portal-title');return;}
     if(Object.hasOwn(data,'portalOpen')){
       if(!Object.hasOwn(portalContent.stories,data.portalOpen))return;
