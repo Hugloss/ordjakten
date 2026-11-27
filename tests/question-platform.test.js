@@ -209,6 +209,12 @@ test('18 special context scenes are distinct questions and preserve authored ans
   }
   assert.equal(total,18);
 });
+test('contextual question IDs cannot cross a Swedish expression boundary',()=>{
+  const altered=JSON.parse(JSON.stringify(missionSource));
+  const affected=altered.missions.find(mission=>mission.contextScenes?.length);
+  affected.contextScenes[0].id='ut-0001-unrelated';
+  assert.throws(()=>Svenska.fromLegacyExpressions(source,altered),/Invalid Swedish contextual scene/);
+});
 test('ordering presentations and test mode never expose the expected order',()=>{
   const registry=makeFullRegistry();
   const ref={bankId:'svenska',id:'order-ut-0001',revision:1};

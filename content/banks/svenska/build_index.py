@@ -147,6 +147,8 @@ def build(connection: sqlite3.Connection) -> dict:
                 answers=mission["order"],
             )
             for scene in mission.get("contextScenes", []):
+                if not scene["id"].startswith(concept_id + "-"):
+                    raise ValueError("Context scene assigned to wrong expression: " + scene["id"])
                 add_question(
                     connection,
                     question_id="sentence-" + scene["id"],

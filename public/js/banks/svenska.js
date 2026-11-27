@@ -47,6 +47,7 @@
       throw new Error('Invalid Swedish sentence source: '+entry?.id);
     const contextual=scene!==null;
     if(contextual&&(!/^[a-z][a-z0-9-]{1,80}$/.test(scene.id||'')||
+      !scene.id.startsWith(mission.id+'-')||
       typeof scene.prompt!=='string'||!scene.prompt.trim()))
       throw new Error('Invalid Swedish contextual scene: '+entry.id);
     const authored=contextual?scene.options:mission.sentences;

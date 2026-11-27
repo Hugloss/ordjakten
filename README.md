@@ -58,7 +58,7 @@ ordfrekvens. Inga ord eller tidigare framsteg har tagits bort.
 
 ## Projektstruktur
 
-Se [målarkitekturen med fristående ämnesbanker och återanvändbara spelmotorer](docs/ARCHITECTURE.md). Svenska, matematik och kemi ska ha **egna kunskapsbanker** med separat innehåll och valfri lagring. Första koddelen använder en svensk bankadapter för befintliga uttrycksfrågor; övrig migration beskrivs i arkitekturdokumentet.
+Se [målarkitekturen med fristående ämnesbanker och återanvändbara spelmotorer](docs/ARCHITECTURE.md). Svenska, matematik och kemi ska ha **egna kunskapsbanker** med separat innehåll och valfri lagring. Första implementationen kopplar 237 befintliga svenska uttrycksuppgifter till ett gemensamt bedömningsgränssnitt. Svenskbanken har även ett genererat, separat SQLite-sökindex; övrig migration beskrivs i arkitekturdokumentet.
 
 - `public/` – hela statiska webbappen, databank och lokala bildresurser.
 - `scripts/` – utvecklingsserver och innehållsvalidering.
