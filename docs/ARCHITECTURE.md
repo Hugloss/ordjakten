@@ -229,6 +229,14 @@ En spelmodell förklarar exempelvis `supportedResponses: [single-choice, numeric
 
 **Särskild gräns för prov:** Även om statisk/offline JavaScript inte kan gömma nedladdat facit för den som analyserar koden ska UI, loggning, utvärderingshändelser och progressionsvyer inte avslöja det för barnet före avslutad omgång.
 
+### 5. Återanvändning får inte ändra frågans betydelse
+
+En gemensam fråga kan återanvändas oförändrad i olika spelformer **bara om prompt, nödvändigt stimulus, svarsspecifikation och giltigt facit betyder samma sak**. Om en detektivscen tillför en ny ledtråd som behövs för rätt svar är den inte längre en neutral kosmetisk inramning. Då krävs ett eget versionerat stimulus, en explicit frågevariant eller en separat aktivitet. Detta är särskilt viktigt för vardagsuttryck där sammanhanget avgör innebörden.
+
+När ett spel visar fyra av fem granskade svarsalternativ dokumenteras det valda delmängdsurvalet i `QuestionInstance` tillsammans med stabila alternativ-ID:n. Frågerevision, bedömning och semantisk entydighet måste fortsätta stämma för just den instansen; det är **inte** tillräckligt att knapparna har rätt antal.
+
+En enda fråga i flera spelformer är heller inte flera oberoende kunskapsbevis: lärandemodellen ska kunna skilja första mötet, upprepning, återanvändning samma dag, assisterat svar och verklig överföring till nytt sammanhang. Rekommendationsmotorn får läsa sådana signaler, men spelmotorer får inte räkna varje återanvändning som en ny behärskad färdighet.
+
 ## Första migrationspilot – konkreta acceptanskriterier
 
 **Rekommenderat innehåll:** använd ett redan redaktionellt skrivet flervalsobjekt från `expressions.json`, exempelvis uttrycket `ut-0001` med dess fasta alternativ. Skapa vid implementation en **enda kanonisk fråga** med eget ID och en läsadapter för befintlig datakälla. Verifiera återanvändning i Träna och Testa. Prova därefter en **referens** från en separat äventyrsscen (utan att skriva över en existerande portalfråga eller dess manus). Inga nya frågor dupliceras för att göra pilotfallet möjligt.
