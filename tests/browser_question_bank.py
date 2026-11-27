@@ -87,7 +87,14 @@ def order_training(browser):
     select_order(page, (0, 1, 2))
     page.locator("#order-submit").click()
     assert page.locator("#feedback-area").is_visible(), errors
-    assert page.locator("#stat-right").inner_text() == "1"
+    diag = page.evaluate("""() => ({
+      right:document.querySelector('#stat-right').textContent,
+      feedback:document.querySelector('#feedback-status')?.dataset?.outcome,
+      selected:[...document.querySelectorAll('#order-selection li')].map(n=>n.textContent),
+      word:document.querySelector('#question-word')?.textContent,
+      errors:[...document.querySelectorAll('#global-error')].map(n=>n.textContent)
+    })""")
+    assert page.locator("#stat-right").inner_text() == "1", diag
     assert not errors, errors
     page.close()
 
