@@ -21,7 +21,7 @@
         clue:'Följ stigen till en ring av svampar. I mitten ligger en sten.',
         lookFor:['svampar i en ring','en sten i mitten'],
         hint:'Du letar efter svampar i en ring, med en sten i mitten.',
-        why:'Svamparna står i en ring runt stenen. Det är de två sakerna som ledtråden beskriver.'
+        why:'Svamparna växer i en ring runt stenen. Både svamparna och stenen stämmer med ledtråden.'
       },
       {
         description:'En uggla har böcker i ett stort träd.',
@@ -62,7 +62,7 @@
       },
       {
         description:'En byggnad har ett stort fönster och en kikare mot rymden.',
-        clue:'Res till byggnaden där du kan titta genom ett stort fönster med en kikare.',
+        clue:'Leta efter byggnaden med ett stort fönster och en kikare.',
         lookFor:['ett stort fönster','en kikare i byggnaden'],
         hint:'Välj byggnaden med både ett stort fönster och en kikare.',
         why:'Byggnaden har fönstret och kikaren som ledtråden nämner. Här kan vi titta ut i rymden.'
@@ -131,10 +131,10 @@
     ocean:[
       {
         description:'Snäckor i olika former ligger i sanden vid vattnet.',
-        clue:'Hitta sanden vid vattnet där snäckor i olika former ligger.',
+        clue:'Leta i sanden vid vattnet. Där ligger snäckor i olika former.',
         lookFor:['snäckor i olika former','sand vid vattnet'],
         hint:'Sök efter snäckorna i sanden, alldeles vid vattnet.',
-        why:'Snäckorna ligger i sanden vid vattnet. Både sakerna och platsen stämmer.'
+        why:'Snäckorna ligger i sanden, nära vattnet. Både snäckorna och platsen stämmer.'
       },
       {
         description:'Små fiskar simmar mellan koraller under vattnet.',
@@ -161,9 +161,9 @@
     dinosaurs:[
       {
         description:'I leran syns stora avtryck efter fötter.',
-        clue:'Leta på marken där stora fötter har lämnat avtryck i lera.',
+        clue:'Leta efter stora fotavtryck i leran på marken.',
         lookFor:['lera på marken','stora avtryck efter fötter'],
-        hint:'Välj leran med de stora avtrycken efter fötter.',
+        hint:'Välj platsen med de stora fotavtrycken i leran.',
         why:'Leran visar stora avtryck efter fötter. Det är spåren som ledtråden ber oss leta efter.'
       },
       {
@@ -185,7 +185,7 @@
         clue:'Gå i fantasin dit där stora dinosaurier vandrar mellan höga växter.',
         lookFor:['stora dinosaurier','höga växter'],
         hint:'Välj platsen där dinosaurierna går bland växterna.',
-        why:'Här finns både dinosaurierna och de höga växterna. Det är den plats vi letar efter.'
+        why:'Här finns stora dinosaurier bland höga växter. Båda detaljerna stämmer.'
       }
     ],
     garden:[
@@ -340,11 +340,11 @@
     ],
     music:[
       {
-        description:'En ensam musiker spelar från ett notblad.',
+        description:'En ensam musiker spelar med hjälp av ett notblad.',
         clue:'Hitta musikern som spelar ensam och läser från ett blad med noter.',
         lookFor:['en ensam musiker','ett blad med noter'],
         hint:'Här ska det vara en ensam musiker med ett notblad.',
-        why:'Musikern spelar ensam från notbladet. Det skiljer platsen från scenen där en hel grupp står.'
+        why:'Musikern spelar ensam med hjälp av notbladet. På scenen står däremot en hel grupp.'
       },
       {
         description:'Trummor och gitarrer står i ett rum med en liten klocka.',
