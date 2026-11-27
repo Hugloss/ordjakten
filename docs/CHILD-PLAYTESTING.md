@@ -83,6 +83,45 @@ förklarar eget svar, förstår varför annat alternativ faller bort*.
 Automatiska tester verifierar funktion och tillstånd men kan inte visa
 att barnet faktiskt förstår resonemanget.
 
+### Kort observationspass för mysterier (ca 5–8 minuter)
+
+Detta är ett **manuellt provspelsprotokoll**, inte ett utfört barnprov.
+Förbered en mobil eller dator med tom testhistorik. Låt barnet själv välja
+om det vill prova; avbryt när det vill. Samla inte in namn, inspelningar,
+ordagranna utsagor eller uppgifter om barnet.
+
+1. Säg bara: **”Visa hur du tänker när du väljer.”** Låt barnet hitta
+   mysteriets plats och de två bevisen. Berätta inte vad som är rätt.
+2. Be barnet förklara med egna ord varför platsen passar. Notera om det
+   självmant tar upp *båda* detaljerna eller behöver meningsstarten.
+3. Fråga om barnet vill öppna **Prova ett nytt fall**. Titta på om det
+   läser båda spåren före svaren, eller provar efter bara ett.
+4. Vid ett spontant fel: låt barnet läsa förklaringen utan hjälp. Notera
+   om det själv kan peka ut varför det första valet inte räckte.
+   Framkalla inte fel genom att uppmana barnet att välja fel.
+5. När barnet hittar rätt: fråga **”Varför passar inte de andra?”**
+   Om barnet svarar utan att upprepa facit visar det bättre överföring.
+   Först sedan får det öppna förklaringen om det vill.
+
+**Observera separat** (inte som ett betyg): hittar barnet knapparna?
+Går texten att läsa? Använder det uppläsning? Hittar det på egen hand
+*två* relevanta spår? Kan det säga varför ett delvis passande alternativ
+inte räcker? Kan det försöka igen utan att bli frustrerat?
+
+Använd nivåerna **självständigt**, **efter läshjälp/meningsstart** och
+**ännu oklart** för *varje moment*, inte en totalsumma eller tidsgräns.
+Om barnet läser rätt men ändå inte kan förklara två villkor behöver
+innehållet förtydligas. Om barnet förstår men inte hittar rätt knapp
+behöver gränssnittet rättas. Om uppläsningen behövs är det ett stöd,
+inte ett misslyckande.
+
+Gör gärna ett andra kort pass med ett annat fall (till exempel buss 4
+till badhuset) utan att först visa lösningen. Rätta otydliga alternativ
+innan fler fall eller belöningar läggs till. Automatiska Chromium-kontroller
+finns i `tests/browser_treasure_mysteries.py` och provar 320 px i
+högkontrast samt datorläge, tangentbord, återkoppling, återöppning
+och att skatter/resultat är opåverkade. De kan **inte** bevisa förståelse.
+
 ## Fördjupade ordförklaringar: fem ord åt gången
 
 Välj fem befintliga, vanliga ord, gärna från olika områden: exempelvis
