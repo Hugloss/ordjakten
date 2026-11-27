@@ -13,3 +13,6 @@ __pycache__/
 
 # Generated browser screenshots; do not commit historical preview captures.
 docs/previews/*.png
+
+# Bank-local relational indices are generated artifacts, never source data.
+content/banks/**/*.sqlite
