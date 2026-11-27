@@ -23,11 +23,11 @@ const render=(state,id=null,opt={})=>{
   View.render(host,Model.model(state,id,content),opt);
   return host;
 };
-test('gallery displays 12 unique unlocked story cards and no challenge answer',()=>{
+test('gallery displays 32 unique unlocked story cards and no challenge answer',()=>{
   const host=render({});
-  assert.equal(buttons(host,'portalOpen').length,12);
+  assert.equal(buttons(host,'portalOpen').length,32);
   assert.match(text(host),/Upptäckarklubben/);
-  assert.match(text(host),/12/);
+  assert.match(text(host),/32/);
   assert.ok(!text(host).includes(Data.STORIES[0].stages[0].why));
   for(const btn of buttons(host,'portalOpen')){
     assert.equal(btn.tag,'button');assert.equal(btn.type,'button');
