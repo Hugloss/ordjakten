@@ -1,5 +1,11 @@
 # Ordjakten – ändringslogg
 
+## Träningsmål (nästa uppdatering)
+
+- Tre frivilliga träningsmål: Blanda, Upptäck nytt, Ge ord en ny chans. Tillgängliga frågor visas innan start; kortare omgångar fylls inte med fel sorts frågor.
+- Aha-stöd kan ge en ny chans även efter ett rätt huvudsvar. Repetitionspauser respekteras och provlägen/presets är oförändrade.
+- Rensning av lokal historik rensar nu även Aha-observationer.
+
 ## Pågående – post-review efter PR #9
 
 - Vardagsurval med 101 ord och 59 uttryck, inklusive 14 skolord. 20 ord och 8 uttryck finns kvar som frivillig fördjupning. Inga nya ord eller ändrade begrepps-ID:n.

@@ -14,7 +14,7 @@
     theme: 'dark', contrast: false, mode: 'train', difficulty: 'easy', topic: 'words', count: 10,
     companion:'fox', adventure:'forest', sound:false,
     timerMode: 'off', timerSeconds: 180, timerScope: 'total', reviewOnly: false,
-    expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true
+    expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true, practiceGoal:'mixed'
   }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],retentionProgress:{}});
 
   function shuffle(input, random = Math.random) {
@@ -289,12 +289,16 @@
     if(difficulty==='exam')return 'meaning'; // preserve five answers in exam mode
     return ({meaning:'sentence',sentence:'order',order:'meaning'})[lastVariant] || 'sentence';
   }
-  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null) {
+  function practiceGoalForRound(settings) {
+    return settings.mode==='train' && settings.difficulty!=='exam' && !settings.reviewOnly &&
+      !settings.contextOnly && !settings.schoolOnly && ['discover','focus'].includes(settings.practiceGoal)?settings.practiceGoal:'mixed';
+  }
+  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null, missionProgress = null) {
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const pool=getTopicPool(bank,curation,expressions,settings);
     const schoolDrill=topic==='expressions'&&settings.schoolOnly===true&&settings.mode==='train'&&settings.difficulty!=='exam'&&!settings.reviewOnly&&!!missions;
     const count=VALID_COUNTS.includes(settings.count)?settings.count:10;
-    const candidates=settings.contextOnly&&!settings.reviewOnly&&settings.topic==='words'&&
+    let candidates=settings.contextOnly&&!settings.reviewOnly&&settings.topic==='words'&&
       settings.mode==='train'&&settings.difficulty!=='exam'?
       pool.filter(item=>item.kind==='word'&&getContextRecord(contexts,item.entry.id)):
       settings.reviewOnly?pool.filter(item=>reviewProgress===null?
@@ -303,14 +307,23 @@
     if(settings.contextOnly&&!settings.reviewOnly&&candidates.length<count)
       throw new Error('För få skrivna vardagssituationer på denna nivå. Välj färre frågor.');
     if(settings.reviewOnly && candidates.length===0)throw new Error('Det finns inga felaktiga ord eller uttryck att repetera.');
+    const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
+    const goal=practiceGoalForRound(settings);
+    if(goal!=='mixed'){
+      if(!adaptive?.trainingPools)throw new Error('Träningsmålet kunde inte laddas. Ladda om sidan.');
+      candidates=adaptive.trainingPools(candidates,settings,{progress:skillProgress,reviews:reviewProgress,
+        mistakes,readingProgress,missionProgress,contextIds,missionsAvailable:!!missions,now})[goal];
+      if(!candidates.length)throw new Error(goal==='discover'?
+        'Inga oprövade ord eller uttryck på den här nivån. Välj Blanda eller en annan nivå.':
+        'Inget behöver en ny chans just nu. Välj Blanda eller Upptäck nytt.');
+    }
     const wanted=Math.min(count,candidates.length);
     let chosen;
     // Adaptation is opt-in and TRAINING ONLY. Tests, exam, and dedicated scene
     // drills preserve their original unbiased question generation.
     const adapt = adaptive && settings.adaptivePractice === true && settings.mode === 'train' &&
       settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly && !schoolDrill;
-    const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
-    if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,settings,contextIds,!!missions,now,random,readingProgress);
+    if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,{...settings,practiceGoal:goal},contextIds,!!missions,now,random,readingProgress);
     else if(topic==='mixed'){
       const words=shuffle(candidates.filter(x=>x.kind==='word'),random);
       const phrases=shuffle(candidates.filter(x=>x.kind==='expression'),random);
@@ -380,7 +393,8 @@
       expressionTask:['mix','meaning','sentence','order'].includes(obj.expressionTask)?obj.expressionTask:'mix',
       missionHints:obj.missionHints!==false,
       contextMix:obj.contextMix!==false,
-      adaptivePractice:obj.adaptivePractice!==false
+      adaptivePractice:obj.adaptivePractice!==false,
+      practiceGoal:obj.reviewOnly!==true&&['mixed','discover','focus'].includes(obj.practiceGoal)?obj.practiceGoal:'mixed'
     };
   }
   const CAMP_STORY_LIMIT=24;
@@ -492,5 +506,5 @@
     return updated;
   }
   return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,validateSelection,isEveryday,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
-    generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
+    practiceGoalForRound,generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

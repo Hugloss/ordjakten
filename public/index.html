@@ -390,6 +390,17 @@
               <label class="check-row"><input type="checkbox" id="high-contrast"><span>Extra hög kontrast</span></label>
             </section>
 
+            <section class="panel mini-panel" id="practice-goal-settings" aria-labelledby="practice-goal-title">
+              <div class="section-header"><h2 id="practice-goal-title">🎯 Vad vill du öva?</h2></div>
+              <div class="practice-goals" role="group" aria-label="Välj träningsmål">
+                <button type="button" data-practice-goal="mixed" aria-pressed="true"><strong>🎲 Blanda</strong><small>Lite av varje · <span id="goal-mixed-count">0</span></small></button>
+                <button type="button" data-practice-goal="discover" aria-pressed="false"><strong>🔎 Upptäck nytt</strong><small>Inte provade här · <span id="goal-discover-count">0</span></small></button>
+                <button type="button" data-practice-goal="focus" aria-pressed="false"><strong>🌱 Ge ord en ny chans</strong><small>Öva lite till · <span id="goal-focus-count">0</span></small></button>
+              </div>
+              <p id="practice-goal-help" class="subtle-note" aria-live="polite">Både nytt och sådant du har provat tidigare.</p>
+              <p class="subtle-note">Räknas ut från dina sparade övningar på den här enheten.</p>
+            </section>
+
             <section class="panel mini-panel" id="adaptive-settings">
               <div class="section-header"><h2>🧠 Smart träning</h2><span class="help-text">Frivilligt</span></div>
               <label class="check-row"><input type="checkbox" id="adaptive-practice" checked><span><strong>Variera efter vad jag behöver öva</strong><small>Lite extra av svåra saker, men alltid plats för nytt</small></span></label>

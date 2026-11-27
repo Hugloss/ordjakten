@@ -128,12 +128,30 @@
     const readingWeak=readingNeeds(readingProgress,id,'transfer')||readingNeeds(readingProgress,id,'recognition');
     return due || weak.length || readingWeak ? 1 + Math.max(0,...weak.map(type=>skills[type].wrong)) + (readingWeak?2:0) : 0;
   }
+  // Explicit practice goals filter only the current level/topic, without changing
+  // scores, creating extra history or claiming that a child knows a word.
+  function trainingPools(pool,settings,{progress=null,reviews=null,mistakes={},readingProgress=null,
+    missionProgress=null,contextIds=new Set(),missionsAvailable=false,now=Date.now()}={}) {
+    const discover=[],focus=[];
+    for(const item of pool){
+      const id=item.entry.id,skills=progress?.[id]?.skills||{},review=reviews?.[id],reading=readingProgress?.[id];
+      const seen=Object.values(skills).some(value=>value?.attempts>0) || !!review ||
+        Number(mistakes?.[id])>0 || (Array.isArray(missionProgress?.[id])&&missionProgress[id].length>0) ||
+        ['transfer','recognition'].some(type=>reading?.[type]?.first>0||reading?.[type]?.supported>0);
+      if(!seen)discover.push(item);
+      const waiting=review&&review.streak<3&&review.dueAt>now;
+      if(!waiting&&(focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress)>0||
+        (!review&&Number(mistakes?.[id])>0)))focus.push(item);
+    }
+    return {mixed:pool,discover,focus};
+  }
   function pickPool(pool,count,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress=null) {
     if(count<=0)return [];
     const scored=pool.map((item,index)=>({item,index,focus:focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress)}));
-    // Limit focused questions to half the round: exploration always has room.
+    // Mixed training reserves half for exploration. Explicit focus training
+    // already uses a filtered pool, so all requested slots may target weak skills.
     const focused=shuffle(scored.filter(x=>x.focus>0),random)
-      .sort((a,b)=>b.focus-a.focus).slice(0,Math.min(Math.ceil(count/2),scored.filter(x=>x.focus>0).length));
+      .sort((a,b)=>b.focus-a.focus).slice(0,settings.practiceGoal==='focus'?count:Math.ceil(count/2));
     const taken=new Set(focused.map(x=>x.index));
     const isWaiting = id => {const card=reviews?.[id];return !!card && card.streak<3 && card.dueAt>now;};
     // Reserve at least the other half for exploration, when enough fresh material
@@ -194,5 +212,5 @@
     }
     return found.sort((a,b)=>b.wrong-a.wrong || b.lastAt-a.lastAt || a.id.localeCompare(b.id)).slice(0,Math.max(0,Math.min(5,max)));
   }
-  return {SKILLS,LABELS,sanitize,record,task,availableTypes,choiceType,nextScene,pickItems,summary,needsPractice,suggestions};
+  return {SKILLS,LABELS,sanitize,record,task,availableTypes,choiceType,nextScene,pickItems,trainingPools,summary,needsPractice,suggestions};
 });
