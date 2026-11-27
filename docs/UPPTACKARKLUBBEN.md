@@ -5,7 +5,7 @@ deltagare i ett prov. Vi utgår från lekfulla kalasidéer, men äventyren
 i Ordjakten är nya, originalskrivna svenska berättelser och bygger inte
 på köpta manus, trycksaker eller skyddade figurer.
 
-## 32 öppna portaler
+## 52 öppna portaler
 
 | Tema | Äventyr | Fynd |
 | --- | --- | --- |
@@ -41,10 +41,31 @@ på köpta manus, trycksaker eller skyddade figurer.
 | Vänlig frågeshow | Frågefestens hemliga studio | Studiobrickan |
 | Riddarskola | Riddarskolans fredsflagga | Riddarens fredsmärke |
 | Hemlig älvskog | Älvskogens borttappade lyktor | Älvornas sagolykta |
+| Tågmysteriet | Biljettens hemliga resa | Tågdetektivens biljett |
+| Fyrens signaler | Fyrvaktarens hemliga ljuskod | Fyrens ljusmärke |
+| Teaterns krona | Teaterns försvunna papperskrona | Teaterkronan |
+| Biblioteksmysteriet | Bibliotekets hemliga lånekort | Bokspanarens märke |
+| Sagomarknaden | Sagomarknadens försvunna vägbeskrivning | Marknadens kartmärke |
+| Drakens musik | Drakungens borttappade melodi | Drakmelodins märke |
+| Molnslottet | Molnslottets borttappade nyckel | Molnslottets nyckel |
+| Månälvans brev | Månälvans hemliga stjärnbrev | Månälvans stjärnbrev |
+| Sjöjungfruns pärla | Sjöjungfruns vänskapspärla | Vänskapssnäckan |
+| Jättarnas trädgård | Jättarnas lilla vänskapsgåta | Jättarnas frömärke |
+| Väderstationen | Väderstationens borttappade skylt | Väderspanarens märke |
+| Snöexpeditionen | Snöexpeditionens försvunna vykort | Snöexpeditionens vykort |
+| Bergsäventyret | Bergsstigens hemliga riktning | Bergsstigens kompass |
+| Vulkanmuseet | Vulkanöns märkliga sten | Stenforskarens fynd |
+| Stjärnskådning | Stjärnskådarens kvällskarta | Stjärnkartans märke |
+| Robotverkstaden | Robotverkstadens vänliga uppfinning | Uppfinnarens kugghjul |
+| Serieteckning | Seriestudions försvunna pratbubbla | Serietecknarens penna |
+| Musikfesten | Musikfestens hemliga program | Festmusikens notblad |
+| Dockteatern | Dockteaterns försvunna skugga | Skuggteatermärket |
+| Fotoklubben | Fotoklubbens försvunna bildtext | Fotoklubbens bildram |
 
-För att 32 teman ska vara lätta att hitta på en smal skärm kan barnet
-välja **Alla (32)**, **Mysterier (6)**, **Fantasivärldar (8)**,
-**Upptäcktsresor (10)** eller **Skapa och klura (8)**. Kategorierna
+För att 52 teman ska vara lätta att hitta på en smal skärm kan barnet
+välja **Alla (52)**, **Mysterier (11)**, **Fantasivärldar (13)**,
+**Upptäcktsresor (15)** eller **Skapa och klura (13)**. Spelaren ser
+tolv kort i taget och kan välja **Visa fler äventyr** för nästa grupp. Kategorierna
 ändrar bara vilka äventyrskort som visas; alla avklarade fynd finns
 kvar. Valet går att göra med tangentbord och sparas inte som prestation.
 
@@ -116,12 +137,41 @@ riktiga kalaspriser. Det kan senare bli aktuellt med fler sorters
 orduppgifter eller samarbetsmoment när barnprovning visar vad som
 verkligen uppskattas.
 
+### Ytterligare 20 originaläventyr
+
+Utbyggnaden från 32 till 52 berättelser ger fler typer av
+språkliga problem och fler miljöer att upptäcka. Fem nya mysterier
+handlar om tåg, en fyrs signaler, teaterns rekvisita, bibliotekets
+bokmärke och sagomarknadens karta. Fem nya fantasivärldar handlar
+om en liten drakes melodi, molnslottet, en omtänksam månälva,
+sjöjungfruns vänskapspärla och vänliga jättars trädgård. Fem
+upptäcktsresor besöker en väderstation, en snöexpedition, en
+bergsvandring, en museiutställning om vulkaner och en
+stjärnskådares lekhörna. Fem skapande berättelser handlar
+om robotverkstad, serier, musikfest, dockteater och fotografier.
+
+De nya uppdragen har samma trygga trestegsstruktur och återkoppling.
+En del kräver att barnet **tolkar en mening i sitt sammanhang** eller
+förstår **ordningsföljd**, medan andra kräver att två konkreta
+detaljer kontrolleras samtidigt. De ska inte behöva använda färg
+ensam för att besvara en fråga. Stenar och vulkaner undersöks
+på ett museum; ingen uppmanas att gå nära en riktig vulkan.
+Inga farliga experiment, riktiga kamerabilder eller barns röster
+krävs för att spela.
+
+När barnets favoriter ska bedömas räcker inte en rätt-klick-räknare.
+Fråga också vad barnet tycker var det roligaste äventyret, vilken
+ledtråd som var svår att förstå och om det kan berätta varför
+de andra alternativen inte passade. För många kort på samma sida
+är ett användbarhetsproblem, därför visas maximalt tolv åt gången.
+Valet av kategori och visningsantal lagras **inte** som ett barnresultat.
+
 ## Lagring och arkitektur
 
 Nedan beskrivs **nuvarande implementation efter PR #28**. Den långsiktiga planen är att skilja berättelsesteg och belöningar från generella frågeobjekt med stabila ID:n, enligt [målarkitekturen](ARCHITECTURE.md). Detta avsnitt ska inte tolkas som en andra, framtida innehållsmodell.
 
 Kanoniskt innehåll finns **bara** i
-`public/js/mission-portals-data.js`: 32 berättelser, 96 uppdrag.
+`public/js/mission-portals-data.js`: 52 berättelser, 156 uppdrag.
 `mission-portals.js` validerar innehåll och all sparad progression,
 `mission-portals-view.js` bygger tillgängliga knappar och lästexter,
 `mission-portals.css` hanterar mobil, tema och högkontrast.
@@ -141,7 +191,7 @@ tillgängligt offline via samma service worker.
 ## Kontroll och barnprovspelning
 
 - `npm run check` kör innehållsvalidering och Node-tester för
-  samtliga 96 uppdrag, äldre historik, olovliga steg, dubbla klick,
+  samtliga 156 uppdrag, äldre historik, olovliga steg, dubbla klick,
   felval, hjälp och unika fynd.
 - Valfri webbläsarprovning:
   `python tests/browser_mission_portals.py`
