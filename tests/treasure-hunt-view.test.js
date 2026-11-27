@@ -263,6 +263,46 @@ test('mystery panel reveals clues gradually, never renders future clues or corre
   assert.match(text(host),/Ugglans träd har böcker/);
 });
 
+test('a new independent case is opt-in, hides its reason and stays readable on retries',()=>{
+  const m=map();
+  m.mystery={available:true,title:'Ugglans försvunna bok',intro:'Var finns boken?',
+    revealed:3,clues:['Första spåret.','Andra spåret.','Tredje spåret.'],
+    attempted:[],solved:true,last:2,feedback:'Det är trädet.',
+    proof:{done:false,wrong:[],feedback:null,evidence:['ett träd','en uggla']},
+    transfer:{title:'Vantarna på skolan',intro:'Sam tappade sina vantar. Var finns de?',
+      clues:['Här finns kläder som någon har glömt.','Det finns en låda med skylten hittegods.'],
+      choices:[{id:0,label:'Omklädningsrummet utan hittegodslåda'},
+        {id:1,label:'Fritids med lådan och vantarna'},
+        {id:2,label:'Leksaksförrådet utan kläder'}],
+      wrong:[],done:false,feedback:null}};
+  let host=render(m,{canReadAloud:true});
+  assert.equal(byData(host,'treasureMysteryTransfer').length,0,
+    'no new case before the proof is completed');
+  m.mystery.proof.done=true;
+  host=render(m,{canReadAloud:true});
+  const transfer=descendants(host).find(node=>node.className==='treasure-transfer');
+  assert.equal(transfer.tag,'details','next mystery starts closed and voluntary');
+  assert.equal(Object.hasOwn(transfer.attributes,'open'),false);
+  assert.equal(byId(host,'treasure-transfer-title').tabIndex,-1);
+  assert.equal(byData(host,'treasureMysteryTransfer').length,3);
+  assert.equal(byData(host,'treasureListen').filter(node=>node.dataset.treasureListen==='transfer').length,1);
+  assert.ok(!text(host).includes('Det är både låda och vantar'),'answer explanation is not leaked');
+  m.mystery.transfer.wrong=[0];
+  m.mystery.transfer.feedback='Det finns kläder där men ingen låda.';
+  host=render(m);
+  assert.equal(descendants(host).find(node=>node.className==='treasure-transfer').attributes.open,'',
+    'case reopens when the child retries');
+  assert.equal(byData(host,'treasureMysteryTransfer').find(button=>button.dataset.treasureMysteryTransfer==='0').disabled,true);
+  assert.match(text(host),/ingen låda/);
+  m.mystery.transfer.done=true;m.mystery.transfer.choices=[];
+  m.mystery.transfer.feedback='Här finns både vantarna och hittegodslådan.';
+  host=render(m);
+  assert.equal(byData(host,'treasureMysteryTransfer').length,0);
+  assert.match(text(host),/Kan du säga varför båda spåren passar/);
+  assert.equal(descendants(host).find(node=>node.className==='treasure-transfer-why').tag,'details');
+  assert.equal(descendants(host).find(node=>node.className==='treasure-transfer').attributes.open,'');
+});
+
 test('the mystery proof is a readable non-scoring choice with disabled previous wrong guesses',()=>{
   const m=map();
   m.mystery={available:true,title:'Ugglans försvunna bok',intro:'Var är boken?',
