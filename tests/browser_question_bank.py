@@ -94,7 +94,8 @@ def order_training(browser):
       word:document.querySelector('#question-word')?.textContent,
       errors:[...document.querySelectorAll('#global-error')].map(n=>n.textContent)
     })""")
-    assert page.locator("#stat-right").inner_text() == "1", diag
+    assert page.locator("#stat-right").text_content().strip() == "1", diag
+    assert diag["feedback"] == "right", diag
     assert not errors, errors
     page.close()
 
