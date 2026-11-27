@@ -300,8 +300,12 @@ test('a new independent case is opt-in, hides its reason and stays readable on r
   m.mystery.transfer.feedback='Här finns både vantarna och hittegodslådan.';
   host=render(m);
   assert.equal(byData(host,'treasureMysteryTransfer').length,0);
-  assert.match(text(host),/Kan du säga varför båda spåren passar/);
+  assert.match(text(host),/Kan du förklara ditt val/);
   assert.equal(descendants(host).find(node=>node.className==='treasure-transfer-why').tag,'details');
+  const withSpeech=render(m,{canReadAloud:true});
+  const explanation=descendants(withSpeech).find(node=>node.className==='treasure-transfer-why');
+  assert.equal(descendants(explanation).filter(node=>node.dataset.treasureListen==='transferExplanation').length,1,
+    'read-aloud of the explanation is inside the optional disclosure');
   assert.equal(descendants(host).find(node=>node.className==='treasure-transfer').attributes.open,'');
 });
 
