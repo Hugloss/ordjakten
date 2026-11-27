@@ -65,6 +65,42 @@ att leta. Varje karta har fyra sakletarpoäng och fyra möjliga ordstjärnor.
 När alla ledtrådar är lösta är kartan färdig, men platserna kan återbesökas.
 Det finns ingen timer, fartbonus, nedräkning eller förlust av tidigare fynd.
 
+### Mysterier: hitta, bevisa, förklara och pröva i en ny situation
+
+Efter barnets första skatt öppnas ett fristående mysterium i varje värld.
+Barnet får tre ledtrådar, väljer en plats och läser varför ett annat val
+inte passar. Efter lösningen finns en frivillig bevisfråga med två konkreta
+detaljer från platsen. **Berätta som en detektiv** uppmuntrar sedan barnet
+att själv säga *därför att* och använda båda spåren. Ett skrivet exempel
+kan öppnas vid behov, men inget fritt svar eller tal spelas in.
+
+När barnet har löst bevisfrågan blir **Prova ett nytt fall** tillgängligt
+under en stängd, frivillig panel. Alla tolv kartor har en egen redaktionellt
+skriven vardagssituation med två nya ledtrådar och tre alternativ:
+- Ett alternativ passar båda detaljerna.
+- Ett alternativ passar bara den första detaljen.
+- Ett alternativ passar bara den andra detaljen.
+
+Exempel: klassen ska till badhuset med **buss 4**. Buss 4 mot centrum har
+rätt nummer men fel mål. Buss 6 mot badhuset har rätt mål men fel nummer.
+Barnet behöver kontrollera **både bussnummer och destination**, inte bara
+känna igen ett bekant ord. Felval ger en konkret förklaring och låses som
+redan provade; det går att pröva ett annat svar utan stress. Efter rätt
+val kan barnet först berätta med egna ord innan förklaringen öppnas.
+
+Nya fallet är **inte** ett prov och ger inga poäng, extra skatter eller
+ordstjärnor. Kartans ordövning är opåverkad. Endast korta index för
+felalternativ och löst/olöst sparas lokalt under mysteriet. Tidigare
+sparade mysterier utan de nya fälten fortsätter fungera. Framtida
+kartledtrådar och deras svar avslöjas inte av det nya fallet.
+
+Källan för samtliga tolv fall är `public/js/treasure-hunt-data.js`
+(`TRANSFERS`). Motor och granskning finns i `public/js/treasure-hunt.js`,
+`tests/treasure-hunt-content.test.js`, `tests/treasure-hunt.test.js`,
+`tests/treasure-hunt-view.test.js` och `tests/treasure-integration.test.js`.
+Kör `npm run check` före merge. Ett verkligt barnprov krävs fortfarande
+för att bedöma om barnet *förstår och förklarar* de två spåren.
+
 ### Kartmärken och nästa steg
 
 **Min skattbok** samlar de tolv kartorna med separata räknare för hittade
