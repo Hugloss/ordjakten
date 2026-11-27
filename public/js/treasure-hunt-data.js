@@ -762,21 +762,21 @@
         "Skyltar berättar vad forskare har tagit reda på."
       ],
       "choices": [
-        "I en butik ligger gamla stenar bakom glas, men skyltarna visar priser.",
-        "I en bokhörna finns texter om forskare, men inga ben bakom glas.",
+        "I skolans samling visas gamla djurben bakom glas, men ingen skylt förklarar fynden.",
+        "På bildutställningen berättar skyltar om forskarnas fynd, men inga djurben visas bakom glas.",
         "På museet visas gamla djurben bakom glas med skyltar som förklarar fynden."
       ],
       "target": 2,
       "wrong": [
-        "Butiken har glas, men där visas priser och inte gamla djurben med förklaringar.",
-        "Bokhörnan berättar om forskning, men visar inga djurben bakom glas.",
+        "Skolans samling visar djurben bakom glas, men ingen skylt förklarar vad forskarna hittat.",
+        "Bildutställningen har förklarande skyltar, men visar inga gamla djurben bakom glas.",
         null
       ],
       "why": "Museet visar djurben bakom glas och har skyltar som förklarar fynden. Båda spåren stämmer."
     },
     "garden": {
-      "title": "Fröna som ska gro",
-      "intro": "Klassen ska välja en plats för sina frön. Var har de bäst chans?",
+      "title": "Plantorna som ska växa",
+      "intro": "Klassen ska ta hand om sina små plantor. Vilken plats passar ledtrådarna?",
       "clues": [
         "Platsen får ljus under dagen.",
         "Någon vattnar jorden varje dag."
@@ -792,7 +792,7 @@
         null,
         "Krukan får ljus, men den får inte vatten varje dag."
       ],
-      "why": "På fönsterbrädan får fröna både ljus och vatten. Båda sakerna behövs för att fröna ska kunna gro."
+      "why": "På fönsterbrädan får plantorna både dagsljus och vatten. Det hjälper dem att växa."
     },
     "unicorn": {
       "title": "Vägen över bäcken",
