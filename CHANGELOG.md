@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Första publiceringen – kortare start och tydligare läsflöde
+
+- Snabbstarten spelar fem lätta ord utan timer. Tomma träningsmål är inaktiverade; ett sparat mål som blivit tomt återgår uttryckligen till Blanda.
+- Rättelsen och den aktuella förklaringen visas direkt. Fler exempel, motexempel och egna tankefrågor kan öppnas frivilligt; fullständigt innehåll finns kvar i facit och ordsamlingen.
+- Aha-frågan och de visade svaren kan läsas upp neutralt med webbläsarens talstöd. Uppläsning följer synligt innehåll och stoppas vid svar och byte av steg.
+- Handlingsbilder och experiment döljs under Aha-steget och återkommer vid omläsning. Offlinecache v65.
+- Publiceringsinstruktionerna beskriver det aktiva GitHub Pages-flödet. Se [första provspelningen](docs/FIRST-PUBLISH.md).
+
 ## Pågående – tydligare förklaringar efter PR #10
 
 - 18 befintliga ord får tydligare undervisning, vardagsscener eller säkrare felalternativ. Överlappande ord hålls isär i frågor som annars kan få flera försvarbara svar.

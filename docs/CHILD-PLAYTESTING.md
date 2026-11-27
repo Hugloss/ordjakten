@@ -12,7 +12,8 @@ konkret användbarhetsbrist, inte ett problem som kan lösas med fler stjärnor.
 2. **Välj**: Barnet öppnar alternativen med *Jag har läst – visa svaren*.
    Berättelsen finns kvar så att det går att gå tillbaka och läsa igen.
 3. **Förstå**: Efter rätt/fel försvinner frågan och förklaringen blir störst
-   på skärmen. Exempel och Aha-ruta visas med läsbar text.
+   på skärmen. Rättelse och aktuell förklaring visas direkt. Kompletterande
+   undervisning öppnas under *Fler exempel och fundera själv*.
 4. **Pröva**: En separat Aha-fråga med tre alternativ frågar om **en annan
    situation** där uttrycket/ordet passar. Alla 121 ord har tre skrivna
    situationer och en separat lista med granskade felberättelser.
@@ -38,6 +39,9 @@ konkret användbarhetsbrist, inte ett problem som kan lösas med fler stjärnor.
   Fråga vilket textstycke det tittade på först.
 - Kan barnet visa med fingret **vad det skulle läsa** innan alternativen?
 - Kan barnet hitta den nya förklaringen och läsa den utan hjälp?
+- Är huvudförklaringen tillräcklig innan barnet öppnar fler exempel?
+- Kan barnet lyssna på både berättelsen, förklaringen och Aha-frågan när
+  webbläsaren stöder uppläsning? Lyssnar det på samma alternativ som visas?
 - Fråga vad det tror att Aha-frågan betyder och varför ett svar passar.
 - Låt barnet svara fel på Aha-frågan; blir det hjälpt att läsa igen?
 - Testa även vanliga ord utan berättelse, bildord och **Testa dig**.

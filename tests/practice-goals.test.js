@@ -31,6 +31,127 @@ function pools(memory={},options={}){
     {...settings,...options},{contextIds,missionsAvailable:true,now:NOW,...memory});
 }
 function ids(items){return items.map(item=>item.entry.id);}
+const appSource=fs.readFileSync(path.resolve(__dirname,'../public/js/app.js'),'utf8');
+function goalSetup(options={},memory={}){
+  const current={...settings,...options};
+  const history={...E.sanitizeHistory(null),settings:{...current},skillProgress:memory.progress||{},
+    reviewProgress:memory.reviews||{},mistakes:memory.mistakes||{},readingProgress:memory.readingProgress||{},
+    missionProgress:memory.missionProgress||{},contextProgress:memory.contextProgress||{}};
+  const elements=new Map();
+  const element=id=>{
+    if(!elements.has(id))elements.set(id,{hidden:false,textContent:'',title:'',disabled:false});
+    return elements.get(id);
+  };
+  const buttons=['mixed','discover','focus'].map(goal=>({dataset:{practiceGoal:goal},disabled:false,title:'',
+    attributes:{},setAttribute(name,value){this.attributes[name]=value;}}));
+  const saved=[];
+  const source=appSource.slice(appSource.indexOf('  function setPressed('),appSource.indexOf('  function setSettings('))+
+    appSource.slice(appSource.indexOf('  function renderPracticeGoal('),appSource.indexOf('  function renderSetup('));
+  const render=vm.runInNewContext(source+'\nrenderPracticeGoal;',{
+    E,D,settings:current,history,contexts,missions,$:element,
+    document:{querySelectorAll(selector){assert.equal(selector,'[data-practice-goal]');return buttons;}},
+    contextMemory:()=>({catalog:contexts,progress:history.contextProgress}),
+    practiceSeenIds:()=>memory.seenIds||new Set(),
+    saveHistory(){history.settings={...current};saved.push({...current});}
+  });
+  const currentPool=E.getTopicPool(bank,curation,expressions,current);
+  const refresh=()=>render(currentPool,NOW);
+  refresh();
+  return {settings:current,history,saved,element,refresh,button:goal=>buttons.find(button=>button.dataset.practiceGoal===goal)};
+}
+
+test('first setup keeps mixed and discovery playable while explaining the empty focus goal',()=>{
+  const view=goalSetup({difficulty:'easy',count:5});
+  assert.equal(view.button('mixed').disabled,false);
+  assert.equal(view.button('discover').disabled,false);
+  assert.equal(view.button('focus').disabled,true);
+  assert.equal(view.button('mixed').attributes['aria-pressed'],'true');
+  assert.equal(view.button('focus').attributes['aria-pressed'],'false');
+  assert.equal(view.element('goal-focus-count').textContent,'0');
+  assert.match(view.element('practice-goal-help').textContent,/Ge ord en ny chans har inga frågor/);
+  assert.equal(view.saved.length,0,'fresh setup does not rewrite preferences');
+  assert.equal(generate(view.settings).length,5);
+});
+
+test('a nonempty selected focus goal stays selected and starts only its available questions',()=>{
+  const progress=D.record({}, {id:target,kind:'word',taskType:'meaning'},'wrong',NOW);
+  const view=goalSetup({practiceGoal:'focus'},{progress});
+  assert.equal(view.settings.practiceGoal,'focus');
+  assert.equal(view.button('focus').disabled,false);
+  assert.equal(view.button('focus').attributes['aria-pressed'],'true');
+  assert.equal(view.element('goal-focus-count').textContent,'1');
+  assert.equal(view.saved.length,0);
+  assert.deepEqual(generate(view.settings,{progress}).map(question=>question.id),[target]);
+});
+
+test('saved exhausted goals visibly return to mixed and persist that change once',()=>{
+  for(const goal of ['focus','discover']){
+    const memory=goal==='discover'?{seenIds:new Set(ids(pool))}:{};
+    const view=goalSetup({practiceGoal:goal},memory);
+    assert.equal(view.settings.practiceGoal,'mixed');
+    assert.equal(view.history.settings.practiceGoal,'mixed');
+    assert.equal(view.button(goal).disabled,true);
+    assert.equal(view.button(goal).attributes['aria-pressed'],'false');
+    assert.equal(view.button('mixed').disabled,false);
+    assert.equal(view.button('mixed').attributes['aria-pressed'],'true');
+    assert.match(view.element('practice-goal-help').textContent,/Blanda är valt i stället/);
+    assert.equal(view.saved.length,1);
+    assert.equal(generate(view.settings,memory).length,5,'the displayed mixed goal can actually start');
+    assert.throws(()=>generate({practiceGoal:goal},memory),/Inget behöver|Inga oprövade/,
+      'the engine still rejects a direct request for an empty filtered goal');
+    view.refresh();
+    assert.equal(view.saved.length,1,'rendering again does not keep saving a fallback');
+  }
+});
+
+test('an exhausted discovery button becomes available again for an untried question',()=>{
+  const seenIds=new Set(ids(pool));
+  const view=goalSetup({}, {seenIds});
+  assert.equal(view.button('discover').disabled,true);
+  assert.match(view.button('discover').title,/inga nya frågor/);
+  seenIds.delete(target);
+  view.refresh();
+  assert.equal(view.button('discover').disabled,false);
+  assert.equal(view.button('discover').title,'');
+  assert.equal(view.element('goal-discover-count').textContent,'1');
+  assert.deepEqual(generate({practiceGoal:'discover'},{seenIds}).map(question=>question.id),[target]);
+});
+
+test('setup does not replace a saved goal when a test or dedicated round ignores it',()=>{
+  for(const override of [{mode:'test'},{difficulty:'exam'},{reviewOnly:true},{contextOnly:true},{schoolOnly:true}]){
+    const view=goalSetup({practiceGoal:'focus',...override});
+    assert.equal(view.settings.practiceGoal,'focus');
+    assert.equal(view.saved.length,0);
+    assert.equal(E.practiceGoalForRound(view.settings),'mixed');
+    if(override.mode||override.difficulty||override.reviewOnly)
+      assert.equal(view.element('practice-goal-settings').hidden,true);
+  }
+});
+
+test('quick start opens five easy training words without a timer and keeps the chosen companion',()=>{
+  let chosen=E.sanitizeSettings({mode:'test',topic:'expressions',difficulty:'exam',count:25,
+    timerMode:'per',reviewOnly:true,practiceGoal:'focus',companion:'owl',adventure:'music'});
+  let click,round;
+  const source=appSource.slice(appSource.indexOf("  $('quick-start').addEventListener("),
+    appSource.indexOf("  $('retention-home-list').addEventListener("));
+  vm.runInNewContext(source,{
+    $(id){assert.equal(id,'quick-start');return {addEventListener(event,callback){assert.equal(event,'click');click=callback;}};},
+    setSettings(change){chosen=E.sanitizeSettings({...chosen,...change});},
+    startRound(){round=generate(chosen);}
+  });
+  click();
+  assert.equal(chosen.mode,'train');
+  assert.equal(chosen.difficulty,'easy');
+  assert.equal(chosen.topic,'words');
+  assert.equal(chosen.timerMode,'off');
+  assert.equal(chosen.reviewOnly,false);
+  assert.equal(chosen.practiceGoal,'mixed');
+  assert.equal(chosen.companion,'owl');
+  assert.equal(chosen.adventure,'music');
+  assert.equal(round.length,5);
+  assert.equal(new Set(round.map(question=>question.id)).size,5);
+  assert.ok(round.every(question=>question.kind==='word'));
+});
 
 test('new goals migrate safely and do not override explicit review or test modes',()=>{
   assert.equal(E.sanitizeSettings({}).practiceGoal,'mixed');

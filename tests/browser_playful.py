@@ -66,7 +66,7 @@ def main():
         quick, errors=make_page(browser,{'width':390,'height':844})
         quick.locator('#quick-start').click()
         assert quick.locator('#view-play').is_visible()
-        assert quick.locator('#stat-progress').inner_text() == '1 / 10'
+        assert quick.locator('#stat-progress').inner_text() == '1 / 5'
         assert quick.locator('#play-tag').inner_text().startswith('📚 Träna')
         assert quick.locator('#clock-stat').is_hidden()
         assert not errors, errors

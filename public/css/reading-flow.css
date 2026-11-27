@@ -69,6 +69,7 @@
 #reading-story.is-story #question-word{font-size:clamp(18px,2.7vw,22px)!important;line-height:1.4}
 #reading-story.is-story #context-story,#reading-story.is-story #expression-story{font-size:clamp(24px,4.2vw,30px);line-height:1.52;font-weight:850}
 #feedback-area[data-reading-stage='quiz'] .explanation,#feedback-area[data-reading-stage='quiz'] #feedback-status,
+#feedback-area[data-reading-stage='quiz'] #quest-action-solution,#feedback-area[data-reading-stage='quiz'] #quest-animal-art,
 #feedback-area[data-reading-stage='reread'] #feedback-status{display:none!important}
 #feedback-area[data-reading-stage='quiz'] #feedback-reading-stage{margin-bottom:12px}
 /* The scene title belongs WITH the large story. Never append a second,
@@ -398,6 +399,11 @@
 /* Short, concrete explanations, followed by a familiar everyday connection. */
 .school-feedback-correction:empty,#school-feedback-explanation:empty{display:none}
 .school-feedback-correction{padding:8px 10px;border-radius:8px;background:var(--surface-2);font-weight:600}
+.teaching-more{margin-top:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.teaching-more>summary{min-height:48px;padding:12px 14px;box-sizing:border-box;cursor:pointer;font-size:17px;font-weight:800;line-height:1.4}
+.teaching-more[open]>summary{border-bottom:1px solid var(--border)}
+.teaching-more>.word-teaching-part,.teaching-more>.school-everyday,.teaching-more>.school-how{margin:12px}
+.teaching-more>summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .school-everyday,.school-how{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2)}
 .school-everyday p,.school-how p{margin-bottom:0}
 

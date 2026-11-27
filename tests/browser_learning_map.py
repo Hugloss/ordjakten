@@ -13,7 +13,7 @@ OUT=Path(__file__).resolve().parents[1]/'docs/previews'
 def play_five(page):
     page.locator('[data-count="5"]').click()
     page.locator('#quick-start').click()
-    for _ in range(10):
+    for _ in range(5):
         if page.locator('#view-results').is_visible():
             break
         page.locator('.answer-option').first.click()
@@ -62,8 +62,8 @@ def main():
         child.locator('#open-learning-results').click()
         assert child.locator('#view-learning').is_visible()
         seen=int(child.locator('#learning-total-seen').inner_text())
-        assert seen==10,seen # quick start overrides setup to 10
-        assert child.locator('.learning-word-card').count()==10
+        assert seen==5,seen
+        assert child.locator('.learning-word-card').count()==5
         assert child.locator('.learning-steps li:visible').count()==0 # closed by default
         first=child.locator('.learning-word-toggle').first
         first.click()
@@ -79,7 +79,7 @@ def main():
         child.locator('[data-theme-choice="light"]').click()
         child.locator('#high-contrast').check()
         child.locator('#open-learning-home').click()
-        assert child.locator('.learning-word-card').count()==10
+        assert child.locator('.learning-word-card').count()==5
         assert child.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), 'Light-mode overflow'
         child.screenshot(path=str(OUT/'v014-ordstig-mobil-ljus.png'),full_page=False)
         assert not errors,errors
