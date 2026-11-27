@@ -43,3 +43,17 @@ svaren kan visas.
 
 Automatiska innehållstester går genom samtliga vardagsscener och uttryck
 i den aktuella ordbanken och kontrollerar att inga ord försvinner.
+
+## Kontroll vid rebase 2026-11-27
+
+Efter uppdateringen mot `main` passerade `npm run check`: 465 tester,
+innehållskontrollen och kontrollen av Pages/offline-filerna. Befintliga
+uppgiftsinstruktioner, äventyrselement och den aktuella modulladdningen
+behölls när konflikterna löstes.
+
+Webbläsartestet kontrollerar dessutom att läshjälpen inte registrerar svar,
+att den saknas genom hela Testa dig-omgången och att en tidsgräns fortfarande
+kan löpa ut medan barnet läser en del. Testfilens Python-syntax har verifierats,
+men dessa Chromium-scenarier kunde inte köras i denna miljö: systemets
+Chromium-program saknades och hämtningen av Playwrights webbläsare blockerades
+med HTTP 403. De behöver köras i en miljö med Chromium före användbarhetsbedömning.
