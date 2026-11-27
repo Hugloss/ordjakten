@@ -1,0 +1,38 @@
+name: Browser check – Upptäckarklubben
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/js/mission-portals*.js'
+      - 'public/css/mission-portals.css'
+      - 'public/js/app.js'
+      - 'public/js/engine.js'
+      - 'public/index.html'
+      - 'tests/browser_mission_portals.py'
+      - 'tests/browser_smoke.py'
+      - '.github/workflows/browser-mission-portals.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ordjakten-portal-browser-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  portal-playtest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install isolated Chromium browser
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Play the twelve adventure portals on desktop and mobile
+        run: python tests/browser_mission_portals.py
