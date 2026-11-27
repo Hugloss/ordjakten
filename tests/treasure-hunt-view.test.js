@@ -283,4 +283,19 @@ test('the mystery proof is a readable non-scoring choice with disabled previous 
   host=render(m);
   assert.equal(byData(host,'treasureMysteryProof').length,0);
   assert.match(text(host),/Du hittade de två detaljer som passar/);
+  assert.equal(descendants(host).filter(node=>node.className==='treasure-proof-reflection').length,0,
+    'older views with no evidence remain compatible');
+  m.mystery.proof.evidence=['ett stort träd','en uggla med böcker'];
+  const original=clone(m);
+  host=render(m);
+  assert.match(text(host),/Berätta som en detektiv/);
+  assert.match(text(host),/Jag valde den här platsen därför att/);
+  const example=descendants(host).find(node=>node.className==='treasure-proof-example');
+  assert.equal(example.tag,'details');
+  assert.match(text(example),/ett stort träd och en uggla med böcker/);
+  assert.deepEqual(m,original,'reflection never changes earned proof or progress');
+  m.mystery.proof.done=false;
+  host=render(m);
+  assert.equal(descendants(host).filter(node=>node.className==='treasure-proof-reflection').length,0,
+    'example never reveals the target before the evidence answer is complete');
 });
