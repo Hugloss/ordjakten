@@ -34,14 +34,30 @@
     list.setAttribute('aria-label','Äventyrets tre uppdrag');
     return list;
   }
-  function gallery(host,doc,model){
+  function gallery(host,doc,model,options){
     const heading=node(doc,'h1','', '🗺️ Upptäckarklubben');
     heading.id='portal-title';heading.tabIndex=-1;
     host.append(heading,node(doc,'p','portal-intro','Välj ett äventyr. Följ spåren, upptäck platser och lös gåtor i din egen takt. Alla äventyr är öppna från början.'));
     const count=node(doc,'p','portal-progress',`🎒 ${model.doneCount} av ${model.entries.length} upptäckarfynd samlade`);
     count.setAttribute('role','status');host.append(count);
+    const selected=['mystery','fantasy','explore','creative'].includes(options.category)?options.category:'all';
+    const categories=[['all','Alla äventyr'],['mystery','🔎 Mysterier'],['fantasy','✨ Fantasivärldar'],
+      ['explore','🧭 Upptäcktsresor'],['creative','🎨 Skapa och klura']];
+    const filters=node(doc,'div','portal-filters');
+    filters.setAttribute('role','group');filters.setAttribute('aria-label','Välj vilken sorts äventyr du vill se');
+    for(const [id,label] of categories){
+      const count=id==='all'?model.entries.length:model.entries.filter(row=>row.group===id).length;
+      const control=button(doc,label+' · '+count,'portalFilter',id);
+      control.id='portal-filter-'+id;
+      control.className='portal-filter'+(selected===id?' portal-filter-selected':'');
+      control.setAttribute('aria-pressed',String(selected===id));filters.append(control);
+    }
+    host.append(filters);
+    const shown=model.entries.filter(row=>selected==='all'||row.group===selected);
+    const chosenCount=node(doc,'p','portal-filter-count',`Visar ${shown.length} av ${model.entries.length} äventyr`);
+    chosenCount.setAttribute('role','status');host.append(chosenCount);
     const grid=node(doc,'div','portal-grid');
-    for(const row of model.entries){
+    for(const row of shown){
       const item=button(doc,'','portalOpen',row.id);
       item.className='portal-card'+(row.done?' portal-card-done':'');
       const icon=node(doc,'span','portal-card-icon',row.emoji);icon.setAttribute('aria-hidden','true');
@@ -130,7 +146,7 @@
     if(!model){host.hidden=true;return;}
     host.hidden=false;host.className='portal-world';
     const doc=host.ownerDocument;
-    if(!model.current)gallery(host,doc,model);
+    if(!model.current)gallery(host,doc,model,options);
     else adventure(host,doc,model,options);
   }
   return {render};
