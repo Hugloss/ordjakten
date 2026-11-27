@@ -2370,7 +2370,7 @@
     if(!stage)return '';
     return [stage.title,stage.scene,...stage.clues,
       stage.solved?'Du hittade lösningen. '+stage.feedback:
-        stage.choices.filter(row=>!row.tried).map(row=>'Alternativ '+(row.index+1)+': '+row.label).join('. '),
+        stage.choices.filter(row=>!row.tried).map(row=>'Alternativ '+(row.position+1)+': '+row.label).join('. '),
       !stage.solved?stage.feedback:'',
       stage.hint?'Läs första spåret och hitta de svar där det stämmer. Läs sedan det andra spåret. Ett svar måste passa båda.':''
     ].filter(Boolean).join('. ');
