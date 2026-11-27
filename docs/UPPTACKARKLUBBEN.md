@@ -14,11 +14,11 @@ på köpta manus, trycksaker eller skyddade figurer.
 | Gåtrum | Gåtrummets hemliga dörr | Gåtnyckeln |
 | Pirater | Piraternas stjärnkarta | Sjökompassen |
 | Trollskola | Trollskolans försvunna skratt | Skrattklockan |
-| Dinosaurier | Dinosauriernas äggmysterium | Fossilmärket |
+| Dinosaurier | Dinosauriernas äggmysterium | Fyndmärket |
 | Fantasiprofessor | Professor Pärlans bubbelgåta | Bubbelmärket |
 | Vänligt spöke | Det vänliga spökets klocka | Spökvännens ljus |
 | Rymdäventyr | Rymdstationens vänliga signal | Signalstjärnan |
-| Djungelexpedition | Djungelns gömda bibliotek | Djungelboken |
+| Djungelexpedition | Djungelns gömda bibliotek | Djungelns sagobok |
 | Superhjältar | Superhjältarnas hjälpuppdrag | Hjältemärket |
 | Egyptens historia | Pyramidens stjärnhemlighet | Stjärnnyckeln |
 
@@ -45,6 +45,8 @@ exempel `antenn`, `monter` och `fossil`. Inga alternativ får bara
 skilja sig genom en osynlig färgkod eller okända symboler.
 
 Ledtrådarna i en scen ska beskriva **två självständiga egenskaper**.
+Varje felalternativ ska avsiktligt passa **ett** spår och motsäga det
+andra – inte missa båda eller av misstag passa båda.
 Förklaringen efter ett fel ska visa vilken egenskap som passar och
 vilken som inte passar. Inget facit eller kommande scen finns i
 webbläsarmodellen innan barnet når den delen. Rubrikerna ska skapa
