@@ -1880,7 +1880,7 @@
           "correct": false
         },
         {
-          "label": "Att ta över en uppgift utan att fråga vad personen behöver.",
+          "label": "Att gömma böckerna så att den andra personen måste leta efter dem.",
           "correct": false
         }
       ],
@@ -2130,13 +2130,13 @@
       "id": "ut-0056",
       "phrase": "Jämför",
       "category": "school-instruction",
-      "scene": "Läraren skriver: ”Jämför en cykel och en buss.” Vad behöver du göra?",
-      "definition": "Berätta vad som är lika och vad som är olika.",
+      "scene": "Läraren skriver: ”Jämför en cykel och en buss. Ta med en likhet och en skillnad.” Vad behöver du göra?",
+      "definition": "Berätta om likheter eller skillnader mellan två eller flera saker.",
       "example": "En cykel och en buss har båda hjul. Men du trampar på cykeln och bussen har en motor.",
       "reveal": [
         {
           "title": "Så fungerar det",
-          "text": "Om du bara berättar om cykeln vet vi inget om bussen. Titta på båda. Säg först vad de har gemensamt och sedan vad som skiljer dem åt."
+          "text": "Titta på både cykeln och bussen. Här ber läraren om två saker: något som är lika och något som skiljer dem åt. Bara en beskrivning av cykeln räcker inte."
         },
         {
           "title": "Tänk på något du känner igen",
@@ -2145,7 +2145,7 @@
       ],
       "options": [
         {
-          "label": "Berätta vad som är lika och vad som är olika.",
+          "label": "Berätta något som är lika och något som är olika mellan cykeln och bussen.",
           "correct": true
         },
         {
@@ -2153,7 +2153,7 @@
           "correct": false
         },
         {
-          "label": "Berätta bara vad du tycker bäst om utan att jämföra sakerna.",
+          "label": "Berätta att du vill åka buss utan att säga något om cykeln.",
           "correct": false
         },
         {
@@ -2166,7 +2166,7 @@
         }
       ],
       "review_status": "draft",
-      "schoolRule": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+      "schoolRule": "Läs vad du ska jämföra. Här övar du på att ta med både en likhet och en skillnad. Använd gärna både, medan eller men."
     },
     {
       "id": "ut-0057",
@@ -2299,7 +2299,7 @@
       "phrase": "Motivera",
       "category": "school-instruction",
       "scene": "Du väljer att ta med regnjacka på utflykten. Läraren säger: ”Motivera ditt val.” Vad ska du lägga till?",
-      "definition": "Berätta vad du väljer eller tycker, och varför.",
+      "definition": "Ge en anledning till ditt val, ditt svar eller din åsikt.",
       "example": "Jag väljer regnjackan eftersom det ska regna och jag vill hålla mig torr.",
       "reveal": [
         {
@@ -2313,7 +2313,7 @@
       ],
       "options": [
         {
-          "label": "Berätta vad du väljer eller tycker, och varför.",
+          "label": "Ge en anledning till ditt val, ditt svar eller din åsikt.",
           "correct": true
         },
         {

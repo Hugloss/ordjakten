@@ -696,6 +696,7 @@
         }
         localIds.add(q.id);localPrompts.add(prompt);
         rows.push({...q,groupId:group.id,type:group.type,starter:group.starter,options,
+          everyday:[...group.words,...q.options].every(id=>byId.get(id).everyday!==false),
           stamp:stamp([group.id,group.type,group.words,group.explanation,q,
             [...new Set([...group.words,...q.options])].map(id=>[id,byId.get(id).name,byId.get(id).definition])])});
       }
@@ -704,7 +705,7 @@
       }
       groupIds.add(group.id);
       for(const q of rows){questionIds.add(q.id);prompts.add(q.prompt.trim().toLocaleLowerCase('sv-SE'));}
-      groups.push({...group,words:group.words.map(id=>byId.get(id)),questions:rows});tasks.push(...rows);
+      groups.push({...group,everyday:rows.every(row=>row.everyday),words:group.words.map(id=>byId.get(id)),questions:rows});tasks.push(...rows);
     }
     return {groups,tasks,errors};
   }
@@ -723,7 +724,8 @@
   }
   function plan(content,raw={},known=new Set(),now=Date.now(),random=Math.random,groupId=null,wordId=null,type='all'){
     const progress=sanitize(raw,content.tasks);
-    const eligible=new Set(content.groups.filter(group=>(type==='all'||group.type===type)&&
+    const eligible=new Set(content.groups.filter(group=>(groupId||wordId||group.everyday!==false)&&
+      (type==='all'||group.type===type)&&
       (!wordId||group.words.some(word=>word.id===wordId))&&
       (groupId?group.id===groupId:wordId||type!=='all'||group.starter||
         group.words.some(word=>known.has(word.id))||group.questions.some(task=>progress[task.id]))).map(group=>group.id));

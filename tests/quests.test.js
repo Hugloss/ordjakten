@@ -73,3 +73,22 @@ test('older stored results and book progress survive quest progress migration',(
   assert.deepEqual(J.earn(after.questCounts,'comeback',false),after.questCounts);
   assert.equal(J.earn(after.questCounts,'evil',true).evil,undefined);
 });
+
+test('automatic retry missions keep extension-only mistakes available for explicit practice',()=>{
+  const settings={...base,difficulty:'exam',topic:'mixed'};
+  const extensionMistakes=Object.fromEntries([...curation.extensionWords,...curation.extensionExpressions].map(id=>[id,2]));
+  const before=JSON.stringify(extensionMistakes);
+  assert.equal(make('comeback',extensionMistakes,settings),null);
+  const reviews=Object.fromEntries(Object.keys(extensionMistakes).map(id=>[id,{streak:0,dueAt:1}]));
+  assert.equal(J.makePlan('comeback',settings,extensionMistakes,bank,curation,expressions,E,reviews,100),null);
+  const core=E.getPool(bank,curation,'medium')[0].id;
+  const mixed={...extensionMistakes,[core]:1};
+  const plan=make('comeback',mixed,settings);
+  assert.ok(plan);
+  assert.notEqual(plan.settings.difficulty,'exam');
+  const questions=E.generateRound(bank,curation,{...settings,...plan.settings},mixed,()=>0.51,expressions);
+  assert.deepEqual(questions.map(question=>question.id),[core]);
+  assert.equal(JSON.stringify(extensionMistakes),before);
+  const explicit=E.getTopicPool(bank,curation,expressions,settings);
+  for(const id of Object.keys(extensionMistakes))assert.ok(explicit.some(item=>item.entry.id===id));
+});

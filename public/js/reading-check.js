@@ -32,6 +32,25 @@
       ...shuffle(wrong,random).slice(0,2).map(label=>({label,correct:false}))],random);
     return {prompt,options,source,why:why||'',evidence};
   }
+  // Presentation only: raw labels remain the identity used by novelty checks,
+  // corrections and authored evidence. Never shorten mismatched instructions.
+  function formatSchoolAnswers(options,enabled=true) {
+    const unchanged={instruction:'',options};
+    if(!enabled||!Array.isArray(options)||!options.length)return unchanged;
+    const separator='” – ';
+    const parts=[];
+    for(const option of options){
+      if(typeof option?.label!=='string')return unchanged;
+      const at=option.label.indexOf(separator);
+      if(at<1||!option.label.slice(0,at).replace(/[“”]/gu,'').trim())return unchanged;
+      const instruction=option.label.slice(0,at+1);
+      const displayLabel=option.label.slice(at+separator.length);
+      if(!displayLabel.trim()||parts.length&&instruction!==parts[0].instruction)return unchanged;
+      parts.push({instruction,displayLabel});
+    }
+    return {instruction:parts[0].instruction,
+      options:options.map((option,index)=>({...option,displayLabel:parts[index].displayLabel}))};
+  }
   function makeCheck(question,{bank,contexts,surprises,missions,readingProgress=null,random=Math.random}={}) {
     if(!question||!question.id||!question.definition)return null;
     const word=question.word;
@@ -70,8 +89,12 @@
         if(wrong.length!==2)return null; // no invented or cross-task alternatives
       }
       const prompt=school?'Vilket svar följer instruktionen ”'+word+'”?':'Vilken NY situation visar uttrycket ”'+word+'”?';
-      return makeChallenge(prompt,picked.label,wrong,
+      const check=makeChallenge(prompt,picked.label,wrong,
         'expression',random,picked.why,picked.key);
+      if(!school||!check)return check;
+      const formatted=formatSchoolAnswers(check.options);
+      return {...check,prompt:formatted.instruction?check.prompt+'\n'+formatted.instruction:check.prompt,
+        options:formatted.options,schoolInstruction:true};
     }
     if(question.kind!=='word')return null;
     const scenes=contexts?.wordContexts||[];
@@ -238,5 +261,5 @@
     // inherit a longer interval from aggregate counters or legacy mastery.
     return !!card&&(!!card.memory||(card.first>0&&card.lastAt>0&&typeof card.lastEvidence==='string'));
   }
-  return {makeCheck,isCorrect,nextStep,sanitizeProgress,recordProgress,needsReview,transferDueAt,hasMaintenance};
+  return {formatSchoolAnswers,makeCheck,isCorrect,nextStep,sanitizeProgress,recordProgress,needsReview,transferDueAt,hasMaintenance};
 });

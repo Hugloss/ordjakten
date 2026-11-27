@@ -72,8 +72,8 @@ def material_experiments(browser):
     cases = [
         ('sv-0037','easy','mirror','Blank spegel','.action-mirror-star','--action-mirror-x'),
         ('sv-0008','medium','bounce','Studsboll av gummi','.action-bounce-ball','--action-bounce-y'),
-        ('sv-0005','easy','slide','Slät is','.action-ice-block','--action-ice-x'),
-        ('sv-0040','medium','sponge','Tvättsvamp med öppna porer','.action-pore-water','--action-water'),
+        ('sv-0005','medium','slide','Slät is','.action-ice-block','--action-ice-x'),
+        ('sv-0014','medium','sponge','Svamp som är full med vatten','.action-pore-water','--action-water'),
         ('sv-0011','medium','sticky','Kort med vått pyssellim','.action-sticky-1',None),
         ('sv-0007','easy','glitter','Slipad kristall','.action-glitter-beam','--action-light-x'),
         ('sv-0029','medium','foam','Vatten med lite tvål','.action-foam-bubble','--action-foam-count'),

@@ -24,6 +24,18 @@ def answer_reading(page):
           document.querySelector('#reading-check-title').textContent.includes(
             window.ORDJAKTEN_EXPRESSIONS.expressions.find(e=>e.id===x.id).phrase))''')
         right=next(o['label'] for o in challenge['options'] if o['correct'])
+    elif 'Vilket svar följer instruktionen' in prompt:
+        raw_answers=page.evaluate('''() => {
+          const phrase=document.querySelector('#explanation-word').textContent;
+          const entry=window.ORDJAKTEN_EXPRESSIONS.expressions.find(e=>e.phrase===phrase);
+          const challenge=window.ORDJAKTEN_SURPRISES.challenges.find(c=>c.id===entry.id);
+          const mission=window.ORDJAKTEN_MISSIONS.missions.find(m=>m.id===entry.id);
+          return [...challenge.options,...mission.sentences]
+            .filter(option=>option.correct).map(option=>option.label);
+        }''')
+        matching=[label for label in raw_answers if label.split('” – ',1)[0]+'”' in prompt]
+        assert len(matching)==1, (prompt,raw_answers)
+        right=matching[0].split('” – ',1)[1]
     elif 'Vilken ANNAN berättelse' in prompt:
         records=page.evaluate('window.ORDJAKTEN_CONTEXTS.wordContexts')
         righttexts={s['text'] for r in records for s in r['scenes']

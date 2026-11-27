@@ -44,7 +44,7 @@
       "En liten robot har packat kartor, vatten och en kikare. Nu väntar uppskjutningen.",
       "Vi ser jorden bli mindre genom fönstret. Robotens första rymdmärke hamnar i boken.",
       "🚀",
-      "Raketsigillet"
+      "Raketmärket"
     ],
     [
       "Spår på månen",

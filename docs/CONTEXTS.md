@@ -30,7 +30,7 @@ Upplevelsen lägger inte till några externa tjänster eller bilder. Befintliga 
 ## Tillgänglighet och förtroende
 
 - Frågans text är alltid läsbar; den ersätts efter val så att förklaringen kommer först.
-- Lätt behåller bilder. Svårare nivåer får rena textkort. Högskoleprovet får aldrig scenfrågor, eftersom det är en separat, klassisk övningsform.
+- Lätt använder bara de 30 godkända bildfrågorna. Ord med osäkra bilder får textkort. Fördjupningsprovet får aldrig scenfrågor, eftersom det är en separat, klassisk övningsform.
 - Samma ord kan återkomma i andra situationer; efter två rätta återbesök kan en ny berättelse användas utan att återanvända första scenen.
 - Vid **Testa dig** visas inga rätt/fel-markeringar eller Aha-rutor förrän testet avslutas.
 - Spelaren kan stänga av inblandningen av scenfrågor på startsidan. Snabbknappen använder medelnivå och ger fem garanterade scenfrågor.

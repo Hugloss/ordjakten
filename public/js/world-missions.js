@@ -10,7 +10,7 @@
   "forest": [
     [
       "sv-0010",
-      "Fågeln vill känna igen ett prassligt ljud. Vad kan vi göra för att visa den ett sådant ljud?",
+      "Fågeln vill höra hur något prassligt låter. Vad kan vi göra?",
       [
         "Skrynkla torra löv i handen",
         "Lyssna på en motor som brummar",
@@ -33,7 +33,7 @@
       "Ugglan har gömt en bok i en ihålig bit trä. Var letar vi?",
       [
         "I en träbit med ett tomt utrymme inuti",
-        "På en massiv träskiva",
+        "På en träskiva utan hålrum",
         "Mellan två släta stenar"
       ],
       "Ihålig betyder att det finns ett tomrum inuti. Där får en liten bok plats."
@@ -96,8 +96,8 @@
       "sv-0022",
       "Portvakten ber oss hitta en randig flagga. Vilken flagga väljer vi?",
       [
-        "En flagga med långa parallella ränder",
-        "En flagga med små prickar",
+        "En flagga med långa ränder bredvid varandra",
+        "En flagga med enbart små prickar",
         "En helt enfärgad flagga"
       ],
       "Randig betyder att den har ränder. Portvakten visar oss in."
@@ -106,11 +106,11 @@
       "sv-0066",
       "Nyckeln har ett fyrkantigt huvud. Vilken form letar vi efter?",
       [
-        "En form med fyra hörn",
+        "En form med fyra raka sidor och fyra hörn",
         "En rund form utan hörn",
         "En form med tre hörn"
       ],
-      "Fyrkantig betyder att formen har fyra hörn. Vi hittar nyckeln."
+      "En fyrkantig form har fyra raka sidor och fyra hörn. Sidorna behöver inte vara lika långa. Vi hittar nyckeln."
     ],
     [
       "sv-0015",
@@ -139,7 +139,7 @@
       "Kaptenen vill släta ut den skrynkliga segelduken. Vilken duk menar kaptenen?",
       [
         "Duken med många veck",
-        "Duken med små färgprickar",
+        "Den helt släta duken med färgprickar",
         "Duken som ligger helt slät"
       ],
       "Skrynklig beskriver veck och rynkor. Vi slätar ut duken."
@@ -181,20 +181,20 @@
       "Vi ska rita av en randig snäcka. Vilken väljer vi?",
       [
         "Snäckan med flera långa ränder",
-        "Snäckan med små prickar",
+        "Snäckan med enbart små prickar",
         "Den helt enfärgade snäckan"
       ],
       "En randig snäcka har ränder. Vi ritar av mönstret."
     ],
     [
       "sv-0055",
-      "Vilket djur är simmande just nu? Vi vill följa det med blicken.",
+      "Vi vill följa ett simmande djur med blicken. Vilket djur passar?",
       [
         "En fisk som tar sig fram genom vattnet",
         "En fiskmås som flyger över havet",
         "En krabba som går längs stranden"
       ],
-      "Simmande beskriver någon som tar sig fram genom vatten genom att simma."
+      "Fisken tar sig fram i vattnet genom att röra kroppen och fenorna. Det är en simmande fisk."
     ],
     [
       "sv-0083",
@@ -211,10 +211,10 @@
       "Ordkompisen vill rita en solig bukt. Vilken himmel väljer vi?",
       [
         "En himmel där solen skiner",
-        "En himmel med tjock dimma",
-        "En himmel med regn och mörka moln"
+        "En himmel där tjocka moln helt skymmer solen",
+        "En mörk natthimmel efter att solen gått ner"
       ],
-      "Solig betyder att solen skiner. Vi väljer en ljus himmel."
+      "Solig betyder att solen skiner på platsen. Det kan vara soligt även en kall dag."
     ]
   ],
   "dinosaurs": [
@@ -246,7 +246,7 @@
         "En helt platt topp",
         "En rundad topp som liknar en boll"
       ],
-      "Spetsig betyder att något har en smal eller vass spets. Vi ritar den formen."
+      "Spetsig beskriver en form som smalnar av till en spets. En spetsig form behöver inte vara vass och kunna skära. Vi ritar bergstoppens form."
     ],
     [
       "sv-0030",
@@ -276,7 +276,7 @@
       [
         "Tulpanen med slokande, torra blad",
         "Tulpanen med upprätt gröna blad",
-        "Tulpanen som just öppnar sig"
+        "Tulpanen med spänstiga blad och en blomma som står upprätt"
       ],
       "En vissnad växt har tappat spänsten och hänger ofta ner."
     ],
@@ -285,18 +285,18 @@
       "Vi letar efter en prickig fjäril. Vilken ska vi rita?",
       [
         "Fjärilen med många små prickar på vingarna",
-        "Fjärilen med långa ränder",
+        "Fjärilen med enbart långa ränder",
         "Fjärilen med enfärgade vingar"
       ],
       "Prickig betyder att något har små prickar. Vi ritar fjärilens mönster."
     ],
     [
       "sv-0037",
-      "Dammens vatten är speglande. Vad kan vi se i det?",
+      "Vad visar att dammens vattenyta är speglande?",
       [
-        "En bild av molnen ovanför",
-        "Enbart en lampa som ger eget ljus",
-        "Bara ett hål genom marken"
+        "Vi ser en bild av molnen i vattenytan",
+        "Vattnet känns varmt när vi känner med fingret",
+        "Vattnet plaskar när vi rör vid det"
       ],
       "En speglande yta återger en bild genom att reflektera ljus. Vi ser molnens spegelbild."
     ]
@@ -328,7 +328,7 @@
       [
         "En filt som ger efter när man trycker på den",
         "En hård sten",
-        "En platta av metall"
+        "En stel platta av metall"
       ],
       "Mjukt material ger efter när man trycker på det. Vi lägger fram filten."
     ],
@@ -362,7 +362,7 @@
         "En tygbit som blir liggande",
         "En bok som ligger still"
       ],
-      "Studsande betyder att något hoppar upp efter att ha träffat ett underlag."
+      "Bollen träffar marken och far tillbaka upp. Då studsar den. En boll kan också studsa tillbaka från en vägg."
     ],
     [
       "sv-0006",
@@ -446,7 +446,7 @@
         "Ropar otåligt hela tiden",
         "Springer fram för att skynda på den"
       ],
-      "Tålmodig betyder att kunna vänta lugnt utan att ge upp. Vi väntar."
+      "Vi ger ponnyn tid och väntar lugnt. Då är vi tålmodiga."
     ],
     [
       "sv-0005",
@@ -501,14 +501,14 @@
       "Blinkande lampor tänds och släcks upprepade gånger. Vi ritar ljusshowen."
     ],
     [
-      "sv-0063",
-      "Musikerna är glädjefyllda efter showen. Vilken reaktion passar?",
+      "sv-0085",
+      "Musikern är förtjust i den sista melodin. Vad betyder det?",
       [
-        "De ler och skrattar av lycka",
-        "De är rädda och vill gömma sig",
-        "De gäspar och behöver sova"
+        "Hon tycker väldigt mycket om melodin och vill spela den igen",
+        "Hon tycker inte alls om melodin",
+        "Hon har ännu inte hört melodin och vet inte vad hon tycker"
       ],
-      "Glädjefylld betyder full av glädje och lycka. Vi avslutar med glada musiker."
+      "Förtjust betyder att tycka väldigt mycket om något. Musikern tycker så mycket om melodin att hon gärna spelar den igen."
     ]
   ]
 });

@@ -3,6 +3,11 @@
 Fortsättning på PR #9, 27 november 2026. Uppgiften är att förbättra de ord
 som redan finns, med konkreta förklaringar och användning i nya situationer.
 
+Efter att PR #9 mergats följs denna genomgång av en
+[post-review av vardagsurval och spelens tydlighet](POST-REVIEW-EVERYDAY.md).
+Den fullständiga banken nedan bevaras. Den vanliga träningen prioriterar
+nu 101 av orden och 59 av uttrycken; övriga kan väljas som fördjupning.
+
 ## Omfattning
 
 | Innehåll | Före denna omgång | Efter denna omgång |

@@ -105,3 +105,30 @@ test('quick launch favors observed concepts and falls back to age-appropriate st
   assert.equal(W.plan(null,catalog,contrasts,random),null);
   assert.equal(W.plan({id:'unknown',name:'X',example:'A B C.',definition:'Unknown'},catalog,contrasts,random),null);
 });
+test('automatic workshop keeps extension words out even when old history makes them eligible',()=>{
+  const extension={...grumlig,everyday:false},ordinary={...phrase,everyday:true};
+  const items=[extension,ordinary],history={recallProgress:{[extension.id]:{assisted:1}}};
+  const before=JSON.stringify(history);
+  for(const draw of [()=>0,()=>.5,()=>.9999]){
+    assert.equal(W.pick(items,contrasts,history,()=>true,draw).id,ordinary.id);
+    assert.equal(W.pick(items,contrasts,history,()=>false,draw).id,ordinary.id);
+    assert.equal(W.pick([extension],contrasts,history,()=>true,draw),null);
+  }
+  assert.equal(W.plan(extension,items,contrasts,random).item.id,extension.id);
+  assert.equal(JSON.stringify(history),before);
+});
+test('automatic workshop does not introduce an extension word through an ordinary contrast partner',()=>{
+  const pair=contrasts.pairs[0];
+  const ordinary={...catalog.find(item=>item.id===pair.left),everyday:true};
+  const extension={...catalog.find(item=>item.id===pair.right),everyday:false};
+  const alternative={...phrase,everyday:true};
+  const items=[ordinary,extension,alternative],history={recallProgress:{[ordinary.id]:{assisted:1}}};
+  const before=JSON.stringify(history);
+  for(const draw of [()=>0,()=>.5,()=>.9999]){
+    assert.equal(W.pick(items,contrasts,history,()=>true,draw).id,alternative.id);
+    assert.equal(W.pick(items,contrasts,history,()=>false,draw).id,alternative.id);
+    assert.equal(W.pick([ordinary,extension],contrasts,history,()=>true,draw),null);
+  }
+  assert.ok(W.plan(ordinary,items,contrasts,random).steps.some(step=>step.type==='repair'));
+  assert.equal(JSON.stringify(history),before);
+});

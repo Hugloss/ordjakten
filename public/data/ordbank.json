@@ -577,7 +577,7 @@
     {
       "id": "sv-0030",
       "word": "Frodig",
-      "definition": "Något där växter växer rikligt och kraftigt.",
+      "definition": "Som växer tätt och kraftigt, med mycket blad eller annan växtlighet.",
       "example": "Skogen var grön och frodig.",
       "difficulty": "medium",
       "source": "nya_20",
@@ -773,7 +773,7 @@
     {
       "id": "sv-0041",
       "word": "Bucklig",
-      "definition": "Något som har gropar eller intryckningar så att ytan inte är jämn.",
+      "definition": "Något som har gropar eller utbuktningar så att ytan inte är jämn.",
       "example": "Den tilltryckta burken var bucklig.",
       "difficulty": "medium",
       "source": "nya_5",
@@ -1034,9 +1034,9 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "Flygande beskriver något som färdas genom luften, till exempel en fågel, ett flygplan eller ett pappersplan. Det befinner sig inte på marken under den rörelsen.",
-        "familiar": "Du viker ett pappersplan och skickar i väg det. Medan det glider genom luften är det ett flygande pappersplan.",
+        "familiar": "Du viker ett pappersplan och skickar i väg det. Det flygande pappersplanet glider genom luften.",
         "nonExample": "Ett flygplan som står parkerat på marken är inte flygande just då. Namnet på saken säger inte vad den gör.",
-        "ownPrompt": "Hur kan samma fågel vara flygande en stund och inte flygande nästa stund?"
+        "ownPrompt": "Hur kan du beskriva en fågel medan den flyger och sedan när den har landat?"
       }
     },
     {
@@ -1055,7 +1055,7 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "En simmande människa eller ett simmande djur tar sig fram i vatten med sin kropp. Armar, ben eller fenor trycker mot vattnet så att kroppen rör sig.",
-        "familiar": "I bassängen för du armarna och benen genom vattnet för att komma framåt. Då är du simmande.",
+        "familiar": "Ett simmande barn gör armtag och sparkar med benen i bassängen. Rörelserna hjälper barnet framåt genom vattnet.",
         "nonExample": "Den som står still på bassängens botten är i vattnet men är inte simmande just då.",
         "ownPrompt": "Vad är skillnaden mellan ett simmande barn och ett barn som bara står i vattnet?"
       }
@@ -1076,7 +1076,7 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "Sovande beskriver någon som befinner sig i sömn. Kroppen och hjärnan får återhämtning. Att vara stilla eller blunda betyder inte alltid att man sover.",
-        "familiar": "När katten har somnat på sin filt är den sovande. Den jagar inte leksaken eller tittar på det som händer i rummet.",
+        "familiar": "Den sovande katten ligger på sin filt. Den har somnat och är inte vaken, även om det händer saker i rummet.",
         "nonExample": "Om du blundar i en gissningslek men lyssnar på ledtrådarna är du vaken, inte sovande.",
         "ownPrompt": "Hur kan du förklara skillnaden mellan sovande och att bara blunda?"
       }
@@ -1097,7 +1097,7 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "Springande beskriver någon som tar sig fram på benen i löpsteg. I löpning är det små ögonblick när båda fötterna lämnar marken.",
-        "familiar": "När du tar löpsteg för att hinna fram till bollen är du springande. Ordet beskriver hur du rör dig.",
+        "familiar": "Ett springande barn tar löpsteg för att hinna fram till bollen. Ordet beskriver hur barnet rör sig.",
         "nonExample": "Den som cyklar fort är inte springande. Hög fart räcker inte; det handlar också om hur personen tar sig fram.",
         "ownPrompt": "Vad skiljer ett springande barn från ett barn som cyklar lika fort?"
       }
@@ -1118,9 +1118,9 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "Gråtande beskriver någon som har börjat gråta, ofta med tårar och snyftningar. Man kan gråta av sorg, smärta, lättnad eller glädje. Ordet säger inte hela orsaken.",
-        "familiar": "Ett barn saknar sin kompis och snyftar med tårar på kinderna. Du kan säga att barnet är gråtande och behöver tröst.",
+        "familiar": "Ett barn saknar sin kompis och snyftar med tårar på kinderna. Det gråtande barnet behöver tröst.",
         "nonExample": "Någon kan vara ledsen utan att gråta. Då beskriver ledsen känslan, men gråtande passar inte just då.",
-        "ownPrompt": "Kan en person vara ledsen utan att vara gråtande? Hur skulle du förklara det?"
+        "ownPrompt": "Kan en person vara ledsen utan att gråta? Hur skulle du förklara skillnaden?"
       }
     },
     {
@@ -1139,8 +1139,8 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "Skrattande beskriver någon som ger ifrån sig skratt, som ett fniss eller ett högt ha-ha. Det handlar om det personen gör, inte bara om att personen är glad.",
-        "familiar": "Din kompis gör en rolig min och du fnissar till. I den stunden är du skrattande.",
-        "nonExample": "Du kan vara glad och le tyst utan att skratta. Ett leende är därför inte alltid samma sak som att vara skrattande.",
+        "familiar": "Din kompis gör en rolig min. Du fnissar och börjar sedan skratta högt.",
+        "nonExample": "Du kan vara glad och le tyst utan att skratta. Ett leende är därför inte alltid samma sak som ett skratt.",
         "ownPrompt": "Hur kan du beskriva skillnaden mellan ett leende barn och ett skrattande barn?"
       }
     },
@@ -1307,7 +1307,7 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "En triangelformad sak har formen av en triangel: tre raka sidor och tre hörn. Formen är densamma även om du vrider saken eller sidorna är olika långa.",
-        "familiar": "Klipper du en fyrkantig smörgås snett från hörn till hörn får du två delar med tre sidor. Delarna är triangelformade.",
+        "familiar": "Delar du en fyrkantig smörgås snett från hörn till hörn får du två delar med tre sidor. Delarna är triangelformade.",
         "nonExample": "En rund pannkaka har inte tre raka sidor eller tre hörn. Den är inte triangelformad.",
         "ownPrompt": "Hur kan du förklara att en triangel fortfarande är triangelformad när spetsen pekar nedåt?"
       }
@@ -1834,7 +1834,7 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "En tillmötesgående person lyssnar på vad någon behöver och försöker hitta ett sätt att hjälpa. Det kan vara att ändra en plan så att den fungerar för fler.",
-        "familiar": "Du når inte en bok på den höga hyllan. Bibliotekarien hjälper dig att ta ner den och visar var lättare hyllor finns.",
+        "familiar": "Du når inte en bok på den höga hyllan. Bibliotekarien hjälper dig att ta ner den och visar böcker på lägre hyllor.",
         "nonExample": "Att avfärda en enkel fråga utan att lyssna eller försöka hjälpa är inte tillmötesgående i den stunden.",
         "ownPrompt": "Hur kan du vara tillmötesgående när en kompis vill ändra lite på en gemensam plan?"
       }
@@ -1993,7 +1993,7 @@
       "illustration": null,
       "review_status": "draft",
       "teaching": {
-        "explanation": "Tillfällig betyder att något gäller eller finns under en begränsad tid. Det kan vara kort eller ganska länge, men det är tänkt att ta slut eller bytas tillbaka.",
+        "explanation": "Tillfällig betyder här att något gäller eller finns under en begränsad tid. Till exempel kan ett strömavbrott vara tillfälligt: efter en stund fungerar lamporna igen. Det behöver inte vara planerat.",
         "familiar": "Ditt klassrum målas om. I två veckor har ni lektioner i ett annat rum, och sedan flyttar ni tillbaka.",
         "nonExample": "Om en ny skola ska vara er vanliga skola utan någon plan att flytta tillbaka är flytten inte tillfällig på det sättet.",
         "ownPrompt": "Vad kan vara en tillfällig lösning om din cykel behöver lagas?"

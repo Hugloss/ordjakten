@@ -61,7 +61,7 @@
     const progress=sanitize(history.recallProgress,catalog);
     const ready=[],waiting=[],seen=new Set();
     for(const item of catalog){
-      if(seen.has(item.id))continue;
+      if(item.everyday===false||seen.has(item.id))continue;
       seen.add(item.id);
       const card=progress[item.id];
       if(!card&&!eligible(item,history))continue;

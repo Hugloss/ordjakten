@@ -6,16 +6,30 @@
  * All emoji choices require a real-device editorial check before wide release.
  */
 window.ORDJAKTEN_CURATION = {
+  // Editorial relevance for children, not measured word-frequency rankings.
+  // These remain in the library and the explicitly chosen extension level.
+  extensionWords: [
+    'sv-0040','sv-0063','sv-0096','sv-0097','sv-0099','sv-0101','sv-0102',
+    'sv-0103','sv-0104','sv-0105','sv-0106','sv-0107','sv-0111','sv-0113',
+    'sv-0115','sv-0116','sv-0117','sv-0118','sv-0120','sv-0121'
+  ],
+  extensionExpressions: ['ut-0014','ut-0017','ut-0026','ut-0027','ut-0028','ut-0035','ut-0041','ut-0042'],
+  // A harder round can use familiar words about feelings, cooperation and
+  // instructions. It does not need to replace them with literary vocabulary.
+  hardWords: [
+    'sv-0071','sv-0072','sv-0073','sv-0074','sv-0075','sv-0076','sv-0077',
+    'sv-0078','sv-0079','sv-0080','sv-0081','sv-0082','sv-0083','sv-0084',
+    'sv-0085','sv-0086','sv-0087','sv-0088','sv-0089','sv-0090','sv-0091',
+    'sv-0092','sv-0093','sv-0094','sv-0095'
+  ],
   easy: {
     'sv-0002': [['🪨','Sten'], ['🔑','Nyckel'], ['🥄','Sked']],
     'sv-0004': [['🍌','Banan'], ['🧸','Nalle'], ['🥒','Gurka']],
-    'sv-0005': [['🪵','Träbit'], ['🧸','Nalle'], ['🍃','Löv']],
     'sv-0007': [['🪵','Vedträ'], ['🧦','Strumpa'], ['🥔','Potatis']],
     'sv-0013': [['🧸','Nalle'], ['🪶','Fjäder'], ['🏀','Boll']],
     'sv-0016': [['📕','Bok'], ['🚪','Dörr'], ['📏','Linjal']],
     'sv-0017': [['🐟','Fisk'], ['🐍','Orm'], ['🐸','Groda']],
     'sv-0018': [['📕','Bok'], ['🪨','Sten'], ['🧸','Nalle']],
-    'sv-0020': [['🐆','Gepard'], ['🐎','Häst'], ['🚀','Raket']],
     'sv-0022': [['🐞','Nyckelpiga'], ['🐘','Elefant'], ['🐸','Groda']],
     'sv-0023': [['🦓','Zebra'], ['🐘','Elefant'], ['🐸','Groda']],
     'sv-0027': [['🌷','Tulpan'], ['🌻','Solros'], ['🌲','Gran']],
@@ -35,18 +49,10 @@ window.ORDJAKTEN_CURATION = {
     'sv-0055': [['🏃','Löpare'], ['🛫','Flygplan'], ['🚴','Cyklist']],
     'sv-0056': [['🏃','Löpare'], ['🏊','Simmare'], ['🚴','Cyklist']],
     'sv-0057': [['🏊','Simmare'], ['🛫','Flygplan'], ['😴','Sovande ansikte']],
-    'sv-0058': [['😂','Skrattande ansikte'], ['😮','Förvånat ansikte'], ['😄','Glatt leende']],
     'sv-0059': [['😢','Ansikte med tår'], ['😨','Skrämt ansikte'], ['😮','Förvånat ansikte']],
-    'sv-0060': [['😄','Glatt leende'], ['😴','Sovande ansikte'], ['😢','Gråtande ansikte']],
-    'sv-0061': [['😄','Glatt leende'], ['😴','Sovande ansikte'], ['😂','Skrattande ansikte']],
-    'sv-0062': [['😄','Glatt leende'], ['😮','Förvånat ansikte'], ['🏃','Löpare']],
-    'sv-0063': [['😢','Gråtande ansikte'], ['😨','Skrämt ansikte'], ['😴','Sovande ansikte']],
-    'sv-0064': [['🐌','Snigel'], ['🪶','Fjäder'], ['🥱','Gäspande ansikte']],
     'sv-0066': [['⚽','Fotboll'], ['🔺','Triangel'], ['🥒','Gurka']],
     'sv-0067': [['⚽','Fotboll'], ['🟥','Kvadrat'], ['🍊','Apelsin']],
-    'sv-0068': [['📕','Bok'], ['🪵','Träbit'], ['🥔','Potatis']],
-    'sv-0069': [['🥶','Fruset ansikte'], ['😴','Sovande ansikte'], ['😮','Förvånat ansikte']],
-    'sv-0070': [['🥵','Svettigt ansikte'], ['😄','Glatt leende'], ['😂','Skrattande ansikte']]
+    'sv-0068': [['📕','Bok'], ['🪵','Träbit'], ['🥔','Potatis']]
   },
   // Avoid showing the actual answer in a reversed-definition prompt.
   reviewClues: {
@@ -80,6 +86,7 @@ window.ORDJAKTEN_CURATION = {
     ['sv-0096','sv-0120'], ['sv-0110','sv-0114'], ['sv-0099','sv-0110'],
     ['sv-0098','sv-0111'], ['sv-0105','sv-0106'], ['sv-0107','sv-0116'],
     ['sv-0012','sv-0093'], ['sv-0002','sv-0015'], ['sv-0013','sv-0065'],
-    ['sv-0077','sv-0108'], ['sv-0100','sv-0118'], ['sv-0109','sv-0121']
+    ['sv-0077','sv-0108'], ['sv-0100','sv-0118'], ['sv-0109','sv-0121'],
+    ['sv-0004','sv-0013'], ['sv-0004','sv-0065'], ['sv-0018','sv-0039']
   ]
 };

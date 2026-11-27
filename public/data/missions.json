@@ -79,7 +79,7 @@
           "correct": true
         },
         {
-          "label": "Vi håller tummarna för att det redan är säkert att solen går upp.",
+          "label": "”Vi håller tummarna” betyder att vi vill att kompisen ska misslyckas.",
           "correct": false
         },
         {
@@ -106,7 +106,7 @@
           "correct": false
         },
         {
-          "label": "Jag visste säkert vad som hänt, men kallade min egen film för en nypa salt.",
+          "label": "Jag trodde genast på ryktet utan att fundera, så jag tog det med en nypa salt.",
           "correct": false
         }
       ],
@@ -129,7 +129,7 @@
           "correct": false
         },
         {
-          "label": "Jag gav bort ryggsäcken för alltid och höll ett öga på den.",
+          "label": "Jag lämnade väskan och tittade inte till den alls, så jag höll ett öga på den.",
           "correct": false
         }
       ],
@@ -171,7 +171,7 @@
           "correct": true
         },
         {
-          "label": "Jag trampade till skolan på cykel, så jag var ute och cyklade om svaret.",
+          "label": "Jag hittade rätt svar i boken och kontrollerade det noga, så jag var ute och cyklade.",
           "correct": false
         },
         {
@@ -221,7 +221,7 @@
           "correct": false
         },
         {
-          "label": "Vi hade slutat bygga helt och kallade vårt misslyckande för att gå som smort.",
+          "label": "Vi fastnade vid varje steg och fick inget att fungera, så bygget gick som smort.",
           "correct": false
         }
       ],
@@ -244,7 +244,7 @@
           "correct": false
         },
         {
-          "label": "Vi arbetade med samma långsamma takt som alltid utan att börja, men satte fart.",
+          "label": "Vi fortsatte arbeta lika långsamt och tog fler pauser, så vi satte fart.",
           "correct": false
         }
       ],
@@ -263,7 +263,7 @@
           "correct": true
         },
         {
-          "label": "Jag åt en sur frukt och sa att jag bet i det sura äpplet som ett svårt beslut.",
+          "label": "Jag slapp berätta om misstaget och gick därifrån, så jag bet i det sura äpplet.",
           "correct": false
         },
         {
@@ -313,7 +313,7 @@
           "correct": false
         },
         {
-          "label": "Sam tappade en tand under maten och fick blodad tand för nya uppdrag.",
+          "label": "Efter försöket tappade Sam all lust att dansa och fick blodad tand.",
           "correct": false
         }
       ],
@@ -336,7 +336,7 @@
           "correct": false
         },
         {
-          "label": "Vi la en handduk i tvättkorgen och kastade in handduken som en tävling.",
+          "label": "Vi löste den sista pusselbiten och blev klara, så vi kastade in handduken.",
           "correct": false
         }
       ],
@@ -359,7 +359,7 @@
           "correct": false
         },
         {
-          "label": "Jag bar ett riktigt halmstrå till en lada och gjorde därmed hela gruppens jobb.",
+          "label": "Jag gjorde uppgiften svårare för gruppen och drog därmed mitt strå till stacken.",
           "correct": false
         }
       ],
@@ -382,7 +382,7 @@
           "correct": false
         },
         {
-          "label": "Elin ritade en tjur med horn och löste därmed problemet utan att ta tag i det.",
+          "label": "Elin undvek samtalet och låtsades att problemet inte fanns, så hon tog tjuren vid hornen.",
           "correct": false
         }
       ],
@@ -405,7 +405,7 @@
           "correct": false
         },
         {
-          "label": "Jag ställde huvudet under en kall dusch och höll huvudet kallt under provet.",
+          "label": "Jag blev så stressad att jag glömde tänka efter, så jag höll huvudet kallt.",
           "correct": false
         }
       ],
@@ -428,7 +428,7 @@
           "correct": false
         },
         {
-          "label": "Vi lyssnade på samma radiofrekvens och var därför automatiskt på samma våglängd i tankarna.",
+          "label": "Vi pratade förbi varandra och missförstod varje idé, så vi var på samma våglängd.",
           "correct": false
         }
       ],
@@ -451,7 +451,7 @@
           "correct": false
         },
         {
-          "label": "Vi firade aldrig något, men ropade hej för tidigt efter att inget hänt.",
+          "label": "Vi började fira först efter prisutdelningen, så vi ropade hej för tidigt.",
           "correct": false
         }
       ],
@@ -497,7 +497,7 @@
           "correct": false
         },
         {
-          "label": "Amir tittade på flera järn i en öppen eld och fick därmed många skoluppgifter.",
+          "label": "Amir hade gjort klart allt och hade inget mer att göra, så han hade många järn i elden.",
           "correct": false
         }
       ],
@@ -520,7 +520,7 @@
           "correct": false
         },
         {
-          "label": "Jag tänkte på två läxor samtidigt och kom på andra tankar utan att ändra åsikt.",
+          "label": "Jag hörde kompisens förslag men höll fast vid mitt första beslut, så jag kom på andra tankar.",
           "correct": false
         }
       ],
@@ -543,7 +543,7 @@
           "correct": false
         },
         {
-          "label": "Båten åkte sakta fram och någon gick över dess styrning, alltså gick leken över styr.",
+          "label": "Alla följde reglerna och slutade lugnt när tiden var ute, så leken gick över styr.",
           "correct": false
         }
       ],
@@ -566,7 +566,7 @@
           "correct": false
         },
         {
-          "label": "Jag vände sidan i min bok och lämnade därmed mitt gamla problem bakom mig utan att tänka på det.",
+          "label": "Vi tog upp det gamla bråket igen och fortsatte anklaga varandra, så vi vände blad.",
           "correct": false
         }
       ],
@@ -1223,21 +1223,21 @@
     },
     {
       "id": "ut-0056",
-      "prompt": "Lärarens uppgift: ”Jämför en katt och en hund.” Vilket svar gör det läraren ber om?",
+      "prompt": "Lärarens uppgift: ”Jämför en katt och en hund. Ta med en likhet och en skillnad.” Vilket svar gör det läraren ber om?",
       "sentences": [
         {
-          "label": "”Jämför en katt och en hund.” – Båda har päls och fyra ben. Katter jamar, medan hundar skäller.",
+          "label": "”Jämför en katt och en hund. Ta med en likhet och en skillnad.” – Båda har päls och fyra ben. Katter jamar, medan hundar skäller.",
           "correct": true
         },
         {
-          "label": "”Jämför en katt och en hund.” – Katten har mjuk päls och en lång svans.",
+          "label": "”Jämför en katt och en hund. Ta med en likhet och en skillnad.” – Katten har mjuk päls och en lång svans.",
           "correct": false,
-          "feedback": "Du berättar hur katten ser ut, men säger inget om hunden. Ta med båda."
+          "feedback": "Du berättar hur katten ser ut, men säger inget om hunden. Uppgiften ber om både en likhet och en skillnad."
         },
         {
-          "label": "”Jämför en katt och en hund.” – Jag tycker mest om hundar eftersom min hund är snäll.",
+          "label": "”Jämför en katt och en hund. Ta med en likhet och en skillnad.” – Jag ska gå ut med min hund efter skolan.",
           "correct": false,
-          "feedback": "Du berättar vilken du gillar bäst. Det är en åsikt, inte en jämförelse."
+          "feedback": "Du berättar vad du ska göra med hunden. Jämför i stället katten och hunden: vad är lika och vad är olika?"
         }
       ],
       "order": [
@@ -1245,27 +1245,27 @@
         "Leta efter något som är lika och något som är olika.",
         "Skriv likheten och skillnaden i samma svar."
       ],
-      "hint": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men.",
+      "hint": "Läs vad du ska jämföra. Här övar du på att ta med både en likhet och en skillnad. Använd gärna både, medan eller men.",
       "explanation": "Katten och hunden har båda päls och fyra ben. Men katten jamar och hunden skäller. Svaret tar med båda djuren, både en likhet och en skillnad.",
       "connection": "Tänk på två jackor: båda håller dig varm, men bara den ena har huva."
     },
     {
       "id": "ut-0057",
-      "prompt": "Lärarens uppgift: ”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” Vilket svar gör det läraren ber om?",
+      "prompt": "Lärarens uppgift: ”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv hur äpplet ser ut.” Vilket svar gör det läraren ber om?",
       "sentences": [
         {
-          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” – Det är runt och rött med ett brunt skaft och ett slätt skal.",
+          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv hur äpplet ser ut.” – Det är runt och rött med ett brunt skaft och ett slätt skal.",
           "correct": true
         },
         {
-          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” – Jag gillar äpplen för att de är goda.",
+          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv hur äpplet ser ut.” – Jag gillar äpplen för att de är goda.",
           "correct": false,
           "feedback": "Du berättar vad du tycker om äpplen. Läraren frågar hur just äpplet ser ut."
         },
         {
-          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” – Jag tror att äpplet växer på ett träd för att få solljus.",
+          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv hur äpplet ser ut.” – Äpplet föll ner när jag skakade trädet.",
           "correct": false,
-          "feedback": "Du försöker berätta varför äpplet växer. Här behövs i stället detaljer om hur äpplet ser ut."
+          "feedback": "Du berättar hur äpplet föll. Här behövs detaljer om hur just äpplet ser ut."
         }
       ],
       "order": [
@@ -1282,7 +1282,7 @@
       "prompt": "Lärarens uppgift: ”Förklara varför en våt handduk blir torr.” Vilket svar gör det läraren ber om?",
       "sentences": [
         {
-          "label": "”Förklara varför en våt handduk blir torr.” – Vatten avdunstar från handduken till luften, så handduken innehåller allt mindre vatten.",
+          "label": "”Förklara varför en våt handduk blir torr.” – Vatten lämnar handduken och blir vattenånga i luften. Då blir handduken torrare.",
           "correct": true
         },
         {
@@ -1291,7 +1291,7 @@
           "feedback": "Du berättar hur handduken ser ut och känns. Men varför blir den torr?"
         },
         {
-          "label": "”Förklara varför en våt handduk blir torr.” – Handduken är torr på kvällen och våt på morgonen.",
+          "label": "”Förklara varför en våt handduk blir torr.” – Handduken var våt på morgonen och torr på kvällen.",
           "correct": false,
           "feedback": "Du berättar att handduken blev torr, men inte vart vattnet tog vägen."
         }
@@ -1419,21 +1419,21 @@
     },
     {
       "id": "ut-0063",
-      "prompt": "Lärarens uppgift: ”Ge ett exempel på en förnybar energikälla.” Vilket svar gör det läraren ber om?",
+      "prompt": "Lärarens uppgift: ”Ge ett exempel på något du kan skriva med.” Vilket svar gör det läraren ber om?",
       "sentences": [
         {
-          "label": "”Ge ett exempel på en förnybar energikälla.” – Solenergi är ett exempel på en förnybar energikälla.",
+          "label": "”Ge ett exempel på något du kan skriva med.” – En blyertspenna är en sak som man kan skriva med.",
           "correct": true
         },
         {
-          "label": "”Ge ett exempel på en förnybar energikälla.” – Energi är något som kan få saker att hända.",
+          "label": "”Ge ett exempel på något du kan skriva med.” – Det är roligt att skriva berättelser.",
           "correct": false,
-          "feedback": "Du berättar vad energi kan göra, men nämner ingen energikälla."
+          "feedback": "Du berättar vad du tycker om att skriva, men nämner ingen sak att skriva med."
         },
         {
-          "label": "”Ge ett exempel på en förnybar energikälla.” – Det finns olika sorters energi som vi kan använda.",
+          "label": "”Ge ett exempel på något du kan skriva med.” – Det finns olika saker som man kan skriva med.",
           "correct": false,
-          "feedback": "Du säger att det finns olika sorter. Säg namnet på en som passar, till exempel solenergi."
+          "feedback": "Du säger att det finns olika saker. Nämn en av dem, till exempel en penna."
         }
       ],
       "order": [
@@ -1442,8 +1442,8 @@
         "Skriv exemplet så att det tydligt hör till frågan."
       ],
       "hint": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på.",
-      "explanation": "Solenergi kommer från solen och är ett exempel på en förnybar energikälla. Det betyder att vi använder energi från en källa som fylls på naturligt.",
-      "connection": "Om läraren ber om exempel på saker som flyter kan du nämna en kork. Du behöver inte räkna upp alla saker i världen."
+      "explanation": "En blyertspenna kan användas för att skriva bokstäver och ord. Därför passar den som ett exempel. Svaret nämner en bestämd sak som hör till frågan.",
+      "connection": "Om någon ber om ett exempel på ett plagg för händerna kan du säga en vante. Du nämner en sak som passar det personen frågar efter."
     },
     {
       "id": "ut-0064",
@@ -1571,9 +1571,9 @@
           "feedback": "Du skriver exakt 17 fast du inte har räknat. Säg ungefär, och visa hur du tänker."
         },
         {
-          "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Det är säkert 900 barn vid de fyra borden.",
+          "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Borden är runda och stolarna är blå.",
           "correct": false,
-          "feedback": "Fyra bord med ungefär fem barn kan inte rimligen ha 900 barn. Utgå från antalet bord och barn per bord."
+          "feedback": "Du beskriver möblerna, men ger inget ungefärligt svar på hur många barn som sitter där."
         }
       ],
       "order": [

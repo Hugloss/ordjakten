@@ -21,6 +21,21 @@ npm run check
 
 Nya ord ska få nytt unikt `sv-####`-ID, nivå (`easy`, `medium`, `hard`, `expert`), `definition`, `example`, `source`, `review_status` och `illustration` (eller `null`). Ändra aldrig ett befintligt ID för att byta text.
 
+## Urval för barnets vanliga träning
+
+`extensionWords` och `extensionExpressions` i `public/data/curation.js`
+markerar innehåll som kräver ett aktivt val av fördjupning. Det vanliga
+urvalet omfattar 101 ord och 59 uttryck, inklusive alla 14 skolord.
+`hardWords` låter den svåra nivån också använda 25 användbara ord om
+känslor och samspel. Svårare träning behöver inte betyda ovanligare ord.
+
+Urvalet gäller målord, genererade ordalternativ, skrivna kontextalternativ
+och automatiska träningsförslag. Äldre resultat ska inte återinföra
+fördjupningsord i dessa förslag. Hela databanken och dess historik bevaras;
+en uttryckligen vald fördjupningsuppgift får fortfarande använda dem.
+`validateSelection` kontrollerar referenser, dubbletter, skolord och
+kontextalternativ. Se [beslut och fullständigt urval](POST-REVIEW-EVERYDAY.md).
+
 ## Emojis och bilder
 
 `public/data/curation.js` är en **allowlist** över bildstödda ord. Den innehåller tre uttryckligt valda felalternativ per ord. Frågor som *grumlig* är textbaserade, eftersom 🪣 beskriver en hink och inte grumligt vatten. En vanlig sten, konservburk eller boll behöver inte visa *skrovlig*, *bucklig* respektive *studsande*.

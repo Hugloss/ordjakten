@@ -90,6 +90,12 @@ def word_collection(browser):
     page.locator("#high-contrast").check()
     page.locator('[data-nav="words"]').click()
     page.locator("#word-type-filter").select_option("words")
+    assert page.locator("#word-scope").input_value() == "everyday"
+    while page.locator("#more-words").is_visible():
+        page.locator("#more-words").click()
+    assert page.locator("#word-list .word-teaching-details").count() == 101
+    assert page.get_by_role("heading", name="Efemär", exact=True).count() == 0
+    page.locator("#word-scope").select_option("all")
     while page.locator("#more-words").is_visible():
         page.locator("#more-words").click()
     assert page.locator("#word-list .word-teaching-details").count() == 121
@@ -113,4 +119,4 @@ if __name__ == "__main__":
         delayed_feedback(browser)
         word_collection(browser)
         browser.close()
-    print("✓ Complete word lessons: mobile training, separate Aha score, delayed test feedback, all 121 word cards")
+    print("✓ Complete word lessons: mobile training, separate Aha score, delayed test feedback, 101 everyday and all 121 word cards")

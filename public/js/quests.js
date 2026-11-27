@@ -25,7 +25,7 @@
   }
   function reviewChoice(settings,mistakes,bank,curation,expressions,engine,reviews=null,now=Date.now()){
     const topics=[...new Set([settings.topic,'mixed','words','expressions'])];
-    const levels=[...new Set([settings.difficulty,'easy','medium','hard','exam'])];
+    const levels=[...new Set([settings.difficulty==='exam'?'medium':settings.difficulty,'easy','medium','hard'])];
     for(const topic of topics){
       for(const difficulty of levels){
         const matching=engine.getTopicPool(bank,curation,expressions,{topic,difficulty})

@@ -17,8 +17,8 @@
        options:[piece('rock','Rund sten','🪨'),piece('bridge','Lång träbro','🌉'),piece('flower','Blomma','🌷')],answer:'bridge',why:'Bron är avlång och går över bäcken.'},
       {slot:1,words:['sv-0066'],prompt:'Placera ett hus med fyrkantig vägg direkt ovanför bron.',hint:'Välj huset med fyra hörn på väggen. Tryck på rutan direkt ovanför bron.',
        options:[piece('round-hut','Rund hydda','🛖','circle','solid','orange'),piece('house','Hus med kvadratisk vägg','🏠','square','solid','blue'),piece('tree','Träd','🌳')],answer:'house',why:'Husets kvadratiska vägg har fyra hörn. Huset ligger ovanför bron.'},
-      {slot:3,words:['sv-0067'],prompt:'Sätt ett triangelformat tält direkt till vänster om bron.',hint:'En triangel har tre hörn. Välj tältet och rutan direkt till vänster om bron.',
-       options:[piece('ball','Boll','⚽'),piece('tent','Tält med tre hörn','⛺','triangle','solid','orange'),piece('box','Låda','📦','square')],answer:'tent',why:'Tältets framsida har tre hörn. Tältet ligger till vänster om bron.'},
+      {slot:3,words:['sv-0067'],prompt:'Sätt ett tält med triangelformad öppning direkt till vänster om bron.',hint:'Öppningen ska ha tre raka sidor och tre hörn. Välj tältet och rutan direkt till vänster om bron.',
+       options:[piece('ball','Boll','⚽'),piece('tent','Tält med triangelformad öppning','⛺','triangle','solid','orange'),piece('box','Låda','📦','square')],answer:'tent',why:'Tältets öppning har tre raka sidor och tre hörn. Tältet ligger till vänster om bron.'},
       {slot:5,words:['sv-0018'],prompt:'Sätt något lysande direkt till höger om bron.',hint:'Den tända lyktan ger ifrån sig ljus. Välj den och rutan direkt till höger om bron.',
        options:[piece('book','Bok','📚'),piece('plant','Planta','🪴'),piece('lantern','Tänd lykta','🏮')],answer:'lantern',why:'Lyktan lyser och står till höger om bron.'}
     ]

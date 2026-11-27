@@ -260,9 +260,9 @@
     "word": "sv-0027",
     "id": "wilt",
     "title": "Blomman som hänger",
-    "prompt": "Den tidigare frodiga trädgården har vissnat av vattenbrist. Växterna lever fortfarande. Vad kan hjälpa dem att återhämta sig?",
+    "prompt": "Blomman har vissnat eftersom den fått för lite vatten. Den lever fortfarande. Vad kan hjälpa den?",
     "target": "Hjälp blomman i krukan",
-    "why": "En vissnad växt har tappat sin spänst. Om den har vissnat av vattenbrist kan vatten och tid hjälpa den att återhämta sig, om den fortfarande lever. Med goda växtförhållanden kan trädgården åter bli frodig.",
+    "why": "Bladen hänger eftersom blomman fått för lite vatten. Vatten hjälper en levande växt att hålla sig uppe. När vi vattnar den torra jorden kan blomman ibland få tillbaka sin spänst, men det kan ta tid.",
     "answer": "water",
     "options": [
       [
@@ -354,7 +354,7 @@
     "word": "sv-0008",
     "id": "bounce",
     "title": "Den studsande stjärnbollen",
-    "prompt": "Vi ska få en leksak att vara studsande när den släpps på ett hårt golv. Vad passar bäst?",
+    "prompt": "Vi vill se en studsande rörelse när vi släpper en leksak på ett hårt golv. Vilken leksak kan hoppa upp igen?",
     "target": "Välj en leksak att släppa",
     "why": "En studsboll hoppar upp igen efter att den träffat golvet. Det är en studsande rörelse.",
     "answer": "ball",
@@ -413,33 +413,33 @@
     ]
   },
   {
-    "word": "sv-0040",
+    "word": "sv-0014",
     "id": "sponge",
-    "title": "Den törstiga svampen",
-    "prompt": "En vattenpöl behöver torkas upp. Välj en porös sak som har små hål och kan suga upp vatten.",
-    "target": "Välj föremål till vattenpölen",
-    "why": "En porös tvättsvamp har många små håligheter. Vatten kan komma in i svampens öppna porer.",
+    "title": "Svampen som blir tyngre",
+    "prompt": "Vi har fyra likadana tvättsvampar. Vattnet gör en av dem tung jämfört med de andra. Vilken svamp är tyngst?",
+    "target": "Välj svampen som väger mest",
+    "why": "Svamparna är likadana, men en är full med vatten. Vattnet väger också. Därför väger den svampen mer än de torra eller bara lite fuktiga svamparna.",
     "answer": "sponge",
     "options": [
       [
         "sponge",
         "🧽",
-        "Tvättsvamp med öppna porer"
+        "Svamp som är full med vatten"
       ],
       [
-        "glass",
-        "🪟",
-        "Massiv glasskiva"
+        "dry",
+        "🧽",
+        "Helt torr svamp"
       ],
       [
-        "metal",
-        "🔩",
-        "Massiv stålplåt"
+        "drops",
+        "🧽",
+        "Svamp med bara två droppar vatten i"
       ],
       [
-        "plastic",
-        "🧱",
-        "Tät plastkloss"
+        "damp",
+        "🧽",
+        "Svamp som bara är lite fuktig"
       ]
     ]
   },
@@ -605,7 +605,7 @@
     "title": "Trädgårdens gömda kraft",
     "prompt": "Vi ska hitta en frodig plats där den lilla fågeln kan söka skydd bland växterna. Vart ska den flyga?",
     "target": "Välj en plats åt fågeln",
-    "why": "En trädgård med riklig, kraftig växtlighet är frodig.",
+    "why": "Här växer många buskar och andra växter tätt och kraftigt. Det gör trädgården frodig.",
     "answer": "garden",
     "options": [
       [
@@ -636,7 +636,7 @@
     "title": "Det försvunna bottentecknet",
     "prompt": "Ett tecken ligger i botten av ett glas. Vilken vätska är grumlig så att tecknet blir svårare att se?",
     "target": "Välj vätska till glaset",
-    "why": "Små lerpartiklar kan sväva i vatten och göra det grumligt. Då syns tecknet bakom vätskan sämre.",
+    "why": "Små korn av lera svävar i vattnet och gör det grumligt. Kornen gör att tecknet bakom vattnet syns sämre.",
     "answer": "clay",
     "options": [
       [
@@ -652,7 +652,7 @@
       [
         "clear",
         "🫙",
-        "Klar sockerlösning"
+        "Klart vatten där lite socker har lösts upp helt"
       ],
       [
         "oil",
@@ -678,17 +678,17 @@
       [
         "solid",
         "🪵",
-        "Massiv träcylinder"
+        "Träkloss utan hål"
       ],
       [
         "stone",
         "🪨",
-        "Massiv sten"
+        "Sten utan hål"
       ],
       [
         "brick",
         "🧱",
-        "Massiv kloss utan hål"
+        "Plastkloss utan hål"
       ]
     ]
   },
@@ -782,24 +782,24 @@
  // answers, do not measure dexterity, and never change a learning record.
  const EXPERIMENTS=Object.freeze({
    window:{label:'Lys genom fönstret',instruction:'Dra för att tända ficklampan. Se hur ljuset passerar genom det genomskinliga glaset i vår bild.',low:'Ficklampan är släckt.',mid:'Ficklampan lyser genom glaset.',high:'Den lysande ficklampan avslöjar tecknet genom glaset.'},
-   nest:{label:'Lägg ägget på den mjuka kudden',instruction:'Dra över bilden för att sänka ägget långsamt. Kudden ger efter lite i vår förenklade illustration.',low:'Ägget hålls ovanför kudden.',mid:'Ägget sänks försiktigt.',high:'Det sköra ägget vilar mjukt i korgen.'},
-   stretch:{label:'Dra i gummibandet',instruction:'Dra över bilden eller använd reglaget. Prova att sträcka bandet och låta det dra ihop sig igen.',low:'Bandet är avslappnat.',mid:'Bandet sträcks ut.',high:'Bandet är längre. Prova att låta det dra ihop sig igen.'},
+   nest:{label:'Lägg ägget på den mjuka kudden',instruction:'Dra över bilden för att sänka ägget långsamt. Se hur kudden trycks ihop lite när ägget landar.',low:'Ägget hålls ovanför kudden.',mid:'Ägget sänks försiktigt.',high:'Det sköra ägget vilar mjukt i korgen.'},
+   stretch:{label:'Dra i gummibandet',instruction:'Dra över bilden eller använd reglaget. Prova att sträcka bandet och låta det dra ihop sig igen.',low:'Bandet är inte sträckt.',mid:'Bandet sträcks ut.',high:'Bandet är längre. Prova att låta det dra ihop sig igen.'},
    magnet:{label:'Flytta magneten',instruction:'Dra magneten närmare järnringen. Se när ringen glider över den hala isen.',low:'Magneten är långt från ringen.',mid:'Magneten närmar sig ringen.',high:'Magneten har dragit järnringen över den hala isen!'},
    whirl:{label:'Snurra löven',instruction:'Dra över bilden eller flytta reglaget för att snurra löven runt mitten.',low:'Löven vilar.',mid:'Löven rör sig runt mitten.',high:'Löven har virvlat ett helt varv!'},
-   wilt:{label:'Låt tiden gå efter vattning',instruction:'Dra fram tiden i vår låtsasbild. En levande, törstig växt kan återhämta sig gradvis efter vattning.',low:'Bladen hänger. Jorden har fått vatten.',mid:'Blomman börjar räta på sig.',high:'I berättelsen har trädgården återhämtat sig och blivit frodig.'},
+   wilt:{label:'Låt tiden gå efter vattning',instruction:'Dra fram tiden i vår låtsasbild. En levande, törstig växt kan räta på sig lite i taget efter vattning.',low:'Bladen hänger. Jorden har fått vatten.',mid:'Blomman börjar räta på sig.',high:'I berättelsen har blomman rätat på sig.'},
    tangle:{label:'Red ut garnet',instruction:'Dra försiktigt över bilden och följ hur slingorna försvinner.',low:'Garnet är trassligt.',mid:'Några slingor har lossnat.',high:'Tråden är utredd!'},
    mirror:{label:'Flytta stjärnan framför spegeln',instruction:'Dra över bilden eller flytta reglaget. Följ hur stjärnans spegelbild rör sig på andra sidan spegellinjen.',low:'Stjärnan och spegelbilden är långt från spegellinjen.',mid:'Spegelbilden följer stjärnans rörelse.',high:'Båda är nära spegellinjen.'},
    bounce:{label:'Följ bollens studs',instruction:'Flytta reglaget framåt och bakåt i tiden. Se hur gummibollen faller, träffar golvet och studsar upp igen.',low:'Bollen är högt upp före fallet.',mid:'Bollen faller eller studsar upp igen.',high:'De allt mindre studsarna har stannat.'},
    slide:{label:'Jämför två ytor',instruction:'Dra fram tiden efter att två likadana klossar fått en lika stor knuff. Se hur långt de glider på is och sträv matta.',low:'Klossarna börjar på samma plats.',mid:'Klossen på isen glider längre.',high:'Klossen på den hala isen har glidit längst.'},
-   sponge:{label:'Följ vattnet in i svampen',instruction:'Dra över bilden eller använd reglaget. De öppna håligheterna i svampen fylls med vatten i vår förenklade bild.',low:'Svampen är torr. Håligheterna är tomma.',mid:'Vatten kommer in i några av porerna.',high:'Svampen har tagit upp vatten.'},
+   sponge:{label:'Fyll svampen med vatten',instruction:'Dra över bilden eller använd reglaget. Se hur svampen fylls med vatten. Vattnet gör att svampen väger mer.',low:'Svampen är torr och lätt.',mid:'Svampen har tagit upp vatten och väger mer.',high:'Svampen är full med vatten och tyngre än när den var torr.'},
    sticky:{label:'Fäst pappersstjärnorna',instruction:'Dra över bilden för att föra stjärnorna till den klibbiga limytan. Se hur de fastnar på kortet.',low:'Stjärnorna ligger bredvid kortet.',mid:'Några stjärnor har fastnat på limytan.',high:'Alla stjärnorna sitter på kortet.'},
    glitter:{"label":"Flytta ljuset över kristallen","instruction":"Dra över bilden. Se hur kristallen glimmar på olika ställen när ljuset flyttas.","low":"Ljuset träffar den vänstra delen.","mid":"Ljuset träffar andra blanka ytor.","high":"Ljuset glimmar på kristallens högra sida."},
    foam:{"label":"Rör om i bubbelgrytan","instruction":"Dra fram tiden i den illustrerade grytan. Luft blandas in i tvålvattnet.","low":"Tvålvattnet har inga synliga skumbubblor.","mid":"Många nya bubblor bildas.","high":"Nu syns ett lager skum."},
    wobble:{"label":"Följ geléns dallring","instruction":"Dra tiden framåt eller bakåt. Gelén böjer sig åt båda hållen och kommer sedan till ro.","low":"Gelén står stilla före stöten.","mid":"Gelén gungar fram och tillbaka.","high":"Gelén står stilla igen."},
-   rough:{"label":"Undersök den skrovliga stenen","instruction":"Dra förstoringsglaset längs ytan. Följ den blå linjens ojämna kontur.","low":"Undersök stenens vänstra kant.","mid":"Stenen har små ojämnheter.","high":"Hela den skrovliga kanten har undersökts."},
-   lush:{"label":"Låt trädgården växa","instruction":"Dra fram tiden i vår låtsasträdgård. Här har växterna ljus, vatten och plats att växa.","low":"Några små plantor syns.","mid":"Blad och grenar växer.","high":"Trädgården har riklig, kraftig växtlighet."},
-   cloudy:{"label":"Blanda lerpartiklar i vattnet","instruction":"Dra reglaget. Fler små partiklar gör att tecknet syns allt sämre. Dra tillbaka för att jämföra.","low":"Vattnet är klart.","mid":"Vattnet blir grumligare.","high":"Vattnet är grumligt och tecknet svårt att se."},
-   hollow:{"label":"Titta in i röret","instruction":"Dra över bilden. Först visas en genomskärning av röret, sedan rullar kulan genom det tomma utrymmet.","low":"Rörets vägg täcker hålrummet i bilden.","mid":"Hålrummet blir synligt.","high":"Kulan har passerat genom röret."},
+   rough:{"label":"Undersök den skrovliga stenen","instruction":"Dra förstoringsglaset längs ytan. Den blå linjen visar den ojämna kanten.","low":"Undersök stenens vänstra kant.","mid":"Stenen har små ojämnheter.","high":"Hela den skrovliga kanten har undersökts."},
+   lush:{"label":"Låt trädgården växa","instruction":"Dra fram tiden i vår låtsasträdgård. Här har växterna ljus, vatten och plats att växa.","low":"Några små plantor syns.","mid":"Blad och grenar växer.","high":"Växterna har vuxit tätt och kraftigt."},
+   cloudy:{"label":"Blanda små korn av lera i vattnet","instruction":"Dra reglaget. Fler små korn gör att tecknet syns allt sämre. Dra tillbaka för att jämföra.","low":"Vattnet är klart.","mid":"Vattnet blir grumligare.","high":"Vattnet är grumligt och tecknet svårt att se."},
+   hollow:{"label":"Titta in i röret","instruction":"Dra över bilden. Rörets sida öppnas i bilden så att du kan se insidan. Sedan rullar kulan genom det tomma utrymmet.","low":"Rörets vägg täcker hålrummet i bilden.","mid":"Hålrummet blir synligt.","high":"Kulan har passerat genom röret."},
    flight:{"label":"Flyg mellan blommorna","instruction":"Dra fjärilen längs blomsterstigen. Reglaget och tangentbordet följer samma stig.","low":"Fjärilen är vid den första blomman.","mid":"Fjärilen flyger genom luften.","high":"Fjärilen har nått den sista blomman."}
  });
  function experiment(id,value=100){
