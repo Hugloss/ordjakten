@@ -233,11 +233,11 @@
   // Explicit practice goals filter only the current level/topic, without changing
   // scores, creating extra history or claiming that a child knows a word.
   function trainingPools(pool,settings,{progress=null,reviews=null,mistakes={},readingProgress=null,
-    missionProgress=null,contextIds=new Set(),missionsAvailable=false,now=Date.now(),contextMemory=null}={}) {
+    missionProgress=null,contextIds=new Set(),missionsAvailable=false,now=Date.now(),contextMemory=null,seenIds=null}={}) {
     const discover=[],focus=[];
     for(const item of pool){
       const id=item.entry.id,skills=progress?.[id]?.skills||{},review=reviews?.[id],reading=readingProgress?.[id];
-      const seen=Object.values(skills).some(value=>value?.attempts>0) || !!review ||
+      const seen=!!seenIds?.has(id) || Object.values(skills).some(value=>value?.attempts>0) || !!review ||
         Number(mistakes?.[id])>0 || (Array.isArray(missionProgress?.[id])&&missionProgress[id].length>0) ||
         ['transfer','recognition'].some(type=>reading?.[type]?.first>0||reading?.[type]?.supported>0);
       if(!seen&&!Object.keys(contextMemory?.progress?.[id]||{}).length)discover.push(item);

@@ -5,6 +5,8 @@ Ordjakten erbjuder tre val i **Träna** (inte expert/provläge):
 - **Blanda**: befintligt blandat urval; smart variation är fortfarande frivillig.
 - **Upptäck nytt**: bara frågor om begrepp utan registrerade försök,
   Aha-observationer, repetitionskort, äldre fel eller avklarade uttrycksuppdrag.
+  Sparade övningar i Hitta ordet själv, Orddetektiven, Begreppskartan och
+  Ordbroar räknas också som tidigare möten, enligt samma historik som Min ordstig.
   Det betyder oprövade i den sparade historiken – inte att barnet aldrig hört ordet.
 - **Ge ord en ny chans**: begrepp med en repetitionsfråga som är redo,
   en tillgänglig uppgiftstyp som behöver övas, eller en Aha-fråga som
@@ -19,7 +21,7 @@ i samma omgång.
 
 Det gamla valet Träna mina fel har företräde och återställer träningsmålet
 till Blanda. Äventyrens snabbval och miniuppdrag behåller sina egna regler.
-Testa dig och högskoleprovsutmaningen använder inte träningsmålet. Poäng,
+Testa dig, Fördjupning och Skolans uppgiftsord använder inte träningsmålet. Poäng,
 belöningar och Aha-resultat har samma regler som tidigare. Målet sparas
 lokalt som en inställning; inga nya personuppgifter eller nätanrop behövs.
 

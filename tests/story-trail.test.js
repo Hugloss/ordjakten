@@ -30,9 +30,36 @@ function round(progress,options={},reviews={}){
 
 test('every authored word has three distinct versioned story identities',()=>{
   const keys=contexts.wordContexts.flatMap(r=>r.scenes.map(s=>r.id+':'+D.sceneKey(s)));
-  assert.equal(keys.length,129);
-  assert.equal(new Set(keys).size,129);
+  assert.equal(keys.length,contexts.wordContexts.length*3);
+  assert.equal(new Set(keys).size,keys.length);
   assert.ok(keys.every(key=>/^sv-\d{4,}:scene-[0-9a-f]{16}$/.test(key)));
+});
+
+test('story preference cannot override Aha novelty or previously credited evidence',()=>{
+  const question=E.makeContextQuestion(word,bank,contexts,()=>.3,0);
+  const readingProgress=B.recordProgress({},id,'context','first',NOW,'context:1');
+  let offered;
+  const check=B.makeCheck(question,{bank,contexts,surprises,missions,readingProgress,random:()=>.2,
+    selectScene:(_record,available)=>{offered=available;return 1;}});
+  assert.deepEqual(offered,[2]);
+  assert.equal(check.sceneIndex,2);
+  assert.equal(check.evidence,'context:2');
+  assert.equal(check.options.find(option=>option.correct).label,record.scenes[2].text);
+});
+
+test('shared Aha recording updates the story trail without awarding main-answer credit',()=>{
+  const app=fs.readFileSync(path.resolve(__dirname,'../public/js/app.js'),'utf8');
+  const fn=app.slice(app.indexOf('  function recordAhaWithFeedback('),app.indexOf('  function saveAhaOutcome('));
+  const history={readingProgress:{},contextProgress:{}};
+  const scope={history,contexts,B,D,Date:{now:()=>NOW},observePracticeFeedback:()=>{}};
+  vm.runInNewContext(fn+'\nrecordAhaWithFeedback('+JSON.stringify(id)+',"context","first","context:2");',scope);
+  assert.equal(info(history.contextProgress).tried,1);
+  assert.equal(info(history.contextProgress).mainTried,0);
+  assert.equal(info(history.contextProgress).correct,0);
+  assert.equal(info(history.contextProgress).scenes[2].lastAha,'first');
+  const before=JSON.stringify(history.contextProgress);
+  vm.runInNewContext('recordAhaWithFeedback('+JSON.stringify(id)+',"context","guided","context:1",{recordStory:false});',scope);
+  assert.equal(JSON.stringify(history.contextProgress),before,'exam feedback does not update detailed stories');
 });
 
 test('repeated success on one story never becomes coverage of several stories',()=>{

@@ -24,7 +24,7 @@ const other=pool.filter(x=>x.entry.id!==target).slice(0,5).map(x=>x.entry.id);
 function generate(options={},memory={}){
   return E.generateRound(bank,curation,{...settings,...options},memory.mistakes||{},()=>.43,
     expressions,missions,memory.reviews||{},NOW,contexts,memory.progress||{},D,
-    memory.readingProgress||{},memory.missionProgress||{});
+    memory.readingProgress||{},memory.missionProgress||{},memory.contextProgress||{},memory.seenIds||null);
 }
 function pools(memory={},options={}){
   return D.trainingPools(E.getTopicPool(bank,curation,expressions,{...settings,...options}),
@@ -37,7 +37,7 @@ test('new goals migrate safely and do not override explicit review or test modes
   assert.equal(E.sanitizeSettings({practiceGoal:'invalid'}).practiceGoal,'mixed');
   assert.equal(E.sanitizeHistory({settings:{practiceGoal:'discover'}}).settings.practiceGoal,'discover');
   assert.equal(E.sanitizeSettings({practiceGoal:'focus',reviewOnly:true}).practiceGoal,'mixed');
-  for(const override of [{mode:'test'},{difficulty:'exam'},{contextOnly:true},{reviewOnly:true}]){
+  for(const override of [{mode:'test'},{difficulty:'exam'},{contextOnly:true},{schoolOnly:true},{reviewOnly:true}]){
     assert.equal(E.practiceGoalForRound({...settings,practiceGoal:'discover',...override}),'mixed');
   }
 });
@@ -92,10 +92,59 @@ test('empty filtered goals are explicit rather than silently switching to mixed'
 test('saved goals never bias test, exam, dedicated context or review rounds',()=>{
   const readingProgress=B.recordProgress({},target,'context','guided',NOW);
   const memory={readingProgress,reviews:{[target]:{streak:0,dueAt:NOW,attempts:1}}};
-  for(const options of [{mode:'test'},{difficulty:'exam'},{contextOnly:true},{reviewOnly:true}]){
+  for(const options of [{mode:'test'},{difficulty:'exam'},{contextOnly:true},{topic:'expressions',schoolOnly:true},{reviewOnly:true}]){
     const base=generate({...options,practiceGoal:'mixed'},memory);
     assert.deepEqual(generate({...options,practiceGoal:'focus'},memory),base);
     assert.deepEqual(generate({...options,practiceGoal:'discover'},memory),base);
+  }
+});
+
+test('discovery respects encounters in other learning games without inventing weak skills',()=>{
+  const seenIds=new Set(pool.map(item=>item.entry.id));
+  const remaining=pool.find(item=>item.entry.id!==target).entry.id;
+  seenIds.delete(remaining);
+  const memory={seenIds};
+  assert.deepEqual(ids(pools(memory).discover),[remaining]);
+  assert.equal(pools(memory).focus.length,0,'an encounter alone is not a mistake');
+  assert.deepEqual(generate({practiceGoal:'discover'},memory).map(q=>q.id),[remaining]);
+  assert.deepEqual(generate({mode:'test'},memory),generate({mode:'test'}),'test selection stays independent');
+});
+
+test('the app includes recall, detective, concept and bridge observations in discovery counts',()=>{
+  const L=require('../public/js/learning-map'),Recall=require('../public/js/recall');
+  const Detector=require('../public/js/detector'),Concepts=require('../public/js/concepts');
+  const Bridges=require('../public/js/bridges');
+  const contrasts=require('../public/data/contrasts.json');
+  const learningCatalog=L.catalog(bank,expressions,contexts,curation);
+  const conceptCatalog=Concepts.catalog(learningCatalog);
+  const bridgeCatalog=Bridges.catalog(learningCatalog,conceptCatalog);
+  const detectorCatalog=Detector.catalog(learningCatalog,contrasts);
+  const poolIds=new Set(pool.map(item=>item.entry.id));
+  const detector=detectorCatalog.find(task=>poolIds.has(task.target));
+  const concept=conceptCatalog.tasks.find(task=>poolIds.has(task.answer));
+  const bridge=bridgeCatalog.tasks.find(task=>task.cards.some(id=>poolIds.has(id)));
+  const cases=[
+    {key:'recallProgress',targets:[target],progress:Recall.record({},learningCatalog,target,
+      {stage:1,matched:true,helped:false},NOW)},
+    {key:'detectorProgress',targets:[detector.target],progress:Detector.record({},detectorCatalog,detector.id,
+      {word:'right',clue:'right'},NOW)},
+    {key:'conceptProgress',targets:[concept.answer],progress:Concepts.record({},conceptCatalog.tasks,concept.id,'direct',NOW)},
+    {key:'bridgeProgress',targets:bridge.cards,progress:Concepts.record({},bridgeCatalog.tasks,bridge.id,'direct',NOW)}
+  ];
+  const app=fs.readFileSync(path.resolve(__dirname,'../public/js/app.js'),'utf8');
+  const entries=app.slice(app.indexOf('  function learningEntries('),app.indexOf('  function startAhaRound('));
+  const seen=app.slice(app.indexOf('  function practiceSeenIds('),app.indexOf('  function currentTimerSeconds('));
+  for(const item of cases){
+    const history={...E.sanitizeHistory(null),[item.key]:item.progress};
+    const before=JSON.stringify(history);
+    const scope={history,L,Recall,Detector,Concepts,B,learningCatalog,conceptCatalog,bridgeCatalog,detectorCatalog,
+      getAhaPlan:()=>({ready:[],waiting:[]}),storySummary:()=>({tried:0,correct:0,needs:0})};
+    const seenIds=vm.runInNewContext(entries+seen+'\npracticeSeenIds();',scope);
+    for(const id of item.targets)assert.ok(seenIds.has(id),item.key+' must mark '+id+' as encountered');
+    const discover=pools({seenIds}).discover;
+    assert.ok(discover.every(item=>!seenIds.has(item.entry.id)));
+    assert.equal(discover.length,pool.length-[...seenIds].filter(id=>poolIds.has(id)).length);
+    assert.equal(JSON.stringify(history),before,'discovery does not rewrite game or assessment history');
   }
 });
 

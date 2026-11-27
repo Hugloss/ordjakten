@@ -1,6 +1,6 @@
 # Berättelsespåret – förstå ord i fler situationer
 
-43 ord har redan tre redaktionellt skrivna vardagsberättelser var.
+Alla 121 ord har tre redaktionellt skrivna vardagsberättelser var, totalt 363.
 Tidigare sparades främst ett sammanlagt resultat för frågetypen
 `context` och indexet för den senaste scenen. Nu kan spelet skilja på
 **vilka berättelser** barnet har mött och hur det gick i var och en.
@@ -8,7 +8,7 @@ Tidigare sparades främst ett sammanlagt resultat för frågetypen
 - En ordfråga (välj vilket ord som passar) sparas med rätt/fel och
   senaste observationstid, direkt efter ett faktiskt svar i Träna
   eller en frivillig riktad övning.
-- Aha-frågan efter förklaringen sparas separat: rätt direkt,
+- Aha-frågan efter förklaringen och den fristående Aha-rundan sparas separat: rätt direkt,
   efter omläsning eller med hjälp. Ett Aha-svar räknas inte som en
   självständigt löst ordfråga.
 - Inga berättelsetexter, namn, fria svar eller användar-ID:n lagras.
@@ -22,13 +22,15 @@ Tidigare sparades främst ett sammanlagt resultat för frågetypen
 
 Smart träning prioriterar helt oprövade berättelser före redan
 observerade, sedan olösta ordfrågor och därefter lösta berättelser.
-Aha prioriterar andra oprövade berättelser än den aktuella ordfrågan,
+Aha behåller reglerna för ett nytt exempel och tidigare tillgodoräknade
+exempel. Inom det tillåtna urvalet prioriteras helt oprövade berättelser,
 och därefter berättelser som ännu inte prövats som Aha. Inga nya
 berättelser skapas automatiskt. En svår eller ofullständig
 berättelsestig kan ge ordet extra prioritet i blandad träning och i
 **Ge ord en ny chans**. Befintliga repetitionspauser gäller fortfarande
-för det riktade urvalet. Med smart träning avstängd är ordinarie
-frågetypsval och Aha-urval inte anpassade.
+för det riktade urvalet. Berättelsespårets prioritering av oprövade
+situationer används när smart träning är på. Grundreglerna för nya
+Aha-exempel och separata tillgodoräknade exempel gäller alltid.
 
 ## Barnets vy
 

@@ -293,7 +293,7 @@
     return settings.mode==='train' && settings.difficulty!=='exam' && !settings.reviewOnly &&
       !settings.contextOnly && !settings.schoolOnly && ['discover','focus'].includes(settings.practiceGoal)?settings.practiceGoal:'mixed';
   }
-  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null, missionProgress = null, contextProgress = null) {
+  function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null, missionProgress = null, contextProgress = null, seenIds = null) {
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const pool=getTopicPool(bank,curation,expressions,settings);
     const schoolDrill=topic==='expressions'&&settings.schoolOnly===true&&settings.mode==='train'&&settings.difficulty!=='exam'&&!settings.reviewOnly&&!!missions;
@@ -314,7 +314,7 @@
     if(goal!=='mixed'){
       if(!adaptive?.trainingPools)throw new Error('Träningsmålet kunde inte laddas. Ladda om sidan.');
       candidates=adaptive.trainingPools(candidates,settings,{progress:skillProgress,reviews:reviewProgress,
-        mistakes,readingProgress,missionProgress,contextIds,missionsAvailable:!!missions,now,contextMemory})[goal];
+        mistakes,readingProgress,missionProgress,contextIds,missionsAvailable:!!missions,now,contextMemory,seenIds})[goal];
       if(!candidates.length)throw new Error(goal==='discover'?
         'Inga oprövade ord eller uttryck på den här nivån. Välj Blanda eller en annan nivå.':
         'Inget behöver en ny chans just nu. Välj Blanda eller Upptäck nytt.');

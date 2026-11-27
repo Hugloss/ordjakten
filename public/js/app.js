@@ -2828,7 +2828,7 @@
   function renderPracticeGoal(pool,now=Date.now()) {
     const available=D.trainingPools(pool,settings,{progress:history.skillProgress,reviews:history.reviewProgress,
       mistakes:history.mistakes,readingProgress:history.readingProgress,missionProgress:history.missionProgress,
-      contextIds:new Set(contexts.wordContexts.map(row=>row.id)),missionsAvailable:!!missions,now,contextMemory:contextMemory()});
+      contextIds:new Set(contexts.wordContexts.map(row=>row.id)),missionsAvailable:!!missions,now,contextMemory:contextMemory(),seenIds:practiceSeenIds()});
     $('practice-goal-settings').hidden=settings.mode!=='train'||settings.difficulty==='exam'||settings.reviewOnly;
     setPressed('[data-practice-goal]','practiceGoal',settings.practiceGoal);
     $('goal-discover-count').textContent=String(available.discover.length);
@@ -2894,6 +2894,11 @@
   }
   function showSetupError(message){$('setup-error').hidden=false;$('setup-error').textContent=message;}
   function hideSetupError(){$('setup-error').hidden=true;}
+  // Reuse the learning map's evidence from recall, detective and concept games.
+  // An encounter excludes discovery; it never creates a score or skill result.
+  function practiceSeenIds(){
+    return new Set(learningEntries().filter(item=>item.seen).map(item=>item.id));
+  }
   function currentTimerSeconds() {
     if(settings.timerMode==='off')return 0;
     if($('timer-preset').value!=='custom')return E.clampInteger($('timer-preset').value,5,3600,180);
@@ -2918,7 +2923,7 @@
     const limit=E.getTopicPool(bank,curation,expressions,roundSettings).length;
     if(limit<settings.count && !settings.reviewOnly&&E.practiceGoalForRound(roundSettings)==='mixed'){showSetupError('Det finns inte tillräckligt många ord för den här omgången.');return;}
     let questions;
-    try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D,history.readingProgress,history.missionProgress,history.contextProgress);
+    try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D,history.readingProgress,history.missionProgress,history.contextProgress,practiceSeenIds());
       questions=ActionWords.adaptRound(roundSettings,questions);}
     catch(error){showSetupError(error.message);return;}
     if(!questions.length){showSetupError('Det finns inga tillgängliga frågor.');return;}
@@ -3442,17 +3447,24 @@
     if(typeof $('reading-check').scrollIntoView==='function')
       $('reading-check').scrollIntoView({behavior:'auto',block:'start'});
   }
-  function recordAhaWithFeedback(id,source,outcome,evidence){
+  function recordAhaWithFeedback(id,source,outcome,evidence,{recordStory=true}={}){
     const now=Date.now(),before=history.readingProgress;
     history.readingProgress=B.recordProgress(before,id,source,outcome,now,evidence);
     if(history.readingProgress!==before&&['context','expression'].includes(source)&&
       history.readingProgress[id]?.transfer?.lastAt===now)
       observePracticeFeedback('aha:'+id,outcome==='first'?'direct':'supported',now,evidence);
+    // Both the quiz's Aha step and the separate Aha round use this helper.
+    // Aha observations never count as independently answered main questions.
+    if(recordStory&&source==='context'&&/^context:[012]$/.test(evidence)){
+      const index=Number(evidence.slice('context:'.length));
+      const scene=contexts.wordContexts.find(record=>record.id===id)?.scenes[index];
+      if(scene)history.contextProgress=D.recordContext(history.contextProgress,contexts,id,index,scene.text,'aha',outcome,now);
+    }
   }
   function saveAhaOutcome(outcome) {
     const q=game?.questions?.[game.index];
     if(!q||!readingCheck)return;
-    recordAhaWithFeedback(q.id,readingCheck.source,outcome,readingCheck.evidence);
+    recordAhaWithFeedback(q.id,readingCheck.source,outcome,readingCheck.evidence,{recordStory:game.settings.difficulty!=='exam'});
     if(game.settings.adaptivePractice&&game.settings.difficulty!=='exam'&&
       (q.taskType==='context'||readingCheck.source==='context'))
       renderStoryTrail($('context-story-trail'),q.id,{compact:true});
@@ -4306,7 +4318,7 @@
     startRound(null,{contextOnly:true});
   });
   $('quick-school').addEventListener('click',()=>{
-    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false});
+    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});
     startRound(null,{schoolOnly:true});
   });
   $('quick-expressions').addEventListener('click',()=>{
@@ -4407,11 +4419,11 @@
   });
   $('play-again').addEventListener('click',()=>{
     if(settings.reviewOnly){const pool=E.getTopicPool(bank,curation,expressions,settings);if(!readyReviewCount(pool))settings.reviewOnly=false;}
-    const schoolOnly=game?.settings.schoolOnly===true;
+    const roundOptions={schoolOnly:game?.settings.schoolOnly===true};
     // A filtered pool can be exhausted by the round just completed. Return
     // to visible settings instead of reporting an error on a hidden screen.
-    if(E.practiceGoalForRound({...settings,schoolOnly})!=='mixed'){game=null;show('home');renderSetup();}
-    startRound(null,{schoolOnly});
+    if(E.practiceGoalForRound({...settings,...roundOptions})!=='mixed'){game=null;show('home');renderSetup();}
+    startRound(null,roundOptions);
   });
   $('change-settings').addEventListener('click',()=>{game=null;renderSetup();show('home');});
   $('word-search').addEventListener('input',()=>{wordListLimit=24;renderWordList();});
