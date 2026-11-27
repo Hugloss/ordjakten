@@ -21,7 +21,8 @@ def make_page(browser, viewport, storage_seed=None):
     page = browser.new_page(viewport=viewport)
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    page.set_content((ROOT / "index.html").read_text(encoding="utf-8"))
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    page.set_content(html)
     if storage_seed is not None:
         # A localStorage shim for about:blank. This is NOT a real-origin reload test.
         page.evaluate("""(initial) => {
@@ -34,27 +35,10 @@ def make_page(browser, viewport, storage_seed=None):
           }});
         }""",storage_seed)
 
-    page.add_style_tag(content=(ROOT / "css/style.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/playful.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/adventures.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/expressions.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/comics.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/surprises.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/missions.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/quests.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/review.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/contexts.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/adaptive.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/learning-map.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/focus-practice.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/contrast.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/confusions.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/clue-ladder.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/retention.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/reading-flow.css").read_text(encoding="utf-8"))
-    page.add_style_tag(content=(ROOT / "css/guided-reading.css").read_text(encoding="utf-8"))
-    # Use the production script order rather than a list that silently goes stale.
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    # Follow the production asset order so newly added styles and modules
+    # behave the same way in about:blank as they do on the deployed page.
+    for name in re.findall(r'<link rel="stylesheet" href="\./([^"]+)"[^>]*>', html):
+        page.add_style_tag(content=(ROOT / name).read_text(encoding="utf-8"))
     for name in re.findall(r'<script src="\./([^"]+)"[^>]*></script>', html):
         page.add_script_tag(content=(ROOT / name).read_text(encoding="utf-8"))
     return page, errors
