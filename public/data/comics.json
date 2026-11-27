@@ -1078,6 +1078,96 @@
         "✅"
       ],
       "takeaway": "Undersök – Ta reda på något genom att titta noga, leta efter fakta eller prova."
+    },
+    "ut-0070": {
+      "before": [
+        "🏠",
+        "💬"
+      ],
+      "after": [
+        "💭",
+        "💡"
+      ],
+      "aha": [
+        "💡",
+        "✅"
+      ],
+      "takeaway": "Här betyder ”hoppa i overallen” att ta på sig overallen. Något hopp behövs inte."
+    },
+    "ut-0071": {
+      "before": [
+        "💬",
+        "🤝"
+      ],
+      "after": [
+        "💬",
+        "💡"
+      ],
+      "aha": [
+        "😌",
+        "✅"
+      ],
+      "takeaway": "I badrummet menar pappa ”kliv lugnt ner”. I en annan situation kan ”hoppa ner” betyda ett riktigt hopp. Fråga om du är osäker."
+    },
+    "ut-0072": {
+      "before": [
+        "💬",
+        "🏪"
+      ],
+      "after": [
+        "💬",
+        "💭"
+      ],
+      "aha": [
+        "💡",
+        "✅"
+      ],
+      "takeaway": "Jackan ska på kroppen. Här betyder ”släng på dig” att ta på sig plagget."
+    },
+    "ut-0073": {
+      "before": [
+        "💬",
+        "🏠"
+      ],
+      "after": [
+        "💬",
+        "💡"
+      ],
+      "aha": [
+        "😌",
+        "✅"
+      ],
+      "takeaway": "”Slå dig ner” betyder att sätta sig. Farmor visar var det finns en ledig plats."
+    },
+    "ut-0074": {
+      "before": [
+        "🤝",
+        "💬"
+      ],
+      "after": [
+        "💬",
+        "💭"
+      ],
+      "aha": [
+        "🤝",
+        "➡️"
+      ],
+      "takeaway": "Här är ”häng med” en inbjudan att följa med. I en förklaring kan samma ord handla om att förstå."
+    },
+    "ut-0075": {
+      "before": [
+        "📋",
+        "💬"
+      ],
+      "after": [
+        "💭",
+        "💡"
+      ],
+      "aha": [
+        "➡️",
+        "✅"
+      ],
+      "takeaway": "I frågespelet betyder ”hoppa över” att lämna en fråga och gå vidare. Över ett streck kan det betyda ett riktigt hopp."
     }
   }
 }

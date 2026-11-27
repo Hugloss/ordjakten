@@ -36,8 +36,8 @@ const twice=(key=aha)=>observe(observe({},key,'supported',NOW,key===aha?'context
 const choose=(rows,raw,now)=>J.select(F.adjust(rows,raw,content,now),{random}).steps;
 const start=(raw,step,now)=>F.complete(raw,content,step,now);
 test('real catalogue scopes exact followup targets and versioned alternative methods',()=>{
-  assert.equal(Object.values(content.objectives).filter(x=>x.mode==='recall').length,188);
-  assert.equal(Object.values(content.objectives).filter(x=>x.mode==='aha').length,188);
+  assert.equal(Object.values(content.objectives).filter(x=>x.mode==='recall').length,194);
+  assert.equal(Object.values(content.objectives).filter(x=>x.mode==='aha').length,194);
   assert.equal(Object.values(content.objectives).filter(x=>x.mode==='concept').length,36);
   assert.ok(content.methods[method].targets.includes(aha));
   assert.ok(!content.methods[method].targets.includes(recall));

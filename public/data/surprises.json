@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "67 frivilliga miniuppdrag med nya vardags- och skoluppgifter. Öppnas efter inlärning, aldrig under prov.",
+  "description": "73 frivilliga miniuppdrag med nya vardags- och skoluppgifter. Öppnas efter inlärning, aldrig under prov.",
   "challenges": [
     {
       "id": "ut-0001",
@@ -1020,6 +1020,108 @@
       ],
       "explanation": "Det är strecken på papperet som ska suddas bort. Rita en linje med varje penna och prova samma sudd på alla tre. Skriv upp vilka streck som försvinner. Då bygger svaret på det du faktiskt provat.",
       "ahaDistractor": "”Undersök vilka av tre pennor som ger streck som går att sudda ut.” – Pennorna har olika färger och ligger på bordet."
+    },
+    {
+      "id": "ut-0070",
+      "category": "everyday-instruction",
+      "prompt": "Vad menas med ”hoppa i overallen” i den här nya situationen?",
+      "options": [
+        {
+          "label": "”Det är dags för rast i snön. Läraren pekar på overallen och säger: Hoppa i overallen, så går vi ut.” – Ta på dig overallen innan du går ut på rast.",
+          "correct": true
+        },
+        {
+          "label": "”Det är dags för rast i snön. Läraren pekar på overallen och säger: Hoppa i overallen, så går vi ut.” – Gå ut med overallen hopvikt under armen.",
+          "correct": false
+        }
+      ],
+      "ahaDistractor": "”Det är dags för rast i snön. Läraren pekar på overallen och säger: Hoppa i overallen, så går vi ut.” – Hoppa upp och ner bredvid overallen och låt den ligga.",
+      "explanation": "Läraren pekar på plagget som behövs ute i snön. Det är overallen du ska ta på dig, inte ett hopp du ska göra."
+    },
+    {
+      "id": "ut-0071",
+      "category": "everyday-instruction",
+      "prompt": "Vad menas med ”hoppa ner från pallen” i den här nya situationen?",
+      "options": [
+        {
+          "label": "”Vera står på en pall vid köksbänken. Bakningen är klar. Mormor säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.” – Vera står kvar på pallen och sträcker sig upp mot ett skåp.",
+          "correct": false
+        },
+        {
+          "label": "”Vera står på en pall vid köksbänken. Bakningen är klar. Mormor säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.” – Vera håller mormors hand och kliver ner med en fot i taget.",
+          "correct": true
+        }
+      ],
+      "ahaDistractor": "”Vera står på en pall vid köksbänken. Bakningen är klar. Mormor säger: Hoppa ner från pallen. Håll min hand och sätt en fot i taget på golvet.” – Vera tar ett skutt från pallen och landar med båda fötterna samtidigt.",
+      "explanation": "Mormor förklarar hur Vera ska komma ner: hålla hennes hand och sätta en fot i taget på golvet. I den här situationen menar hon att Vera ska kliva ner."
+    },
+    {
+      "id": "ut-0072",
+      "category": "everyday-instruction",
+      "prompt": "Vad menas med ”släng på dig jackan” i den här nya situationen?",
+      "options": [
+        {
+          "label": "”Det blåser svalt på skolgården. Inför rasten säger läraren: Släng på dig jackan innan du går ut.” – Ta på dig jackan innan du går ut på skolgården.",
+          "correct": true
+        },
+        {
+          "label": "”Det blåser svalt på skolgården. Inför rasten säger läraren: Släng på dig jackan innan du går ut.” – Häng jackan på kroken och gå ut utan den.",
+          "correct": false
+        }
+      ],
+      "ahaDistractor": "”Det blåser svalt på skolgården. Inför rasten säger läraren: Släng på dig jackan innan du går ut.” – Kasta jackan framför dig och låt den ligga på golvet.",
+      "explanation": "Läraren pratar om jackan inför en sval rast ute. ”Släng på dig” betyder här att du ska ha jackan på kroppen."
+    },
+    {
+      "id": "ut-0073",
+      "category": "everyday-instruction",
+      "prompt": "Vad menas med ”slå dig ner” i den här nya situationen?",
+      "options": [
+        {
+          "label": "”På biblioteket pekar ledaren på en ledig sittkudde och säger: Slå dig ner här, så börjar sagan.” – Ställ sittkudden i ett hörn och fortsätt stå.",
+          "correct": false
+        },
+        {
+          "label": "”På biblioteket pekar ledaren på en ledig sittkudde och säger: Slå dig ner här, så börjar sagan.” – Sätt dig på sittkudden och gör dig redo att lyssna.",
+          "correct": true
+        }
+      ],
+      "ahaDistractor": "”På biblioteket pekar ledaren på en ledig sittkudde och säger: Slå dig ner här, så börjar sagan.” – Slå på sittkudden med handen och låt platsen vara tom.",
+      "explanation": "Ledaren visar en sittkudde inför sagostunden. ”Slå dig ner” betyder att sätta sig på platsen som ledaren visar."
+    },
+    {
+      "id": "ut-0074",
+      "category": "everyday-instruction",
+      "prompt": "Vad menas med ”häng med” i den här nya situationen?",
+      "options": [
+        {
+          "label": "”Några barn ska gå till bollplanen. De säger till Lo: Häng med oss till planen!” – Lo följer med barnen till bollplanen.",
+          "correct": true
+        },
+        {
+          "label": "”Några barn ska gå till bollplanen. De säger till Lo: Häng med oss till planen!” – Lo stannar kvar medan barnen går till planen.",
+          "correct": false
+        }
+      ],
+      "ahaDistractor": "”Några barn ska gå till bollplanen. De säger till Lo: Häng med oss till planen!” – Lo hänger i ett räcke och låter de andra gå utan henne.",
+      "explanation": "Barnen säger vart de ska gå och bjuder Lo att följa med. Här betyder ”häng med” att gå tillsammans med dem till bollplanen."
+    },
+    {
+      "id": "ut-0075",
+      "category": "everyday-instruction",
+      "prompt": "Vad menas med ”hoppa över” i den här nya situationen?",
+      "options": [
+        {
+          "label": "”På pysselbladet är ruta två redan färdig. Ledaren säger: Hoppa över ruta två och fortsätt med ruta tre.” – Gör om ruta två och lämna ruta tre orörd.",
+          "correct": false
+        },
+        {
+          "label": "”På pysselbladet är ruta två redan färdig. Ledaren säger: Hoppa över ruta två och fortsätt med ruta tre.” – Låt ruta två vara och börja arbeta i ruta tre.",
+          "correct": true
+        }
+      ],
+      "ahaDistractor": "”På pysselbladet är ruta två redan färdig. Ledaren säger: Hoppa över ruta två och fortsätt med ruta tre.” – Lägg pysselbladet på golvet och hoppa med kroppen över det.",
+      "explanation": "Ruta två är redan färdig och ledaren pekar ut ruta tre som nästa uppgift. Här betyder ”hoppa över” att låta den färdiga rutan vara och fortsätta med nästa."
     }
   ]
 }

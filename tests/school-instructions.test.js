@@ -40,7 +40,7 @@ test('school-only rounds contain only school instructions and ask practical answ
    assert.ok(round.every(q=>q.schoolInstruction&&q.taskType==='sentence'&&q.options.length===3));
  }
  const regular=E.getTopicPool(bank,curation,expressions,{...settings,schoolOnly:false});
- assert.equal(regular.length,67);
+ assert.equal(regular.length,73);
  assert.equal(Object.hasOwn(E.sanitizeSettings(settings),'schoolOnly'),false);
 });
 test('the original expression and review flows still work without the school-only filter',()=>{

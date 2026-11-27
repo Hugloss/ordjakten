@@ -429,7 +429,7 @@ test('everyday expressions replace niche animal nicknames without reusing retire
  const missions=require('../public/data/missions.json').missions;
  const surprises=require('../public/data/surprises.json').challenges;
  const comics=require('../public/data/comics.json').stories;
- assert.equal(entries.length,67);
+ assert.equal(entries.length,73);
  for(const id of ['ut-0029','ut-0031']){
    assert.ok(!entries.some(x=>x.id===id));
    assert.ok(!missions.some(x=>x.id===id));
@@ -468,15 +468,15 @@ test('school instructions have a dedicated five-question training entry and work
  assert.ok(html.includes('id="school-feedback"'));
  assert.ok(app.includes("startRound(null,{schoolOnly:true})"));
  assert.ok(app.includes("schoolOnly:game?.settings.schoolOnly===true"));
- assert.ok(app.includes("school-feedback').hidden=!q.schoolInstruction"));
+ assert.ok(app.includes("school-feedback').hidden=!(q.schoolInstruction||q.everydayInstruction)"));
  assert.ok(engine.includes("schoolDrill?'sentence'"));
 });
 
 test('school feedback presents concrete explanations, everyday connections and selected-answer feedback after submission',()=>{
  const html=read('index.html'),app=read('js/app.js');
  for(const id of ['school-feedback-explanation','school-feedback-connection','school-feedback-correction','school-feedback-rule','school-feedback-answer'])assert.ok(html.includes('id="'+id+'"'));
- assert.ok(app.includes('Q.schoolFeedback(q,option?.label,missions)'));
- assert.ok(app.includes('Q.schoolFeedback(q,game.selected[q.id],missions)'));
+ assert.ok(app.includes('Q.instructionFeedback(q,option?.label,missions)'));
+ assert.ok(app.includes('Q.instructionFeedback(q,game.selected[q.id],missions)'));
  assert.ok(app.includes("school-feedback-connection').textContent=lesson.connection"));
  assert.ok(app.includes("school-feedback-correction').textContent=lesson.correction"));
 });

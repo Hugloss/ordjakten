@@ -2,6 +2,8 @@
    Theme (dark/light/auto) is independent from adventure world.
    Success and error states keep their accessible green/red colors. */
 /* World accents are independent of dark/light/auto and never recolor right/wrong feedback. */
+/* Text cards keep an opaque theme surface beneath the decorative world tint. */
+html{--world-surface:linear-gradient(var(--world-wash,transparent),var(--world-wash,transparent)),var(--surface)}
 html[data-adventure='forest']{--world-color:#63b98a;--world-wash:rgba(38,132,89,.11)}
 html[data-theme='light'][data-adventure='forest']{--world-color:#176c42;--world-wash:rgba(27,125,70,.10)}
 html[data-adventure='space']{--world-color:#a78bfa;--world-wash:rgba(139,92,246,.13)}
@@ -26,7 +28,7 @@ html[data-adventure='horses']{--world-color:#efb778;--world-wash:rgba(189,126,72
 html[data-theme='light'][data-adventure='horses']{--world-color:#854d0e;--world-wash:rgba(161,98,7,.10)}
 html[data-adventure='music']{--world-color:#f9a8ef;--world-wash:rgba(217,91,209,.13)}
 html[data-theme='light'][data-adventure='music']{--world-color:#86198f;--world-wash:rgba(192,38,211,.09)}
-html[data-contrast='high'] {--world-wash:transparent}
+html[data-contrast='high'][data-theme] {--world-wash:transparent}
 body {background-image:radial-gradient(ellipse 50% 25% at 90% 5%,var(--play-glow),transparent),radial-gradient(ellipse 75% 30% at 15% 38%,var(--world-wash),transparent)}
 .adventure-setup {border-top:5px solid var(--world-color)!important}
 .adventure-worlds{display:grid;gap:18px;margin:15px 0 12px}
@@ -39,8 +41,8 @@ body {background-image:radial-gradient(ellipse 50% 25% at 90% 5%,var(--play-glow
 .adventure-selected {font-size:12px;font-weight:850;color:var(--world-color);visibility:hidden}
 .adventure-choice[aria-pressed='true'] {border-color:var(--world-color);box-shadow:inset 0 0 0 1px var(--world-color);background:var(--surface)}
 .adventure-choice[aria-pressed='true'] .adventure-selected{visibility:visible}
-.adventure-intro{display:flex;align-items:center;min-height:53px;border-radius:13px;border:1px solid var(--border);background:var(--world-wash);padding:11px 13px;font-size:14px;font-weight:750;line-height:1.5;color:var(--text)}
-.adventure-journey{margin:15px 0 20px;padding:15px 17px;border-radius:19px;border:2px solid var(--border);background:linear-gradient(115deg,var(--world-wash),var(--surface));border-left:6px solid var(--world-color);color:var(--text)}
+.adventure-intro{display:flex;align-items:center;min-height:53px;border-radius:13px;border:1px solid var(--border);background:var(--world-surface);padding:11px 13px;font-size:14px;font-weight:750;line-height:1.5;color:var(--text)}
+.adventure-journey{margin:15px 0 20px;padding:15px 17px;border-radius:19px;border:2px solid var(--border);background:linear-gradient(115deg,var(--world-wash),transparent),var(--surface);border-left:6px solid var(--world-color);color:var(--text)}
 .adventure-journey-header{display:flex;align-items:center;gap:12px;margin-bottom:15px}
 .adventure-journey-header>span{font-size:41px;line-height:1.2;flex-shrink:0}
 .adventure-journey-header strong{display:block;font-size:17px;color:var(--text);font-weight:950}
@@ -50,11 +52,11 @@ body {background-image:radial-gradient(ellipse 50% 25% at 90% 5%,var(--play-glow
 .journey-stop .stop-emoji{font-size:33px;line-height:1.2;filter:grayscale(.6);opacity:.6}
 .journey-stop .stop-name{font-size:12px;font-weight:850;line-height:1.25;overflow-wrap:anywhere;color:var(--muted)}
 .journey-stop .stop-step{font-size:11px;font-weight:750;color:var(--muted)}
-.journey-stop.reached{background:var(--world-wash);border:2px solid var(--world-color);color:var(--text);opacity:1}
+.journey-stop.reached{background:var(--world-surface);border:2px solid var(--world-color);color:var(--text);opacity:1}
 .journey-stop.reached .stop-emoji{filter:none;opacity:1}
 .journey-stop.reached .stop-name,.journey-stop.reached .stop-step{color:var(--text)}
 .journey-progress{font-size:12px;color:var(--muted);font-weight:800;text-align:right;margin:10px 0 0}
-.adventure-milestone{display:flex;align-items:center;gap:12px;border:2px solid var(--world-color);border-radius:17px;padding:13px 15px;background:var(--world-wash);color:var(--text);margin:14px 0}
+.adventure-milestone{display:flex;align-items:center;gap:12px;border:2px solid var(--world-color);border-radius:17px;padding:13px 15px;background:var(--world-surface);color:var(--text);margin:14px 0}
 .adventure-milestone span{font-size:39px;line-height:1.2}
 .adventure-milestone strong{font-weight:900;font-size:17px;line-height:1.4;color:var(--text)}
 .adventure-finale{margin:16px 0;border-top:5px solid var(--world-color)!important;display:flex;gap:13px;align-items:center}
@@ -174,7 +176,7 @@ html[data-contrast='high'] .adventure-svg .map-stop-back{stroke-width:5}
 .camp-theatre-choices[hidden]{display:none}
 .camp-theatre-choice{background:var(--surface);color:var(--text);border:2px solid var(--border);border-radius:16px;min-height:112px;padding:12px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;cursor:pointer;overflow-wrap:anywhere;font:inherit;text-align:center}
 .camp-theatre-choice:focus-visible{outline:3px solid var(--world-color);outline-offset:3px}
-@media(hover:hover){.camp-theatre-choice:hover{border-color:var(--world-color);background:var(--world-wash)}}
+@media(hover:hover){.camp-theatre-choice:hover{border-color:var(--world-color);background:var(--world-surface)}}
 .camp-theatre-icon{font-size:42px;line-height:1.2}
 .camp-theatre-panels{padding:0;list-style:none}
 .camp-theatre-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;min-width:0;padding:12px}
@@ -194,7 +196,7 @@ html[data-contrast='high'] .adventure-svg .map-stop-back{stroke-width:5}
 .camp-live-landscape{position:absolute;inset:0;pointer-events:none;z-index:-1;display:flex;justify-content:space-between;padding:8px 20px;font-size:clamp(32px,8vw,60px)}
 .camp-live-landscape span:last-child{align-self:end}
 .camp-live-object{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:115px;padding:12px 5px;background:var(--surface);color:var(--text);border:2px solid var(--border);border-radius:18px;font:inherit;text-align:center;overflow-wrap:anywhere;cursor:pointer}
-.camp-live-object[aria-pressed='true']{border-color:var(--world-color);background:var(--world-wash)}
+.camp-live-object[aria-pressed='true']{border-color:var(--world-color);background:var(--world-surface)}
 .camp-live-object:focus-visible{outline:3px solid var(--text);outline-offset:2px}
 .camp-live-icon{display:block;font-size:clamp(40px,8vw,62px);line-height:1.2}
 .camp-live-label{font-size:15px}
@@ -219,13 +221,13 @@ html[data-contrast='high'] .adventure-svg .map-stop-back{stroke-width:5}
 .camp-mini-game:focus-visible,.camp-mini-tile:focus-visible{outline:3px solid var(--text);outline-offset:2px}
 .camp-mini-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .camp-mini-head h3,.camp-mini-head p{margin:0}
-.camp-mini-stage{display:flex;align-items:center;gap:14px;border:1px solid var(--border);background:var(--world-wash);border-radius:18px;margin:12px 0;padding:16px;min-height:108px}
+.camp-mini-stage{display:flex;align-items:center;gap:14px;border:1px solid var(--border);background:var(--world-surface);border-radius:18px;margin:12px 0;padding:16px;min-height:108px}
 .camp-mini-stage h3{font-size:clamp(20px,4vw,25px);line-height:1.45;margin:0;overflow-wrap:anywhere}
 .camp-mini-visual{font-size:clamp(42px,9vw,68px);line-height:1.2;flex:0 1 auto}
 .camp-mini-play[data-game='lab'] .camp-mini-options{grid-template-columns:repeat(2,minmax(0,1fr))}
 .camp-mini-selection{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
 .camp-mini-slot{min-height:65px;padding:9px;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;border:2px dashed var(--world-color);border-radius:14px;background:var(--surface-2);overflow-wrap:anywhere}
-.camp-mini-tile[aria-pressed='true']{border:3px solid var(--world-color);background:var(--world-wash)}
+.camp-mini-tile[aria-pressed='true']{border:3px solid var(--world-color);background:var(--world-surface)}
 .camp-mini-options.mini-map{grid-template-columns:repeat(3,minmax(0,1fr));background:var(--world-wash);border:2px dashed var(--world-color);border-radius:18px;padding:8px;gap:6px}
 .camp-mini-options.mini-map .camp-mini-tile{min-height:90px;padding:6px 3px;border-radius:12px}
 .camp-mini-options.mini-map .camp-mini-icon{font-size:clamp(29px,6vw,47px)}
@@ -254,7 +256,7 @@ button.camp-build-cell:focus-visible{outline:3px solid var(--text);outline-offse
 .camp-build-board[data-game='robot'] .camp-build-cell:nth-child(3){grid-column:1;grid-row:2}
 .camp-build-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
 .camp-build-options[hidden]{display:none}
-.camp-build-piece[aria-pressed='true']{border-color:var(--world-color);background:var(--world-wash)}
+.camp-build-piece[aria-pressed='true']{border-color:var(--world-color);background:var(--world-surface)}
 .camp-build-art{display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;width:clamp(44px,11vw,72px);height:clamp(44px,11vw,72px);font-size:clamp(31px,7vw,50px);line-height:1.2}
 .camp-build-art[data-color='blue']{--build-color:#2775c9;--build-mark:#e0f3ff}
 .camp-build-art[data-color='green']{--build-color:#24845d;--build-mark:#e2f8cf}

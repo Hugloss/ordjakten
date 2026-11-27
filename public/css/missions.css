@@ -17,7 +17,7 @@
 .mission-choice[aria-pressed='true']{border-color:var(--accent-line);background:var(--accent-soft)}
 .mission-order-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .mission-order-controls button{padding:9px 13px;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-weight:800}
-.mission-order-controls button:disabled{opacity:.5}
+.mission-order-controls button:disabled{border-style:dashed}
 .mission-selected{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px;margin:10px 0;color:var(--text)}
 .mission-selected p{margin:0 0 7px!important;font-weight:850;color:var(--text)}
 .mission-selected ol{margin:0;padding:0 0 0 23px;line-height:1.6}
