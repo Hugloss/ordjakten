@@ -84,7 +84,7 @@ def exercise_voluntary_transfer(page):
     assert transfer.get_attribute("open") is None
     assert transfer.locator("summary").is_visible()
     assert transfer.locator("[data-treasure-mystery-transfer]").first.is_hidden()
-    assert "Vantarna i hittegodslådan" in transfer.locator("summary").inner_text()
+    assert "Sams försvunna vantar" in transfer.locator("summary").inner_text()
 
     # Native details supports keyboard opening; no automatic start/score.
     transfer.locator("summary").focus()
