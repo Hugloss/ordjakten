@@ -44,8 +44,26 @@ def check_bank_registry(browser):
     page.close()
 
 
+def reveal_story(page):
+    # Ordjakten requires the learner to read the authored scene first.
+    gate = page.locator("#story-reveal")
+    if gate.is_visible():
+        gate.click()
+
+
+def meaning_training(browser):
+    page, errors = setup(browser, "train", "meaning")
+    reveal_story(page)
+    assert page.locator(".answer-option").count() == 4
+    page.locator(".answer-option").first.click()
+    assert page.locator("#feedback-area").is_visible(), errors
+    assert not errors, errors
+    page.close()
+
+
 def sentence_training(browser):
     page, errors = setup(browser, "train", "sentence")
+    reveal_story(page)
     assert page.locator("#order-area").is_hidden()
     assert page.locator(".answer-option").count() == 3
     page.locator(".answer-option").first.click()
@@ -56,12 +74,14 @@ def sentence_training(browser):
 
 
 def select_order(page, indexes):
+    reveal_story(page)
     for index in indexes:
         page.locator("#order-choices").locator(f'[data-order-step="{index}"]').click()
 
 
 def order_training(browser):
     page, errors = setup(browser, "train", "order")
+    reveal_story(page)
     assert page.locator("#order-area").is_visible()
     assert page.locator("#answer-options").is_hidden()
     select_order(page, (0, 1, 2))
@@ -93,11 +113,12 @@ def run():
             headless=True, executable_path=browser_executable(playwright),
             args=["--no-sandbox"])
         check_bank_registry(browser)
+        meaning_training(browser)
         sentence_training(browser)
         order_training(browser)
         exam_privacy(browser)
         browser.close()
-    print("✓ Federated Swedish bank, sentence/order gameplay, exam secrecy and scores")
+    print("✓ Federated Swedish bank, meaning/sentence/order gameplay, exam secrecy and scores")
 
 
 if __name__ == "__main__":
