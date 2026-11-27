@@ -186,6 +186,7 @@
       feedback:mysteryAvailable&&mysteryProgress.last!==null?
         (mysteryProgress.solved?mysteryContent.why:mysteryContent.wrong[mysteryProgress.last]):null,
       proof:{done:mysteryAvailable&&mysteryProgress.proofDone,
+        evidence:mysteryAvailable&&mysteryProgress.proofDone?[...world.places[mysteryContent.target].lookFor]:[],
         wrong:mysteryAvailable?[...mysteryProgress.proofWrong]:[],
         choices:mysteryAvailable&&mysteryProgress.solved?proofChoices(world):[],
         feedback:mysteryAvailable&&mysteryProgress.proofLast!==null?
