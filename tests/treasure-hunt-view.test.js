@@ -217,13 +217,13 @@ test('the treasure trail shows four legible steps without revealing future place
   assert.match(text(steps[1]),/Inte hittad än/);
   assert.ok(!text(trail).includes('SECRET'));
   const partial=map();partial.count=2;
-  const progress=render(partial),progressSteps=descendants(progress).filter(node=>node.className.startsWith('treasure-journey-step'));
+  const progress=render(partial),progressSteps=descendants(progress).filter(node=>/^treasure-journey-step(?: |$)/.test(node.className));
   assert.match(text(progressSteps[0]),/Skatt hittad/);
   assert.match(text(progressSteps[1]),/Skatt hittad/);
   assert.equal(progressSteps[2].attributes['aria-current'],'step');
   const complete=map();complete.count=4;complete.complete=true;complete.clue=null;
   const finished=render(complete);
-  const finishedSteps=descendants(finished).filter(node=>node.className.startsWith('treasure-journey-step'));
+  const finishedSteps=descendants(finished).filter(node=>/^treasure-journey-step(?: |$)/.test(node.className));
   assert.equal(finishedSteps.filter(node=>node.attributes['aria-current']==='step').length,0);
   assert.equal(finishedSteps.filter(node=>text(node).includes('Skatt hittad')).length,4);
 });
