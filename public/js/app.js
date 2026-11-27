@@ -2431,6 +2431,12 @@
     if(next===history.treasureHunt)return;
     stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
   }
+  function answerTreasureMysteryTransfer(index){
+    if(screen!=='treasure')return;
+    const next=Treasure.mysteryTransfer(history.treasureHunt,treasureWorld,index,treasureContent);
+    if(next===history.treasureHunt)return;
+    stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
+  }
   function switchTreasureWorld(id){
     if(screen!=='treasure'||!A.isWorld(id)||treasureModel().phase!=='map')return;
     stopReadAloud();treasureWorld=id;treasureStarReward=null;
@@ -2454,6 +2460,14 @@
           .filter(choice=>!story.proof.wrong.includes(choice.id))
           .map((choice,i)=>'Alternativ '+'ABC'[i]+': '+choice.label).join('. '):'',
         story.proof?.feedback||''].filter(Boolean).join('. ');
+    }
+    if(kind==='transfer'&&model.phase==='map'&&model.mystery?.transfer){
+      const next=model.mystery.transfer;
+      return [next.title,next.intro,...next.clues,
+        next.done?'Berätta varför båda spåren passar.':
+          next.choices.filter(choice=>!next.wrong.includes(choice.id))
+            .map((choice,index)=>'Alternativ '+(index+1)+': '+choice.label).join('. '),
+        next.done?next.feedback:'',!next.done?next.feedback:''].filter(Boolean).join('. ');
     }
     if(kind==='arrival'&&visit&&!visit.matched&&model.clue){
       const place=model.places.find(row=>row.index===visit.index);
@@ -2487,6 +2501,7 @@
     else if(Object.hasOwn(data,'treasureMysteryReveal'))revealTreasureMystery();
     else if(Object.hasOwn(data,'treasureMysteryGuess'))guessTreasureMystery(Number(data.treasureMysteryGuess));
     else if(Object.hasOwn(data,'treasureMysteryProof'))answerTreasureMysteryProof(Number(data.treasureMysteryProof));
+    else if(Object.hasOwn(data,'treasureMysteryTransfer'))answerTreasureMysteryTransfer(Number(data.treasureMysteryTransfer));
   }
   function missionButton(story,index,label){
     const button=element('button','primary-button full-button',label);
