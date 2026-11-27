@@ -61,6 +61,7 @@
   const systemTheme = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   const labels = {easy:'🌱 Lätt',medium:'🧩 Medel',hard:'🔥 Svårt',exam:'📚 Fördjupning',expert:'Fördjupning'};
   const topicLabels = {words:'Ord',expressions:'Uttryck',mixed:'Blandat'};
+  const goalLabels = {mixed:'Blanda',discover:'Upptäck nytt',focus:'Ge ord en ny chans'};
   let history = readHistory();
   let settings = {...history.settings};
   let game = null;
@@ -119,6 +120,8 @@
   history.detectorLevels=Detector.sanitizeLevels(history.detectorLevels,detectorCatalog);
   history.conceptProgress=Concepts.sanitize(history.conceptProgress,conceptCatalog.tasks);
   history.bridgeProgress=Concepts.sanitize(history.bridgeProgress,bridgeCatalog.tasks);
+  history.contextProgress=D.sanitizeContextProgress(history.contextProgress,contexts);
+  const contextMemory=()=>({catalog:contexts,progress:history.contextProgress});
   history.confusionProgress=H.sanitize(history.confusionProgress,contrastHistoryData);
   history.clueProgress=T.sanitize(history.clueProgress,clues);
   history.retentionProgress=U.sanitize(history.retentionProgress,contrastHistoryData);
@@ -621,7 +624,7 @@
       if(screen==='home')showSetupError('Det finns ännu inga gamla fel att öva på. Prova ett annat uppdrag!');
       return;
     }
-    setSettings(plan.settings);
+    setSettings({...plan.settings,practiceGoal:'mixed'});
     startRound(id);
   }
   function getAhaPlan(random=()=>.37){
@@ -1577,7 +1580,7 @@
   function learningEntries(plan=getAhaPlan()){
     const ready=new Set(plan.ready.map(row=>row.id)),waiting=new Set(plan.waiting.map(row=>row.id));
     return L.entries(learningCatalog,history.skillProgress,history.reviewProgress,
-      history.missionProgress,history.mistakes).map(item=>{
+      history.missionProgress,history.mistakes,Date.now(),id=>storySummary(id)).map(item=>{
       const observed=history.readingProgress[item.id];
       const recall=history.recallProgress[item.id];
       const detector=Detector.summary(detectorCatalog,history.detectorProgress,item.id,Date.now(),history.detectorLevels);
@@ -1682,6 +1685,32 @@
       'Du har provat '+ahaRound.completed+' berättelser på nytt.';
     $('aha-round-finished-title').focus({preventScroll:true});scrollTop();
     if(journey)renderJourneyBanner();
+  }
+  function storySummary(id){
+    return D.contextSummary(contexts.wordContexts.find(record=>record.id===id),history.contextProgress);
+  }
+  function storyNote(info){
+    if(info.correct===info.total&&info.total&&!info.needs)return 'Du hittade rätt senast i alla '+info.total+' berättelser. Prova gärna igen en annan dag!';
+    return 'Du har provat '+info.tried+' av '+info.total+' berättelser. Du svarade senast rätt i '+info.correct+' av dem som ordfråga. '+
+      (info.needs?'Någon berättelse kan få en ny chans.':'Det finns fler sätt att upptäcka ordet!');
+  }
+  function renderStoryTrail(target,id,{showEmpty=false,compact=false}={}){
+    const info=storySummary(id);
+    target.replaceChildren();
+    target.hidden=!info.total||(!showEmpty&&!info.tried);
+    if(target.hidden)return;
+    target.append(element('strong','','🌍 Berättelsespåret'),element('p','',storyNote(info)));
+    if(compact)return;
+    const list=element('ul','story-trail-list');
+    for(const scene of info.scenes){
+      const row=element('li','');
+      const label=scene.lastMain==='right'?'✅ Ordfråga: rätt senast':
+        scene.lastMain==='wrong'?'🌱 Ordfråga: prova igen':'🔎 Ordfråga: inte provad';
+      row.append(element('strong','',scene.title),element('span','',label));
+      if(scene.lastAha)row.append(element('small','',scene.lastAha==='first'?'Aha: rätt direkt efter förklaringen':'Aha: övat med hjälp'));
+      list.append(row);
+    }
+    target.append(list);
   }
   // A gentle, optional compass: only observed wrong alternatives from the
   // two-answer comparison exercise can create these suggestions.
@@ -2508,6 +2537,11 @@
       }
       if(item.skills.length){const note=item.skills.map(x=>`${x.label}: ${x.right} rätt och ${x.wrong} fel`).join(' · ');
         detail.append(element('p','learning-evidence','Dina övningar: '+note));}
+      if(item.kind==='word'&&item.hasContext){
+        const storyTrail=element('section','story-trail');
+        renderStoryTrail(storyTrail,item.id,{showEmpty:true});
+        detail.append(storyTrail);
+      }
       const pair=K.findPair(item.id,contrasts);
       if(pair){
         const insight=H.insight(K.findPair(item.id,contrastHistoryData),history.confusionProgress?.[pair.id]);
@@ -2571,7 +2605,8 @@
   // so it NEVER enters the ordinary quiz, which keys answers by concept ID.
   function startFocus(id,skill=null,{gentle=false}={}){
     let plan;
-    try{plan=F.create(id,skill,bank,curation,expressions,missions,contexts,E,history.skillProgress,Math.random,K,contrasts,history.confusionProgress,T,clues,history.clueProgress);}
+    try{plan=F.create(id,skill,bank,curation,expressions,missions,contexts,E,history.skillProgress,Math.random,K,contrasts,history.confusionProgress,T,clues,history.clueProgress,
+      record=>D.contextOrder(record,history.contextProgress,{previous:history.skillProgress?.[record.id]?.lastScene}));}
     catch(error){
       if(journey)return false;
       if(screen==='learning'){
@@ -2676,6 +2711,7 @@
     // Persist the actual skill observation as soon as the child answers.
     // The normal test result history and star/quest counters remain untouched.
     history.skillProgress=D.record(history.skillProgress,q,outcome);
+    if(q.taskType==='context')history.contextProgress=D.recordContext(history.contextProgress,contexts,q.id,q.contextIndex,q.stem,'main',outcome);
     if(q.taskType==='contrast'){
       history.confusionProgress=H.record(history.confusionProgress,q,option,contrastHistoryData);
     }
@@ -2742,7 +2778,8 @@
       : f.before.attempts
       ? `🎯 ${F.LABELS[f.chosen]}: tidigare ${f.before.right} rätt av ${f.before.attempts} försök. Nu ${successes} rätt av ${attempts.length} nya uppgifter. Fortsätt gärna i en annan omgång!`
       : `🎯 ${F.LABELS[f.chosen]}: ditt första försök här! Du fick ${successes} rätt av ${attempts.length} uppgifter.`;
-    const updated=L.detail(learningCatalog.find(x=>x.id===f.item.id),history.skillProgress,history.reviewProgress,history.missionProgress,history.mistakes);
+    const updated=L.detail(learningCatalog.find(x=>x.id===f.item.id),history.skillProgress,history.reviewProgress,history.missionProgress,history.mistakes,Date.now(),storySummary(f.item.id));
+    renderStoryTrail($('focus-story-trail'),f.item.id);
     const comparison=f.chosen==='contrast'?H.insight(K.findPair(f.item.id,contrastHistoryData),
       history.confusionProgress?.[f.questions[0].contrastPair]):null;
     $('focus-next-hint').textContent=f.chosen==='contrast'
@@ -2787,6 +2824,23 @@
       const button=$('learning-list').querySelector(`[data-learning-open="${id}"]`);
       if(button){button.click();button.focus({preventScroll:true});}
     }
+  }
+  function renderPracticeGoal(pool,now=Date.now()) {
+    const available=D.trainingPools(pool,settings,{progress:history.skillProgress,reviews:history.reviewProgress,
+      mistakes:history.mistakes,readingProgress:history.readingProgress,missionProgress:history.missionProgress,
+      contextIds:new Set(contexts.wordContexts.map(row=>row.id)),missionsAvailable:!!missions,now,contextMemory:contextMemory(),seenIds:practiceSeenIds()});
+    $('practice-goal-settings').hidden=settings.mode!=='train'||settings.difficulty==='exam'||settings.reviewOnly;
+    setPressed('[data-practice-goal]','practiceGoal',settings.practiceGoal);
+    $('goal-discover-count').textContent=String(available.discover.length);
+    $('goal-focus-count').textContent=String(available.focus.length);
+    $('goal-mixed-count').textContent=String(available.mixed.length);
+    const goal=E.practiceGoalForRound(settings),length=available[goal].length;
+    $('practice-goal-help').textContent=goal==='mixed'?'Både nytt och sådant du har provat tidigare.':
+      length===0?(goal==='discover'?'Inga oprövade frågor här just nu. Välj Blanda eller en annan nivå.':
+        'Inget behöver en ny chans här just nu. Välj Blanda eller Upptäck nytt.'):
+      length<settings.count?'Här finns '+length+' '+(length===1?'fråga':'frågor')+
+        ' för ditt mål. Omgången blir kortare – inga andra frågor fylls på.':
+      'Du får '+settings.count+' olika frågor för ditt valda mål.';
   }
   function renderSetup() {
     setPressed('[data-mode]','mode',settings.mode);
@@ -2836,9 +2890,15 @@
       waiting?`${waiting} ${waiting===1?'fråga kommer':'frågor kommer'} tillbaka senare`:'Inga svåra frågor väntar just nu';
     $('review-only').disabled=ready===0;
     if(ready===0 && settings.reviewOnly){settings.reviewOnly=false;$('review-only').checked=false;saveHistory();}
+    renderPracticeGoal(pool);
   }
   function showSetupError(message){$('setup-error').hidden=false;$('setup-error').textContent=message;}
   function hideSetupError(){$('setup-error').hidden=true;}
+  // Reuse the learning map's evidence from recall, detective and concept games.
+  // An encounter excludes discovery; it never creates a score or skill result.
+  function practiceSeenIds(){
+    return new Set(learningEntries().filter(item=>item.seen).map(item=>item.id));
+  }
   function currentTimerSeconds() {
     if(settings.timerMode==='off')return 0;
     if($('timer-preset').value!=='custom')return E.clampInteger($('timer-preset').value,5,3600,180);
@@ -2858,11 +2918,12 @@
     // preferences. Keep the existing quiz and history semantics.
     const schoolOnly=roundOptions.schoolOnly===true&&settings.topic==='expressions'&&settings.mode==='train'&&!settings.reviewOnly&&settings.difficulty!=='exam';
     const roundSettings={...settings,contextOnly:roundOptions.contextOnly===true,schoolOnly,
+      practiceGoal:questId||roundOptions.contextOnly||schoolOnly?'mixed':settings.practiceGoal,
       adaptivePractice:questId==='stories'||schoolOnly?false:settings.adaptivePractice};
     const limit=E.getTopicPool(bank,curation,expressions,roundSettings).length;
-    if(limit<settings.count && !settings.reviewOnly){showSetupError('Det finns inte tillräckligt många ord för den här omgången.');return;}
+    if(limit<settings.count && !settings.reviewOnly&&E.practiceGoalForRound(roundSettings)==='mixed'){showSetupError('Det finns inte tillräckligt många ord för den här omgången.');return;}
     let questions;
-    try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D,history.readingProgress);
+    try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D,history.readingProgress,history.missionProgress,history.contextProgress,practiceSeenIds());
       questions=ActionWords.adaptRound(roundSettings,questions);}
     catch(error){showSetupError(error.message);return;}
     if(!questions.length){showSetupError('Det finns inga tillgängliga frågor.');return;}
@@ -2877,7 +2938,9 @@
     $('clock-stat').hidden=settings.timerMode==='off';
     $('view-play').querySelector('.score-grid').classList.toggle('has-timer',settings.timerMode!=='off');
     $('journey-details').open=false; // Reading must not start below an expanded map.
-    $('play-tag').textContent=(settings.mode==='train'?'📚 Träna':'🏆 Testa dig')+' • '+(schoolOnly?'Skolans uppgiftsord':topicLabels[settings.topic])+' • '+labels[settings.difficulty];
+    const activeGoal=E.practiceGoalForRound(roundSettings);
+    $('play-tag').textContent=(settings.mode==='train'?'📚 Träna':'🏆 Testa dig')+' • '+(schoolOnly?'Skolans uppgiftsord':topicLabels[settings.topic])+' • '+labels[settings.difficulty]+
+      (activeGoal!=='mixed'?' • '+goalLabels[activeGoal]:'');
     $('progress-label').textContent=settings.topic==='words'?'ORD':'FRÅGA';
     const mystery=QuestionPlay.mystery(roundSettings,0,questions.length);
     $('play-score-details').open=!mystery;
@@ -3281,6 +3344,7 @@
     $('school-feedback').hidden=true;
     renderWordTeaching($('word-teaching'),null);
     readingCheck=null;
+    $('context-story-trail').hidden=true;
     $('reading-check').hidden=true;
     $('reading-launch').hidden=true;
     $('reading-reread').hidden=true;
@@ -3383,17 +3447,27 @@
     if(typeof $('reading-check').scrollIntoView==='function')
       $('reading-check').scrollIntoView({behavior:'auto',block:'start'});
   }
-  function recordAhaWithFeedback(id,source,outcome,evidence){
+  function recordAhaWithFeedback(id,source,outcome,evidence,{recordStory=true}={}){
     const now=Date.now(),before=history.readingProgress;
     history.readingProgress=B.recordProgress(before,id,source,outcome,now,evidence);
     if(history.readingProgress!==before&&['context','expression'].includes(source)&&
       history.readingProgress[id]?.transfer?.lastAt===now)
       observePracticeFeedback('aha:'+id,outcome==='first'?'direct':'supported',now,evidence);
+    // Both the quiz's Aha step and the separate Aha round use this helper.
+    // Aha observations never count as independently answered main questions.
+    if(recordStory&&source==='context'&&/^context:[012]$/.test(evidence)){
+      const index=Number(evidence.slice('context:'.length));
+      const scene=contexts.wordContexts.find(record=>record.id===id)?.scenes[index];
+      if(scene)history.contextProgress=D.recordContext(history.contextProgress,contexts,id,index,scene.text,'aha',outcome,now);
+    }
   }
   function saveAhaOutcome(outcome) {
     const q=game?.questions?.[game.index];
     if(!q||!readingCheck)return;
-    recordAhaWithFeedback(q.id,readingCheck.source,outcome,readingCheck.evidence);
+    recordAhaWithFeedback(q.id,readingCheck.source,outcome,readingCheck.evidence,{recordStory:game.settings.difficulty!=='exam'});
+    if(game.settings.adaptivePractice&&game.settings.difficulty!=='exam'&&
+      (q.taskType==='context'||readingCheck.source==='context'))
+      renderStoryTrail($('context-story-trail'),q.id,{compact:true});
     saveHistory();
   }
   function answerReadingCheck(index) {
@@ -3479,6 +3553,10 @@
     if(outcome==='right')game.stars++;
     updateScore();
     if(game.settings.mode==='train'){
+      if(q.taskType==='context'&&game.settings.difficulty!=='exam'){
+        const updated=D.recordContext(history.contextProgress,contexts,q.id,q.contextIndex,q.stem,'main',outcome);
+        if(updated!==history.contextProgress){history.contextProgress=updated;saveHistory();}
+      }
       game.feedback=true;
       pauseTimerForFeedback();
       const status=$('feedback-status');status.dataset.outcome=outcome;
@@ -3534,8 +3612,14 @@
       $('question-area').hidden=true;
       $('feedback-area').hidden=false;
       // The reading checkpoint is for learning, never an extra scored test.
-      readingCheck=B.makeCheck(q,{bank,contexts,surprises,missions,readingProgress:history.readingProgress});
+      const selectScene=game.settings.adaptivePractice&&game.settings.difficulty!=='exam'?
+        (record,available)=>D.contextOrder(record,history.contextProgress,{
+          purpose:'aha',exclude:record.scenes.map((_,index)=>index).filter(index=>!available.includes(index))
+        })[0]:null;
+      readingCheck=B.makeCheck(q,{bank,contexts,surprises,missions,readingProgress:history.readingProgress,selectScene});
       showReadingCheck(readingCheck);
+      if(!readingCheck&&q.taskType==='context'&&game.settings.adaptivePractice)
+        renderStoryTrail($('context-story-trail'),q.id,{compact:true});
       $('feedback-area').dataset.readingStage='explain';
       $('view-play').dataset.readingPhase='explain';
       $('feedback-area').dataset.readingPending=readingCheck?'true':'false';
@@ -3594,7 +3678,7 @@
     $('adaptive-results').hidden=game.settings.mode!=='train'||!game.settings.adaptivePractice;
     if(!$('adaptive-results').hidden){
       const skills=D.summary(history.skillProgress);
-      $('adaptive-results-message').textContent=`Du har provat ${skills.practised} övningsmoment på ${skills.concepts} ord och uttryck. ${skills.needsPractice} moment kan behöva en ny chans. I nästa omgång får du både variation och hjälp med det som varit svårt.`;
+      $('adaptive-results-message').textContent=`Du har provat ${skills.practised} övningsmoment på ${skills.concepts} ord och uttryck. ${skills.needsPractice} moment kan behöva en ny chans. Nästa övning kan anpassas efter ditt träningsmål.`;
     }
     const reading=game.readingMetrics;
     $('results-reading').hidden=game.settings.mode!=='train'||!reading||reading.attempted===0;
@@ -3607,7 +3691,9 @@
     $('result-wrong').textContent=String(result.wrong);
     $('result-empty').textContent=String(result.unanswered);
     $('results-percent').textContent=result.percent+' %';
-    $('results-descriptor').textContent=labels[game.settings.difficulty]+' · '+game.questions.length+' frågor · '+(game.settings.schoolOnly?'Skolans uppgiftsord':topicLabels[game.settings.topic])+' · '+(game.settings.mode==='train'?'Träna':'Testa dig')+(timeExpired?' · Tiden tog slut':'');
+    const resultGoal=E.practiceGoalForRound(game.settings);
+    $('results-descriptor').textContent=labels[game.settings.difficulty]+' · '+game.questions.length+' frågor · '+(game.settings.schoolOnly?'Skolans uppgiftsord':topicLabels[game.settings.topic])+' · '+(game.settings.mode==='train'?'Träna':'Testa dig')+
+      (resultGoal!=='mixed'?' · '+goalLabels[resultGoal]:'')+(timeExpired?' · Tiden tog slut':'');
     renderRewards(result);
     renderQuestFinale(questStep);
     renderFinale();
@@ -3800,7 +3886,7 @@
     });
   }
   function exportHistory() {
-    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,adventureChallenge:history.adventureChallenge,storyProgress:history.storyProgress,campLayout:history.campLayout,campStories:history.campStories,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
+    const data={app:'Ordjakten',exportedAt:new Date().toISOString(),results:history.results,mistakes:history.mistakes,surprises:history.surprises,missionProgress:history.missionProgress,questCounts:history.questCounts,reviewProgress:history.reviewProgress,skillProgress:history.skillProgress,readingProgress:history.readingProgress,contextProgress:history.contextProgress,recallProgress:history.recallProgress,detectorProgress:history.detectorProgress,detectorLevels:history.detectorLevels,conceptProgress:history.conceptProgress,bridgeProgress:history.bridgeProgress,feedbackProgress:history.feedbackProgress,practiceBalance:history.practiceBalance,adventureChallenge:history.adventureChallenge,storyProgress:history.storyProgress,campLayout:history.campLayout,campStories:history.campStories,confusionProgress:history.confusionProgress,clueProgress:history.clueProgress,retentionProgress:history.retentionProgress};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ordjakten-resultat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -3839,6 +3925,10 @@
   });
   document.querySelectorAll('[data-theme-choice]').forEach(btn=>btn.addEventListener('click',()=>setSettings({theme:btn.dataset.themeChoice})));
   $('high-contrast').addEventListener('change',e=>setSettings({contrast:e.target.checked}));
+  document.querySelectorAll('[data-practice-goal]').forEach(btn=>btn.addEventListener('click',()=>{
+    hideSetupError();
+    setSettings({practiceGoal:btn.dataset.practiceGoal,reviewOnly:false});
+  }));
   $('review-only').addEventListener('change',e=>setSettings({reviewOnly:e.target.checked}));
   $('setup-form').addEventListener('submit',event=>{event.preventDefault();startRound();});
   for(const location of ['home','learning'])$('next-journey-'+location+'-start').addEventListener('click',startJourney);
@@ -4166,7 +4256,7 @@
   $('results-book').addEventListener('click',openBook);
   $('book-go-home').addEventListener('click',()=>{renderSetup();show('home');});
   $('book-start-expressions').addEventListener('click',()=>{
-    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false});startRound();
+    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});startRound();
   });
   $('book-grid').addEventListener('click',event=>{
     const button=event.target.closest('button[data-door-id]');
@@ -4203,7 +4293,7 @@
     startQuest(id);
   });
   $('quick-start').addEventListener('click',()=>{ 
-    setSettings({mode:'train',topic:'words',difficulty:'easy',count:10,timerMode:'off',reviewOnly:false});
+    setSettings({mode:'train',topic:'words',difficulty:'easy',count:10,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});
     startRound();
   });
   $('retention-home-list').addEventListener('click',event=>{
@@ -4224,15 +4314,15 @@
     if(pair)startFocus(pair.left,'contrast');
   });
   $('quick-contexts').addEventListener('click',()=>{
-    setSettings({mode:'train',topic:'words',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,contextMix:true});
+    setSettings({mode:'train',topic:'words',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,contextMix:true,practiceGoal:'mixed'});
     startRound(null,{contextOnly:true});
   });
   $('quick-school').addEventListener('click',()=>{
-    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false});
+    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});
     startRound(null,{schoolOnly:true});
   });
   $('quick-expressions').addEventListener('click',()=>{
-    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false});
+    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});
     startRound();
   });
   $('exam-preset').addEventListener('click',()=>{
@@ -4329,7 +4419,11 @@
   });
   $('play-again').addEventListener('click',()=>{
     if(settings.reviewOnly){const pool=E.getTopicPool(bank,curation,expressions,settings);if(!readyReviewCount(pool))settings.reviewOnly=false;}
-    startRound(null,{schoolOnly:game?.settings.schoolOnly===true});
+    const roundOptions={schoolOnly:game?.settings.schoolOnly===true};
+    // A filtered pool can be exhausted by the round just completed. Return
+    // to visible settings instead of reporting an error on a hidden screen.
+    if(E.practiceGoalForRound({...settings,...roundOptions})!=='mixed'){game=null;show('home');renderSetup();}
+    startRound(null,roundOptions);
   });
   $('change-settings').addEventListener('click',()=>{game=null;renderSetup();show('home');});
   $('word-search').addEventListener('input',()=>{wordListLimit=24;renderWordList();});
@@ -4341,7 +4435,7 @@
   $('clear-history').addEventListener('click',()=>{
     if(!window.confirm('Vill du radera sparade resultat, repetitionsplan, öppnade luckor, upptäckter, din äventyrsplats och din sagobok? Detta går inte att ångra.'))return;
     for(const key of Object.keys(journeyUsage))delete journeyUsage[key];journeyWorkshopSeen.clear();
-    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());history.campStories=[];campTheatre=null;campSelected=null;campTarget=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
+    history.results=[];history.mistakes={};history.surprises={unlocked:[],opened:[],mastered:[]};history.missionProgress={};history.questCounts=J.sanitizeCounts(null);history.reviewProgress=R.sanitize(null);history.skillProgress=D.sanitize(null);history.readingProgress=B.sanitizeProgress(null);history.contextProgress=D.sanitizeContextProgress(null,contexts);history.recallProgress=Recall.sanitize(null,learningCatalog);history.detectorProgress=Detector.sanitize(null,detectorCatalog);history.detectorLevels=Detector.sanitizeLevels(null,detectorCatalog);history.conceptProgress=Concepts.sanitize(null,conceptCatalog.tasks);history.bridgeProgress=Concepts.sanitize(null,bridgeCatalog.tasks);history.feedbackProgress=Feedback.sanitize(null,feedbackCatalog);history.practiceBalance=Balance.sanitize(null);history.adventureChallenge=Challenge.sanitize(null);history.storyProgress=Story.sanitize(null);history.campLayout=Camp.sanitize(null,campInventory());history.campStories=[];campTheatre=null;campSelected=null;campTarget=null;campMessage='';history.confusionProgress=H.sanitize(null,contrastHistoryData);history.clueProgress=T.sanitize(null,clues);history.retentionProgress=U.sanitize(null,contrastHistoryData);selectedBookDoor=null;missionChoices.clear();settings.reviewOnly=false;settings.practiceGoal='mixed';saveHistory();renderHistory();updateBookCounters();renderQuestShelf();renderLearningPreview();
   });
   createAdventureChoices();renderSetup();show('home');
   if ('serviceWorker' in navigator && window.isSecureContext) {

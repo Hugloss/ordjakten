@@ -390,9 +390,20 @@
               <label class="check-row"><input type="checkbox" id="high-contrast"><span>Extra hög kontrast</span></label>
             </section>
 
+            <section class="panel mini-panel" id="practice-goal-settings" aria-labelledby="practice-goal-title">
+              <div class="section-header"><h2 id="practice-goal-title">🎯 Vad vill du öva?</h2></div>
+              <div class="practice-goals" role="group" aria-label="Välj träningsmål">
+                <button type="button" data-practice-goal="mixed" aria-pressed="true"><strong>🎲 Blanda</strong><small>Lite av varje · <span id="goal-mixed-count">0</span></small></button>
+                <button type="button" data-practice-goal="discover" aria-pressed="false"><strong>🔎 Upptäck nytt</strong><small>Inte provade här · <span id="goal-discover-count">0</span></small></button>
+                <button type="button" data-practice-goal="focus" aria-pressed="false"><strong>🌱 Ge ord en ny chans</strong><small>Öva lite till · <span id="goal-focus-count">0</span></small></button>
+              </div>
+              <p id="practice-goal-help" class="subtle-note" aria-live="polite">Både nytt och sådant du har provat tidigare.</p>
+              <p class="subtle-note">Räknas ut från dina sparade övningar på den här enheten.</p>
+            </section>
+
             <section class="panel mini-panel" id="adaptive-settings">
               <div class="section-header"><h2>🧠 Smart träning</h2><span class="help-text">Frivilligt</span></div>
-              <label class="check-row"><input type="checkbox" id="adaptive-practice" checked><span><strong>Variera efter vad jag behöver öva</strong><small>Lite extra av svåra saker, men alltid plats för nytt</small></span></label>
+              <label class="check-row"><input type="checkbox" id="adaptive-practice" checked><span><strong>Variera efter vad jag behöver öva</strong><small>Spelet varierar frågetypen inom ditt valda träningsmål</small></span></label>
               <p id="adaptive-home-summary" class="subtle-note">Spelet lär känna vilka sorters frågor som behöver tränas.</p>
               <p class="subtle-note">Gäller bara Träna. I Testa dig får alla samma sorts blandade urval.</p>
             </section>
@@ -683,6 +694,7 @@
             <p id="reading-why" class="reading-why" hidden></p>
             <button id="reading-reread" type="button" class="secondary-button" hidden>📖 Läs förklaringen igen</button>
           </section>
+          <section id="context-story-trail" class="story-trail" aria-label="Berättelsespåret" hidden></section>
           <div id="feedback-cheer" class="feedback-cheer"><span id="feedback-companion" aria-hidden="true">🦊</span><p id="feedback-message"></p></div>
           <div id="adaptive-feedback" class="adaptive-feedback" hidden><strong id="adaptive-feedback-title">🧠 Vi lär oss steg för steg</strong><p id="adaptive-feedback-text"></p></div>
           <div id="star-burst" class="star-burst" hidden aria-hidden="true">✦ ⭐ ✦</div>
@@ -1352,6 +1364,7 @@
         <section id="focus-finished" class="panel focus-finish" aria-live="polite" hidden>
           <div style="font-size:48px" aria-hidden="true">🌟</div><h2>Du vågade prova!</h2>
           <p id="focus-summary"></p><p id="focus-skill-insight" class="focus-skill-insight"></p><p id="focus-next-hint" class="muted"></p>
+          <section id="focus-story-trail" class="story-trail" aria-label="Berättelsespåret" hidden></section>
           <div class="focus-actions">
             <button id="focus-other-skill" type="button" class="primary-button full-button">🧩 Prova ett annat sätt</button>
             <button id="focus-done" type="button" class="secondary-button full-button">🗺️ Se min ordstig</button>
