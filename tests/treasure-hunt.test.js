@@ -206,3 +206,45 @@ test('letter reveals only finds, persists, and never rewards a wrong destination
  assert.equal(view(state).finderTotal,4);
  assert.deepEqual(view(reload(state)).letter,view(state).letter);
 });
+
+test('mysteries require three clues, explain wrong places, save progress and never add finder points',()=>{
+  let state=fresh(),first=view(state);
+  assert.equal(first.mystery.available,false);
+  assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
+  assert.equal(Treasure.mysteryGuess(state,'forest',2,catalog),state);
+  state=finish(choose(visit(state,2)));
+  assert.equal(view(state).count,1);
+  state=back(state);
+  let mystery=view(state).mystery;
+  assert.equal(mystery.available,true);assert.equal(mystery.revealed,1);
+  assert.equal(mystery.clues.length,1);
+  assert.equal(Treasure.mysteryGuess(state,'forest',2,catalog),state);
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  mystery=view(state).mystery;
+  assert.equal(mystery.clues.length,3);
+  assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
+  state=Treasure.mysteryGuess(state,'forest',0,catalog);
+  assert.equal(view(state).mystery.solved,false);
+  assert.match(view(state).mystery.feedback,/skylt/);
+  assert.equal(Treasure.mysteryGuess(state,'forest',0,catalog),state);
+  state=reload(state);
+  assert.deepEqual(view(state).mystery.attempted,[0]);
+  state=Treasure.mysteryGuess(state,'forest',2,catalog);
+  assert.equal(view(state).mystery.solved,true);
+  assert.match(view(state).mystery.feedback,/trädet|träd/);
+  assert.equal(view(state).finderTotal,1);
+  assert.equal(Treasure.mysteryGuess(state,'forest',1,catalog),state);
+  assert.deepEqual(view(reload(state)).mystery,view(state).mystery);
+});
+
+test('mystery answers cannot be changed while an ordinary visit is active',()=>{
+  let state=finish(choose(visit(fresh(),2)));
+  assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
+  assert.equal(Treasure.mysteryGuess(state,'forest',0,catalog),state);
+  state=back(state);
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=visit(state,1);
+  assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
+  assert.equal(Treasure.mysteryGuess(state,'forest',0,catalog),state);
+});

@@ -23,7 +23,7 @@
   function speech(el,kind,enabled,serial=null){
     if(!enabled)return [];
     const id='treasure-listen-'+kind;
-    const labels={clue:'🔊 Lyssna på ledtråden och platserna',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen'};
+    const labels={clue:'🔊 Lyssna på ledtråden och platserna',mystery:'🔊 Lyssna på mysteriet',arrival:'🔊 Lyssna på ledtråden och platsen',task:'🔊 Lyssna på uppgiften',explanation:'🔊 Lyssna på förklaringen'};
     const button=action(el,labels[kind], 'treasureListen',kind,serial);
     button.id=id;button.setAttribute('aria-pressed','false');
     const status=el('p','treasure-speech-status');status.id=id+'-status';
@@ -101,7 +101,8 @@
       button.append(icon,el('strong','treasure-badge-name',world.title),
         el('span','treasure-badge-state',collected?'✓ Kartmärke samlat':world.count?'Fortsätt leta':'Börja leta'),
         el('span','treasure-badge-count',`${world.count} av ${world.total} skatter`),
-        el('span','treasure-badge-count',`⭐ ${world.starCount} av ${world.total} ordstjärnor`));
+        el('span','treasure-badge-count',`⭐ ${world.starCount} av ${world.total} ordstjärnor`),
+        el('span','treasure-badge-count',world.mysterySolved?'🔍 Mysteriet löst':'🔍 Mysterium kvar'));
       if(world.id===current)button.append(el('span','treasure-badge-current','Den här kartan'));
       row.append(button);list.append(row);
     }
@@ -166,6 +167,52 @@
     }
     box.append(list);return box;
   }
+  function mysteryCard(el,model,options){
+    const story=model.mystery;
+    if(!story)return null;
+    const box=el('section','treasure-mystery');
+    box.setAttribute('aria-labelledby','treasure-mystery-title');
+    const heading=el('h2','',story.available?'🔍 '+story.title:'🔒 Ett mysterium väntar');
+    heading.id='treasure-mystery-title';heading.tabIndex=-1;
+    box.append(heading);
+    if(!story.available){
+      box.append(el('p','','Hitta din första skatt på kartan. Då öppnas ett mysterium att lösa.'));
+      return box;
+    }
+    box.append(el('p','treasure-mystery-intro',story.intro));
+    const clues=el('ol','treasure-mystery-clues');
+    for(const [index,clue] of story.clues.entries())
+      clues.append(el('li','treasure-mystery-clue','Ledtråd '+(index+1)+': '+clue));
+    box.append(clues);
+    box.append(...speech(el,'mystery',options.canReadAloud));
+    if(story.solved){
+      box.append(el('p','treasure-mystery-success','✓ Mysteriet löst! Du jämförde ledtrådarna och hittade platsen.'));
+      if(story.feedback)box.append(el('p','treasure-mystery-feedback',story.feedback));
+    }else if(story.revealed<3){
+      box.append(el('p','','Du har '+story.revealed+' av 3 ledtrådar. Läs nästa för att få fler spår.'));
+      box.append(action(el,'Visa ledtråd '+(story.revealed+1),'treasureMysteryReveal','',null,true));
+    }else{
+      box.append(el('p','treasure-mystery-prompt','Nu har du tre ledtrådar. Vilken plats passar dem tillsammans?'));
+      const choices=el('div','treasure-mystery-choices');
+      choices.setAttribute('role','group');choices.setAttribute('aria-label','Välj plats för mysteriet');
+      for(const place of model.places){
+        const tried=story.attempted.includes(place.index);
+        const button=action(el,place.emoji+' '+place.name+(tried?' – redan provad':''),'treasureMysteryGuess',place.index);
+        button.className='treasure-mystery-choice'+(tried?' treasure-mystery-tried':'');
+        button.disabled=tried;
+        choices.append(button);
+      }
+      box.append(choices);
+      if(story.feedback){
+        const feedback=el('p','treasure-mystery-feedback');
+        feedback.setAttribute('role','status');
+        feedback.textContent='Inte riktigt. '+story.feedback+' Läs de tre ledtrådarna och prova en annan plats.';
+        box.append(feedback);
+      }
+    }
+    box.append(el('p','treasure-mystery-note','Det finns ingen timer. Du får prova igen utan att förlora skatter eller ordstjärnor.'));
+    return box;
+  }
   function mapView(host,el,model,options,wordStars){
     const intro=el('header','treasure-map-heading');
     const copy=el('div');
@@ -204,7 +251,9 @@
       if(wordStars.includes(place.index))button.append(el('span','treasure-place-star','⭐ Ordfrågans stjärna samlad'));
       map.append(button);
     }
-    host.append(map,el('p','treasure-reassurance','Ta den tid du behöver. Dina fynd och stjärnor sparas här i webbläsaren.'),collection(el,model));
+    host.append(map,el('p','treasure-reassurance','Ta den tid du behöver. Dina fynd och stjärnor sparas här i webbläsaren.'));
+    const mystery=mysteryCard(el,model,options);if(mystery)host.append(mystery);
+    host.append(collection(el,model));
     if(worlds.length)host.append(mapBook(el,worlds,model.id));
     const rules=el('details','treasure-rules');rules.append(el('summary','','Så fungerar skattjakten'),
       el('p','','När du hittar platsen som ledtråden beskriver får du en skatt och en sakletarpoäng efter uppgiften. Vid en annan plats finns en uppgift och ett litet fynd. Sedan kan du leta vidare.'),

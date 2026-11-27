@@ -123,3 +123,18 @@ test('each map has four short authored letter fragments',()=>{
   for(const part of parts)assert.ok(part.length>=25&&part.length<=120&&!/[<>]/.test(part));
   assert.equal(new Set(parts).size,4);}
 });
+
+test('all twelve context mysteries have concrete clues and feedback for each wrong place',()=>{
+  assert.deepEqual(Object.keys(Treasure.MYSTERIES),A.WORLD_IDS);
+  for(const [id,m] of Object.entries(Treasure.MYSTERIES)){
+    assert.ok(m.title.length>=8&&m.intro.length>=20);
+    assert.equal(m.clues.length,3);assert.equal(m.wrong.length,4);
+    assert.ok(Number.isInteger(m.target)&&m.target>=0&&m.target<4);
+    for(const clue of m.clues)assert.ok(clue.length>=20&&clue.length<=140);
+    m.wrong.forEach((feedback,index)=>{
+      if(index===m.target)assert.equal(feedback,null);
+      else assert.ok(typeof feedback==='string'&&feedback.length>=25&&feedback.length<=200);
+    });
+    assert.ok(m.why.length>=25);
+  }
+});

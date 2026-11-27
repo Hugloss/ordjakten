@@ -444,6 +444,213 @@
     "Du har hittat hela musikbrevet. Bra ledtrådsarbete!"
   ]
 };
+  // Three contextual clues and grounded explanations for each one-time mystery.
+  const MYSTERIES={
+  "forest": {
+    "title": "Ugglans försvunna bok",
+    "intro": "Ugglan hittar inte sin bok. Var kan den vara?",
+    "target": 2,
+    "clues": [
+      "Boken är inte utomhus på marken.",
+      "Den som har boken tycker om att läsa uppe i ett träd.",
+      "På platsen finns redan flera andra böcker."
+    ],
+    "why": "Ugglan har böcker i ett stort träd. Både trädet och böckerna passar ledtrådarna.",
+    "wrong": [
+      "Vid skogsbrynet finns en fågel på en skylt, men inga böcker uppe i ett träd.",
+      "Vid svampstigen finns en sten och svampar, inte böcker i ett träd.",
+      null,
+      "Vid gläntan hänger lyktor, men det finns inga böcker hos en uggla."
+    ]
+  },
+  "space": {
+    "title": "Robotens försvunna låda",
+    "intro": "Roboten har tappat bort en låda som behövs på resan. Var finns den?",
+    "target": 0,
+    "clues": [
+      "Lådan hör till något som ska följa med på en resa.",
+      "Någon har redan samlat fler lådor där.",
+      "En robot står precis bredvid en raket."
+    ],
+    "why": "Vid raketen står en robot med packlådor. Alla ledtrådarna pekar på samma plats.",
+    "wrong": [
+      null,
+      "Här finns fotspår i damm, men ingen robot med packlådor.",
+      "Här finns en planet med ringar, inte en robot som packar.",
+      "Här finns en kikare och ett stort fönster, men inga packlådor bredvid en raket."
+    ]
+  },
+  "castle": {
+    "title": "Den försvunna glittrande stenen",
+    "intro": "En liten sten har försvunnit ur skattkammaren. Var kan den ligga?",
+    "target": 3,
+    "clues": [
+      "Stenen ligger inomhus.",
+      "Den förvaras i en låda i ett rum med böcker.",
+      "Flera andra stenar glittrar i samma låda."
+    ],
+    "why": "I rummet med bokhyllor finns en låda med glittrande stenar. Där passar alla tre spåren.",
+    "wrong": [
+      "Vakten står vid en dörr med flaggor, inte vid en låda med stenar.",
+      "På krokarna hänger nycklar, inte glittrande stenar i en låda.",
+      "Draken sitter på en kudde och berättar sagor, men har ingen stenlåda.",
+      null
+    ]
+  },
+  "pirate": {
+    "title": "Flaskposten som försvann",
+    "intro": "Kaptenen väntar på ett brev i en flaska. Var ligger flaskan?",
+    "target": 2,
+    "clues": [
+      "Brevet finns inte ombord på ett skepp.",
+      "Det har lagts i en flaska som ligger utomhus.",
+      "Runt flaskan ligger snäckor på sanden."
+    ],
+    "why": "På stranden finns både snäckor och en flaska med meddelande. Där möts ledtrådarna.",
+    "wrong": [
+      "Kaptenens båt har segel och kompass, men ingen flaska på sanden.",
+      "Bordet har en karta med ett kryss, inte en flaska bland snäckor.",
+      null,
+      "I kistan finns en bok med snöre, inte ett brev i en flaska."
+    ]
+  },
+  "ocean": {
+    "title": "Den borttappade snäckan",
+    "intro": "En vän har tappat bort en vacker snäcka. Var letar ni?",
+    "target": 0,
+    "clues": [
+      "Snäckan ligger inte ute på djupt vatten.",
+      "Den finns nära strandkanten.",
+      "Flera snäckor ligger i sanden vid vattnet."
+    ],
+    "why": "Vid strandkanten ligger snäckor i sanden. Alla tre ledtrådarna handlar om samma plats.",
+    "wrong": [
+      null,
+      "Här simmar fiskar mellan koraller under vattnet, inte i sanden vid stranden.",
+      "I viken finns sköldpaddor mellan klippor, inte snäckor i strandens sand.",
+      "Delfinerna hoppar nära en båt, men snäckan ligger inte där."
+    ]
+  },
+  "dinosaurs": {
+    "title": "Forskarens borttappade anteckning",
+    "intro": "En forskare har glömt var hon såg en märklig sten. Var var hon?",
+    "target": 1,
+    "clues": [
+      "Forskaren såg något som såg ut att höra till ett djur.",
+      "Hon höll inte på att följa spår i lera.",
+      "Föremålet var en gammal sten som liknade ett ägg."
+    ],
+    "why": "Forskaren visar en gammal sten som liknar ett ägg. Det är den stenen som beskrivs.",
+    "wrong": [
+      "I leran syns fotavtryck, men forskaren letar efter en äggliknande sten.",
+      null,
+      "Från utkiksplatsen syns ett berg, men ingen sten som ser ut som ett ägg.",
+      "I dalen finns stora dinosaurier och växter, men inte forskarens sten."
+    ]
+  },
+  "garden": {
+    "title": "Påsen med hemliga frön",
+    "intro": "Trädgårdsmästaren saknar en påse frön. Var kan den ligga?",
+    "target": 0,
+    "clues": [
+      "Påsen finns där någon arbetar med växter.",
+      "Det finns flera krukor på platsen.",
+      "En trädgårdsmästare står bredvid en påse frön."
+    ],
+    "why": "Trädgårdsmästaren står vid krukorna och påsen med frön. Alla ledtrådarna passar.",
+    "wrong": [
+      null,
+      "Vid tulpanstigen står en liten skylt, men inga krukor med en påse frön.",
+      "På ängen flyger fjärilar över blommorna, men där arbetar ingen med fröpåsar.",
+      "Vid dammen finns vatten och stenar, men ingen påse frön vid krukor."
+    ]
+  },
+  "unicorn": {
+    "title": "Halsbandet vid bron",
+    "intro": "En vän tappade ett halsband när hon gick över vatten. Var ska vi leta?",
+    "target": 1,
+    "clues": [
+      "Hon gick inte över land hela vägen.",
+      "Hon använde en bro för att ta sig över en bäck.",
+      "Bron hade samma färger som en regnbåge."
+    ],
+    "why": "Bron med regnbågens färger går över en bäck. Där passar både bron och vattnet.",
+    "wrong": [
+      "Det glittrande spåret går över kullar, inte över en bäck med en bro.",
+      null,
+      "Här ligger hjärtformade stenar bland fåglar, men ingen bro går över vattnet.",
+      "På ängen leker enhörningar bland blommor, men det finns ingen regnbågsbro."
+    ]
+  },
+  "animals": {
+    "title": "Kaninens försvunna morot",
+    "intro": "Kaninen har tappat bort sin morot. Var kan den ha blivit kvar?",
+    "target": 2,
+    "clues": [
+      "Kaninen var inte inne i ett hus.",
+      "Den stannade utanför vid en grind.",
+      "Där stod kaninen och nosade på en morot."
+    ],
+    "why": "Vid grinden nosar kaninen på en morot. Både djuret, platsen och föremålet stämmer.",
+    "wrong": [
+      "Här finns en katt vid en gardin inne i ett hus, inte en kanin vid en grind.",
+      "Här leker en hund med en boll i parken, inte en kanin med morot.",
+      null,
+      "Här sitter flera djur på en filt med frukt, men ingen kanin vid en grind."
+    ]
+  },
+  "rainbow": {
+    "title": "Den saknade penseln",
+    "intro": "En målare kan inte hitta sin pensel. Var kan den vara?",
+    "target": 1,
+    "clues": [
+      "Den ligger där någon arbetar med färg.",
+      "Det finns flera skålar med färg på platsen.",
+      "Penslarna står tillsammans på ett bord."
+    ],
+    "why": "På bordet står penslar och färgskålar. Det är just den arbetsplatsen ledtrådarna beskriver.",
+    "wrong": [
+      "Bakom molnporten finns färgpennor, men inga penslar i färgskålar på ett bord.",
+      null,
+      "Här svävar såpbubblor över en stig, inte penslar vid ett målarbord.",
+      "Tornet har lampor och regnbågsfärger, men inga penslar på ett bord."
+    ]
+  },
+  "horses": {
+    "title": "Den försvunna rosetten",
+    "intro": "Efter en tävling saknar någon en rosett. Var hänger den?",
+    "target": 3,
+    "clues": [
+      "Den har inte lämnats vid hästarnas mat.",
+      "Den sitter upphängd på gården.",
+      "Där finns en tavla med flera rosetter och långa band."
+    ],
+    "why": "Rosetter med långa band hänger på en tavla på gården. Det är just den platsen.",
+    "wrong": [
+      "I boden finns hö och morötter, men ingen tavla med rosetter.",
+      "I hagen står en ponny vid ett staket, men inga rosetter hänger där.",
+      "Längs ridstigen finns träd och bäck, inte en tavla med långa band.",
+      null
+    ]
+  },
+  "music": {
+    "title": "Den borttappade mikrofonen",
+    "intro": "En grupp ska uppträda men hittar inte sin mikrofon. Var finns den?",
+    "target": 3,
+    "clues": [
+      "Mikrofonen ska användas av flera personer tillsammans.",
+      "Den ligger inte i rummet där instrumenten övas.",
+      "En hel grupp musiker står på en scen vid mikrofonen."
+    ],
+    "why": "På scenen står flera musiker tillsammans vid mikrofonen. Det skiljer platsen från den ensamma musikern.",
+    "wrong": [
+      "Här spelar en ensam musiker från ett notblad, inte en grupp vid en mikrofon.",
+      "Övningsrummet har trummor, gitarrer och en klocka, men ingen grupp på scen.",
+      "På dansgolvet hänger lampor, men ingen musikgrupp står med mikrofonen.",
+      null
+    ]
+  }
+};
   const SMALL_FINDS={
     forest:{emoji:'🪵',name:'Liten vedbit'},
     space:{emoji:'📎',name:'Robotens gem'},
@@ -461,7 +668,8 @@
   for(const rows of Object.values(DATA)){
     rows.forEach(row=>{Object.freeze(row.lookFor);Object.freeze(row);});Object.freeze(rows);
   }
+  for(const item of Object.values(MYSTERIES)){Object.freeze(item.clues);Object.freeze(item.wrong);Object.freeze(item);}
   for(const item of Object.values(SMALL_FINDS))Object.freeze(item);
   for(const parts of Object.values(LETTER_FRAGMENTS))Object.freeze(parts);
-  return Object.freeze({DATA:Object.freeze(DATA),SMALL_FINDS:Object.freeze(SMALL_FINDS),LETTER_FRAGMENTS:Object.freeze(LETTER_FRAGMENTS)});
+  return Object.freeze({DATA:Object.freeze(DATA),SMALL_FINDS:Object.freeze(SMALL_FINDS),LETTER_FRAGMENTS:Object.freeze(LETTER_FRAGMENTS),MYSTERIES:Object.freeze(MYSTERIES)});
 });
