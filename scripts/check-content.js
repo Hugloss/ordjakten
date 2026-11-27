@@ -40,7 +40,10 @@ if(JSON.stringify(clueLadder)!==JSON.stringify(browserClues))issues.push('Clues 
 issues.push(...Clues.validate(clueLadder,contrasts,bank));
 issues.push(...Contrast.validate(contrasts,bank));
 issues.push(...E.validateContexts(wordContexts,bank,curation));
-if(wordContexts.wordContexts.length!==55||wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)!==165)issues.push('Missing authored context scenes');
+for(const word of bank.words){
+  if(!E.wordTeaching(bank,word.id))issues.push('Missing concrete word lesson: '+word.id);
+  if(!wordContexts.wordContexts.some(row=>row.id===word.id))issues.push('Missing authored context scenes: '+word.id);
+}
 if(JSON.stringify(comics)!==JSON.stringify(browserComics))issues.push('Comic JS/JSON diverged');
 for(const [emoji,image] of Object.entries(comics.iconPaths)) {
   const filepath=path.join(root,image.slice(2));
@@ -82,4 +85,4 @@ for(const level of ['easy','medium','hard','exam']){
  }
 }
 if(issues.length){process.stderr.write(issues.map(x=>'✗ '+x).join('\n')+'\n');process.exitCode=1;}
-else process.stdout.write('✓ 121 words + 67 expressions + 165 everyday scenes + 96 comparisons + 64 inference scenes across four pairs + 67 comics and 201 task variations validated.\n');
+else process.stdout.write(`✓ ${bank.words.length} words with complete lessons + 67 expressions + ${wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)} everyday scenes with reviewed Aha alternatives + 96 comparisons + 64 inference scenes across four pairs + 67 comics and 201 task variations validated.\n`);

@@ -18,15 +18,6 @@ test('every authored word context offers a novel Aha scene when another is avail
     const word=bank.words.find(w=>w.id===row.id);
     const q=E.makeContextQuestion(word,bank,contexts,()=>.29,0);
     const first=check(q);
-    // Seven curated words lack two safe, authored counterexamples. Keep the
-    // validated meaning check rather than generating ambiguous distractors.
-    const safe=contexts.wordContexts.some(other=>
-      [...(row.distractors||[]),...(row.readingDistractors||[])].includes(other.id));
-    if(!safe){
-      assert.equal(first.source,'meaning',word.word);
-      assert.equal(first.options.filter(o=>o.correct).length,1);
-      continue;
-    }
     assert.equal(first.source,'context',word.word);
     assert.match(first.evidence,/^context:[012]$/);
     assert.equal(first.options.length,3);

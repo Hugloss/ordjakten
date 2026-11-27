@@ -51,7 +51,7 @@ window.ORDJAKTEN_CURATION = {
   // Avoid showing the actual answer in a reversed-definition prompt.
   reviewClues: {
     'sv-0009': 'Ett jämnt, långdraget ljud som till exempel ett flygande bi kan ge ifrån sig.',
-    'sv-0068': 'Som kan dra till sig vissa metaller, exempelvis järn.'
+    'sv-0068': 'Som fungerar som en magnet eller dras till en magnet, till exempel järn.'
   },
   // Content is grouped to favor plausible, relevant distractors instead of random nonsense.
   groups: {
@@ -78,6 +78,8 @@ window.ORDJAKTEN_CURATION = {
     ['sv-0072','sv-0077'], ['sv-0078','sv-0081'], ['sv-0081','sv-0082'],
     ['sv-0079','sv-0088'], ['sv-0093','sv-0094'],
     ['sv-0096','sv-0120'], ['sv-0110','sv-0114'], ['sv-0099','sv-0110'],
-    ['sv-0098','sv-0111'], ['sv-0105','sv-0106'], ['sv-0107','sv-0116']
+    ['sv-0098','sv-0111'], ['sv-0105','sv-0106'], ['sv-0107','sv-0116'],
+    ['sv-0012','sv-0093'], ['sv-0002','sv-0015'], ['sv-0013','sv-0065'],
+    ['sv-0077','sv-0108'], ['sv-0100','sv-0118'], ['sv-0109','sv-0121']
   ]
 };

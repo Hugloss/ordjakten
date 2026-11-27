@@ -27,12 +27,13 @@ innan provet är klart.
 
 ## Innehållskvalitet
 
-Nya ordscener hämtas från den kuraterade vardagsbanken. Vissa ord fick
-särskilda läsdistraktorer (fältet readingDistractors i
-public/data/word-contexts.json) som aldrig ändrar vanliga frågors
-svarsalternativ. Uttryck hämtar nya exempel från surprises.json och
-missions.json. Ord utan skrivna berättelser använder befintliga
-orddefinitioner. Inga nya berättelser eller bilder genereras under spel.
+Nya ordscener hämtas från den kuraterade vardagsbanken. Alla 121 ord har
+tre egna scener och en separat lista med granskade Aha-källor (fältet
+readingDistractors i public/data/word-contexts.json). Aha använder enbart
+den listan, aldrig huvudfrågans distraktorer. Uttryck hämtar nya exempel
+från surprises.json och missions.json. Saknas säkra berättelser i en äldre
+eller ofullständig bank används en betydelsefråga; den räknas inte som
+förståelse i en ny situation. Inga nya berättelser eller bilder genereras under spel.
 
 ## Nästa barnprovspelning
 

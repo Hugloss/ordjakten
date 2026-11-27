@@ -256,7 +256,7 @@
           "title": "Nykokt te",
           "text": "Hemma i köket steg en tunn vit sky från den nykokta tekoppen eftersom drycken var mycket varm.",
           "target": "sv-0028",
-          "why": "Värme får fuktig luft att bilda synliga små droppar ovanför koppen.",
+          "why": "Vattenånga från det varma teet kyls i luften och blir små droppar. Dropparna syns som en vit sky.",
           "difference": "Det är inte ett lager av bubblor på dryckens yta.",
           "id": "js-04-01",
           "context": "hem"
@@ -312,7 +312,7 @@
           "title": "Varm choklad i pausen",
           "text": "Efter skridskoåkningen såg barnen en tunn vit sky stiga från den heta chokladen i muggen.",
           "target": "sv-0028",
-          "why": "Värmen gör att fukt ovanför muggen syns som små droppar.",
+          "why": "Vattenånga från den varma chokladen kyls i luften och blir små droppar. Det är dropparna vi ser ovanför muggen.",
           "difference": "Det handlar inte om ett lager bubblor på drycken."
         },
         {

@@ -28,7 +28,13 @@
       "difficulty": "medium",
       "source": "första_10",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En skrovlig yta har ojämnheter som känns sträva mot handen. Det handlar om ytan, inte om hur stor eller tung saken är.",
+        "familiar": "Barken på ett gammalt träd kan ha hårda, ojämna delar. När du känner försiktigt på barken märker du att den inte är slät.",
+        "nonExample": "En blank, slät bordsskiva är inte skrovlig bara för att bordet är stort.",
+        "ownPrompt": "Hur skulle du beskriva skillnaden mellan en skrovlig sten och en slät sten för någon som inte ser dem?"
+      }
     },
     {
       "id": "sv-0002",
@@ -43,7 +49,13 @@
         "label": "Mjuk nalle",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något fluffigt är mjukt och luftigt. Det tar ganska stor plats eftersom det finns mycket luft mellan de mjuka delarna.",
+        "familiar": "När du skakar en kudde kan fyllningen breda ut sig och kudden bli tjock och luftig igen.",
+        "nonExample": "En mjuk degklump är inte nödvändigtvis fluffig. Den kan vara mjuk men ändå tät, utan mycket luft i.",
+        "ownPrompt": "Vad hemma känns fluffigt, och hur märker du att det finns luft mellan delarna?"
+      }
     },
     {
       "id": "sv-0003",
@@ -53,7 +65,13 @@
       "difficulty": "medium",
       "source": "första_10",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Genomskinligt material släpper igenom ljus så att du kan se saker på andra sidan. Du ser genom materialet, inte bara hur ytan ser ut.",
+        "familiar": "Genom en ren glasruta kan du se trädet utanför, fast rutan finns mellan dig och trädet.",
+        "nonExample": "En spegel visar en bild av dig, men du ser inte genom den till väggen bakom. Den är därför inte genomskinlig.",
+        "ownPrompt": "Vilken skillnad märker du om du tittar genom ett dricksglas och genom en mugg som du inte kan se igenom?"
+      }
     },
     {
       "id": "sv-0004",
@@ -68,7 +86,13 @@
         "label": "Kaktus med taggar",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något taggigt har hårda, vassa delar som sticker ut från ytan. De kan sticka till om man kommer emot dem.",
+        "familiar": "På en rosstjälk kan det finnas flera hårda spetsar. Man kan titta på dem utan att känna med fingret.",
+        "nonExample": "Mjuka hår på en nalle gör inte nallen taggig. Håren böjer sig lätt och sticks inte som hårda taggar.",
+        "ownPrompt": "Hur kan du visa eller beskriva att något är taggigt utan att röra vid spetsarna?"
+      }
     },
     {
       "id": "sv-0005",
@@ -83,7 +107,13 @@
         "label": "Is",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En hal yta gör det svårt att få fäste. Foten eller saken glider lätt i stället för att stanna där du sätter den.",
+        "familiar": "Om det ligger blankis på vägen kan skon glida framåt när du försöker ta ett steg.",
+        "nonExample": "En torr dörrmatta som håller skon på plats är inte hal, även om mattan är platt.",
+        "ownPrompt": "När har du märkt att en yta är hal, och vad gjorde du för att inte tappa balansen?"
+      }
     },
     {
       "id": "sv-0006",
@@ -93,7 +123,13 @@
       "difficulty": "medium",
       "source": "första_10",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Knaprig mat ger ett tydligt knaster eller knak när du biter sönder den. Du både känner motståndet och hör ljudet.",
+        "familiar": "Torra frukostflingor kan knastra i munnen. Efter lång tid i mjölk blir de mjuka och knastrar inte på samma sätt.",
+        "nonExample": "Mjuk gröt är inte knaprig. Den går att äta utan att bitarna knäcks med ett knaster.",
+        "ownPrompt": "Vilken mat brukar vara knaprig, och vad kan göra att den slutar vara det?"
+      }
     },
     {
       "id": "sv-0007",
@@ -108,12 +144,18 @@
         "label": "Glittrande discokula",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En glittrig yta ger många små glimtar när ljuset träffar den. Glimtarna kan ändras när du eller saken rör sig.",
+        "familiar": "På ett kort med glitter blänker små bitar till när du vrider kortet under en lampa.",
+        "nonExample": "Ett papper med målade gula prickar behöver inte vara glittrigt. Prickarna kan ha samma färg hela tiden utan att blänka.",
+        "ownPrompt": "Vad behöver du för att se om något glittrar, och vad händer när du vrider på det?"
+      }
     },
     {
       "id": "sv-0008",
       "word": "Studsande",
-      "definition": "Något som hoppar upp efter att ha träffat ett underlag.",
+      "definition": "Som far tillbaka efter att ha träffat en yta.",
       "example": "Bollen studsade mot marken.",
       "difficulty": "easy",
       "source": "första_10",
@@ -123,17 +165,29 @@
         "label": "Studsande boll",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något studsande träffar en yta och åker tillbaka från den. Det kan gå upp från marken eller tillbaka från en vägg.",
+        "familiar": "När du släpper en gummiboll mot golvet trycks den ihop lite och fjädrar sedan upp igen.",
+        "nonExample": "En boll som bara rullar längs golvet studsar inte. Den rör sig framåt utan att hoppa upp från golvet.",
+        "ownPrompt": "Hur skulle du visa skillnaden mellan en studsande boll och en rullande boll?"
+      }
     },
     {
       "id": "sv-0009",
       "word": "Surrande",
-      "definition": "Ett långdraget brummande eller surrande ljud.",
+      "definition": "Som ger ifrån sig ett jämnt, långdraget brummande ljud.",
       "example": "Det surrande biet flög förbi.",
       "difficulty": "medium",
       "source": "första_10",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Surrande beskriver ett ganska jämnt ljud som fortsätter en stund, ungefär bzzzz. Insekters vingar och små motorer kan låta så.",
+        "familiar": "När en humla flyger nära hörs ett litet brummande ljud så länge vingarna arbetar.",
+        "nonExample": "En enda kort handklapp är inte ett surrande ljud. Det tar slut direkt i stället för att fortsätta som ett jämnt brum.",
+        "ownPrompt": "Vilket surrande ljud har du hört, och hur skiljer det sig från en smäll?"
+      }
     },
     {
       "id": "sv-0010",
@@ -143,7 +197,13 @@
       "difficulty": "medium",
       "source": "första_10",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något prassligt ger lätta, torra ljud när det böjs eller rör vid sig självt eller andra saker. Papper, påsar och torra löv kan låta så.",
+        "familiar": "När du vecklar upp presentpapper hörs många små ljud från pappret som rör sig.",
+        "nonExample": "En klocka som piper är inte prasslig. Pipet kommer inte av att tunt material rör sig eller gnids mot något.",
+        "ownPrompt": "Vilken sak kan du få att prassla, och vilken rörelse behövs för att ljudet ska höras?"
+      }
     },
     {
       "id": "sv-0011",
@@ -153,7 +213,13 @@
       "difficulty": "medium",
       "source": "första_20_tillägg",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något klibbigt fastnar lätt på andra saker. När du försöker dra bort handen eller en sak kan du känna att ytan håller kvar den lite.",
+        "familiar": "Om saft torkar på bordet kan sockret bli kvar. Då kan ett papper fastna där du spillde.",
+        "nonExample": "Ett rent, torrt bord där pappret lossnar direkt är inte klibbigt. Att en yta bara är våt räcker inte heller.",
+        "ownPrompt": "Vad kan göra ett bord klibbigt, och hur kan du få bort det som fastnar?"
+      }
     },
     {
       "id": "sv-0012",
@@ -168,7 +234,13 @@
         "label": "Ägg med skört skal",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något skört kan spricka eller gå sönder av en liten stöt eller ett lätt tryck. Därför behöver man hantera det varsamt.",
+        "familiar": "Ett tunt äggskal kan spricka när du knackar på det, även om slaget inte är hårt.",
+        "nonExample": "En stadig träkloss som klarar att tappas på golvet är inte skör bara för att den är liten.",
+        "ownPrompt": "Vad skulle du göra annorlunda när du packar en skör sak än när du packar en träkloss?"
+      }
     },
     {
       "id": "sv-0013",
@@ -183,7 +255,13 @@
         "label": "Vass kniv",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En vass kant eller spets kan skära eller sticka hål. Kanten är så tunn eller spetsen så smal att den lätt går in i materialet.",
+        "familiar": "En vuxen kan använda en vass kniv för att skära jämna skivor av en gurka utan att trycka hårt.",
+        "nonExample": "En sked har oftast en rundad kant. Den kan trycka på maten men skär inte som en vass kniv.",
+        "ownPrompt": "Hur kan du förstå att en kant är vass utan att känna på den med fingret?"
+      }
     },
     {
       "id": "sv-0014",
@@ -198,7 +276,13 @@
         "label": "Tung hantel",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Tung betyder att något väger mycket. Hur tungt det känns att bära beror också på hur stark den som bär är.",
+        "familiar": "En ryggsäck med många böcker är tyngre att lyfta än samma ryggsäck när den är tom.",
+        "nonExample": "En stor tom kartong behöver inte vara tung. Storleken berättar inte ensam hur mycket den väger.",
+        "ownPrompt": "Kan du komma på en liten sak som känns tung och en stor sak som känns lätt?"
+      }
     },
     {
       "id": "sv-0015",
@@ -213,7 +297,13 @@
         "label": "Mjuk kudde",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något mjukt ger lätt efter när du trycker försiktigt på det. Du kan göra en liten grop eller ändra formen utan stor kraft.",
+        "familiar": "När du lägger huvudet på en kudde sjunker det ner lite eftersom kudden ger efter.",
+        "nonExample": "En sten kan vara helt slät men ändå hård. Slät beskriver ytan, medan mjuk beskriver hur lätt något ger efter.",
+        "ownPrompt": "Hur kan du märka skillnaden mellan en mjuk och en hård sak genom att trycka försiktigt?"
+      }
     },
     {
       "id": "sv-0016",
@@ -228,7 +318,13 @@
         "label": "Rund fotboll",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Rund beskriver en form som en cirkel eller ett klot, utan hörn. En tallrik kan vara platt och rund, medan en boll är rund åt alla håll.",
+        "familiar": "På en rund klocka går kanten runt utan raka sidor eller hörn.",
+        "nonExample": "En tärning är inte rund. Den har platta sidor och hörn, även om den också kan rulla en liten bit.",
+        "ownPrompt": "Vilka runda saker finns nära dig, och är de platta som en cirkel eller som ett klot?"
+      }
     },
     {
       "id": "sv-0017",
@@ -243,7 +339,13 @@
         "label": "Kanin med päls",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något pälsigt har många hår på utsidan. Håren bildar päls, som kan vara kort eller lång och behöver inte stå ut fluffigt.",
+        "familiar": "En katt har päls över kroppen. Även en katt med korta, tätt liggande hår är pälsig.",
+        "nonExample": "En orm har fjäll på huden och en fågel har fjädrar. Det är andra slags ytor än päls.",
+        "ownPrompt": "Hur skulle du förklara skillnaden mellan ett pälsigt djur och ett djur med fjädrar?"
+      }
     },
     {
       "id": "sv-0018",
@@ -258,7 +360,13 @@
         "label": "Tänd ficklampa",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Här betyder lysande att något ger ifrån sig ljus. Ljuset kan göra att du ser både saken själv och det som finns nära den.",
+        "familiar": "En tänd ficklampa lyser upp tältet när det är mörkt ute.",
+        "nonExample": "En spegel kan skicka tillbaka ljus från en lampa, men den tillverkar inte eget ljus. I ett helt mörkt rum lyser den inte av sig själv.",
+        "ownPrompt": "Vilka saker hemma kan ge ifrån sig ljus, och hur märker du när de är avstängda?"
+      }
     },
     {
       "id": "sv-0019",
@@ -268,12 +376,18 @@
       "difficulty": "medium",
       "source": "första_20_tillägg",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En knottrig yta har många små upphöjningar. Det är de små kullarna på ytan som ordet beskriver.",
+        "familiar": "På en massageboll kan det sitta små, täta upphöjningar som du känner en i taget med fingertoppen.",
+        "nonExample": "Ett papper med tryckta prickar är inte knottrigt om prickarna är helt platta. Ett mönster räcker inte; ytan måste ha upphöjningar.",
+        "ownPrompt": "Hur kan du avgöra om en yta verkligen är knottrig och inte bara ser prickig ut?"
+      }
     },
     {
       "id": "sv-0020",
       "word": "Långsam",
-      "definition": "Något eller någon som rör sig med låg fart.",
+      "definition": "Som rör sig med låg fart eller tar lång tid.",
       "example": "Snigeln var långsam.",
       "difficulty": "easy",
       "source": "första_20_tillägg",
@@ -283,7 +397,13 @@
         "label": "Långsam snigel",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Långsam beskriver låg fart eller att något tar lång tid. Man kan behöva jämföra med hur fort samma sak brukar gå.",
+        "familiar": "En kö är långsam om människorna bara kommer fram en liten bit trots att ni väntar länge.",
+        "nonExample": "Någon som springer fort är inte långsam bara för att vägen är lång. En lång sträcka och låg fart är olika saker.",
+        "ownPrompt": "När kan det vara bra att göra något långsamt, och när skulle du vilja att det gick fortare?"
+      }
     },
     {
       "id": "sv-0021",
@@ -293,7 +413,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Järn och stål kan reagera med luft och fukt och få rost. Då kan ytan få brunröda fläckar och till slut skadas.",
+        "familiar": "En järnspik som ligger ute i regn kan efter en tid få en brunröd beläggning.",
+        "nonExample": "Brun färg på en målad träbit är inte rost. Färgen ensam visar inte att något är rostigt.",
+        "ownPrompt": "Vad skulle du titta efter för att skilja en rostig järnspik från en spik med brun färg på?"
+      }
     },
     {
       "id": "sv-0022",
@@ -308,7 +434,13 @@
         "label": "Randig zebra",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något randigt har ett mönster av långa smala fält eller streck. Fälten kan ha olika färg och gå åt olika håll.",
+        "familiar": "På en halsduk kan blå och vita band följa efter varandra hela vägen längs tyget.",
+        "nonExample": "En tröja med små runda fläckar är prickig. Fläckarna bildar inte långa band som på en randig tröja.",
+        "ownPrompt": "Hur skulle du rita ett randigt mönster så att ingen förväxlar det med ett prickigt?"
+      }
     },
     {
       "id": "sv-0023",
@@ -323,7 +455,13 @@
         "label": "Prickig nyckelpiga",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något prickigt har många små märken eller fläckar i sitt mönster. Prickarna syns var för sig.",
+        "familiar": "En mugg kan vara vit med små blå prickar utspridda över hela utsidan.",
+        "nonExample": "Långa streck över en tröja gör den randig. De är inte små separata prickar.",
+        "ownPrompt": "Vad kan vara prickigt, och hur skulle det se ut om du bytte prickarna mot ränder?"
+      }
     },
     {
       "id": "sv-0024",
@@ -338,27 +476,45 @@
         "label": "Pappersrulle med hål",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något ihåligt har ett tomrum inuti. Det finns material runt om, men insidan är inte fylld hela vägen.",
+        "familiar": "En toarulle har en vägg av papp runt ett tomt utrymme. Därför kan du se genom rullen från ena änden.",
+        "nonExample": "En massiv träkloss är inte ihålig bara för att du kan gömma något bakom den. Tomrummet måste finnas inuti saken.",
+        "ownPrompt": "Hur kan du ta reda på om en sak är ihålig utan att förstöra den?"
+      }
     },
     {
       "id": "sv-0025",
       "word": "Elastisk",
-      "definition": "Något som kan sträckas och sedan återgå till sin form.",
+      "definition": "Som kan töjas eller tryckas ihop och sedan återgå till sin form.",
       "example": "Gummibandet är elastiskt.",
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något elastiskt kan töjas eller tryckas ihop och sedan gå tillbaka mot sin tidigare form. Det viktiga är att formen kommer tillbaka när kraften släpper.",
+        "familiar": "Ett gummiband blir längre när du drar försiktigt i det. När du släpper blir det kort igen.",
+        "nonExample": "En lerklump går att trycka ihop, men den blir inte rund igen av sig själv. Att bara kunna ändra form är inte samma sak som att vara elastisk.",
+        "ownPrompt": "Vad behöver du se efter att du släppt taget för att avgöra om ett material är elastiskt?"
+      }
     },
     {
       "id": "sv-0026",
       "word": "Doftande",
       "definition": "Något som ger ifrån sig en lukt.",
-      "example": "Rosen var väldoftande.",
+      "example": "Den doftande rosen spred en söt lukt.",
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något doftande ger ifrån sig en lukt som du kan känna med näsan. Ofta används ordet om en lukt man tycker om.",
+        "familiar": "När bröd gräddas kan lukten sprida sig från köket, så att du känner den innan du ser brödet.",
+        "nonExample": "En bild av en ros kan se fin ut utan att ge ifrån sig någon lukt. Bilden är då inte doftande.",
+        "ownPrompt": "Vilken doft kan hjälpa dig att förstå vad som finns i ett rum innan du ser det?"
+      }
     },
     {
       "id": "sv-0027",
@@ -373,13 +529,19 @@
         "label": "Vissnad blomma",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En vissnad växt har tappat sin spänst så att blad eller stjälkar hänger. Den kan till exempel ha fått för lite vatten.",
+        "familiar": "Blommor som stått länge i en vas utan vatten kan börja sloka i stället för att stå upprätt.",
+        "nonExample": "En frisk växt är inte vissnad bara för att bladen naturligt pekar nedåt. Titta på om den tappat sin vanliga spänst.",
+        "ownPrompt": "Vad skulle du jämföra med för att avgöra om en växt håller på att vissna?"
+      }
     },
     {
       "id": "sv-0028",
       "word": "Ångande",
-      "definition": "Något som avger synlig ånga eller en dimma av små droppar.",
-      "example": "Den varma koppen var ångande.",
+      "definition": "Som det stiger ånga från, ofta synlig som en dimma av små vattendroppar.",
+      "example": "Den ångande soppan var för varm att äta direkt.",
       "difficulty": "easy",
       "source": "nya_20",
       "illustration": {
@@ -388,7 +550,13 @@
         "label": "Ångande varm dryck",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Ångande används om något som det stiger ånga från. Det vita molnet vi ser är små vattendroppar som bildas när vattenångan kyls av i luften.",
+        "familiar": "Ovanför varm soppa kan du se en tunn vit dimma stiga. Själva vattenångan är osynlig; dropparna gör molnet synligt.",
+        "nonExample": "Rök från något som brinner är inte samma sak som molnet ovanför varm mat. Det är olika saker även om båda kan stiga uppåt.",
+        "ownPrompt": "Var har du sett något ångande, och vad var det som var varmt?"
+      }
     },
     {
       "id": "sv-0029",
@@ -398,7 +566,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något skummande bildar många små bubblor som samlas tillsammans. Ofta finns luft inne i bubblorna, med ett tunt lager vätska runt.",
+        "familiar": "När du vispar upp diskmedel i vatten kan ett lager av små bubblor lägga sig ovanpå vattnet.",
+        "nonExample": "Vatten med jord i kan vara grumligt utan att skumma. Det behöver finnas bubblor, inte bara små bitar i vattnet.",
+        "ownPrompt": "Hur kan du se skillnad på vatten som skummar och vatten som bara är smutsigt?"
+      }
     },
     {
       "id": "sv-0030",
@@ -408,7 +582,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Frodig beskriver växtlighet som växer tätt och kraftigt. Det finns mycket blad, gräs eller andra växtdelar som ser livskraftiga ut.",
+        "familiar": "I en frodig rabatt har växterna många blad och fyller ut större delen av rabatten.",
+        "nonExample": "En ensam hög stjälk med några få torra blad gör inte en rabatt frodig. Höjd ensam räcker inte.",
+        "ownPrompt": "Vad skulle du vilja se i en trädgård för att beskriva den som frodig?"
+      }
     },
     {
       "id": "sv-0031",
@@ -418,7 +598,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något slemmigt har slem eller en liknande hal, geléaktig hinna på sig. Det beskriver hur ytan är, inte om saken är farlig eller äcklig.",
+        "familiar": "En snigel kan lämna ett blankt spår av slem efter sig på en sten.",
+        "nonExample": "Vatten på ett rent fönster är inte slem. Att något är vått betyder inte automatiskt att det är slemmigt.",
+        "ownPrompt": "Hur skulle du beskriva en slemmig yta för någon som bara vet hur vanligt vatten känns?"
+      }
     },
     {
       "id": "sv-0032",
@@ -428,17 +614,29 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Frasig mat har tunna, spröda delar som går sönder med ett lätt knastrande ljud. Ofta lossnar små flingor eller tunna lager.",
+        "familiar": "När du delar ett bakverk av smördeg kan de tunna lagren spricka och falla som små flingor.",
+        "nonExample": "Ett mjukt bröd som böjs utan att spricka i tunna delar är inte frasigt. Det kan ändå vara gott.",
+        "ownPrompt": "Hur märker du med både öronen och ögonen att ett bakverk är frasigt?"
+      }
     },
     {
       "id": "sv-0033",
       "word": "Saftig",
-      "definition": "Något som innehåller mycket vätska.",
+      "definition": "Mat eller frukt som innehåller mycket vätska.",
       "example": "Vattenmelonen var saftig.",
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Saftig mat innehåller mycket vätska. Det kan märkas när du biter, skär eller trycker på den och vätskan kommer fram.",
+        "familiar": "När du äter en mogen melon kan vätska droppa från fruktköttet.",
+        "nonExample": "Ett torrt kex är inte saftigt. Att det ligger bredvid ett glas vatten gör inte att kexet innehåller mycket vätska.",
+        "ownPrompt": "Vilken frukt brukar vara saftig, och hur märker du det när du äter den?"
+      }
     },
     {
       "id": "sv-0034",
@@ -453,13 +651,19 @@
         "label": "Avlång gurka",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Avlång betyder att formen är mycket längre åt ett håll än åt det andra. Både saker med raka kanter och saker med böjda kanter kan vara avlånga.",
+        "familiar": "En vanlig linjal är lång från ände till ände men smal tvärs över.",
+        "nonExample": "En stor rund tallrik är inte avlång. Den är ungefär lika bred oavsett vilket håll du mäter över mitten.",
+        "ownPrompt": "Vilka två mått skulle du jämföra för att visa att något är avlångt?"
+      }
     },
     {
       "id": "sv-0035",
       "word": "Virvlande",
       "definition": "Något som rör sig runt i en snurrande rörelse.",
-      "example": "Vinden var virvlande kring huset.",
+      "example": "De virvlande löven snurrade runt på skolgården.",
       "difficulty": "easy",
       "source": "nya_20",
       "illustration": {
@@ -468,7 +672,13 @@
         "label": "Virvlande tornado",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Virvlande beskriver en rörelse som går runt och runt. Det som rör sig följer en cirkel eller en snurrande väg.",
+        "familiar": "När du rör i ett glas kan vätskan fortsätta snurra runt en kort stund efter att du tagit bort skeden.",
+        "nonExample": "En hiss som går rakt upp rör sig inte virvlande. Den förflyttar sig utan att snurra runt.",
+        "ownPrompt": "Hur skulle du visa en virvlande rörelse med handen och sedan en rörelse som går rakt fram?"
+      }
     },
     {
       "id": "sv-0036",
@@ -478,7 +688,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något skrynkligt har många veck eller rynkor. Ytan är inte längre slät eftersom materialet har böjts och pressats ihop.",
+        "familiar": "En teckning som legat hopknölad i väskan kan ha veck kvar när du breder ut pappret.",
+        "nonExample": "Ett slätt papper med ritade streck är inte skrynkligt. Strecken är ett mönster och inte verkliga veck.",
+        "ownPrompt": "Vad kan göra ett tyg skrynkligt, och hur skulle du försöka få det slätt igen?"
+      }
     },
     {
       "id": "sv-0037",
@@ -493,7 +709,13 @@
         "label": "Spegel",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En speglande yta skickar tillbaka ljus så att du ser en bild av det som finns framför den. Bilden kan vara tydlig eller lite förvrängd.",
+        "familiar": "I en vanlig spegel ser du ditt ansikte. Du ser en bild som ytan skickar tillbaka, inte en person bakom glaset.",
+        "nonExample": "En vägg kan bli ljus av en lampa utan att visa en bild av lampan. Att bara bli upplyst gör inte väggen speglande.",
+        "ownPrompt": "Vad skulle du leta efter på en vattenyta för att avgöra om den är speglande?"
+      }
     },
     {
       "id": "sv-0038",
@@ -503,7 +725,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Dallrande beskriver något som skakar eller gungar i små rörelser fram och tillbaka. Det kan fortsätta en stund efter en liten stöt.",
+        "familiar": "Om du stöter till ett fat med gelé kan gelén börja vaja fram och tillbaka även när fatet stannat.",
+        "nonExample": "En leksaksbil som kör stadigt rakt fram dallrar inte bara för att den rör sig. Rörelsen behöver vara skakande eller gungande.",
+        "ownPrompt": "Kan du beskriva hur något dallrar utan att använda ordet dallra?"
+      }
     },
     {
       "id": "sv-0039",
@@ -513,7 +741,13 @@
       "difficulty": "medium",
       "source": "nya_20",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Blinkande ljus växlar mellan att vara tänt och släckt. Det upprepas så att ljuset syns, försvinner och syns igen.",
+        "familiar": "En bils blinkers tänds och släcks för att visa åt vilket håll föraren tänker svänga.",
+        "nonExample": "En lampa som lyser stadigt hela tiden är inte blinkande. Att den lyser starkt är en annan egenskap.",
+        "ownPrompt": "Hur skulle du visa skillnaden mellan ett blinkande ljus och ett ljus som lyser hela tiden?"
+      }
     },
     {
       "id": "sv-0040",
@@ -528,7 +762,13 @@
         "label": "Svamp med porer",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något poröst har många små hålrum i materialet. Det handlar om flera små utrymmen, inte bara ett stort hål i mitten.",
+        "familiar": "I en tvättsvamp finns många små hålrum där vatten kan samlas. Därför kan svampen suga upp vatten.",
+        "nonExample": "En slät plastrulle med ett enda stort hål genom mitten är ihålig. Plasten behöver inte vara porös.",
+        "ownPrompt": "Vad skulle du titta efter i en bit bröd för att kunna beskriva den som porös?"
+      }
     },
     {
       "id": "sv-0041",
@@ -538,7 +778,13 @@
       "difficulty": "medium",
       "source": "nya_5",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En burk kan få en intryckning när den får en smäll. Har ytan sådana gropar eller utbuktningar är den bucklig. Det handlar om formen, inte om rost eller färg.",
+        "familiar": "En cykelskärm får en grop efter att cykeln har ramlat. Skärmen är bucklig även om färgen fortfarande är fin.",
+        "nonExample": "En burk som är slät men har tappat lite färg är inte bucklig för det. Ytan måste ha ändrat form.",
+        "ownPrompt": "Hur kan du förklara skillnaden mellan en bucklig burk och en burk som bara är repad?"
+      }
     },
     {
       "id": "sv-0042",
@@ -548,7 +794,13 @@
       "difficulty": "medium",
       "source": "nya_5",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En brant backe stiger eller sjunker mycket på en kort sträcka. Därför kan den vara jobbig att gå uppför. Brant handlar om lutningen, inte om hur lång backen är.",
+        "familiar": "På en kort men brant backe får du ta i för att komma upp. En längre backe kan luta mycket mindre.",
+        "nonExample": "En lång väg på platt mark är inte brant. Den lutar inte uppåt eller nedåt bara för att den är lång.",
+        "ownPrompt": "Hur skulle du rita en brant backe och en backe som lutar lite?"
+      }
     },
     {
       "id": "sv-0043",
@@ -558,17 +810,29 @@
       "difficulty": "medium",
       "source": "nya_5",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Trådar eller sladdar kan snurra runt varandra och bilda knutar. Då är de trassliga och svåra att dra isär. De behöver redas ut, inte bara läggas rakt.",
+        "familiar": "Hörlurssladden har legat i fickan. När du tar upp den sitter flera delar ihop i knutar som du får lossa.",
+        "nonExample": "Ett snöre som ligger i en enda stor båge utan knutar är böjt, men behöver inte vara trassligt.",
+        "ownPrompt": "Vad kan bli trassligt hemma, och hur kan du reda ut det?"
+      }
     },
     {
       "id": "sv-0044",
       "word": "Grumlig",
-      "definition": "En vätska som inte är klar, ofta för att små partiklar finns i den.",
+      "definition": "En vätska som är svår att se igenom, ofta för att små korn eller annat finns i den.",
       "example": "Vattnet blev grumligt när leran blandades i.",
       "difficulty": "medium",
       "source": "nya_5",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Vatten är grumligt när små korn eller annat i vattnet gör det svårt att se igenom. En sten kan finnas på botten fast du inte ser den.",
+        "familiar": "Om du rör upp lera från botten i en vattenpöl blandas den med vattnet. Då blir det svårare att se vad som ligger under ytan.",
+        "nonExample": "Rent vatten i ett blått glas kan se blått ut och ändå vara klart. Färg betyder inte alltid att vattnet är grumligt.",
+        "ownPrompt": "Hur kan vattnet i en pöl förändras när någon trampar i leran på botten?"
+      }
     },
     {
       "id": "sv-0045",
@@ -578,7 +842,13 @@
       "difficulty": "medium",
       "source": "nya_5",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Ett dånande ljud är mycket kraftigt och fyller omgivningen, ofta som ett djupt muller. Det kan göra det svårt att höra någon som pratar bredvid.",
+        "familiar": "Vid ett stort vattenfall låter vattnet så kraftigt att du måste höja rösten. Då kan du beskriva ljudet som dånande.",
+        "nonExample": "Ett löv som prasslar svagt ger också ett ljud, men ljudet är för svagt för att beskrivas som dånande.",
+        "ownPrompt": "Vilket ljud skulle du kunna kalla dånande, och vad gör det annorlunda än ett svagt ljud?"
+      }
     },
     {
       "id": "sv-0046",
@@ -593,7 +863,13 @@
         "label": "Regnväder",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En dag är regnig när det regnar, ofta mycket eller flera gånger. Det beskriver vad som faller från himlen. Grå moln räcker inte: det måste också komma regn.",
+        "familiar": "På vägen till skolan droppar det på jackan, och på rasten kommer ännu en skur. Du har en regnig dag.",
+        "nonExample": "En grå himmel där inget regn faller kan vara molnig utan att dagen är regnig.",
+        "ownPrompt": "Vad märker du på väg till skolan när vädret är regnigt?"
+      }
     },
     {
       "id": "sv-0047",
@@ -608,12 +884,18 @@
         "label": "Snöfall",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Snöig kan beskriva väder där snö faller, eller en plats som är täckt av snö. Snön behöver alltså inte falla just nu för att gården ska vara snöig.",
+        "familiar": "Det slutade snöa under natten, men på morgonen ligger ett tjockt vitt lager på gården. Gården är fortfarande snöig.",
+        "nonExample": "Det kan vara minusgrader på en bar väg. Kallt väder betyder inte i sig att vägen är snöig.",
+        "ownPrompt": "Hur kan en gård vara snöig fast inget faller från himlen?"
+      }
     },
     {
       "id": "sv-0048",
       "word": "Solig",
-      "definition": "När solen skiner och det är ljust.",
+      "definition": "En plats eller dag där solen skiner.",
       "example": "Vi lekte ute på en solig dag.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -623,7 +905,13 @@
         "label": "Solsken",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När solen skiner på en plats eller under en dag kan vi säga att det är soligt. Soligt beskriver solskenet. Det säger inte hur varm luften är.",
+        "familiar": "En vinterdag kan du se solen och tydliga skuggor på snön. Det är soligt även om du behöver mössa och vantar.",
+        "nonExample": "Ett varmt rum med gardinerna fördragna är inte soligt bara för att det är varmt.",
+        "ownPrompt": "Hur kan du märka att det är soligt utan att känna efter hur varmt det är?"
+      }
     },
     {
       "id": "sv-0049",
@@ -638,12 +926,18 @@
         "label": "Moln",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En molnig himmel har många moln. De kan täcka stora delar av himlen eller nästan hela. Moln betyder inte att det alltid regnar.",
+        "familiar": "På rasten ligger ett grått täcke över himlen. Solen syns inte, men inga droppar faller. Då är det molnigt utan regn.",
+        "nonExample": "En blå himmel utan moln är inte molnig, även om det blåser mycket.",
+        "ownPrompt": "Hur skulle du beskriva en molnig dag när det inte regnar?"
+      }
     },
     {
       "id": "sv-0050",
       "word": "Dimmig",
-      "definition": "När det finns dimma i luften som gör det svårt att se långt.",
+      "definition": "När små vattendroppar i luften nära marken gör det svårt att se långt.",
       "example": "Vägen syntes knappt i den dimmiga morgonen.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -653,7 +947,13 @@
         "label": "Dimma",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Dimma består av mycket små vattendroppar i luften nära marken. Dropparna gör det svårt att se långt. Där det finns dimma är det dimmigt.",
+        "familiar": "Du ser vägen nära dina fötter, men husen längre bort döljs bakom ett ljust dis. När dimman försvinner syns husen igen.",
+        "nonExample": "Smuts på ett fönster kan hindra sikten, men det gör inte luften utanför dimmig.",
+        "ownPrompt": "Vad är skillnaden mellan att se dåligt genom ett smutsigt fönster och att det är dimmigt ute?"
+      }
     },
     {
       "id": "sv-0051",
@@ -668,7 +968,13 @@
         "label": "Blixt och åska",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När det blixtrar och mullrar är vädret åskigt. Ljuset från blixten når dig snabbare än ljudet, så du kan se blixten innan du hör mullret.",
+        "familiar": "Du tittar ut från ett fönster hemma. Ett starkt ljus syns på himlen och strax efter hörs ett muller. Det är åskigt ute.",
+        "nonExample": "Om regnet bara smattrar mot taket behöver vädret inte vara åskigt. Vanligt regn kan falla utan blixtar och muller.",
+        "ownPrompt": "Vilka två saker kan du lägga märke till inifrån ett hus när det är åskigt?"
+      }
     },
     {
       "id": "sv-0052",
@@ -683,7 +989,13 @@
         "label": "Isbit",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Iskall betyder mycket kall. Vatten kan kännas iskallt och ändå vara flytande. Ordet betyder alltså inte att något måste ha blivit till is.",
+        "familiar": "En flaska har legat bland kylklampar. Utsidan känns mycket kall när du tar upp den. Du kan säga att flaskan är iskall.",
+        "nonExample": "Vatten som känns lagom varmt på händerna är inte iskallt, även om det är svalare än en varm dryck.",
+        "ownPrompt": "Vad kan vara iskallt utan att vara en isbit?"
+      }
     },
     {
       "id": "sv-0053",
@@ -698,7 +1010,13 @@
         "label": "Eldlåga",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Het betyder mycket varm. Det är starkare än att bara säga varm. En het plåt från ugnen kan bränna huden, så en vuxen använder grytlappar.",
+        "familiar": "Soppan har just kokat upp. Du väntar tills den har svalnat eftersom den ännu är för het att äta.",
+        "nonExample": "En filt som känns behagligt varm är inte het bara för att den hjälper dig att hålla värmen.",
+        "ownPrompt": "Hur kan du använda orden varm och het för att beskriva skillnaden mellan en filt och en nykokt soppa?"
+      }
     },
     {
       "id": "sv-0054",
@@ -713,12 +1031,18 @@
         "label": "Flygplan som lyfter",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Flygande beskriver något som färdas genom luften, till exempel en fågel, ett flygplan eller ett pappersplan. Det befinner sig inte på marken under den rörelsen.",
+        "familiar": "Du viker ett pappersplan och skickar i väg det. Medan det glider genom luften är det ett flygande pappersplan.",
+        "nonExample": "Ett flygplan som står parkerat på marken är inte flygande just då. Namnet på saken säger inte vad den gör.",
+        "ownPrompt": "Hur kan samma fågel vara flygande en stund och inte flygande nästa stund?"
+      }
     },
     {
       "id": "sv-0055",
       "word": "Simmande",
-      "definition": "Någon som tar sig fram genom vatten genom att simma.",
+      "definition": "Som tar sig fram i vatten med rörelser av kroppen, till exempel armar, ben eller fenor.",
       "example": "En simmande person tränade i bassängen.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -728,12 +1052,18 @@
         "label": "Simmare",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En simmande människa eller ett simmande djur tar sig fram i vatten med sin kropp. Armar, ben eller fenor trycker mot vattnet så att kroppen rör sig.",
+        "familiar": "I bassängen för du armarna och benen genom vattnet för att komma framåt. Då är du simmande.",
+        "nonExample": "Den som står still på bassängens botten är i vattnet men är inte simmande just då.",
+        "ownPrompt": "Vad är skillnaden mellan ett simmande barn och ett barn som bara står i vattnet?"
+      }
     },
     {
       "id": "sv-0056",
       "word": "Sovande",
-      "definition": "Någon som sover och vilar.",
+      "definition": "Som befinner sig i sömn och inte är vaken.",
       "example": "Den sovande katten låg i soffan.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -743,12 +1073,18 @@
         "label": "Sovande ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Sovande beskriver någon som befinner sig i sömn. Kroppen och hjärnan får återhämtning. Att vara stilla eller blunda betyder inte alltid att man sover.",
+        "familiar": "När katten har somnat på sin filt är den sovande. Den jagar inte leksaken eller tittar på det som händer i rummet.",
+        "nonExample": "Om du blundar i en gissningslek men lyssnar på ledtrådarna är du vaken, inte sovande.",
+        "ownPrompt": "Hur kan du förklara skillnaden mellan sovande och att bara blunda?"
+      }
     },
     {
       "id": "sv-0057",
       "word": "Springande",
-      "definition": "Någon som rör sig genom att springa.",
+      "definition": "Som tar sig fram på benen med löpsteg.",
       "example": "En springande elev skyndade till skolan.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -758,12 +1094,18 @@
         "label": "Löpare",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Springande beskriver någon som tar sig fram på benen i löpsteg. I löpning är det små ögonblick när båda fötterna lämnar marken.",
+        "familiar": "När du tar löpsteg för att hinna fram till bollen är du springande. Ordet beskriver hur du rör dig.",
+        "nonExample": "Den som cyklar fort är inte springande. Hög fart räcker inte; det handlar också om hur personen tar sig fram.",
+        "ownPrompt": "Vad skiljer ett springande barn från ett barn som cyklar lika fort?"
+      }
     },
     {
       "id": "sv-0058",
       "word": "Gråtande",
-      "definition": "Någon som gråter och får tårar.",
+      "definition": "Som fäller tårar och kanske snyftar, till exempel av sorg eller glädje.",
       "example": "Det gråtande barnet blev tröstat.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -773,13 +1115,19 @@
         "label": "Ansikte med tår",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Gråtande beskriver någon som har börjat gråta, ofta med tårar och snyftningar. Man kan gråta av sorg, smärta, lättnad eller glädje. Ordet säger inte hela orsaken.",
+        "familiar": "Ett barn saknar sin kompis och snyftar med tårar på kinderna. Du kan säga att barnet är gråtande och behöver tröst.",
+        "nonExample": "Någon kan vara ledsen utan att gråta. Då beskriver ledsen känslan, men gråtande passar inte just då.",
+        "ownPrompt": "Kan en person vara ledsen utan att vara gråtande? Hur skulle du förklara det?"
+      }
     },
     {
       "id": "sv-0059",
       "word": "Skrattande",
-      "definition": "Någon som skrattar.",
-      "example": "Barnen var skrattande efter skämtet.",
+      "definition": "Som ger ifrån sig skratt, till exempel ett fniss eller ett ha-ha.",
+      "example": "De skrattande barnen hade hört ett roligt skämt.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
       "illustration": {
@@ -788,7 +1136,13 @@
         "label": "Skrattande ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Skrattande beskriver någon som ger ifrån sig skratt, som ett fniss eller ett högt ha-ha. Det handlar om det personen gör, inte bara om att personen är glad.",
+        "familiar": "Din kompis gör en rolig min och du fnissar till. I den stunden är du skrattande.",
+        "nonExample": "Du kan vara glad och le tyst utan att skratta. Ett leende är därför inte alltid samma sak som att vara skrattande.",
+        "ownPrompt": "Hur kan du beskriva skillnaden mellan ett leende barn och ett skrattande barn?"
+      }
     },
     {
       "id": "sv-0060",
@@ -803,7 +1157,13 @@
         "label": "Överraskat ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Du blir förvånad när något händer som du inte väntade dig. Det kan vara roligt, besvärligt eller bara annorlunda. Du behöver inte bli rädd.",
+        "familiar": "Du tror att påsen innehåller äpplen, men där ligger en badboll. Då kan du bli förvånad eftersom innehållet var oväntat.",
+        "nonExample": "Du öppnar din vanliga matlåda och hittar precis det du visste låg där. Då finns inget oväntat som gör dig förvånad.",
+        "ownPrompt": "Kan du hitta på något som skulle göra dig förvånad men inte rädd?"
+      }
     },
     {
       "id": "sv-0061",
@@ -818,7 +1178,13 @@
         "label": "Skrämt ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Skrämd betyder att ha blivit rädd för något. Hjärtat kan slå fortare och man kan vilja backa eller söka hjälp. Att bli rädd är en känsla, inte ett fel.",
+        "familiar": "Ett plötsligt högt brak hörs bakom dig. Du hoppar till och känner rädsla innan du förstår vad som lät.",
+        "nonExample": "Om du ser en oväntad present och blir glatt överraskad behöver du inte vara skrämd. Överraskning är inte alltid rädsla.",
+        "ownPrompt": "Vad kan hjälpa någon som har blivit skrämd att känna sig trygg igen?"
+      }
     },
     {
       "id": "sv-0062",
@@ -833,7 +1199,13 @@
         "label": "Gäspande ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När du är trött behöver kroppen eller hjärnan vila. Du kan ha mindre ork eller få svårt att hålla ögonen öppna. Man kan vara trött och fortfarande vara vaken.",
+        "familiar": "Efter en lång utflykt vill du sitta ner och vila benen. Du orkar mindre just då och känner dig trött.",
+        "nonExample": "Att sitta still betyder inte alltid att vara trött. Du kan sitta och bygga piggt med klossar.",
+        "ownPrompt": "Hur brukar du märka att du är trött, och vilken sorts vila hjälper dig?"
+      }
     },
     {
       "id": "sv-0063",
@@ -848,12 +1220,18 @@
         "label": "Glatt leende",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Glädjefylld beskriver någon eller något som är fullt av glädje. Du kan känna stor glädje utan att skratta högt. En stund tillsammans kan också vara glädjefylld.",
+        "familiar": "Du får träffa en vän som du längtat efter. Du känner dig riktigt glad inuti under hela besöket.",
+        "nonExample": "Ett lugnt rum behöver inte vara glädjefyllt. Det kan vara tyst utan att någon känner särskilt stor glädje.",
+        "ownPrompt": "Vad skulle kunna göra en helt vanlig eftermiddag glädjefylld för dig?"
+      }
     },
     {
       "id": "sv-0064",
       "word": "Stark",
-      "definition": "Någon som har mycket kraft.",
+      "definition": "Som har mycket kraft, till exempel muskelkraft.",
       "example": "Hon var stark nog att lyfta lådan.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -863,13 +1241,19 @@
         "label": "Spänd muskel",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Stark betyder här att ha mycket muskelkraft. Den kraften kan användas för att lyfta, bära eller dra. Hur stor någon ser ut avgör inte ensamt hur stark personen är.",
+        "familiar": "Du behöver kraft för att dra upp en tung väska på en vagn. En person som klarar det lätt kan vara stark.",
+        "nonExample": "En tung sten väger mycket, men den har inte muskelkraft. Tung och stark betyder olika saker.",
+        "ownPrompt": "När använder du muskelkraft i vardagen, och vad hjälper den dig att göra?"
+      }
     },
     {
       "id": "sv-0065",
       "word": "Spetsig",
-      "definition": "Något som har en vass eller smal spets.",
-      "example": "Häftstiftets spets kan stickas.",
+      "definition": "Som smalnar av till en spets.",
+      "example": "Den spetsiga pennan behövde inte vässas.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
       "illustration": {
@@ -878,12 +1262,18 @@
         "label": "Häftstift",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något är spetsigt när det smalnar av till en spets. Spetsen kan stickas, men den kan också vara mjuk. En spetsig mössa behöver inte vara vass.",
+        "familiar": "En vässad blyertspenna är bredare där du håller den och smal längst fram. Den smala änden är spetsig.",
+        "nonExample": "En penna med en platt, avbruten ände är inte spetsig där, även om resten av pennan är smal.",
+        "ownPrompt": "Kan du komma på något som är spetsigt men mjukt och inte sticks?"
+      }
     },
     {
       "id": "sv-0066",
       "word": "Fyrkantig",
-      "definition": "Något som har fyra hörn.",
+      "definition": "Som har en form med fyra raka sidor och fyra hörn.",
       "example": "En kvadrat är fyrkantig.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -893,7 +1283,13 @@
         "label": "Kvadrat",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En fyrkantig form har fyra raka sidor och fyra hörn. Sidorna behöver inte vara lika långa. Både en kvadrat och en rektangel är fyrkantiga.",
+        "familiar": "Ett vanligt skrivpapper har två längre och två kortare sidor. Det har ändå fyra hörn och är därför fyrkantigt.",
+        "nonExample": "En triangel har bara tre sidor och tre hörn. Den är inte fyrkantig även om alla sidor är raka.",
+        "ownPrompt": "Hur kan du kontrollera om ett fönster är fyrkantigt utan att mäta sidornas längd?"
+      }
     },
     {
       "id": "sv-0067",
@@ -908,12 +1304,18 @@
         "label": "Triangel",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En triangelformad sak har formen av en triangel: tre raka sidor och tre hörn. Formen är densamma även om du vrider saken eller sidorna är olika långa.",
+        "familiar": "Klipper du en fyrkantig smörgås snett från hörn till hörn får du två delar med tre sidor. Delarna är triangelformade.",
+        "nonExample": "En rund pannkaka har inte tre raka sidor eller tre hörn. Den är inte triangelformad.",
+        "ownPrompt": "Hur kan du förklara att en triangel fortfarande är triangelformad när spetsen pekar nedåt?"
+      }
     },
     {
       "id": "sv-0068",
       "word": "Magnetisk",
-      "definition": "Något som har magnetiska egenskaper.",
+      "definition": "Som fungerar som en magnet eller dras till en magnet, till exempel järn.",
       "example": "Den magnetiska leksaken fastnade på kylskåpet.",
       "difficulty": "easy",
       "source": "ordjakten_2_lätt",
@@ -923,7 +1325,13 @@
         "label": "Magnet",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En magnet kan dra till sig vissa material, till exempel järn, utan att först röra vid dem. Sådana material är magnetiska. Alla metaller fungerar inte så; aluminium dras inte till en vanlig magnet.",
+        "familiar": "För du en magnet nära ett gem av stål kan gemet dras mot magneten. Det visar att gemet är magnetiskt.",
+        "nonExample": "En lapp som sitter fast med tejp hålls kvar av lim. Det visar inte att lappen är magnetisk.",
+        "ownPrompt": "Hur skulle du undersöka om ett gem är magnetiskt, utan att använda lim eller tejp?"
+      }
     },
     {
       "id": "sv-0069",
@@ -938,7 +1346,13 @@
         "label": "Svettigt ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När kroppen blir varm kan den släppa ut svett på huden. Då kan huden bli fuktig och du blir svettig. Svett hjälper kroppen att svalna när den avdunstar, alltså lämnar huden som vattenånga.",
+        "familiar": "Efter en stunds dans är du varm och känner fukt på pannan trots att inget vatten har stänkts på dig. Det är svett.",
+        "nonExample": "Att bli blöt av regn är inte samma sak som att vara svettig. Regnvattnet kommer utifrån.",
+        "ownPrompt": "Hur kan du förklara skillnaden mellan att vara svettig och att ha fått regn på sig?"
+      }
     },
     {
       "id": "sv-0070",
@@ -953,7 +1367,13 @@
         "label": "Fruset ansikte",
         "review_status": "editorial_candidate"
       },
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En frusen person känner sig kall och vill ofta värma sig. Det beskriver personens känsla. Personen har inte blivit till is.",
+        "familiar": "Efter att du stått ute en stund huttrar du och längtar efter en varm tröja. Då känner du dig frusen.",
+        "nonExample": "En vinterjacka betyder inte att personen i den är frusen. Jackan kan hålla personen lagom varm.",
+        "ownPrompt": "Vad kan du göra när du känner dig frusen efter en stund utomhus?"
+      }
     },
     {
       "id": "sv-0071",
@@ -963,7 +1383,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Den som är nyfiken vill ta reda på mer. Det kan leda till att man frågar, undersöker eller provar. Du behöver inte misstänka något fel för att vilja veta.",
+        "familiar": "Du hittar ett frö och undrar vilken växt det kommer från. Du tittar i en bok för att lära dig mer.",
+        "nonExample": "Om du redan vet vad som finns i en låda och inte vill undersöka den mer visar du ingen nyfikenhet på innehållet just då.",
+        "ownPrompt": "Vad är du nyfiken på, och hur skulle du kunna ta reda på mer?"
+      }
     },
     {
       "id": "sv-0072",
@@ -1037,7 +1463,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Den som är generös delar gärna med sig. Det kan vara saker, tid eller hjälp. Man behöver inte ha mycket pengar för att göra något generöst.",
+        "familiar": "Du har färgpennor och låter en kompis använda dem tillsammans med dig. Du delar med dig av något du har.",
+        "nonExample": "Att bara lämna tillbaka en penna du har lånat är att hålla en överenskommelse. Det är inte i sig ett exempel på att vara generös.",
+        "ownPrompt": "Hur kan du göra något generöst utan att köpa eller ge bort en sak?"
+      }
     },
     {
       "id": "sv-0077",
@@ -1047,7 +1479,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Envis beskriver någon som inte ger upp eller ändrar sig lätt. Det kan hjälpa när man lär sig något. Men ibland behöver man lyssna och prova ett annat sätt.",
+        "familiar": "Du vill lära dig ett nytt ackord och försöker många gånger. Du fortsätter för att du har bestämt dig för att lära dig.",
+        "nonExample": "Om du slutar direkt vid första svårigheten och inte vill försöka igen visar du inte envishet i den stunden.",
+        "ownPrompt": "När kan det vara bra att vara envis, och när kan det vara klokt att ändra sig?"
+      }
     },
     {
       "id": "sv-0078",
@@ -1057,7 +1495,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Du är osäker när du inte riktigt vet vad som stämmer, vad du kan eller vilket val du ska göra. Du kan behöva fråga eller kontrollera något innan du bestämmer dig.",
+        "familiar": "Två stigar går åt olika håll. Du vet inte vilken som leder till stugan och tittar på kartan för att få hjälp.",
+        "nonExample": "Om du vet precis vilken stig som leder hem och känner dig trygg med valet är du säker på vägen just då.",
+        "ownPrompt": "Vad kan hjälpa dig när du är osäker på hur en skoluppgift ska göras?"
+      }
     },
     {
       "id": "sv-0079",
@@ -1067,7 +1511,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En hänsynsfull person tänker på hur det den gör påverkar andra. Personen kan ändra sitt beteende så att någon annan får det lättare eller slipper bli störd.",
+        "familiar": "En kompis försöker läsa. Du sänker ljudet på spelet så att det blir lättare för kompisen att koncentrera sig.",
+        "nonExample": "Om du märker att ljudet stör men höjer det ännu mer tar du inte hänsyn till den som försöker läsa.",
+        "ownPrompt": "Hur kan du vara hänsynsfull när du delar ett rum med någon som gör något annat?"
+      }
     },
     {
       "id": "sv-0080",
@@ -1109,7 +1559,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Du kan bli omtumlad när något oväntat väcker många starka känslor på en gång. Då kan du behöva en stund för att samla tankarna, även om det som hände var roligt.",
+        "familiar": "En vän som du inte träffat på länge står plötsligt vid dörren. Du blir så glad och överraskad att du knappt vet vad du ska säga.",
+        "nonExample": "Om besöket är väntat och du lugnt fortsätter duka har överraskningen inte skakat om dig på det sättet.",
+        "ownPrompt": "Hur kan man hjälpa någon som behöver samla tankarna efter en stor överraskning?"
+      }
     },
     {
       "id": "sv-0083",
@@ -1119,7 +1575,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Fridfull beskriver ett lugn där det inte är bråkigt eller oroligt. Det behöver inte vara helt tyst: fågelsång och stilla samtal kan höra till en fridfull stund.",
+        "familiar": "Du sitter på en filt vid sjön. Vattnet kluckar lite och ingen skyndar eller stör. Det känns lugnt att vara där.",
+        "nonExample": "Om alla skriker åt varandra och du blir orolig är stämningen inte fridfull.",
+        "ownPrompt": "Hur skulle du beskriva en fridfull plats med ljud, rörelser och känslor?"
+      }
     },
     {
       "id": "sv-0084",
@@ -1129,7 +1591,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När något är livligt händer mycket: människor rör sig, pratar eller visar mycket energi. Ordet kan beskriva en person, en plats eller ett samtal.",
+        "familiar": "På rasten hoppar några rep, andra jagar varandra och många pratar samtidigt. Det är mycket liv på skolgården.",
+        "nonExample": "En tom skolgård där ingen rör sig eller pratar är inte livlig just då.",
+        "ownPrompt": "När är det livligt på din skola, och vad märker du då?"
+      }
     },
     {
       "id": "sv-0085",
@@ -1144,7 +1612,7 @@
         "explanation": "Att vara förtjust betyder att något gör dig extra glad och att du tycker mycket om det. Man kan vara förtjust i en bok, en lek eller en smak.",
         "familiar": "Du provar en ny glass och tycker så mycket om den att du gärna vill äta den igen.",
         "nonExample": "Om glassen smakar illa och du inte vill ha mer är du inte förtjust i den.",
-        "ownPrompt": "Vad är du förtjust i just nu? Berätta varför."
+        "ownPrompt": "Vad är du förtjust i just nu, och vad tycker du om med det?"
       }
     },
     {
@@ -1155,7 +1623,13 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Förargad betyder att vara arg eller irriterad över något som stör. Man kan känna så utan att skrika, och känslan säger inte att någon är en elak person.",
+        "familiar": "Någon tar din penna utan att fråga. Du vill använda den och säger irriterat att du vill få tillbaka den.",
+        "nonExample": "Om du gärna lånar ut pennan och inte blir irriterad är du inte förargad över lånet.",
+        "ownPrompt": "Vad kan du säga på ett lugnt sätt när du känner dig förargad?"
+      }
     },
     {
       "id": "sv-0087",
@@ -1181,17 +1655,29 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Att vara varsam är att ta lätta, försiktiga tag så att något eller någon inte skadas. Det handlar om hur du hanterar det du håller på med.",
+        "familiar": "Du vänder ett tunt blad i en gammal bok genom att lyfta i kanten, utan att rycka. Då minskar risken att sidan går sönder.",
+        "nonExample": "Att dra hårt i sidan så att papperet rivs sönder är inte ett varsamt sätt att bläddra.",
+        "ownPrompt": "Hur kan du visa någon hur man är varsam med en tunn bok?"
+      }
     },
     {
       "id": "sv-0089",
       "word": "Orädd",
-      "definition": "Vågar trots att något kan kännas skrämmande.",
-      "example": "Hon var orädd när hon provade den höga trampolinen.",
+      "definition": "Som inte känner rädsla inför det som händer.",
+      "example": "Noor var orädd inför att tala på scenen och kände sig lugn.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Orädd betyder att du inte känner dig rädd i en viss situation. Du kan vara orädd inför en sak och rädd inför en annan. Det säger inget om vad du måste våga göra.",
+        "familiar": "Du ska visa din teckning för klassen. Du känner dig lugn inför att alla ska lyssna och går fram utan rädsla.",
+        "nonExample": "Du kan vara rädd och ändå räcka upp handen. Då visar du mod, men du känner fortfarande rädsla.",
+        "ownPrompt": "Kan två personer känna olika inför att gå upp på en scen, och hur kan man visa hänsyn till det?"
+      }
     },
     {
       "id": "sv-0090",
@@ -1281,17 +1767,29 @@
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Lättad blir du när något som oroade dig får en bra lösning. Det är förändringen från oro till lugn som är viktig, inte bara att du är glad.",
+        "familiar": "Du tror att ditt lånekort är borta. När du hittar det i jackfickan kan du slappna av: du behöver inte leta mer.",
+        "nonExample": "Att bli glad av en god smörgås är inte samma sak som att bli lättad, om du inte var orolig för något innan.",
+        "ownPrompt": "Vad kan någon ha oroat sig för innan den säger ”Vad skönt, nu är jag lättad”?"
+      }
     },
     {
       "id": "sv-0096",
       "word": "Obeveklig",
       "definition": "Som inte låter sig påverkas eller övertalas.",
-      "example": "Beslutet var obevekligt trots protesterna.",
+      "example": "Domaren var obeveklig och ändrade inte beslutet trots lagets protester.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En obeveklig person står fast vid sitt beslut även när andra ber eller försöker övertala. Ordet berättar att personen inte ger med sig i just den frågan.",
+        "familiar": "Ledaren säger att hjälm behövs för att få cykla på banan. Någon ber om ett undantag flera gånger, men ledaren står fast vid samma besked.",
+        "nonExample": "Om ledaren lyssnar på en begäran och ändrar beslutet har ledaren gått att påverka i den frågan.",
+        "ownPrompt": "Hur märks det i ett samtal att en person är obeveklig?"
+      }
     },
     {
       "id": "sv-0097",
@@ -1301,7 +1799,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Ofrånkomlig betyder att något inte går att komma undan i den situationen. Det är mer än något som är bra att göra: utan det kan du inte komma vidare.",
+        "familiar": "För att nå en ö måste ni över vattnet. Det finns ingen bro eller tunnel. En färd över vattnet går då inte att slippa om ni ska till ön.",
+        "nonExample": "Om du kan välja en torr väg runt en vattenpöl är det inte ofrånkomligt att gå genom pölen.",
+        "ownPrompt": "Vilket steg går inte att hoppa över när du vill låna en bok, och varför behövs det?"
+      }
     },
     {
       "id": "sv-0098",
@@ -1327,37 +1831,61 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En tillmötesgående person lyssnar på vad någon behöver och försöker hitta ett sätt att hjälpa. Det kan vara att ändra en plan så att den fungerar för fler.",
+        "familiar": "Du når inte en bok på den höga hyllan. Bibliotekarien hjälper dig att ta ner den och visar var lättare hyllor finns.",
+        "nonExample": "Att avfärda en enkel fråga utan att lyssna eller försöka hjälpa är inte tillmötesgående i den stunden.",
+        "ownPrompt": "Hur kan du vara tillmötesgående när en kompis vill ändra lite på en gemensam plan?"
+      }
     },
     {
       "id": "sv-0100",
       "word": "Missvisande",
       "definition": "Som ger en felaktig bild av verkligheten.",
-      "example": "Diagrammet var missvisande eftersom skalan var konstig.",
+      "example": "Bilden var missvisande: rummet såg stort ut, men var i själva verket litet.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något missvisande får dig att tro att verkligheten ser annorlunda ut än den gör. En bild eller siffra kan vara riktig men visas på ett sätt som ger fel intryck.",
+        "familiar": "Ett foto visar bara den städade delen av ett stökigt rum. Om fotot ska visa hur hela rummet ser ut ger det fel bild.",
+        "nonExample": "Ett foto som tydligt visar både den städade och den stökiga delen döljer inte rummets skick på det sättet.",
+        "ownPrompt": "Hur kan du göra ett foto mer rättvisande om det ska visa hur stort ett rum är?"
+      }
     },
     {
       "id": "sv-0101",
       "word": "Nyckfull",
-      "definition": "Som ändrar humör eller beslut utan tydlig anledning.",
+      "definition": "Som ändrar sig snabbt och är svår att förutse.",
       "example": "Det nyckfulla vädret växlade hela dagen.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Nyckfull beskriver något som ändrar sig på ett sätt du har svårt att förutse. Väder kan växla plötsligt, och en person kan byta beslut utan att du förstår varför.",
+        "familiar": "Ni planerar en utflykt i sol. Snart kommer en regnskur, sedan sol igen och så en ny skur, utan att vädret verkar hålla sig åt ett håll.",
+        "nonExample": "En plan som ändras för att bussen är inställd har en tydlig orsak. En enda sådan ändring gör inte personen nyckfull.",
+        "ownPrompt": "Hur kan du förbereda dig för en dag med nyckfullt väder?"
+      }
     },
     {
       "id": "sv-0102",
       "word": "Betänksam",
-      "definition": "Som funderar noga innan ett beslut.",
-      "example": "Hon såg betänksam ut innan hon svarade.",
+      "definition": "Som funderar och tvekar över om något är en bra idé.",
+      "example": "Lo blev betänksam när planen lämnade så lite tid att hinna till bussen.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När du är betänksam stannar du upp och funderar eftersom något får dig att tveka. Du är inte säker på att förslaget är klokt och vill tänka igenom det.",
+        "familiar": "En kompis vill börja bygga en jättestor koja strax före hemgång. Du undrar om ni hinner och vill fundera innan du säger ja.",
+        "nonExample": "Om du genast säger ”Ja, det blir bra!” utan någon tvekan visar du inte betänksamhet just då.",
+        "ownPrompt": "Vad skulle göra dig betänksam inför en plan att ordna ett stort kalas på en enda eftermiddag?"
+      }
     },
     {
       "id": "sv-0103",
@@ -1367,7 +1895,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Försumlig beskriver att någon inte sköter något som den har ansvar för. Det kan vara att strunta i att kontrollera eller glömma uppgiften flera gånger. En handling beskriver inte hela personen.",
+        "familiar": "Du har lovat att sätta på locken efter målningen men låter färgburkarna stå öppna trots påminnelser. Då kan färgen torka.",
+        "nonExample": "Att kontrollera alla lock och be om hjälp med ett som sitter fel är att ta hand om uppgiften.",
+        "ownPrompt": "Vad kan hjälpa dig att komma ihåg en uppgift som du har lovat att sköta?"
+      }
     },
     {
       "id": "sv-0104",
@@ -1377,17 +1911,29 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Ovidkommande betyder att något inte hör till frågan ni försöker besvara. Det kan vara intressant i ett annat samtal, men hjälper inte med just den här saken.",
+        "familiar": "Ni ska bestämma vilken buss ni hinner med. Att någon gillar blåa skor hjälper inte er att välja avgång.",
+        "nonExample": "Bussens avgångstid hör till frågan och hjälper er att planera. Den uppgiften är inte ovidkommande.",
+        "ownPrompt": "Ni ska välja en jacka för regn: vilken uppgift om jackan behövs, och vilken spelar ingen roll för regnskyddet?"
+      }
     },
     {
       "id": "sv-0105",
       "word": "Häpnadsväckande",
-      "definition": "Så överraskande att man blir mycket förundrad.",
+      "definition": "Som överraskar så mycket att man nästan inte kan tro det.",
       "example": "Resultatet var häpnadsväckande bra.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Häpnadsväckande beskriver något som får människor att bli mycket förvånade eller förundrade. Det är mer än en liten överraskning: man kan nästan tappa orden.",
+        "familiar": "Du tror att en bild är ett fotografi. Sedan får du se att någon har ritat varje liten detalj med blyerts, och du gapar av förvåning.",
+        "nonExample": "Att hitta din vanliga mössa på sin vanliga krok är väntat och väcker inte den sortens stora förvåning.",
+        "ownPrompt": "Vad har du sett någon göra som fick dig att tänka ”Hur är det ens möjligt”?"
+      }
     },
     {
       "id": "sv-0106",
@@ -1397,7 +1943,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En omskakande händelse eller berättelse väcker så starka känslor att de stannar kvar efteråt. Du kan behöva prata eller ta en lugn stund för att komma till ro.",
+        "familiar": "I en film kommer en bortsprungen hund till slut hem. Du har känt stark oro för den och är så rörd att du tänker på filmen länge efteråt.",
+        "nonExample": "En film som du tittar på utan starka känslor och sedan knappt tänker på har inte skakat om dig på det sättet.",
+        "ownPrompt": "Vad kan vara skönt att göra efter en berättelse som väckt starka känslor?"
+      }
     },
     {
       "id": "sv-0107",
@@ -1407,7 +1959,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En förbehållsam person berättar lite om sina tankar eller känslor. Personen kan veta precis vad den tycker men vilja hålla det för sig själv eller lära känna andra först.",
+        "familiar": "Någon frågar vad du tyckte om en film. Du säger bara ”Den var okej” och vill inte berätta mer om dina tankar just då.",
+        "nonExample": "Om du ivrigt berättar vad du känner och förklarar dina åsikter visar du dem öppet i det samtalet.",
+        "ownPrompt": "Hur kan du låta en förbehållsam person vara med utan att pressa den att berätta mer?"
+      }
     },
     {
       "id": "sv-0108",
@@ -1417,7 +1975,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Ihärdig är du när du fortsätter försöka nå ett mål även efter att det blivit svårt eller gått fel. Du kan ta pauser och prova nya sätt och ändå vara ihärdig.",
+        "familiar": "En melodi är svår att spela. Du övar lite flera dagar, frågar om ett knep och provar igen när det blir fel.",
+        "nonExample": "Om du slutar direkt vid första felet och inte försöker mer har du inte fortsatt genom svårigheten.",
+        "ownPrompt": "Hur kan du fortsätta med något svårt utan att behöva öva hela tiden utan paus?"
+      }
     },
     {
       "id": "sv-0109",
@@ -1427,7 +1991,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Tillfällig betyder att något gäller eller finns under en begränsad tid. Det kan vara kort eller ganska länge, men det är tänkt att ta slut eller bytas tillbaka.",
+        "familiar": "Ditt klassrum målas om. I två veckor har ni lektioner i ett annat rum, och sedan flyttar ni tillbaka.",
+        "nonExample": "Om en ny skola ska vara er vanliga skola utan någon plan att flytta tillbaka är flytten inte tillfällig på det sättet.",
+        "ownPrompt": "Vad kan vara en tillfällig lösning om din cykel behöver lagas?"
+      }
     },
     {
       "id": "sv-0110",
@@ -1437,7 +2007,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Omsorgsfull betyder att göra något noggrant och med omtanke. Du tänker på vad som behövs och ser till att detaljerna fungerar för den som ska använda det.",
+        "familiar": "Du gör ett kort till en vän, kontrollerar att namnet är rätt och väljer en bild på något vännen tycker om.",
+        "nonExample": "Att lämna ett kort med fel namn utan att bry sig om att rätta det visar inte samma noggrannhet och omtanke.",
+        "ownPrompt": "Hur kan du göra omsorgsfullt arbete när du packar något som en kompis ska låna?"
+      }
     },
     {
       "id": "sv-0111",
@@ -1447,7 +2023,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Två uppgifter är motstridiga när de säger sådant som inte kan stämma samtidigt om samma sak. Då behöver man undersöka vilken uppgift som gäller.",
+        "familiar": "En lapp säger att samma lektion börjar klockan nio. En annan säger att den börjar klockan tio. Båda kan inte ange rätt starttid för samma lektion.",
+        "nonExample": "”Lektionen börjar nio” och ”Lektionen är i sal fyra” kan båda vara sanna. De berättar olika saker utan att motsäga varandra.",
+        "ownPrompt": "Kan du hitta på två uppgifter om samma låda som inte båda kan vara sanna?"
+      }
     },
     {
       "id": "sv-0112",
@@ -1457,7 +2039,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Överflödig betyder att något inte behövs eftersom det redan finns tillräckligt. Saken kan vara bra i sig men behövs inte i just den situationen.",
+        "familiar": "Fyra personer ska sitta vid bordet och alla har en stol. En femte stol behövs inte för att alla ska få sitta.",
+        "nonExample": "Om en person saknar stol behövs en till. Den stolen är då inte överflödig.",
+        "ownPrompt": "Hur kan du ta reda på om något extra verkligen behövs när du ska duka?"
+      }
     },
     {
       "id": "sv-0113",
@@ -1467,7 +2055,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Påtaglig betyder att något märks tydligt. Du kan till exempel känna, höra eller se en skillnad utan att behöva leta efter mycket små tecken.",
+        "familiar": "När ett mörkt rum får flera tända lampor ser du genast möblerna mycket bättre. Skillnaden i ljus är tydlig.",
+        "nonExample": "En så liten skillnad att du knappt kan upptäcka den är inte påtaglig.",
+        "ownPrompt": "Vilken förändring skulle märkas tydligt om du kom in i ditt klassrum i morgon?"
+      }
     },
     {
       "id": "sv-0114",
@@ -1477,7 +2071,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Skonsam beskriver ett sätt som inte sliter, skadar eller gör ont mer än nödvändigt. Det viktiga är hur behandlingen påverkar det som ska tas om hand.",
+        "familiar": "Du löser upp en tova lite i taget med fingrarna i stället för att dra borsten hårt genom håret. Då drar det mindre i hårbotten.",
+        "nonExample": "Att rycka hårt i tovan så att det gör ont och hårstrån går av är inte skonsamt.",
+        "ownPrompt": "Hur kan du ta bort smuts från en känslig yta på ett skonsamt sätt?"
+      }
     },
     {
       "id": "sv-0115",
@@ -1487,7 +2087,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En anspråkslös person behöver inte mycket eller något storslaget för att vara nöjd. Ordet handlar om små krav och enkelhet, inte om att personen är mindre värd.",
+        "familiar": "Du vill fira med en enkel utflykt och en smörgås. Du tycker att det räcker bra och behöver ingen stor fest.",
+        "nonExample": "Om du kräver den största festen, dyraste dekorationerna och finaste maten ställer du stora krav.",
+        "ownPrompt": "Hur skulle ett enkelt firande kunna bli bra utan många saker eller stora krav?"
+      }
     },
     {
       "id": "sv-0116",
@@ -1497,7 +2103,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Oberörd beskriver att någon inte verkar påverkas känslomässigt av det som händer. Vi kan se hur personen beter sig, men kan inte alltid veta hur den känner inuti.",
+        "familiar": "En lek ställs in. En kompis säger lugnt att det inte gör något och fortsätter med sin bok, utan att visa besvikelse.",
+        "nonExample": "Om kompisen blir ledsen och säger att den är besviken visar den att beskedet berör den.",
+        "ownPrompt": "Varför kan det vara bra att fråga hur någon känner även om personen ser oberörd ut?"
+      }
     },
     {
       "id": "sv-0117",
@@ -1507,7 +2119,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Gryende betyder att något precis börjar visa sig eller växa fram. Det kan vara det första morgonljuset, ett intresse eller en liten förhoppning.",
+        "familiar": "Du har aldrig varit intresserad av fåglar. Nu börjar du undra vad fågeln utanför heter. Ett litet intresse håller på att vakna.",
+        "nonExample": "Ett stort intresse som du har haft i flera år är redan utvecklat och håller inte just på att börja.",
+        "ownPrompt": "Hur kan ett gryende intresse för något märkas innan det blivit ett stort intresse?"
+      }
     },
     {
       "id": "sv-0118",
@@ -1517,7 +2135,13 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Skenbar betyder att något verkar vara på ett sätt fast det inte är så i verkligheten. När du undersöker saken ser du skillnaden mellan intrycket och det som faktiskt gäller.",
+        "familiar": "På håll ser en målad dörr ut att gå att öppna. När du kommer nära märker du att hela väggen är platt och dörren bara är en bild.",
+        "nonExample": "En riktig dörr som du faktiskt kan öppna är inte bara skenbar.",
+        "ownPrompt": "Hur kan du kontrollera om något bara ser ut att fungera eller verkligen fungerar?"
+      }
     },
     {
       "id": "sv-0119",
@@ -1527,17 +2151,29 @@
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En sammanhängande berättelse går att följa eftersom delarna hör ihop. Du får veta vad som hände och hur det ledde vidare, utan viktiga luckor eller tvära hopp.",
+        "familiar": "”Bollen rullade under soffan. Jag hämtade en lång linjal och drog fram den.” Du förstår varför linjalen behövdes och hur bollen kom fram.",
+        "nonExample": "”Bollen försvann. Sedan hade jag den. Och i går åt vi soppa.” Här saknas en viktig del och en mening handlar om något annat.",
+        "ownPrompt": "Hur kan du berätta om en borttappad sak så att någon annan förstår hela händelsen?"
+      }
     },
     {
       "id": "sv-0120",
       "word": "Oåterkallelig",
       "definition": "Som inte går att göra ogjort eller ta tillbaka.",
-      "example": "Beslutet var oåterkalleligt efter tidsfristen.",
+      "example": "Förändringen var oåterkallelig: det kokta ägget kunde inte bli rått igen.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Oåterkallelig betyder att det som har hänt inte går att göra ogjort. Du kan ibland ordna en ny lösning, men kan inte få tillbaka precis det som fanns före förändringen.",
+        "familiar": "När ett ägg har kokats går det inte att göra samma ägg rått igen. Du kan ta ett nytt rått ägg, men kokningen av det första är redan gjord.",
+        "nonExample": "En kloss du sätter på ett torn kan du lyfta av igen. Den ändringen går att ta tillbaka.",
+        "ownPrompt": "Vad är skillnaden mellan att göra en förändring ogjord och att ordna en ny lösning efteråt?"
+      }
     },
     {
       "id": "sv-0121",
@@ -1547,7 +2183,13 @@
       "difficulty": "expert",
       "source": "exempel_högskoleprov",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Efemär är ett ovanligt ord för något som bara finns eller varar en kort stund. Det kan beskriva ett sken eller en upplevelse som snabbt är över.",
+        "familiar": "En såpbubbla glittrar i solen i några sekunder. Sedan spricker den och glittret är borta.",
+        "nonExample": "Ett träd som står kvar och växer under många år är inte kortvarigt på det sättet.",
+        "ownPrompt": "Vilken vacker syn kan försvinna efter bara en kort stund?"
+      }
     }
   ]
 }

@@ -84,13 +84,15 @@
       const unused=fresh.filter(({index})=>'context:'+index!==lastEvidence);
       const unproved=unused.filter(({index})=>!proofs.has('context:'+index));
       const target=choose(unproved.length?unproved:unused.length?unused:fresh,random);
-      const ids=[...new Set([...record.distractors,...(record.readingDistractors||[])])];
+      // Only use the separately reviewed Aha allowlist. A wrong word for
+      // this scene need not supply a wrong scene for this word.
+      const ids=[...new Set(record.readingDistractors||[])].filter(id=>id!==record.id);
       const records=shuffle(ids.map(id=>scenes.find(x=>x.id===id)).filter(x=>x?.scenes?.length),random);
       const wrong=records.map(x=>choose(x.scenes,random)?.text);
       const check=makeChallenge('Vilken ANNAN berättelse visar ordet ”'+word+'”?',
         target?.scene.text,wrong,'context',random,target?.scene.why,
         target?'context:'+target.index:'');
-      if(check)return check;
+      if(check?.options.length===3)return check;
     }
     const words=bank?.words||[];
     const safe=[];

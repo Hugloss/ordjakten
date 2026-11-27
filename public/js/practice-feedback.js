@@ -24,18 +24,23 @@
       const id=word.id;
       const version=[word.id,word.name,word.definition,word.example];
       objectives['recall:'+id]={stamp:stamp(version),mode:'recall',id,evidence:['']};
-      let scenes=[];
+      let scenes=[],alternatives=null;
       if(word.kind==='word'){
         const row=contexts?.wordContexts?.find(x=>x.id===id);
-        if(row&&contexts.wordContexts.some(other=>[...(row.distractors||[]),...(row.readingDistractors||[])].includes(other.id)))
+        const sources=(row?.readingDistractors||[]).map(sourceId=>contexts.wordContexts.find(other=>other.id===sourceId&&other.id!==id)).filter(Boolean);
+        if(new Set(sources.map(source=>source.id)).size>=2){
           scenes=row.scenes.map((scene,index)=>['context:'+index,scene.text]);
+          // A changed wrong story changes the task too. Do not compare a
+          // pending practice episode with a different set of Aha alternatives.
+          alternatives=sources.map(source=>[source.id,source.scenes.map(scene=>scene.text)]);
+        }
       }else{
         const challenge=surprises?.challenges?.find(x=>x.id===id);
         const mission=missions?.missions?.find(x=>x.id===id);
         const a=challenge?.options?.find(x=>x.correct)?.label,b=mission?.sentences?.find(x=>x.correct)?.label;
         if(a&&b&&a!==b)scenes=[['expression:challenge',a],['expression:mission',b]];
       }
-      if(scenes.length>=2)objectives['aha:'+id]={stamp:stamp([version,scenes]),mode:'aha',id,evidence:scenes.map(s=>s[0])};
+      if(scenes.length>=2)objectives['aha:'+id]={stamp:stamp(alternatives?[version,scenes,alternatives]:[version,scenes]),mode:'aha',id,evidence:scenes.map(s=>s[0])};
       const pair=contrasts?.pairs?.find(p=>[p.left,p.right].includes(id));
       link('workshop:'+id,'workshop',[version,pair||null],['recall:'+id,'aha:'+id]);
     }

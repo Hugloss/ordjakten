@@ -39,8 +39,10 @@ test('all 188 targets have prompts with no exposed complete answer; exact author
   assert.ok(clozes>0&&clozes<catalog.length);
   const inflected=catalog.find(item=>item.name==='Genomskinlig');
   assert.equal(R.task(inflected).cloze,'','Never rewrite the inflected example');
-  const leak=catalog.find(item=>item.name==='Surrande');
-  assert.equal(R.task(leak).definitionMasked,true);
+  const sound=catalog.find(item=>item.name==='Surrande');
+  assert.equal(R.task(sound).definitionMasked,false,'The definition no longer explains surrande with itself');
+  const legacyLeak={...sound,definition:'Ett långdraget brummande eller surrande ljud.'};
+  assert.equal(R.task(legacyLeak).definitionMasked,true,'Older self-referential definitions must still be masked');
 });
 test('typed answers normalize case, Unicode composition, whitespace and sentence punctuation only',()=>{
   assert.ok(R.match(R.task(phrase),'  FÖR  EN GÅNGS SKULL. '));

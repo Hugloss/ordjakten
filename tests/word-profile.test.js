@@ -141,11 +141,16 @@ test('the meaning gap takes priority over story gaps; no action is offered for a
   let p=D.record({},q(word,'context'),'wrong',NOW);
   p=D.record(p,q(word,'meaning'),'wrong',NOW);
   assert.equal(profile(word,p).next.id,'meaning');
-  const noStory=catalog.find(item=>item.kind==='word'&&!item.hasContext);
-  assert.equal(V.option(noStory,{},deps),null);
-  const unavailable=facet(profile(noStory),'transfer');
+  const empty={wordContexts:[]};
+  const noStory=L.catalog(bank,expressions,empty).find(item=>item.kind==='word');
+  const unavailableProfile=(reading={},now=NOW)=>L.profile(noStory,{
+    types:F.supported(F.findItem(noStory.id,bank,expressions),curation,empty,missions),
+    skillProgress:{},missionProgress:{},readingProgress:reading,
+    transfer:V.option(noStory,reading,{...deps,contexts:empty}),reading:B,now});
+  assert.equal(V.option(noStory,{}, {...deps,contexts:empty}),null);
+  const unavailable=facet(unavailableProfile(),'transfer');
   assert.equal(unavailable.state,'unavailable');
   assert.equal(unavailable.action,null);
   const stale=B.recordProgress({},noStory.id,'context','guided',NOW,'context:0');
-  assert.equal(facet(profile(noStory,{},stale,NOW+DAY),'transfer').state,'unavailable');
+  assert.equal(facet(unavailableProfile(stale,NOW+DAY),'transfer').state,'unavailable');
 });

@@ -1,5 +1,14 @@
 # Ordjakten – ändringslogg
 
+## Pågående – pedagogisk genomgång av hela ordbanken
+
+- Alla 121 befintliga ord får konkret förklaring, vardagsexempel, motexempel och frivillig fråga för eget språk; 107 nya fördjupningar.
+- 66 ord får tre egna vardagssituationer vardera: 198 nya scener, totalt 363. Inga nya ord läggs till.
+- Aha använder en separat, granskad lista med felberättelser för varje ord. Huvudfrågans distraktorer återanvänds inte automatiskt i motsatt riktning.
+- Betydelser och exempel rättas, bland annat orädd, betänksam, magnetisk och ångande. Fler överlappande ordpar spärras i genererade alternativ.
+- Innehållskontrollen kräver fullständig täckning. Den befintliga snabba testsviten utökas med Aha-gränsfall, och ett lokalt Chromium-test provar undervisningen i träning, facit och ordbank.
+- Offlinecache v60. Läs [genomgången](docs/WORD-UNDERSTANDING.md) och [planen för barnprovspelning](docs/CHILD-PLAYTESTING.md).
+
 ## 0.20.0 – Minnesstigen: nya sammanhang över tid
 
 - Frivilliga återbesök efter 1, 3 och 7 dagar – och därefter återkommande 14-dagarsförslag. Ingen daglig inloggningsbelöning eller tidsstress.

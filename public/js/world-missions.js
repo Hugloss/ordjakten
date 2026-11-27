@@ -488,7 +488,7 @@
         "Ett enda kort klick",
         "Ett enstaka knallande ljud"
       ],
-      "Surrande beskriver ett utdraget surr eller brummande. Vi känner igen ljudet."
+      "Ett surrande ljud fortsätter en stund, som ljudet från en fläkt. Ett enda klick tar slut direkt."
     ],
     [
       "sv-0039",

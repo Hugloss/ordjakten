@@ -42,13 +42,11 @@ test('authored situations rotate evidence; unavailable and stale content is excl
   for(const row of expressions.expressions)p=help(p,row.id);
   p=help(p,'sv-9999');
   const queue=plan(p);
-  const safe=contexts.wordContexts.filter(row=>contexts.wordContexts.some(other=>
-    [...(row.distractors||[]),...(row.readingDistractors||[])].includes(other.id)));
-  assert.equal(queue.ready.length,safe.length+expressions.expressions.length);
+  assert.equal(queue.ready.length,bank.words.length+expressions.expressions.length);
   assert.ok(queue.ready.every(x=>x.check.options.filter(o=>o.correct).length===1));
   assert.ok(queue.ready.every(x=>x.check.evidence!==p[x.id].transfer.lastEvidence));
   assert.ok(!queue.ready.some(x=>x.id==='sv-9999'));
-  const stale=help({},safe[0].id);
+  const stale=help({},contexts.wordContexts[0].id);
   assert.equal(V.plan(stale,{...deps,contexts:{wordContexts:[]},now:NOW+DAY}).ready.length,0);
 });
 test('oldest first; demonstrated understanding removes the word, new help reopens it',()=>{

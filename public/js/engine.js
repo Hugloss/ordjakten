@@ -108,6 +108,7 @@
     const errors=[];
     if(!contexts || !Array.isArray(contexts.wordContexts))return ['Saknar vardagssituationer.'];
     const words=new Map((bank?.words || []).map(word=>[word.id,word]));
+    const contextIds=new Set(contexts.wordContexts.map(record=>record?.id));
     const seen=new Set();
     const blocked=new Set((curation?.nearSynonyms||[]).map(pair=>nearPair(...pair)));
     for(const record of contexts.wordContexts){
@@ -118,6 +119,12 @@
       if(!Array.isArray(record.distractors)||record.distractors.length!==4||
         new Set(record.distractors).size!==4||record.distractors.some(id=>!words.has(id)||id===record.id||blocked.has(nearPair(id,record.id))))
         errors.push('Ogiltiga eller närliggande svarsalternativ: '+record.id);
+      // Choosing a word for a story and choosing a story for a word are
+      // different editorial decisions. An object can be both round and fragile.
+      if(!Array.isArray(record.readingDistractors)||record.readingDistractors.length<2||
+        new Set(record.readingDistractors).size!==record.readingDistractors.length||
+        record.readingDistractors.some(id=>!words.has(id)||!contextIds.has(id)||id===record.id||blocked.has(nearPair(id,record.id))))
+        errors.push('Kräver minst två granskade Aha-alternativ med egna berättelser: '+record.id);
       if(!Array.isArray(record.scenes)||record.scenes.length!==3){errors.push('Kräver tre berättelser: '+record.id);continue;}
       const normalized=new Set();
       for(const scene of record.scenes){
@@ -128,7 +135,7 @@
         }
         const stem=scene.text.toLocaleLowerCase('sv-SE');
         const token=words.get(record.id).word.toLocaleLowerCase('sv-SE');
-        if(stem.includes(token))errors.push('Ordet avslöjas i berättelsen: '+record.id);
+        if(stem.includes(token)||scene.title.toLocaleLowerCase('sv-SE').includes(token))errors.push('Ordet avslöjas i berättelsen: '+record.id);
         if(normalized.has(stem))errors.push('Duplicerad berättelse: '+record.id);
         normalized.add(stem);
       }

@@ -4,22 +4,23 @@ const assert=require('node:assert/strict');
 const E=require('../public/js/engine'),B=require('../public/js/reading-check'),S=require('../public/js/surprises');
 const bank=require('../public/data/ordbank.json'),contexts=require('../public/data/word-contexts.json'),expressions=require('../public/data/expressions.json'),surprises=require('../public/data/surprises.json'),missions=require('../public/data/missions.json');
 const lessons=bank.words.filter(w=>w.teaching);
-test('fourteen enriched words have a concrete explanation, familiar example, counterexample and open prompt',()=>{
- assert.equal(lessons.length,14);
+test('all 121 existing words have a concrete explanation, familiar example, counterexample and open prompt',()=>{
+ assert.equal(lessons.length,121);
  assert.deepEqual(E.validateBank(bank),[]);
  for(const w of lessons){
    const lesson=E.wordTeaching(bank,w.id);
    assert.deepEqual(lesson,w.teaching);
    assert.equal(new Set(Object.values(lesson)).size,4);
-   assert.ok(lesson.ownPrompt.includes('?'));
+   assert.ok(lesson.ownPrompt.trim().endsWith('?'),w.id);
  }
- const missing=bank.words.find(w=>!w.teaching);
- assert.equal(E.wordTeaching(bank,missing.id),null);
+ const missing={...lessons[0]};delete missing.teaching;
+ assert.equal(E.wordTeaching({words:[missing]},missing.id),null);
+ assert.equal(E.wordTeaching(bank,'sv-9999'),null);
  const malformed={...bank,words:bank.words.map(w=>w.id===lessons[0].id?{...w,teaching:{...w.teaching,nonExample:''}}:w)};
  assert.ok(E.validateBank(malformed).some(x=>x.includes('Ofullständig ordförklaring')));
 });
 test('new everyday scenes teach actual meaning and transfer without inventing examples',()=>{
- assert.equal(contexts.wordContexts.length,55);
+ assert.deepEqual(new Set(contexts.wordContexts.map(row=>row.id)),new Set(bank.words.map(w=>w.id)));
  for(const w of lessons){
    const row=contexts.wordContexts.find(r=>r.id===w.id);
    assert.ok(row);

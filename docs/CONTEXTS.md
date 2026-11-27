@@ -14,14 +14,18 @@ Alla tre är **separata redaktionella frågor**, inte automatiskt omformulerade 
 
 ## Innehåll och teknik
 
-- `public/data/word-contexts.json`: enda redaktionella datakälla, 43 begrepp × 3 situationer = 129.
+- `public/data/word-contexts.json`: enda redaktionella datakälla, samtliga 121 befintliga ord × 3 situationer = 363.
 - `public/data/word-contexts.js`: maskinellt genererad fil som fungerar offline i en klassisk statisk HTML-webbapp. Synkronisera med `npm run sync:contexts`.
 - `public/js/engine.js`: `validateContexts`, `makeContextQuestion` och variantval i `generateRound`.
 - `public/js/review.js`: känner igen frågetypen `context` i den gamla repetitionskön. Inga lagringsnycklar, ID:n eller schematider ändras.
 - `public/js/app.js`: scen visas *före* svaret; konkret Aha-förklaring visas *efter* svaret. Provets facitspärr gäller fortfarande.
 - `public/css/contexts.css`: temaanpassade, stora och högkontrastvänliga textrutor.
 
-En post har `id`, fyra kuraterade `distractors` (ID:n från samma ordlista) och tre poster i `scenes`, var och en med `title`, `text` och `why`. De fyra alternativen som visas är **det rätta ordet och tre av fyra granskade förväxlingsord** i slumpad ordning. Upplevelsen lägger inte till några externa tjänster eller bilder.
+En post har `id`, fyra kuraterade `distractors` (ID:n från samma ordlista), minst två separata `readingDistractors` och tre poster i `scenes`, var och en med `title`, `text` och `why`. De fyra alternativen i huvudfrågan är **det rätta ordet och tre av fyra granskade förväxlingsord** i slumpad ordning.
+
+`readingDistractors` är den enda källan till felaktiga berättelser i ordets Aha-fråga. Listan är separat eftersom frågorna går åt olika håll: ett ord som inte beskriver den första berättelsen kan ändå ha en egen berättelse där målbegreppet också passar. Ett skört föremål kan till exempel vara runt. Granska därför **samtliga tre scener** för varje ID i Aha-listan mot målordet. Listan får inte innehålla målordet självt, okända ID:n, dubbleringar eller spärrade nära synonymer. Utan två olika skrivna Aha-alternativ använder motorn en betydelsefråga; den lånar aldrig huvudfrågans distraktorer. Innehållskontrollen stoppar sådana ofullständiga poster före leverans.
+
+Upplevelsen lägger inte till några externa tjänster eller bilder. Befintliga scenindex 0–2 behålls, eftersom den lokala återbesökshistoriken hänvisar till dem.
 
 ## Tillgänglighet och förtroende
 
@@ -36,4 +40,4 @@ En post har `id`, fyra kuraterade `distractors` (ID:n från samma ordlista) och 
 
 Varje nytt kort måste granskas mot följande: 1) Är scenen lätt att läsa för målåldern? 2) Finns bara ett rimligt svar? 3) Är alternativen tillräckligt näraliggande för att vara meningsfulla utan att bli synonymer? 4) Är situationerna verkligt olika? 5) Avslöjar scenen inte ordets stavning? 6) Förklarar `why` **varför** ordet passar just den händelsen? 7) Undviks missvisande bilder och känsliga elevuppgifter?
 
-`npm run check` upptäcker tekniska fel, duplicering och några uppenbara närliggande alternativ, men det kan inte avgöra pedagogisk kvalitet eller alla möjliga betydelser. Behåll därför statusen **redaktionellt utkast** tills barn och lärare har provspelat.
+`npm run check` upptäcker saknad täckning, tekniska fel, duplicering, avslöjat målord i rubrik/text och några uppenbara närliggande alternativ. Det kan inte avgöra pedagogisk kvalitet eller alla möjliga betydelser. Behåll därför statusen **redaktionellt utkast** tills barn och lärare har provspelat. Se [den samlade genomgången](WORD-UNDERSTANDING.md).

@@ -16,10 +16,10 @@ const curation=context.window.ORDJAKTEN_CURATION;
 const NOW=1800000000000;
 const WORDS=new Map(bank.words.map(w=>[w.id,w]));
 const round=(settings,cards={})=>E.generateRound(bank,curation,settings,{},()=>.44,null,null,cards,NOW,contexts);
-test('165 authored situations for 55 real words are valid and browser data matches JSON',()=>{
+test('363 authored situations cover all 121 existing words and browser data matches JSON',()=>{
   assert.deepEqual(E.validateContexts(contexts,bank,curation),[]);
-  assert.equal(contexts.wordContexts.length,55);
-  assert.equal(contexts.wordContexts.reduce((n,r)=>n+r.scenes.length,0),165);
+  assert.deepEqual(new Set(contexts.wordContexts.map(row=>row.id)),new Set(WORDS.keys()));
+  assert.equal(contexts.wordContexts.reduce((n,r)=>n+r.scenes.length,0),363);
   assert.equal(JSON.stringify(context.window.ORDJAKTEN_CONTEXTS),JSON.stringify(contexts));
   for(const r of contexts.wordContexts){
     assert.ok(WORDS.has(r.id));
@@ -27,7 +27,7 @@ test('165 authored situations for 55 real words are valid and browser data match
     assert.equal(new Set(r.scenes.map(s=>s.text)).size,3);
   }
 });
-test('all 165 real-world questions have four unique text answers and no answer leakage',()=>{
+test('all 363 real-world questions have four unique text answers and no answer leakage',()=>{
   for(const record of contexts.wordContexts)for(let i=0;i<3;i++){
     const q=E.makeContextQuestion(WORDS.get(record.id),bank,contexts,()=>.37,i);
     assert.equal(q.kind,'word');assert.equal(q.taskType,'context');
@@ -38,6 +38,7 @@ test('all 165 real-world questions have four unique text answers and no answer l
     assert.equal(q.options.find(o=>o.correct).label,q.word);
     assert.equal(new Set(q.options.map(o=>o.label)).size,4);
     assert.ok(!q.stem.toLocaleLowerCase('sv-SE').includes(q.word.toLocaleLowerCase('sv-SE')),q.id);
+    assert.ok(!record.scenes[i].title.toLocaleLowerCase('sv-SE').includes(q.word.toLocaleLowerCase('sv-SE')),q.id);
     assert.ok(q.contextWhy.length>15);
   }
 });
@@ -50,6 +51,18 @@ test('bad or duplicate contexts fail editorial validation rather than being used
   assert.ok(errors.some(x=>x.includes('alternativ')));
   assert.ok(errors.some(x=>x.includes('avslöjas')));
   assert.ok(errors.some(x=>x.includes('Duplicerad')));
+});
+test('Aha curation rejects missing, duplicate, self, unknown and synonymous scene sources',()=>{
+  const row=contexts.wordContexts.find(record=>record.id==='sv-0012'); // skör / ömtålig
+  for(const readingDistractors of [undefined,[],row.readingDistractors.slice(0,1),
+    [row.readingDistractors[0],row.readingDistractors[0]],
+    [row.id,row.readingDistractors[0]],['sv-9999',row.readingDistractors[0]],
+    ['sv-0093',row.readingDistractors[0]]]){
+    const malformed={...contexts,wordContexts:contexts.wordContexts.map(record=>record.id===row.id?{...record,readingDistractors}:record)};
+    assert.ok(E.validateContexts(malformed,bank,curation).some(error=>error.includes('Aha-alternativ')&&error.includes(row.id)));
+  }
+  const missingSource={...contexts,wordContexts:contexts.wordContexts.filter(record=>record.id!==row.readingDistractors[0])};
+  assert.ok(E.validateContexts(missingSource,bank,curation).some(error=>error.includes('Aha-alternativ')&&error.includes(row.id)));
 });
 test('quick start can pick 5 distinct medium words exclusively as contextual tasks',()=>{
   const settings={topic:'words',difficulty:'medium',mode:'train',count:5,contextOnly:true};

@@ -11,6 +11,15 @@ const words=L.catalog(bank,expressions,contexts),conceptContent=C.catalog(words)
   detectorTasks=D.catalog(words,contrasts).concat(D.advancedCatalog(words,contrasts,clues));
 const input={words,contexts,surprises,missions,conceptContent,bridgeTasks,detectorTasks,contrasts};
 const content=F.catalog(input);
+test('an Aha objective needs two separately reviewed scene sources',()=>{
+  const row=contexts.wordContexts[0];
+  for(const readingDistractors of [[],row.readingDistractors.slice(0,1)]){
+    const incomplete={...contexts,wordContexts:contexts.wordContexts.map(record=>record.id===row.id?{...record,readingDistractors}:record)};
+    const actual=F.catalog({...input,contexts:incomplete});
+    assert.equal(actual.objectives['aha:'+row.id],undefined);
+    assert.ok(actual.objectives['recall:'+row.id]);
+  }
+});
 const NOW=1780000000000,DAY=F.DAY,random=()=>.37;
 const id='sv-0044',other='sv-0003',aha='aha:'+id,recall='recall:'+id;
 const detector=detectorTasks.find(t=>t.target===id&&t.level===1);
@@ -28,7 +37,7 @@ const choose=(rows,raw,now)=>J.select(F.adjust(rows,raw,content,now),{random}).s
 const start=(raw,step,now)=>F.complete(raw,content,step,now);
 test('real catalogue scopes exact followup targets and versioned alternative methods',()=>{
   assert.equal(Object.values(content.objectives).filter(x=>x.mode==='recall').length,188);
-  assert.equal(Object.values(content.objectives).filter(x=>x.mode==='aha').length,122);
+  assert.equal(Object.values(content.objectives).filter(x=>x.mode==='aha').length,188);
   assert.equal(Object.values(content.objectives).filter(x=>x.mode==='concept').length,36);
   assert.ok(content.methods[method].targets.includes(aha));
   assert.ok(!content.methods[method].targets.includes(recall));
@@ -39,6 +48,25 @@ test('real catalogue scopes exact followup targets and versioned alternative met
   assert.notEqual(changed.objectives[aha].stamp,content.objectives[aha].stamp);
   assert.notEqual(changed.objectives[recall].stamp,content.objectives[recall].stamp);
   assert.notEqual(changed.methods[workshop].stamp,content.methods[workshop].stamp);
+});
+test('changing an Aha source list or its story invalidates a pending comparison but keeps separate recall history',()=>{
+  const baseline=twice();
+  const step=choose(alternatives,baseline,NOW+2*DAY)[0];
+  let pending=start(baseline,step,NOW+2*DAY);
+  assert.ok(pending[aha].pending);
+  pending=observe(pending,recall,'supported',NOW+2*DAY);
+  const row=contexts.wordContexts.find(record=>record.id===id);
+  const changedList={...contexts,wordContexts:contexts.wordContexts.map(record=>record.id===id?
+    {...record,readingDistractors:record.readingDistractors.slice(1).concat('sv-0056')}:record)};
+  const changedStory={...contexts,wordContexts:contexts.wordContexts.map(record=>record.id===row.readingDistractors[0]?
+    {...record,scenes:record.scenes.map((scene,index)=>index===0?{...scene,text:scene.text+' En ny detalj.'}:scene)}:record)};
+  for(const updatedContexts of [changedList,changedStory]){
+    const updated=F.catalog({...input,contexts:updatedContexts});
+    assert.notEqual(updated.objectives[aha].stamp,content.objectives[aha].stamp);
+    const safe=F.sanitize(pending,updated,NOW+3*DAY);
+    assert.equal(safe[aha],undefined);
+    assert.deepEqual(safe[recall],pending[recall]);
+  }
 });
 test('two supported observations must be spaced; repeated identical Aha scenes do not qualify',()=>{
   let p=observe({},aha,'supported',NOW,'context:0');

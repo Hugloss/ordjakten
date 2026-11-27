@@ -96,8 +96,8 @@ test('a curated easy word retains image cards, including fallback to text for 7 
   assert.equal(make(without.id,'meaning').questions[0].picture,false);
 });
 test('an older word with no contexts still has a short two-question drill',()=>{
-  const old=bank.words.find(x=>!contexts.wordContexts.some(scene=>scene.id===x.id)&&x.difficulty==='medium');
-  const plan=make(old.id,'meaning');
+  const old=bank.words.find(x=>x.difficulty==='medium');
+  const plan=F.create(old.id,'meaning',bank,curation,expressions,missions,{wordContexts:[]},E,{},()=>.34);
   assert.deepEqual(plan.questions.map(q=>q.taskType),['meaning','reverse']);
 });
 test('recommended chooses the weak skill even when definition is right',()=>{

@@ -67,7 +67,7 @@ test('Aha history validates IDs, counts and malformed stored data',()=>{
 });
 
 test('short stories and definition checks are not mislabeled as an independent new context',()=>{
-  const word=bank.words.find(w=>!contexts.wordContexts.some(c=>c.id===w.id));
-  const check=B.makeCheck({...word,kind:'word',options:[],picture:false},{bank,contexts,surprises:{},missions,random:()=>.25});
+  const word=bank.words[0];
+  const check=B.makeCheck({...word,kind:'word',options:[],picture:false},{bank,contexts:{wordContexts:[]},surprises:{},missions,random:()=>.25});
   assert.equal(check.source,'meaning');
 });

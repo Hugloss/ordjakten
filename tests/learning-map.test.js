@@ -79,7 +79,7 @@ test('reverse-only success never gets a misleading contextual-story badge',()=>{
   assert.equal(result.steps[2].done,true);
 });
 test('words without authored context use reverse questions for application',()=>{
-  const word=catalog.find(x=>x.kind==='word'&&!x.hasContext);
+  const word=L.catalog(bank,expressions,{wordContexts:[]}).find(x=>x.kind==='word');
   const progress=D.record({},q(word,'reverse'),'right',NOW);
   const result=card(word,progress);
   assert.equal(result.application,true);

@@ -41,19 +41,34 @@ test('every authored word context tests a different story than the current one',
     for(let i=0;i<3;i++){
       const q=E.makeContextQuestion(words.get(record.id),bank,contexts,()=>.31,i);
       const check=run(q);
-      // Some curated records have no safe authored *wrong* scene. In that
-      // case, do not invent one: fall back to the validated definition.
-      const hasSafeOther=[...record.distractors,...(record.readingDistractors||[])].some(id=>contexts.wordContexts.some(c=>c.id===id));
-      if(hasSafeOther){
-        assert.equal(check.source,'context');
-        assert.equal(check.options.length,3);
-        assert.ok(!check.options.some(o=>o.label===q.stem),`Repeated story: ${q.word}`);
-        assert.ok(record.scenes.some(s=>s.text===check.options.find(o=>o.correct).label));
-      } else {
-        assert.equal(check.source,'meaning');
-        assert.equal(check.options.length,3);
-      }
+      assert.equal(check.source,'context');
+      assert.equal(check.options.length,3);
+      assert.ok(!check.options.some(o=>o.label===q.stem),`Repeated story: ${q.word}`);
+      assert.ok(record.scenes.some(s=>s.text===check.options.find(o=>o.correct).label));
     }
+  }
+});
+test('Aha alternatives come only from the separate editorial allowlist for every word',()=>{
+  for(const record of contexts.wordContexts){
+    const allowed=new Set(contexts.wordContexts.filter(row=>record.readingDistractors.includes(row.id)).flatMap(row=>row.scenes.map(scene=>scene.text)));
+    for(const value of [0,.21,.49,.78,.999]){
+      const question=E.makeContextQuestion(words.get(record.id),bank,contexts,()=>value,0);
+      const check=B.makeCheck(question,{bank,contexts,random:()=>value});
+      assert.equal(check.source,'context',record.id);
+      assert.equal(check.options.filter(o=>!o.correct).length,2);
+      for(const option of check.options.filter(o=>!o.correct))assert.ok(allowed.has(option.label),record.id);
+    }
+  }
+});
+test('missing or incomplete Aha curation falls back to meaning instead of borrowing main-question distractors',()=>{
+  const record=contexts.wordContexts[0];
+  const question=E.makeContextQuestion(words.get(record.id),bank,contexts,()=>.31,0);
+  for(const readingDistractors of [undefined,[],record.readingDistractors.slice(0,1),[record.id,'sv-9999']]){
+    const incomplete={...contexts,wordContexts:contexts.wordContexts.map(row=>row.id===record.id?{...row,readingDistractors}:row)};
+    const check=B.makeCheck(question,{bank,contexts:incomplete,random:()=>.31});
+    assert.equal(check.source,'meaning');
+    assert.equal(check.options.length,3);
+    assert.equal(check.options.filter(o=>o.correct).length,1);
   }
 });
 test('reading step is not an extra graded question and does not change the original question',()=>{

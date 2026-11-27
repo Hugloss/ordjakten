@@ -13,16 +13,17 @@ konkret användbarhetsbrist, inte ett problem som kan lösas med fler stjärnor.
    Berättelsen finns kvar så att det går att gå tillbaka och läsa igen.
 3. **Förstå**: Efter rätt/fel försvinner frågan och förklaringen blir störst
    på skärmen. Exempel och Aha-ruta visas med läsbar text.
-4. **Pröva**: En separat tvåvalskontroll frågar om **en annan situation**
-   där uttrycket/ordet passar, när en granskad sådan finns. Annars får
-   barnet välja mellan två redan granskade betydelser.
-5. **Vidare**: *Nästa ord* visas först när kontrollen är rätt besvarad.
+4. **Pröva**: En separat Aha-fråga med tre alternativ frågar om **en annan
+   situation** där uttrycket/ordet passar. Alla 121 ord har tre skrivna
+   situationer och en separat lista med granskade felberättelser.
+5. **Vidare**: *Nästa ord* visas när barnet svarat rätt eller fått ett förklarat exempel efter två försök.
    Fel på kontrollen ger stöd att läsa igen och pröva, inte minuspoäng.
 
 ## Skyddsräcken
 
 - Den korta kontrollen är **inte** ett nytt provresultat och påverkar
-  varken vanliga rätt/fel, stjärnor eller repetitionsschema.
+  varken vanliga rätt/fel eller stjärnor. Separata Aha-observationer kan
+  användas för att välja senare, frivilliga återbesök.
 - I **Testa dig** / högskoleprovsutmaningen visas ingen förklaring eller
   efterfråga under provet. Frågeantalet och tiden påverkas inte.
 - Ingen tidsbaserad låsning av knappar: barn läser i olika takt.
@@ -52,3 +53,23 @@ Se `docs/READING-FLOW.md` för ett barnprovtest utan hjälp i svarssituationen. 
 
 ## Nytt provspelningstest
 Observera utan att vägleda: hittar barnet berättelsen på första skärmen, läser det betydelsen innan Aha-frågan och förstår det varför rätt exempel passar? Vid första fel ska förklaringen återkomma. Vid ett andra fel visas facit pedagogiskt, utan att ett gissat svar får räknas som självständig förståelse. Prova mobil, dator, ljus/mörk, lång berättelse och Testa dig. Ingen lästid lagras om barnet.
+
+## Fördjupade ordförklaringar: fem ord åt gången
+
+Välj fem befintliga, vanliga ord, gärna från olika områden: exempelvis
+genomskinlig, grumlig, sparsam, uppmärksam och lättad. Låt barnet själv
+välja om det vill besvara den frivilliga tankefrågan muntligt.
+
+1. Be barnet peka ut vad i berättelsen som gör att ordet passar.
+2. Fråga varför motexemplet inte visar samma betydelse. Hjälp efteråt om
+   själva ordet i motexemplet var svårt att läsa.
+3. Be om ett eget exempel som skiljer sig från spelets tre berättelser.
+   Ett muntligt svar räcker; bedöm inte stavning som ordförståelse.
+4. Visa eller beskriv en ny situation efter en paus, utan att först läsa
+   förklaringen igen. Lyssna efter barnets skäl, inte bara rätt ord.
+5. Fråga vilken förklaring som hjälpte och om någon ruta var för lång.
+   Avsluta när barnet vill; fem ord är ett urval, inget krav på att bli klar.
+
+Skilj i anteckningarna mellan svårigheter att läsa texten, förstå ordets
+betydelse och använda det i en ny situation. Rätta oklara scener eller
+svarsalternativ innan nya ord läggs till. Se [WORD-UNDERSTANDING.md](WORD-UNDERSTANDING.md).

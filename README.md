@@ -20,14 +20,15 @@ Kör innehållskontroller och samtliga Node-tester:
 npm run check
 ```
 
-## Vad finns i version 0.20?
+## Vad finns i spelet?
 
 - **Träna** med omedelbar återkoppling och **Testa dig** med dolt facit.
 - Lätt, medel, svårt och högskoleprovsinspirerade ordfrågor.
-- 121 ord, 25 vardagsuttryck, 129 vardagsscener, 96 jämförelsescener och
+- 121 ord med konkreta förklaringar, vardagsexempel, motexempel och egna tankefrågor.
+- 53 vardagsuttryck, 14 skolord, 363 vardagsscener, 96 jämförelsescener och
   64 djupare berättelser för fyra jämförelsepar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
-- Uttrycksberättelser, 25 luckor, tre typer av miniuppdrag och serieillustrationer.
+- Uttrycksberättelser, 67 luckor, tre typer av miniuppdrag och serieillustrationer.
 - Anpassad träning, Min ordstig, Ledtrådstrappan, Förväxlingskompassen
   och frivilliga återbesök över tid.
 - Val av frågeantal och timer; mörkt, ljust och automatiskt tema.
@@ -61,9 +62,10 @@ Det finns ännu ingen vald generell licens för den övriga projektkoden.
 I **Träna** visas berättelsen med stor läsbar text före svaren. När en
 berättelse finns får barnet först trycka **Jag har läst – visa svaren**.
 Efter varje svar visas förklaringen tydligt och barnet får en kort
-**Aha-fråga** med två alternativ innan nästa ord går att öppna.
+**Aha-fråga** med tre alternativ innan nästa ord går att öppna.
 Frågan bygger på skrivna vardagsberättelser eller på granskade definitioner;
-den ger **inga ytterligare provpoäng, stjärnor eller repetitionsframsteg**.
+den ger **inga ytterligare provpoäng eller stjärnor**. Separata observationer
+av Aha-svar används för att välja frivilliga återbesök.
 
 I **Testa dig** och högskoleprovsutmaningen finns ingen förklaringsfråga
 under själva provet: facit och förklaringar visas först efteråt.
@@ -72,10 +74,15 @@ förstått texten. Låt gärna barnet berätta innebörden med egna ord.
 
 ## Kvalitetsstatus
 
-`npm run check` passerar **155 automatiska tester** i den importerade
-v0.20-kodbasen. Webbläsartester och scenariotester ligger under `tests/`.
+`npm run check` kontrollerar hela ordbanken, dess genererade webbläsarfiler
+och den snabba Node-sviten. Alla 121 ord ska ha en fullständig förklaring,
+tre vardagsscener och särskilt valda Aha-alternativ. Webbläsartester och
+scenariotester ligger under `tests/`.
 Verifiera särskilt localStorage över sidomladdning och offline-läge
 i en vanlig webbläsare före publicering.
+
+Innehållsgenomgången och dess kvarvarande granskningsbehov beskrivs i
+[Förstå orden](docs/WORD-UNDERSTANDING.md).
 
 Fortsatt utveckling: se [färdplan](docs/ROADMAP.md),
 [produktbeslut](docs/PRODUCT.md) och

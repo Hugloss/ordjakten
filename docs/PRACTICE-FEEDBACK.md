@@ -4,7 +4,7 @@ Ordjakten kan nu prova ett annat sätt att öva när samma observerade stödbeho
 
 ## Mål och kontroller
 
-250 möjliga uppföljningsmål i nuvarande material (146 skrivmål, 68 Aha-mål med minst två författade exempel, 36 exakta sambandsfrågor). En elev får endast en registrering för ett mål där stöd faktiskt har observerats. Uppföljningsmålet behåller sitt eget facit och sin egen tidsplan.
+412 möjliga uppföljningsmål i nuvarande material (188 skrivmål, 188 Aha-mål med minst två författade exempel, 36 exakta sambandsfrågor). En elev får endast en registrering för ett mål där stöd faktiskt har observerats. Uppföljningsmålet behåller sitt eget facit och sin egen tidsplan.
 
 | Ursprungligt mål | Möjlig alternativ övning |
 |---|---|
@@ -25,7 +25,7 @@ Ordverkstadens fria meningar bedöms aldrig. En alternativ station är bara en g
 
 ## Integritet och begränsningar
 
-`feedbackProgress` lagras lokalt med målets och alternativets innehållsnycklar/kontrollkoder, tider och begränsade utfall. Inga egna svar, meningar, namn eller externa analyser. Okända mål, gamla innehållsversioner och ogiltiga uppföljningar filtreras. Radering och export omfattar fältet. Ett väntande försök kan läsas efter omladdning. Vanliga övningar är fortsatt frivilliga, även när ett automatiskt återbesök vilar.
+`feedbackProgress` lagras lokalt med målets och alternativets innehållsnycklar/kontrollkoder, tider och begränsade utfall. Ordens Aha-version omfattar både de egna scenerna och den separata listan med felalternativ inklusive deras berättelsetexter. Ett ändrat alternativ får därför inte jämföras som om frågan vore identisk. Inga egna svar, meningar, namn eller externa analyser. Okända mål, gamla innehållsversioner och ogiltiga uppföljningar filtreras. Radering och export omfattar fältet. Ett väntande försök kan läsas efter omladdning. Vanliga övningar är fortsatt frivilliga, även när ett automatiskt återbesök vilar.
 
 Barnet kan ha övat utanför appen eller i andra övningar mellan tillfällena. Vi vet därför inte varför ett senare svar förbättrats. Aha visar ordets betydelse före frågan; en direkt Aha-träff är inte självständig ordåterkallning. UI visar bara antal väntande/jämförbara uppföljningar och observerade utfall, aldrig en effektprocent, diagnos eller förmågepoäng. Rekommendationerna behöver utvärderas genom användning.
 
