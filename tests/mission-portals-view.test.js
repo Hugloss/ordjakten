@@ -34,6 +34,22 @@ test('gallery displays 32 unique unlocked story cards and no challenge answer',(
     assert.ok(!btn.disabled);assert.ok(btn.dataset.portalOpen);
   }
 });
+test('the catalog can be filtered by theme without changing completed progress',()=>{
+  const all=render({});
+  const groupButtons=buttons(all,'portalFilter');
+  assert.equal(groupButtons.length,5);
+  assert.equal(groupButtons[0].dataset.portalFilter,'all');
+  assert.equal(groupButtons[0].attributes['aria-pressed'],'true');
+  for(const [category,count] of [['mystery',6],['fantasy',8],['explore',10],['creative',8]]){
+    const host=render({},null,{category});
+    assert.equal(buttons(host,'portalOpen').length,count,category);
+    assert.match(text(host),new RegExp('Visar '+count+' av 32 äventyr'));
+    assert.equal(buttons(host,'portalFilter').find(x=>x.dataset.portalFilter===category).attributes['aria-pressed'],'true');
+    assert.ok(buttons(host,'portalOpen').every(x=>content.stories[x.dataset.portalOpen].group===category));
+  }
+  assert.equal(buttons(render({},null,{category:'invalid'}),'portalOpen').length,32);
+});
+
 test('new stage has two visible clues, three choices and a separate optional hint',()=>{
   const stage=Data.STORIES.find(x=>x.id==='detective').stages[0];
   let host=render({},'detective',{canReadAloud:true});
