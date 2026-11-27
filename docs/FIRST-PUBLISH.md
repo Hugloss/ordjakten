@@ -25,7 +25,7 @@ Innehåll, facit och tidigare resultat påverkas inte av presentationen.
 
 ## Automatiska kontroller
 
-`npm run check` passerar med 504 Node-tester, innehållsvalidering och
+`npm run check` omfattar Node-tester, innehållsvalidering och
 kontroll av 71 HTML-resurser, 154 offline-sökvägar och 49 skript.
 Nya regressioner gäller:
 
@@ -89,9 +89,41 @@ fem frågor. Den följande rättningen använder omgångens faktiska antal.
 En dubbel punkt i den guidade Aha-förklaringen rättades också.
 
 Knappen för Aha-uppläsning visades och gick att aktivera, men faktiskt
-ljud och kvaliteten på en svensk röst har inte verifierats. Mobilvy,
-ljus bakgrund och spel med nätet frånkopplat återstår att prova på
-de enheter som ska användas. Inget barn har deltagit i dessa kontroller.
+ljud och kvaliteten på en svensk röst har inte verifierats. Inget barn
+har deltagit i dessa kontroller.
+
+### Fortsatt granskning av läsbarhet och enhetsstöd
+
+Den publicerade sidan provades också i **ljust tema vid 337 CSS-pixlars
+innehållsbredd**, med 400 procents förstoring i Chrome. Startsidan,
+snabbstartens svarsknappar, förklaringen, öppna fler exempel och Aha
+rymde sig utan horisontell sidskroll. Ordlistans sökning efter
+Triangelformad fungerade också i samma vy. Detta kontrollerar smal
+layout och förstoring; det är inte mobil- eller pekskärmsemulering.
+
+Efter rätt Aha-svar blev även facitknappen blek. Den följande rättningen
+behåller full kontrast när svaren låses. Den gör också att långa ord
+i förklaringsrubriken och långa resultatetiketter kan radbrytas.
+Textbrytningen är förebyggande; någon klippt sådan rubrik har inte
+reproducerats i den här webbläsarkontrollen.
+
+Om talstödet misslyckas visas nu **”Uppläsningen fungerar inte just nu.
+Läs själv eller be någon om hjälp.”** vid den använda ljudknappen.
+Automatiska beteendetester täcker fel, ett nytt lyckat försök, avsiktligt
+stopp, stegbyte och sena händelser från en tidigare uppläsning.
+
+Service workerns hämtning har testats med simulerat nät och cache.
+Den tidigare hämtningen kunde skicka vidare ett serverfel trots en
+cachad sida, missa startsidan när adressen hade sökparametrar och
+skriva in filer från en ny utgåva i den gamla versionscachen. Den nya
+strategin använder den kompletta precachade utgåvan först och låter
+okända resurser gå till nätet som vanligt. Efter en uppdatering kan en
+öppen sida behöva laddas om när den nya service workern har installerats.
+
+**Kvar på de enheter som ska användas:** verklig mobil och pekskärm,
+svensk uppläsningsröst, spel med nätet frånkopplat och barnprovspelning.
+Det automatiska testet av service workern ersätter inte ett riktigt
+offlineprov. Slutkontrollerna efter nästa publicering antecknas i PR:n.
 
 ## Första korta testet med barn
 

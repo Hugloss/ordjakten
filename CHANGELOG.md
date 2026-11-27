@@ -1,5 +1,12 @@
 # Ordjakten – ändringslogg
 
+## Efter publicering – läsbarhet, uppläsningshjälp och offlinefiler
+
+- Låsta Aha-svar behåller full kontrast så att barnet kan läsa det rätta exemplet. Draggreppet på kristallkort följer valt färgtema; långa förklaringsrubriker och resultatetiketter kan radbrytas inom sitt kort.
+- Om uppläsningen misslyckas får barnet ett kort hjälpmeddelande vid den använda knappen. Avsiktliga stopp är tysta, och gamla ljudhändelser kan inte påverka ett nytt försök.
+- Offlinecache v67 behåller en sammanhållen precachad utgåva. Startsidan kan hittas även med sökparametrar i adressen. Okända filer ersätts inte med startsidans HTML.
+- Läsbarheten har granskats i ljust tema vid 337 CSS-pixlar med webbläsarförstoring. Det är inte ett test av pekskärm, verklig svensk röst eller flygplansläge; se [kontroller och kvarvarande provspelning](docs/FIRST-PUBLISH.md).
+
 ## Efter publicering – korrekt resultattext
 
 - Stjärnletare beskriver antalet rätt av de frågor som faktiskt spelades, även i femfrågorsomgångar. Samma gräns för märket gäller som tidigare.

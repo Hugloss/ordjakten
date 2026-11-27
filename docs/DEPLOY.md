@@ -41,6 +41,12 @@ Appen har relativa länkar och en PWA-manifest med `./` för att även fungera u
 
 Om du ändrar appens statiska filer och vill att offline-besökare ska få en ny sammanhållen uppsättning filer, öka `CACHE_NAME` i `public/sw.js` (t.ex. `ordjakten-static-v2`). Testa alltid online och offline efter uppdateringar.
 
+Den precachade utgåvan används först för sina kända filer och skrivs
+inte över av enstaka hämtningar. En ny cache installeras som en hel
+uppsättning innan den tas i bruk. En redan öppen sida kan behöva laddas
+om efter att den nya service workern installerats. Höj därför alltid
+cacheversionen tillsammans med ändringar i `public/`.
+
 ## Kostnad
 
 Ingen databas, inga betal-API:er, inga specialservrar eller krav på betalplan behövs för själva statiska appen. Vilka begränsningar som gäller på en host kan ändras med tiden.

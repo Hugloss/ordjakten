@@ -471,6 +471,7 @@
           <p id="story-help" class="story-help" hidden>👀 Läs hela berättelsen. Vilken ledtråd hittar du?</p>
           <button id="guided-start" type="button" class="secondary-button guided-start" hidden>📖 Läs med mig – en del i taget</button>
           <button id="listen-story" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på texten</button>
+          <p id="listen-story-status" class="subtle-note" role="status" aria-live="polite" hidden></p>
           <button id="story-reveal" class="primary-button big-button" type="button" hidden>Jag har läst – visa svaren →</button>
           <div id="answer-step" class="answer-step"><strong>🎯 STEG 2: VÄLJ</strong><p id="question-instruction" class="subtle-note">Välj ett av alternativen</p></div>
           <div id="question-egg-box" class="quest-egg-box" hidden>
@@ -681,6 +682,7 @@
             <span id="explanation-label" class="eyebrow">📖 LÄS FÖRKLARINGEN</span>
             <h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p>
             <button id="listen-explanation" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på förklaringen</button>
+            <p id="listen-explanation-status" class="subtle-note" role="status" aria-live="polite" hidden></p>
             <div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div>
             <section id="word-teaching" class="word-teaching" aria-label="Så används ordet" hidden></section>
             <section id="school-feedback" class="context-aha school-feedback" aria-labelledby="school-feedback-title" hidden>
@@ -718,6 +720,7 @@
             <h3 id="reading-check-title"></h3>
             <p class="reading-intro" id="reading-instruction">Tänk efter och välj rätt svar. Den här övningen ger inga extra poäng.</p>
             <button id="listen-reading-check" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på frågan och svaren</button>
+            <p id="listen-reading-check-status" class="subtle-note" role="status" aria-live="polite" hidden></p>
             <div id="reading-options" class="reading-options"></div>
             <p id="reading-response" class="reading-response" role="status" aria-live="polite"></p>
             <p id="reading-why" class="reading-why" hidden></p>

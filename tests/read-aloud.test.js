@@ -26,7 +26,7 @@ function speechHarness({supported=true}={}){
       querySelector(selector){return this.children[Number(selector.match(/"(\d+)"/)?.[1])];},
       focus(){},scrollIntoView(){}};
   }
-  const $=id=>{if(!nodes.has(id))nodes.set(id,node());return nodes.get(id);};
+  const $=id=>{if(!nodes.has(id))nodes.set(id,{...node(),id});return nodes.get(id);};
   const window={addEventListener(name,callback){events[name]=callback;}};
   if(supported){
     window.SpeechSynthesisUtterance=function(text){this.text=text;};
@@ -58,6 +58,11 @@ test('read-aloud controls are optional, accessible, and hidden by default',()=>{
     assert.ok(tag,id+' missing');
     assert.match(tag,/aria-pressed="false"/);
     assert.match(tag,/hidden/);
+    const status=html.match(new RegExp('<p[^>]*id="'+id+'-status"[^>]*>'))?.[0];
+    assert.ok(status,id+' status missing');
+    assert.match(status,/role="status"/);
+    assert.match(status,/aria-live="polite"/);
+    assert.match(status,/hidden/);
   }
   assert.match(app,/canReadAloud/);
   assert.match(app,/\.hidden=!canReadAloud/);
@@ -162,6 +167,108 @@ test('Aha listening is user initiated, toggles stop, and resets when speech ends
   click('listen-reading-check');spoken[1].onend();
   assert.equal($('listen-reading-check').attributes['aria-pressed'],'false');
   assert.equal($('listen-reading-check').textContent,'🔊 Lyssna på frågan och svaren');
+});
+
+test('speech failures explain the problem beside the chosen control without changing game progress',()=>{
+  const ids=['listen-story','listen-explanation','listen-reading-check'];
+  for(const id of ids){
+    const {scope,$,spoken,click}=speechHarness();
+    if(id==='listen-story'){
+      scope.game.feedback=false;
+      scope.game.questions[0].word='Försiktig';
+    }else if(id==='listen-explanation')$('explanation-word').textContent='Försiktig';
+    const before=JSON.stringify(scope.game);
+    click(id);
+    assert.equal(spoken.length,1);
+    spoken[0].onerror({error:'synthesis-unavailable'});
+    assert.equal($(id).attributes['aria-pressed'],'false');
+    assert.equal($(id+'-status').hidden,false);
+    assert.equal($(id+'-status').textContent,'Uppläsningen fungerar inte just nu. Läs själv eller be någon om hjälp.');
+    for(const other of ids.filter(other=>other!==id))assert.equal($(other+'-status').hidden,true);
+    assert.equal(JSON.stringify(scope.game),before);
+  }
+});
+
+test('constructor and speak exceptions show a helpful status and a fresh attempt can recover',()=>{
+  for(const failure of ['constructor','speak']){
+    const {scope,$,spoken,click}=speechHarness();
+    const originalConstructor=scope.window.SpeechSynthesisUtterance;
+    const originalSpeak=scope.window.speechSynthesis.speak;
+    if(failure==='constructor')scope.window.SpeechSynthesisUtterance=function(){throw new Error('voice not ready');};
+    else scope.window.speechSynthesis.speak=()=>{throw new Error('audio unavailable');};
+    assert.doesNotThrow(()=>click('listen-reading-check'));
+    assert.equal($('listen-reading-check-status').hidden,false);
+    assert.equal($('listen-reading-check').attributes['aria-pressed'],'false');
+    scope.window.SpeechSynthesisUtterance=originalConstructor;
+    scope.window.speechSynthesis.speak=originalSpeak;
+    click('listen-reading-check');
+    assert.equal(spoken.length,1);
+    assert.equal($('listen-reading-check-status').hidden,true);
+    assert.equal($('listen-reading-check-status').textContent,'');
+    assert.equal($('listen-reading-check').attributes['aria-pressed'],'true');
+    spoken[0].onend();
+    assert.equal($('listen-reading-check').attributes['aria-pressed'],'false');
+    assert.equal($('listen-reading-check-status').hidden,true);
+  }
+});
+
+test('canceled or interrupted speech stays silent, including a synchronous cancellation callback',()=>{
+  for(const error of ['canceled','interrupted']){
+    const {scope,$,spoken,click}=speechHarness();
+    click('listen-reading-check');
+    spoken[0].onerror({error});
+    assert.equal($('listen-reading-check-status').hidden,true);
+    assert.equal($('listen-reading-check').attributes['aria-pressed'],'false');
+    click('listen-reading-check');
+    scope.window.speechSynthesis.cancel=()=>spoken[1].onerror({error});
+    assert.doesNotThrow(()=>click('listen-reading-check'));
+    assert.equal($('listen-reading-check-status').hidden,true);
+    assert.equal($('listen-reading-check').attributes['aria-pressed'],'false');
+  }
+});
+
+test('late callbacks cannot disturb a newer request or erase its error and recovery',()=>{
+  const {scope,$,spoken,click}=speechHarness();
+  click('listen-reading-check');
+  const old=spoken[0];
+  scope.window.speechSynthesis.cancel=()=>old.onerror({error:'synthesis-failed'});
+  // Switching controls cancels the first request before starting the next one.
+  scope.speakReadAloud('En synlig förklaring',$('listen-explanation'));
+  const current=spoken[1];
+  assert.equal($('listen-reading-check-status').hidden,true);
+  old.onerror({error:'synthesis-failed'});old.onend();
+  assert.equal($('listen-explanation').attributes['aria-pressed'],'true');
+  assert.equal($('listen-explanation-status').hidden,true);
+  current.onerror({error:'audio-busy'});
+  const message=$('listen-explanation-status').textContent;
+  old.onend();old.onerror({error:'interrupted'});
+  assert.equal($('listen-explanation-status').hidden,false);
+  assert.equal($('listen-explanation-status').textContent,message);
+  scope.speakReadAloud('Försök igen',$('listen-explanation'));
+  current.onend();current.onerror({error:'synthesis-failed'});
+  assert.equal($('listen-explanation').attributes['aria-pressed'],'true');
+  assert.equal($('listen-explanation-status').hidden,true);
+  assert.equal($('listen-explanation-status').textContent,'');
+});
+
+test('leaving the step clears speech errors and late events cannot bring them back',()=>{
+  const transitions=[
+    ({events})=>events.pagehide(),
+    ({click})=>click('reading-reread'),
+    ({scope})=>scope.answerReadingCheck(1)
+  ];
+  for(const leave of transitions){
+    const harness=speechHarness();
+    const {$,spoken,click}=harness;
+    click('listen-reading-check');
+    spoken[0].onerror({error:'network'});
+    assert.equal($('listen-reading-check-status').hidden,false);
+    leave(harness);
+    assert.equal($('listen-reading-check-status').hidden,true);
+    assert.equal($('listen-reading-check-status').textContent,'');
+    spoken[0].onerror({error:'synthesis-failed'});
+    assert.equal($('listen-reading-check-status').hidden,true);
+  }
 });
 
 test('answering or rereading stops Aha speech, including guided and retry outcomes',()=>{
