@@ -253,6 +253,69 @@ test('spoken explanation evidence is revealed only after the child proves the my
   assert.equal(view(state).finderTotal,1,'speaking does not award a second treasure');
 });
 
+test('each world unlocks an independent everyday case only after the evidence explanation',()=>{
+  for(const id of A.WORLD_IDS){
+    let state=fresh();
+    assert.equal(view(state,id).mystery.transfer,null,id);
+    assert.equal(Treasure.mysteryTransfer(state,id,0,catalog),state,id);
+    state=back(finish(choose(visit(state,2,id))));
+    for(let step=0;step<2;step++)state=Treasure.mysteryReveal(state,id,catalog);
+    state=Treasure.mysteryGuess(state,id,Data.MYSTERIES[id].target,catalog);
+    assert.equal(view(state,id).mystery.transfer,null,'finding the place is not proof');
+    assert.equal(Treasure.mysteryTransfer(state,id,0,catalog),state);
+    state=Treasure.mysteryProof(state,id,Data.MYSTERIES[id].target,catalog);
+    const task=Data.TRANSFERS[id],before=view(state,id);
+    assert.equal(before.mystery.transfer.done,false,id);
+    assert.deepEqual(before.mystery.transfer.clues,task.clues,id);
+    assert.equal(before.mystery.transfer.choices.length,3,id);
+    assert.equal('target' in before.mystery.transfer,false,'correct index remains private');
+    assert.equal(before.mystery.transfer.feedback,null);
+    const invalid=Treasure.mysteryTransfer(state,id,3,catalog);
+    assert.equal(invalid,state,'invalid choice cannot change state');
+    const wrong=(task.target+1)%3;
+    state=Treasure.mysteryTransfer(state,id,wrong,catalog);
+    assert.deepEqual(view(state,id).mystery.transfer.wrong,[wrong],id);
+    assert.equal(view(state,id).mystery.transfer.feedback,task.wrong[wrong],id);
+    assert.equal(view(state,id).mystery.transfer.done,false,id);
+    assert.equal(Treasure.mysteryTransfer(state,id,wrong,catalog),state,'repeated incorrect answer is inert');
+    state=reload(state);
+    assert.deepEqual(view(state,id).mystery.transfer.wrong,[wrong],'wrong choice survives reload');
+    state=Treasure.mysteryTransfer(state,id,task.target,catalog);
+    assert.equal(view(state,id).mystery.transfer.done,true,id);
+    assert.deepEqual(view(state,id).mystery.transfer.choices,[],'answers disappear after success');
+    assert.equal(view(state,id).mystery.transfer.feedback,task.why,id);
+    assert.equal(view(state,id).finderTotal,before.finderTotal,'transfer never awards a finder point');
+    assert.deepEqual(view(state,id).collection,before.collection,'treasures are unchanged');
+    assert.equal(view(state,id).worlds.find(world=>world.id===id).mysteryTransferDone,true,id);
+    assert.deepEqual(view(reload(state),id).mystery.transfer,view(state,id).mystery.transfer);
+    assert.equal(Treasure.mysteryTransfer(state,id,wrong,catalog),state,'finished case is immutable');
+  }
+});
+
+test('transfer saves fail closed when corrupted while keeping found treasures',()=>{
+  let state=back(finish(choose(visit(fresh(),2))));
+  for(let i=0;i<2;i++)state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=Treasure.mysteryGuess(state,'forest',Data.MYSTERIES.forest.target,catalog);
+  state=Treasure.mysteryProof(state,'forest',Data.MYSTERIES.forest.target,catalog);
+  const legacy=clone(state);
+  delete legacy.worlds.forest.mystery.transferWrong;
+  delete legacy.worlds.forest.mystery.transferDone;
+  delete legacy.worlds.forest.mystery.transferLast;
+  assert.equal(view(reload(legacy)).mystery.proof.done,true,'old proof state is preserved');
+  assert.equal(view(reload(legacy)).mystery.transfer.done,false);
+  const bad=clone(state);
+  bad.worlds.forest.mystery.transferDone=true;
+  bad.worlds.forest.mystery.transferLast=3;
+  const clean=reload(bad);
+  assert.equal(view(clean).count,1,'a bad transfer record cannot erase a real find');
+  assert.equal(view(clean).mystery.transfer,null,'invalid transfer record cannot unlock a puzzle');
+  state=visit(state,0);
+  const before=clone(state);
+  assert.equal(Treasure.mysteryTransfer(state,'forest',Data.TRANSFERS.forest.target,catalog),state,
+    'cannot answer an extra case while another task is active');
+  assert.deepEqual(state,before);
+});
+
 test('mystery answers cannot be changed while an ordinary visit is active',()=>{
   let state=finish(choose(visit(fresh(),2)));
   assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
