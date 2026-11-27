@@ -35,3 +35,9 @@ och kontrollera att Aha-observationerna försvinner.
 Kör `npm run check` och den frivilliga `python tests/browser_practice_goals.py`
 med Playwright/Chromium. En riktig barnprovspelning behövs fortfarande
 för att bedöma begriplighet och inlärning.
+
+
+Berättelsespåret bidrar också till urvalet: ett ord som prövats i en
+berättelse kan få fler vardagsexempel även när huvudsvar varit rätt.
+En oavslutad omgång kan ha sparade berättelseobservationer, och sådana
+ord räknas inte som helt oprövade. Se [Berättelsespåret](STORY-TRAIL.md).

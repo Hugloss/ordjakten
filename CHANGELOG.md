@@ -1,5 +1,10 @@
 # Ordjakten – ändringslogg
 
+## Berättelsespåret (nästa uppdatering)
+
+- Sparar vilka redaktionellt skrivna vardagsberättelser som faktiskt prövats. Ordfrågor och Aha efter förklaring visas separat.
+- Nya och ännu inte lösta situationer får förtur i smart träning och fokuserade vardagsövningar. Min ordstig visar varje berättelse utan att utlova behärskning.
+
 ## Träningsmål (nästa uppdatering)
 
 - Tre frivilliga träningsmål: Blanda, Upptäck nytt, Ge ord en ny chans. Tillgängliga frågor visas innan start; kortare omgångar fylls inte med fel sorts frågor.

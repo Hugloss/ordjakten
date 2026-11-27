@@ -47,7 +47,7 @@
     if(untried.length)return untried.includes('context')&&types.some(type=>entries[type]?.attempts) ? 'context':untried[0];
     return types.slice().sort((a,b)=>(entries[a]?.lastAt||0)-(entries[b]?.lastAt||0))[0];
   }
-  function create(id,requested,bank,curation,expressions,missions,contexts,engine,progress={},random=Math.random,contrastLib=null,contrasts=null,confusionProgress={},clues=null,clueData=null,clueProgress={}) {
+  function create(id,requested,bank,curation,expressions,missions,contexts,engine,progress={},random=Math.random,contrastLib=null,contrasts=null,confusionProgress={},clues=null,clueData=null,clueProgress={},sceneOrder=null) {
     const item=findItem(id,bank,expressions);
     if(!item)throw new Error('Det ordet finns inte i ordbanken.');
     const pair=contrastLib?.findPair(item.id,contrasts);
@@ -82,11 +82,18 @@
       return {...q,kind:item.kind,taskType:type==='picture'?'picture':type,
         focusKey:`${id}:${type}:${sceneIndex===null?'one':sceneIndex}`};
     };
-    if(chosen==='context'){
-      const scenes=contexts.wordContexts.find(x=>x.id===id).scenes;
+    function storyOrder(){
+      const record=contexts.wordContexts.find(x=>x.id===id),scenes=record.scenes;
+      const preferred=typeof sceneOrder==='function'?sceneOrder(record):null;
+      if(Array.isArray(preferred)&&preferred.length===scenes.length&&
+        new Set(preferred).size===scenes.length&&preferred.every(i=>Number.isInteger(i)&&i>=0&&i<scenes.length))
+        return preferred;
       const last=progress?.[id]?.lastScene;
       const start=Number.isInteger(last)&&last>=0&&last<scenes.length ? (last+1)%scenes.length : Math.floor(random()*scenes.length);
-      for(let i=0;i<scenes.length;i++)questions.push(make('context',(start+i)%scenes.length));
+      return scenes.map((_,i)=>(start+i)%scenes.length);
+    }
+    if(chosen==='context'){
+      for(const index of storyOrder())questions.push(make('context',index));
     }else{
       questions.push(make(chosen));
       const alternatives=item.kind==='expression' ? ['meaning','sentence','order'] :
@@ -95,9 +102,7 @@
         if(questions.length>=3)break;
         if(type===chosen||!types.includes(type))continue;
         if(type==='context'){
-          const last=progress?.[id]?.lastScene;
-          const first=Number.isInteger(last)&&last>=0&&last<3?(last+1)%3:Math.floor(random()*3);
-          questions.push(make(type,first));
+          questions.push(make(type,storyOrder()[0]));
         } else questions.push(make(type));
       }
     }

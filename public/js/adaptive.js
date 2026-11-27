@@ -61,6 +61,101 @@
     if(type==='context' && Number.isInteger(question.contextIndex) && question.contextIndex>=0 && question.contextIndex<=2)card.lastScene=question.contextIndex;
     return {...progress,[question.id]:card};
   }
+  // Context evidence is deliberately distinct from aggregate skill counters:
+  // two correct clicks on one story do not cover two situations. The key is
+  // an authored-content fingerprint, not a saved story or a child identifier.
+  function sceneKey(scene) {
+    const text=JSON.stringify([scene.title,scene.text,scene.why]);
+    let a=2166136261,b=2246822519;
+    for(let i=0;i<text.length;i++){
+      const unit=text.charCodeAt(i);
+      a=Math.imul(a^unit,16777619);
+      b=Math.imul(b^unit,3266489917);
+    }
+    return 'scene-'+(a>>>0).toString(16).padStart(8,'0')+(b>>>0).toString(16).padStart(8,'0');
+  }
+  const sceneTime=value=>Number.isFinite(value)&&value>=0&&value<=4102444800000?Math.floor(value):0;
+  function sanitizeContextProgress(raw,contexts) {
+    const out=Object.create(null);
+    if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;
+    for(const record of contexts?.wordContexts||[]){
+      const stored=raw[record.id];
+      if(!stored||typeof stored!=='object'||Array.isArray(stored))continue;
+      const clean=Object.create(null);
+      for(const scene of record.scenes){
+        const key=sceneKey(scene),value=stored[key];
+        if(!value||typeof value!=='object'||Array.isArray(value))continue;
+        const mainRight=limit(value.mainRight,9999),mainWrong=limit(value.mainWrong,9999);
+        const ahaFirst=limit(value.ahaFirst,9999),ahaSupported=limit(value.ahaSupported,9999);
+        const lastMain=value.lastMain==='right'&&mainRight?'right':value.lastMain==='wrong'&&mainWrong?'wrong':null;
+        const lastAha=value.lastAha==='first'&&ahaFirst?'first':
+          ['retry','guided'].includes(value.lastAha)&&ahaSupported?value.lastAha:null;
+        if(!lastMain&&!lastAha)continue;
+        clean[key]={mainRight,mainWrong,lastMain,lastMainAt:lastMain?sceneTime(value.lastMainAt):0,
+          ahaFirst,ahaSupported,lastAha,lastAhaAt:lastAha?sceneTime(value.lastAhaAt):0};
+      }
+      if(Object.keys(clean).length)out[record.id]=clean;
+    }
+    return out;
+  }
+  function recordContext(raw,contexts,id,index,text,lane,outcome,now=Date.now()) {
+    const record=contexts?.wordContexts?.find(item=>item.id===id);
+    const scene=Number.isInteger(index)&&record?.scenes[index];
+    if(!scene||scene.text!==text||
+      !(lane==='main'&&['right','wrong'].includes(outcome)||lane==='aha'&&['first','retry','guided'].includes(outcome)))return raw;
+    const cards=sanitizeContextProgress(raw,contexts),key=sceneKey(scene);
+    const before=cards[id]?.[key]||{mainRight:0,mainWrong:0,lastMain:null,lastMainAt:0,
+      ahaFirst:0,ahaSupported:0,lastAha:null,lastAhaAt:0};
+    const updated={...before};
+    const at=sceneTime(now);
+    if(lane==='main'){
+      const count=outcome==='right'?'mainRight':'mainWrong';
+      updated[count]=Math.min(9999,before[count]+1);
+      updated.lastMain=outcome;updated.lastMainAt=at;
+    }else{
+      const count=outcome==='first'?'ahaFirst':'ahaSupported';
+      updated[count]=Math.min(9999,before[count]+1);
+      updated.lastAha=outcome;updated.lastAhaAt=at;
+    }
+    return {...cards,[id]:{...cards[id],[key]:updated}};
+  }
+  function contextSummary(record,progress) {
+    const scenes=(record?.scenes||[]).map((scene,index)=>{
+      const item=progress?.[record.id]?.[sceneKey(scene)];
+      return {index,title:scene.title,lastMain:item?.lastMain||null,lastAha:item?.lastAha||null,
+        mainAt:item?.lastMainAt||0,ahaAt:item?.lastAhaAt||0};
+    });
+    const tried=scenes.filter(scene=>scene.lastMain||scene.lastAha).length;
+    const correct=scenes.filter(scene=>scene.lastMain==='right').length;
+    const needs=scenes.filter(scene=>scene.lastMain==='wrong'||
+      (['retry','guided'].includes(scene.lastAha)&&(scene.lastMain!=='right'||scene.ahaAt>scene.mainAt))).length;
+    return {scenes,total:scenes.length,tried,correct,needs,
+      mainTried:scenes.filter(scene=>scene.lastMain).length};
+  }
+  function contextPriority(id,memory) {
+    const record=memory?.catalog?.wordContexts?.find(item=>item.id===id);
+    const info=contextSummary(record,memory?.progress);
+    if(!info.tried)return 0;
+    return info.needs?3:info.correct<info.total?1:0;
+  }
+  function contextOrder(record,progress,{purpose='main',exclude=[],previous=-1,random=Math.random}={}) {
+    const info=contextSummary(record,progress);
+    const candidates=info.scenes.filter(scene=>!exclude.includes(scene.index));
+    const rank=scene=>{
+      if(!scene.lastMain&&!scene.lastAha)return 0;
+      if(purpose==='aha'){
+        if(!scene.lastAha)return 1;
+        return scene.lastAha==='first'?3:2;
+      }
+      if(!scene.lastMain)return 1;
+      return scene.lastMain==='wrong'?2:3;
+    };
+    // First seek entirely new stories. For equally useful scenes, avoid the
+    // most recent main story and use the least recently observed evidence.
+    return shuffle(candidates,random).sort((a,b)=>rank(a)-rank(b)||
+      Number(a.index===previous)-Number(b.index===previous)||
+      Math.max(a.mainAt,a.ahaAt)-Math.max(b.mainAt,b.ahaAt)).map(scene=>scene.index);
+  }
   function availableTypes(item, settings, hasContext, hasMissions) {
     if (item.kind === 'expression') {
       if(settings.difficulty==='exam'||settings.expressionTask!=='mix') return [settings.difficulty==='exam'?'meaning':settings.expressionTask||'meaning'];
@@ -77,7 +172,7 @@
     if(entry.streak===1)return 9;
     return Math.max(1,5-Math.min(entry.streak,4));
   }
-  function choiceType(item,settings,progress,types,random=Math.random,readingProgress=null) {
+  function choiceType(item,settings,progress,types,random=Math.random,readingProgress=null,contextMemory=null) {
     if(types.length===1)return types[0];
     const id=item.entry.id;
     // A child may recognise the right main answer yet need help applying its
@@ -96,6 +191,8 @@
     if(readingNeeds(readingProgress,id,'recognition')&&types.includes('reverse'))return 'reverse';
     const record = progress?.[id];
     const skills=record?.skills || {};
+    const contextNeed=types.includes('context')?contextPriority(id,contextMemory):0;
+    if(contextNeed>=3||(contextNeed&& !types.some(type=>needsPractice(skills[type]))))return 'context';
     if(!types.some(type=>skills[type]?.attempts)){
       const sample=random();
       if(item.kind==='expression')return sample<.6?'meaning':sample<.85?'sentence':'order';
@@ -117,7 +214,7 @@
     return !!item&&item.supported>0 &&
       (type==='transfer'&&Number.isInteger(item.quality)?item.quality<2:item.streak<2);
   }
-  function focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress=null) {
+  function focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress=null,contextMemory=null) {
     const id=item.entry.id;
     const types=availableTypes(item,settings,contextIds.has(id),missionsAvailable);
     const skills=progress?.[id]?.skills || {};
@@ -126,28 +223,30 @@
     const weak=types.filter(type=>needsPractice(skills[type]));
     const due=card && card.streak<3 && card.dueAt<=now;
     const readingWeak=readingNeeds(readingProgress,id,'transfer')||readingNeeds(readingProgress,id,'recognition');
-    return due || weak.length || readingWeak ? 1 + Math.max(0,...weak.map(type=>skills[type].wrong)) + (readingWeak?2:0) : 0;
+    const storyNeed=types.includes('context')?contextPriority(id,contextMemory):0;
+    return due || weak.length || readingWeak || storyNeed ?
+      1 + Math.max(0,...weak.map(type=>skills[type].wrong)) + (readingWeak?2:0) + storyNeed : 0;
   }
   // Explicit practice goals filter only the current level/topic, without changing
   // scores, creating extra history or claiming that a child knows a word.
   function trainingPools(pool,settings,{progress=null,reviews=null,mistakes={},readingProgress=null,
-    missionProgress=null,contextIds=new Set(),missionsAvailable=false,now=Date.now()}={}) {
+    missionProgress=null,contextIds=new Set(),missionsAvailable=false,now=Date.now(),contextMemory=null}={}) {
     const discover=[],focus=[];
     for(const item of pool){
       const id=item.entry.id,skills=progress?.[id]?.skills||{},review=reviews?.[id],reading=readingProgress?.[id];
       const seen=Object.values(skills).some(value=>value?.attempts>0) || !!review ||
         Number(mistakes?.[id])>0 || (Array.isArray(missionProgress?.[id])&&missionProgress[id].length>0) ||
         ['transfer','recognition'].some(type=>reading?.[type]?.first>0||reading?.[type]?.supported>0);
-      if(!seen)discover.push(item);
+      if(!seen&&!Object.keys(contextMemory?.progress?.[id]||{}).length)discover.push(item);
       const waiting=review&&review.streak<3&&review.dueAt>now;
-      if(!waiting&&(focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress)>0||
+      if(!waiting&&(focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress,contextMemory)>0||
         (!review&&Number(mistakes?.[id])>0)))focus.push(item);
     }
     return {mixed:pool,discover,focus};
   }
-  function pickPool(pool,count,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress=null) {
+  function pickPool(pool,count,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress=null,contextMemory=null) {
     if(count<=0)return [];
-    const scored=pool.map((item,index)=>({item,index,focus:focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress)}));
+    const scored=pool.map((item,index)=>({item,index,focus:focusScore(item,progress,reviews,settings,contextIds,missionsAvailable,now,readingProgress,contextMemory)}));
     // Mixed training reserves half for exploration. Explicit focus training
     // already uses a filtered pool, so all requested slots may target weak skills.
     const focused=shuffle(scored.filter(x=>x.focus>0),random)
@@ -167,17 +266,17 @@
     for(let i=arr.length-1;i>0;i--){const j=Math.min(i,Math.max(0,Math.floor(random()*(i+1))));[arr[i],arr[j]]=[arr[j],arr[i]];}
     return arr;
   }
-  function pickItems(candidates,count,progress,reviews,settings,contextIds,missionsAvailable,now=Date.now(),random=Math.random,readingProgress=null) {
+  function pickItems(candidates,count,progress,reviews,settings,contextIds,missionsAvailable,now=Date.now(),random=Math.random,readingProgress=null,contextMemory=null) {
     const wanted=Math.min(Math.max(0,count),candidates.length);
-    if(settings.topic!=='mixed')return pickPool(candidates,wanted,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress);
+    if(settings.topic!=='mixed')return pickPool(candidates,wanted,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress,contextMemory);
     const words=candidates.filter(item=>item.kind==='word'),expressions=candidates.filter(item=>item.kind==='expression');
     const phraseCount=Math.min(Math.ceil(wanted/2),expressions.length);
     const wordCount=Math.min(wanted-phraseCount,words.length);
-    const selected=pickPool(words,wordCount,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress)
-      .concat(pickPool(expressions,phraseCount,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress));
+    const selected=pickPool(words,wordCount,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress,contextMemory)
+      .concat(pickPool(expressions,phraseCount,progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress,contextMemory));
     const chosen=new Set(selected.map(item=>item.entry.id));
     return shuffle(selected.concat(pickPool(candidates.filter(item=>!chosen.has(item.entry.id)),wanted-selected.length,
-      progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress)),random);
+      progress,reviews,settings,contextIds,missionsAvailable,now,random,readingProgress,contextMemory)),random);
   }
   function summary(progress) {
     const result={concepts:0,practised:0,needsPractice:0,comfortable:0};
@@ -212,5 +311,6 @@
     }
     return found.sort((a,b)=>b.wrong-a.wrong || b.lastAt-a.lastAt || a.id.localeCompare(b.id)).slice(0,Math.max(0,Math.min(5,max)));
   }
-  return {SKILLS,LABELS,sanitize,record,task,availableTypes,choiceType,nextScene,pickItems,trainingPools,summary,needsPractice,suggestions};
+  return {SKILLS,LABELS,sanitize,record,task,availableTypes,choiceType,nextScene,pickItems,trainingPools,summary,needsPractice,suggestions,
+    sceneKey,sanitizeContextProgress,recordContext,contextSummary,contextPriority,contextOrder};
 });
