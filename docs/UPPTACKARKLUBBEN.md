@@ -73,6 +73,12 @@ skilja sig genom en osynlig färgkod eller okända symboler.
 Ledtrådarna i en scen ska beskriva **två självständiga egenskaper**.
 Varje felalternativ ska avsiktligt passa **ett** spår och motsäga det
 andra – inte missa båda eller av misstag passa båda.
+Ordningen på de tre svarsalternativen varierar mellan äventyr och
+uppdrag så att barnet inte kan lära sig att rätt svar alltid är första,
+andra eller tredje knappen. Ordningen bestäms av äventyrets ID och steg:
+den är densamma efter omladdning, men inget extra lagringstillstånd
+behövs. Uppläsningen använder samma synliga numrering som knapparna.
+
 Förklaringen efter ett fel ska visa vilken egenskap som passar och
 vilken som inte passar. Inget facit eller kommande scen finns i
 webbläsarmodellen innan barnet når den delen. Rubrikerna ska skapa
