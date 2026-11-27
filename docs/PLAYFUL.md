@@ -1,77 +1,97 @@
-# Ordjakten 0.2.0 – lekfullt för 8–10-åringar
+# Stjärnor och lekfull återkoppling
 
-## Produktmål
+Ordjakten uppmuntrar barnet att tänka i lugn och ro, läsa förklaringen och
+fortsätta utforska. Stjärnorna är en samling i spelet. De visar varken ett
+betyg eller att ett ord är färdiglärt.
 
-Gör ord och begrepp roliga att förstå, inte bara roliga att gissa. Också en elev
-som gissar fel ska vilja läsa vad ordet betyder och våga försöka igen.
+## En stjärnrad att fylla
 
-## Flöde
+1. En vanlig ordjakt börjar en rad med en stjärna för varje fråga.
+2. Ett rätt huvudsvar tänder frågans stjärna och sparar den direkt.
+3. Efter ett fel kan ett eget rätt Aha-svar tända samma saknade stjärna.
+   En fråga ger högst en stjärna i raden; Aha ger aldrig extra provpoäng.
+4. Efter två fel i Aha visas en förklaring. Att få facit ger ingen stjärna.
+   Barnet kan gå vidare och fortsätta med stjärnraden senare.
+5. På startsidan och resultatsidan finns en knapp för radens återstående
+   frågor. De får skrivna vardagssituationer och kan besvaras i egen takt,
+   utan timer. Redan samlade stjärnor ligger kvar.
+6. Hela raden firas när den är fylld, också om barnet har övat vidare.
+   En ny vanlig omgång börjar en ny rad; samlingens total försvinner inte.
 
-1. **Snabbstart** startar 10 ord med bilder, utan tidspress (Träna).
-2. **Valfria inställningar**: Träna/Testa dig, nivå, antal, timer, tema,
-   ordkompis och ljud.
-3. **Träna**: direkt feedback; hela frågan och svarsalternativen försvinner.
-   Betydelsen och exemplet visas. Ett rätt svar ger 1 stjärna.
-4. **Testa dig**: inget facit, rätt/fel eller stjärnpoäng visas innan slutet.
-5. **Resultat**: rätt/fel/obesvarade, stjärnor och 1–4 positiva märken.
-6. **Nästa försök**: tidigare fel kan tränas igen utan att frågorna dupliceras.
+En avbruten rad kan innehålla frågor barnet aldrig hann se. Därför skiljer
+sammanfattningen på **i första rundan** och **i fortsatt träning**, utan att
+påstå att varje fortsatt fråga tidigare var fel. Det går att fortsätta
+radens återstående frågor även efter en sidomladdning.
 
-## Figuren och mikrointeraktioner
+Fristående fokus, Aha, ordverkstad och berättelseuppdrag har kvar sina egna
+övnings- och minnesmärkesregler. Denna samling gäller huvudomgången,
+dess Aha-steg och den uttryckliga fortsättningen av stjärnraden.
 
-| Kompis | Emoji | Namn | Syfte |
-| --- | --- | --- | --- |
-| Räv | 🦊 | Roffe | Nyfiken upptäckare |
-| Uggla | 🦉 | Ulla | Klok och lugn |
-| Drake | 🐉 | Dino | Äventyrlig |
+## Samlingsmärken
 
-Kompisens val sparas lokalt i `ordjakten-v1` via validerade inställningar;
-namn på barnet efterfrågas inte. Ingen spårning eller fjärrsynkning.
+| Stjärnor | Samlingsmärke |
+| ---: | --- |
+| 5 | Första gnistan |
+| 15 | Stjärnblomman |
+| 30 | Stjärnkompassen |
+| 50 | Stjärnlyktan |
+| 75 | Stjärnvingarna |
+| 100 | Stjärnslottet |
 
-- Uppmuntran varierar mellan frågor med förutsägbar, testbar logik.
-- Tre rätt i rad ger en liten extra kommentar men **inte** fler stjärnor.
-- Etapper markerar framsteg/avklarade frågor och är skilda från stjärnor.
-- Ett fel ger en vänlig reaktion, aldrig minuspoäng eller bestraffning.
-- Ljudeffekter är *avstängda från början*, skapas lokalt utan ljudfiler,
-  och visas aldrig som ett krav för att kunna spela.
-- Animationer respekterar `prefers-reduced-motion`.
+Alla mål syns från början och bygger på samma stjärntotal. Märkena är
+kosmetiska; de kräver varken köp, tidtagning, dagliga besök eller en följd
+av rätta svar. Inget låser undervisningsinnehållet. När alla sex märken är
+samlade kan barnet fortsätta spela och samla stjärnor.
 
-## Märken
+Efter rundan kan barnet också få ett kort uppmuntrande märke:
 
-- **Ordspanare**: genomförde en omgång oavsett poäng.
-- **Tre i rad**: minst tre korrekta svar i följd.
-- **Stjärnletare**: minst 80 % rätt.
-- **Ordmästare**: alla rätt.
+- **Ordspanare** beskriver att barnet gav sig ut på en ordjakt.
+- **Stjärnletare** anger det faktiska antalet rätt direkt när det är minst
+  80 procent av frågorna i den ursprungliga raden.
+- **Övade vidare** visar stjärnor som tillkommit under fortsatt träning.
+- **Alla stjärnor** firar en fylld rad, oavsett om den krävde fler försök.
 
-Märken ges i presentationslagret `public/js/playful.js`, utan databas.
-För yngre barn är **att läsa förklaringen** viktigare än att nå högsta poäng.
+Ordkompisarna Roffe, Ulla och Dino uppmuntrar försök och eftertanke.
+Återkopplingen lovar inte att ett enda svar innebär att ordet är inlärt.
 
-## Kvalitets- och integritetsregler
+## Resultat och sparande
 
-- Bildfrågor visar bara uttryckligen kuraterade emojis (fortsatt 40 godkända).
-- Använd egna formuleringar på förklaringarna; inga officiella prov kopieras.
-- Testläge visar inte individuell prestation i realtid.
-- Ordkompisljud får aldrig starta automatiskt på sidladdning.
-- Ingen ny vuxen- eller barnprofil krävs.
-- 121 historiska ord, teman och timerlägen är bevarade.
+`star-collection.js` håller samlingens total och en aktiv rad med högst
+25 ord- eller uttrycks-ID:n. Varje rad har ett löpnummer. Dubbla anrop,
+redan insamlade stjärnor och anrop från äldre rader ger inget extra.
+Varje utdelad stjärna sparas omedelbart i den befintliga lokala historiken.
 
-## Test och visuella kontroller
+Vid första uppdateringen hämtas stjärnor från giltiga sparade resultat.
+Äldre resultat som redan har rullats bort går inte att återskapa. Därefter
+är totalen oberoende av gränsen på 50 sparade resultat. Återstående frågor
+sparas som ID:n; inga frågetexter eller uppgifter om barnet behövs.
 
-- `npm run check`: innehåll samt Node-test av logik, inställningar, märken.
-- `python tests/browser_smoke.py`: befintliga spel/timer/mobil/test-scenarier.
-- `python tests/browser_playful.py`: ordkompis, snabbstart, tre i rad,
-  välvillig felrespons, märken och frånvaro av facit under prov.
-- `docs/previews/`: uppdaterade skärmbilder av start, pågående och feedback.
+I **Testa dig** delas stjärnorna ut först efter att testet har avslutats.
+Inget i stjärnsamlingen avslöjar rätt eller fel under testet. Fortsatt
+stjärnträning sker i Träna utan timer, ändrar inte tidigare resultat och
+lägger inte till ett nytt provresultat. De verkliga övningssvaren kan
+fortfarande hjälpa det befintliga repetitionssystemet; kosmetiska
+stjärnor ändrar inte dess regler för återbesök över tid.
 
-## Nästa möjliga steg
+Exporten innehåller stjärnsamlingen. Rensa historik tar bort den tillsammans
+med övriga sparade framsteg, efter appens befintliga bekräftelse.
 
-1. Barnprovning med 3–5 elever i åldern 8–10, fånga svårlästa ord och
-   missvisande emoji-varianter utan att samla in personuppgifter.
-2. Skapa kuraterade fasta distraktorer där de nu slumpas ur andra definitioner.
-3. Inför valfria korta tema-uppdrag, t.ex. djur, natur och vardag, först när
-   ord för dessa teman har kvalitetsgranskats och märkts upp.
-4. Återuppta avbrutna spel utan att bryta provrättvisan.
-5. Föräldravy på samma enhet med veckans vanliga felord – utan konton.
+## Läsvänlig presentation
 
-## 0.3: äventyrsvärldar
+Samlingen finns på startsidan och i rundans resultat. Under träningen visas
+en kompakt stjärnrad. Märken och stjärnor har text som beskriver deras
+status, så att betydelsen inte beror på färg. Textytor använder befintliga
+kontrastfärger i ljust, mörkt och högkontrastläge. Korten radbryts på smala
+skärmar och respekterar minskad rörelse.
 
-Tre världar och fyra upptäckbara platser per värld är nu implementerade. De påverkar bara berättelsen och utseendet; inte ordpoolen eller bedömningen. Se `ADVENTURES.md`.
+## Kontroll före publicering
+
+`npm run check` kör innehåll, logik, presentation och Pages-resurser.
+Stjärnmodellens tester täcker bland annat omladdning, migrering, dubbletter,
+gamla svar, fulla rader och gränsen på sparad historik. Integrationstester
+kör produktionsfunktionerna för Aha, fortsättning utan timer och testläge.
+
+Prova även i den publicerade webbläsaren: fel huvudsvar följt av rätt Aha,
+guidad förklaring med kvarvarande stjärna, fortsättning av raden, omladdning,
+fullt samlingsmärke samt text vid stor förstoring. Barnprovspelning ska
+bedöma om målen känns roliga och om barnet använder förklaringarna.

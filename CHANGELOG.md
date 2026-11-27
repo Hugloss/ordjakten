@@ -1,5 +1,13 @@
 # Ordjakten – ändringslogg
 
+## Stjärnor som finns kvar och nya chanser i egen takt
+
+- Stjärnor sparas direkt och visas på startsidan, i rundan och efteråt. Sex fasta samlingsmärken blir synliga vid 5, 15, 30, 50, 75 och 100 stjärnor.
+- Varje fråga i stjärnraden kan ge en stjärna: genom huvudsvaret eller ett eget rätt svar efter förklaringen. Visat facit, svarstid och rätt i rad ger inga extra stjärnor.
+- Kvarvarande stjärnor går att samla i en frivillig ny övning utan timer, även efter omladdning. Den använder samma ord i skrivna situationer och bevarar den ursprungliga resultathistoriken.
+- Uppmuntran och märken beskriver det barnet faktiskt har gjort. En full stjärnrad firas även när den fyllts genom flera försök.
+- Tidigare sparade korrekta svar förs över en gång. Samlingen är sedan oberoende av gränsen på 50 sparade resultat. Dubbelklick och gamla rundors svar kan inte ge dubbla stjärnor. Offlinecache v71.
+
 ## Sammanhanget avgör betydelsen
 
 - Sex befintliga uttryck får 18 skrivna situationer: Häng med, Hoppa över, Hoppa ner från pallen, Vända blad, Tappa tråden och Få kalla fötter. Varje uttryck får två tydliga betydelser och en situation där en konkret fråga behövs.

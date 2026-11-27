@@ -3,6 +3,7 @@
 Uses the same no-network, in-memory page as browser_smoke.py; no external assets.
 """
 from browser_smoke import make_page
+from browser_reading_flow import answer_reading
 import shutil
 from playwright.sync_api import sync_playwright
 
@@ -31,23 +32,27 @@ def main():
             assert page.locator('#feedback-message').inner_text()
             assert page.locator('#feedback-reward').is_visible()
             assert page.locator('#explanation-definition').is_visible()
-            assert page.locator('#play-stars').inner_text() == f'⭐ {i+1} ' + ('stjärna' if i == 0 else 'stjärnor')
+            assert page.locator('#play-stars').inner_text() == f'⭐ {i+1} av 5 stjärnor'
+            answer_reading(page)
             page.locator('#next').click()
-        assert page.locator('#play-streak').inner_text() == '🔥 3 i rad'
+        assert not page.locator('#play-streak').is_visible()
         word=page.locator('#question-word').inner_text()
         right=page.evaluate("""word => window.ORDJAKTEN_WORDS.words.find(w=>w.word===word).illustration.label""",word)
         page.locator('.answer-option').filter(has_not_text=right).first.click()
-        assert 'Ett nytt ord upptäckt' in page.locator('#feedback-title').inner_text()
+        assert page.locator('#feedback-title').inner_text()
         assert page.locator('#stat-wrong').inner_text() == '1'
+        answer_reading(page)
+        assert page.locator('#play-stars').inner_text() == '⭐ 4 av 5 stjärnor'
         page.locator('#next').click()
         answer_correct(page)
+        answer_reading(page)
         page.locator('#next').click()
         assert page.locator('#view-results').is_visible()
         assert page.locator('#result-right').inner_text() == '4'
         assert page.locator('#result-wrong').inner_text() == '1'
-        assert page.locator('#rewards-stars').inner_text() == '⭐ 4 stjärnor hittade'
-        assert 'Tre i rad' in page.locator('#rewards-badges').inner_text()
-        assert 'Ordmästare' not in page.locator('#rewards-badges').inner_text()
+        assert page.locator('#rewards-stars').inner_text() == '⭐ 5 av 5 stjärnor i din rad'
+        assert 'Alla stjärnor' in page.locator('#rewards-badges').inner_text()
+        assert 'Övade vidare' in page.locator('#rewards-badges').inner_text()
         assert not errors, errors
         page.close()
 

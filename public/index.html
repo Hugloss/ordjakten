@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/playful.css">
+  <link rel="stylesheet" href="./css/star-collection.css">
   <link rel="stylesheet" href="./css/adventures.css">
   <link rel="stylesheet" href="./css/expressions.css">
   <link rel="stylesheet" href="./css/comics.css">
@@ -39,6 +40,8 @@
   <script src="./data/clue-ladder.js" defer></script>
   <script src="./js/engine.js" defer></script>
   <script src="./js/playful.js" defer></script>
+  <script src="./js/star-collection.js" defer></script>
+  <script src="./js/star-collection-view.js" defer></script>
   <script src="./js/adventures.js" defer></script>
   <script src="./js/adventure-map.js" defer></script>
   <script src="./js/comics.js" defer></script>
@@ -182,10 +185,12 @@
           <h1 id="home-title">Ordjakten börjar här!<br><span>Hur många ord hittar du?</span></h1>
           <p>Börja spela direkt med din ordkompis. Du kan välja en annan längre ner.</p>
           <div class="hero-companion" aria-hidden="true"><span class="hero-companion-emoji">🦊</span><span class="hero-companion-message">Hej! Jag heter Roffe. Ska vi gå på ordjakt?</span></div>
-          <div class="quick-start-area"><button type="button" id="quick-start" class="primary-button big-button quick-start-button">⚡ Spela 5 ord direkt →</button><button type="button" id="quick-expressions" class="secondary-button big-button quick-expressions">💬 Prova 5 kluriga uttryck →</button><button type="button" id="quick-school" class="secondary-button big-button quick-school">🎒 Skolans uppgifter · 5 frågor →</button><button type="button" id="quick-contexts" class="secondary-button big-button quick-contexts">🎭 5 ord i vardagen →</button><button type="button" id="quick-contrast" class="secondary-button big-button quick-contrast">⚖️ Hitta skillnaden · 4 situationer →</button><p class="subtle-note">📚 Spela i din takt. I Hitta skillnaden blir ledtrådarna lite klurigare när du är redo.</p></div>
+          <div class="quick-start-area"><button type="button" id="quick-start" class="primary-button big-button quick-start-button">⭐ Spela 5 ord i din takt →</button><button type="button" id="quick-expressions" class="secondary-button big-button quick-expressions">💬 Prova 5 kluriga uttryck →</button><button type="button" id="quick-school" class="secondary-button big-button quick-school">🎒 Skolans uppgifter · 5 frågor →</button><button type="button" id="quick-contexts" class="secondary-button big-button quick-contexts">🎭 5 ord i vardagen →</button><button type="button" id="quick-contrast" class="secondary-button big-button quick-contrast">⚖️ Hitta skillnaden · 4 situationer →</button><p class="subtle-note">📚 Spela i din takt. I Hitta skillnaden blir ledtrådarna lite klurigare när du är redo.</p></div>
           <button type="button" id="open-book-home" class="book-home-link">🎁 Min luckbok <span id="book-home-count">· 0 av 25 upptäckta</span> →</button>
           <div class="hero-badges"><span>⭐ Samla stjärnor</span><span>🎯 121 ord · 59 uttryck · 14 skolord</span><span>🎒 Spela utan konto</span></div>
         </div>
+
+        <section id="star-collection-home" class="panel star-collection" aria-label="Min stjärnsamling"></section>
 
         <section class="panel learning-home" aria-labelledby="learning-home-title">
           <div class="learning-home-intro">
@@ -436,6 +441,7 @@
         <div id="mission-bar" class="mission-bar" aria-label="Stjärnjakten" hidden>
           <div class="companion-bubble"><span id="play-companion-emoji" class="companion-face" aria-hidden="true">🦊</span><div><strong id="play-companion-name">Roffe hejar på dig!</strong><p id="play-companion-hint">Vi klarar det här tillsammans!</p></div></div>
           <div class="mission-stars"><span id="play-stars" class="star-total">⭐ 0 stjärnor</span><span id="play-streak" class="streak-pill" hidden>🔥 3 i rad</span></div>
+          <div id="star-round-progress" class="star-round-progress" hidden></div>
         </div>
         <section id="quest-progress" class="quest-progress" aria-label="Miniuppdragets framsteg" hidden>
           <div class="quest-progress-heading"><span id="quest-progress-icon" aria-hidden="true">🔎</span><div><strong id="quest-progress-title">Ordspanaren</strong><p id="quest-progress-caption">Upptäck fem ord!</p></div><span id="quest-progress-count">0 / 5</span></div>
@@ -761,7 +767,7 @@
         <section class="panel adventure-finale" aria-labelledby="finale-title"><div id="finale-emoji" aria-hidden="true">🌲</div><div><h2 id="finale-title">Mystiska skogen</h2><p id="finale-text">Du har utforskat hela skogen!</p><p id="finale-stops" class="subtle-note"></p></div></section>
         <section id="story-results" class="panel story-card" aria-label="Nästa berättelseäventyr"></section>
         <section id="results-reading" class="panel results-reading" hidden><h2>📖 Så gick Aha-frågorna</h2><p id="results-reading-detail"></p><p class="subtle-note">Aha-frågorna hjälper dig att öva. De ändrar inte poängen i ordjakten.</p></section>
-        <section id="results-rewards" class="panel rewards-panel" hidden aria-labelledby="rewards-title"><div class="section-header"><h2 id="rewards-title">🌟 Dina upptäckter</h2></div><p id="rewards-stars" class="rewards-stars"></p><div id="rewards-badges" class="rewards-badges"></div></section>
+        <section id="results-rewards" class="panel rewards-panel" hidden aria-labelledby="rewards-title"><div class="section-header"><h2 id="rewards-title">🌟 Dina upptäckter</h2></div><p id="rewards-stars" class="rewards-stars"></p><div id="rewards-badges" class="rewards-badges"></div><div id="star-collection-results" class="star-collection star-collection-compact" role="region" aria-label="Min stjärnsamling"></div></section>
         <section id="quest-finale" class="panel quest-finale" hidden aria-labelledby="quest-finale-title"><div id="quest-finale-emoji" class="quest-finale-emoji" aria-hidden="true">🌟</div><div><h2 id="quest-finale-title">Miniuppdrag avklarat!</h2><p id="quest-finale-text"></p><p id="quest-finale-count" class="subtle-note"></p></div></section>
         <div class="result-grid"><div class="result-stat positive"><span>✅ Rätt</span><strong id="result-right">0</strong></div><div class="result-stat negative"><span>❌ Fel</span><strong id="result-wrong">0</strong></div><div class="result-stat neutral"><span>⏳ Obesvarade</span><strong id="result-empty">0</strong></div></div>
         <section class="panel review-result-note" aria-live="polite"><h2>🧠 Vad har du lärt dig?</h2><p id="review-result-message">Ord som varit svåra kommer tillbaka med en annan fråga.</p><p id="review-result-counts" class="subtle-note"></p></section>
@@ -773,7 +779,7 @@
         </section>
         <div id="results-review" class="panel review-panel"><div class="section-header"><h2 id="review-title">📖 Repetera orden</h2></div><div id="review-list" class="review-list"></div></div>
         <section class="panel next-steps" aria-labelledby="next-steps-title"><h2 id="next-steps-title">🧭 Vad vill du upptäcka nu?</h2><p id="next-steps-note" class="subtle-note">Välj ett kort uppdrag eller fortsätt med dina vanliga inställningar.</p><div class="next-step-grid" id="quest-result-buttons"><button type="button" class="next-step-button" data-start-quest="scout">🔎 Fem ord</button><button type="button" class="next-step-button" data-start-quest="stories">💬 Fem uttryck</button><button type="button" class="next-step-button" data-start-quest="comeback">🌱 Öva det svåra</button></div></section>
-        <div class="results-actions"><button type="button" id="play-again" class="primary-button big-button">🔁 Spela en ny omgång</button><button type="button" id="change-settings" class="secondary-button big-button">⚙️ Ändra inställningar</button><button type="button" id="results-book" class="secondary-button big-button">🎁 Öppna min luckbok</button></div>
+        <div class="results-actions"><button type="button" id="play-again" class="primary-button big-button">🔁 Ny omgång och ny stjärnrad</button><button type="button" id="change-settings" class="secondary-button big-button">⚙️ Ändra inställningar</button><button type="button" id="results-book" class="secondary-button big-button">🎁 Öppna min luckbok</button></div>
       </section>
 
       <section id="view-book" class="view" aria-labelledby="book-title" hidden>
