@@ -58,6 +58,8 @@ ordfrekvens. Inga ord eller tidigare framsteg har tagits bort.
 
 ## Projektstruktur
 
+Se [målarkitekturen för en ämnesoberoende lärplattform](docs/ARCHITECTURE.md) för hur frågor, svarstyper, kunskapsmål, spelmodeller, berättelser, belöningar och historik ska frikopplas. Dokumentet är en **migrationsplan**, inte en beskrivning av redan genomförda kodändringar.
+
 - `public/` – hela statiska webbappen, databank och lokala bildresurser.
 - `scripts/` – utvecklingsserver och innehållsvalidering.
 - `tests/` – automatiska Node-tester och valfria Python/Chromium-tester.

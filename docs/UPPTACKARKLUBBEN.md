@@ -118,6 +118,8 @@ verkligen uppskattas.
 
 ## Lagring och arkitektur
 
+Nedan beskrivs **nuvarande implementation efter PR #28**. Den långsiktiga planen är att skilja berättelsesteg och belöningar från generella frågeobjekt med stabila ID:n, enligt [målarkitekturen](ARCHITECTURE.md). Detta avsnitt ska inte tolkas som en andra, framtida innehållsmodell.
+
 Kanoniskt innehåll finns **bara** i
 `public/js/mission-portals-data.js`: 32 berättelser, 96 uppdrag.
 `mission-portals.js` validerar innehåll och all sparad progression,

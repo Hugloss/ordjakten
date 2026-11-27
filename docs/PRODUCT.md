@@ -44,6 +44,8 @@ Se `docs/QUESTS.md`.
 
 **Kunskap före spelmekanik:** Stjärnor och belöningar kan tillkomma, men inte uppmuntra till att hoppa över definitioner.
 
-**Ett gemensamt innehållslager:** Ord, exempel, illustrationer och nivåer hålls i ordbanken, inte som kopior utspridda i komponenterna.
+**Ett gemensamt innehållslager:** I nuvarande språkspel hålls ord, exempel, illustrationer och nivåer i ordbanken, inte som kopior utspridda i komponenterna. Målbilden är en **ämnesoberoende fråge- och kunskapsbank** som inte känner till spelformer. Se [arkitektur och stegvis migrering](ARCHITECTURE.md).
+
+**Separata resultat:** Rätt/fel på en uppgift, en lärandeobservation och ett fynd i ett äventyr är skilda begrepp. Spelframsteg ska aldrig automatiskt räknas som att barnet behärskar ett kunskapsmål.
 
 **Behåll historiken:** Stabila ord-ID:n och en separat innehållsgranskning gör vidareutveckling möjlig utan att tidigare ord försvinner.

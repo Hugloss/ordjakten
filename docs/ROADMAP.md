@@ -1,5 +1,9 @@
 # Utvecklingsplan – idéer vi inte vill glömma
 
+## Nästa arkitektursteg – utan att tappa befintligt innehåll
+
+Den kanoniska målbilden och den detaljerade migreringsordningen finns i [ARCHITECTURE.md](ARCHITECTURE.md). Inventera först frågor, kunskapsmål, scener, ID:n, återkoppling och belöningar. Inför därefter en liten läsadapter och ett gemensamt pilotfall innan innehåll flyttas. Separera sedan bedömning, urval och lärandeprogression från spelmodellerna, med bevarad webbläsarhistorik. De nuvarande språkspelens regler och offline-funktion är kompatibilitetskrav, inte något som ska skrivas om samtidigt.
+
 ## Nuvarande MVP (finns i koden)
 
 - Ordjakten som namn, barnvänlig design och svenska texter.
