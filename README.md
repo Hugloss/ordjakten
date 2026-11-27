@@ -30,7 +30,7 @@ npm run check
 - Sex befintliga uttryck har dessutom 18 situationer där sammanhanget
   avgör betydelsen eller visar att barnet behöver fråga vad personen menar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
-- **Upptäckarklubben**: 32 originalskrivna äventyr med 96 korta uppdrag,
+- **Upptäckarklubben**: 52 originalskrivna äventyr med 156 korta uppdrag,
   inspirerade av detektiver, hav, hotell, djur, sagor, resor, byggande
   och andra kalasteman. Varje äventyr har tre uppdrag med två ledtrådar,
   begriplig hjälp och ett eget fynd. Utan timer eller poängavdrag.
