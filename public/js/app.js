@@ -1691,15 +1691,16 @@
   }
   function storyNote(info){
     if(info.correct===info.total&&info.total&&!info.needs)return 'Du hittade rätt senast i alla '+info.total+' berättelser. Prova gärna igen en annan dag!';
-    return 'Du har provat '+info.tried+' av '+info.total+' berättelser. Rätt senast på '+info.correct+' ordfrågor. '+
+    return 'Du har provat '+info.tried+' av '+info.total+' berättelser. Du svarade senast rätt i '+info.correct+' av dem som ordfråga. '+
       (info.needs?'Någon berättelse kan få en ny chans.':'Det finns fler sätt att upptäcka ordet!');
   }
-  function renderStoryTrail(target,id,{showEmpty=false}={}){
+  function renderStoryTrail(target,id,{showEmpty=false,compact=false}={}){
     const info=storySummary(id);
     target.replaceChildren();
     target.hidden=!info.total||(!showEmpty&&!info.tried);
     if(target.hidden)return;
     target.append(element('strong','','🌍 Berättelsespåret'),element('p','',storyNote(info)));
+    if(compact)return;
     const list=element('ul','story-trail-list');
     for(const scene of info.scenes){
       const row=element('li','');
@@ -3452,8 +3453,9 @@
     const q=game?.questions?.[game.index];
     if(!q||!readingCheck)return;
     recordAhaWithFeedback(q.id,readingCheck.source,outcome,readingCheck.evidence);
-    if(readingCheck.source==='context'&&game.settings.difficulty!=='exam'&&game.settings.adaptivePractice)
-      renderStoryTrail($('context-story-trail'),q.id);
+    if(game.settings.adaptivePractice&&game.settings.difficulty!=='exam'&&
+      (q.taskType==='context'||readingCheck.source==='context'))
+      renderStoryTrail($('context-story-trail'),q.id,{compact:true});
     saveHistory();
   }
   function answerReadingCheck(index) {
@@ -3605,7 +3607,7 @@
       readingCheck=B.makeCheck(q,{bank,contexts,surprises,missions,readingProgress:history.readingProgress,selectScene});
       showReadingCheck(readingCheck);
       if(!readingCheck&&q.taskType==='context'&&game.settings.adaptivePractice)
-        renderStoryTrail($('context-story-trail'),q.id);
+        renderStoryTrail($('context-story-trail'),q.id,{compact:true});
       $('feedback-area').dataset.readingStage='explain';
       $('view-play').dataset.readingPhase='explain';
       $('feedback-area').dataset.readingPending=readingCheck?'true':'false';

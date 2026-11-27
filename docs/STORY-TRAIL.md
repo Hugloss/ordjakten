@@ -32,9 +32,10 @@ frågetypsval och Aha-urval inte anpassade.
 
 ## Barnets vy
 
-Efter en Aha-fråga med en skriven vardagsscen och i Min ordstig visas
-**Berättelsespåret**: vilka berättelser som har prövats, vilka ordfrågor
-som senast besvarades rätt och vilka Aha-övningar som behövde hjälp.
+Efter en Aha-fråga med en skriven vardagsscen visas en kort sammanfattning
+av **Berättelsespåret** när smart träning är på. I Min ordstig visas
+hela spåret: vilka berättelser som har prövats, vilka ordfrågor som
+senast besvarades rätt och vilka Aha-övningar som behövde hjälp.
 Den frivilliga tre-berättelseövningen kan börja med en ny eller
 olöst berättelse. Alla tre scener förekommer fortfarande exakt en gång.
 

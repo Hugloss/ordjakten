@@ -119,6 +119,10 @@
     }
     return {...cards,[id]:{...cards[id],[key]:updated}};
   }
+  function sceneNeedsPractice(scene){
+    return scene.lastMain==='wrong'||
+      (['retry','guided'].includes(scene.lastAha)&&(scene.lastMain!=='right'||scene.ahaAt>=scene.mainAt));
+  }
   function contextSummary(record,progress) {
     const scenes=(record?.scenes||[]).map((scene,index)=>{
       const item=progress?.[record.id]?.[sceneKey(scene)];
@@ -127,8 +131,7 @@
     });
     const tried=scenes.filter(scene=>scene.lastMain||scene.lastAha).length;
     const correct=scenes.filter(scene=>scene.lastMain==='right').length;
-    const needs=scenes.filter(scene=>scene.lastMain==='wrong'||
-      (['retry','guided'].includes(scene.lastAha)&&(scene.lastMain!=='right'||scene.ahaAt>scene.mainAt))).length;
+    const needs=scenes.filter(sceneNeedsPractice).length;
     return {scenes,total:scenes.length,tried,correct,needs,
       mainTried:scenes.filter(scene=>scene.lastMain).length};
   }
@@ -148,7 +151,7 @@
         return scene.lastAha==='first'?3:2;
       }
       if(!scene.lastMain)return 1;
-      return scene.lastMain==='wrong'?2:3;
+      return sceneNeedsPractice(scene)?2:3;
     };
     // First seek entirely new stories. For equally useful scenes, avoid the
     // most recent main story and use the least recently observed evidence.
