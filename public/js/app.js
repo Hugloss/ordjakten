@@ -1736,7 +1736,9 @@
     $('aha-round-progress').textContent='Berättelse '+(ahaRound.index+1)+' av '+ahaRound.items.length;
     $('aha-round-word').textContent=row.word;
     $('aha-round-definition').textContent=row.definition;
-    $('aha-round-read-note').textContent=message||'Läs vad ordet eller uttrycket betyder.';
+    $('aha-round-read-note').textContent=message||(row.check.everydayInstruction?
+      'Läs betydelsen du ska öva på. Samma uttryck kan betyda något annat i en annan situation.':
+      'Läs vad ordet eller uttrycket betyder.');
     $('aha-round-read').hidden=false;
     $('aha-round-question').hidden=true;
     $('aha-round-feedback').hidden=true;
@@ -2834,14 +2836,15 @@
     $('focus-verdict').dataset.outcome=outcome;
     $('focus-verdict-icon').textContent=right?'✅':'❌';
     $('focus-verdict-title').textContent=right?'Bra jobbat!':'Vi lär oss tillsammans!';
-    const solution=isOrder?q.correctOrder.join(' → '):q.options.find(o=>o.correct).label;
+    const instructionLesson=Q.instructionFeedback(q,option?.label,missions);
+    const solution=isOrder?q.correctOrder.join(' → '):instructionLesson?.answer||q.options.find(o=>o.correct).label;
     $('focus-correct').textContent=right?'Du hittade rätt svar!':
       q.taskType==='contrast'?`Du valde ${option.label}. Här passar ${solution} bättre.`:`Rätt svar: ${solution}`;
     $('focus-explain-word').textContent=q.word;
     $('focus-definition').textContent=q.definition;
     $('focus-example').textContent='Exempel: '+q.example;
-    const instructionLesson=Q.instructionFeedback(q,option?.label,missions);
-    const why=instructionLesson?[instructionLesson.correction,instructionLesson.explanation,instructionLesson.connection,instructionLesson.rule].filter(Boolean).join(' '):
+    $('focus-example').hidden=!!instructionLesson;
+    const why=instructionLesson?[instructionLesson.correction,instructionLesson.explanation,instructionLesson.connection,instructionLesson.rule].filter(Boolean).join('\n\n'):
       q.taskType==='contrast'?'⚖️ Aha! Därför passar ordet: '+q.contextWhy+(q.contrastClue?' Ledtråden: '+q.contrastClue:''):
       q.taskType==='context'?'💡 Varför passar ordet? '+q.contextWhy:
       q.kind==='expression'&&q.reveal?.length===2?

@@ -83,3 +83,23 @@ Den publicerade sidan behöver också kontrolleras med de nya uttrycken i
 ljust och mörkt tema, hög kontrast och smal layout. Anteckna faktisk
 webbläsarverifiering i publicerings-PR:n. Barnprovspelning, fysisk pekskärm
 och svensk röst behöver fortsatt provas separat.
+
+### Genomfört efter publiceringen av PR #15
+
+På den riktiga HTTPS-sidan i Chrome har samtliga 48 temakombinationer
+valts genom spelets kontroller. Världsintroduktionens beräknade stil
+visade opak bakgrund i alla kombinationer och borttagen världston i
+högkontrastläget. Ingen horisontell sidskroll uppstod vid 1348 CSS-pixlar.
+Ljust och mörkt tema granskades också visuellt.
+
+En komplett fokusövning för **Hoppa ner från pallen** provades med
+meningsfråga, betydelsefråga och ordningsuppgift. Ett bokstavligt hopp
+valdes avsiktligt för att kontrollera återkopplingen. Den efterföljande
+Aha-frågan visade en gemensam situation och tre korta svar. **Hoppa i
+overallen** hittades i vardagsurvalet och dess förklaring öppnades i
+ordsamlingen. Låsta ordningsknappar behöll full opacitet och streckad kant.
+
+Kontrollen fångade två presentationer som därefter putsades: Aha-steget
+säger **Välj svar**, och fokusförklaringen delas i stycken med kortare
+rättelse och färre upprepade exempel. Vardagsuttryckens fristående lässteg
+förklarar att den visade betydelsen är en av flera möjliga.
