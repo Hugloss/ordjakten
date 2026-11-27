@@ -11,6 +11,16 @@
   const line=value=>typeof value==='string'&&value.trim()===value&&value.length>=8&&value.length<=260;
   const choice=value=>Number.isInteger(value)&&value>=0&&value<3;
   const fresh=()=>({rev:1,step:0,solved:false,wrong:[],hint:false});
+  // Deterministic variation avoids teaching children that part 1 always has
+  // answer A, part 2 always B, and part 3 always C. Original indexes remain
+  // the only answer identifiers; a reload reconstructs the same order.
+  function displayOrder(id,step){
+    let hash=2166136261;
+    for(const ch of id)hash=Math.imul(hash^ch.charCodeAt(0),16777619)>>>0;
+    const order=hash%2?[2,1,0]:[0,1,2];
+    const shift=(hash%3+2*step)%3;
+    return [...order.slice(shift),...order.slice(0,shift)];
+  }
   function catalog(data){
     const stories={},ids=[],errors=[];
     if(!Array.isArray(data?.STORIES)||data.STORIES.length<12||data.STORIES.length>40)
@@ -75,7 +85,8 @@
       ending:done?row.ending:null,keepsake:done?{...row.keepsake}:null,
       stage:done?null:{
         title:stage.title,scene:stage.scene,clues:[...stage.clues],
-        choices:solved?[]:stage.choices.map((label,index)=>({index,label,tried:progress.wrong.includes(index)})),
+        choices:solved?[]:displayOrder(id,progress.step).map((index,position)=>({index,position,
+          label:stage.choices[index],tried:progress.wrong.includes(index)})),
         wrong:[...progress.wrong],solved,
         feedback:solved?stage.why:progress.wrong.length?
           stage.wrong[progress.wrong.at(-1)]:null,
