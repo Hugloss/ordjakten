@@ -30,15 +30,17 @@ npm run check
 - Sex befintliga uttryck har dessutom 18 situationer där sammanhanget
   avgör betydelsen eller visar att barnet behöver fråga vad personen menar.
 - Tolv valbara äventyrsvärldar med egna SVG-kartor och tre ordkompisar.
-- **Upptäckarklubben**: 12 helt nya, originalskrivna äventyr inspirerade av
-  detektiv-, spion-, gåt-, trollkarls-, dinosaurie-, pirat- och andra fantasiteman.
-  Totalt 36 korta uppdrag med två ledtrådar per steg, hjälp vid fel och ett
-  unikt upptäckarfynd efter varje berättelse. Utan timer eller poängavdrag.
+- **Upptäckarklubben**: nya originalskrivna äventyr inspirerade av
+  mysterier, spioner, gåtor, djur, musik och andra fantasiteman.
+  Varje äventyr har tre korta uppdrag med två ledtrådar, hjälp vid fel
+  och ett eget fynd. Utan timer eller poängavdrag.
   Se [spelregler och barnprovspelning](docs/UPPTACKARKLUBBEN.md).
 - **Skattkartan**: läs en ledtråd, välj en plats och lös dess orduppgift.
   48 skrivna ledtrådar ger separata sakletarfynd och ordstjärnor i egen takt.
   Två korta hållpunkter hjälper barnet att jämföra platser. Skattboken samlar
   kartmärken och visar vilka skatter och ordstjärnor som finns kvar.
+- **Tolv mysterier** med ledtrådsbevis, frivillig muntlig förklaring och
+  ett nytt vardagsfall där barnet måste kontrollera två detaljer samtidigt.
 - Sparad stjärnsamling med sex samlingsmärken, en synlig stjärnrad och
   frivilliga nya chanser utan timer för de stjärnor som återstår.
 - Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.

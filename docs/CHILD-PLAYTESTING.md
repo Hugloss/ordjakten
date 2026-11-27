@@ -58,6 +58,70 @@ Se `docs/READING-FLOW.md` för ett barnprovtest utan hjälp i svarssituationen. 
 ## Nytt provspelningstest
 Observera utan att vägleda: hittar barnet berättelsen på första skärmen, läser det betydelsen innan Aha-frågan och förstår det varför rätt exempel passar? Vid första fel ska förklaringen återkomma. Vid ett andra fel visas facit pedagogiskt, utan att ett gissat svar får räknas som självständig förståelse. Prova mobil, dator, ljus/mörk, lång berättelse och Testa dig. Ingen lästid lagras om barnet.
 
+## Provspelning av skattkartans nya mysterier
+
+Börja med **Följ skattkartan** och en skatt. Låt barnet själv hitta rätt
+plats i mysteriet, välja de två bevisen och berätta *varför* med egna ord.
+Öppna inte facit eller berätta det rätta svaret innan barnet fått fundera.
+
+Låt barnet därefter själv välja om det vill öppna **Prova ett nytt fall**.
+Exempel: bussen till badhuset. Fråga inte bara vilken buss som är rätt utan:
+
+- Vad gör att det andra bussvalet inte passar **båda** detaljerna?
+- Kan barnet formulera: ”Jag valde den därför att … **och** …”?
+- Förstår barnet varför ett alternativ som passar ett spår ändå är fel?
+- Efter ett fel, läser barnet återkopplingen och testar själv igen?
+- Hittar barnet uppläsning och hjälp? Är texten lättläst på mobil?
+- Förblir det frivilliga nya fallet stängt tills barnet öppnar det?
+
+Kontrollera i ljus/mörk/högkontrast, med tangentbord, 320 px mobil och
+utan ljud. Kontrollera omladdning efter ett felsvar och efter rätt svar.
+Skatter, ordstjärnor och ordresultat ska inte ändras av det nya fallet.
+
+Dokumentera observationer som *läser ledtrådarna, kombinerar två villkor,
+förklarar eget svar, förstår varför annat alternativ faller bort*.
+Automatiska tester verifierar funktion och tillstånd men kan inte visa
+att barnet faktiskt förstår resonemanget.
+
+### Kort observationspass för mysterier (ca 5–8 minuter)
+
+Detta är ett **manuellt provspelsprotokoll**, inte ett utfört barnprov.
+Förbered en mobil eller dator med tom testhistorik. Låt barnet själv välja
+om det vill prova; avbryt när det vill. Samla inte in namn, inspelningar,
+ordagranna utsagor eller uppgifter om barnet.
+
+1. Säg bara: **”Visa hur du tänker när du väljer.”** Låt barnet hitta
+   mysteriets plats och de två bevisen. Berätta inte vad som är rätt.
+2. Be barnet förklara med egna ord varför platsen passar. Notera om det
+   självmant tar upp *båda* detaljerna eller behöver meningsstarten.
+3. Fråga om barnet vill öppna **Prova ett nytt fall**. Titta på om det
+   läser båda spåren före svaren, eller provar efter bara ett.
+4. Vid ett spontant fel: låt barnet läsa förklaringen utan hjälp. Notera
+   om det själv kan peka ut varför det första valet inte räckte.
+   Framkalla inte fel genom att uppmana barnet att välja fel.
+5. När barnet hittar rätt: fråga **”Varför passar inte de andra?”**
+   Om barnet svarar utan att upprepa facit visar det bättre överföring.
+   Först sedan får det öppna förklaringen om det vill.
+
+**Observera separat** (inte som ett betyg): hittar barnet knapparna?
+Går texten att läsa? Använder det uppläsning? Hittar det på egen hand
+*två* relevanta spår? Kan det säga varför ett delvis passande alternativ
+inte räcker? Kan det försöka igen utan att bli frustrerat?
+
+Använd nivåerna **självständigt**, **efter läshjälp/meningsstart** och
+**ännu oklart** för *varje moment*, inte en totalsumma eller tidsgräns.
+Om barnet läser rätt men ändå inte kan förklara två villkor behöver
+innehållet förtydligas. Om barnet förstår men inte hittar rätt knapp
+behöver gränssnittet rättas. Om uppläsningen behövs är det ett stöd,
+inte ett misslyckande.
+
+Gör gärna ett andra kort pass med ett annat fall (till exempel buss 4
+till badhuset) utan att först visa lösningen. Rätta otydliga alternativ
+innan fler fall eller belöningar läggs till. Automatiska Chromium-kontroller
+finns i `tests/browser_treasure_mysteries.py` och provar 320 px i
+högkontrast samt datorläge, tangentbord, återkoppling, återöppning
+och att skatter/resultat är opåverkade. De kan **inte** bevisa förståelse.
+
 ## Fördjupade ordförklaringar: fem ord åt gången
 
 Välj fem befintliga, vanliga ord, gärna från olika områden: exempelvis

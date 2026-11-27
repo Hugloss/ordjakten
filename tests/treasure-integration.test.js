@@ -262,6 +262,43 @@ test('completed-map progress and world choices preserve word stars and the ordin
   assert.deepEqual(clone(h.context.history.treasureHunt),pending);
 });
 
+test('extra mystery answers and read-aloud flow through real app handler without affecting scores',()=>{
+  const h=harness();
+  assert.equal(h.context.treasureReadAloudText('transfer'),'');
+  assert.equal(h.context.treasureReadAloudText('transferExplanation'),'');
+  h.visit(h.model().clue.index);h.answer(true);h.finish();h.back();
+  for(let i=0;i<2;i++)h.click({treasureMysteryReveal:''});
+  h.click({treasureMysteryGuess:String(Data.MYSTERIES.forest.target)});
+  assert.equal(h.model().mystery.transfer,null);
+  h.click({treasureMysteryProof:String(Data.MYSTERIES.forest.target)});
+  assert.equal(h.model().mystery.proof.done,true);
+  const before=clone(h.context.history),task=Data.TRANSFERS.forest;
+  const speech=h.context.treasureReadAloudText('transfer');
+  assert.ok(speech.includes(task.title));
+  for(const clue of task.clues)assert.ok(speech.includes(clue));
+  assert.ok(!speech.includes(task.why),'read-aloud cannot reveal the right answer early');
+  assert.equal(h.context.treasureReadAloudText('transferExplanation'),'');
+  h.click({treasureListen:'transfer'});
+  assert.equal(h.spoken.at(-1).text,speech);
+  const wrong=(task.target+1)%3;
+  h.click({treasureMysteryTransfer:String(wrong)});
+  assert.deepEqual(clone(h.model().mystery.transfer.wrong),[wrong]);
+  assert.equal(h.model().mystery.transfer.feedback,task.wrong[wrong]);
+  const count=h.saved.length;h.click({treasureMysteryTransfer:String(wrong)});
+  assert.equal(h.saved.length,count,'no extra saves from repeated guesses');
+  h.click({treasureMysteryTransfer:String(task.target)});
+  assert.equal(h.model().mystery.transfer.done,true);
+  assert.equal(h.focus.at(-1),'treasure-transfer-title');
+  assert.ok(!h.context.treasureReadAloudText('transfer').includes(task.why),
+    'listening to the case cannot read its collapsed explanation');
+  assert.equal(h.context.treasureReadAloudText('transferExplanation'),task.why,
+    'the deliberately requested explanation can be read aloud');
+  assert.equal(h.model().finderTotal,Treasure.model(before.treasureHunt,'forest',treasureContent).finderTotal);
+  assert.deepEqual(clone(h.context.history.starCollection),before.starCollection);
+  assert.deepEqual(unrelated(h.context.history),unrelated(before));
+  assert.deepEqual(clone(reload(h.saved.at(-1)).treasureHunt),clone(h.context.history.treasureHunt));
+});
+
 test('a delayed cancel after an answer preserves the find until it is collected',()=>{
   const h=harness();h.visit(h.model().clue.index);
   const serial=h.model().visit.serial;h.answer(true);

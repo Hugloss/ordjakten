@@ -1,0 +1,41 @@
+# Narrow browser coverage: run only when the treasure/mystery experience changes.
+# Keeps the dependency-free unit suite fast for unrelated Ordjakten PRs.
+name: Browser check – Skattkartans mysterier
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/js/treasure-hunt*.js'
+      - 'public/js/app.js'
+      - 'public/js/engine.js'
+      - 'public/index.html'
+      - 'public/css/treasure-hunt.css'
+      - 'public/css/style.css'
+      - 'tests/browser_treasure_mysteries.py'
+      - 'tests/browser_smoke.py'
+      - '.github/workflows/browser-treasure.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ordjakten-browser-treasure-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  browser-treasure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install Chromium and isolated Playwright test dependency
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Simulate mystery reading, retry, reload and accessibility
+        run: python tests/browser_treasure_mysteries.py
