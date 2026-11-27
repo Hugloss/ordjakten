@@ -25,8 +25,8 @@ def no_overflow(page):
 def one_story(page):
     page.locator("#quick-portals").click()
     assert page.locator("#view-portals").is_visible()
-    assert page.locator(".portal-card").count()==12
-    assert page.locator(".portal-progress").inner_text().startswith("🎒 0 av 12")
+    assert page.locator(".portal-card").count()==32
+    assert page.locator(".portal-progress").inner_text().startswith("🎒 0 av 32")
     assert page.locator(".portal-card-done").count()==0
     assert page.locator(".portal-journey").count()==0
     before=stored(page)
@@ -78,7 +78,7 @@ def one_story(page):
         assert after.get(key)==before.get(key),f"unrelated {key} changed"
     page.locator("[data-portal-back]").first.click()
     assert page.locator(".portal-card-done").count()==1
-    assert "1 av 12" in page.locator(".portal-progress").inner_text()
+    assert "1 av 32" in page.locator(".portal-progress").inner_text()
     page.locator('[data-portal-open="agents"]').click()
     agent=page.evaluate("""()=>window.OrdjaktenPortalsData.STORIES.find(x=>x.id==='agents').stages[0]""")
     page.locator(f'[data-portal-answer="{(agent["answer"]+1)%3}"]').click()
@@ -126,7 +126,7 @@ def run():
             page.close()
             restore(browser,viewport,snapshot,story)
         browser.close()
-    print("✓ 12 open portals, 3 playable stages, retries, hints, collectible, reload, mobile/desktop and no scoring")
+    print("✓ 32 open portals, 3 playable stages, retries, hints, collectible, reload, mobile/desktop and no scoring")
 
 
 if __name__=="__main__":
