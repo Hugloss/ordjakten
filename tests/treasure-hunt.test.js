@@ -238,6 +238,21 @@ test('mysteries require three clues, explain wrong places, save progress and nev
   assert.deepEqual(view(reload(state)).mystery,view(state).mystery);
 });
 
+test('spoken explanation evidence is revealed only after the child proves the mystery',()=>{
+  let state=fresh();
+  assert.deepEqual(view(state).mystery.proof.evidence,[]);
+  state=back(finish(choose(visit(state,2))));
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=Treasure.mysteryReveal(state,'forest',catalog);
+  state=Treasure.mysteryGuess(state,'forest',Data.MYSTERIES.forest.target,catalog);
+  assert.deepEqual(view(state).mystery.proof.evidence,[],'finding a place is not enough to reveal the example');
+  state=Treasure.mysteryProof(state,'forest',Data.MYSTERIES.forest.target,catalog);
+  const expected=Data.DATA.forest[Data.MYSTERIES.forest.target].lookFor;
+  assert.deepEqual(view(state).mystery.proof.evidence,expected);
+  assert.deepEqual(view(reload(state)).mystery.proof.evidence,expected);
+  assert.equal(view(state).finderTotal,1,'speaking does not award a second treasure');
+});
+
 test('mystery answers cannot be changed while an ordinary visit is active',()=>{
   let state=finish(choose(visit(fresh(),2)));
   assert.equal(Treasure.mysteryReveal(state,'forest',catalog),state);
