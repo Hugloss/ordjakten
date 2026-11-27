@@ -17,6 +17,14 @@
     for(const item of data.challenges){
       if(!item||!valid.has(item.id)||seen.has(item.id)){errors.push('Ogiltigt eller upprepat miniuppdrags-ID: '+(item&&item.id));continue;}
       seen.add(item.id);
+      if(expressions.expressions.find(e=>e.id===item.id)?.category==='school-instruction'){
+        const labels=Array.isArray(item.options)?item.options.map(o=>o?.label):[];
+        const first=labels[0],prefix=typeof first==='string'&&first.includes('” – ')?first.split('” – ')[0]+'” – ':'';
+        if(!prefix||!labels.every(label=>typeof label==='string'&&label.startsWith(prefix))||
+          typeof item.ahaDistractor!=='string'||!item.ahaDistractor.startsWith(prefix)||
+          item.ahaDistractor.slice(prefix.length).trim().length<8||labels.includes(item.ahaDistractor))
+          errors.push('Skolans Aha saknar ett tredje svar till samma uppgift: '+item.id);
+      }
       if(typeof item.prompt!=='string'||item.prompt.trim().length<25)errors.push('Saknar fråga: '+item.id);
       if(typeof item.explanation!=='string'||item.explanation.trim().length<30)errors.push('Saknar återkoppling: '+item.id);
       if(!Array.isArray(item.options)||item.options.length!==2||

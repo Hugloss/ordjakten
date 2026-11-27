@@ -35,6 +35,19 @@
     if(value!==undefined)el.textContent=value;
     return el;
   }
+  function renderAnimal(target,expression){
+    if(!target)return false;
+    target.replaceChildren();
+    if(!expression?.animal||typeof document==='undefined')return false;
+    const template=document.getElementById('quest-animal-template');
+    const source=template?.content?.querySelector('svg');
+    const animal=source&&[...source.children].find(node=>node.getAttribute('data-animal')===expression.animal);
+    if(!animal)return false;
+    const svg=source.cloneNode(false);
+    svg.append(animal.cloneNode(true));
+    target.append(svg);
+    return true;
+  }
   function render(target, expression, data) {
     if(!target||!expression)return false;
     target.replaceChildren();
@@ -46,7 +59,7 @@
       const count=make('span','comic-step',step.label);
       const art=make('div','comic-icons');
       art.setAttribute('aria-hidden','true');
-      for(const icon of story[step.key]){
+      if(!(i===1&&renderAnimal(art,expression)))for(const icon of story[step.key]){
         const src=data.iconPaths[icon];
         const img=document.createElement('img');
         img.className='comic-icon';img.src=src;img.alt='';img.width=96;img.height=96;
@@ -67,5 +80,5 @@
     target.append(track);
     return true;
   }
-  return {stages,validate,render};
+  return {stages,validate,render,renderAnimal};
 });

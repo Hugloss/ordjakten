@@ -101,5 +101,72 @@
       .sort((a,b)=>Number(b.seen)-Number(a.seen) || Number(b.needsPractice)-Number(a.needsPractice) ||
         b.done-a.done || a.name.localeCompare(b.name,'sv'));
   }
-  return {catalog,detail,entries,summary,filter};
+  // Independent dimensions, not levels. A correct answer in one dimension
+  // must not silently promote another dimension or imply permanent mastery.
+  const FACETS=[
+    {id:'recognition',icon:'🔎',label:'Hitta ordet eller bilden'},
+    {id:'meaning',icon:'📖',label:'Förstå betydelsen'},
+    {id:'story',icon:'🎭',label:'Förstå i en berättelse'},
+    {id:'contrast',icon:'⚖️',label:'Skilja på liknande ord'},
+    {id:'transfer',icon:'🧠',label:'Nya exempel över tid'}
+  ];
+  const stateLabels={new:'Att prova',right:'Hittat rätt',practice:'Öva igen',supported:'Övat med stöd',
+    waiting:'Vilar till en annan dag',spaced:'Två olika exempel',unavailable:'Ingen sådan övning än'};
+  function profile(item,{skillProgress={},missionProgress={},readingProgress={},types=[],transfer=null,
+    reading,now=Date.now()}={}){
+    const skills=skillProgress?.[item.id]?.skills||{};
+    const missions=new Set(item.kind==='expression'&&Array.isArray(missionProgress?.[item.id])?missionProgress[item.id]:[]);
+    const aha=readingProgress?.[item.id]||{};
+    const count=(type,key)=>positive(skills[type]?.[key]);
+    const weak=type=>count(type,'wrong')>0&&count(type,'streak')<2;
+    const choose=keys=>keys.find(key=>types.includes(key)&&weak(key))||
+      keys.find(key=>types.includes(key)&&!count(key,'right'))||keys.find(key=>types.includes(key))||null;
+    const ordinary=(keys,{extraRight=false,extraSeen=false,extraWeak=false}={})=>{
+      const available=keys.filter(key=>types.includes(key));
+      const right=keys.some(key=>count(key,'right'))||extraRight;
+      const seen=keys.some(key=>count(key,'attempts'))||extraSeen||right;
+      const difficult=available.some(weak)||extraWeak;
+      return {state:!available.length&&!seen?'unavailable':difficult?'practice':right?'right':seen?'supported':'new',
+        seen,right,action:available.length?{kind:'focus',skill:choose(keys)}:null};
+    };
+    const recognition=ordinary(['picture','reverse']);
+    const meaning=ordinary(['meaning'],{extraRight:missions.has('meaning')||positive(aha.recognition?.first)>0,
+      extraSeen:positive(aha.recognition?.supported)>0,
+      extraWeak:!!reading?.needsReview(readingProgress,item.id,'recognition')});
+    const story=ordinary([item.kind==='expression'?'sentence':'context'],{
+      extraRight:missions.has('sentence')||positive(aha.transfer?.first)>0,
+      extraSeen:positive(aha.transfer?.supported)>0});
+    const contrast=ordinary(['contrast']);
+    const t=aha.transfer;
+    const attempted=positive(t?.first)>0||positive(t?.supported)>0;
+    const needs=!!reading?.needsReview(readingProgress,item.id,'transfer');
+    // Legacy streaks, picture/reverse/contrast successes and ordering tasks
+    // are NOT proof of independently answering two distinct Aha examples.
+    const spaced=t?.quality===2&&Array.isArray(t.proofs)&&new Set(t.proofs).size===2&&!needs;
+    const ready=!!transfer&&transfer.dueAt<=now;
+    const transferRow={
+      state:spaced?'spaced':!transfer?'unavailable':!ready?'waiting':
+        needs?'practice':positive(t?.first)>0?'right':attempted?'supported':'new',
+      seen:attempted,right:spaced||positive(t?.first)>0,
+      action:ready?{kind:'aha'}:null,
+      help:spaced?'Du hittade rätt direkt i två olika Aha-exempel, med minst ett dygn emellan.':
+        transfer&&!ready?'Du får prova ett annat exempel när ordet har vilat.':
+        needs?'Du fick hjälp tidigare. Prova ett annat exempel.':
+        positive(t?.first)>0?'Du har hittat rätt direkt i en Aha-fråga. Prova gärna ett annat exempel en annan dag.':
+        attempted?'Du har övat med hjälp.':'Läs betydelsen och välj ett annat exempel.'
+    };
+    const records=[recognition,meaning,story,contrast,transferRow];
+    const facets=FACETS.map((facet,index)=>({...facet,...records[index],status:stateLabels[records[index].state]}));
+    // First address observed needs, then missing experience. Meaning before
+    // transfer when both are difficult. Waiting tasks are not auto-selected.
+    const weakOrder=['meaning','transfer','story','contrast','recognition'];
+    const exploreOrder=['meaning','recognition','story','contrast','transfer'];
+    const find=(states,order)=>order.map(id=>facets.find(row=>row.id===id))
+      .find(row=>row.action&&states.includes(row.state));
+    const next=find(['practice'],weakOrder)||find(['new','supported'],exploreOrder)||
+      (transferRow.action&&attempted&&!spaced&&!t?.legacyMastered&&t?.quality!==2?facets[4]:null);
+    return {facets,next:next||null,seen:facets.some(row=>row.seen),
+      tried:facets.filter(row=>row.seen).length,needsPractice:facets.some(row=>row.state==='practice')||needs};
+  }
+  return {catalog,detail,entries,summary,filter,FACETS,profile};
 });

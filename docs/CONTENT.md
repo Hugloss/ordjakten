@@ -57,3 +57,10 @@ Uttryck med sammanhang ligger **inte** i `ordbank.json`. De har stabila `ut-####
 Det finns fem manuellt valda betydelsealternativ per uttryck, ett rätt. Motorn använder fyra svar i vanliga nivåer och fem i högskoleprovsutmaningen. Alla tvådelade Aha-förklaringar visas **efter** svaret i Träna och bara i facit efter Testa dig. Inga emojis används som alternativ för bildliga uttryck.
 
 Se `EXPRESSIONS.md` för innehållsformat, synkroniseringskommando, pedagogik och redaktionell granskningslista.
+
+## Pedagogisk kvalitetsstandard (pågående genomgång)
+Ordträning ska ge mer än igenkänning. Alla 121 befintliga ord har nu `teaching` med fyra redaktionellt skrivna fält: `explanation` (enkel konkret förklaring), `familiar` (vardagsexempel), `nonExample` (när ordet inte passar), `ownPrompt` (fråga att besvara muntligt eller tänka på). Innehållskontrollen kräver dessa fält och tre egna vardagsscener för varje ord. Motorn hanterar fortfarande äldre eller ofullständiga ordposter utan att hitta på innehåll.
+
+Visa förklaringen efter svaret, i fokusträning, facit och ordsamlingen. För kända felalternativ visas även vilket annat ord svaret handlar om. Gissa inte en förklaring för en bildetikett eller en handling. Självformulerat språk bedöms inte automatiskt och sparas inte. Tankefrågan är frivillig och ger ingen poäng.
+
+Granska begreppets gräns: motexemplet ska verkligen sakna den testade betydelsen, och det ska finnas exakt ett försvarbart alternativ i den konkreta uppgiften. För Aha behövs en separat lista med granskade berättelser; se [CONTEXTS.md](CONTEXTS.md). Fullständig teknisk täckning ersätter inte språkgranskning med lärare eller barnprovspelning. Aktuell omfattning och nästa kvalitetssteg finns i [WORD-UNDERSTANDING.md](WORD-UNDERSTANDING.md).

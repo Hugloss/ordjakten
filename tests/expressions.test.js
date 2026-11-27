@@ -14,8 +14,8 @@ for(const source of ['data/curation.js','data/expressions.js'])
 const curation=ctx.window.ORDJAKTEN_CURATION;
 const encoded=JSON.parse(JSON.stringify(ctx.window.ORDJAKTEN_EXPRESSIONS));
 
-test('25 separate expressions, canonical JSON and browser data are identical',()=>{
-  assert.equal(expressions.expressions.length,25);
+test('67 separate expressions and school instructions, canonical JSON and browser data are identical',()=>{
+  assert.equal(expressions.expressions.length,67);
   assert.deepEqual(E.validateExpressions(expressions),[]);
   assert.deepEqual(encoded,expressions);
   assert.equal(bank.words.length,121);
@@ -44,7 +44,7 @@ test('expression data validation catches missing cues, duplicate options and key
   data.expressions[0].reveal.pop();
   assert.ok(E.validateExpressions(data).some(x=>x.includes('förklaringsrutor')));
 });
-test('all 25 expressions support 5–25 questions, including exam with 5 choices',()=>{
+test('all 67 entries support 5–25 questions, including exam with 5 choices',()=>{
   for(const level of ['easy','medium','hard','exam']){
     for(const count of [5,10,15,20,25]){
       const settings={topic:'expressions',difficulty:level,count};

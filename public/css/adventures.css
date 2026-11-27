@@ -163,3 +163,111 @@ html[data-contrast='high'] .adventure-svg .map-stop-back{stroke-width:5}
   .adventure-journey .journey-stop .stop-step{font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.adventure-svg .map-road-done{transition:none}}
+
+/* Sagoteatern — three choices become a small illustrated story. */
+.camp-theatre{border-top:4px solid var(--world-color);margin-bottom:16px}
+.camp-theatre-heading{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.camp-theatre-heading>span{font-size:clamp(38px,8vw,58px);line-height:1.2;flex-shrink:0}
+.camp-theatre-heading h2{margin:0 0 4px}
+.camp-theatre-heading p{margin:0;line-height:1.5}
+.camp-theatre-choices,.camp-theatre-panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.camp-theatre-choices[hidden]{display:none}
+.camp-theatre-choice{background:var(--surface);color:var(--text);border:2px solid var(--border);border-radius:16px;min-height:112px;padding:12px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;cursor:pointer;overflow-wrap:anywhere;font:inherit;text-align:center}
+.camp-theatre-choice:focus-visible{outline:3px solid var(--world-color);outline-offset:3px}
+@media(hover:hover){.camp-theatre-choice:hover{border-color:var(--world-color);background:var(--world-wash)}}
+.camp-theatre-icon{font-size:42px;line-height:1.2}
+.camp-theatre-panels{padding:0;list-style:none}
+.camp-theatre-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;min-width:0;padding:12px}
+.camp-theatre-picture{display:flex;align-items:center;justify-content:center;min-height:88px;background:var(--world-wash);border-radius:12px;font-size:clamp(25px,5vw,42px);line-height:1.6;text-align:center}
+.camp-theatre-card h4{margin:12px 0 4px;font-size:17px}
+.camp-theatre-card p{font-size:17px;line-height:1.55;margin:0}
+.camp-theatre-controls{margin-top:14px}
+@media(max-width:570px){.camp-theatre-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.camp-theatre-panels{grid-template-columns:1fr}.camp-theatre-picture{font-size:42px}.camp-theatre-choice{min-height:100px}}
+@media(prefers-reduced-motion:no-preference){.camp-theatre-card{animation:camp-story-arrive .22s ease-out both}@keyframes camp-story-arrive{from{opacity:.65;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}}
+
+/* Interactive playground: buttons are the objects, not hidden hotspots. */
+.camp-living{border-top:4px solid var(--world-color);margin-bottom:16px}
+.camp-live-scene{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:40px 14px 18px;border-radius:20px;border:1px solid var(--border);background:linear-gradient(170deg,#a6d9df 0 45%,#7dbb86 45% 75%,#488b64 75%)}
+.camp-live-scene[data-scene='space']{background:radial-gradient(circle at 84% 13%,#cbb4ed 0 2%,transparent 3%),linear-gradient(160deg,#20234b 0 59%,#74649b 59%)}
+.camp-live-scene[data-scene='coast']{background:linear-gradient(172deg,#bce4ec 0 40%,#67afc7 40% 60%,#e8cb96 60%)}
+.camp-live-scene[data-scene='garden']{background:linear-gradient(170deg,#ffe1ed 0 39%,#b0dba7 39% 61%,#84b576 61%)}
+.camp-live-landscape{position:absolute;inset:0;pointer-events:none;z-index:-1;display:flex;justify-content:space-between;padding:8px 20px;font-size:clamp(32px,8vw,60px)}
+.camp-live-landscape span:last-child{align-self:end}
+.camp-live-object{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:115px;padding:12px 5px;background:var(--surface);color:var(--text);border:2px solid var(--border);border-radius:18px;font:inherit;text-align:center;overflow-wrap:anywhere;cursor:pointer}
+.camp-live-object[aria-pressed='true']{border-color:var(--world-color);background:var(--world-wash)}
+.camp-live-object:focus-visible{outline:3px solid var(--text);outline-offset:2px}
+.camp-live-icon{display:block;font-size:clamp(40px,8vw,62px);line-height:1.2}
+.camp-live-label{font-size:15px}
+.camp-live-dialogue{margin-top:12px}
+#camp-live-buddy{font-size:42px;line-height:1.2}
+.camp-live-sound{display:flex;align-items:center;gap:8px;min-height:44px;margin-top:6px;font-weight:700;cursor:pointer}
+.camp-live-sound input{width:22px;height:22px;accent-color:var(--world-color)}
+.camp-story-book{margin-bottom:16px}
+.camp-story-list{display:grid;gap:10px;list-style:none;padding:0}
+.camp-story-entry{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:12px;min-width:0;overflow-wrap:anywhere}
+.camp-story-entry p{margin:6px 0 12px}
+@media(max-width:570px){.camp-live-scene{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:32px 8px 12px}.camp-live-object{min-height:108px}.camp-live-label{font-size:14px}}
+@media(forced-colors:active){.camp-live-scene{background:Canvas}.camp-live-landscape{display:none}.camp-live-object[aria-pressed='true']{outline:3px solid Highlight}}
+
+/* Three mini-games, with different mechanics and a shared optional play shell. */
+.camp-minigames{border-top:4px solid var(--world-color);margin-bottom:16px}
+.camp-mini-menu,.camp-mini-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.camp-mini-menu[hidden],.camp-mini-options[hidden],.camp-mini-selection[hidden]{display:none}
+.camp-mini-game,.camp-mini-tile{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;min-width:0;min-height:112px;padding:12px 7px;border:2px solid var(--border);border-radius:18px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;text-align:center;overflow-wrap:anywhere}
+.camp-mini-game>span,.camp-mini-icon{font-size:clamp(36px,8vw,58px);line-height:1.2}
+.camp-mini-game>small{font-size:13px;color:var(--muted)}
+.camp-mini-game:focus-visible,.camp-mini-tile:focus-visible{outline:3px solid var(--text);outline-offset:2px}
+.camp-mini-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.camp-mini-head h3,.camp-mini-head p{margin:0}
+.camp-mini-stage{display:flex;align-items:center;gap:14px;border:1px solid var(--border);background:var(--world-wash);border-radius:18px;margin:12px 0;padding:16px;min-height:108px}
+.camp-mini-stage h3{font-size:clamp(20px,4vw,25px);line-height:1.45;margin:0;overflow-wrap:anywhere}
+.camp-mini-visual{font-size:clamp(42px,9vw,68px);line-height:1.2;flex:0 1 auto}
+.camp-mini-play[data-game='lab'] .camp-mini-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+.camp-mini-selection{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.camp-mini-slot{min-height:65px;padding:9px;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;border:2px dashed var(--world-color);border-radius:14px;background:var(--surface-2);overflow-wrap:anywhere}
+.camp-mini-tile[aria-pressed='true']{border:3px solid var(--world-color);background:var(--world-wash)}
+.camp-mini-options.mini-map{grid-template-columns:repeat(3,minmax(0,1fr));background:var(--world-wash);border:2px dashed var(--world-color);border-radius:18px;padding:8px;gap:6px}
+.camp-mini-options.mini-map .camp-mini-tile{min-height:90px;padding:6px 3px;border-radius:12px}
+.camp-mini-options.mini-map .camp-mini-icon{font-size:clamp(29px,6vw,47px)}
+.camp-mini-options.mini-map .camp-mini-tile strong{font-size:14px;line-height:1.25}
+.camp-mini-feedback{font-size:18px;line-height:1.5}
+.camp-mini-play>.full-button{margin-top:9px}
+@media(max-width:420px){.camp-mini-menu{grid-template-columns:1fr}.camp-mini-game{min-height:68px;display:grid;grid-template-columns:53px 1fr;text-align:left;column-gap:12px;row-gap:0;justify-items:start}.camp-mini-game>span{grid-row:span 2}.camp-mini-tile{min-height:90px;font-size:14px}.camp-mini-stage{padding:12px;gap:10px}.camp-mini-options.mini-map .camp-mini-tile strong{font-size:12px}}
+@media(prefers-reduced-motion:no-preference){.camp-mini-play[data-stage='solved'] .camp-mini-visual{animation:mini-reveal .45s ease-out both}@keyframes mini-reveal{0%{transform:scale(.8);opacity:.6}65%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}}
+@media(forced-colors:active){.camp-mini-tile[aria-pressed='true']{outline:3px solid Highlight}}
+
+/* Cumulative construction boards and visual swatches. */
+.camp-build-prompt{font-size:clamp(20px,4vw,25px);line-height:1.45;margin:14px 0}
+.camp-build-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:10px;border:2px solid var(--border);border-radius:18px;background:var(--world-wash);margin:12px 0}
+.camp-build-board[data-game='world']{background:linear-gradient(165deg,#5a9d73,#305e43)}
+.camp-build-board[data-game='paint']{grid-template-columns:repeat(2,minmax(0,1fr));background:#f4e8cb;border-color:#987447}
+.camp-build-board[data-game='robot']{grid-template-columns:repeat(2,minmax(0,1fr));background:linear-gradient(160deg,#25334b,#536780)}
+.camp-build-cell{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;min-height:100px;min-width:0;padding:9px 3px;border:2px solid var(--border);border-radius:13px;background:var(--surface);color:var(--text);font:inherit;text-align:center;overflow-wrap:anywhere}
+button.camp-build-cell{cursor:pointer}
+button.camp-build-cell:focus-visible{outline:3px solid var(--text);outline-offset:2px}
+.camp-build-cell[data-target='true']{border:3px dashed var(--world-color)}
+.camp-build-cell[data-preview='true']{outline:2px dashed var(--world-color);outline-offset:-6px}
+.camp-build-cell-label{font-size:12px;font-weight:800}
+.camp-build-cell-detail{font-size:12px;color:var(--muted)}
+.camp-build-board[data-game='robot'] .camp-build-cell:nth-child(1),.camp-build-board[data-game='robot'] .camp-build-cell:nth-child(4){grid-column:1 / -1;width:min(100%,230px);justify-self:center}
+.camp-build-board[data-game='robot'] .camp-build-cell:nth-child(2){grid-column:2;grid-row:2}
+.camp-build-board[data-game='robot'] .camp-build-cell:nth-child(3){grid-column:1;grid-row:2}
+.camp-build-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.camp-build-options[hidden]{display:none}
+.camp-build-piece[aria-pressed='true']{border-color:var(--world-color);background:var(--world-wash)}
+.camp-build-art{display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;width:clamp(44px,11vw,72px);height:clamp(44px,11vw,72px);font-size:clamp(31px,7vw,50px);line-height:1.2}
+.camp-build-art[data-color='blue']{--build-color:#2775c9;--build-mark:#e0f3ff}
+.camp-build-art[data-color='green']{--build-color:#24845d;--build-mark:#e2f8cf}
+.camp-build-art[data-color='orange']{--build-color:#bc5418;--build-mark:#fff1b8}
+.camp-build-art[data-color='purple']{--build-color:#8750bd;--build-mark:#f3deff}
+.camp-build-art[data-shape]{background-color:var(--build-color);border:2px solid rgba(0,0,0,.32)}
+.camp-build-art[data-shape='circle']{border-radius:50%}
+.camp-build-art[data-shape='square']{border-radius:2px}
+.camp-build-art[data-shape='triangle']{clip-path:polygon(50% 0,100% 100%,0 100%)}
+.camp-build-art[data-shape='long']{width:clamp(61px,16vw,104px);height:clamp(27px,7vw,43px);max-width:100%;border-radius:5px}
+.camp-build-art[data-pattern='stripes']{background-image:repeating-linear-gradient(45deg,var(--build-mark) 0 7px,transparent 7px 15px)}
+.camp-build-art[data-pattern='dots']{background-image:radial-gradient(circle,var(--build-mark) 0 3px,transparent 4px);background-size:15px 15px}
+.camp-build-overlay{font-size:clamp(24px,5vw,38px)}
+.camp-build-play>.full-button{margin-top:9px}
+@media(max-width:420px){.camp-build-board{padding:6px;gap:5px}.camp-build-cell{min-height:88px}.camp-build-cell-label,.camp-build-cell-detail{font-size:11px}.camp-build-options{gap:5px}.camp-build-piece{padding:7px 3px;font-size:12px}.camp-build-piece strong{line-height:1.25}}
+@media(forced-colors:active){.camp-build-board{background:Canvas!important}.camp-build-art[data-shape]{forced-color-adjust:none}.camp-build-piece[aria-pressed='true']{outline:3px solid Highlight}}

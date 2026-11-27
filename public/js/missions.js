@@ -13,6 +13,14 @@
     for(const m of data.missions){
       if(!m||!available.has(m.id)||seen.has(m.id)){issues.push('Felaktigt eller dubblerat ID: '+(m&&m.id));continue;}
       seen.add(m.id);
+      if(expressions.expressions.find(e=>e.id===m.id)?.category==='school-instruction'){
+        if(typeof m.prompt!=='string'||m.prompt.trim().length<25)issues.push('Skoluppgift saknar instruktion: '+m.id);
+        for(const key of ['explanation','connection']){
+          if(typeof m[key]!=='string'||m[key].trim().length<30)issues.push('Skoluppgift saknar konkret '+key+': '+m.id);
+        }
+        if(!Array.isArray(m.sentences)||m.sentences.some(s=>s?.correct===false&&(typeof s.feedback!=='string'||s.feedback.trim().length<15)))
+          issues.push('Skoluppgift saknar svarsspecifik förklaring: '+m.id);
+      }
       if(!Array.isArray(m.sentences)||m.sentences.length!==3||
         m.sentences.filter(s=>s&&s.correct===true).length!==1||
         m.sentences.some(s=>!s||typeof s.label!=='string'||s.label.trim().length<25)||
@@ -24,6 +32,21 @@
     }
     for(const id of available)if(!seen.has(id))issues.push('Uppdrag saknas: '+id);
     return issues;
+  }
+  // All teaching text is authored. Look up the selected option by its label,
+  // never by its position in the shuffled choices.
+  function schoolFeedback(question,selectedLabel,data){
+    if(!question?.schoolInstruction)return null;
+    const task=get(data,question.id),practical=question.taskType==='sentence';
+    const selected=practical?task?.sentences?.find(s=>s.label===selectedLabel):null;
+    const model={
+      explanation:practical?task?.explanation:question.reveal?.[0]?.text,
+      connection:practical?task?.connection:question.reveal?.[1]?.text,
+      correction:selected?.correct===false?selected.feedback:'',
+      rule:question.schoolRule||task?.hint||'',
+      answer:practical?task?.sentences?.find(s=>s.correct===true)?.label:question.taskType==='order'?question.correctOrder?.join(' → '):''
+    };
+    return {...model,answer:practical?(model.answer||'').split('” – ').slice(1).join('” – ')||model.answer||'':model.answer||''};
   }
   function sanitizeProgress(value,expressions,legacyMastered=[]){
     const valid=new Set(expressions&&Array.isArray(expressions.expressions)?expressions.expressions.map(x=>x.id):[]);
@@ -67,5 +90,5 @@
       sequence.every(Number.isInteger)&&new Set(sequence).size===3&&
       sequence.every((value,index)=>value===index);
   }
-  return {TYPES,get,validate,sanitizeProgress,complete,nextType,checkOrder};
+  return {TYPES,get,validate,schoolFeedback,sanitizeProgress,complete,nextType,checkOrder};
 });

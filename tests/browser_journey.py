@@ -1,0 +1,72 @@
+"""Optional browser interaction regression for mixed ungraded stations."""
+import json
+import shutil
+from playwright.sync_api import sync_playwright
+from browser_smoke import make_page
+
+def main(browser):
+    page, errors = make_page(browser, {"width":390,"height":800}, storage_seed={})
+    page.locator('[data-mode="test"]').click()
+    stored = lambda: json.loads(page.evaluate("localStorage.getItem('ordjakten-v1')"))
+    before = stored()
+    page.locator("#next-journey-home-start").click()
+    assert page.locator("#next-journey-banner").is_visible()
+    assert page.locator("#view-focus").is_visible()
+    assert "Äventyr · 1 av" in page.locator("#next-journey-progress").inner_text()
+    for _ in range(4):
+        if page.locator("#focus-finished").is_visible():
+            break
+        page.locator('#focus-choices button:not(:disabled)').first.click()
+        page.locator("#focus-next").click()
+    assert page.locator("#focus-finished").is_visible()
+    assert page.locator("#next-journey-skip").is_hidden()
+    assert page.locator("#focus-other-skill").is_hidden()
+    after = stored()
+    assert after["skillProgress"]
+    assert after["practiceBalance"] == ["discover"]
+    assert len(after["adventureChallenge"]) == 1
+    assert after["adventureChallenge"][0]["mode"] == "focus"
+    assert after["results"] == before["results"]
+    assert after["settings"] == before["settings"]
+    page.locator("#focus-done").click()
+    for _ in range(3):
+        if page.locator("#view-journey").is_visible():
+            break
+        page.locator("#next-journey-skip").click()
+    assert page.locator("#view-journey").is_visible()
+    assert "1 av" in page.locator("#next-journey-summary").inner_text()
+    assert page.locator("#next-journey-banner").is_hidden()
+    assert stored()["storyProgress"] == {before["settings"]["adventure"]: 1}
+    assert {k:v for k,v in stored().items() if k != "storyProgress"} == {k:v for k,v in after.items() if k != "storyProgress"}
+    assert page.locator("#story-earned").is_visible()
+    assert page.locator("#story-journey .story-place[data-state=visited]").count() == 1
+    assert 1 <= page.locator("#story-journey button[data-story-mode]").count() <= 2
+    page.locator("#next-journey-back").click()
+    assert page.locator("#view-learning").is_visible()
+    assert page.locator("#story-learning .story-place[data-state=visited]").count() == 1
+    page.locator("#story-learning .story-album summary").click()
+    assert page.locator("#story-learning .story-album-marks li").count() == 1
+    assert page.locator("#balance-learning-summary").is_visible()
+    page.locator("#balance-learning-summary summary").click()
+    assert "Den senaste avslutade stationen" in page.locator("#balance-learning-note").inner_text()
+    assert page.locator("#balance-learning-list li").count() == 4
+    page.locator("#next-journey-learning-start").click()
+    assert page.locator("#next-journey-banner").is_visible()
+    page.locator("#next-journey-stop").click()
+    assert page.locator("#view-learning").is_visible()
+    assert page.locator("#next-journey-banner").is_hidden()
+    assert stored()["results"] == before["results"]
+    assert stored()["practiceBalance"] == ["discover"]
+    assert stored()["adventureChallenge"] == after["adventureChallenge"]
+    assert stored()["storyProgress"] == {before["settings"]["adventure"]: 1}
+    assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+    assert not errors, errors
+    page.close()
+
+if __name__ == "__main__":
+    with sync_playwright() as p:
+        browser=p.chromium.launch(headless=True, executable_path=shutil.which("chromium") or None,
+                                  args=["--no-sandbox"])
+        main(browser)
+        browser.close()
+    print("✓ one-click journey, focus, skip, cancellation and unchanged test history")

@@ -97,3 +97,314 @@
 #feedback-area[data-reading-stage='quiz'] #listen-explanation{display:none!important}
 .reading-audio[aria-pressed='true']{border-color:var(--accent);background:var(--accent-soft)}
 @media(max-width:570px){.reading-audio{width:100%}}
+
+/* Illustrated question play: readable question first, then optional movement.
+   The drag handle alone consumes pointer gestures; cards remain ordinary buttons. */
+.answer-play-layout{min-width:0}
+.answer-play-layout.is-adventure{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.65fr);gap:12px;align-items:start}
+.quest-egg-box{margin:12px 0}
+.quest-egg-button{display:flex;align-items:center;gap:12px;text-align:left;color:var(--text);background:var(--surface);border:2px solid var(--border);border-radius:16px;width:100%;padding:8px 12px;font:inherit;min-height:72px;cursor:pointer}
+.quest-egg-button strong,.quest-egg-button small{display:block;line-height:1.4}
+.quest-egg-button small{color:var(--muted);font-size:13px}
+.quest-egg-art{width:56px;height:59px;flex:0 0 56px}
+.quest-egg-open,.quest-egg-button[data-open='true'] .quest-egg-closed{display:none}
+.quest-egg-button[data-open='true'] .quest-egg-open{display:block}
+.quest-egg-hint{font-size:18px;line-height:1.5;padding:12px 15px;margin:8px 0 0;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px}
+.question-portal{min-width:0;overflow:hidden;border:2px solid var(--border);border-radius:19px;background:var(--surface);text-align:center;position:sticky;top:8px}
+.question-portal[hidden]{display:none}
+.quest-portal-art{display:block;width:100%;height:auto;aspect-ratio:300/210}
+.quest-scene{display:none}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork,.quest-picture-art)[data-scene='forest'] .quest-scene-forest,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork,.quest-picture-art)[data-scene='space'] .quest-scene-space,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork,.quest-picture-art)[data-scene='ocean'] .quest-scene-ocean,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork,.quest-picture-art)[data-scene='castle'] .quest-scene-castle{display:block}
+.quest-portal-copy{padding:12px;line-height:1.4}
+#question-portal-symbol{font-size:25px;margin-right:5px}
+#question-portal-title{font-size:18px}
+.quest-portal-copy p{font-weight:800;margin:5px 0}
+.quest-portal-copy small{display:block;color:var(--muted);font-size:13px}
+.question-portal.is-drop-ready{border-color:#f4bf58;outline:3px solid #f4bf58;outline-offset:-3px}
+.answer-option{position:relative}
+.answer-play-layout.is-adventure .answer-option{padding-right:46px}
+.answer-play-layout.is-adventure .answer-option.with-picture{padding:13px 32px 13px 7px}
+.answer-option .quest-drag-grip{position:absolute;right:3px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:38px;height:44px;border-radius:10px;cursor:grab;touch-action:none;user-select:none;color:var(--accent);background:var(--surface);border:1px solid var(--border);font-size:20px}
+.answer-option.with-picture .quest-drag-grip{right:2px;width:28px;top:12px;transform:none}
+.answer-grid.is-dragging .quest-drag-grip{cursor:grabbing}
+.quest-drag-ghost{position:fixed;z-index:1000;pointer-events:none;transform:translate(-50%,-50%);width:max-content;max-width:min(250px,75vw);padding:11px 16px;background:var(--surface);color:var(--text);border:2px solid var(--accent);border-radius:14px;font:inherit;font-weight:800;box-shadow:0 6px 24px #0004;text-align:center;overflow-wrap:anywhere}
+@media(max-width:680px){
+ .answer-play-layout.is-adventure{grid-template-columns:1fr}
+ .question-portal{position:relative;top:auto;grid-row:1;display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr);align-items:center;text-align:left}
+ .quest-portal-copy{padding:6px 10px}
+ .quest-portal-copy p{font-size:14px;margin:2px 0}
+ .quest-portal-copy small{font-size:12px}
+ #question-portal-title{font-size:16px}
+ .answer-play-layout.is-adventure .answer-option.with-picture{padding-right:32px}
+}
+@media(prefers-reduced-motion:no-preference){.quest-egg-button[data-open='true'] .quest-egg-open{animation:quest-hatch .35s ease-out both}@keyframes quest-hatch{from{transform:scale(.8);opacity:.5}to{transform:scale(1);opacity:1}}}
+@media(forced-colors:active){.question-portal.is-drop-ready{outline:3px solid Highlight}.quest-egg-button:focus-visible{outline:3px solid Highlight}}
+
+/* A finite narrative journey inside the existing round. Art and discoveries
+   depend on completed tasks, not correctness. */
+.play-score-details{margin:0 0 8px}
+.play-score-details>summary{font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;min-height:32px;line-height:32px}
+.play-score-details>summary[hidden]{display:none}
+.quest-mystery{border:1px solid var(--border);border-top:4px solid var(--world-color);background:var(--surface);border-radius:18px;padding:14px 16px;margin:0 0 13px}
+.quest-mystery[hidden],.quest-mystery-discovery[hidden],.quest-mystery-finale[hidden]{display:none}
+.quest-mystery-kicker{color:var(--muted);font-size:11px;font-weight:900;letter-spacing:.13em}
+.quest-mystery h2{font-size:clamp(20px,3.5vw,27px);line-height:1.2;margin:5px 0 10px;text-wrap:balance}
+.quest-mystery-progress{display:flex;gap:6px;list-style:none;padding:0;margin:8px 0 12px}
+.quest-mystery-step{min-width:0;flex:1;display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid var(--border);border-radius:11px;padding:7px 3px;font-size:12px;font-weight:800;text-align:center;overflow-wrap:anywhere;color:var(--muted)}
+.quest-mystery-step-icon{font-size:22px;line-height:1.2}
+.quest-mystery-step[data-state='current']{color:var(--text);border:2px solid var(--world-color);background:var(--world-wash)}
+.quest-mystery-step[data-state='found']{color:var(--text);background:var(--surface-2)}
+.quest-mystery-step[data-state='found']::after{content:'✓';color:var(--text);font-weight:900}
+.quest-mystery-step[data-state='later'] .quest-mystery-step-icon{filter:saturate(.35);opacity:.6}
+.quest-mystery-chapter{font-size:13px;font-weight:900;color:var(--muted);margin:0 0 5px}
+#quest-mystery-story{font-size:18px;line-height:1.5;font-weight:700;margin:0}
+.quest-object{display:none}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='map'] .quest-object-map,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lock'] .quest-object-lock,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lantern'] .quest-object-lantern,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='chest'] .quest-object-chest{display:block}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='map'] .quest-arch,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lock'] .quest-arch,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='lantern'] .quest-arch,:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-artifact='chest'] .quest-arch{display:none}
+.quest-mystery-discovery,.quest-mystery-finale{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:18px;background:var(--surface);margin:16px 0}
+.quest-mystery-reveal-icon{font-size:52px;line-height:1.2;flex:0 0 auto}
+.quest-mystery-discovery h2,.quest-mystery-finale h2{font-size:clamp(19px,3.5vw,25px);line-height:1.3;margin:4px 0}
+.quest-mystery-discovery p,.quest-mystery-finale p{margin:4px 0;line-height:1.5}
+.quest-finale-art{width:clamp(100px,26vw,190px);height:auto;flex-shrink:0}
+.quest-mystery-finale>div{min-width:0}
+@media(max-width:520px){.quest-mystery{padding:12px}.quest-mystery-step{flex-direction:column;gap:2px;font-size:11px}.quest-mystery-step[data-state='found']::after{display:none}.quest-mystery-step-icon{font-size:24px}.quest-mystery-finale{align-items:flex-start;gap:8px}.quest-mystery-finale .quest-finale-art{width:86px}.quest-mystery-reveal-icon{font-size:40px}}
+@media(prefers-reduced-motion:no-preference){.quest-mystery-discovery:not([hidden]) .quest-mystery-reveal-icon{animation:mystery-reveal .42s ease-out both}@keyframes mystery-reveal{from{transform:scale(.8);opacity:.5}70%{transform:scale(1.1)}to{transform:scale(1);opacity:1}}}
+@media(forced-colors:active){.quest-mystery-step[data-state='current']{outline:2px solid Highlight}}
+
+/* Reactive illustrations: the next question continues at the exact visual
+   progress of the previous discovery. A finite reveal, never a delay. */
+.quest-hatchling,.quest-treasure{display:none}
+.quest-egg-button[data-hatchling='fox'] .quest-hatchling-fox,
+.quest-egg-button[data-hatchling='star'] .quest-hatchling-star,
+.quest-egg-button[data-hatchling='turtle'] .quest-hatchling-turtle,
+.quest-egg-button[data-hatchling='dragon'] .quest-hatchling-dragon{display:block}
+.quest-egg-art{width:76px;height:80px;flex-basis:76px}
+.quest-route-ink{stroke-dasharray:var(--quest-route,0) 100;opacity:var(--quest-fraction,0)}
+.quest-map-mark{opacity:var(--quest-fraction,0)}
+.quest-door-panel{transform-box:fill-box;transform-origin:left center}
+.quest-key-motion{transform-box:fill-box;transform-origin:center;transform:rotate(var(--quest-turn,0deg))}
+.quest-lantern-glow{opacity:var(--quest-glow,.06)}
+.quest-lantern-flame{opacity:var(--quest-fraction,0);transform-box:fill-box;transform-origin:center bottom;transform:scale(var(--quest-flame,.35))}
+.quest-chest-treasure{opacity:0}
+.quest-chest-lid{transform-box:fill-box;transform-origin:left bottom}
+.quest-chest-seal{filter:drop-shadow(0 0 calc(var(--quest-fraction,0) * 5px) #fff1a6)}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-complete='true'] .quest-door-panel{transform:scaleX(.18)}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-complete='true'] .quest-chest-lid{transform:translate(-3px,-40px) rotate(-9deg)}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-complete='true'] .quest-chest-treasure{opacity:1}
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='sprout'] .quest-treasure-sprout,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='star'] .quest-treasure-star,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='melody'] .quest-treasure-melody,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='map'] .quest-treasure-map,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='pearl'] .quest-treasure-pearl,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='egg'] .quest-treasure-egg,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='flower'] .quest-treasure-flower,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='book'] .quest-treasure-book,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='rainbow'] .quest-treasure-rainbow,
+:is(.question-portal,.quest-discovery-art,.quest-finale-artwork)[data-treasure='shoe'] .quest-treasure-shoe{display:block}
+.quest-discovery-art,.quest-finale-artwork{width:clamp(120px,34vw,260px);flex:0 0 auto;overflow:hidden;border:1px solid var(--border);border-radius:15px}
+.quest-mystery-discovery>div:last-child,.quest-mystery-finale>div:last-child{min-width:0;flex:1}
+.quest-discovery-art .quest-portal-art,.quest-finale-artwork .quest-portal-art{width:100%;height:auto}
+@media(max-width:520px){.quest-mystery-discovery,.quest-mystery-finale{flex-direction:column;align-items:stretch}.quest-discovery-art,.quest-finale-artwork{width:100%;max-width:290px;align-self:center}.quest-egg-art{width:66px;height:70px;flex-basis:66px}}
+@media(prefers-reduced-motion:no-preference){
+ .quest-mystery-discovery:not([hidden]) .quest-route-ink{animation:quest-ink .55s ease-out both}
+ .quest-mystery-discovery:not([hidden]) .quest-key-motion{animation:quest-key-turn .45s ease-out both}
+ .quest-mystery-discovery:not([hidden]) [data-complete='true'] .quest-door-panel{animation:quest-door-open .6s .15s ease-out both}
+ .quest-mystery-discovery:not([hidden]) .quest-lantern-glow{animation:quest-glow-in .55s ease-out both}
+ .quest-mystery-discovery:not([hidden]) [data-complete='true'] .quest-chest-lid,
+ .quest-mystery-finale:not([hidden]) .quest-chest-lid{animation:quest-open-chest .55s ease-out both}
+ .quest-mystery-discovery:not([hidden]) [data-complete='true'] .quest-chest-treasure,
+ .quest-mystery-finale:not([hidden]) .quest-chest-treasure{animation:quest-treasure-show .55s .18s ease-out both}
+ @keyframes quest-ink{from{stroke-dasharray:0 100;opacity:.4}to{stroke-dasharray:var(--quest-route) 100;opacity:var(--quest-fraction)}}
+ @keyframes quest-key-turn{from{transform:rotate(0deg)}to{transform:rotate(var(--quest-turn))}}
+ @keyframes quest-door-open{from{transform:scaleX(1)}to{transform:scaleX(.18)}}
+ @keyframes quest-glow-in{from{opacity:.06}to{opacity:var(--quest-glow)}}
+ @keyframes quest-open-chest{from{transform:translate(0,0) rotate(0deg)}to{transform:translate(-3px,-40px) rotate(-9deg)}}
+ @keyframes quest-treasure-show{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+}
+
+/* Secret picture: one neutral piece per completed question, never per
+   correct answer. Small enough to keep the actual reading in view. */
+.quest-mystery-story-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,155px);gap:12px;align-items:center}
+.quest-picture{margin:0;min-width:0}
+.quest-picture-art{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#33465c}
+.quest-picture-art .quest-arch,.quest-picture-art .quest-object{display:none}
+.quest-picture-art .quest-portal-art{display:block;width:100%;height:auto}
+.quest-picture-cover{fill:#34485e;stroke:#8495a7;stroke-width:.8}
+.quest-picture-cover:nth-child(3n+2){fill:#3d5067}
+.quest-picture-cover:nth-child(3n){fill:#4a5b73}
+.quest-picture figcaption{display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.35;color:var(--muted);padding:4px 2px}
+.quest-picture figcaption strong{color:var(--text);font-size:13px}
+.quest-mystery-discovery .quest-picture,.quest-mystery-finale .quest-picture{max-width:175px;margin-top:10px}
+.quest-message-label{display:block;font-size:12px;font-weight:900;letter-spacing:.035em;margin-bottom:8px;color:var(--muted)}
+.quest-message-label[hidden]{display:none}
+.question-card[data-message-style='letter']{border:2px solid var(--border);border-top:5px solid var(--world-color)}
+.question-card[data-message-style='scroll']{border:2px solid #a78258;border-radius:13px 13px 20px 20px;box-shadow:inset 0 5px 0 #d5b48630,inset 0 -5px 0 #d5b48630}
+.quest-crystal-art{display:none;width:76px;height:80px;flex:0 0 76px}
+.quest-crystal-light{display:none}
+.quest-egg-button[data-helper='crystal'] .quest-egg-art{display:none}
+.quest-egg-button[data-helper='crystal'] .quest-crystal-art{display:block}
+.quest-egg-button[data-helper='crystal'][data-open='true'] .quest-crystal-cloud{display:none}
+.quest-egg-button[data-helper='crystal'][data-open='true'] .quest-crystal-light{display:block}
+/* A single uniform card style per question; never style by answer key.
+   Keep the authored text and existing picture options fully readable. */
+.answer-grid[data-card-style] .answer-option{border-radius:19px}
+.answer-grid[data-card-style='leaf'] .answer-option{border-left:5px solid #75ad91}
+.answer-grid[data-card-style='butterfly'] .answer-option{border-left:5px solid #bb91d1}
+.answer-grid[data-card-style='crystal'] .answer-option{border-left:5px solid #83a9dc}
+.answer-grid[data-card-style='scroll'] .answer-option{border-left:5px solid #c6a477}
+.answer-grid[data-card-style='leaf'] .quest-drag-grip{background:var(--surface);border-radius:50% 12px 50% 12px}
+.answer-grid[data-card-style='butterfly'] .quest-drag-grip{border-radius:50% 50% 42% 42%;color:#a675d1}
+.answer-grid[data-card-style='crystal'] .quest-drag-grip{border-radius:10px 18px 10px 18px;color:#80a8db}
+.answer-grid[data-card-style='scroll'] .quest-drag-grip{border-radius:5px 12px 5px 12px}
+@media(max-width:520px){.quest-mystery-story-row{grid-template-columns:minmax(0,1fr) minmax(86px,105px);gap:9px}#quest-mystery-story{font-size:16px}.quest-picture figcaption{font-size:11px}.quest-picture figcaption strong{font-size:11px}.quest-crystal-art{width:66px;height:70px;flex-basis:66px}}
+@media(max-width:340px){.quest-mystery-story-row{grid-template-columns:1fr}.quest-mystery-story-row .quest-picture{max-width:120px;justify-self:end}}
+@media(prefers-reduced-motion:no-preference){.quest-egg-button[data-helper='crystal'][data-open='true'] .quest-crystal-light{animation:quest-crystal-reveal .38s ease-out both}@keyframes quest-crystal-reveal{from{opacity:0;transform:scale(.85);transform-origin:center}to{opacity:1;transform:scale(1)}}}
+@media(forced-colors:active){.quest-picture-cover{fill:Canvas;stroke:CanvasText}}
+
+/* Authored action targets and worked examples, independent of the score. */
+.quest-action-prompt{font-size:clamp(18px,3.5vw,24px);font-weight:800;line-height:1.5;max-width:36em;margin:8px auto 0}
+.quest-action-prompt[hidden],.quest-action-art[hidden],.quest-action-solution[hidden]{display:none}
+.question-portal[data-semantic='true']>.quest-portal-art{display:none}
+.quest-action-svg{display:block;width:100%;height:auto;aspect-ratio:300/210}
+.quest-action-scene,.quest-action-result{display:none}
+.quest-action-art[data-solved='true'] .quest-action-result{display:inline}
+.quest-action-art[data-solved='true'] .quest-action-wait{display:none}
+.quest-action-art[data-action='stretch'] .action-stretch,
+.quest-action-art[data-action='window'] .action-window,
+.quest-action-art[data-action='magnet'] .action-magnet,
+.quest-action-art[data-action='nest'] .action-nest,
+.quest-action-art[data-action='whirl'] .action-whirl,
+.quest-action-art[data-action='light'] .action-light,
+.quest-action-art[data-action='share'] .action-share,
+.quest-action-art[data-action='care'] .action-care,
+.quest-action-art[data-action='wilt'] .action-wilt,
+.quest-action-art[data-action='tangle'] .action-tangle,
+.quest-action-art[data-action='mirror'] .action-mirror,
+.quest-action-art[data-action='bounce'] .action-bounce,
+.quest-action-art[data-action='slide'] .action-slide,
+.quest-action-art[data-action='sponge'] .action-sponge,
+.quest-action-art[data-action='sticky'] .action-sticky,
+.quest-action-art[data-action='glitter'] .action-glitter,
+.quest-action-art[data-action='foam'] .action-foam,
+.quest-action-art[data-action='wobble'] .action-wobble,
+.quest-action-art[data-action='rough'] .action-rough,
+.quest-action-art[data-action='lush'] .action-lush,
+.quest-action-art[data-action='cloudy'] .action-cloudy,
+.quest-action-art[data-action='hollow'] .action-hollow,
+.quest-action-art[data-action='flight'] .action-flight{display:inline}
+.quest-action-solution{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--border);border-radius:16px;margin:12px 0;background:var(--surface)}
+.quest-action-solution .quest-action-art{width:clamp(120px,33vw,240px);flex-shrink:0;border-radius:12px;overflow:hidden}
+.quest-action-solution h3{margin:4px 0;font-size:20px;line-height:1.3}
+.quest-action-solution p{margin:4px 0;line-height:1.5}
+@media(max-width:520px){.quest-action-solution{flex-direction:column;align-items:stretch}.quest-action-solution .quest-action-art{width:100%;max-width:280px;align-self:center}.quest-action-prompt{font-size:18px}}
+@media(prefers-reduced-motion:no-preference){
+ .quest-action-art[data-solved='true'] .action-rubber{transform-box:fill-box;transform-origin:center;animation:quest-stretch .6s ease-out both}
+ .quest-action-art[data-solved='true'] .action-iron-ring{animation:quest-attract .5s ease-out both}
+ .quest-action-art[data-solved='true'] .action-leaf-swirl{transform-box:view-box;transform-origin:150px 105px;animation:quest-whirl .8s ease-out both}
+ .quest-action-art[data-solved='true'] .action-beam{animation:quest-beam .45s ease-out both}
+ .quest-action-art[data-solved='true'] .action-protected-egg,.quest-action-art[data-solved='true'] .action-small-figure{animation:quest-gentle .45s ease-out both}
+ @keyframes quest-stretch{from{transform:scaleX(.38)}to{transform:scaleX(1)}}
+ @keyframes quest-attract{from{transform:translate(83px,57px)}to{transform:translate(0,0)}}
+ @keyframes quest-whirl{from{transform:rotate(-100deg)}to{transform:rotate(0deg)}}
+ @keyframes quest-beam{from{opacity:.1}to{opacity:.66}}
+ @keyframes quest-gentle{from{transform:translateY(-12px)}to{transform:translateY(0)}}
+}
+
+/* Reversible, optional experiments use native range controls and direct
+   horizontal manipulation of the artwork. Vertical page scrolling remains. */
+.quest-action-experiment{margin-top:12px;padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.quest-action-experiment[hidden]{display:none}
+.quest-action-experiment label{display:block;font-weight:900;margin:3px 0}
+.quest-action-experiment p{font-size:15px;line-height:1.45}
+#quest-action-range{display:block;box-sizing:border-box;width:100%;min-height:44px;accent-color:var(--accent);cursor:ew-resize;margin:4px 0}
+#quest-action-experiment-status{font-weight:800}
+.quest-action-art[data-experiment='true']{touch-action:pan-y;cursor:ew-resize;user-select:none}
+.quest-action-art[data-experiment='true'] .action-rubber{animation:none;transform-box:fill-box;transform-origin:left center;transform:scaleX(var(--action-stretch,1))}
+.quest-action-art[data-solved='true'] .action-moving-magnet{transform:translateX(80px)}
+.quest-action-art[data-solved='true'] .action-iron-ring{animation:none;transform:translateX(-75px)}
+.quest-action-art[data-experiment='true'] .action-moving-magnet{transform:translateX(var(--action-magnet-x,80px))}
+.quest-action-art[data-experiment='true'] .action-iron-ring{transform:translateX(var(--action-ring-x,-75px))}
+.quest-action-art[data-experiment='true'] .action-leaf-swirl{animation:none;transform-box:view-box;transform-origin:150px 105px;transform:rotate(var(--action-rotation,360deg))}
+.action-flower-stem{transform-box:view-box;transform-origin:150px 91px;transform:rotate(var(--action-wilt-angle,0deg));opacity:var(--action-wilt-opacity,1)}
+.action-yarn{display:none}
+.quest-action-art[data-solved='true'] .action-yarn-2{display:inline}
+.quest-action-art[data-experiment='true'] .action-yarn{display:none}
+.quest-action-art[data-experiment='true'][data-tangle='0'] .action-yarn-0,
+.quest-action-art[data-experiment='true'][data-tangle='1'] .action-yarn-1,
+.quest-action-art[data-experiment='true'][data-tangle='2'] .action-yarn-2{display:inline}
+@media(max-width:520px){.quest-action-experiment .camp-choice-row{flex-wrap:wrap}}
+
+/* Five more scrubbable examples. SVG user coordinates are deliberately
+   illustrative, never used as scientific measurements or scored gestures. */
+.action-mirror-star{transform:translateX(var(--action-mirror-x,68px))}
+.action-mirror-reflection{transform:translateX(var(--action-reflection-x,-68px))}
+.action-bounce-ball{transform:translateY(var(--action-bounce-y,106px))}
+.action-ice-block{transform:translateX(var(--action-ice-x,194px))}
+.action-mat-block{transform:translateX(var(--action-mat-x,76px))}
+.action-pore-water{opacity:var(--action-water,1)}
+.quest-action-art[data-solved='true'] .action-sticky-1{transform:translate(142px,0)}
+.quest-action-art[data-solved='true'] .action-sticky-2{transform:translate(136px,0)}
+.quest-action-art[data-solved='true'] .action-sticky-3{transform:translate(142px,0)}
+.quest-action-art[data-solved='true'] .action-sticky-4{transform:translate(136px,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-1{transform:translate(0,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-2,
+.quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-2{transform:translate(0,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-3,
+.quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-3,
+.quest-action-art[data-experiment='true'][data-sticky='2'] .action-sticky-3{transform:translate(0,0)}
+.quest-action-art[data-experiment='true'][data-sticky='0'] .action-sticky-4,
+.quest-action-art[data-experiment='true'][data-sticky='1'] .action-sticky-4,
+.quest-action-art[data-experiment='true'][data-sticky='2'] .action-sticky-4,
+.quest-action-art[data-experiment='true'][data-sticky='3'] .action-sticky-4{transform:translate(0,0)}
+
+/* Magical materials: reversible illustrations, not calibrated simulations. */
+.action-glitter-beam{transform:translateX(calc(53px + var(--action-light-x,194px)))}
+.quest-action-art[data-experiment='true'] .action-glint{opacity:.1}
+.quest-action-art[data-experiment='true'][data-glitter='0'] .action-glint-0,
+.quest-action-art[data-experiment='true'][data-glitter='1'] .action-glint-1,
+.quest-action-art[data-experiment='true'][data-glitter='2'] .action-glint-2,
+.quest-action-art[data-experiment='true'][data-glitter='3'] .action-glint-3,
+.quest-action-art[data-experiment='true'][data-glitter='4'] .action-glint-4{opacity:1}
+.action-foam-bubble{opacity:clamp(0,calc(var(--action-foam-count,12) - var(--action-index) + 1),1)}
+.action-cloud-particle{opacity:clamp(0,calc(var(--action-particle-count,16) - var(--action-index) + 1),1)}
+.action-jelly{transform-box:view-box;transform-origin:150px 153px;transform:skewX(var(--action-wobble,0deg))}
+.action-magnifier{transform:translateX(var(--action-scan-x,184px))}
+.action-growth-shape{transform-box:view-box;transform-origin:0 0;transform:scale(var(--action-growth,1))}
+.action-cloud-water{opacity:var(--action-cloud,.88)}
+.action-tube-cover{opacity:calc(1 - var(--action-cutaway,1))}
+.action-marble{transform:translateX(var(--action-marble-x,236px))}
+.action-flying-butterfly{transform:translate(var(--action-flight-x,200px),var(--action-flight-y,0px))}
+
+/* Two-word connections and animal metaphors, visible after the answer. */
+.quest-related-word{border-left:4px solid var(--accent);background:var(--surface-2);border-radius:10px;padding:9px 11px;margin:10px 0}
+.quest-related-word[hidden],.quest-animal-art[hidden]{display:none}
+.quest-related-word h4{font-size:16px;margin:0 0 5px}
+.quest-animal-art{margin:12px auto;padding:8px;border:1px solid var(--border);border-radius:16px;max-width:340px;text-align:center;background:var(--surface)}
+.quest-animal-svg{width:100%;height:auto;display:block;border-radius:12px}
+.quest-animal-art figcaption{padding:5px;font-weight:800}
+.comic-icons .quest-animal-svg{max-width:220px}
+.action-window-star{opacity:calc(.14 + .86 * var(--action-beam-power,1))}
+.action-window-beam{opacity:var(--action-beam-power,1)}
+.quest-action-art[data-experiment='true'] .action-protected-egg{animation:none;transform:translateY(var(--action-egg-y,32px))}
+.action-soft-pillow{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(var(--action-pillow-scale,.82))}
+.action-garden-leaves{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(var(--action-growth,1));opacity:var(--action-wilt-opacity,1)}
+
+/* School instructions use the normal question flow and one worked example. */
+.school-feedback[hidden]{display:none}
+.school-feedback{border-left:4px solid var(--accent);padding:10px 12px;margin-top:12px;border-radius:10px}
+.school-feedback p{white-space:normal;overflow-wrap:anywhere;line-height:1.55;margin:5px 0}
+#school-feedback-answer:empty{display:none}
+
+/* Short, concrete explanations, followed by a familiar everyday connection. */
+.school-feedback-correction:empty,#school-feedback-explanation:empty{display:none}
+.school-feedback-correction{padding:8px 10px;border-radius:8px;background:var(--surface-2);font-weight:600}
+.school-everyday,.school-how{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2)}
+.school-everyday p,.school-how p{margin-bottom:0}
+
+/* Concrete vocabulary teaching, not a second scored activity. */
+.word-teaching[hidden]{display:none}
+.word-teaching{display:grid;gap:8px;margin:12px 0}
+.word-teaching-part{padding:10px 12px;border-radius:10px;background:var(--surface-2);border-left:3px solid var(--accent)}
+.word-teaching-part h4{font-size:1rem;margin:0 0 4px;line-height:1.4}
+.word-teaching-part p{font-size:1rem;white-space:normal;overflow-wrap:anywhere;line-height:1.55;margin:0}
+.word-teaching-details summary{cursor:pointer;font-weight:700;padding:8px 0}

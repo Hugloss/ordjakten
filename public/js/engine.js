@@ -15,7 +15,7 @@
     companion:'fox', adventure:'forest', sound:false,
     timerMode: 'off', timerSeconds: 180, timerScope: 'total', reviewOnly: false,
     expressionTask:'mix', missionHints:true, contextMix:true, adaptivePractice:true
-  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},retentionProgress:{}});
+  }, results: [], mistakes: {}, surprises:{unlocked:[],opened:[],mastered:[]}, missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],retentionProgress:{}});
 
   function shuffle(input, random = Math.random) {
     const result = input.slice();
@@ -29,6 +29,34 @@
     const parsed = Number(value);
     return Number.isFinite(parsed) ? Math.max(min, Math.min(max, Math.floor(parsed))) : fallback;
   }
+  const TEACHING_FIELDS=['explanation','familiar','nonExample','ownPrompt'];
+  function validTeaching(value){
+    return !!value&&typeof value==='object'&&!Array.isArray(value)&&
+      TEACHING_FIELDS.every(key=>typeof value[key]==='string'&&value[key].trim().length>=15)&&
+      new Set(TEACHING_FIELDS.map(key=>value[key].trim())).size===TEACHING_FIELDS.length;
+  }
+  function wordTeaching(bank,id){
+    const lesson=bank?.words?.find(w=>w.id===id)?.teaching;
+    return validTeaching(lesson)?Object.fromEntries(TEACHING_FIELDS.map(key=>[key,lesson[key]])):null;
+  }
+  // Only identify an alternative when its label is an unambiguous bank word
+  // or definition. Do not infer a wrong-answer meaning from pictures or actions.
+  function wordFeedback(bank,question,selectedLabel){
+    if(question?.kind!=='word')return null;
+    const lesson=wordTeaching(bank,question.id);
+    if(!lesson)return null;
+    const selected=question.options?.find(o=>o.label===selectedLabel&&o.correct===false);
+    let correction='';
+    if(selected&&!question.picture&&!question.action){
+      const byWord=['context','reverse','contrast'].includes(question.taskType);
+      const matches=bank.words.filter(w=>w.id!==question.id&&(byWord?w.word:w.definition)===selected.label);
+      if(matches.length===1){
+        const other=matches[0];
+        correction='Det valda svaret handlar om '+other.word.toLocaleLowerCase('sv-SE')+'. Det betyder: '+other.definition+' Här passar '+question.word.toLocaleLowerCase('sv-SE')+' bättre.';
+      }
+    }
+    return {...lesson,correction};
+  }
   function validateBank(bank) {
     const errors = [];
     if (!bank || !Array.isArray(bank.words)) return ['Ordbanken saknar en lista med ord.'];
@@ -39,6 +67,7 @@
       if (ids.has(entry.id)) errors.push('Dubblerat ID: ' + entry.id);
       ids.add(entry.id);
       if (!entry.word || !entry.definition || !entry.example) errors.push('Saknar innehåll: ' + entry.id);
+      if(Object.hasOwn(entry,'teaching')&&!validTeaching(entry.teaching))errors.push('Ofullständig ordförklaring: '+entry.id);
       if (words.has(String(entry.word).toLocaleLowerCase('sv-SE'))) errors.push('Dubblerat ord: ' + entry.word);
       words.add(String(entry.word).toLocaleLowerCase('sv-SE'));
       if (!['easy','medium','hard','expert'].includes(entry.difficulty)) errors.push('Ogiltig nivå: '+entry.id);
@@ -61,6 +90,8 @@
       for(const key of ['scene','definition','example']){
         if(typeof entry[key]!=='string'||!entry[key].trim())errors.push('Saknar '+key+': '+entry.id);
       }
+      if(entry.category==='school-instruction'&&(typeof entry.schoolRule!=='string'||entry.schoolRule.trim().length<20))
+        errors.push('Skoluppgift saknar arbetsregel: '+entry.id);
       if(!Array.isArray(entry.reveal)||entry.reveal.length!==2 ||
         entry.reveal.some(panel=>!panel||!panel.title||!panel.text))errors.push('Saknar två förklaringsrutor: '+entry.id);
       if(!Array.isArray(entry.options)||entry.options.length!==5 ||
@@ -77,6 +108,7 @@
     const errors=[];
     if(!contexts || !Array.isArray(contexts.wordContexts))return ['Saknar vardagssituationer.'];
     const words=new Map((bank?.words || []).map(word=>[word.id,word]));
+    const contextIds=new Set(contexts.wordContexts.map(record=>record?.id));
     const seen=new Set();
     const blocked=new Set((curation?.nearSynonyms||[]).map(pair=>nearPair(...pair)));
     for(const record of contexts.wordContexts){
@@ -87,6 +119,12 @@
       if(!Array.isArray(record.distractors)||record.distractors.length!==4||
         new Set(record.distractors).size!==4||record.distractors.some(id=>!words.has(id)||id===record.id||blocked.has(nearPair(id,record.id))))
         errors.push('Ogiltiga eller närliggande svarsalternativ: '+record.id);
+      // Choosing a word for a story and choosing a story for a word are
+      // different editorial decisions. An object can be both round and fragile.
+      if(!Array.isArray(record.readingDistractors)||record.readingDistractors.length<2||
+        new Set(record.readingDistractors).size!==record.readingDistractors.length||
+        record.readingDistractors.some(id=>!words.has(id)||!contextIds.has(id)||id===record.id||blocked.has(nearPair(id,record.id))))
+        errors.push('Kräver minst två granskade Aha-alternativ med egna berättelser: '+record.id);
       if(!Array.isArray(record.scenes)||record.scenes.length!==3){errors.push('Kräver tre berättelser: '+record.id);continue;}
       const normalized=new Set();
       for(const scene of record.scenes){
@@ -97,7 +135,7 @@
         }
         const stem=scene.text.toLocaleLowerCase('sv-SE');
         const token=words.get(record.id).word.toLocaleLowerCase('sv-SE');
-        if(stem.includes(token))errors.push('Ordet avslöjas i berättelsen: '+record.id);
+        if(stem.includes(token)||scene.title.toLocaleLowerCase('sv-SE').includes(token))errors.push('Ordet avslöjas i berättelsen: '+record.id);
         if(normalized.has(stem))errors.push('Duplicerad berättelse: '+record.id);
         normalized.add(stem);
       }
@@ -112,6 +150,7 @@
     const words=topic==='expressions'?[]:getPool(bank,curation,settings.difficulty)
       .map(entry=>({kind:'word',entry}));
     const phrases=topic==='words'?[]:(expressions && Array.isArray(expressions.expressions)?expressions.expressions:[])
+      .filter(entry=>topic!=='expressions'||settings.schoolOnly!==true||entry.category==='school-instruction')
       .map(entry=>({kind:'expression',entry}));
     return words.concat(phrases);
   }
@@ -119,12 +158,15 @@
   // Exam keeps five traditional definition alternatives for consistency.
   function makeExpressionQuestion(entry,difficulty,random=Math.random,taskType='meaning',missions=null){
     const base={id:entry.id,kind:'expression',word:entry.phrase,definition:entry.definition,
-      example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false};
+      example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false,...(entry.animal?{animal:entry.animal}:{}),
+      ...(entry.category==='school-instruction'?{schoolInstruction:true,schoolRule:entry.schoolRule}:{})};
     const type=difficulty==='exam'?'meaning':taskType;
     const mission=missions&&Array.isArray(missions.missions)?missions.missions.find(x=>x.id===entry.id):null;
     if(type==='sentence'){
       if(!mission)throw new Error('Saknar skrivna meningsalternativ: '+entry.id);
-      return {...base,taskType:type,options:shuffle(mission.sentences.map(s=>({label:s.label,correct:s.correct})),random)};
+      return {...base,taskType:type,
+        ...(base.schoolInstruction&&mission.prompt?{scene:mission.prompt}:{}),
+        options:shuffle(mission.sentences.map(s=>({label:s.label,correct:s.correct})),random)};
     }
     if(type==='order'){
       if(!mission)throw new Error('Saknar skrivna händelser: '+entry.id);
@@ -225,6 +267,7 @@
   function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null) {
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const pool=getTopicPool(bank,curation,expressions,settings);
+    const schoolDrill=topic==='expressions'&&settings.schoolOnly===true&&settings.mode==='train'&&settings.difficulty!=='exam'&&!settings.reviewOnly&&!!missions;
     const count=VALID_COUNTS.includes(settings.count)?settings.count:10;
     const candidates=settings.contextOnly&&!settings.reviewOnly&&settings.topic==='words'&&
       settings.mode==='train'&&settings.difficulty!=='exam'?
@@ -240,7 +283,7 @@
     // Adaptation is opt-in and TRAINING ONLY. Tests, exam, and dedicated scene
     // drills preserve their original unbiased question generation.
     const adapt = adaptive && settings.adaptivePractice === true && settings.mode === 'train' &&
-      settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly;
+      settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly && !schoolDrill;
     const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
     if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,settings,contextIds,!!missions,now,random,readingProgress);
     else if(topic==='mixed'){
@@ -273,7 +316,7 @@
         }
         return makeQuestion(item.entry,bank,curation,settings.difficulty,random);
       }
-      const task=adapt?adaptive.choiceType(item,settings,skillProgress,
+      const task=schoolDrill?'sentence':adapt?adaptive.choiceType(item,settings,skillProgress,
         adaptive.availableTypes(item,settings,false,!!missions),random,readingProgress):
         settings.reviewOnly&&settings.mode!=='test'&&missions ? nextReviewTask(
         reviewProgress?.[item.entry.id]?.lastVariant || 'meaning','expression',settings.difficulty):
@@ -315,8 +358,29 @@
       adaptivePractice:obj.adaptivePractice!==false
     };
   }
+  const CAMP_STORY_LIMIT=24;
+  function campStoryKey(row){return [row.scene,row.hero,row.prop,row.plot].join(':');}
+  function sanitizeCampStories(raw,storyProgress){
+    if(!Array.isArray(raw))return [];
+    const seen=new Set(),stories=[];
+    // Bound work on corrupt or hostile stored data; normal saves hold at most 24.
+    for(const row of raw.slice(0,256)){
+      if(!row||typeof row!=='object'||Array.isArray(row)||
+        !['glade','space','coast','garden'].includes(row.scene)||
+        !['fox','owl','dragon'].includes(row.hero)||
+        !['mystery','friend','show'].includes(row.plot)||typeof row.prop!=='string')continue;
+      const mark=/^mark-(forest|space|castle|pirate|ocean|dinosaurs|garden|unicorn|animals|rainbow|horses|music)-([0-3])$/.exec(row.prop);
+      if(!/^free-(book|tent|lantern|flower|blanket|telescope)$/.test(row.prop)&&
+        !(mark&&Number.isInteger(storyProgress?.[mark[1]])&&storyProgress[mark[1]]>Number(mark[2])))continue;
+      const clean={scene:row.scene,hero:row.hero,prop:row.prop,plot:row.plot},key=campStoryKey(clean);
+      if(seen.has(key))continue;
+      seen.add(key);stories.push(clean);
+      if(stories.length===CAMP_STORY_LIMIT)break;
+    }
+    return stories;
+  }
   function sanitizeHistory(history) {
-    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},confusionProgress:{},clueProgress:{},retentionProgress:{}};
+    if (!history || typeof history !== 'object') return { ...DEFAULT_STATE,settings:{...DEFAULT_STATE.settings},results:[],mistakes:{},surprises:{unlocked:[],opened:[],mastered:[]},missionProgress:{},questCounts:{scout:0,stories:0,comeback:0},reviewProgress:{},skillProgress:{},readingProgress:{},recallProgress:{},detectorProgress:{},detectorLevels:{},conceptProgress:{},bridgeProgress:{},feedbackProgress:{},practiceBalance:[],adventureChallenge:[],storyProgress:{},campLayout:null,campStories:[],confusionProgress:{},clueProgress:{},retentionProgress:{}};
     const rawResults = Array.isArray(history.results)?history.results:[];
     const results = rawResults.filter(x => x && typeof x==='object' && Number.isFinite(x.finishedAt))
       .slice(-50).map(x => ({finishedAt:x.finishedAt,level:String(x.level||''),mode:String(x.mode||''),
@@ -363,8 +427,38 @@
     // Separate, strictly validated by retention.js once curated scene IDs are available.
     const retentionProgress=history.retentionProgress&&typeof history.retentionProgress==='object'&&!Array.isArray(history.retentionProgress)?history.retentionProgress:{};
     const readingProgress=history.readingProgress&&typeof history.readingProgress==='object'&&!Array.isArray(history.readingProgress)?history.readingProgress:{};
+    const storyProgress={};
+    for(const id of ['forest','space','castle','pirate','ocean','dinosaurs','garden','unicorn','animals','rainbow','horses','music']){
+      const n=history.storyProgress?.[id];if(Number.isInteger(n)&&n>0)storyProgress[id]=Math.min(4,n);
+    }
+    let campLayout=null;
+    if(history.campLayout&&typeof history.campLayout==='object'&&!Array.isArray(history.campLayout)){
+      const value=history.campLayout,used=new Set();
+      const source=Array.isArray(value.slots)?value.slots:['free-tent',null,'free-lantern',null,'free-book',null];
+      const slots=Array.from({length:6},(_,i)=>{
+        const id=source[i];
+        if(typeof id!=='string'||used.has(id))return null;
+        const match=/^mark-(forest|space|castle|pirate|ocean|dinosaurs|garden|unicorn|animals|rainbow|horses|music)-([0-3])$/.exec(id);
+        const owned=/^free-(book|tent|lantern|flower|blanket|telescope)$/.test(id)||
+          !!(match&&(storyProgress[match[1]]||0)>Number(match[2]));
+        if(!owned)return null;
+        used.add(id);return id;
+      });
+      campLayout={scene:['glade','space','coast','garden'].includes(value.scene)?value.scene:'glade',slots};
+    }
+    const adventureChallenge=Array.isArray(history.adventureChallenge)?history.adventureChallenge.slice(-8).filter(row=>row&&
+      ['focus','aha','recall','workshop','detector','concept','bridge'].includes(row.mode)&&['direct','supported','neutral'].includes(row.outcome)&&
+      [1,2,3].includes(row.demand)&&Number.isSafeInteger(row.at)&&row.at>0&&row.at<=4102444800000)
+      .map(({mode,outcome,demand,at})=>({mode,outcome,demand,at})):[];
+    const practiceBalance=Array.isArray(history.practiceBalance)?history.practiceBalance.slice(-20).filter(value=>['develop','review','discover','creative'].includes(value)):[];
+    const feedbackProgress=history.feedbackProgress&&typeof history.feedbackProgress==='object'&&!Array.isArray(history.feedbackProgress)?history.feedbackProgress:{};
+    const bridgeProgress=history.bridgeProgress&&typeof history.bridgeProgress==='object'&&!Array.isArray(history.bridgeProgress)?history.bridgeProgress:{};
+    const conceptProgress=history.conceptProgress&&typeof history.conceptProgress==='object'&&!Array.isArray(history.conceptProgress)?history.conceptProgress:{};
+    const detectorLevels=history.detectorLevels&&typeof history.detectorLevels==='object'&&!Array.isArray(history.detectorLevels)?history.detectorLevels:{};
+    const detectorProgress=history.detectorProgress&&typeof history.detectorProgress==='object'&&!Array.isArray(history.detectorProgress)?history.detectorProgress:{};
+    const recallProgress=history.recallProgress&&typeof history.recallProgress==='object'&&!Array.isArray(history.recallProgress)?history.recallProgress:{};
     const skillProgress=history.skillProgress&&typeof history.skillProgress==='object'&&!Array.isArray(history.skillProgress)?history.skillProgress:{};
-    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,confusionProgress,clueProgress,retentionProgress};
+    return {version:1,settings:sanitizeSettings(history.settings),results,mistakes,surprises,missionProgress,questCounts,reviewProgress,skillProgress,readingProgress,recallProgress,detectorProgress,detectorLevels,conceptProgress,bridgeProgress,feedbackProgress,practiceBalance,adventureChallenge,storyProgress,campLayout,campStories:sanitizeCampStories(history.campStories,storyProgress),confusionProgress,clueProgress,retentionProgress};
   }
   function applyOutcome(mistakes,id,outcome) {
     const updated={...mistakes};
@@ -372,6 +466,6 @@
     if (outcome==='right'&&updated[id]) {updated[id]-=1;if(updated[id]===0)delete updated[id];}
     return updated;
   }
-  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,validateExpressions,validateContexts,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
-    generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome};
+  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
+    generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

@@ -67,3 +67,220 @@
   .learning-word-heading strong {font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){.learning-word-toggle{scroll-behavior:auto}}
+
+/* Five independent observations, laid out as readable rows rather than levels. */
+.learning-profile-title{font-size:19px;margin:14px 0 8px}
+.learning-profile.learning-steps{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.learning-profile.learning-steps:before{display:none}
+.learning-profile.learning-steps li{display:flex;flex-direction:row;align-items:center;text-align:left;gap:10px;padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.learning-profile .learning-stage-icon{width:38px;height:38px;flex:0 0 38px;font-size:20px}
+.learning-profile-text{flex:1;min-width:0;display:grid;gap:4px}
+.learning-profile .learning-stage-label{font-size:15px;line-height:1.35}
+.learning-profile .learning-stage-state{font-size:13px;line-height:1.4}
+.learning-profile-help{margin:0;font-size:13px;line-height:1.45;overflow-wrap:anywhere}
+.learning-profile .learning-focus-skill{flex:0 0 auto;min-width:54px}
+.learning-profile [data-state='practice']{border-color:var(--accent-line)}
+.learning-profile [data-state='waiting'] .learning-stage-state{font-weight:750}
+.learning-pebble[data-state='unavailable']{opacity:.45}
+.learning-pebble[data-state='practice']{border-color:var(--accent-line)}
+.learning-word-pebbles{flex-wrap:wrap;gap:6px}
+@media(max-width:360px){.learning-profile.learning-steps li{flex-wrap:wrap}.learning-profile .learning-focus-skill{width:100%}}
+
+/* A compact relation map: readable word cards, not a graph that needs zoom. */
+#view-concepts .panel{margin-bottom:12px}
+.concept-intro{display:grid;gap:12px}
+.concept-filters{display:flex;flex-wrap:wrap;gap:8px}
+.concept-filters button{min-height:44px;flex:1;white-space:normal}
+.concept-filters button[aria-pressed='true']{background:var(--accent-soft);border-color:var(--accent-line)}
+.concept-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;align-items:start}
+.concept-card{border:1px solid var(--border);background:var(--surface);border-radius:14px;min-width:0;overflow:hidden}
+.concept-card-summary{display:grid;grid-template-columns:35px minmax(0,1fr);gap:4px 10px;padding:14px;cursor:pointer;list-style:none}
+.concept-card-summary::-webkit-details-marker{display:none}
+.concept-card-summary strong{font-size:18px;overflow-wrap:anywhere;line-height:1.4}
+.concept-card-summary small{grid-column:2;color:var(--muted);font-size:13px}
+.concept-card-summary strong::after{content:' ＋';color:var(--muted)}
+.concept-card[open] .concept-card-summary strong::after{content:' −'}
+.concept-icon{font-size:27px;grid-row:span 2}
+.concept-card-body{padding:14px;border-top:1px solid var(--border);display:grid;gap:12px}
+.concept-word-list{list-style:none;padding:0;display:grid;gap:8px;margin:0}
+.concept-word{display:grid;gap:5px;border:1px solid var(--border);background:var(--surface-2);padding:12px;border-radius:10px;overflow-wrap:anywhere}
+.concept-word strong{font-size:20px;color:var(--text)}
+.concept-word span{font-size:16px;line-height:1.5}
+.concept-explanation{font-size:18px;line-height:1.55;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px;overflow-wrap:anywhere}
+#concepts-prompt{font-size:clamp(23px,4vw,31px);line-height:1.45}
+
+/* Ordbroar: click or keyboard, never require drag-and-drop. */
+.bridge-options{display:grid;gap:10px}
+.bridge-sort-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.bridge-sort-row>strong{font-size:19px;line-height:1.4;overflow-wrap:anywhere}
+.bridge-bin-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.bridge-bin-choices button{min-height:46px;white-space:normal;overflow-wrap:anywhere}
+.bridge-options button[aria-pressed='true']{background:var(--accent-soft);border-color:var(--accent-line);box-shadow:inset 0 0 0 1px var(--accent-line)}
+.bridge-slots{display:grid;gap:10px;padding-left:24px}
+.bridge-slot{padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
+.bridge-slot span,.bridge-slot strong{display:block;line-height:1.5;overflow-wrap:anywhere}
+.bridge-slot strong{margin-top:6px;font-size:19px;color:var(--muted)}
+.bridge-slot strong[data-filled='true']{color:var(--text)}
+.bridge-solution{display:grid;gap:10px;padding-left:24px;font-size:19px;line-height:1.5}
+#bridges-prompt{font-size:clamp(23px,4vw,31px);line-height:1.45}
+@media(max-width:540px){.bridge-sort-row{grid-template-columns:minmax(0,1fr)}}
+
+/* One entry point, one short route; no timer, score or answer preview. */
+.journey-launch{display:grid;gap:10px;border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:14px;padding:15px}
+.journey-launch h2,.journey-launch h3{font-size:clamp(23px,4vw,29px);margin:0;line-height:1.35}
+.journey-launch p{font-size:16px;line-height:1.5;margin:0}
+.journey-launch button{font-size:20px;min-height:54px}
+.journey-banner{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:13px;margin-bottom:12px;border-color:var(--accent-line)}
+.journey-banner strong{font-size:18px;line-height:1.35;overflow-wrap:anywhere}
+.journey-banner p{margin:4px 0;line-height:1.45}
+.journey-actions{display:flex;flex-wrap:wrap;gap:8px}
+.journey-actions button{min-height:44px}
+.journey-finish{display:grid;gap:13px}
+.journey-summary-list{list-style:none;padding:0;display:grid;gap:8px;margin:0}
+.journey-summary-item{padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);font-size:17px;line-height:1.5}
+@media(max-width:600px){.journey-banner{grid-template-columns:minmax(0,1fr)}.journey-actions button{flex:1}}
+
+/* Rest is part of learning: no deadlines, losses, or overdue counters. */
+.memory-preview{display:grid;gap:6px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+.memory-preview strong,.memory-preview h2{font-size:19px;margin:0;line-height:1.4}
+.memory-preview p{margin:0;line-height:1.5;font-size:16px}
+.memory-preview small{line-height:1.5;color:var(--muted)}
+.memory-feedback{padding:10px 12px;background:var(--surface-2);border-radius:10px;font-size:17px;line-height:1.5}
+
+/* Explain the choice of learning method without a global ability score. */
+.knowledge-home-note{padding:10px 12px;background:var(--surface-2);border-radius:10px;line-height:1.5}
+.knowledge-panel{display:grid;gap:10px}
+.knowledge-panel h2,.knowledge-panel p{margin:0}
+.knowledge-next-list{list-style:none;display:grid;gap:9px;padding:0;margin:0}
+.knowledge-suggestion,.knowledge-observation{min-width:0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);overflow-wrap:anywhere}
+.knowledge-suggestion strong,.knowledge-observation strong{font-size:18px;line-height:1.4}
+.knowledge-suggestion p,.knowledge-observation p{margin:5px 0 0;font-size:16px;line-height:1.5}
+.knowledge-panel small,.knowledge-observation small{color:var(--muted);line-height:1.5}
+.knowledge-word{border:1px solid var(--border);border-radius:10px;padding:12px;min-width:0}
+.knowledge-word summary{font-size:17px;font-weight:750;line-height:1.45;cursor:pointer}
+.knowledge-word-body{display:grid;gap:8px;margin-top:10px}
+
+#feedback-learning-summary p{margin:8px 0;font-size:16px;line-height:1.5}
+
+.balance-mix-list{list-style:none;display:grid;gap:6px;padding:0;margin:10px 0}
+.balance-mix-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:8px;background:var(--surface-2);line-height:1.45}
+.balance-mix-row strong{min-width:2ch;text-align:right}
+
+.journey-pacing{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--muted)}
+
+/* Finite story quests: a satisfying ending, with optional choices. */
+.story-card{display:grid;gap:12px;padding:15px;border:1px solid var(--world-color,var(--border));border-radius:16px;background:var(--world-wash,var(--surface-2));min-width:0}
+.story-preview{padding:12px}
+.story-heading{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px}
+.story-world-icon{font-size:clamp(36px,8vw,58px);line-height:1.2}
+.story-heading-copy h2{margin:3px 0;font-size:clamp(21px,4vw,28px);line-height:1.3}
+.story-heading-copy p,.story-card p{margin:0;line-height:1.5}
+.story-intro{font-size:18px;line-height:1.55}
+.story-world-path{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:0;margin:0}
+.story-place{display:grid;justify-items:center;align-content:start;gap:4px;padding:10px 5px;border:1px solid var(--border);background:var(--surface-2);border-radius:12px;text-align:center;min-width:0;overflow-wrap:anywhere}
+.story-place[data-state='next']{border:2px solid var(--world-color,var(--accent-line))}
+.story-place[data-state='visited']{background:var(--world-wash,var(--surface-2))}
+.story-place-icon{font-size:28px;line-height:1.3}
+.story-place strong{font-size:13px;line-height:1.3}
+.story-place small{font-size:12px;color:var(--muted);line-height:1.4}
+.story-small{font-size:14px;color:var(--muted);line-height:1.45}
+.story-choice-heading{font-size:22px;margin:2px 0}
+.story-quest-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px}
+.story-quest-option{display:grid;justify-items:start;gap:6px;text-align:left;min-width:0;min-height:100px;padding:14px;border:2px solid var(--world-color,var(--accent-line));background:var(--surface-2);border-radius:14px;color:var(--text);cursor:pointer}
+.story-quest-option strong{font-size:20px;line-height:1.35}
+.story-quest-option small{color:var(--muted);line-height:1.35}
+.story-quest-icon{font-size:32px;line-height:1.2}
+.story-quest-option:hover{background:var(--world-wash,var(--accent-soft))}
+.story-world-picker{display:grid;gap:6px}
+.story-earned{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;padding:16px;border:2px solid var(--world-color,var(--accent-line));border-radius:16px;background:var(--world-wash,var(--surface-2));align-items:center}
+.story-keepsake-icon{font-size:clamp(48px,12vw,80px);line-height:1.2;animation:story-appear .45s ease-out both}
+.story-earned h2{font-size:24px;margin:4px 0}
+.story-earned p{margin:0;line-height:1.5}
+.story-banner-title{font-weight:700;color:var(--world-color,var(--text))}
+.story-stations{list-style:none;display:flex;gap:8px;padding:0;margin:8px 0}
+.story-station{display:grid;place-items:center;min-width:34px;min-height:34px;border:1px solid var(--border);border-radius:50%;background:var(--surface-2);font-size:18px}
+.story-station[data-state='current']{border:2px solid var(--world-color,var(--accent-line))}
+.story-station[data-state='done']{background:var(--world-wash,var(--accent-soft));border-color:var(--world-color,var(--accent-line));font-weight:800}
+.story-station[data-state='skipped']{border-style:dashed}
+@keyframes story-appear{from{transform:scale(.85);opacity:.6}to{transform:scale(1);opacity:1}}
+@media(max-width:480px){.story-world-path{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.story-keepsake-icon{animation:none}}
+
+.story-album summary{cursor:pointer;font-size:17px;font-weight:700;line-height:1.4}
+.story-album-grid{display:grid;gap:8px;margin-top:10px}
+.story-album-world{padding:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px}
+.story-album-marks{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:5px;margin:8px 0 0;padding:0}
+.story-album-marks li{font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+
+/* Min äventyrsplats – a calm, keyboard-operable creative scene. */
+.camp-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
+.camp-header h1{margin:6px 0;font-size:clamp(32px,6vw,46px)}
+.camp-header p{max-width:55ch;font-size:18px;line-height:1.5;margin:0}
+.camp-editor,.camp-companion,.camp-travel{display:grid;gap:14px;margin-bottom:18px}
+.camp-editor h2,.camp-companion h2,.camp-travel h2,.camp-editor p,.camp-travel p{margin:0}
+.camp-choice-row{display:flex;gap:8px;flex-wrap:wrap}
+.camp-choice-row button{min-height:44px}
+#view-camp button[aria-pressed='true']{border-color:var(--accent-line);box-shadow:inset 0 0 0 1px var(--accent-line);background:var(--accent-soft)}
+.camp-scene{position:relative;isolation:isolate;overflow:hidden;padding:clamp(24px,5vw,45px) 14px 18px;border-radius:18px;border:1px solid var(--border);
+  background:linear-gradient(170deg,#a6daee 0 39%,#b9dba2 39% 57%,#6b9a64 57% 100%)}
+.camp-scene[data-scene='space']{background:radial-gradient(circle at 77% 16%,#cbb4ed 0 2%,transparent 3%),linear-gradient(160deg,#293155 0 57%,#74649b 57% 100%)}
+.camp-scene[data-scene='coast']{background:linear-gradient(172deg,#bce4ec 0 40%,#67afc7 40% 57%,#e8cb96 57% 100%)}
+.camp-scene[data-scene='garden']{background:linear-gradient(170deg,#ffe1ed 0 39%,#b0dba7 39% 61%,#84b576 61% 100%)}
+.camp-landscape{position:absolute;inset:0;pointer-events:none;z-index:-1;font-size:clamp(30px,8vw,76px)}
+#camp-sky{position:absolute;top:2%;right:6%}
+#camp-edge{position:absolute;bottom:17%;left:2%}
+#camp-ground{position:absolute;bottom:2%;right:2%}
+.camp-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:680px;margin:0 auto}
+.camp-slot{display:grid;align-content:center;justify-items:center;gap:4px;min-width:0;min-height:126px;padding:12px 6px;border:2px dashed var(--border);border-radius:18px;background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.camp-slot-symbol{font-size:clamp(34px,7vw,58px);line-height:1.25}
+.camp-slot-label{font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.camp-selection{padding:12px;border-radius:10px;background:var(--accent-soft);line-height:1.5;font-weight:700}
+.camp-notice{font-size:15px;line-height:1.4;min-height:1.4em}
+.camp-inventory{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,125px),1fr));gap:9px}
+.camp-item{display:grid;justify-items:center;align-content:start;gap:4px;min-height:104px;min-width:0;padding:9px 6px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);overflow-wrap:anywhere;text-align:center}
+.camp-item-icon{font-size:34px;line-height:1.2}
+.camp-item strong{font-size:15px;line-height:1.3}
+.camp-item small,.camp-world small{color:var(--muted);font-size:12px;line-height:1.4}
+.camp-dialogue{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:16px;background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:14px}
+#camp-buddy-icon{font-size:clamp(44px,10vw,72px)}
+.camp-dialogue p,.camp-prompt p{font-size:19px;line-height:1.55;margin:6px 0}
+.camp-prompt{padding:14px;border:1px solid var(--border);background:var(--surface-2);border-radius:14px}
+.camp-prompt h3{margin:0;font-size:21px}
+.camp-prompt small{display:block;color:var(--muted);line-height:1.4;margin-bottom:10px}
+.camp-worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:10px}
+.camp-world{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px;padding:12px;border:1px solid var(--border);border-radius:13px;min-height:76px;background:var(--surface-2);color:var(--text);text-align:left}
+.camp-world-icon{font-size:32px}
+.camp-world-copy{min-width:0;display:grid;gap:4px;overflow-wrap:anywhere}
+.camp-world-count{font-size:13px;white-space:nowrap}
+#camp-go{min-height:54px;font-size:18px}
+#story-decorate{margin-top:12px}
+@media(max-width:480px){.camp-slots{gap:6px}.camp-slot{padding:8px 3px;min-height:104px}.camp-slot-label{font-size:12px}.camp-scene{padding:24px 7px 12px}.camp-inventory{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(forced-colors:active){.camp-scene{background:Canvas}.camp-landscape{display:none}}
+
+.camp-riddle-box{display:grid;gap:10px;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2)}
+.camp-riddle-box h3,.camp-riddle-box h4{margin:0;font-size:21px;line-height:1.4}
+.camp-riddle-box p{margin:6px 0;line-height:1.5}
+.camp-riddle-options{display:grid;gap:8px;margin:12px 0}
+.camp-riddle-options button{min-height:48px}
+
+/* Story actions are readable before anything decorative. A visited or next
+   place is an actual accessible button, later places are story context. */
+.mission-path .story-place{padding:0;overflow:hidden}
+.mission-place-button,.mission-place-label{display:grid;justify-items:center;align-content:start;gap:5px;min-height:96px;width:100%;height:100%;min-width:0;padding:10px 5px;overflow-wrap:anywhere;text-align:center;color:var(--text)}
+.mission-place-button{background:transparent;border:0;border-radius:10px}
+.mission-place-button:hover,.mission-place-button:focus-visible{background:var(--accent-soft)}
+.mission-place-button:focus-visible{outline-offset:-4px}
+.world-mission-panel{display:grid;gap:14px;max-width:760px;margin:0 auto}
+.mission-scene{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center;border:1px solid var(--world-color,var(--border));border-radius:18px;padding:16px;background:var(--world-wash,var(--surface-2))}
+.mission-scene-icons{display:grid;justify-items:center;gap:6px;font-size:clamp(38px,8vw,68px);line-height:1.1}
+.mission-scene-text h1{font-size:clamp(26px,5vw,38px);line-height:1.2;margin:5px 0 10px}
+.mission-scene-text p{margin:0}
+.mission-reading{font-size:clamp(18px,3.3vw,23px);line-height:1.6;margin:0}
+.mission-question{display:grid;gap:12px;padding:14px;border:1px solid var(--border);border-radius:15px;background:var(--surface-2)}
+.mission-question h2{margin:0;font-size:24px;line-height:1.4}
+.mission-word{font-size:21px;line-height:1.5;font-weight:750;margin:0}
+.mission-actions{display:grid;gap:9px}
+.mission-actions button{min-height:58px;text-align:left;line-height:1.45;font-size:18px}
+.mission-earned{grid-template-columns:minmax(0,1fr)}
+.world-mission-panel button{min-height:44px}
+@media(max-width:480px){.mission-scene{grid-template-columns:minmax(0,1fr);gap:8px;padding:12px}.mission-scene-icons{display:flex;align-items:center;gap:12px}.mission-question{padding:10px}.mission-place-button,.mission-place-label{min-height:88px}.mission-actions button{font-size:17px}}

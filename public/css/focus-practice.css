@@ -44,3 +44,54 @@
 .learning-home-focus p{margin:0;flex:1;min-width:160px;font-size:13px;line-height:1.5}
 @media(max-width:380px){.focus-hero{align-items:flex-start}.focus-buddy{font-size:34px}.focus-choice{padding:11px}}
 @media(prefers-reduced-motion:reduce){.focus-line-fill{transition:none}}
+
+/* Aha is one reading step at a time, with the explanation as prominent as
+ * the answer options. Reuse the established theme and accessible buttons. */
+#aha-home {display:grid;gap:10px;margin:12px 0;padding:16px;border:2px solid var(--accent-line);border-radius:14px;background:var(--surface-2)}
+#aha-home strong,#aha-learning-title {font-size:clamp(19px,3vw,24px)}
+#aha-home-note,#aha-learning-note {font-size:17px;line-height:1.5;min-width:0}
+#aha-round-progress {font-weight:800;font-size:17px}
+#aha-round-word,#aha-round-prompt {font-size:clamp(24px,4vw,34px);line-height:1.4;overflow-wrap:anywhere}
+#aha-round-definition,#aha-round-correct {font-size:clamp(22px,3.5vw,27px);line-height:1.55;font-weight:700;overflow-wrap:anywhere}
+#aha-round-why {font-size:18px;line-height:1.55}
+#view-aha .panel {margin-bottom:12px}
+
+/* Retrieval: large clue, single input, optional support, no score. */
+.recall-preview{display:grid;gap:10px;border:1px solid var(--border);background:var(--surface-2);padding:15px;border-radius:12px}
+.recall-preview strong{font-size:20px}
+.recall-preview p{margin:0;font-size:16px;line-height:1.5}
+.recall-form{display:grid;gap:12px}
+#recall-prompt{font-size:clamp(23px,4vw,32px);line-height:1.4;margin:0}
+#recall-definition,#recall-explanation,#recall-cloze{font-size:clamp(21px,3.5vw,26px);line-height:1.55;font-weight:700;overflow-wrap:anywhere}
+#recall-answer{font-size:22px;min-height:54px}
+#recall-response{line-height:1.55;margin:0}
+#recall-solution{font-size:clamp(26px,5vw,36px);font-weight:850;overflow-wrap:anywhere}
+.recall-letters{font-size:25px;letter-spacing:.04em;overflow-wrap:anywhere}
+.recall-actions{display:flex;flex-wrap:wrap;gap:8px}
+.recall-actions button{flex:1;min-height:46px}
+#view-recall .panel{margin-bottom:12px}
+
+/* A small workshop with readable puzzle pieces and no correctness score. */
+.workshop-task{display:grid;gap:12px}
+.workshop-task h2{font-size:clamp(23px,4vw,32px);line-height:1.35;margin:0;overflow-wrap:anywhere}
+.workshop-target{font-size:clamp(25px,4.5vw,34px);line-height:1.4;overflow-wrap:anywhere}
+.workshop-reading{font-size:clamp(19px,3.5vw,24px);line-height:1.55;overflow-wrap:anywhere}
+.workshop-pieces{display:flex;flex-wrap:wrap;gap:9px}
+.workshop-piece{font-size:18px;line-height:1.4;min-height:48px;max-width:100%;overflow-wrap:anywhere;white-space:normal}
+.workshop-story{display:grid;gap:8px;width:100%}
+.workshop-story strong{font-size:16px}
+.workshop-feedback-body{display:grid;gap:10px}
+.workshop-feedback-body p{font-size:18px;line-height:1.55;background:var(--surface-2);padding:12px;border-radius:10px;overflow-wrap:anywhere;margin:0}
+#workshop-reflection{font-size:20px;line-height:1.5;min-height:112px;width:100%;resize:vertical}
+#view-workshop .panel{margin-bottom:12px}
+
+/* Keep the original story readable while finding evidence. */
+#view-detector .panel{margin-bottom:12px}
+#detector-story-text{white-space:normal;font-size:clamp(21px,3.5vw,27px);line-height:1.65}
+#detector-clue-options .reading-option{font-size:clamp(18px,3vw,22px);line-height:1.55}
+#detector-evidence{border:2px solid var(--accent-line);background:var(--accent-soft);font-weight:800}
+
+.detector-highlight{background:var(--accent-soft);color:var(--text);border-bottom:2px solid var(--accent-line);border-radius:3px;font-weight:850}
+
+.detector-level{font-weight:800;font-size:16px;color:var(--muted);margin:8px 0}
+#detector-clue-options button[aria-pressed='true']{border-color:var(--accent-line);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line)}

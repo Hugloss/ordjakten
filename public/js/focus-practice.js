@@ -34,7 +34,7 @@
     }
     const image=!!item.entry.illustration&&Array.isArray(curation?.easy?.[item.id])&&curation.easy[item.id].length===3;
     const hasContext=!!contexts?.wordContexts?.find(entry=>entry.id===item.id&&entry.scenes?.length===3);
-    return [image?'picture':'meaning','reverse',...(hasContext?['context']:[]),...(contrastLib?.findPair(item.id,contrasts)?['contrast']:[])];
+    return [...(image?['picture']:[]),'meaning','reverse',...(hasContext?['context']:[]),...(contrastLib?.findPair(item.id,contrasts)?['contrast']:[])];
   }
   function recommended(item,types,progress) {
     if(!types?.length) return null;
@@ -71,7 +71,7 @@
       else if(type==='context')q=engine.makeContextQuestion(item.entry,bank,contexts,random,sceneIndex);
       else if(type==='reverse')q=engine.makeReverseQuestion(item.entry,bank,curation,difficulty,random);
       else if(type==='picture')q=engine.makeQuestion(item.entry,bank,curation,'easy',random);
-      else q=engine.makeQuestion(item.entry,bank,curation,difficulty,random);
+      else q=engine.makeQuestion(item.entry,bank,curation,difficulty==='easy'?'medium':difficulty,random);
       return {...q,kind:item.kind,taskType:type==='picture'?'picture':type,
         focusKey:`${id}:${type}:${sceneIndex===null?'one':sceneIndex}`};
     };
