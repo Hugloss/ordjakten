@@ -318,8 +318,8 @@
             "Ovanför dörren hänger en klocka."
           ],
           "choices": [
-            "Rummet med ljudböcker har en klocka ovanför dörren.",
-            "Rummet med ljudböcker har en stjärna ovanför.",
+            "Rummet med böcker om ljud har en klocka ovanför dörren.",
+            "Rummet med böcker om ljud har en stjärna ovanför.",
             "Rummet med målningar har en klocka ovanför."
           ],
           "answer": 0,
@@ -328,7 +328,7 @@
             "Böckerna passar, men klockan saknas.",
             "Klockan finns, men böckerna handlar inte om ljud."
           ],
-          "why": "Både ljudböcker och en klocka finns vid rummet."
+          "why": "Rummet har böcker om ljud och en klocka ovanför dörren. Båda spåren stämmer."
         },
         {
           "title": "Det magiska ordet",
@@ -380,7 +380,7 @@
       "ending": "Fyndet är en hård sten som liknar ett ägg. Forskarna skyddar den och berättar vad spåren visade.",
       "keepsake": {
         "emoji": "🥚",
-        "name": "Fossilmärket"
+        "name": "Fyndmärket"
       },
       "stages": [
         {
@@ -431,13 +431,13 @@
             "Besökare ska kunna se det genom glas."
           ],
           "choices": [
-            "Fyndet ligger framme där alla kan röra det.",
+            "Fyndet står bakom glas, men ligger löst och kan falla.",
             "Fyndet ligger skyddat i en låda utan glas.",
             "Fyndet ligger i en skyddad glasmonter."
           ],
           "answer": 2,
           "wrong": [
-            "Det är synligt, men inte skyddat.",
+            "Besökarna kan se fyndet genom glas, men det ligger inte säkert.",
             "Det är skyddat, men syns inte genom glas.",
             null
           ],
@@ -504,13 +504,13 @@
             "Blått ska stå före grönt."
           ],
           "choices": [
-            "Grönt, blått, rött.",
+            "Blått, rött, grönt.",
             "Rött, grönt, blått.",
             "Rött, blått, grönt."
           ],
           "answer": 2,
           "wrong": [
-            "Rött kommer sist, inte före blått.",
+            "Blått står före grönt, men rött kommer efter blått.",
             "Grönt kommer före blått, så andra spåret stämmer inte.",
             null
           ],
@@ -557,13 +557,13 @@
             "Det låter som en liten klocka."
           ],
           "choices": [
-            "En stark smäll från en dörr.",
+            "Ett högt dång från en klocka.",
             "Ett svagt pling från en klocka.",
             "En svag viskning i vinden."
           ],
           "answer": 1,
           "wrong": [
-            "Det är ett starkt ljud, inte ett svagt pling.",
+            "Ljudet kommer från en klocka, men det är högt och inte svagt.",
             null,
             "Viskningen är svag, men låter inte som en klocka."
           ],
@@ -672,7 +672,7 @@
       "ending": "Du hittar läshuset bakom träden. Där väntar sagor för alla skogens vänner.",
       "keepsake": {
         "emoji": "📗",
-        "name": "Djungelboken"
+        "name": "Djungelns sagobok"
       },
       "stages": [
         {
@@ -796,13 +796,13 @@
             "De bär böcker tillsammans."
           ],
           "choices": [
-            "Två vänner vinkar åt varandra.",
+            "Två vänner hjälper varandra att bära en väska.",
             "En vän bär alla böcker själv.",
             "Två vänner bär böckerna tillsammans."
           ],
           "answer": 2,
           "wrong": [
-            "Två vänner syns, men de bär inga böcker.",
+            "Två vänner hjälper till, men de bär inte böckerna.",
             "Böckerna bärs, men bara av en person.",
             null
           ],
