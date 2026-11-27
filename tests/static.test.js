@@ -485,7 +485,7 @@ test('concrete word lessons are rendered only as teaching, not as an extra score
  const html=read('index.html'),app=read('js/app.js');
  assert.ok(html.includes('id="word-teaching"'));
  assert.ok(html.includes('id="focus-word-teaching"'));
- assert.ok(app.includes("renderWordTeaching($('word-teaching'),E.wordFeedback(bank,q,option?.label))"));
+ assert.ok(app.includes("renderWordTeaching($('word-teaching'),E.wordFeedback(bank,q,option?.label),{contextExplanation:"));
  assert.ok(app.includes("renderWordTeaching($('word-teaching'),null)"));
  assert.ok(app.includes("E.wordFeedback(bank,q,game.selected[q.id])"));
  assert.ok(app.includes("Prova med egna ord – frivilligt"));

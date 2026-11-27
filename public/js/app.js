@@ -141,7 +141,8 @@
     typeof window.SpeechSynthesisUtterance === 'function';
   const speechLabels = {
     'listen-story':'🔊 Lyssna på texten',
-    'listen-explanation':'🔊 Lyssna på förklaringen'
+    'listen-explanation':'🔊 Lyssna på förklaringen',
+    'listen-reading-check':'🔊 Lyssna på frågan och svaren'
   };
   let speakingButton = null;
   let currentUtterance = null;
@@ -202,12 +203,24 @@
   function explanationReadAloudText() {
     if(!game?.feedback || game.settings.mode!=='train') return '';
     const chunks=[$('explanation-word').textContent,
-      $('explanation-definition').textContent,
-      $('explanation-example').textContent];
+      $('explanation-definition').textContent];
+    if(!$('explanation-example').hidden)chunks.push($('explanation-example').textContent);
     if(!$('context-aha').hidden)chunks.push($('context-reason').textContent);
-    if(!$('word-teaching').hidden)chunks.push(...[...$('word-teaching').querySelectorAll('h4,p')].map(node=>node.textContent));
-    if(!$('school-feedback').hidden)chunks.push($('school-feedback-correction').textContent,$('school-feedback-explanation').textContent,$('school-feedback-connection').textContent,$('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
+    if(!$('quest-action-solution').hidden)chunks.push($('quest-action-solution-text').textContent);
+    if(!$('word-teaching').hidden)chunks.push(...[...$('word-teaching').querySelectorAll('h4,p')]
+      .filter(node=>!node.closest('details:not([open])')).map(node=>node.textContent));
+    if(!$('school-feedback').hidden){
+      chunks.push($('school-feedback-correction').textContent,$('school-feedback-explanation').textContent);
+      if($('school-feedback-more').open)chunks.push($('school-feedback-connection').textContent,$('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
+    }
     return chunks.filter(Boolean).join('. ');
+  }
+  function readingCheckReadAloudText() {
+    if(screen!=='play' || !game?.feedback || !readingCheck || $('reading-check').hidden ||
+      $('feedback-area').dataset.readingStage!=='quiz' || $('reading-check').dataset.complete==='true')return '';
+    if(!readingCheck.prompt || !Array.isArray(readingCheck.options) || !readingCheck.options.length)return '';
+    const options=readingCheck.options.map((option,index)=>'Alternativ '+'ABC'[index]+': '+(option.displayLabel||option.label||''));
+    return readingCheck.prompt+' '+options.join('. ');
   }
 
 
@@ -2808,7 +2821,7 @@
       `${q.reveal[0].title}: ${q.reveal[0].text} ${q.reveal[1].title}: ${q.reveal[1].text}`:'';
     $('focus-why').hidden=!why;
     $('focus-why').textContent=why;
-    renderWordTeaching($('focus-word-teaching'),E.wordFeedback(bank,q,option?.label));
+    renderWordTeaching($('focus-word-teaching'),E.wordFeedback(bank,q,option?.label),{contextExplanation:!!q.contextWhy});
     $('focus-next').textContent=f.index===f.questions.length-1?'🌟 Se vad jag övade':'Nästa uppgift →';
     updateFocusProgress();
     $('focus-verdict-title').setAttribute('tabindex','-1');
@@ -2902,17 +2915,31 @@
       mistakes:history.mistakes,readingProgress:history.readingProgress,missionProgress:history.missionProgress,
       contextIds:new Set(contexts.wordContexts.map(row=>row.id)),missionsAvailable:!!missions,now,contextMemory:contextMemory(),seenIds:practiceSeenIds()});
     $('practice-goal-settings').hidden=settings.mode!=='train'||settings.difficulty==='exam'||settings.reviewOnly;
+    const emptyHelp={discover:'Upptäck nytt har inga nya frågor här just nu.',
+      focus:'Ge ord en ny chans har inga frågor att spela just nu.'};
+    let goal=E.practiceGoalForRound(settings),changedGoal='';
+    if(goal!=='mixed'&&!available[goal].length){
+      changedGoal=goal;
+      settings.practiceGoal='mixed';goal='mixed';
+      saveHistory();
+    }
+    document.querySelectorAll('[data-practice-goal]').forEach(button=>{
+      const key=button.dataset.practiceGoal;
+      button.disabled=!available[key].length;
+      button.title=button.disabled?(emptyHelp[key]||'Här finns inga frågor just nu.'):'';
+    });
     setPressed('[data-practice-goal]','practiceGoal',settings.practiceGoal);
     $('goal-discover-count').textContent=String(available.discover.length);
     $('goal-focus-count').textContent=String(available.focus.length);
     $('goal-mixed-count').textContent=String(available.mixed.length);
-    const goal=E.practiceGoalForRound(settings),length=available[goal].length;
-    $('practice-goal-help').textContent=goal==='mixed'?'Både nytt och sådant du har provat tidigare.':
-      length===0?(goal==='discover'?'Inga oprövade frågor här just nu. Välj Blanda eller en annan nivå.':
-        'Inget behöver en ny chans här just nu. Välj Blanda eller Upptäck nytt.'):
+    const length=available[goal].length;
+    const help=changedGoal?emptyHelp[changedGoal]+' Blanda är valt i stället.':
+      goal==='mixed'?'Både nytt och sådant du har provat tidigare.':
       length<settings.count?'Här finns '+length+' '+(length===1?'fråga':'frågor')+
         ' för ditt mål. Omgången blir kortare – inga andra frågor fylls på.':
       'Du får '+settings.count+' olika frågor för ditt valda mål.';
+    $('practice-goal-help').textContent=[help,...Object.keys(emptyHelp)
+      .filter(key=>!available[key].length&&key!==changedGoal).map(key=>emptyHelp[key])].join(' ');
   }
   function renderSetup() {
     setPressed('[data-mode]','mode',settings.mode);
@@ -3486,6 +3513,7 @@
     $('reading-response').textContent='';
     $('reading-why').hidden=true;
     $('reading-reread').hidden=true;
+    $('listen-reading-check').hidden=true;
     $('reading-launch-prompt').textContent='📖 Läs betydelsen och exemplet ovan. Sedan får du visa vad du förstått.';
     $('reading-start').textContent=mysteryForRound()?'🔎 Jag har läst – undersök spåret →':'🧠 Jag har läst – prova mig →';
     $('feedback-reading-stage').textContent='📖 Läs först – 🧠 prova sedan';
@@ -3515,6 +3543,7 @@
     $('reading-launch').hidden=true;
     $('reading-check').hidden=false;
     $('reading-reread').hidden=false;
+    $('listen-reading-check').hidden=!canReadAloud;
     $('feedback-area').dataset.readingStage='quiz';
     $('feedback-reading-stage').textContent='🧠 Steg 2: Visa vad du förstått';
     $('reading-check-title').setAttribute('tabindex','-1');
@@ -3549,6 +3578,8 @@
     if(!game||!game.feedback||!readingCheck||$('reading-check').dataset.complete==='true')return;
     const option=readingCheck.options[index];
     if(!option)return;
+    stopReadAloud();
+    $('listen-reading-check').hidden=true;
     const button=$('reading-options').querySelector('[data-reading-option="'+index+'"]');
     readingCheck.attempts++;
     if(readingCheck.attempts===1)game.readingMetrics.attempted++;
@@ -3663,12 +3694,14 @@
       $('explanation-word').textContent=q.word;
       $('explanation-definition').textContent=q.definition;
       $('explanation-example').textContent='Exempel: '+q.example;
-      renderWordTeaching($('word-teaching'),E.wordFeedback(bank,q,option?.label));
+      $('explanation-example').hidden=!!(q.schoolInstruction||q.contextWhy||q.action);
+      renderWordTeaching($('word-teaching'),E.wordFeedback(bank,q,option?.label),{contextExplanation:!!(q.contextWhy||q.action)});
       renderActionSolution(q);
       $('quest-animal-art').hidden=!C.renderAnimal($('quest-animal-picture'),q);
       $('context-aha').hidden=q.taskType!=='context';
       if(q.taskType==='context')$('context-reason').textContent=q.contextWhy;
       $('school-feedback').hidden=!q.schoolInstruction;
+      $('school-feedback-more').open=false;
       if(q.schoolInstruction){
         const lesson=Q.schoolFeedback(q,option?.label,missions);
         $('school-feedback-correction').textContent=lesson.correction||'';
@@ -3858,7 +3891,7 @@
       const example=document.createElement('p');example.textContent='Exempel: '+q.example;
       el.append(def,example);
       const wordLesson=E.wordFeedback(bank,q,game.selected[q.id]);
-      if(wordLesson){const host=element('section','word-teaching');renderWordTeaching(host,wordLesson);el.append(host);}
+      if(wordLesson){const host=element('section','word-teaching');renderWordTeaching(host,wordLesson,{expanded:true});el.append(host);}
       if(q.taskType==='context')el.append(element('p','context-review-why','💡 Därför passar ordet: '+q.contextWhy));
       if(q.taskType==='order')el.append(element('p','mission-done','Rätt ordning: '+q.correctOrder.join(' → ')));
       if(q.taskType==='sentence')el.append(element('p','mission-done',(q.schoolInstruction?'Exempelsvar: ':'Rätt mening: ')+q.options.find(o=>o.correct).label));
@@ -3907,17 +3940,22 @@
   }
   // Keep the same concrete lesson available in feedback, facit and ordsamling.
   // The open prompt is optional, spoken or thought about; no score or stored text.
-  function renderWordTeaching(host,lesson){
+  function renderWordTeaching(host,lesson,{expanded=false,contextExplanation=false}={}){
     host.replaceChildren();host.hidden=!lesson;
     if(!lesson)return;
     const rows=[['Tänk på ditt svar',lesson.correction],['💡 Så fungerar ordet',lesson.explanation],
       ['🌱 Tänk på något du känner igen',lesson.familiar],['↔ När passar ordet inte?',lesson.nonExample],
       ['💬 Prova med egna ord – frivilligt',lesson.ownPrompt]];
-    for(const [title,body] of rows){
+    const more=expanded?null:element('details','teaching-more');
+    if(more)more.append(element('summary','','Fler exempel och fundera själv'));
+    for(const [index,[title,body]] of rows.entries()){
       if(!body)continue;
       const part=element('div','word-teaching-part');
-      part.append(element('h4','',title),element('p','',body));host.append(part);
+      part.append(element('h4','',title),element('p','',body));
+      const optional=more&&(index>=2||(index===1&&contextExplanation));
+      (optional?more:host).append(part);
     }
+    if(more&&more.children.length>1)host.append(more);
   }
   function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
   function renderWordList() {
@@ -3943,7 +3981,7 @@
       card.append(element('p','',entry.definition),element('p','word-sample',entry.example));
       const lesson=item.kind==='word'?E.wordTeaching(bank,entry.id):null;
       if(lesson){const details=element('details','word-teaching-details'),host=element('div','word-teaching');
-        renderWordTeaching(host,lesson);details.append(element('summary','','💡 Så används ordet'),host);card.append(details);}
+        renderWordTeaching(host,lesson,{expanded:true});details.append(element('summary','','💡 Så används ordet'),host);card.append(details);}
       list.append(card);
     }
     $('word-count').textContent=`Visar ${Math.min(entries.length,wordListLimit)} av ${entries.length} ord och uttryck.`;
@@ -4370,7 +4408,7 @@
     startQuest(id);
   });
   $('quick-start').addEventListener('click',()=>{ 
-    setSettings({mode:'train',topic:'words',difficulty:'easy',count:10,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});
+    setSettings({mode:'train',topic:'words',difficulty:'easy',count:5,timerMode:'off',reviewOnly:false,practiceGoal:'mixed'});
     startRound();
   });
   $('retention-home-list').addEventListener('click',event=>{
@@ -4447,6 +4485,8 @@
   $('reading-start').addEventListener('click',revealReadingCheck);
   $('reading-reread').addEventListener('click',()=>{
     if(!game||!game.feedback||!readingCheck||$('reading-check').dataset.complete==='true')return;
+    stopReadAloud();
+    $('listen-reading-check').hidden=true;
     $('reading-check').hidden=true;
     $('reading-launch').hidden=false;
     $('feedback-area').dataset.readingStage='reread';
@@ -4459,11 +4499,15 @@
   });
   $('listen-story').hidden=!canReadAloud;
   $('listen-explanation').hidden=!canReadAloud;
+  $('listen-reading-check').hidden=!canReadAloud;
   $('listen-story').addEventListener('click',()=>{
     speakReadAloud(storyReadAloudText(),$('listen-story'));
   });
   $('listen-explanation').addEventListener('click',()=>{
     speakReadAloud(explanationReadAloudText(),$('listen-explanation'));
+  });
+  $('listen-reading-check').addEventListener('click',()=>{
+    speakReadAloud(readingCheckReadAloudText(),$('listen-reading-check'));
   });
   window.addEventListener('pagehide',()=>{stopReadAloud();resetQuestionDrag();});
   document.addEventListener('visibilitychange',()=>{

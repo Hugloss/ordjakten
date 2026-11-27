@@ -31,8 +31,13 @@ def main(browser):
         assert {buttons.nth(i).get_attribute("aria-label") for i in range(3)} == expected_main
         page.locator(".answer-option").first.click()
         assert page.locator("#school-feedback").is_visible()
-        assert page.locator("#school-feedback-rule").inner_text()
+        assert page.locator("#school-feedback-more").get_attribute("open") is None
+        assert page.locator("#school-feedback-rule").is_hidden()
+        assert page.locator("#school-feedback-explanation").is_visible()
         assert page.locator("#school-feedback-explanation").inner_text()
+        page.locator("#school-feedback-more summary").click()
+        assert page.locator("#school-feedback-rule").is_visible()
+        assert page.locator("#school-feedback-rule").inner_text()
         assert page.locator("#school-feedback-connection").inner_text()
         assert "Exempelsvar:" in page.locator("#school-feedback-answer").inner_text()
         assert page.locator("#next").is_hidden()

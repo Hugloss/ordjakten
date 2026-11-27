@@ -180,9 +180,9 @@
         <div class="hero">
           <div class="eyebrow">✨ ETT NYTT ÄVENTYR VÄNTAR</div>
           <h1 id="home-title">Ordjakten börjar här!<br><span>Hur många ord hittar du?</span></h1>
-          <p>Välj en ordkompis, lös kluriga ordgåtor och samla stjärnor på vägen.</p>
+          <p>Börja spela direkt med din ordkompis. Du kan välja en annan längre ner.</p>
           <div class="hero-companion" aria-hidden="true"><span class="hero-companion-emoji">🦊</span><span class="hero-companion-message">Hej! Jag heter Roffe. Ska vi gå på ordjakt?</span></div>
-          <div class="quick-start-area"><button type="button" id="quick-start" class="primary-button big-button quick-start-button">⚡ Spela 10 ord direkt →</button><button type="button" id="quick-expressions" class="secondary-button big-button quick-expressions">💬 Prova 5 kluriga uttryck →</button><button type="button" id="quick-school" class="secondary-button big-button quick-school">🎒 Skolans uppgifter · 5 frågor →</button><button type="button" id="quick-contexts" class="secondary-button big-button quick-contexts">🎭 5 ord i vardagen →</button><button type="button" id="quick-contrast" class="secondary-button big-button quick-contrast">⚖️ Hitta skillnaden · 4 situationer →</button><p class="subtle-note">📚 Spela i din takt. I Hitta skillnaden blir ledtrådarna lite klurigare när du är redo.</p></div>
+          <div class="quick-start-area"><button type="button" id="quick-start" class="primary-button big-button quick-start-button">⚡ Spela 5 ord direkt →</button><button type="button" id="quick-expressions" class="secondary-button big-button quick-expressions">💬 Prova 5 kluriga uttryck →</button><button type="button" id="quick-school" class="secondary-button big-button quick-school">🎒 Skolans uppgifter · 5 frågor →</button><button type="button" id="quick-contexts" class="secondary-button big-button quick-contexts">🎭 5 ord i vardagen →</button><button type="button" id="quick-contrast" class="secondary-button big-button quick-contrast">⚖️ Hitta skillnaden · 4 situationer →</button><p class="subtle-note">📚 Spela i din takt. I Hitta skillnaden blir ledtrådarna lite klurigare när du är redo.</p></div>
           <button type="button" id="open-book-home" class="book-home-link">🎁 Min luckbok <span id="book-home-count">· 0 av 25 upptäckta</span> →</button>
           <div class="hero-badges"><span>⭐ Samla stjärnor</span><span>🎯 121 ord · 53 uttryck · 14 skolord</span><span>🎒 Spela utan konto</span></div>
         </div>
@@ -677,7 +677,23 @@
         <div id="feedback-area" hidden aria-live="polite" aria-atomic="true">
           <p id="feedback-reading-stage" class="reading-stage" role="status">📖 Läs först – 🧠 prova sedan</p>
           <div id="feedback-status" class="feedback-status"><div id="feedback-emoji" class="result-icon">✅</div><h2 id="feedback-title">Rätt svar!</h2><p id="feedback-correct"></p><p id="feedback-reward" class="feedback-reward" hidden></p></div>
-          <div class="explanation"><span id="explanation-label" class="eyebrow">📖 LÄS FÖRKLARINGEN</span><h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p><button id="listen-explanation" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på förklaringen</button><div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div><section id="word-teaching" class="word-teaching" aria-label="Så används ordet" hidden></section><section id="school-feedback" class="context-aha school-feedback" aria-labelledby="school-feedback-title" hidden><strong id="school-feedback-title">💡 Så hänger det ihop</strong><p id="school-feedback-correction" class="school-feedback-correction"></p><p id="school-feedback-explanation"></p><div class="school-everyday"><strong>🌱 Tänk på något du känner igen</strong><p id="school-feedback-connection"></p></div><div class="school-how"><strong>🎒 Kom ihåg när läraren frågar</strong><p id="school-feedback-rule"></p><p id="school-feedback-answer"></p></div></section></div>
+          <div class="explanation">
+            <span id="explanation-label" class="eyebrow">📖 LÄS FÖRKLARINGEN</span>
+            <h2 id="explanation-word"></h2><p id="explanation-definition"></p><p id="explanation-example"></p>
+            <button id="listen-explanation" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på förklaringen</button>
+            <div id="context-aha" class="context-aha" hidden><strong>💡 Aha! Varför passar ordet?</strong><p id="context-reason"></p></div>
+            <section id="word-teaching" class="word-teaching" aria-label="Så används ordet" hidden></section>
+            <section id="school-feedback" class="context-aha school-feedback" aria-labelledby="school-feedback-title" hidden>
+              <strong id="school-feedback-title">💡 Så hänger det ihop</strong>
+              <p id="school-feedback-correction" class="school-feedback-correction"></p>
+              <p id="school-feedback-explanation"></p>
+              <details id="school-feedback-more" class="teaching-more">
+                <summary>Fler exempel och hjälp med uppgiften</summary>
+                <div class="school-everyday"><strong>🌱 Tänk på något du känner igen</strong><p id="school-feedback-connection"></p></div>
+                <div class="school-how"><strong>🎒 Kom ihåg när läraren frågar</strong><p id="school-feedback-rule"></p><p id="school-feedback-answer"></p></div>
+              </details>
+            </section>
+          </div>
           <figure id="quest-animal-art" class="quest-animal-art" hidden><div id="quest-animal-picture" aria-hidden="true"></div><figcaption>✦ Djuret bakom uttrycket</figcaption></figure>
           <section id="quest-action-solution" class="quest-action-solution" aria-labelledby="quest-action-solution-title" hidden>
             <div id="quest-action-solution-art" class="quest-action-art" aria-hidden="true"></div>
@@ -701,6 +717,7 @@
             <span class="reading-label">🧠 STEG 2: ANVÄND DET DU LÄST</span>
             <h3 id="reading-check-title"></h3>
             <p class="reading-intro" id="reading-instruction">Tänk efter och välj rätt svar. Den här övningen ger inga extra poäng.</p>
+            <button id="listen-reading-check" type="button" class="secondary-button reading-audio" aria-pressed="false" hidden>🔊 Lyssna på frågan och svaren</button>
             <div id="reading-options" class="reading-options"></div>
             <p id="reading-response" class="reading-response" role="status" aria-live="polite"></p>
             <p id="reading-why" class="reading-why" hidden></p>

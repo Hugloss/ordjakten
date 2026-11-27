@@ -48,9 +48,15 @@ ordfrekvens. Inga ord eller tidigare framsteg har tagits bort.
 - `tests/` – automatiska Node-tester och valfria Python/Chromium-tester.
 - `docs/` – pedagogik, arkitektur, innehåll och testplaner.
 - `.github/workflows/check.yml` – CI för kvalitetskontroller vid PR.
+- `.github/workflows/deploy-pages.yml` – kontroller och publicering till GitHub Pages från `main`.
 
-Appen kan senare publiceras via GitHub Pages eller GitLab Pages, men
-**denna första PR publicerar ingen webbplats**.
+## Spela och publicera
+
+Publiceringsadressen är [Ordjakten på GitHub Pages](https://hugloss.github.io/ordjakten/).
+Arbetsflödet publicerar `public/` när relevanta ändringar når `main` och
+kontrollerna passerar. Se [publiceringsguiden](docs/GITHUB-PAGES.md) för
+statuskontroll och [första provspelningen](docs/FIRST-PUBLISH.md) för vad
+som ska kontrolleras i webbläsare och med barn.
 
 ## Barnens integritet och innehåll
 
@@ -70,6 +76,9 @@ I **Träna** visas berättelsen med stor läsbar text före svaren. När en
 berättelse finns får barnet först trycka **Jag har läst – visa svaren**.
 Efter varje svar visas förklaringen tydligt och barnet får en kort
 **Aha-fråga** med tre alternativ innan nästa ord går att öppna.
+Snabbstarten börjar med fem lätta ord utan timer. Fler exempel, motexempel
+och egna tankefrågor öppnas frivilligt under förklaringen. När webbläsaren
+har talstöd går även Aha-frågan och dess svarsalternativ att lyssna på.
 Frågan bygger på skrivna vardagsberättelser eller på granskade definitioner;
 den ger **inga ytterligare provpoäng eller stjärnor**. Separata observationer
 av Aha-svar används för att välja frivilliga återbesök.

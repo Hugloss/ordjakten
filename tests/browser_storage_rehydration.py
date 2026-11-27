@@ -39,7 +39,7 @@ def main():
         browser=pw.chromium.launch(headless=True,executable_path=shutil.which('chromium') or None,args=['--no-sandbox'])
         page=open_with_storage(browser)
         page.locator('#quick-start').click()
-        for _ in range(10):
+        for _ in range(5):
             page.locator('.answer-option').first.click()
             page.locator('#next').click()
         assert page.locator('#view-results').is_visible()
@@ -48,7 +48,7 @@ def main():
         page.close()
         restored=open_with_storage(browser,{'ordjakten-v1':state})
         restored.locator('#open-learning-home').click()
-        assert int(restored.locator('#learning-total-seen').inner_text())==10
+        assert int(restored.locator('#learning-total-seen').inner_text())==5
         restored.locator('[data-nav="history"]').click()
         restored.on('dialog',lambda dialog:dialog.accept())
         restored.locator('#clear-history').click()

@@ -48,9 +48,14 @@ def training(browser):
         page.locator(".answer-option").nth(answer).click()
         lesson = page.locator("#word-teaching")
         assert lesson.is_visible()
+        more = lesson.locator("details.teaching-more")
+        assert more.get_attribute("open") is None
+        assert word["teaching"]["ownPrompt"] not in lesson.inner_text()
+        assert page.locator("#context-aha").is_visible()
+        assert ("Tänk på ditt svar" in lesson.inner_text()) == (index == 0)
+        more.locator("summary").click()
         for text in word["teaching"].values():
             assert text in lesson.inner_text()
-        assert ("Tänk på ditt svar" in lesson.inner_text()) == (index == 0)
         assert lesson.locator("input, textarea").count() == 0
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         assert page.locator("#next").is_hidden()

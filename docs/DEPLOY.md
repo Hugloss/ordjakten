@@ -1,10 +1,29 @@
-# Publicera när ni är redo (inget publiceras av ZIP-filen)
+# Publicera Ordjakten
 
 ## Lokalt
 
 `npm start` och öppna `http://127.0.0.1:4173`. Kör `npm run check` före publicering.
 
-## GitLab Pages
+## GitHub Pages
+
+Det befintliga arbetsflödet `.github/workflows/deploy-pages.yml` kör
+`npm run check` och publicerar **endast `public/`** från `main`.
+Appadressen är **https://hugloss.github.io/ordjakten/** efter en lyckad
+publicering. PR-grenar publiceras inte.
+
+- Om Pages inte redan är aktiverat: välj **Settings → Pages → Build and
+  deployment → Source → GitHub Actions** en gång i repot.
+- Relevanta appändringar på `main` startar kontroller och publicering
+  automatiskt. Rena dokumentationsändringar startar ingen publicering.
+- För en manuell körning: öppna **Actions → Publish Ordjakten to GitHub
+  Pages → Run workflow** och välj `main`.
+- Kontrollera att både testerna och steget **Deploy** lyckas innan länken
+  delas. En godkänd PR-kontroll bevisar inte att publiceringen har lyckats.
+
+Följ kontrollerna i [GitHub Pages-guiden](GITHUB-PAGES.md) och
+[planen för första provspelningen](FIRST-PUBLISH.md).
+
+## GitLab Pages som alternativ
 
 1. Skapa ett nytt GitLab-projekt, exempelvis `ordjakten`.
 2. Lägg in *hela* projektets innehåll i repots rot.
@@ -13,10 +32,6 @@
 5. Välj om projektet ska vara offentligt eller privat och gå igenom Pages åtkomstinställningar innan du delar länken.
 
 GitLab dokumenterar Pages under https://docs.gitlab.com/user/project/pages/ och det moderna nyckelordet `pages: true` under https://docs.gitlab.com/ci/yaml/ . En Pages-webbplats kan vara offentlig även om projektet är privat, beroende på Pages-inställningarna.
-
-## GitHub (alternativ)
-
-Inkluderat `.github/workflows/check.yml` kör **bara tester**, ingen publicering. På GitHub Pages skulle `public/` behöva kopieras eller byggas till publiceringsplatsen genom ett separat arbetsflöde; det har vi avsiktligt inte aktiverat.
 
 ## Valfri domän
 
