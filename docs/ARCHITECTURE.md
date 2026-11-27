@@ -157,7 +157,95 @@ Detta beskriver **nuläget**, inte att kod redan migrerats.
 | `public/data/*.json` + motsvarande `*.js`, `public/data/curation.js` och synkskript | Etablera en redaktionell källa och genererade browserartefakter med täckningskontroll. |
 | `public/sw.js` innehåller hårdkodat cacheversionsnamn och resurslista | Frikoppla innehållsrelease/manifest och cachepaketering; bevara offline. |
 
-### Migration i små, verifierbara PR:er – ingen kod ändras av denna beskrivning
+## Verifierad inventering – vilka objekt finns redan?
+
+**Ögonblicksbild 2026-11-27, `main` efter mergade PR #28 och #29.** Detta är **antal källposter**, inte antalet unika frågor; lägg aldrig ihop talen till en total. Inventeringen förblir en granskningsöversikt; katalog och framtida counts ska genereras från innehållsfilerna.
+
+| Källa (befintlig) | Verifierat | Nuvarande identitet och framtida roll |
+| --- | ---: | --- |
+| `public/data/ordbank.json` | 121 ord | `sv-####` identifierar ett målord/begrepp, **inte** varje fråga om ordet. |
+| `public/data/word-contexts.json` | 121 ordposter, 363 scener | Samma `sv-####` binder in tre scener per ord; scener behöver separata, stabila stimulus-/uppgifts-ID:n. |
+| `public/data/expressions.json` | 73 uttryck | `ut-####` binder uttryck med scen, fem alternativ och förklaringar. Uttrycks-ID blir begreppsalias; separat ID för varje bedömningsuppgift. |
+| `public/data/missions.json` | 73 uppdragsposter | **Exakt samma 73 uttrycks-ID:n** som i uttrycksbanken. Mening/ordning är egna aktiviteter, inte kopior av ordet. |
+| `public/data/surprises.json` | 73 utmaningar | Exakt samma 73 uttrycks-ID:n; innehåller ytterligare uppgifter. |
+| `public/data/comics.json` | 73 serier kopplade till uttryck | Samma 73 uttrycks-ID:n som objekt-nycklar; serie är återanvändbar media/berättelse, inte en synonym till frågan. |
+| `public/data/contrasts.json` | 12 jämförelsepar, 96 scener | `js-01` o.s.v. för par och **96 unika scen-ID:n**. Behåll relationerna till båda målord. |
+| `public/data/clue-ladder.json` | 4 jämförelsepar, 64 nivåscener | Fyra befintliga `js-...`-referenser; nivåscenerna har egna `ld-...`-ID:n som ska bevaras. |
+| `public/js/mission-portals-data.js` | 32 berättelser, 96 steg/uppdrag | Berättelserna har ID:n; de **96 stegen saknar egna ID:n** och har facit/alternativ inbäddade. Separera frågan från scenen före omordning. |
+| `public/js/treasure-hunt-data.js` | 48 platsledtrådar | Ledtrådarna saknar egna ID:n och är knutna till värld + platsindex. Ytterligare mysterier och överföringsuppgifter finns i samma modul. |
+| `public/js/action-words.js` | 23 skrivna handlingsuppgifter | Varje handling har kort lokalt ID och ordreferens; behöver global uppgiftsidentitet och tydlig bedömnings-/presentationsgräns. |
+| `public/js/story-quests.js` och `public/js/world-missions.js` | Innehåll för vardera 12 världar | Berättelsekapitel respektive skrivna världsuppdrag i JS; inventera varje kapitel/uppgift separat före migrering. |
+| `public/js/adventures.js`, `public/js/question-play.js` | Världs- och presentationsdata | Äger världar, kartor, scenpresentation och ledtrådstexter – inte framtida fråge-ID:n, facit eller kunskapsmål. |
+| `public/data/curation.js` | Urvals- och bildstödsregler | Separera redaktionella bildkopplingar/felalternativ från användaranpassat urval och generell spelpresentation. |
+
+**Resultat av referenskontroll:** 121/121 ord-ID:n matchar posterna i `word-contexts.json`. Mängderna av 73 uttrycks-ID:n är identiska mellan `expressions.json`, `missions.json`, `surprises.json` och serienycklarna i `comics.json`. Det är **referenser till samma begrepp**, inte 292 olika uttryck. Någon semantisk kontroll av alla frågetexter är ännu inte utförd; avsaknad av främmande ID:n bevisar inte avsaknad av innehållsdubletter.
+
+**Viktigt om "en källa":** Även idag är vissa `*.json` redaktionella original med synkade `*.js`-exports, medan andra uppgifter endast finns som JS-objekt. Den senare gruppen ska **inventeras innan flytt**, inte slås ihop genom textmatchning. Skapade presentationer, fysiska interaktioner och berättelser ska bara brytas ut som egna objekt där det faktiskt ger återanvändbarhet. Målet är en ägare per innehållsobjekt – inte att pressa allt till en enda jättestor JSON-fil.
+
+### ID-policy och migreringskarta
+
+| Gammal referens | Föreslagen identitet framåt | Skydd |
+| --- | --- | --- |
+| `sv-0001` som både ord och fråga | Begrepp behåller `sv-0001` som bestående alias; varje separat fråga får `q-...` | Äldre ordhistorik mappas via explicit alias, inte via ändrat ID. |
+| `ut-0001` i fyra innehållskällor | Ett uttryck `ut-0001`, plus fråge-/uppgifts-ID:n och referenser | Bevara scen, svarsalternativ, förklaringar och uppgiftsvariant. |
+| `wordContexts[sv-...].scenes[0..2]` | Varje stimulus/scen och eventuell fråga får eget ID | Engångsmappning av ursprungligt ord-ID **och** position före redaktionell omordning. |
+| `mission-portals-data.STORIES[detective].stages[0..2]` | Stabilt `scene/step`-ID som refererar till självständig `questionId` | Versionerad mappning från berättelse-ID + gamla stegindex; flytta inte stegen först. |
+| `treasure-hunt-data.DATA[forest][0..3]` | Separat `placeId`/`clueId` och eventuellt `questionId` | Bevara gamla platsindex i migreringsmappningen och intjänade fynd. |
+| `js-01`, `js-01-01`, `ld-...` | Behåll befintliga stabila identiteter där de redan är entydiga | Tilldela dem rätt objekttyp; skapa inte nya identiteter enbart för snyggare prefix. |
+| `action-words.js` lokala handlings-ID:n | Globala uppgifts-ID:n med alias från handlings-ID + ord-ID | Skilj rätt-svar-kontroll från animation och manipulation. |
+
+Nya ID:n får vara läsbara men ska **inte härledas från dagens arrayposition vid varje bygge**. Ett migrerat steg får permanent ID även om placering eller ordning senare ändras. Övergången ska ha en envägs, testad tabell `legacyReference → newId`; tvetydigheter måste granskas manuellt. Ingen tyst deduplicering, omnumrering, sammanslagning eller radering av sparad progression.
+
+## Minsta interoperabla kontrakt – specificera före implementation
+
+Detta är **kontraktsutkast, inte befintlig kod eller fastslaget JSON-schema**. Kontraktet ska göra det möjligt att både läsa gamla språkfrågor och senare lägga till fysik/kemi utan spelformsspecifika fält i frågorna.
+
+### 1. Registry, fråga och sammansatt uppgift
+
+- `ContentRef = {id, revision, locale}`. `id` är stabilt, `revision` ökar vid ändring i betydelse/facit/formulering, `locale` är innehållets språk. Sluta använda fråge-ID som synonym till ämnets begrepps-ID.
+- `Question = {ref, skillIds, stimulusRefs?, prompt, responseSpec, assessmentSpec, explanation?, review, provenance?, assetRefs?}`. Frågan är en självständig bedömningsbar enhet och **får inte ha gameMode/adventure/reward/score/localStorage-fält**.
+- `Task/Activity = {id, revision, objectives, steps/questionRefs}` kan vara flera uppgifter, en simulerad laboration eller ett frivilligt fritt resonemang. En fråga behöver **inte** vara flerval eller ens binärt rätt/fel.
+- `Scene = {id, revision, narrative, activityRefs, assetRefs, transitions}`. Ett äventyr äger ordningen och upplevelsen, men inte uppgiftens facit. En scen kan referera till flera frågor och samma fråga får användas av flera scener.
+- `Collection = {id, criteria | orderedRefs}` skiljer fasta redaktionella listor från dynamiskt sökfilter. Gemensam fråga = gemensamt refererat ID, inte en kopia av dess text.
+
+### 2. Svar, bedömning och hjälp
+
+- `ResponseSpec` beskriver **hur svar lämnas** (exempelvis `single-choice`, `multi-choice`, `numeric`, `quantity-with-unit`, `math-expression`, `chemical-equation`, `ordering`, `text`). Interaktionskomponenten väljs av capability-matchning, inte av ämnesnamnet.
+- `AssessmentSpec` anger **hur ett svar kan bedömas** (exakt matchning, ett eller flera tillåtna alternativ, numerisk tolerans, dimension/enhet, symbolisk ekvivalens, atom- och laddningsbevarande, rubrik/mänsklig granskning eller medvetet obetygsatt). Flera vetenskapligt ekvivalenta svar är tillåtna. Normalisering får inte förlora enheter eller betydelse.
+- `AssessmentOutcome = {status, evidence, score?}` har minst `correct`, `incorrect`, `partial`, `ungraded`, `needs-review`, `invalid`. `score`, om det används, är **bedömningsmått** och inte stjärnor eller spelbelöning.
+- `FeedbackPolicy` bestämmer **när** facit/ledtrådar visas (omedelbart i Träna, först efteråt i Testa). `HintContent` hör till uppgiften eller en pedagogisk strategi; ledtrådens **visning** styrs av spelpolicyn. Rätt/fel behöver inte vara synligt i alla spelformer.
+
+### 3. Instans, slump, händelse och progression
+
+- `QuestionInstance = {instanceId, questionRef, parameters?, seed?, choiceOrder?, contextRef?, manifestId}` fryser frågerevisionen och alternativens stabila ID:n för ett försök. Parametriserad uppgift får deterministiskt facit från samma parametrar och bedömningsversion; förklaringen måste vara giltig även efter variation.
+- `AttemptEvidence = {attemptId, instanceId, assessmentStatus, assessedSkillIds, assistance, originMode, eventTime?, assessmentRevision}` förklarar **vad som observerades**, inte automatiskt att barnet kan eller inte kan. `assistance` ska exempelvis skilja självständigt svar, upprepat försök, ledtråd och förhandsvisning. Undvik att spara barns fria texter, ljud eller identifierare.
+- `GameEvent = {sessionId, modeId, eventType, sceneId?, instanceId?, payloadVersion}` får uppdatera ett separat `GameProgress` (plats, kapitel, fynd) medan godkänd `AttemptEvidence` kan uppdatera `LearningProgress` (övningssignaler och repetition). Dessa är **olika projektioner**, även om samma försök utlöser dem.
+- `StorageEnvelope` har egen schemaversion, aktiva sessionsreferenser och innehållsmanifest-ID. Appversion, innehållsrevision och lagringsschema **får inte blandas ihop**. En äldre nyckel `ordjakten-v1` måste kunna läsas och migreras idempotent eller förbli i säkert kompatibilitetsläge tills migrering är klar.
+- `ContentManifest` låser publicerade fråga-/asset-revisioner och offline-buntens version så att cacheuppdatering inte blandar gammalt facit med ny fråga. Om referensen inte finns: **stoppa/visa kontrollerat fel**, hitta inte på ersättningsfråga.
+
+### 4. Spelmodellen får endast begära kapabiliteter
+
+En spelmodell förklarar exempelvis `supportedResponses: [single-choice, numeric]`, vilka feedbackflöden som tillåts och om sessionen är låst eller adaptiv. Urvalet söker frågor vars **krav** uppfylls; frågan behöver inte listas mot varje framtida spelmodell. Redaktionellt urval till världar och uppdrag sker genom samlingar, kunskapsmål eller scenreferenser, **inte genom fältet "spelformer" på frågan**.
+
+**Särskild gräns för prov:** Även om statisk/offline JavaScript inte kan gömma nedladdat facit för den som analyserar koden ska UI, loggning, utvärderingshändelser och progressionsvyer inte avslöja det för barnet före avslutad omgång.
+
+## Första migrationspilot – konkreta acceptanskriterier
+
+**Rekommenderat innehåll:** använd ett redan redaktionellt skrivet flervalsobjekt från `expressions.json`, exempelvis uttrycket `ut-0001` med dess fasta alternativ. Skapa vid implementation en **enda kanonisk fråga** med eget ID och en läsadapter för befintlig datakälla. Verifiera återanvändning i Träna och Testa. Prova därefter en **referens** från en separat äventyrsscen (utan att skriva över en existerande portalfråga eller dess manus). Inga nya frågor dupliceras för att göra pilotfallet möjligt.
+
+**Kriterier innan pilot-PR får mergas:**
+
+1. Kanoniskt fråga-/alternativ-ID och revision är oförändrade oavsett spelform; text, facit och förklaring är jämförda mot nuvarande källa.
+2. Ingen fråga eller bedömare importerar `adventures.js`, `mission-portals.js` eller UI; spelmodellen får bara fråga/instans och neutralt bedömningsresultat.
+3. Ett prov avslöjar inte rätt svar i UI förrän omgången är avslutad. Träning får frivillig hjälp utan att ändra facit.
+4. Äldre `sv-####`/`ut-####`-historik, `ordjakten-v1`, portalsteg, fynd och belöningar migreras inte i smyg och förloras inte vid omladdning. Först dokumenterad alias-/instansmappning, sedan migrationskod.
+5. Samma fråga får två olika presentationer utan två manuellt redigerade frågetexter; tests kan kontrollera referensintegritet samt identisk bedömning.
+6. Testerna täcker rätt, fel, delvis/obetygsatt som kontrakt, assisterat svar, slumpad alternativordning, återupptagen session, export/import/radering och offline-cachegräns. Kemi-/fysikgraderare behöver inte vara implementerade i denna pilot, men får inte kräva ett nytt `Question`-kontrakt.
+7. Inget oavsiktligt beroende av konto, nätverk, backend, stor extern runtime, kopiering av licensierade resurser eller sparande av rå fritext introduceras.
+
+**Nästa verifiering före själva kodflytten:** gå igenom `world-missions.js` och `story-quests.js` på objektnivå och kontrollera semantiska dubbleringar mellan formulerade portaluppdrag, världsmysterier och ord-/uttrycksfrågor. De inventerade talen ovan visar **strukturella mängder**, inte att semantisk deduplicering är färdig.
+
+## Migration i små, verifierbara PR:er – ingen kod ändras av denna beskrivning
 
 1. **Inventera och klassificera** samtliga innehållskällor (frågor, stimulus, äventyr, begrepp, medieobjekt), tilldela beständiga ID:n där de saknas och registrera användningsrelationer. Bevara publicerade belöningar och progression.
 2. **Fastställ minimikontrakten** för question, question instance, typed response, assessment, event/evidence, scene, story step och content manifest. Besluta först vilka fält som är kanoniska och vilka som är härledda.
