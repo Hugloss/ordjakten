@@ -29,6 +29,17 @@ def one_story(page):
     assert page.locator(".portal-progress").inner_text().startswith("🎒 0 av 32")
     assert page.locator(".portal-card-done").count()==0
     assert page.locator(".portal-journey").count()==0
+    # All 32 themes are still available, but categories avoid a giant
+    # unfiltered mobile list. Filters do not earn or erase discoveries.
+    page.locator('[data-portal-filter="mystery"]').click()
+    assert page.locator(".portal-card").count()==6
+    assert page.locator('[data-portal-filter="mystery"]').get_attribute("aria-pressed")=="true"
+    assert "Visar 6 av 32" in page.locator(".portal-filter-count").inner_text()
+    page.locator('[data-portal-filter="fantasy"]').click()
+    assert page.locator(".portal-card").count()==8
+    page.locator('[data-portal-filter="all"]').click()
+    assert page.locator(".portal-card").count()==32
+    no_overflow(page)
     before=stored(page)
     page.locator('[data-portal-open="detective"]').click()
     assert page.locator(".portal-clue").count()==2
