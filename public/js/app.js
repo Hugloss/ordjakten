@@ -2435,7 +2435,7 @@
     if(screen!=='treasure')return;
     const next=Treasure.mysteryTransfer(history.treasureHunt,treasureWorld,index,treasureContent);
     if(next===history.treasureHunt)return;
-    stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
+    stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-transfer-title');
   }
   function switchTreasureWorld(id){
     if(screen!=='treasure'||!A.isWorld(id)||treasureModel().phase!=='map')return;
