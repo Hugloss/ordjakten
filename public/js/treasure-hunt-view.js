@@ -194,6 +194,20 @@
         proof.append(el('h3','','🧩 Spårdetektivens bevis'));
         if(story.proof.done){
           proof.append(el('p','treasure-proof-done','✓ Du hittade de två detaljer som passar platsen. Bra jämfört!'));
+          // An optional spoken explanation practises reasoning, not speed or scoring.
+          // The model reveals the authored evidence only after proof completion.
+          if(Array.isArray(story.proof.evidence)&&story.proof.evidence.length===2){
+            const [first,second]=story.proof.evidence;
+            const reflect=el('div','treasure-proof-reflection');
+            reflect.append(el('h4','','🗣️ Berätta som en detektiv'),
+              el('p','','Kan du berätta för någon varför platsen passar? Använd båda spåren.'),
+              el('p','','Börja gärna: ”Jag valde den här platsen därför att … och …”'));
+            const example=el('details','treasure-proof-example');
+            example.append(el('summary','','Visa ett exempel om du vill ha hjälp'),
+              el('p','','Jag valde platsen därför att jag hittade '+first+' och '+second+'. Båda spåren passar.'));
+            reflect.append(example,el('p','','Du behöver inte skriva något. Berätta högt eller tänk tyst. Inga extra poäng behövs.'));
+            proof.append(reflect);
+          }
         }else{
           proof.append(el('p','','Vilka två detaljer visar varför platsen passar? Välj ett par.'));
           const choices=el('div','treasure-proof-choices');
