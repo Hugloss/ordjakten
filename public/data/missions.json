@@ -1231,11 +1231,13 @@
         },
         {
           "label": "”Jämför en katt och en hund.” – Katten har mjuk päls och en lång svans.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar hur katten ser ut, men säger inget om hunden. Ta med båda."
         },
         {
           "label": "”Jämför en katt och en hund.” – Jag tycker mest om hundar eftersom min hund är snäll.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vilken du gillar bäst. Det är en åsikt, inte en jämförelse."
         }
       ],
       "order": [
@@ -1243,7 +1245,9 @@
         "Leta efter något som är lika och något som är olika.",
         "Skriv likheten och skillnaden i samma svar."
       ],
-      "hint": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+      "hint": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men.",
+      "explanation": "Katten och hunden har båda päls och fyra ben. Men katten jamar och hunden skäller. Svaret tar med båda djuren, både en likhet och en skillnad.",
+      "connection": "Tänk på två jackor: båda håller dig varm, men bara den ena har huva."
     },
     {
       "id": "ut-0057",
@@ -1255,11 +1259,13 @@
         },
         {
           "label": "”Beskriv ett äpple som ligger på bordet.” – Jag gillar äpplen för att de är goda.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vad du tycker om äpplen. Läraren frågar hur just äpplet ser ut."
         },
         {
           "label": "”Beskriv ett äpple som ligger på bordet.” – Jag tror att äpplet växer på ett träd för att få solljus.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du försöker berätta varför äpplet växer. Här behövs i stället detaljer om hur äpplet ser ut."
         }
       ],
       "order": [
@@ -1267,7 +1273,9 @@
         "Välj tydliga detaljer som färg, form eller egenskaper.",
         "Skriv detaljerna så att en annan person kan föreställa sig saken."
       ],
-      "hint": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+      "hint": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?",
+      "explanation": "Äpplet är runt och rött. Skaftet är brunt och skalet är slätt. Nu kan någon som inte ser äpplet ändå föreställa sig det.",
+      "connection": "Tänk på när du beskriver ditt rum för en kompis: berätta vad som finns där och hur det ser ut."
     },
     {
       "id": "ut-0058",
@@ -1279,11 +1287,13 @@
         },
         {
           "label": "”Förklara varför en våt handduk blir torr.” – Handduken är mjuk, blå och ligger på en stol.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar hur handduken ser ut och känns. Men varför blir den torr?"
         },
         {
           "label": "”Förklara varför en våt handduk blir torr.” – Handduken är torr på kvällen och våt på morgonen.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar att handduken blev torr, men inte vart vattnet tog vägen."
         }
       ],
       "order": [
@@ -1291,7 +1301,9 @@
         "Leta efter orsaken eller hur delarna hänger ihop.",
         "Skriv sambandet så att det blir tydligt varför eller hur det händer."
       ],
-      "hint": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+      "hint": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … .",
+      "explanation": "En våt handduk innehåller vatten. En del vatten lämnar handduken och blir vattenånga i luften. Det kallas att avdunsta. När mindre vatten finns kvar blir handduken torrare.",
+      "connection": "Tänk på en vattenpöl efter regnet. Vattnet kan långsamt bli vattenånga och försvinna ut i luften. Därför torkar pölen."
     },
     {
       "id": "ut-0059",
@@ -1303,11 +1315,13 @@
         },
         {
           "label": "”Sammanfatta: Elsa tog bussen till biblioteket, lånade en bok och läste den hemma. Bussen var gul.” – Bussen var gul och körde till biblioteket.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du tog med bussens färg, men glömde det viktigaste: att Elsa lånade och läste en bok."
         },
         {
           "label": "”Sammanfatta: Elsa tog bussen till biblioteket, lånade en bok och läste den hemma. Bussen var gul.” – Elsa åkte till badhuset och simmade med sin kompis.",
-          "correct": false
+          "correct": false,
+          "feedback": "Det hände inte i berättelsen. En sammanfattning får inte hitta på nya händelser."
         }
       ],
       "order": [
@@ -1315,7 +1329,9 @@
         "Välj ut de viktigaste händelserna eller huvudtankarna.",
         "Skriv en kort version med egna ord."
       ],
-      "hint": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+      "hint": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om.",
+      "explanation": "Elsa åkte till biblioteket, lånade en bok och läste den hemma. Det är det viktigaste som hände. Bussens färg behövs inte i den korta versionen.",
+      "connection": "Om du berättar om en fotbollsmatch kan du säga vilka som spelade och hur det gick. Du behöver inte berätta om varje passning."
     },
     {
       "id": "ut-0060",
@@ -1327,11 +1343,13 @@
         },
         {
           "label": "”Motivera varför klassen ska ta bussen på en lång utflykt.” – Jag väljer bussen och vill åka buss.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du säger vad du väljer, men inte varför bussen passar uppgiften."
         },
         {
           "label": "”Motivera varför klassen ska ta bussen på en lång utflykt.” – Bussen har hjul, fönster och blå säten.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du beskriver bussen. Berätta i stället varför den är ett bra val för utflykten."
         }
       ],
       "order": [
@@ -1339,7 +1357,9 @@
         "Tänk ut en anledning som har med valet att göra.",
         "Skriv valet tillsammans med din anledning."
       ],
-      "hint": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+      "hint": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom.",
+      "explanation": "Klassen ska långt bort. Bussen kan köra långt och hela klassen får plats. Det är skäl som passar valet av buss.",
+      "connection": "Om du tar med en vattenflaska till träningen kan du säga att du vill kunna dricka när du blir törstig."
     },
     {
       "id": "ut-0061",
@@ -1351,11 +1371,13 @@
         },
         {
           "label": "”Argumentera för att skolan ska ha en lugn läsplats.” – Det finns en stol, en lampa och en bokhylla i rummet.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vad som finns i rummet, men inte varför skolan behöver en läsplats."
         },
         {
           "label": "”Argumentera för att skolan ska ha en lugn läsplats.” – Jag vill ha en läsplats och alla måste tycka som jag.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vad du tycker, men ger inget skäl som hjälper andra att förstå varför."
         }
       ],
       "order": [
@@ -1363,7 +1385,9 @@
         "Välj relevanta skäl som stödjer åsikten.",
         "Säg din åsikt och förklara dina argument så att andra kan förstå dem."
       ],
-      "hint": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+      "hint": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan.",
+      "explanation": "En lugn läsplats gör det lättare att koncentrera sig. Då kan elever läsa utan att bli störda. Det är ett skäl till varför skolan borde ha en sådan plats.",
+      "connection": "Vill du ha en längre rast? Berätta vad en längre rast skulle hjälpa eleverna med. Andra får också berätta vad de tycker."
     },
     {
       "id": "ut-0062",
@@ -1375,11 +1399,13 @@
         },
         {
           "label": "”Resonera kring att dela leksaker på fritids.” – Det finns tio leksaker i lådan.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du nämner en sak du vet. Tänk vidare: vad händer när barnen delar på leksakerna?"
         },
         {
           "label": "”Resonera kring att dela leksaker på fritids.” – Jag tycker att vi ska dela. Det är allt.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar din åsikt. Utveckla den med varför, vad som kan hända och hur man kan lösa ett problem."
         }
       ],
       "order": [
@@ -1387,7 +1413,9 @@
         "Tänk på möjliga skäl, samband och följder.",
         "Knyt ihop tankarna och förklara vad de kan innebära."
       ],
-      "hint": "Resonera betyder att utveckla tankarna och koppla samman dem, inte bara skriva ett kort ja eller nej."
+      "hint": "Resonera betyder att utveckla tankarna och koppla samman dem, inte bara skriva ett kort ja eller nej.",
+      "explanation": "När vi delar kan fler leka. Men två barn kan vilja ha samma leksak. Om de turas om får båda en chans. Du visar vad som kan hända och hur problemet kan lösas.",
+      "connection": "Om du väljer mellan att leka ute eller inne kan du tänka på vädret, vad kompisarna vill och vilka lekar som fungerar på varje plats."
     },
     {
       "id": "ut-0063",
@@ -1399,11 +1427,13 @@
         },
         {
           "label": "”Ge ett exempel på en förnybar energikälla.” – Energi är något som kan få saker att hända.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vad energi kan göra, men nämner ingen energikälla."
         },
         {
           "label": "”Ge ett exempel på en förnybar energikälla.” – Det finns olika sorters energi som vi kan använda.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du säger att det finns olika sorter. Säg namnet på en som passar, till exempel solenergi."
         }
       ],
       "order": [
@@ -1411,7 +1441,9 @@
         "Kom på en verklig sak eller situation som passar.",
         "Skriv exemplet så att det tydligt hör till frågan."
       ],
-      "hint": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+      "hint": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på.",
+      "explanation": "Solenergi kommer från solen och är ett exempel på en förnybar energikälla. Det betyder att vi använder energi från en källa som fylls på naturligt.",
+      "connection": "Om läraren ber om exempel på saker som flyter kan du nämna en kork. Du behöver inte räkna upp alla saker i världen."
     },
     {
       "id": "ut-0064",
@@ -1423,11 +1455,13 @@
         },
         {
           "label": "”Redogör för hur du planterade ett frö.” – Jag tycker att plantor är fina och att blomkrukor är roliga.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vad du tycker om plantor. Här ska vi få veta vad du gjorde när du planterade fröet."
         },
         {
           "label": "”Redogör för hur du planterade ett frö.” – Det växte en planta, men jag berättar inte vad jag gjorde.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar vad som hände till slut. Men vi behöver veta hur du gjorde på vägen dit."
         }
       ],
       "order": [
@@ -1435,7 +1469,9 @@
         "Välj viktiga fakta och sätt dem i en begriplig ordning.",
         "Berätta sakligt så att läsaren kan följa helheten."
       ],
-      "hint": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+      "hint": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till.",
+      "explanation": "Först kom jorden i krukan. Sedan lades fröet i jorden. Till sist täcktes fröet och fick vatten. Nu kan någon annan följa hur planteringen gick till.",
+      "connection": "Tänk på hur du byggde med lego. Vilka viktiga steg tog du från de första bitarna till det färdiga bygget?"
     },
     {
       "id": "ut-0065",
@@ -1447,11 +1483,13 @@
         },
         {
           "label": "”Dra en slutsats: Tre pennor testades och bara den röda fungerade.” – Pennorna låg på ett bord bredvid varandra.",
-          "correct": false
+          "correct": false,
+          "feedback": "Att pennorna låg på ett bord berättar inte vad testet visade."
         },
         {
           "label": "”Dra en slutsats: Tre pennor testades och bara den röda fungerade.” – Alla röda pennor i världen fungerar alltid bäst.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du vet bara vad som hände med de tre pennorna. Det räcker inte för att säga att alla röda pennor alltid är bäst."
         }
       ],
       "order": [
@@ -1459,7 +1497,9 @@
         "Fundera på vad resultatet ger stöd för.",
         "Skriv slutsatsen utan att påstå mer än informationen visar."
       ],
-      "hint": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+      "hint": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till.",
+      "explanation": "Tre pennor provades. Bara den röda skrev. Då vet vi att den röda var den enda av just de tre som fungerade. Vi vet inget om alla andra röda pennor.",
+      "connection": "Om du testar två cykelpumpar och bara en fungerar vet du vilken av de två som gick att använda. Du vet inte hur alla pumpar i världen fungerar."
     },
     {
       "id": "ut-0066",
@@ -1471,11 +1511,13 @@
         },
         {
           "label": "”Tolka: Mira ler och springer fram till en vän hon inte sett på länge.” – Mira springer fram till en vän och ler.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du upprepar det vi redan vet. Använd det för att fundera på vad Mira kanske känner."
         },
         {
           "label": "”Tolka: Mira ler och springer fram till en vän hon inte sett på länge.” – Mira är säkert arg på sin vän, även om inget tyder på det.",
-          "correct": false
+          "correct": false,
+          "feedback": "Inget i berättelsen tyder på att Mira är arg. Leta efter ledtrådar som passar din tolkning."
         }
       ],
       "order": [
@@ -1483,7 +1525,9 @@
         "Leta efter ledtrådar som stödjer en möjlig betydelse.",
         "Beskriv din tolkning och vilka ledtrådar du använder."
       ],
-      "hint": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+      "hint": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på.",
+      "explanation": "Mira ler och springer fram till vännen. Det är ledtrådar som tyder på att hon är glad att se vännen. Vi säger verkar glad eftersom vi inte vet säkert vad hon känner.",
+      "connection": "När någon kommer in med blöta kläder och ett paraply kan du gissa att det regnar ute. Kläderna och paraplyet är ledtrådar."
     },
     {
       "id": "ut-0067",
@@ -1495,11 +1539,13 @@
         },
         {
           "label": "”Beräkna kostnaden för två pennor som kostar 5 kronor styck.” – Pennorna är bra att ha i skolan.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du berättar att pennor är användbara, men räknar inte ut priset."
         },
         {
           "label": "”Beräkna kostnaden för två pennor som kostar 5 kronor styck.” – Det kostar ungefär något mellan en och tjugo kronor.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du ger ett ungefärligt svar trots att du har talen du behöver. Räkna 5 + 5."
         }
       ],
       "order": [
@@ -1507,7 +1553,9 @@
         "Välj räknesätt och utför beräkningen.",
         "Kontrollera att svaret verkar rimligt och skriv det med enhet."
       ],
-      "hint": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+      "hint": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet.",
+      "explanation": "Varje penna kostar 5 kronor. Du vill köpa två. Lägg ihop 5 + 5 eller räkna 2 gånger 5. Båda sätten ger 10 kronor.",
+      "connection": "Om du har fyra kompisar och ger varje kompis två kort behöver du 2 + 2 + 2 + 2 = 8 kort."
     },
     {
       "id": "ut-0068",
@@ -1519,11 +1567,13 @@
         },
         {
           "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Exakt 17 barn, fast jag har inte räknat dem.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du skriver exakt 17 fast du inte har räknat. Säg ungefär, och visa hur du tänker."
         },
         {
           "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Det är säkert 900 barn vid de fyra borden.",
-          "correct": false
+          "correct": false,
+          "feedback": "Fyra bord med ungefär fem barn kan inte rimligen ha 900 barn. Utgå från antalet bord och barn per bord."
         }
       ],
       "order": [
@@ -1531,7 +1581,9 @@
         "Använd något du känner till som jämförelse eller avrunda talen.",
         "Skriv ett rimligt ungefärligt svar, inte ett påhittat exakt tal."
       ],
-      "hint": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+      "hint": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka.",
+      "explanation": "Varje bord verkar ha omkring fem barn. Fyra bord med ungefär fem barn blir ungefär tjugo barn. Det är en uppskattning eftersom vi inte räknat alla exakt.",
+      "connection": "Om en bok kostar ungefär 100 kronor kan tre liknande böcker kosta cirka 300 kronor tillsammans."
     },
     {
       "id": "ut-0069",
@@ -1543,11 +1595,13 @@
         },
         {
           "label": "”Undersök vilka föremål som flyter i en balja med vatten.” – Skriv bara att vattnet är kallt och genomskinligt.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du beskriver vattnet, men tar inte reda på vilka föremål som flyter."
         },
         {
           "label": "”Undersök vilka föremål som flyter i en balja med vatten.” – Gissa att allt flyter och skriv det som ett säkert resultat utan att prova.",
-          "correct": false
+          "correct": false,
+          "feedback": "Du gissar i förväg. Prova föremålen först och skriv vad som verkligen händer."
         }
       ],
       "order": [
@@ -1555,7 +1609,9 @@
         "Gör ett försök eller samla information på ett lämpligt sätt.",
         "Anteckna vad du upptäcker så att resultatet går att förstå."
       ],
-      "hint": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
+      "hint": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker.",
+      "explanation": "Lägg ett föremål i vattnet och se om det flyter eller sjunker. Prova nästa föremål på samma sätt. Skriv upp resultaten så att du vet vilka som flöt.",
+      "connection": "Tänk på att prova tre olika pennor. Skriv med varje penna och se vilka som fungerar. Då har du undersökt saken."
     }
   ]
 }

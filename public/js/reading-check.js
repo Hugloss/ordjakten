@@ -46,7 +46,7 @@
       const sentenceRight=mission?.sentences?.find(x=>x.correct===true)?.label;
       if(surpriseRight)candidates.push({label:surpriseRight,key:'expression:challenge',why:challenge?.explanation});
       if(sentenceRight && sentenceRight!==surpriseRight)
-        candidates.push({label:sentenceRight,key:'expression:mission',why:mission?.hint||challenge?.explanation});
+        candidates.push({label:sentenceRight,key:'expression:mission',why:question.schoolInstruction?(mission?.explanation||challenge?.explanation):(mission?.hint||challenge?.explanation)});
       // Aha must not repeat the correct sentence already present among the
       // main question's answer choices. Prefer a genuinely NEW authored scene.
       const shown=new Set((question.options||[]).map(option=>option.label));

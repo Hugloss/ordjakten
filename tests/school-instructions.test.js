@@ -62,3 +62,50 @@ test('school instructions require a mission prompt and receive an answer-neutral
  assert.deepEqual(a,b);assert.ok(a.hint.includes('uppgiftsordet'));
  assert.equal(P.plan({...settings,mode:'test'},q).egg,false);
 });
+
+test('school explanations teach a real example and connect it to everyday life',()=>{
+ for(const entry of school){
+   const task=M.get(missions,entry.id);
+   const q=E.makeExpressionQuestion(entry,'medium',()=>.42,'sentence',missions);
+   const good=q.options.find(o=>o.correct);
+   const lesson=M.schoolFeedback(q,good.label,missions);
+   assert.equal(lesson.explanation,task.explanation);
+   assert.equal(lesson.connection,task.connection);
+   assert.equal(lesson.rule,entry.schoolRule);
+   assert.ok(lesson.explanation.length>=30&&lesson.connection.length>=30);
+   assert.equal(lesson.correction,'');
+   assert.ok(lesson.answer.length>0);
+   assert.ok(!lesson.answer.includes('” – '));
+   for(const o of q.options.filter(o=>!o.correct)){
+     const miss=M.schoolFeedback(q,o.label,missions);
+     assert.equal(miss.correction,task.sentences.find(s=>s.label===o.label).feedback);
+     assert.ok(miss.correction.length>=15);
+     assert.equal(miss.explanation,lesson.explanation);
+   }
+   const meaning=E.makeExpressionQuestion(entry,'medium',()=>.42,'meaning',missions);
+   assert.equal(M.schoolFeedback(meaning,null,missions).explanation,entry.reveal[0].text);
+   assert.equal(M.schoolFeedback(meaning,null,missions).connection,entry.reveal[1].text);
+   const check=B.makeCheck(q,{bank,contexts,surprises,missions,random:()=>.42});
+   assert.equal(check.why,surprises.challenges.find(c=>c.id===entry.id).explanation);
+ }
+ assert.equal(M.schoolFeedback(E.makeExpressionQuestion(expressions.expressions[0],'medium'),null,missions),null);
+});
+test('ice explanation teaches heat transfer and connects to the snowman',()=>{
+ const entry=school.find(e=>e.phrase==='Förklara');
+ assert.match(entry.example,/värme från luften/);
+ assert.match(entry.reveal[1].text,/snögubbe/);
+ const q=E.makeExpressionQuestion(entry,'medium',()=>.42,'sentence',missions);
+ const lesson=M.schoolFeedback(q,q.options.find(o=>o.correct).label,missions);
+ assert.match(lesson.explanation,/vattenånga/);
+ assert.match(lesson.connection,/vattenpöl/);
+});
+test('content checks reject missing concrete explanations and choice-specific feedback',()=>{
+ const id=school[0].id;
+ const invalid={...missions,missions:missions.missions.map(m=>m.id===id?{...m,explanation:'',connection:'',sentences:m.sentences.map(s=>({...s,feedback:''}))}:m)};
+ const errors=M.validate(invalid,expressions);
+ assert.ok(errors.some(s=>s.includes('konkret explanation')));
+ assert.ok(errors.some(s=>s.includes('konkret connection')));
+ assert.ok(errors.some(s=>s.includes('svarsspecifik')));
+ const invalidExpressions={...expressions,expressions:expressions.expressions.map(e=>e.id===id?{...e,schoolRule:''}:e)};
+ assert.ok(E.validateExpressions(invalidExpressions).some(s=>s.includes('arbetsregel')));
+});

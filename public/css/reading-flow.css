@@ -394,3 +394,9 @@
 .school-feedback{border-left:4px solid var(--accent);padding:10px 12px;margin-top:12px;border-radius:10px}
 .school-feedback p{white-space:normal;overflow-wrap:anywhere;line-height:1.55;margin:5px 0}
 #school-feedback-answer:empty{display:none}
+
+/* Short, concrete explanations, followed by a familiar everyday connection. */
+.school-feedback-correction:empty,#school-feedback-explanation:empty{display:none}
+.school-feedback-correction{padding:8px 10px;border-radius:8px;background:var(--surface-2);font-weight:600}
+.school-everyday,.school-how{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2)}
+.school-everyday p,.school-how p{margin-bottom:0}

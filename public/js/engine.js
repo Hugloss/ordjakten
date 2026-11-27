@@ -61,6 +61,8 @@
       for(const key of ['scene','definition','example']){
         if(typeof entry[key]!=='string'||!entry[key].trim())errors.push('Saknar '+key+': '+entry.id);
       }
+      if(entry.category==='school-instruction'&&(typeof entry.schoolRule!=='string'||entry.schoolRule.trim().length<20))
+        errors.push('Skoluppgift saknar arbetsregel: '+entry.id);
       if(!Array.isArray(entry.reveal)||entry.reveal.length!==2 ||
         entry.reveal.some(panel=>!panel||!panel.title||!panel.text))errors.push('Saknar två förklaringsrutor: '+entry.id);
       if(!Array.isArray(entry.options)||entry.options.length!==5 ||
@@ -121,7 +123,7 @@
   function makeExpressionQuestion(entry,difficulty,random=Math.random,taskType='meaning',missions=null){
     const base={id:entry.id,kind:'expression',word:entry.phrase,definition:entry.definition,
       example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false,...(entry.animal?{animal:entry.animal}:{}),
-      ...(entry.category==='school-instruction'?{schoolInstruction:true}:{})};
+      ...(entry.category==='school-instruction'?{schoolInstruction:true,schoolRule:entry.schoolRule}:{})};
     const type=difficulty==='exam'?'meaning':taskType;
     const mission=missions&&Array.isArray(missions.missions)?missions.missions.find(x=>x.id===entry.id):null;
     if(type==='sentence'){

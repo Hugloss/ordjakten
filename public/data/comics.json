@@ -882,7 +882,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+      "takeaway": "Jämför – Berätta vad som är lika och vad som är olika."
     },
     "ut-0057": {
       "before": [
@@ -897,7 +897,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+      "takeaway": "Beskriv – Berätta hur något är eller ser ut. Ta med detaljer."
     },
     "ut-0058": {
       "before": [
@@ -912,7 +912,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+      "takeaway": "Förklara – Berätta varför något händer eller hur det fungerar."
     },
     "ut-0059": {
       "before": [
@@ -927,7 +927,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+      "takeaway": "Sammanfatta – Berätta det viktigaste med få ord."
     },
     "ut-0060": {
       "before": [
@@ -942,7 +942,7 @@
         "✅",
         "📖"
       ],
-      "takeaway": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+      "takeaway": "Motivera – Berätta vad du väljer eller tycker, och varför."
     },
     "ut-0061": {
       "before": [
@@ -957,7 +957,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+      "takeaway": "Argumentera – Säg vad du tycker och ge skäl som andra kan förstå."
     },
     "ut-0062": {
       "before": [
@@ -972,7 +972,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "Utveckla dina tankar. Knyt ihop skäl och följder med ord som eftersom, därför, om och men. Flera perspektiv kan göra resonemanget tydligare."
+      "takeaway": "Resonera – Tänk vidare och visa hur saker hänger ihop. Berätta vad som kan hända sedan."
     },
     "ut-0063": {
       "before": [
@@ -987,7 +987,7 @@
         "⭐",
         "📋"
       ],
-      "takeaway": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+      "takeaway": "Ge exempel – Visa en sak eller situation som passar frågan."
     },
     "ut-0064": {
       "before": [
@@ -1002,7 +1002,7 @@
         "💡",
         "✅"
       ],
-      "takeaway": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+      "takeaway": "Redogör för – Berätta vad som hände eller hur något gick till, så att man kan följa det."
     },
     "ut-0065": {
       "before": [
@@ -1017,7 +1017,7 @@
         "💡",
         "✅"
       ],
-      "takeaway": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+      "takeaway": "Dra en slutsats – Använd det du har sett eller fått veta för att säga vad det visar."
     },
     "ut-0066": {
       "before": [
@@ -1032,7 +1032,7 @@
         "💡",
         "💬"
       ],
-      "takeaway": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+      "takeaway": "Tolka – Använd ledtrådar för att förstå vad något kan betyda."
     },
     "ut-0067": {
       "before": [
@@ -1047,7 +1047,7 @@
         "💡",
         "📖"
       ],
-      "takeaway": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+      "takeaway": "Beräkna – Räkna ut svaret."
     },
     "ut-0068": {
       "before": [
@@ -1062,7 +1062,7 @@
         "💡",
         "✅"
       ],
-      "takeaway": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+      "takeaway": "Uppskatta – Ge ett ungefärligt svar som verkar rimligt."
     },
     "ut-0069": {
       "before": [
@@ -1077,7 +1077,7 @@
         "💡",
         "✅"
       ],
-      "takeaway": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
+      "takeaway": "Undersök – Ta reda på något genom att titta noga, leta efter fakta eller prova."
     }
   }
 }

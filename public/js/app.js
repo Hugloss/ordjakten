@@ -188,7 +188,7 @@
       $('explanation-definition').textContent,
       $('explanation-example').textContent];
     if(!$('context-aha').hidden)chunks.push($('context-reason').textContent);
-    if(!$('school-feedback').hidden)chunks.push($('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
+    if(!$('school-feedback').hidden)chunks.push($('school-feedback-correction').textContent,$('school-feedback-explanation').textContent,$('school-feedback-connection').textContent,$('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
     return chunks.filter(Boolean).join('. ');
   }
 
@@ -333,15 +333,16 @@
     if(button.hasAttribute('data-mission-undo')){wrap._selected.pop();redrawMissionOrder(wrap);return;}
     if(button.hasAttribute('data-mission-reset')){wrap._selected=[];redrawMissionOrder(wrap);wrap.querySelector('.bonus-message').textContent='';return;}
     const message=wrap.querySelector('.bonus-message');
-    let right=null,explanation='';
+    let right=null,explanation='',correction='';
     if(mode==='order'&&button.hasAttribute('data-mission-check')){
       if(wrap._selected.length!==3)return;
       right=Q.checkOrder(wrap._selected);
-      explanation='Du såg hur händelserna hör ihop i tid.';
+      explanation=task.explanation?task.hint:'Du såg hur händelserna hör ihop i tid.';
     }else if(mode==='sentence'&&button.hasAttribute('data-mission-sentence')){
       const index=Number(button.dataset.missionSentence);
       right=task.sentences[index]&&task.sentences[index].correct===true;
-      explanation='Du kan använda uttrycket i en ny mening.';
+      explanation=task.explanation?[task.explanation,task.connection].filter(Boolean).join(' '):'Du kan använda uttrycket i en ny mening.';
+      correction=task.sentences[index]?.feedback||'';
     }else if(mode==='meaning'&&button.hasAttribute('data-mission-answer')){
       right=S.checkAnswer(surprises,id,Number(button.dataset.missionAnswer));
       explanation=data.explanation;
@@ -350,7 +351,7 @@
     else if(right===false){
       if(mode!=='order'){button.classList.add('is-wrong');button.disabled=true;}
       message.dataset.outcome='wrong';
-      message.textContent=mode==='order'?'Inte riktigt än. Prova att ändra ordningen med Ångra eller Börja om.':'Inte riktigt. Fundera på vad uttrycket betyder och försök igen!';
+      message.textContent=correction|| (mode==='order'?'Inte riktigt än. Prova att ändra ordningen med Ångra eller Börja om.':'Inte riktigt. Fundera på vad uttrycket betyder och försök igen!');
     }
   }
   function renderBookTiles(){
@@ -2673,7 +2674,9 @@
     $('focus-explain-word').textContent=q.word;
     $('focus-definition').textContent=q.definition;
     $('focus-example').textContent='Exempel: '+q.example;
-    const why=q.taskType==='contrast'?'⚖️ Aha! Därför passar ordet: '+q.contextWhy+(q.contrastClue?' Ledtråden: '+q.contrastClue:''):
+    const schoolLesson=Q.schoolFeedback(q,option?.label,missions);
+    const why=schoolLesson?[schoolLesson.correction,schoolLesson.explanation,schoolLesson.connection,schoolLesson.rule].filter(Boolean).join(' '):
+      q.taskType==='contrast'?'⚖️ Aha! Därför passar ordet: '+q.contextWhy+(q.contrastClue?' Ledtråden: '+q.contrastClue:''):
       q.taskType==='context'?'💡 Varför passar ordet? '+q.contextWhy:
       q.kind==='expression'&&q.reveal?.length===2?
       `${q.reveal[0].title}: ${q.reveal[0].text} ${q.reveal[1].title}: ${q.reveal[1].text}`:'';
@@ -3492,8 +3495,12 @@
       if(q.taskType==='context')$('context-reason').textContent=q.contextWhy;
       $('school-feedback').hidden=!q.schoolInstruction;
       if(q.schoolInstruction){
-        $('school-feedback-rule').textContent=q.reveal[1].text;
-        $('school-feedback-answer').textContent=q.taskType==='sentence'?'Exempelsvar: '+correct:q.taskType==='order'?'Arbetssteg: '+correct:'';
+        const lesson=Q.schoolFeedback(q,option?.label,missions);
+        $('school-feedback-correction').textContent=lesson.correction||'';
+        $('school-feedback-explanation').textContent=lesson.explanation||'';
+        $('school-feedback-connection').textContent=lesson.connection||'';
+        $('school-feedback-rule').textContent=lesson.rule||'';
+        $('school-feedback-answer').textContent=lesson.answer?(q.taskType==='order'?'Arbetssteg: ':'Exempelsvar: ')+lesson.answer:'';
       }
       $('expression-reveal').hidden=q.kind!=='expression';
       $('expression-comic').replaceChildren();
@@ -3669,7 +3676,11 @@
       if(q.taskType==='context')el.append(element('p','context-review-why','💡 Därför passar ordet: '+q.contextWhy));
       if(q.taskType==='order')el.append(element('p','mission-done','Rätt ordning: '+q.correctOrder.join(' → ')));
       if(q.taskType==='sentence')el.append(element('p','mission-done',(q.schoolInstruction?'Exempelsvar: ':'Rätt mening: ')+q.options.find(o=>o.correct).label));
-      if(q.schoolInstruction)el.append(element('p','context-review-why','Så gör du: '+q.reveal[1].text));
+      if(q.schoolInstruction){
+        const lesson=Q.schoolFeedback(q,game.selected[q.id],missions);
+        for(const text of [lesson.correction,lesson.explanation,lesson.connection,lesson.rule].filter(Boolean))
+          el.append(element('p','context-review-why',text));
+      }
       if(q.kind==='expression'){
         const comicToggle=element('details','comic-review');
         const summary=element('summary','','🎁 Öppna luckan – serie och miniuppdrag');

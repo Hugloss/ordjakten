@@ -810,7 +810,7 @@
           "correct": false
         }
       ],
-      "explanation": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+      "explanation": "Ett äpple och en banan är båda frukter. De har olika form. När du berättar om både likheten och skillnaden har du jämfört."
     },
     {
       "id": "ut-0057",
@@ -825,7 +825,7 @@
           "correct": false
         }
       ],
-      "explanation": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+      "explanation": "Fönstret, färgen på stolarna och var de står hjälper oss att föreställa oss rummet. Det är en beskrivning."
     },
     {
       "id": "ut-0058",
@@ -840,7 +840,7 @@
           "correct": false
         }
       ],
-      "explanation": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+      "explanation": "Solljuset färdas mot marken. Din kropp står i vägen för en del av ljuset. Därför blir det mörkare bakom dig och en skugga bildas."
     },
     {
       "id": "ut-0059",
@@ -855,7 +855,7 @@
           "correct": false
         }
       ],
-      "explanation": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+      "explanation": "Sam satte ett frö i jorden och vattnade det. Det började växa. En kort sammanfattning behöver bara ta med de viktiga händelserna."
     },
     {
       "id": "ut-0060",
@@ -870,7 +870,7 @@
           "correct": false
         }
       ],
-      "explanation": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+      "explanation": "En faktabok om planeter passar eftersom du behöver fakta till uppgiften. Det är anledningen till att du valde just den boken."
     },
     {
       "id": "ut-0061",
@@ -885,7 +885,7 @@
           "correct": false
         }
       ],
-      "explanation": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+      "explanation": "En bytesdag gör att gamla leksaker kan användas igen och att fler kan hitta något nytt. Det är två skäl som stödjer förslaget."
     },
     {
       "id": "ut-0062",
@@ -900,7 +900,7 @@
           "correct": false
         }
       ],
-      "explanation": "Utveckla dina tankar. Knyt ihop skäl och följder med ord som eftersom, därför, om och men. Flera perspektiv kan göra resonemanget tydligare."
+      "explanation": "En egen flaska kan användas igen och hjälper dig att dricka. Men den behöver också diskas. Du tänker vidare kring både nyttan och vad som behövs för att flaskan ska fungera bra."
     },
     {
       "id": "ut-0063",
@@ -915,7 +915,7 @@
           "correct": false
         }
       ],
-      "explanation": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+      "explanation": "Äpple och banan är två konkreta frukter. Det var just två exempel som efterfrågades."
     },
     {
       "id": "ut-0064",
@@ -930,7 +930,7 @@
           "correct": false
         }
       ],
-      "explanation": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+      "explanation": "Gruppen valde en rubrik, skrev fakta, ritade bilder och satte upp affischen. Nu kan vi följa vad de gjorde från början till slut."
     },
     {
       "id": "ut-0065",
@@ -945,7 +945,7 @@
           "correct": false
         }
       ],
-      "explanation": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+      "explanation": "Fyra av fem tillfrågade elever ville leka ute. Det är de flesta i den lilla gruppen. Vi har inte frågat resten av skolan."
     },
     {
       "id": "ut-0066",
@@ -960,7 +960,7 @@
           "correct": false
         }
       ],
-      "explanation": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+      "explanation": "Sam suckar och säger att han inte vill fortsätta. Det tyder på att han kan ha tröttnat på leken, men vi kan inte veta säkert."
     },
     {
       "id": "ut-0067",
@@ -975,7 +975,7 @@
           "correct": false
         }
       ],
-      "explanation": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+      "explanation": "En cykel har två hjul. Tre cyklar har 2 + 2 + 2 hjul. Det blir sex hjul."
     },
     {
       "id": "ut-0068",
@@ -990,7 +990,7 @@
           "correct": false
         }
       ],
-      "explanation": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+      "explanation": "En kilometer kan ta ungefär 15 minuter att gå i vanlig promenadtakt. Det är ett rimligt ungefärligt svar; tiden kan variera."
     },
     {
       "id": "ut-0069",
@@ -1005,7 +1005,7 @@
           "correct": false
         }
       ],
-      "explanation": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
+      "explanation": "Dra en linje med varje penna och prova att sudda ut dem. Anteckna vilka som försvann. Då vet du vad som hände i stället för att gissa."
     }
   ]
 }

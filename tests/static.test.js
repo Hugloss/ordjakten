@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v57-school-instructions'));
+  assert.ok(worker.includes('v58-child-friendly-school-feedback'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -470,4 +470,13 @@ test('school instructions have a dedicated five-question training entry and work
  assert.ok(app.includes("schoolOnly:game?.settings.schoolOnly===true"));
  assert.ok(app.includes("school-feedback').hidden=!q.schoolInstruction"));
  assert.ok(engine.includes("schoolDrill?'sentence'"));
+});
+
+test('school feedback presents concrete explanations, everyday connections and selected-answer feedback after submission',()=>{
+ const html=read('index.html'),app=read('js/app.js');
+ for(const id of ['school-feedback-explanation','school-feedback-connection','school-feedback-correction','school-feedback-rule','school-feedback-answer'])assert.ok(html.includes('id="'+id+'"'));
+ assert.ok(app.includes('Q.schoolFeedback(q,option?.label,missions)'));
+ assert.ok(app.includes('Q.schoolFeedback(q,game.selected[q.id],missions)'));
+ assert.ok(app.includes("school-feedback-connection').textContent=lesson.connection"));
+ assert.ok(app.includes("school-feedback-correction').textContent=lesson.correction"));
 });

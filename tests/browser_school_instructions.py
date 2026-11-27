@@ -22,6 +22,8 @@ def main(browser):
         page.locator(".answer-option").first.click()
         assert page.locator("#school-feedback").is_visible()
         assert page.locator("#school-feedback-rule").inner_text()
+        assert page.locator("#school-feedback-explanation").inner_text()
+        assert page.locator("#school-feedback-connection").inner_text()
         assert "Exempelsvar:" in page.locator("#school-feedback-answer").inner_text()
         assert page.locator("#next").is_hidden()
         for _ in range(2):
