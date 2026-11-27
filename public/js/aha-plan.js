@@ -22,7 +22,7 @@
     return {...item,word:item.word||item.name,check,dueAt,
       reason:reading.needsReview(progress,item.id,'transfer')||card?.memory?.outcome==='supported'?'need':card?'review':'extend'};
   }
-  function plan(raw,{bank,expressions,contexts,surprises,missions,reading,now=Date.now(),random=Math.random}){
+  function plan(raw,{bank,expressions,contexts,surprises,missions,reading,curation={},now=Date.now(),random=Math.random}){
     const progress=reading.sanitizeProgress(raw);
     const ready=[],waiting=[];
     const catalog=[
@@ -30,8 +30,10 @@
       ...(expressions?.expressions||[]).map(entry=>({id:entry.id,word:entry.phrase,definition:entry.definition,kind:'expression'}))
     ];
     const seen=new Set();
+    const extension=new Set([...(curation.extensionWords||[]),...(curation.extensionExpressions||[]),
+      ...(bank?.words||[]).filter(entry=>entry.difficulty==='expert').map(entry=>entry.id)]);
     for(const item of catalog){
-      if(seen.has(item.id)||(!reading.needsReview(progress,item.id,'transfer')&&
+      if(extension.has(item.id)||seen.has(item.id)||(!reading.needsReview(progress,item.id,'transfer')&&
         !reading.hasMaintenance(progress[item.id]?.transfer)))continue;
       seen.add(item.id);
       const row=option(item,progress,{bank,contexts,surprises,missions,reading,random});

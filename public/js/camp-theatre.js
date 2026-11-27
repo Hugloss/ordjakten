@@ -18,7 +18,7 @@
       middle:name=>'En liten fågel letar efter sin vän. '+name+' använder föremålet i en hälsning som syns på långt håll.',
       end:name=>'Fågelns vän ser hälsningen och kommer fram. '+name+' vinkar till dem båda. Nu kan de leka tillsammans!',endEmoji:'🤝'},
     {id:'show',emoji:'🎪',label:'En tokig föreställning',title:'Den knasiga föreställningen',
-      middle:name=>name+' bjuder in en vän och låtsas att föremålet är en magisk rekvisita. Föreställningen börjar!',
+      middle:name=>name+' bjuder in en vän och låtsas att föremålet har magiska krafter. Föreställningen börjar!',
       end:name=>'Vännen hittar på en tokig roll. '+name+' spelar med och båda börjar skratta. Vilken rolig saga!',endEmoji:'🎉'}
   ]);
   const STAGES=['hero','prop','plot','ending'];

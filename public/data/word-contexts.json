@@ -364,7 +364,7 @@
     {
       "id": "sv-0024",
       "distractors": [
-        "sv-0040",
+        "sv-0021",
         "sv-0025",
         "sv-0011",
         "sv-0003"
@@ -547,7 +547,7 @@
         "sv-0006",
         "sv-0032",
         "sv-0029",
-        "sv-0040"
+        "sv-0036"
       ],
       "scenes": [
         {
@@ -683,7 +683,7 @@
         {
           "title": "Vid skrivbordet",
           "text": "En linjal sticker ut över bordskanten. När Sam knäpper på änden skakar den snabbt upp och ner en stund.",
-          "why": "Linjalens fria ände är dallrande eftersom den rör sig snabbt fram och tillbaka efter stöten."
+          "why": "Linjalens fria ände dallrar: den skakar snabbt fram och tillbaka efter stöten."
         }
       ],
       "readingDistractors": [
@@ -1066,9 +1066,9 @@
       "id": "sv-0088",
       "distractors": [
         "sv-0073",
-        "sv-0103",
         "sv-0086",
-        "sv-0101"
+        "sv-0075",
+        "sv-0078"
       ],
       "scenes": [
         {
@@ -1126,9 +1126,9 @@
       "id": "sv-0098",
       "distractors": [
         "sv-0100",
-        "sv-0104",
+        "sv-0090",
         "sv-0112",
-        "sv-0120"
+        "sv-0109"
       ],
       "scenes": [
         {
@@ -1156,7 +1156,7 @@
       "id": "sv-0100",
       "distractors": [
         "sv-0098",
-        "sv-0104",
+        "sv-0109",
         "sv-0112",
         "sv-0119"
       ],
@@ -1185,9 +1185,9 @@
     {
       "id": "sv-0108",
       "distractors": [
-        "sv-0103",
-        "sv-0102",
-        "sv-0107",
+        "sv-0078",
+        "sv-0073",
+        "sv-0080",
         "sv-0109"
       ],
       "scenes": [
@@ -1218,7 +1218,7 @@
         "sv-0090",
         "sv-0100",
         "sv-0098",
-        "sv-0117"
+        "sv-0109"
       ],
       "scenes": [
         {
@@ -1245,10 +1245,10 @@
     {
       "id": "sv-0114",
       "distractors": [
-        "sv-0103",
+        "sv-0073",
         "sv-0109",
         "sv-0112",
-        "sv-0113"
+        "sv-0090"
       ],
       "scenes": [
         {
@@ -1732,12 +1732,12 @@
         {
           "title": "I gympasalen",
           "text": "Maja släpper en gummiboll. Den träffar golvet och far upp i luften igen, flera gånger.",
-          "why": "Bollen är studsande eftersom den vänder uppåt efter varje träff mot golvet."
+          "why": "Bollen studsar: den vänder uppåt efter varje träff mot golvet."
         },
         {
           "title": "Vid bordtennisbordet",
           "text": "Den lilla bollen slår i bordsskivan och åker upp igen så att Joel kan slå tillbaka den.",
-          "why": "När bollen träffar bordet och far upp igen är det en studsande boll."
+          "why": "Bollen studsar när den träffar bordet och far upp igen."
         },
         {
           "title": "Mot en vägg",
@@ -1779,7 +1779,7 @@
         "sv-0015",
         "sv-0025",
         "sv-0036",
-        "sv-0040"
+        "sv-0021"
       ],
       "readingDistractors": [
         "sv-0015",
@@ -1917,7 +1917,7 @@
         {
           "title": "I kön",
           "text": "Det tar flera minuter innan kön till kassan rör sig ett enda steg framåt.",
-          "why": "Kön är långsam. Det tar lång tid att komma fram."
+          "why": "Kön rör sig långsamt. Det tar lång tid att komma fram."
         },
         {
           "title": "Med leksaksbilen",
@@ -2062,17 +2062,17 @@
         {
           "title": "På skolgården",
           "text": "Vinden får de torra löven att följa varandra runt och runt i en liten cirkel över marken.",
-          "why": "Löven är virvlande eftersom de rör sig i en snurrande bana."
+          "why": "Löven virvlar: de rör sig runt och runt i en snurrande bana."
         },
         {
           "title": "I glaset",
           "text": "Efter att Elin rört i vattnet med skeden fortsätter vattnet att snurra runt mitten.",
-          "why": "Vattnet är virvlande när det fortsätter röra sig runt och runt."
+          "why": "Vattnet virvlar när det fortsätter röra sig runt och runt."
         },
         {
           "title": "I handfatet",
           "text": "När proppen dras ur rör sig vattnet i cirklar runt hålet på vägen ner.",
-          "why": "Vattnets cirkelrörelse är virvlande. Det snurrar runt innan det försvinner."
+          "why": "Vattnet virvlar runt hålet innan det försvinner ner."
         }
       ],
       "distractors": [
@@ -2416,7 +2416,7 @@
         {
           "title": "Högt över husen",
           "text": "Ett passagerarplan befinner sig högt ovanför taken. Det rör sig genom luften på väg mot en annan stad.",
-          "why": "Planet färdas i luften, så det är flygande just då."
+          "why": "Ett flygande plan färdas i luften. Här är planet högt ovanför taken."
         }
       ],
       "readingDistractors": [
@@ -2809,7 +2809,7 @@
         {
           "title": "Den delade smörgåsen",
           "text": "Mira håller upp en halv smörgås. Biten har tre raka kanter och tre hörn.",
-          "why": "Varje halva får formen av en triangel med tre sidor."
+          "why": "Biten har tre raka sidor och tre hörn. Därför har den formen av en triangel."
         },
         {
           "title": "Den röda figuren",
@@ -2895,7 +2895,7 @@
       "distractors": [
         "sv-0069",
         "sv-0053",
-        "sv-0063",
+        "sv-0085",
         "sv-0089"
       ],
       "scenes": [
@@ -2927,7 +2927,7 @@
         "sv-0083",
         "sv-0086",
         "sv-0095",
-        "sv-0107"
+        "sv-0075"
       ],
       "scenes": [
         {
@@ -2987,7 +2987,7 @@
         "sv-0083",
         "sv-0056",
         "sv-0062",
-        "sv-0116"
+        "sv-0020"
       ],
       "scenes": [
         {
@@ -3374,9 +3374,9 @@
     {
       "id": "sv-0109",
       "distractors": [
-        "sv-0120",
-        "sv-0118",
-        "sv-0111",
+        "sv-0090",
+        "sv-0100",
+        "sv-0112",
         "sv-0098"
       ],
       "scenes": [
@@ -3404,10 +3404,10 @@
     {
       "id": "sv-0110",
       "distractors": [
-        "sv-0103",
+        "sv-0078",
         "sv-0073",
-        "sv-0101",
-        "sv-0096"
+        "sv-0071",
+        "sv-0075"
       ],
       "scenes": [
         {
@@ -3584,7 +3584,7 @@
     {
       "id": "sv-0119",
       "distractors": [
-        "sv-0111",
+        "sv-0112",
         "sv-0091",
         "sv-0098",
         "sv-0100"

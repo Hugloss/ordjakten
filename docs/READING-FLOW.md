@@ -1,5 +1,23 @@
 # Läs först – förstå sedan
 
+## Uppföljning efter PR #9: tydligare ord och skoluppgifter
+
+Den vanliga träningen använder nu ett redaktionellt vardagsurval. Svampens
+vattenexperiment övar **tung**: fyra likadana svampar innehåller olika mycket
+vatten. Den tidigare kopplingen till porös hör till äldre beskrivningar
+längre ned. Musikuppdraget använder **förtjust**, med en melodi som musikern
+tycker mycket om. Osäkra emojifrågor flyttas till text.
+
+I skoluppgifter med samma instruktion framför varje svar visas
+instruktionen en gång och knapparna innehåller bara svaren. Detta används
+i huvudfrågan, fokusträning, bonusfrågor och Aha. Fullständiga svarstexter,
+facit och sparade identifierare behålls under presentationen. Korta
+knapptexter används bara när alla svar faktiskt delar samma instruktion.
+
+Se [post-review och verifiering](POST-REVIEW-EVERYDAY.md). Den nya
+presentationen behöver fortfarande granskas visuellt på mobil och
+provspelas med barn.
+
 ## Problemet från barnets provspelning
 
 Berättelsen och förklaringen var för små jämfört med svaren. Barnet tryckte

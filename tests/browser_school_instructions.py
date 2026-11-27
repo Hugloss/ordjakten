@@ -19,6 +19,16 @@ def main(browser):
         page.locator("#story-reveal").click()
         assert page.locator(".answer-option").count() == 3
         assert "läraren ber om" in page.locator("#question-instruction").inner_text()
+        authored = page.evaluate("""phrase => {
+          const entry=window.ORDJAKTEN_EXPRESSIONS.expressions.find(e=>e.phrase===phrase);
+          const mission=window.ORDJAKTEN_MISSIONS.missions.find(m=>m.id===entry.id);
+          const challenge=window.ORDJAKTEN_SURPRISES.challenges.find(c=>c.id===entry.id);
+          return {main:mission.sentences.map(option=>option.label),
+            aha:[...challenge.options.map(option=>option.label),challenge.ahaDistractor]};
+        }""", word)
+        expected_main = {label.split("” – ", 1)[1] for label in authored["main"]}
+        buttons = page.locator(".answer-option")
+        assert {buttons.nth(i).get_attribute("aria-label") for i in range(3)} == expected_main
         page.locator(".answer-option").first.click()
         assert page.locator("#school-feedback").is_visible()
         assert page.locator("#school-feedback-rule").inner_text()
@@ -30,6 +40,13 @@ def main(browser):
             if page.locator("#next").is_visible():
                 break
             page.locator("#reading-start").click()
+            instruction = authored["aha"][0].split("” – ", 1)[0] + "”"
+            title = page.locator("#reading-check-title").inner_text()
+            assert title.count(instruction) == 1
+            expected_aha = {label.split("” – ", 1)[1] for label in authored["aha"]}
+            aha_buttons = page.locator("#reading-options button")
+            assert aha_buttons.count() == 3
+            assert {aha_buttons.nth(i).locator("span").last.inner_text() for i in range(3)} == expected_aha
             page.locator("#reading-options button").first.click()
         assert page.locator("#next").is_visible()
         page.locator("#next").click()

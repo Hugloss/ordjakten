@@ -444,6 +444,7 @@
         if(!first||!second||first.start<second.end&&second.start<first.end)continue;
         const target=byId.get(scene.target);
         const task={id:scene.id,pairId:pair.id,starter:pair.starter===true,target:target.id,level:1,context:scene.context,required:1,
+          everyday:left.everyday!==false&&right.everyday!==false,
           word:target.name,definition:target.definition,title:scene.title,text:scene.text,why:scene.why,
           words:[left,right].map(item=>({id:item.id,label:item.name})),
           quotes:[{label:evidence,correct:true},{label:neutral,correct:false}],
@@ -474,6 +475,7 @@
           const question=tier.level===3?annotation.question:'Vilket ord passar bäst?';
           if(!question)continue;
           tasks.push({id:scene.id,pairId:pair.id,starter:pair.starter===true,target:target.id,
+            everyday:left.everyday!==false&&right.everyday!==false,
             level:tier.level,context:scene.context,required,question,word:target.name,definition:target.definition,
             title:scene.title,text:scene.text,why:scene.why,hint:scene.clue,
             words:[left,right].map(item=>({id:item.id,label:item.name})),
@@ -558,7 +560,8 @@
     const progress=sanitize(raw,tasks);
     const knownPairs=new Set(tasks.filter(task=>knownIds.has(task.target)||progress[task.id]).map(task=>task.pairId));
     const tiers=sanitizeLevels(levels,tasks);
-    const rows=tasks.filter(task=>(target?task.target===target:task.starter||knownPairs.has(task.pairId))&&
+    const rows=tasks.filter(task=>(target||task.everyday!==false)&&
+      (target?task.target===target:task.starter||knownPairs.has(task.pairId))&&
       (task.level||1)===(tiers[task.pairId]?.level||1))
       .map(task=>({task,card:progress[task.id],dueAt:progress[task.id]?progress[task.id].lastAt+DAY:0,draw:random()}));
     const ready=rows.filter(row=>row.dueAt<=now);

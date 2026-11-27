@@ -42,7 +42,10 @@ test('authored situations rotate evidence; unavailable and stale content is excl
   for(const row of expressions.expressions)p=help(p,row.id);
   p=help(p,'sv-9999');
   const queue=plan(p);
-  assert.equal(queue.ready.length,bank.words.length+expressions.expressions.length);
+  assert.equal(queue.ready.length,bank.words.filter(word=>word.difficulty!=='expert').length+expressions.expressions.length);
+  const expert=bank.words.find(word=>word.difficulty==='expert');
+  assert.ok(!queue.ready.some(row=>row.id===expert.id));
+  assert.ok(V.option({...expert,kind:'word'},p,deps),'expert word remains available when explicitly selected');
   assert.ok(queue.ready.every(x=>x.check.options.filter(o=>o.correct).length===1));
   assert.ok(queue.ready.every(x=>x.check.evidence!==p[x.id].transfer.lastEvidence));
   assert.ok(!queue.ready.some(x=>x.id==='sv-9999'));

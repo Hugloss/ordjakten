@@ -63,6 +63,7 @@
   }
   function build({catalog,history={},focusTypes,pairFor,knownIds=new Set(),aha,recall,detector,concept,bridge,
     conceptContent,workshopSeen=new Set(),now=Date.now(),random=Math.random,usage={},decorate=null,adjust=null,chooseNext=null,used=[],limit=LIMIT,budget=BUDGET}){
+    catalog=catalog.filter(item=>item.everyday!==false);
     const byId=new Map(catalog.map(item=>[item.id,item]));
     const candidates=[],known=new Set([...knownIds].filter(id=>byId.has(id)));
     const encountered=new Set(known);

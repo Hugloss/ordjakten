@@ -1,5 +1,14 @@
 # Ordjakten – ändringslogg
 
+## Pågående – post-review efter PR #9
+
+- Vardagsurval med 101 ord och 59 uttryck, inklusive 14 skolord. 20 ord och 8 uttryck finns kvar som frivillig fördjupning. Inga nya ord eller ändrade begrepps-ID:n.
+- Automatiska omgångar, återbesök och träningsförslag följer urvalet även med äldre resultat. Ordlista och riktad fördjupning bevarar tillgången till hela innehållet.
+- Tio osäkra emojifrågor blir textfrågor. Mer precisa spelalternativ för bland annat saftig, speglande, solig, skrynklig och spetsig; enklare hjälpspråk och naturligare ordförklaringar.
+- Skoluppgifter får tydligare facit och vardagligare sammanhang. Den gemensamma instruktionen visas en gång före kortare svarsknappar i huvudfråga, fokus, bonus och Aha.
+- Nya regressionstester för urvalet, gamla resultat och skolfrågornas presentation. Offlinecache v61. Visuell webbläsargranskning och barnprovspelning återstår.
+- Läs [granskning, urval och begränsningar](docs/POST-REVIEW-EVERYDAY.md).
+
 ## Pågående – pedagogisk genomgång av hela ordbanken
 
 - Alla 121 befintliga ord får konkret förklaring, vardagsexempel, motexempel och frivillig fråga för eget språk; 107 nya fördjupningar.

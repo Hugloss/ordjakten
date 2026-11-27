@@ -80,10 +80,15 @@
     return {item,steps:[build(item,random),repair(item,catalog,contrasts,random),{type:'reflect'}].filter(Boolean)};
   }
   function pick(catalog,contrasts,history,eligible,random=Math.random){
-    const ready=catalog.filter(item=>eligible(item,history)||history?.recallProgress?.[item.id]);
+    const extensions=new Set(catalog.filter(item=>item.everyday===false).map(item=>item.id));
+    const extensionPairs=new Set((contrasts?.pairs||[])
+      .filter(pair=>extensions.has(pair.left)||extensions.has(pair.right))
+      .flatMap(pair=>[pair.left,pair.right]));
+    const everyday=catalog.filter(item=>item.everyday!==false&&!extensionPairs.has(item.id));
+    const ready=everyday.filter(item=>eligible(item,history)||history?.recallProgress?.[item.id]);
     const pairs=new Set((contrasts?.pairs||[]).filter(p=>p.starter).flatMap(p=>[p.left,p.right]));
-    const starter=catalog.filter(item=>pairs.has(item.id));
-    return draw(ready.length?ready:starter.length?starter:catalog,random)||null;
+    const starter=everyday.filter(item=>pairs.has(item.id));
+    return draw(ready.length?ready:starter.length?starter:everyday,random)||null;
   }
   return {chunks,build,built,repair,plan,pick};
 });

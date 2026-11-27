@@ -40,6 +40,7 @@ if(JSON.stringify(clueLadder)!==JSON.stringify(browserClues))issues.push('Clues 
 issues.push(...Clues.validate(clueLadder,contrasts,bank));
 issues.push(...Contrast.validate(contrasts,bank));
 issues.push(...E.validateContexts(wordContexts,bank,curation));
+issues.push(...E.validateSelection(curation,bank,expressionBank,wordContexts));
 for(const word of bank.words){
   if(!E.wordTeaching(bank,word.id))issues.push('Missing concrete word lesson: '+word.id);
   if(!wordContexts.wordContexts.some(row=>row.id===word.id))issues.push('Missing authored context scenes: '+word.id);

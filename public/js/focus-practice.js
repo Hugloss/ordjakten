@@ -12,7 +12,7 @@
   const TYPES = ['picture','meaning','reverse','context','sentence','order','contrast'];
   const LABELS = {
     picture:'Hitta bilden',meaning:'Förstå betydelsen',reverse:'Hitta rätt ord',
-    context:'Ord i vardagen',sentence:'Välj rätt mening',order:'Ordna berättelsen',contrast:'Hitta skillnaden'
+    context:'Ord i vardagen',sentence:'Välj meningen som visar betydelsen',order:'Ordna berättelsen',contrast:'Hitta skillnaden'
   };
   const shuffle=(items,random=Math.random)=>{
     const output=items.slice();
@@ -50,7 +50,14 @@
   function create(id,requested,bank,curation,expressions,missions,contexts,engine,progress={},random=Math.random,contrastLib=null,contrasts=null,confusionProgress={},clues=null,clueData=null,clueProgress={}) {
     const item=findItem(id,bank,expressions);
     if(!item)throw new Error('Det ordet finns inte i ordbanken.');
-    const types=supported(item,curation,contexts,missions,contrastLib,contrasts);
+    const pair=contrastLib?.findPair(item.id,contrasts);
+    const everyday=engine.isEveryday(item.entry,curation);
+    const ordinaryPair=!pair||[pair.left,pair.right].every(wordId=>
+      engine.isEveryday(bank.words.find(word=>word.id===wordId),curation));
+    // Keep the next-skill recommendation within the ordinary selection.
+    // A named contrast remains available when deliberately requested.
+    const types=supported(item,curation,contexts,missions,contrastLib,contrasts)
+      .filter(type=>type!=='contrast'||requested==='contrast'||!everyday||ordinaryPair);
     if(!types.length)throw new Error('Det finns ingen färdig övning för ordet.');
     const chosen=types.includes(requested)?requested:recommended(item,types,progress);
     if(chosen==='contrast') {
@@ -60,7 +67,7 @@
         clueLevel:comparison.clueLevel,clueSupported:comparison.clueSupported};
     }
     const questions=[];
-    // Seven easy-level words have no approved illustration and are intentionally
+    // Words without an approved illustration are intentionally
     // part of the medium TEXT pool, not the emoji-only pool.
     const difficulty=item.kind==='word' ?
       item.entry.difficulty==='expert'?'exam':

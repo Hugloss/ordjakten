@@ -115,3 +115,79 @@ test('after one incorrect Aha response the learner rereads; after two misses get
   assert.equal(B.nextStep(1,true),'complete');
   assert.equal(B.nextStep(2,true),'complete');
 });
+
+test('school presentation extracts only a shared instruction and preserves every raw answer and field',()=>{
+  const instruction='”Ge två exempel på frukter.”';
+  const options=Object.freeze([
+    Object.freeze({id:'first',label:instruction+' – Ett äpple och en banan.',correct:true,evidence:'authored'}),
+    Object.freeze({id:'second',label:instruction+' – Frukten är rund.',correct:false}),
+    Object.freeze({id:'third',label:instruction+' – Ett äpple.',correct:false})
+  ]);
+  const before=JSON.stringify(options);
+  const formatted=B.formatSchoolAnswers(options);
+  assert.equal(formatted.instruction,instruction);
+  assert.notEqual(formatted.options,options);
+  assert.deepEqual(formatted.options.map(option=>option.displayLabel),[
+    'Ett äpple och en banan.','Frukten är rund.','Ett äpple.'
+  ]);
+  formatted.options.forEach((option,index)=>{
+    const {displayLabel,...raw}=option;
+    assert.notEqual(option,options[index]);
+    assert.deepEqual(raw,options[index]);
+    assert.equal(B.isCorrect({options:formatted.options},index),options[index].correct);
+  });
+  assert.equal(JSON.stringify(options),before);
+  assert.deepEqual(B.formatSchoolAnswers(options,false),{instruction:'',options});
+  assert.equal(B.formatSchoolAnswers(options,false).options,options);
+  assert.equal(typeof browser.OrdjaktenReading.formatSchoolAnswers,'function');
+});
+test('school presentation does not guess at mismatched, missing or empty instruction boundaries',()=>{
+  const pair=labels=>labels.map((label,i)=>({label,correct:i===0}));
+  for(const options of [
+    pair(['”Beskriv katten.” – Den är grå.','”Beskriv hunden.” – Den är brun.']),
+    pair(['”Beskriv katten.” – Den är grå.','”Beskriv katten. ” – Den är brun.']),
+    pair(['”Beskriv katten.” – Den är grå.','Den är brun.']),
+    pair(['”Beskriv katten.” - Den är grå.','”Beskriv katten.” - Den är brun.']),
+    pair(['” – Ett svar','” – Ett annat svar']),
+    pair(['”” – Ett svar','”” – Ett annat svar']),
+    pair(['”Beskriv katten.” – ','”Beskriv katten.” – Den är grå.']),
+    [{label:'”Beskriv katten.” – Den är grå.',correct:true},null],
+    [{label:123,correct:true}],[],null,undefined
+  ]){
+    const before=JSON.stringify(options);
+    const formatted=B.formatSchoolAnswers(options);
+    assert.equal(formatted.instruction,'');
+    assert.equal(formatted.options,options);
+    assert.equal(JSON.stringify(options),before);
+  }
+});
+test('all school Aha tasks show the instruction once while retaining novelty, evidence and scoring',()=>{
+  const schools=expressions.expressions.filter(entry=>entry.category==='school-instruction');
+  assert.equal(schools.length,14);
+  for(const entry of schools)for(const taskType of ['meaning','sentence']){
+    const question=E.makeExpressionQuestion(entry,'medium',()=>.66,taskType,missionBank);
+    const original=JSON.stringify(question);
+    const check=run(question);
+    const formatted=B.formatSchoolAnswers(check.options);
+    assert.equal(check.schoolInstruction,true,entry.id);
+    assert.ok(formatted.instruction,entry.id);
+    assert.equal(check.prompt.split(formatted.instruction).length-1,1,entry.id);
+    assert.equal(check.prompt.endsWith(formatted.instruction),true);
+    assert.ok(check.options.every(option=>option.displayLabel&&option.label===formatted.instruction+' – '+option.displayLabel));
+    assert.equal(check.source,'expression');
+    const right=check.options.find(option=>option.correct).label;
+    const challenge=surprises.challenges.find(row=>row.id===entry.id);
+    const mission=missionBank.missions.find(row=>row.id===entry.id);
+    const expected=challenge.options.some(option=>option.correct&&option.label===right)?
+      'expression:challenge':'expression:mission';
+    assert.equal(check.evidence,expected,entry.id);
+    assert.ok([...challenge.options,...mission.sentences].some(option=>option.correct&&option.label===right));
+    assert.ok(!question.options.some(option=>option.label===right));
+    assert.notEqual(right,question.scene);
+    assert.notEqual(right,question.stem);
+    check.options.forEach((option,index)=>assert.equal(B.isCorrect(check,index),option.correct));
+    const formattedMain={...question,options:B.formatSchoolAnswers(question.options).options};
+    assert.deepEqual(run(formattedMain),check);
+    assert.equal(JSON.stringify(question),original);
+  }
+});

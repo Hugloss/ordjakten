@@ -328,8 +328,8 @@
               <div class="level-list" role="group" aria-label="Svårighetsgrad">
                 <button type="button" class="level-card" data-level="easy" aria-pressed="true"><span class="level-icon">🌱</span><span class="level-copy"><strong>Lätt</strong><small>Med tydliga bilder och text</small></span><span class="level-tick">✓</span></button>
                 <button type="button" class="level-card" data-level="medium" aria-pressed="false"><span class="level-icon">🧩</span><span class="level-copy"><strong>Medel</strong><small>Ordförståelse utan bilder</small></span><span class="level-tick">✓</span></button>
-                <button type="button" class="level-card" data-level="hard" aria-pressed="false"><span class="level-icon">🔥</span><span class="level-copy"><strong>Svårt</strong><small>Kluriga ord och betydelser</small></span><span class="level-tick">✓</span></button>
-                <button type="button" class="level-card" data-level="exam" aria-pressed="false"><span class="level-icon">🎓</span><span class="level-copy"><strong>Högskoleprovsutmaning</strong><small>Fem alternativ, inspirerat av ORD-delen</small></span><span class="level-tick">✓</span></button>
+                <button type="button" class="level-card" data-level="hard" aria-pressed="false"><span class="level-icon">🔥</span><span class="level-copy"><strong>Svårt</strong><small>Fler ord om känslor, samspel och skola</small></span><span class="level-tick">✓</span></button>
+                <button type="button" class="level-card" data-level="exam" aria-pressed="false"><span class="level-icon">📚</span><span class="level-copy"><strong>Fördjupning</strong><small>Mer ovanliga ord · fem svar</small></span><span class="level-tick">✓</span></button>
               </div>
               <p id="level-note" class="subtle-note">På lätt nivå visar vi bara bilder som faktiskt hör ihop med svaren.</p>
             </section>
@@ -402,7 +402,7 @@
             </section>
 
             <button type="submit" id="start" class="primary-button big-button"><span>🚀</span> Starta Ordjakten <span aria-hidden="true">→</span></button>
-            <button type="button" id="exam-preset" class="secondary-button full-button">🎓 Snabbval: 10 ord på 3 minuter</button>
+            <button type="button" id="exam-preset" class="secondary-button full-button">📚 Fördjupning: 10 ord på 3 minuter</button>
             <div id="setup-error" class="form-error" role="alert" hidden></div>
           </div>
         </form>
@@ -1361,8 +1361,8 @@
       </section>
 
       <section id="view-words" class="view" aria-labelledby="words-title" hidden>
-        <div class="page-heading"><span class="eyebrow">📚 DIN ORDSAMLING</span><h1 id="words-title">Alla våra ord och uttryck</h1><p class="muted">121 ord, 53 vardagsuttryck och 14 uppgiftsord från skolan med betydelser och exempel. Sök och läs i lugn och ro.</p></div>
-        <div class="panel words-toolbar"><label class="form-label" for="word-search">Sök efter ord eller betydelse</label><input type="search" id="word-search" class="field" placeholder="Till exempel skrovlig eller för en gångs skull …"><label class="form-label" for="word-type-filter">Innehåll</label><select id="word-type-filter" class="field"><option value="all">Ord och uttryck</option><option value="words">Bara ord</option><option value="expressions">Bara uttryck</option></select><label class="form-label" for="word-filter">Svårighetsgrad</label><select id="word-filter" class="field"><option value="all">Alla nivåer</option><option value="easy">Lätt</option><option value="medium">Medel</option><option value="hard">Svårt</option><option value="expert">Expert</option></select><p id="word-count" class="subtle-note" aria-live="polite"></p></div>
+        <div class="page-heading"><span class="eyebrow">📚 DIN ORDSAMLING</span><h1 id="words-title">Ord och uttryck att använda</h1><p class="muted">Börja med ord från vardagen och skolan. I fördjupningen finns fler ord att utforska när du vill.</p></div>
+        <div class="panel words-toolbar"><label class="form-label" for="word-search">Sök efter ord eller betydelse</label><input type="search" id="word-search" class="field" placeholder="Till exempel nyfiken eller hålla tummarna …"><label class="form-label" for="word-scope">Vilka ord vill du se?</label><select id="word-scope" class="field"><option value="everyday">Vardag och skola</option><option value="extension">Fördjupning</option><option value="all">Hela samlingen</option></select><label class="form-label" for="word-type-filter">Innehåll</label><select id="word-type-filter" class="field"><option value="all">Ord och uttryck</option><option value="words">Bara ord</option><option value="expressions">Bara uttryck</option></select><label class="form-label" for="word-filter">Nivå</label><select id="word-filter" class="field"><option value="all">Alla nivåer</option><option value="easy">Lätt</option><option value="medium">Medel</option><option value="hard">Svårt</option><option value="expert">Expertord</option></select><p id="word-count" class="subtle-note" aria-live="polite"></p></div>
         <div id="word-list" class="word-list"></div><button id="more-words" type="button" class="secondary-button full-button" hidden>Visa fler ord</button>
       </section>
 

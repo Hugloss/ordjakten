@@ -145,12 +145,35 @@
   function getContextRecord(contexts,id){
     return contexts?.wordContexts?.find(item=>item.id===id)||null;
   }
+  function isEveryday(entry,curation){
+    return !!entry&&entry.difficulty!=='expert'&&
+      !(curation?.extensionWords||[]).includes(entry.id)&&
+      !(curation?.extensionExpressions||[]).includes(entry.id);
+  }
+  function validateSelection(curation,bank,expressions,contexts){
+    const errors=[],words=new Map((bank?.words||[]).map(w=>[w.id,w])),
+      phrases=new Map((expressions?.expressions||[]).map(e=>[e.id,e]));
+    for(const [key,source] of [['extensionWords',words],['extensionExpressions',phrases],['hardWords',words]]){
+      const ids=curation?.[key];
+      if(!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!source.has(id)))
+        errors.push('Ogiltigt redaktionellt ordurval: '+key);
+    }
+    for(const id of curation?.hardWords||[])
+      if(!isEveryday(words.get(id),curation))errors.push('Fördjupningsord i vardagsutmaningen: '+id);
+    for(const entry of phrases.values())
+      if(entry.category==='school-instruction'&&!isEveryday(entry,curation))errors.push('Skolord saknas i vardagsurvalet: '+entry.id);
+    for(const row of contexts?.wordContexts||[])
+      if(isEveryday(words.get(row.id),curation)&&(row.distractors||[]).some(id=>!isEveryday(words.get(id),curation)))
+        errors.push('Fördjupningsord som felalternativ i vardagsfråga: '+row.id);
+    return errors;
+  }
   function getTopicPool(bank,curation,expressions,settings){
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const words=topic==='expressions'?[]:getPool(bank,curation,settings.difficulty)
       .map(entry=>({kind:'word',entry}));
     const phrases=topic==='words'?[]:(expressions && Array.isArray(expressions.expressions)?expressions.expressions:[])
-      .filter(entry=>topic!=='expressions'||settings.schoolOnly!==true||entry.category==='school-instruction')
+      .filter(entry=>(settings.difficulty==='exam'||isEveryday(entry,curation))&&
+        (topic!=='expressions'||settings.schoolOnly!==true||entry.category==='school-instruction'))
       .map(entry=>({kind:'expression',entry}));
     return words.concat(phrases);
   }
@@ -180,18 +203,20 @@
   }
   function getPool(bank, curation, difficulty) {
     if (!VALID_LEVELS.includes(difficulty)) throw new Error('Okänd svårighetsgrad');
+    if(difficulty==='exam')return bank.words.filter(w=>
+      ['hard','expert'].includes(w.difficulty)||!isEveryday(w,curation));
+    const everyday=bank.words.filter(w=>isEveryday(w,curation));
     if (difficulty === 'easy') {
-      return bank.words.filter(w => w.difficulty === 'easy' && w.illustration &&
+      return everyday.filter(w => w.difficulty === 'easy' && w.illustration &&
         curation.easy[w.id] && curation.easy[w.id].length === 3);
     }
     // Easy words with ambiguous emojis are still playable as TEXT questions.
     // That preserves all 121 historical words without showing misleading icons.
     if (difficulty === 'medium') {
-      return bank.words.filter(w => w.difficulty === 'medium' ||
+      return everyday.filter(w => w.difficulty === 'medium' ||
         (w.difficulty === 'easy' && !curation.easy[w.id]));
     }
-    const levels = difficulty === 'exam' ? ['hard','expert'] : [difficulty];
-    return bank.words.filter(w => levels.includes(w.difficulty));
+    return everyday.filter(w=>w.difficulty==='hard'||(curation.hardWords||[]).includes(w.id));
   }
   function makeQuestion(entry, bank, curation, difficulty, random = Math.random) {
     if (difficulty === 'easy') {
@@ -466,6 +491,6 @@
     if (outcome==='right'&&updated[id]) {updated[id]-=1;if(updated[id]===0)delete updated[id];}
     return updated;
   }
-  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
+  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,validateSelection,isEveryday,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
     generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

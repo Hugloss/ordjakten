@@ -41,7 +41,7 @@
           "correct": true
         },
         {
-          "label": "Sara fattade sitt beslut direkt utan att fundera.",
+          "label": "Sara fick panik och valde något utan att tänka efter.",
           "correct": false
         }
       ],
@@ -97,7 +97,7 @@
       "prompt": "Vilken NY situation passar uttrycket ”det var nära ögat”?",
       "options": [
         {
-          "label": "Bollen flög förbi fönstret utan att slå sönder det.",
+          "label": "Bollen flög bara några centimeter från fönstret, men rutan klarade sig.",
           "correct": true
         },
         {
@@ -120,7 +120,7 @@
           "correct": true
         }
       ],
-      "explanation": "Ute och cykla betyder här att ha fel eller vara förvirrad."
+      "explanation": "Ute och cykla betyder här att ha fel eller vara på fel spår i sina tankar."
     },
     {
       "id": "ut-0009",
@@ -157,7 +157,7 @@
       "prompt": "Vilken NY situation passar uttrycket ”sätta fart”?",
       "options": [
         {
-          "label": "Vi började jobba snabbare för att hinna till bussen.",
+          "label": "Vi började packa snabbare för att hinna till bussen.",
           "correct": true
         },
         {
@@ -802,16 +802,16 @@
       "prompt": "Vilket svar följer instruktionen ”jämför”?",
       "options": [
         {
-          "label": "”Jämför ett äpple och en banan.” – Båda är frukter. Äpplet är oftast runt, medan bananen är böjd.",
+          "label": "”Jämför ett äpple och en banan. Ta med en likhet och en skillnad.” – Båda är frukter. Äpplet är oftast runt, medan bananen är böjd.",
           "correct": true
         },
         {
-          "label": "”Jämför ett äpple och en banan.” – Bananen är böjd och har ett skal.",
+          "label": "”Jämför ett äpple och en banan. Ta med en likhet och en skillnad.” – Bananen är böjd och har ett skal.",
           "correct": false
         }
       ],
-      "explanation": "Ett äpple och en banan är båda frukter. De har olika form. När du berättar om både likheten och skillnaden har du jämfört.",
-      "ahaDistractor": "”Jämför ett äpple och en banan.” – Jag tycker att bananer smakar bättre än äpplen."
+      "explanation": "Äpplet och bananen är båda frukter, men de har olika form. Svaret tar med både en likhet och en skillnad, som uppgiften ber om.",
+      "ahaDistractor": "”Jämför ett äpple och en banan. Ta med en likhet och en skillnad.” – Jag åt en banan efter skolan."
     },
     {
       "id": "ut-0057",
@@ -978,32 +978,32 @@
       "prompt": "Vilket svar följer instruktionen ”beräkna”?",
       "options": [
         {
-          "label": "”Beräkna hur många hjul tre vanliga cyklar har tillsammans.” – 3 × 2 = 6 hjul.",
+          "label": "”Tre cyklar har två hjul var. Beräkna hur många hjul de har tillsammans.” – 3 × 2 = 6 hjul.",
           "correct": true
         },
         {
-          "label": "”Beräkna hur många hjul tre vanliga cyklar har tillsammans.” – Det är ungefär tio hjul, men jag har inte räknat.",
+          "label": "”Tre cyklar har två hjul var. Beräkna hur många hjul de har tillsammans.” – Cyklarna har sadlar, styren och ringklockor.",
           "correct": false
         }
       ],
-      "explanation": "En cykel har två hjul. Tre cyklar har 2 + 2 + 2 hjul. Det blir sex hjul.",
-      "ahaDistractor": "”Beräkna hur många hjul tre vanliga cyklar har tillsammans.” – 3 + 2 = 5 hjul."
+      "explanation": "Varje cykel har två hjul. Tre cyklar har 2 + 2 + 2 hjul. Det blir sex hjul. De andra svaren räknar inte ut antalet hjul.",
+      "ahaDistractor": "”Tre cyklar har två hjul var. Beräkna hur många hjul de har tillsammans.” – Det står tre cyklar bredvid varandra."
     },
     {
       "id": "ut-0068",
       "prompt": "Vilket svar följer instruktionen ”uppskatta”?",
       "options": [
         {
-          "label": "”Uppskatta hur många minuter en kort promenad till en butik som ligger ungefär en kilometer bort kan ta.” – Kanske ungefär 15 minuter, beroende på hur snabbt man går.",
+          "label": "”Det tar ungefär tio minuter att gå till affären. Uppskatta hur lång tid det tar att gå dit och tillbaka.” – Ungefär tjugo minuter om jag går ungefär lika fort åt båda hållen.",
           "correct": true
         },
         {
-          "label": "”Uppskatta hur många minuter en kort promenad till en butik som ligger ungefär en kilometer bort kan ta.” – Exakt 13 minuter och 42 sekunder, utan att jag har tagit tiden.",
+          "label": "”Det tar ungefär tio minuter att gå till affären. Uppskatta hur lång tid det tar att gå dit och tillbaka.” – Exakt tjugo minuter, varje gång, oavsett hur fort jag går.",
           "correct": false
         }
       ],
-      "explanation": "En kilometer kan ta ungefär 15 minuter att gå i vanlig promenadtakt. Det är ett rimligt ungefärligt svar; tiden kan variera.",
-      "ahaDistractor": "”Uppskatta hur många minuter en kort promenad till en butik som ligger ungefär en kilometer bort kan ta.” – Det tar säkert en hel vecka att gå en kilometer."
+      "explanation": "Om vägen dit tar ungefär tio minuter och du går lika fort tillbaka blir det ungefär tio minuter till. Det blir omkring tjugo minuter, inte en exakt tid som alltid gäller.",
+      "ahaDistractor": "”Det tar ungefär tio minuter att gå till affären. Uppskatta hur lång tid det tar att gå dit och tillbaka.” – Affären ligger i ett rött hus."
     },
     {
       "id": "ut-0069",

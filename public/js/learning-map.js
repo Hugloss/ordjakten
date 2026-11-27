@@ -13,17 +13,20 @@
   const positive = value => Number.isInteger(value) && value > 0 ? value : 0;
   const names = {picture:'bild', meaning:'betydelse', reverse:'hitta ord', context:'vardag', sentence:'meningar', order:'ordning',contrast:'skillnaden mellan ord'};
 
-  function catalog(bank, expressions, contexts) {
+  function catalog(bank, expressions, contexts, curation = {}) {
     const contextIds = new Set(ids(contexts?.wordContexts).map(x=>x.id));
+    const extension=new Set([...(curation.extensionWords||[]),...(curation.extensionExpressions||[])]);
     const items = [];
     for (const word of ids(bank?.words)) {
       if (!validId.test(word.id) || !word.word) continue;
       items.push({id:word.id,name:word.word,kind:'word',difficulty:word.difficulty||'medium',
+        everyday:word.difficulty!=='expert'&&!extension.has(word.id),
         definition:word.definition||'',example:word.example||'',hasContext:contextIds.has(word.id)});
     }
     for (const expression of ids(expressions?.expressions)) {
       if (!validId.test(expression.id) || !expression.phrase) continue;
       items.push({id:expression.id,name:expression.phrase,kind:'expression',difficulty:'expression',
+        everyday:!extension.has(expression.id),
         definition:expression.definition||'',example:expression.example||'',hasContext:true});
     }
     return items;

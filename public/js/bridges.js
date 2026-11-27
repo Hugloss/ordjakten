@@ -429,6 +429,7 @@
       ids.add(row.id);prompts.add(prompt);
       const participants=[...new Set([...(row.anchors||[]),...row.cards])];
       tasks.push({...row,starter:group.starter,type:group.type,groupTitle:group.title,participants,
+        everyday:group.everyday!==false&&participants.every(id=>byId.get(id).everyday!==false),
         labels:Object.fromEntries(row.cards.map(id=>[id,byId.get(id).name])),
         stamp:stamp([row,group.explanation,participants.map(id=>[id,byId.get(id).name,byId.get(id).definition])])});
     }
@@ -464,7 +465,8 @@
         card.lastAt<=4102444800000&&Number.isInteger(card.attempts)&&card.attempts>0&&
         ['direct','supported','previewed'].includes(card.last)?card:null;
     };
-    const rows=content.tasks.filter(task=>(type==='all'||task.type===type)&&(kind==='all'||task.kind===kind)&&
+    const rows=content.tasks.filter(task=>(wordId||groupId||task.everyday!==false)&&
+      (type==='all'||task.type===type)&&(kind==='all'||task.kind===kind)&&
       (!groupId||task.groupId===groupId)&&(!wordId||task.participants.includes(wordId))&&
       (wordId||groupId||type!=='all'||kind!=='all'||task.starter||task.participants.some(id=>known.has(id))||cardFor(task)))
       .map(task=>{const card=cardFor(task);return {task,card,dueAt:card?card.lastAt+DAY:0,draw:random()};});
