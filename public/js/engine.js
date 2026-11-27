@@ -112,6 +112,7 @@
     const words=topic==='expressions'?[]:getPool(bank,curation,settings.difficulty)
       .map(entry=>({kind:'word',entry}));
     const phrases=topic==='words'?[]:(expressions && Array.isArray(expressions.expressions)?expressions.expressions:[])
+      .filter(entry=>topic!=='expressions'||settings.schoolOnly!==true||entry.category==='school-instruction')
       .map(entry=>({kind:'expression',entry}));
     return words.concat(phrases);
   }
@@ -119,12 +120,15 @@
   // Exam keeps five traditional definition alternatives for consistency.
   function makeExpressionQuestion(entry,difficulty,random=Math.random,taskType='meaning',missions=null){
     const base={id:entry.id,kind:'expression',word:entry.phrase,definition:entry.definition,
-      example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false,...(entry.animal?{animal:entry.animal}:{})};
+      example:entry.example,scene:entry.scene,reveal:entry.reveal,picture:false,...(entry.animal?{animal:entry.animal}:{}),
+      ...(entry.category==='school-instruction'?{schoolInstruction:true}:{})};
     const type=difficulty==='exam'?'meaning':taskType;
     const mission=missions&&Array.isArray(missions.missions)?missions.missions.find(x=>x.id===entry.id):null;
     if(type==='sentence'){
       if(!mission)throw new Error('Saknar skrivna meningsalternativ: '+entry.id);
-      return {...base,taskType:type,options:shuffle(mission.sentences.map(s=>({label:s.label,correct:s.correct})),random)};
+      return {...base,taskType:type,
+        ...(base.schoolInstruction&&mission.prompt?{scene:mission.prompt}:{}),
+        options:shuffle(mission.sentences.map(s=>({label:s.label,correct:s.correct})),random)};
     }
     if(type==='order'){
       if(!mission)throw new Error('Saknar skrivna händelser: '+entry.id);
@@ -225,6 +229,7 @@
   function generateRound(bank, curation, settings, mistakes = {}, random = Math.random, expressions = null, missions = null, reviewProgress = null, now = Date.now(), contexts = null, skillProgress = null, adaptive = null, readingProgress = null) {
     const topic=['words','expressions','mixed'].includes(settings.topic)?settings.topic:'words';
     const pool=getTopicPool(bank,curation,expressions,settings);
+    const schoolDrill=topic==='expressions'&&settings.schoolOnly===true&&settings.mode==='train'&&settings.difficulty!=='exam'&&!settings.reviewOnly&&!!missions;
     const count=VALID_COUNTS.includes(settings.count)?settings.count:10;
     const candidates=settings.contextOnly&&!settings.reviewOnly&&settings.topic==='words'&&
       settings.mode==='train'&&settings.difficulty!=='exam'?
@@ -240,7 +245,7 @@
     // Adaptation is opt-in and TRAINING ONLY. Tests, exam, and dedicated scene
     // drills preserve their original unbiased question generation.
     const adapt = adaptive && settings.adaptivePractice === true && settings.mode === 'train' &&
-      settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly;
+      settings.difficulty !== 'exam' && !settings.contextOnly && !settings.reviewOnly && !schoolDrill;
     const contextIds = new Set((contexts?.wordContexts || []).map(row=>row.id));
     if(adapt) chosen=adaptive.pickItems(candidates,wanted,skillProgress,reviewProgress,settings,contextIds,!!missions,now,random,readingProgress);
     else if(topic==='mixed'){
@@ -273,7 +278,7 @@
         }
         return makeQuestion(item.entry,bank,curation,settings.difficulty,random);
       }
-      const task=adapt?adaptive.choiceType(item,settings,skillProgress,
+      const task=schoolDrill?'sentence':adapt?adaptive.choiceType(item,settings,skillProgress,
         adaptive.availableTypes(item,settings,false,!!missions),random,readingProgress):
         settings.reviewOnly&&settings.mode!=='test'&&missions ? nextReviewTask(
         reviewProgress?.[item.entry.id]?.lastVariant || 'meaning','expression',settings.difficulty):

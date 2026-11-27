@@ -13,6 +13,8 @@
     for(const m of data.missions){
       if(!m||!available.has(m.id)||seen.has(m.id)){issues.push('Felaktigt eller dubblerat ID: '+(m&&m.id));continue;}
       seen.add(m.id);
+      if(expressions.expressions.find(e=>e.id===m.id)?.category==='school-instruction'&&
+        (typeof m.prompt!=='string'||m.prompt.trim().length<25))issues.push('Skoluppgift saknar instruktion: '+m.id);
       if(!Array.isArray(m.sentences)||m.sentences.length!==3||
         m.sentences.filter(s=>s&&s.correct===true).length!==1||
         m.sentences.some(s=>!s||typeof s.label!=='string'||s.label.trim().length<25)||

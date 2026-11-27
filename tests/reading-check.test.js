@@ -17,7 +17,7 @@ vm.runInNewContext(fs.readFileSync(path.join(root,'js/reading-check.js'),'utf8')
 const words=new Map(bank.words.map(w=>[w.id,w]));
 const run=q=>B.makeCheck(q,{bank,contexts,surprises,missions:missionBank,random:()=>.22});
 
-test('reading checks exist for all 121 words, 53 expressions, and both shuffled positions',()=>{
+test('reading checks exist for all 121 words, 67 expressions and school instructions, and both shuffled positions',()=>{
   for(const w of bank.words){
     const q={...w,kind:'word',options:[],picture:false};
     const check=run(q);

@@ -188,6 +188,7 @@
       $('explanation-definition').textContent,
       $('explanation-example').textContent];
     if(!$('context-aha').hidden)chunks.push($('context-reason').textContent);
+    if(!$('school-feedback').hidden)chunks.push($('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
     return chunks.filter(Boolean).join('. ');
   }
 
@@ -222,6 +223,7 @@
     target.replaceChildren();
     const data=S.getChallenge(surprises,id),task=Q.get(missions,id);
     if(!data||!task)return;
+    const school=expressions.expressions.find(e=>e.id===id)?.category==='school-instruction';
     const mode=missionMode(id),completed=history.missionProgress[id]||[];
     const wrap=element('section','bonus-question');wrap.dataset.expressionId=id;wrap.dataset.missionMode=mode;
     wrap.append(element('h4','','🎯 Välj ett litet uppdrag'));
@@ -231,25 +233,25 @@
       const btn=element('button','mission-mode-choice');btn.type='button';btn.dataset.missionChoice=type;
       btn.setAttribute('aria-pressed',String(mode===type));
       btn.append(element('span','mission-mode-icon',type==='meaning'?'🧠':type==='sentence'?'💬':'🧩'),
-        element('span','',type==='meaning'?'Förstå':type==='sentence'?'Rätt mening':'Ordna'),
+        element('span','',type==='meaning'?'Förstå':type==='sentence'?(school?'Gör uppgiften':'Rätt mening'):'Ordna'),
         element('span','mission-check',completed.includes(type)?'⭐ Klarat':'Inte klart'));
       menu.append(btn);
     }
     wrap.append(menu);
     if(completed.length===3)wrap.append(element('p','mission-done','🏆 Alla tre uppdragen klara! Du kan spela dem igen när du vill.'));
     if(mode==='meaning'){
-      wrap.append(element('p','mission-instructions','Läs den nya situationen. Vilken beskrivning passar uttrycket?'),element('p','bonus-prompt',data.prompt));
+      wrap.append(element('p','mission-instructions',school?'Läs den nya skoluppgiften. Vilket svar följer instruktionen?':'Läs den nya situationen. Vilken beskrivning passar uttrycket?'),element('p','bonus-prompt',data.prompt));
       const buttons=element('div','mission-buttons');
       data.options.forEach((opt,i)=>{const b=element('button','mission-choice',opt.label);b.type='button';b.dataset.missionAnswer=String(i);buttons.append(b);});
       wrap.append(buttons);
     }else if(mode==='sentence'){
-      wrap.append(element('p','mission-instructions','Vilken av meningarna använder uttrycket på rätt sätt?'));
+      wrap.append(element('p','mission-instructions',school?task.prompt:'Vilken av meningarna använder uttrycket på rätt sätt?'));
       const choices=E.shuffle(task.sentences.map((row,index)=>({row,index})));
       const buttons=element('div','mission-buttons');
       for(const choice of choices){const b=element('button','mission-choice',choice.row.label);b.type='button';b.dataset.missionSentence=String(choice.index);buttons.append(b);}
       wrap.append(buttons);
     }else{
-      wrap.append(element('p','mission-instructions','Lägg de tre händelserna i ordning. Tryck på det som händer först, sedan nästa och sist på slutet.'));
+      wrap.append(element('p','mission-instructions',school?'Lägg de tre arbetsstegen i ordning. Vad gör du först, sedan och sist?':'Lägg de tre händelserna i ordning. Tryck på det som händer först, sedan nästa och sist på slutet.'));
       const available=element('div','mission-buttons');
       for(const row of E.shuffle(task.order.map((label,key)=>({label,key})))){
         const b=element('button','mission-choice',row.label);b.type='button';b.dataset.missionStep=String(row.key);b.setAttribute('aria-pressed','false');available.append(b);
@@ -2607,15 +2609,15 @@
     $('focus-question').hidden=false;
     $('focus-feedback').hidden=true;
     $('focus-finished').hidden=true;
-    $('focus-task').textContent='🎯 '+F.LABELS[q.taskType].toLocaleUpperCase('sv-SE');
+    $('focus-task').textContent='🎯 '+(q.schoolInstruction&&q.taskType==='sentence'?'VÄLJ ETT SVAR SOM FÖLJER INSTRUKTIONEN':q.schoolInstruction&&q.taskType==='order'?'ORDNA ARBETSSTEGEN':F.LABELS[q.taskType].toLocaleUpperCase('sv-SE'));
     $('focus-context-label').hidden=q.taskType!=='contrast';
     if(q.taskType==='contrast')$('focus-context-label').textContent=q.contrastContextLabel;
     $('focus-clue-level').hidden=q.taskType!=='contrast'||!f.clueSupported;
     if(q.taskType==='contrast'&&f.clueSupported)$('focus-clue-level').textContent=T.LABELS[q.contrastClueLevel||1];
     $('focus-stem').textContent=['context','contrast'].includes(q.taskType)?q.contextTitle:
-      q.taskType==='reverse'?q.stem:q.taskType==='order'?'Vad händer först, sedan och sist?':q.word;
+      q.taskType==='reverse'?q.stem:q.taskType==='order'?(q.schoolInstruction?q.word+' – vad gör du först, sedan och sist?':'Vad händer först, sedan och sist?'):q.word;
     const story=['context','contrast'].includes(q.taskType)?q.stem:
-      q.kind==='expression'&&q.taskType==='meaning'?q.scene:'';
+      q.kind==='expression'&&(q.taskType==='meaning'||q.schoolInstruction&&q.taskType==='sentence')?q.scene:'';
     $('focus-scene').hidden=!story;
     $('focus-scene').textContent=story;
     const choices=$('focus-choices');choices.replaceChildren();
@@ -2830,12 +2832,13 @@
       if(seconds<5||seconds>max) {showSetupError('Välj en tid mellan 5 sekunder och '+(max/60)+' minuter.');return;}
       settings.timerSeconds=seconds;
     }
-    const limit=E.getTopicPool(bank,curation,expressions,settings).length;
+    // School-only and context-only are ephemeral round filters, not saved
+    // preferences. Keep the existing quiz and history semantics.
+    const schoolOnly=roundOptions.schoolOnly===true&&settings.topic==='expressions'&&settings.mode==='train'&&!settings.reviewOnly&&settings.difficulty!=='exam';
+    const roundSettings={...settings,contextOnly:roundOptions.contextOnly===true,schoolOnly,
+      adaptivePractice:questId==='stories'||schoolOnly?false:settings.adaptivePractice};
+    const limit=E.getTopicPool(bank,curation,expressions,roundSettings).length;
     if(limit<settings.count && !settings.reviewOnly){showSetupError('Det finns inte tillräckligt många ord för den här omgången.');return;}
-    // Berättelsehjälten promises all three expression tasks in five questions.
-    // Its task mix must be guaranteed, not overridden by personalised practice.
-    const roundSettings={...settings,contextOnly:roundOptions.contextOnly===true,
-      adaptivePractice:questId==='stories'?false:settings.adaptivePractice};
     let questions;
     try {questions=E.generateRound(bank,curation,roundSettings,history.mistakes,Math.random,expressions,missions,history.reviewProgress,Date.now(),contexts,history.skillProgress,D,history.readingProgress);
       questions=ActionWords.adaptRound(roundSettings,questions);}
@@ -2852,7 +2855,7 @@
     $('clock-stat').hidden=settings.timerMode==='off';
     $('view-play').querySelector('.score-grid').classList.toggle('has-timer',settings.timerMode!=='off');
     $('journey-details').open=false; // Reading must not start below an expanded map.
-    $('play-tag').textContent=(settings.mode==='train'?'📚 Träna':'🏆 Testa dig')+' • '+topicLabels[settings.topic]+' • '+labels[settings.difficulty];
+    $('play-tag').textContent=(settings.mode==='train'?'📚 Träna':'🏆 Testa dig')+' • '+(schoolOnly?'Skolans uppgiftsord':topicLabels[settings.topic])+' • '+labels[settings.difficulty];
     $('progress-label').textContent=settings.topic==='words'?'ORD':'FRÅGA';
     const mystery=QuestionPlay.mystery(roundSettings,0,questions.length);
     $('play-score-details').open=!mystery;
@@ -2924,7 +2927,7 @@
     $('order-undo').disabled=orderSelection.length===0;
     $('order-reset').disabled=orderSelection.length===0;
     $('order-submit').disabled=orderSelection.length!==3;
-    $('order-count').textContent=`${orderSelection.length} av 3 händelser valda`;
+    $('order-count').textContent=`${orderSelection.length} av 3 ${q.schoolInstruction?'arbetssteg':'händelser'} valda`;
   }
   function mysteryForRound(done=game?.index){
     return game?QuestionPlay.mystery(game.settings,done,game.questions.length):null;
@@ -3253,6 +3256,7 @@
     $('adventure-milestone').hidden=true;
     $('question-area').hidden=false;
     $('feedback-area').hidden=true;
+    $('school-feedback').hidden=true;
     readingCheck=null;
     $('reading-check').hidden=true;
     $('reading-launch').hidden=true;
@@ -3269,14 +3273,20 @@
     if(q.taskType==='context')$('context-scene').querySelector('.context-scene-label').textContent='📖 BERÄTTELSEN · '+q.contextTitle;
     $('context-scene').hidden=q.taskType!=='context';
     if(q.taskType==='context')$('context-story').textContent=q.stem;
-    $('explanation-label').textContent=q.kind==='expression'?'📖 STEG 1: LÄS VAD UTTRYCKET BETYDER':'📖 STEG 1: LÄS VAD ORDET BETYDER';
+    $('explanation-label').textContent=q.schoolInstruction?'📖 SÅ GÖR DU UPPGIFTEN':q.kind==='expression'?'📖 STEG 1: LÄS VAD UTTRYCKET BETYDER':'📖 STEG 1: LÄS VAD ORDET BETYDER';
     $('expression-scene').hidden=q.kind!=='expression';
     if(q.kind==='expression')$('expression-story').textContent=q.scene;
+    $('expression-scene').querySelector('.expression-scene-label').textContent=q.schoolInstruction?'🎒 LÄRARENS UPPGIFT':'📖 BERÄTTELSEN';
     $('question-prompt').textContent=q.taskType==='context'?'🎭 VILKET ORD PASSAR I BERÄTTELSEN?':q.taskType==='reverse'?'🌱 VILKET ORD PASSAR TILL BETYDELSEN?':q.taskType==='sentence'?'💬 VILKEN MENING PASSAR?':q.taskType==='order'?'🧩 VAD HÄNDER FÖRST?':q.kind==='expression'?'🕵️ VAD BETYDER UTTRYCKET?':q.picture?'VILKEN BILD PASSAR BÄST?':'VAD BETYDER ORDET?';
     $('question-instruction').textContent=q.taskType==='context'?'Läs noga och välj ordet som beskriver situationen':q.taskType==='reverse'?'Läs betydelsen och hitta ordet som passar':q.taskType==='sentence'?'Välj meningen där uttrycket används rätt':q.taskType==='order'?'Tryck på händelserna i rätt ordning – först, sedan, sist':q.kind==='expression'?'Läs meningen och välj den bästa förklaringen':q.picture?'Välj rätt bild och ord':'Välj den bästa betydelsen';
-    $('expression-story').parentElement.hidden=q.kind!=='expression'||q.taskType==='order'||(game.settings.reviewOnly&&q.taskType==='sentence');
+    if(q.schoolInstruction){
+      $('question-instruction').textContent=q.taskType==='sentence'?'Välj svaret som gör det läraren ber om.':q.taskType==='order'?'Ordna arbetsstegen – först, sedan, sist.':'Vad ska du faktiskt göra när läraren använder det här ordet?';
+      $('order-area').setAttribute('aria-label','Sätt arbetsstegen i ordning');
+    }else $('order-area').setAttribute('aria-label','Sätt händelserna i ordning');
+    $('order-area').querySelector('.mission-order-hint').textContent=q.schoolInstruction?'💡 Tryck på det första arbetssteget, sedan nästa och sist det sista. Du kan ändra dig innan du svarar.':'💡 Tryck på den första händelsen, sedan den andra och sist den tredje. Du kan ändra dig innan du svarar.';
+    $('expression-story').parentElement.hidden=q.kind!=='expression'||q.taskType==='order'||(game.settings.reviewOnly&&q.taskType==='sentence'&&!q.schoolInstruction);
     const storyVisible=!$('context-scene').hidden || !$('expression-story').parentElement.hidden;
-    if(storyVisible)$('question-prompt').textContent='📖 STEG 1: LÄS BERÄTTELSEN';
+    if(storyVisible)$('question-prompt').textContent=q.schoolInstruction?'📖 STEG 1: LÄS UPPGIFTEN':'📖 STEG 1: LÄS BERÄTTELSEN';
     $('answer-step').querySelector('strong').textContent=storyVisible?'🎯 STEG 2: VÄLJ SVAR':'🎯 VÄLJ SVAR';
     $('reading-story').classList.toggle('is-story',storyVisible);
     // The story takes priority in Träna and Testa dig. Only Träna has
@@ -3480,6 +3490,11 @@
       $('quest-animal-art').hidden=!C.renderAnimal($('quest-animal-picture'),q);
       $('context-aha').hidden=q.taskType!=='context';
       if(q.taskType==='context')$('context-reason').textContent=q.contextWhy;
+      $('school-feedback').hidden=!q.schoolInstruction;
+      if(q.schoolInstruction){
+        $('school-feedback-rule').textContent=q.reveal[1].text;
+        $('school-feedback-answer').textContent=q.taskType==='sentence'?'Exempelsvar: '+correct:q.taskType==='order'?'Arbetssteg: '+correct:'';
+      }
       $('expression-reveal').hidden=q.kind!=='expression';
       $('expression-comic').replaceChildren();
       $('expression-bonus').replaceChildren();
@@ -3564,7 +3579,7 @@
     $('result-wrong').textContent=String(result.wrong);
     $('result-empty').textContent=String(result.unanswered);
     $('results-percent').textContent=result.percent+' %';
-    $('results-descriptor').textContent=labels[game.settings.difficulty]+' · '+game.questions.length+' frågor · '+topicLabels[game.settings.topic]+' · '+(game.settings.mode==='train'?'Träna':'Testa dig')+(timeExpired?' · Tiden tog slut':'');
+    $('results-descriptor').textContent=labels[game.settings.difficulty]+' · '+game.questions.length+' frågor · '+(game.settings.schoolOnly?'Skolans uppgiftsord':topicLabels[game.settings.topic])+' · '+(game.settings.mode==='train'?'Träna':'Testa dig')+(timeExpired?' · Tiden tog slut':'');
     renderRewards(result);
     renderQuestFinale(questStep);
     renderFinale();
@@ -3653,7 +3668,8 @@
       el.append(def,example);
       if(q.taskType==='context')el.append(element('p','context-review-why','💡 Därför passar ordet: '+q.contextWhy));
       if(q.taskType==='order')el.append(element('p','mission-done','Rätt ordning: '+q.correctOrder.join(' → ')));
-      if(q.taskType==='sentence')el.append(element('p','mission-done','Rätt mening: '+q.options.find(o=>o.correct).label));
+      if(q.taskType==='sentence')el.append(element('p','mission-done',(q.schoolInstruction?'Exempelsvar: ':'Rätt mening: ')+q.options.find(o=>o.correct).label));
+      if(q.schoolInstruction)el.append(element('p','context-review-why','Så gör du: '+q.reveal[1].text));
       if(q.kind==='expression'){
         const comicToggle=element('details','comic-review');
         const summary=element('summary','','🎁 Öppna luckan – serie och miniuppdrag');
@@ -4158,6 +4174,10 @@
     setSettings({mode:'train',topic:'words',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false,contextMix:true});
     startRound(null,{contextOnly:true});
   });
+  $('quick-school').addEventListener('click',()=>{
+    setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false});
+    startRound(null,{schoolOnly:true});
+  });
   $('quick-expressions').addEventListener('click',()=>{
     setSettings({mode:'train',topic:'expressions',difficulty:'medium',count:5,timerMode:'off',reviewOnly:false});
     startRound();
@@ -4256,7 +4276,7 @@
   });
   $('play-again').addEventListener('click',()=>{
     if(settings.reviewOnly){const pool=E.getTopicPool(bank,curation,expressions,settings);if(!readyReviewCount(pool))settings.reviewOnly=false;}
-    startRound();
+    startRound(null,{schoolOnly:game?.settings.schoolOnly===true});
   });
   $('change-settings').addEventListener('click',()=>{game=null;renderSetup();show('home');});
   $('word-search').addEventListener('input',()=>{wordListLimit=24;renderWordList();});

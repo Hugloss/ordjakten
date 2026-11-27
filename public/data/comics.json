@@ -868,6 +868,216 @@
         "🍀"
       ],
       "takeaway": "Tur i oturen betyder att det finns en lycklig vändning trots att något olyckligt har hänt."
+    },
+    "ut-0056": {
+      "before": [
+        "🔍",
+        "💭"
+      ],
+      "after": [
+        "🧩",
+        "🤝"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+    },
+    "ut-0057": {
+      "before": [
+        "👀",
+        "🔍"
+      ],
+      "after": [
+        "📋",
+        "💬"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+    },
+    "ut-0058": {
+      "before": [
+        "🧊",
+        "🤔"
+      ],
+      "after": [
+        "💧",
+        "➡️"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+    },
+    "ut-0059": {
+      "before": [
+        "📚",
+        "👀"
+      ],
+      "after": [
+        "📋",
+        "💭"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+    },
+    "ut-0060": {
+      "before": [
+        "🤔",
+        "🎯"
+      ],
+      "after": [
+        "💬",
+        "💡"
+      ],
+      "aha": [
+        "✅",
+        "📖"
+      ],
+      "takeaway": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+    },
+    "ut-0061": {
+      "before": [
+        "💬",
+        "🤔"
+      ],
+      "after": [
+        "📋",
+        "🤝"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+    },
+    "ut-0062": {
+      "before": [
+        "🤔",
+        "💭"
+      ],
+      "after": [
+        "🧩",
+        "💬"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Utveckla dina tankar. Knyt ihop skäl och följder med ord som eftersom, därför, om och men. Flera perspektiv kan göra resonemanget tydligare."
+    },
+    "ut-0063": {
+      "before": [
+        "📖",
+        "🔍"
+      ],
+      "after": [
+        "💡",
+        "✅"
+      ],
+      "aha": [
+        "⭐",
+        "📋"
+      ],
+      "takeaway": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+    },
+    "ut-0064": {
+      "before": [
+        "📋",
+        "👀"
+      ],
+      "after": [
+        "➡️",
+        "📖"
+      ],
+      "aha": [
+        "💡",
+        "✅"
+      ],
+      "takeaway": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+    },
+    "ut-0065": {
+      "before": [
+        "🔍",
+        "📋"
+      ],
+      "after": [
+        "🤔",
+        "➡️"
+      ],
+      "aha": [
+        "💡",
+        "✅"
+      ],
+      "takeaway": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+    },
+    "ut-0066": {
+      "before": [
+        "📖",
+        "👀"
+      ],
+      "after": [
+        "🤔",
+        "🔍"
+      ],
+      "aha": [
+        "💡",
+        "💬"
+      ],
+      "takeaway": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+    },
+    "ut-0067": {
+      "before": [
+        "📋",
+        "🧠"
+      ],
+      "after": [
+        "🧩",
+        "✅"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+    },
+    "ut-0068": {
+      "before": [
+        "⏰",
+        "🤔"
+      ],
+      "after": [
+        "📋",
+        "💭"
+      ],
+      "aha": [
+        "💡",
+        "✅"
+      ],
+      "takeaway": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+    },
+    "ut-0069": {
+      "before": [
+        "🔍",
+        "🤔"
+      ],
+      "after": [
+        "📋",
+        "👀"
+      ],
+      "aha": [
+        "💡",
+        "✅"
+      ],
+      "takeaway": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
     }
   }
 }

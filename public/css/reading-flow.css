@@ -388,3 +388,9 @@
 .quest-action-art[data-experiment='true'] .action-protected-egg{animation:none;transform:translateY(var(--action-egg-y,32px))}
 .action-soft-pillow{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(var(--action-pillow-scale,.82))}
 .action-garden-leaves{transform-box:fill-box;transform-origin:center bottom;transform:scaleY(var(--action-growth,1));opacity:var(--action-wilt-opacity,1)}
+
+/* School instructions use the normal question flow and one worked example. */
+.school-feedback[hidden]{display:none}
+.school-feedback{border-left:4px solid var(--accent);padding:10px 12px;margin-top:12px;border-radius:10px}
+.school-feedback p{white-space:normal;overflow-wrap:anywhere;line-height:1.55;margin:5px 0}
+#school-feedback-answer:empty{display:none}

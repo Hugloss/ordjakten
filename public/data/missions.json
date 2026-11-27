@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "53 uttryck med två redaktionellt skrivna uppdrag: välj rätt mening och sätt händelser i ordning.",
+  "description": "67 uttryck och uppgiftsord med två redaktionellt skrivna uppdrag: välj rätt svar och sätt händelser eller arbetssteg i ordning.",
   "missions": [
     {
       "id": "ut-0001",
@@ -1220,6 +1220,342 @@
         "Mira får tillbaka den trots att hon hade tappat den."
       ],
       "hint": "Leta efter både något som gick fel och något lyckligt som hände i samma situation."
+    },
+    {
+      "id": "ut-0056",
+      "prompt": "Lärarens uppgift: ”Jämför en katt och en hund.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Jämför en katt och en hund.” – Båda har päls och fyra ben. Katter jamar, medan hundar skäller.",
+          "correct": true
+        },
+        {
+          "label": "”Jämför en katt och en hund.” – Katten har mjuk päls och en lång svans.",
+          "correct": false
+        },
+        {
+          "label": "”Jämför en katt och en hund.” – Jag tycker mest om hundar eftersom min hund är snäll.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs vilka två saker som ska jämföras.",
+        "Leta efter något som är lika och något som är olika.",
+        "Skriv likheten och skillnaden i samma svar."
+      ],
+      "hint": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+    },
+    {
+      "id": "ut-0057",
+      "prompt": "Lärarens uppgift: ”Beskriv ett äpple som ligger på bordet.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Beskriv ett äpple som ligger på bordet.” – Det är runt och rött med ett brunt skaft och ett slätt skal.",
+          "correct": true
+        },
+        {
+          "label": "”Beskriv ett äpple som ligger på bordet.” – Jag gillar äpplen för att de är goda.",
+          "correct": false
+        },
+        {
+          "label": "”Beskriv ett äpple som ligger på bordet.” – Jag tror att äpplet växer på ett träd för att få solljus.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Titta noga på saken du ska beskriva.",
+        "Välj tydliga detaljer som färg, form eller egenskaper.",
+        "Skriv detaljerna så att en annan person kan föreställa sig saken."
+      ],
+      "hint": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+    },
+    {
+      "id": "ut-0058",
+      "prompt": "Lärarens uppgift: ”Förklara varför en våt handduk blir torr.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Förklara varför en våt handduk blir torr.” – Vatten avdunstar från handduken till luften, så handduken innehåller allt mindre vatten.",
+          "correct": true
+        },
+        {
+          "label": "”Förklara varför en våt handduk blir torr.” – Handduken är mjuk, blå och ligger på en stol.",
+          "correct": false
+        },
+        {
+          "label": "”Förklara varför en våt handduk blir torr.” – Handduken är torr på kvällen och våt på morgonen.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs vad det är du ska förklara.",
+        "Leta efter orsaken eller hur delarna hänger ihop.",
+        "Skriv sambandet så att det blir tydligt varför eller hur det händer."
+      ],
+      "hint": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+    },
+    {
+      "id": "ut-0059",
+      "prompt": "Lärarens uppgift: ”Sammanfatta: Elsa tog bussen till biblioteket, lånade en bok och läste den hemma. Bussen var gul.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Sammanfatta: Elsa tog bussen till biblioteket, lånade en bok och läste den hemma. Bussen var gul.” – Elsa lånade en bok på biblioteket och läste den hemma.",
+          "correct": true
+        },
+        {
+          "label": "”Sammanfatta: Elsa tog bussen till biblioteket, lånade en bok och läste den hemma. Bussen var gul.” – Bussen var gul och körde till biblioteket.",
+          "correct": false
+        },
+        {
+          "label": "”Sammanfatta: Elsa tog bussen till biblioteket, lånade en bok och läste den hemma. Bussen var gul.” – Elsa åkte till badhuset och simmade med sin kompis.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs hela texten för att förstå vad den handlar om.",
+        "Välj ut de viktigaste händelserna eller huvudtankarna.",
+        "Skriv en kort version med egna ord."
+      ],
+      "hint": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+    },
+    {
+      "id": "ut-0060",
+      "prompt": "Lärarens uppgift: ”Motivera varför klassen ska ta bussen på en lång utflykt.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Motivera varför klassen ska ta bussen på en lång utflykt.” – Jag väljer bussen eftersom sträckan är lång och hela klassen får plats samtidigt.",
+          "correct": true
+        },
+        {
+          "label": "”Motivera varför klassen ska ta bussen på en lång utflykt.” – Jag väljer bussen och vill åka buss.",
+          "correct": false
+        },
+        {
+          "label": "”Motivera varför klassen ska ta bussen på en lång utflykt.” – Bussen har hjul, fönster och blå säten.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Bestäm vilket svar eller val du vill stå för.",
+        "Tänk ut en anledning som har med valet att göra.",
+        "Skriv valet tillsammans med din anledning."
+      ],
+      "hint": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+    },
+    {
+      "id": "ut-0061",
+      "prompt": "Lärarens uppgift: ”Argumentera för att skolan ska ha en lugn läsplats.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Argumentera för att skolan ska ha en lugn läsplats.” – Vi borde ha en lugn läsplats eftersom det hjälper elever att koncentrera sig och ger alla möjlighet att läsa ostört.",
+          "correct": true
+        },
+        {
+          "label": "”Argumentera för att skolan ska ha en lugn läsplats.” – Det finns en stol, en lampa och en bokhylla i rummet.",
+          "correct": false
+        },
+        {
+          "label": "”Argumentera för att skolan ska ha en lugn läsplats.” – Jag vill ha en läsplats och alla måste tycka som jag.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Bestäm vilken åsikt du vill framföra.",
+        "Välj relevanta skäl som stödjer åsikten.",
+        "Säg din åsikt och förklara dina argument så att andra kan förstå dem."
+      ],
+      "hint": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+    },
+    {
+      "id": "ut-0062",
+      "prompt": "Lärarens uppgift: ”Resonera kring att dela leksaker på fritids.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Resonera kring att dela leksaker på fritids.” – Om vi delar får fler prova leksakerna. Men ibland vill två ha samma sak samtidigt. Då kan turordning göra leken rättvisare.",
+          "correct": true
+        },
+        {
+          "label": "”Resonera kring att dela leksaker på fritids.” – Det finns tio leksaker i lådan.",
+          "correct": false
+        },
+        {
+          "label": "”Resonera kring att dela leksaker på fritids.” – Jag tycker att vi ska dela. Det är allt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs frågan och fundera på vilka delar den innehåller.",
+        "Tänk på möjliga skäl, samband och följder.",
+        "Knyt ihop tankarna och förklara vad de kan innebära."
+      ],
+      "hint": "Resonera betyder att utveckla tankarna och koppla samman dem, inte bara skriva ett kort ja eller nej."
+    },
+    {
+      "id": "ut-0063",
+      "prompt": "Lärarens uppgift: ”Ge ett exempel på en förnybar energikälla.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Ge ett exempel på en förnybar energikälla.” – Solenergi är ett exempel på en förnybar energikälla.",
+          "correct": true
+        },
+        {
+          "label": "”Ge ett exempel på en förnybar energikälla.” – Energi är något som kan få saker att hända.",
+          "correct": false
+        },
+        {
+          "label": "”Ge ett exempel på en förnybar energikälla.” – Det finns olika sorters energi som vi kan använda.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs vad du ska ge exempel på och hur många exempel som efterfrågas.",
+        "Kom på en verklig sak eller situation som passar.",
+        "Skriv exemplet så att det tydligt hör till frågan."
+      ],
+      "hint": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+    },
+    {
+      "id": "ut-0064",
+      "prompt": "Lärarens uppgift: ”Redogör för hur du planterade ett frö.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Redogör för hur du planterade ett frö.” – Jag fyllde en kruka med jord, lade fröet i jorden, täckte det och vattnade.",
+          "correct": true
+        },
+        {
+          "label": "”Redogör för hur du planterade ett frö.” – Jag tycker att plantor är fina och att blomkrukor är roliga.",
+          "correct": false
+        },
+        {
+          "label": "”Redogör för hur du planterade ett frö.” – Det växte en planta, men jag berättar inte vad jag gjorde.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Ta reda på vilka händelser eller delar uppgiften gäller.",
+        "Välj viktiga fakta och sätt dem i en begriplig ordning.",
+        "Berätta sakligt så att läsaren kan följa helheten."
+      ],
+      "hint": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+    },
+    {
+      "id": "ut-0065",
+      "prompt": "Lärarens uppgift: ”Dra en slutsats: Tre pennor testades och bara den röda fungerade.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Dra en slutsats: Tre pennor testades och bara den röda fungerade.” – I testet var den röda pennan den enda som gick att skriva med.",
+          "correct": true
+        },
+        {
+          "label": "”Dra en slutsats: Tre pennor testades och bara den röda fungerade.” – Pennorna låg på ett bord bredvid varandra.",
+          "correct": false
+        },
+        {
+          "label": "”Dra en slutsats: Tre pennor testades och bara den röda fungerade.” – Alla röda pennor i världen fungerar alltid bäst.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs eller undersök resultatet noga.",
+        "Fundera på vad resultatet ger stöd för.",
+        "Skriv slutsatsen utan att påstå mer än informationen visar."
+      ],
+      "hint": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+    },
+    {
+      "id": "ut-0066",
+      "prompt": "Lärarens uppgift: ”Tolka: Mira ler och springer fram till en vän hon inte sett på länge.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Tolka: Mira ler och springer fram till en vän hon inte sett på länge.” – Mira verkar glad att se sin vän, eftersom hon ler och springer fram.",
+          "correct": true
+        },
+        {
+          "label": "”Tolka: Mira ler och springer fram till en vän hon inte sett på länge.” – Mira springer fram till en vän och ler.",
+          "correct": false
+        },
+        {
+          "label": "”Tolka: Mira ler och springer fram till en vän hon inte sett på länge.” – Mira är säkert arg på sin vän, även om inget tyder på det.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs texten eller titta på bilden noga.",
+        "Leta efter ledtrådar som stödjer en möjlig betydelse.",
+        "Beskriv din tolkning och vilka ledtrådar du använder."
+      ],
+      "hint": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+    },
+    {
+      "id": "ut-0067",
+      "prompt": "Lärarens uppgift: ”Beräkna kostnaden för två pennor som kostar 5 kronor styck.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Beräkna kostnaden för två pennor som kostar 5 kronor styck.” – 2 × 5 = 10 kronor.",
+          "correct": true
+        },
+        {
+          "label": "”Beräkna kostnaden för två pennor som kostar 5 kronor styck.” – Pennorna är bra att ha i skolan.",
+          "correct": false
+        },
+        {
+          "label": "”Beräkna kostnaden för två pennor som kostar 5 kronor styck.” – Det kostar ungefär något mellan en och tjugo kronor.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs vilka tal du har och vad du ska räkna ut.",
+        "Välj räknesätt och utför beräkningen.",
+        "Kontrollera att svaret verkar rimligt och skriv det med enhet."
+      ],
+      "hint": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+    },
+    {
+      "id": "ut-0068",
+      "prompt": "Lärarens uppgift: ”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Ungefär 20 barn, eftersom fyra gånger omkring fem är omkring tjugo.",
+          "correct": true
+        },
+        {
+          "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Exakt 17 barn, fast jag har inte räknat dem.",
+          "correct": false
+        },
+        {
+          "label": "”Uppskatta hur många barn som sitter vid fyra bord om varje bord verkar ha omkring fem barn.” – Det är säkert 900 barn vid de fyra borden.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs vad som ska uppskattas och vilken enhet som passar.",
+        "Använd något du känner till som jämförelse eller avrunda talen.",
+        "Skriv ett rimligt ungefärligt svar, inte ett påhittat exakt tal."
+      ],
+      "hint": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+    },
+    {
+      "id": "ut-0069",
+      "prompt": "Lärarens uppgift: ”Undersök vilka föremål som flyter i en balja med vatten.” Vilket svar gör det läraren ber om?",
+      "sentences": [
+        {
+          "label": "”Undersök vilka föremål som flyter i en balja med vatten.” – Prova föremålen ett i taget i vattnet och skriv upp vilka som flyter och vilka som sjunker.",
+          "correct": true
+        },
+        {
+          "label": "”Undersök vilka föremål som flyter i en balja med vatten.” – Skriv bara att vattnet är kallt och genomskinligt.",
+          "correct": false
+        },
+        {
+          "label": "”Undersök vilka föremål som flyter i en balja med vatten.” – Gissa att allt flyter och skriv det som ett säkert resultat utan att prova.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Läs frågan och bestäm vad du behöver ta reda på.",
+        "Gör ett försök eller samla information på ett lämpligt sätt.",
+        "Anteckna vad du upptäcker så att resultatet går att förstå."
+      ],
+      "hint": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
     }
   ]
 }

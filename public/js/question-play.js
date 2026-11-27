@@ -21,6 +21,7 @@
     music:{scene:'space',name:'Melodiporten',target:'🎵'}
   };
   const HINTS={
+    school:'Läs uppgiftsordet först. Tänk på vad läraren ber dig att göra och om varje svar verkligen gör just det.',
     action:'Tänk på ordets betydelse. Föreställ dig vad som händer med varje föremål eller handling i situationen.',
     context:'Läs berättelsen igen. Vad händer? Leta efter något i texten som visar hur saken, personen eller situationen är.',
     reverse:'Läs betydelsen långsamt. Tänk på vilket ord som skulle passa in i en egen mening.',
@@ -251,7 +252,7 @@
     const world=Object.hasOwn(WORLDS,settings?.adventure)?WORLDS[settings.adventure]:WORLDS.forest;
     const enabled=!!q&&settings?.difficulty!=='exam'&&q.taskType!=='order'&&
       ['train','test'].includes(settings?.mode)&&Array.isArray(q.options)&&q.options.length>=2;
-    const kind=q?.action?'action':q?.taskType==='context'?'context':q?.taskType==='reverse'?'reverse':
+    const kind=q?.schoolInstruction?'school':q?.action?'action':q?.taskType==='context'?'context':q?.taskType==='reverse'?'reverse':
       q?.taskType==='sentence'?'sentence':q?.kind==='expression'?'expression':q?.picture?'picture':'meaning';
     // Explicitly timed rounds keep a compact, ordinary answer interaction.
     const interactive=enabled&&settings.timerMode==='off';

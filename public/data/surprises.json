@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "53 frivilliga miniuppdrag med nya vardagssituationer. Öppnas efter inlärning, aldrig under prov.",
+  "description": "67 frivilliga miniuppdrag med nya vardags- och skoluppgifter. Öppnas efter inlärning, aldrig under prov.",
   "challenges": [
     {
       "id": "ut-0001",
@@ -796,6 +796,216 @@
         }
       ],
       "explanation": "Tur i oturen betyder att det finns en lycklig vändning trots att något olyckligt har hänt."
+    },
+    {
+      "id": "ut-0056",
+      "prompt": "Vilket svar följer instruktionen ”jämför”?",
+      "options": [
+        {
+          "label": "”Jämför ett äpple och en banan.” – Båda är frukter. Äpplet är oftast runt, medan bananen är böjd.",
+          "correct": true
+        },
+        {
+          "label": "”Jämför ett äpple och en banan.” – Bananen är böjd och har ett skal.",
+          "correct": false
+        }
+      ],
+      "explanation": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+    },
+    {
+      "id": "ut-0057",
+      "prompt": "Vilket svar följer instruktionen ”beskriv”?",
+      "options": [
+        {
+          "label": "”Beskriv ett rum med ett fönster och tre stolar.” – Rummet är ljust, har ett stort fönster och tre blå stolar vid väggen.",
+          "correct": true
+        },
+        {
+          "label": "”Beskriv ett rum med ett fönster och tre stolar.” – Jag tycker att rummet är fint eftersom jag gillar blått.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+    },
+    {
+      "id": "ut-0058",
+      "prompt": "Vilket svar följer instruktionen ”förklara”?",
+      "options": [
+        {
+          "label": "”Förklara varför en skugga bildas när du står i solen.” – Kroppen blockerar en del av solljuset, så mindre ljus når marken bakom dig.",
+          "correct": true
+        },
+        {
+          "label": "”Förklara varför en skugga bildas när du står i solen.” – Skuggan är mörk och har ungefär samma form som kroppen.",
+          "correct": false
+        }
+      ],
+      "explanation": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+    },
+    {
+      "id": "ut-0059",
+      "prompt": "Vilket svar följer instruktionen ”sammanfatta”?",
+      "options": [
+        {
+          "label": "”Sammanfatta: Sam planterade ett frö, vattnade det varje dag och såg efter några dagar en liten planta.” – Sam planterade och vattnade ett frö som började växa.",
+          "correct": true
+        },
+        {
+          "label": "”Sammanfatta: Sam planterade ett frö, vattnade det varje dag och såg efter några dagar en liten planta.” – Sam hade en grön vattenkanna när han vattnade.",
+          "correct": false
+        }
+      ],
+      "explanation": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+    },
+    {
+      "id": "ut-0060",
+      "prompt": "Vilket svar följer instruktionen ”motivera”?",
+      "options": [
+        {
+          "label": "”Motivera varför du valde en faktabok till uppgiften om planeter.” – Jag valde faktaboken eftersom den innehåller information om planeter som jag behöver till uppgiften.",
+          "correct": true
+        },
+        {
+          "label": "”Motivera varför du valde en faktabok till uppgiften om planeter.” – Jag valde boken och den har ett rött omslag.",
+          "correct": false
+        }
+      ],
+      "explanation": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+    },
+    {
+      "id": "ut-0061",
+      "prompt": "Vilket svar följer instruktionen ”argumentera”?",
+      "options": [
+        {
+          "label": "”Argumentera för att klassen ska ordna en bytesdag för leksaker.” – En bytesdag är en bra idé eftersom vi kan återanvända leksaker och ge fler barn möjlighet att hitta något nytt.",
+          "correct": true
+        },
+        {
+          "label": "”Argumentera för att klassen ska ordna en bytesdag för leksaker.” – Jag tycker att en bytesdag är bra, punkt slut.",
+          "correct": false
+        }
+      ],
+      "explanation": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+    },
+    {
+      "id": "ut-0062",
+      "prompt": "Vilket svar följer instruktionen ”resonera”?",
+      "options": [
+        {
+          "label": "”Resonera kring att ta med egen vattenflaska.” – En egen flaska kan användas igen och gör det lättare att dricka vatten. Men man behöver komma ihåg att diska den, så den håller sig ren.",
+          "correct": true
+        },
+        {
+          "label": "”Resonera kring att ta med egen vattenflaska.” – Flaskan är blå och har ett skruvlock.",
+          "correct": false
+        }
+      ],
+      "explanation": "Utveckla dina tankar. Knyt ihop skäl och följder med ord som eftersom, därför, om och men. Flera perspektiv kan göra resonemanget tydligare."
+    },
+    {
+      "id": "ut-0063",
+      "prompt": "Vilket svar följer instruktionen ”ge exempel”?",
+      "options": [
+        {
+          "label": "”Ge två exempel på frukter.” – Ett äpple och en banan är två exempel på frukter.",
+          "correct": true
+        },
+        {
+          "label": "”Ge två exempel på frukter.” – Frukt kan vara god och ha olika färger.",
+          "correct": false
+        }
+      ],
+      "explanation": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+    },
+    {
+      "id": "ut-0064",
+      "prompt": "Vilket svar följer instruktionen ”redogör för”?",
+      "options": [
+        {
+          "label": "”Redogör för hur gruppen gjorde affischen.” – Först valde vi en rubrik, sedan skrev vi fakta och ritade bilder. Till sist satte vi upp affischen.",
+          "correct": true
+        },
+        {
+          "label": "”Redogör för hur gruppen gjorde affischen.” – Jag tyckte att affischen var snygg och att rött är min favoritfärg.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+    },
+    {
+      "id": "ut-0065",
+      "prompt": "Vilket svar följer instruktionen ”dra en slutsats”?",
+      "options": [
+        {
+          "label": "”Dra en slutsats: Gruppen frågade fem elever; fyra ville leka ute.” – De flesta av de fem elever som tillfrågades ville leka ute.",
+          "correct": true
+        },
+        {
+          "label": "”Dra en slutsats: Gruppen frågade fem elever; fyra ville leka ute.” – Alla elever på hela skolan vill alltid leka ute.",
+          "correct": false
+        }
+      ],
+      "explanation": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+    },
+    {
+      "id": "ut-0066",
+      "prompt": "Vilket svar följer instruktionen ”tolka”?",
+      "options": [
+        {
+          "label": "”Tolka: Sam lägger undan leksaken, suckar och säger att han inte vill fortsätta.” – Sam verkar ha tröttnat på leken, eftersom han suckar och inte vill fortsätta.",
+          "correct": true
+        },
+        {
+          "label": "”Tolka: Sam lägger undan leksaken, suckar och säger att han inte vill fortsätta.” – Sam är säkert överlycklig och vill fortsätta leka hela dagen.",
+          "correct": false
+        }
+      ],
+      "explanation": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+    },
+    {
+      "id": "ut-0067",
+      "prompt": "Vilket svar följer instruktionen ”beräkna”?",
+      "options": [
+        {
+          "label": "”Beräkna hur många hjul tre vanliga cyklar har tillsammans.” – 3 × 2 = 6 hjul.",
+          "correct": true
+        },
+        {
+          "label": "”Beräkna hur många hjul tre vanliga cyklar har tillsammans.” – Det är ungefär tio hjul, men jag har inte räknat.",
+          "correct": false
+        }
+      ],
+      "explanation": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+    },
+    {
+      "id": "ut-0068",
+      "prompt": "Vilket svar följer instruktionen ”uppskatta”?",
+      "options": [
+        {
+          "label": "”Uppskatta hur många minuter en kort promenad till en butik som ligger ungefär en kilometer bort kan ta.” – Kanske ungefär 15 minuter, beroende på hur snabbt man går.",
+          "correct": true
+        },
+        {
+          "label": "”Uppskatta hur många minuter en kort promenad till en butik som ligger ungefär en kilometer bort kan ta.” – Exakt 13 minuter och 42 sekunder, utan att jag har tagit tiden.",
+          "correct": false
+        }
+      ],
+      "explanation": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+    },
+    {
+      "id": "ut-0069",
+      "prompt": "Vilket svar följer instruktionen ”undersök”?",
+      "options": [
+        {
+          "label": "”Undersök vilken av tre pennor som går att sudda ut.” – Rita en linje med varje penna, prova suddet på varje linje och anteckna resultatet.",
+          "correct": true
+        },
+        {
+          "label": "”Undersök vilken av tre pennor som går att sudda ut.” – Bestäm dig i förväg för att alla pennor går att sudda ut utan att testa dem.",
+          "correct": false
+        }
+      ],
+      "explanation": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
     }
   ]
 }

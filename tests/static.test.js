@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v56-everyday-language'));
+  assert.ok(worker.includes('v57-school-instructions'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -429,7 +429,7 @@ test('everyday expressions replace niche animal nicknames without reusing retire
  const missions=require('../public/data/missions.json').missions;
  const surprises=require('../public/data/surprises.json').challenges;
  const comics=require('../public/data/comics.json').stories;
- assert.equal(entries.length,53);
+ assert.equal(entries.length,67);
  for(const id of ['ut-0029','ut-0031']){
    assert.ok(!entries.some(x=>x.id===id));
    assert.ok(!missions.some(x=>x.id===id));
@@ -458,4 +458,16 @@ test('the everyday-language expansion contains twelve new distinct fully authore
    assert.ok(surprises.some(x=>x.id===id));
  }
  assert.equal(new Set(entries.map(x=>x.phrase.toLocaleLowerCase('sv-SE'))).size,entries.length);
+});
+
+test('school instructions have a dedicated five-question training entry and worked feedback',()=>{
+ const html=read('index.html'),app=read('js/app.js'),engine=read('js/engine.js');
+ const entries=require('../public/data/expressions.json').expressions;
+ assert.equal(entries.filter(e=>e.category==='school-instruction').length,14);
+ assert.ok(html.includes('id="quick-school"'));
+ assert.ok(html.includes('id="school-feedback"'));
+ assert.ok(app.includes("startRound(null,{schoolOnly:true})"));
+ assert.ok(app.includes("schoolOnly:game?.settings.schoolOnly===true"));
+ assert.ok(app.includes("school-feedback').hidden=!q.schoolInstruction"));
+ assert.ok(engine.includes("schoolDrill?'sentence'"));
 });

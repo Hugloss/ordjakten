@@ -58,7 +58,8 @@
       const picked=choose(unproved.length?unproved:fresh.length?fresh:eligible,random);
       const wrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
       wrong.push(...(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label));
-      return picked?makeChallenge('Vilken NY situation visar uttrycket ”'+word+'”?',picked.label,wrong,
+      const prompt=question.schoolInstruction?'Vilket svar följer instruktionen ”'+word+'”?':'Vilken NY situation visar uttrycket ”'+word+'”?';
+      return picked?makeChallenge(prompt,picked.label,wrong,
         'expression',random,picked.why,picked.key):null;
     }
     if(question.kind!=='word')return null;

@@ -25,7 +25,7 @@ test('focused drills never use a fabricated concept or unsupported skill',()=>{
   assert.equal(F.findItem(word.id,bank,expressions).name,'Grumlig');
   assert.equal(F.findItem(expr.id,bank,expressions).name,'För en gångs skull');
 });
-test('all 174 concepts have short, playable drills for every supported skill',()=>{
+test('all 188 concepts have short, playable drills for every supported skill',()=>{
   let count=0;
   for(const id of [...bank.words.map(x=>x.id),...expressions.expressions.map(x=>x.id)]){
     const item=F.findItem(id,bank,expressions);

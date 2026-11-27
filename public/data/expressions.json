@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Barnvänliga, etablerade svenska vardagsuttryck, idiom och liknelser med konkreta exempel och förklaringar.",
+  "description": "Barnvänliga svenska vardagsuttryck, idiom, liknelser och skolans uppgiftsord med konkreta exempel och förklaringar.",
   "expressions": [
     {
       "id": "ut-0001",
@@ -2121,6 +2121,580 @@
         },
         {
           "label": "Att ge upp för att något är svårt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0056",
+      "phrase": "Jämför",
+      "category": "school-instruction",
+      "scene": "Läraren skriver: ”Jämför en cykel och en buss.” Vad behöver du göra?",
+      "definition": "Berätta vad som är lika och vad som skiljer sig mellan två eller flera saker.",
+      "example": "Båda har hjul och transporterar människor. En cykel drivs av den som cyklar, medan en buss har en motor.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Berätta vad som är lika och vad som skiljer sig mellan två eller flera saker."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Säg något som är lika och något som är olika. Använd gärna både, medan eller men."
+        }
+      ],
+      "options": [
+        {
+          "label": "Berätta vad som är lika och vad som skiljer sig mellan två eller flera saker.",
+          "correct": true
+        },
+        {
+          "label": "Beskriva bara cykeln utan att nämna bussen.",
+          "correct": false
+        },
+        {
+          "label": "Berätta bara vad du tycker bäst om utan att jämföra sakerna.",
+          "correct": false
+        },
+        {
+          "label": "Skriva en lista över cykelns delar.",
+          "correct": false
+        },
+        {
+          "label": "Räkna ut hur lång tid resan tar.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0057",
+      "phrase": "Beskriv",
+      "category": "school-instruction",
+      "scene": "Läraren skriver: ”Beskriv den röda ryggsäcken.” Vad ska du göra?",
+      "definition": "Berätta hur något är, ser ut eller fungerar så att någon annan kan föreställa sig det.",
+      "example": "Ryggsäcken är röd, har två svarta axelremmar och en liten ficka på framsidan.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Berätta hur något är, ser ut eller fungerar så att någon annan kan föreställa sig det."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Ta med tydliga detaljer. Hur ser saken ut? Hur känns den? Vilka egenskaper har den?"
+        }
+      ],
+      "options": [
+        {
+          "label": "Berätta hur något är, ser ut eller fungerar så att någon annan kan föreställa sig det.",
+          "correct": true
+        },
+        {
+          "label": "Förklara varför du köpte ryggsäcken.",
+          "correct": false
+        },
+        {
+          "label": "Säga vilken ryggsäck du gillar bäst och varför.",
+          "correct": false
+        },
+        {
+          "label": "Räkna hur mycket ryggsäcken kostar.",
+          "correct": false
+        },
+        {
+          "label": "Jämföra två helt olika väskor utan att beskriva den röda.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0058",
+      "phrase": "Förklara",
+      "category": "school-instruction",
+      "scene": "Läraren frågar: ”Förklara varför en isbit smälter i ett varmt rum.” Vad behöver du visa?",
+      "definition": "Visa varför något händer eller hur det fungerar genom att beskriva samband.",
+      "example": "Isbiten tar upp värme från rummet. När den blir tillräckligt varm smälter den och blir vatten.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Visa varför något händer eller hur det fungerar genom att beskriva samband."
+        },
+        {
+          "title": "Så gör du",
+          "text": "En förklaring visar ett samband: det händer därför att …, eller först … och därför … ."
+        }
+      ],
+      "options": [
+        {
+          "label": "Visa varför något händer eller hur det fungerar genom att beskriva samband.",
+          "correct": true
+        },
+        {
+          "label": "Bara säga att isbiten blir mindre.",
+          "correct": false
+        },
+        {
+          "label": "Bara säga att isbiten är kall och genomskinlig.",
+          "correct": false
+        },
+        {
+          "label": "Bara berätta att du gillar is i saften.",
+          "correct": false
+        },
+        {
+          "label": "Räkna hur många isbitar som finns i glaset.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0059",
+      "phrase": "Sammanfatta",
+      "category": "school-instruction",
+      "scene": "Du har läst en hel berättelse om en hund som kommer bort och sedan hittar hem. Läraren ber dig sammanfatta berättelsen.",
+      "definition": "Berätta det viktigaste kortfattat och utelämna detaljer som inte behövs.",
+      "example": "Hunden sprang bort, letade efter sin familj och hittade till slut hem igen.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Berätta det viktigaste kortfattat och utelämna detaljer som inte behövs."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Hitta huvudpunkterna. Berätta kort med egna ord, utan att ändra vad texten handlar om."
+        }
+      ],
+      "options": [
+        {
+          "label": "Berätta det viktigaste kortfattat och utelämna detaljer som inte behövs.",
+          "correct": true
+        },
+        {
+          "label": "Skriva av hela berättelsen ord för ord.",
+          "correct": false
+        },
+        {
+          "label": "Berätta bara vilken färg hunden hade.",
+          "correct": false
+        },
+        {
+          "label": "Hitta på en ny berättelse med ett annat slut.",
+          "correct": false
+        },
+        {
+          "label": "Skriva alla små detaljer men inte berätta vad som hände.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0060",
+      "phrase": "Motivera",
+      "category": "school-instruction",
+      "scene": "Du väljer att ta med regnjacka på utflykten. Läraren säger: ”Motivera ditt val.” Vad ska du lägga till?",
+      "definition": "Berätta varför du har valt ett visst svar, gjort ett val eller tycker något.",
+      "example": "Jag väljer regnjackan eftersom prognosen säger regn och jag vill hålla mig torr.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Berätta varför du har valt ett visst svar, gjort ett val eller tycker något."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Skriv ditt val eller svar och en anledning som faktiskt hör ihop med det. Använd gärna eftersom."
+        }
+      ],
+      "options": [
+        {
+          "label": "Berätta varför du har valt ett visst svar, gjort ett val eller tycker något.",
+          "correct": true
+        },
+        {
+          "label": "Upprepa bara att du väljer regnjackan.",
+          "correct": false
+        },
+        {
+          "label": "Berätta vad kompisen valde utan att säga varför du valde som du gjorde.",
+          "correct": false
+        },
+        {
+          "label": "Skriva färgen på regnjackan utan att knyta den till valet.",
+          "correct": false
+        },
+        {
+          "label": "Byta till en annan jacka utan att förklara valet.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0061",
+      "phrase": "Argumentera",
+      "category": "school-instruction",
+      "scene": "Elevrådet diskuterar om skolan behöver fler böcker. Läraren säger: ”Argumentera för fler böcker.” Vad ska du göra?",
+      "definition": "Framföra en åsikt och ge argument som visar varför andra kan hålla med.",
+      "example": "Skolan borde köpa fler böcker eftersom fler elever då kan hitta något de vill läsa, och det blir lättare att låna samtidigt.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Framföra en åsikt och ge argument som visar varför andra kan hålla med."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Säg vad du tycker och ge relevanta skäl. Lyssna på andra argument och håll dig till frågan."
+        }
+      ],
+      "options": [
+        {
+          "label": "Framföra en åsikt och ge argument som visar varför andra kan hålla med.",
+          "correct": true
+        },
+        {
+          "label": "Bara skriva att det finns böcker i skolan.",
+          "correct": false
+        },
+        {
+          "label": "Bara säga att du vill ha fler böcker utan skäl.",
+          "correct": false
+        },
+        {
+          "label": "Räkna antalet fönster i skolbiblioteket.",
+          "correct": false
+        },
+        {
+          "label": "Säga att alla måste hålla med utan att ge något argument.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0062",
+      "phrase": "Resonera",
+      "category": "school-instruction",
+      "scene": "Läraren frågar: ”Resonera kring fördelar och nackdelar med att cykla till skolan.” Vad ska ett sådant svar innehålla?",
+      "definition": "Tänka vidare kring en fråga, koppla ihop idéer och förklara hur olika skäl eller följder hänger samman.",
+      "example": "Att cykla ger motion och kan vara bra för miljön. Men om vägen är isig eller trafiken farlig kan det vara svårt. Därför behöver man också tänka på säkerheten.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Tänka vidare kring en fråga, koppla ihop idéer och förklara hur olika skäl eller följder hänger samman."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Utveckla dina tankar. Knyt ihop skäl och följder med ord som eftersom, därför, om och men. Flera perspektiv kan göra resonemanget tydligare."
+        }
+      ],
+      "options": [
+        {
+          "label": "Tänka vidare kring en fråga, koppla ihop idéer och förklara hur olika skäl eller följder hänger samman.",
+          "correct": true
+        },
+        {
+          "label": "Bara skriva att cyklar har två hjul.",
+          "correct": false
+        },
+        {
+          "label": "Bara svara ja eller nej utan att utveckla svaret.",
+          "correct": false
+        },
+        {
+          "label": "Skriva av frågan utan att lägga till egna tankar.",
+          "correct": false
+        },
+        {
+          "label": "Ge en lista över cykelns färger.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0063",
+      "phrase": "Ge exempel",
+      "category": "school-instruction",
+      "scene": "Läraren säger: ”Ge exempel på ett djur som lever i vatten.” Vad ska du svara med?",
+      "definition": "Visa ett konkret fall som passar det man pratar om.",
+      "example": "En gädda är ett exempel på ett djur som lever i vatten.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Visa ett konkret fall som passar det man pratar om."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Välj en konkret sak, person eller situation som passar det du ska ge exempel på."
+        }
+      ],
+      "options": [
+        {
+          "label": "Visa ett konkret fall som passar det man pratar om.",
+          "correct": true
+        },
+        {
+          "label": "Skriva att vatten är en vätska.",
+          "correct": false
+        },
+        {
+          "label": "Bara upprepa att vissa djur lever i vatten.",
+          "correct": false
+        },
+        {
+          "label": "Nämna en sten som ligger i vatten.",
+          "correct": false
+        },
+        {
+          "label": "Förklara varför du tycker om att bada.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0064",
+      "phrase": "Redogör för",
+      "category": "school-instruction",
+      "scene": "Läraren säger: ”Redogör för vad klassen gjorde under utflykten.” Vad behöver du göra?",
+      "definition": "Berätta sakligt och i tydlig ordning om vad som hände eller hur något går till, med viktiga delar med.",
+      "example": "Först åkte vi buss till museet. Där såg vi en utställning och åt lunch. Till sist åkte vi tillbaka till skolan.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Berätta sakligt och i tydlig ordning om vad som hände eller hur något går till, med viktiga delar med."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Ta med viktiga delar, berätta sakligt och ordna dem så att läsaren kan följa vad som hände eller hur något går till."
+        }
+      ],
+      "options": [
+        {
+          "label": "Berätta sakligt och i tydlig ordning om vad som hände eller hur något går till, med viktiga delar med.",
+          "correct": true
+        },
+        {
+          "label": "Skriva bara att utflykten var rolig.",
+          "correct": false
+        },
+        {
+          "label": "Hitta på händelser som inte inträffade.",
+          "correct": false
+        },
+        {
+          "label": "Säga bara vilken mat du åt.",
+          "correct": false
+        },
+        {
+          "label": "Skriva händelser som inte har med utflykten att göra.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0065",
+      "phrase": "Dra en slutsats",
+      "category": "school-instruction",
+      "scene": "Två likadana isbitar läggs på två tallrikar, en i sol och en i skugga. Isbiten i solen smälter snabbare. Läraren säger: ”Dra en slutsats.”",
+      "definition": "Komma fram till något som verkar stämma genom att använda den information eller de resultat man har.",
+      "example": "I vårt försök smälte isen snabbare i solen än i skuggan. Resultatet tyder på att den varmare platsen gjorde att isen smälte fortare.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Komma fram till något som verkar stämma genom att använda den information eller de resultat man har."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Titta på resultatet och säg vad det visar. Skilj vad du vet från vad du tror, och dra inte större slutsatser än resultatet räcker till."
+        }
+      ],
+      "options": [
+        {
+          "label": "Komma fram till något som verkar stämma genom att använda den information eller de resultat man har.",
+          "correct": true
+        },
+        {
+          "label": "Bara upprepa att det fanns två tallrikar.",
+          "correct": false
+        },
+        {
+          "label": "Hitta på ett resultat som vi inte såg.",
+          "correct": false
+        },
+        {
+          "label": "Säga att isen alltid smälter snabbast i skuggan trots resultatet.",
+          "correct": false
+        },
+        {
+          "label": "Beskriva tallrikarnas färger utan att använda resultatet.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0066",
+      "phrase": "Tolka",
+      "category": "school-instruction",
+      "scene": "I en berättelse står det att Leo tittar ner och svarar med mycket låg röst. Läraren ber dig tolka hur Leo känner sig.",
+      "definition": "Försöka förstå vad något betyder genom att använda ledtrådar i texten, bilden eller informationen.",
+      "example": "Leo kan vara ledsen eller osäker, eftersom han tittar ner och pratar tyst. Texten säger inte säkert hur han känner sig.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Försöka förstå vad något betyder genom att använda ledtrådar i texten, bilden eller informationen."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Använd ledtrådarna för att förklara vad de kan betyda. Ibland finns flera möjliga tolkningar, så visa vad din tolkning bygger på."
+        }
+      ],
+      "options": [
+        {
+          "label": "Försöka förstå vad något betyder genom att använda ledtrådar i texten, bilden eller informationen.",
+          "correct": true
+        },
+        {
+          "label": "Bara skriva av exakt samma mening utan att säga vad den kan betyda.",
+          "correct": false
+        },
+        {
+          "label": "Påstå att Leo är glad utan någon ledtråd.",
+          "correct": false
+        },
+        {
+          "label": "Beräkna hur många ord meningen innehåller.",
+          "correct": false
+        },
+        {
+          "label": "Skriva att du vet säkert vad Leo tänker trots att texten inte säger det.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0067",
+      "phrase": "Beräkna",
+      "category": "school-instruction",
+      "scene": "I matteboken står det: ”Beräkna hur många äpplen det finns om du har tre påsar med fyra äpplen i varje.” Vad ska du göra?",
+      "definition": "Räkna ut ett svar med hjälp av de tal och räknesätt som passar uppgiften.",
+      "example": "3 × 4 = 12 äpplen.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Räkna ut ett svar med hjälp av de tal och räknesätt som passar uppgiften."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Läs vad som efterfrågas, välj ett räknesätt och räkna ut svaret. Visa gärna hur du räknade och skriv rätt enhet."
+        }
+      ],
+      "options": [
+        {
+          "label": "Räkna ut ett svar med hjälp av de tal och räknesätt som passar uppgiften.",
+          "correct": true
+        },
+        {
+          "label": "Bara gissa ett tal utan att räkna.",
+          "correct": false
+        },
+        {
+          "label": "Beskriva vilken färg äpplena har.",
+          "correct": false
+        },
+        {
+          "label": "Upprepa att det finns tre påsar utan att räkna antalet äpplen.",
+          "correct": false
+        },
+        {
+          "label": "Berätta vilka äpplen du tycker bäst om.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0068",
+      "phrase": "Uppskatta",
+      "category": "school-instruction",
+      "scene": "Läraren säger: ”Uppskatta hur lång skolbänken är innan du använder måttbandet.” Vad ska du göra?",
+      "definition": "Ge ett ungefärligt svar genom att göra en rimlig bedömning, utan att mäta eller räkna exakt.",
+      "example": "Jag tror att bänken är ungefär en meter lång, eftersom den är lite kortare än min utsträckta famn.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Ge ett ungefärligt svar genom att göra en rimlig bedömning, utan att mäta eller räkna exakt."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Tänk på något du känner till och använd det för att göra en rimlig ungefärlig bedömning. Skriv ungefär eller cirka."
+        }
+      ],
+      "options": [
+        {
+          "label": "Ge ett ungefärligt svar genom att göra en rimlig bedömning, utan att mäta eller räkna exakt.",
+          "correct": true
+        },
+        {
+          "label": "Mäta bänken exakt direkt och kalla det en uppskattning.",
+          "correct": false
+        },
+        {
+          "label": "Välja ett helt orimligt tal utan att tänka efter.",
+          "correct": false
+        },
+        {
+          "label": "Bara beskriva bänkens färg och material.",
+          "correct": false
+        },
+        {
+          "label": "Skriva att det är omöjligt att ge ett ungefärligt svar.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0069",
+      "phrase": "Undersök",
+      "category": "school-instruction",
+      "scene": "Läraren säger: ”Undersök vilka av de här föremålen en magnet drar till sig.” Vad ska du göra?",
+      "definition": "Ta reda på något genom att titta noga, söka information eller göra ett försök och anteckna vad du hittar.",
+      "example": "Prova magneten på föremålen ett i taget och anteckna vilka som dras till magneten.",
+      "reveal": [
+        {
+          "title": "Vad ber läraren dig att göra?",
+          "text": "Ta reda på något genom att titta noga, söka information eller göra ett försök och anteckna vad du hittar."
+        },
+        {
+          "title": "Så gör du",
+          "text": "Bestäm vad du vill ta reda på. Samla information på ett lämpligt sätt och skriv vad du faktiskt upptäcker."
+        }
+      ],
+      "options": [
+        {
+          "label": "Ta reda på något genom att titta noga, söka information eller göra ett försök och anteckna vad du hittar.",
+          "correct": true
+        },
+        {
+          "label": "Bara gissa vilka saker som fastnar och låta bli att prova.",
+          "correct": false
+        },
+        {
+          "label": "Bara skriva att magneten är röd.",
+          "correct": false
+        },
+        {
+          "label": "Bara säga att du tycker om magneter.",
+          "correct": false
+        },
+        {
+          "label": "Skriva ett resultat som inte kommer från någon undersökning.",
           "correct": false
         }
       ],
