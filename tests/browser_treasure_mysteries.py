@@ -24,7 +24,17 @@ def no_horizontal_overflow(page):
     size = page.evaluate("""() => ({
         viewport: window.innerWidth,
         page: document.documentElement.scrollWidth,
-        content: document.querySelector('#treasure-content').scrollWidth
+        content: document.querySelector('#treasure-content').scrollWidth,
+        overhanging: [...document.querySelectorAll('body *')]
+            .filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden')
+            .map(el => ({el, rect: el.getBoundingClientRect()}))
+            .filter(x => x.rect.right > window.innerWidth + 1 || x.rect.left < -1)
+            .slice(0, 12)
+            .map(x => ({
+                tag: x.el.tagName, id: x.el.id, cls: String(x.el.className).slice(0, 80),
+                left: Math.round(x.rect.left), right: Math.round(x.rect.right),
+                width: Math.round(x.rect.width)
+            }))
     })""")
     assert size["page"] <= size["viewport"], f"Horizontal scrolling at {size}"
 
