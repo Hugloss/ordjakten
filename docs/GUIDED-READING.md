@@ -41,5 +41,5 @@ inte konkurrerar med texten som ska läsas. När barnet väljer
 **Visa hela berättelsen** återkommer originaltexten i fokus innan
 svaren kan visas.
 
-Automatiska innehållstester går genom alla 129 vanliga vardagsscener
-och 25 uttryck och kontrollerar att inga ord försvinner.
+Automatiska innehållstester går genom samtliga vardagsscener och uttryck
+i den aktuella ordbanken och kontrollerar att inga ord försvinner.

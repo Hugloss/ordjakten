@@ -12,6 +12,11 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1] / "public"
 
 
+def browser_executable(playwright):
+    bundled = playwright.chromium.executable_path
+    return bundled if Path(bundled).is_file() else shutil.which("chromium")
+
+
 def make_page(browser, viewport, storage_seed=None):
     page = browser.new_page(viewport=viewport)
     errors = []
@@ -57,7 +62,7 @@ def make_page(browser, viewport, storage_seed=None):
 
 def main():
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True, executable_path=shutil.which("chromium") or None, args=["--no-sandbox"])
+        browser = playwright.chromium.launch(headless=True, executable_path=browser_executable(playwright), args=["--no-sandbox"])
         desktop, errors = make_page(browser, {"width": 1100, "height": 900})
         assert desktop.locator("#view-home").is_visible()
         desktop.locator('[data-mode="test"]').click()
