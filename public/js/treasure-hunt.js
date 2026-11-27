@@ -13,8 +13,9 @@
   const integer=value=>Number.isSafeInteger(value)&&value>=0;
   const text=value=>typeof value==='string'&&value.trim().length>0&&value.length<=700;
   const placeIndex=value=>Number.isInteger(value)&&value>=0&&value<4;
+  const transferIndex=value=>Number.isInteger(value)&&value>=0&&value<3;
   const emptyWorld=()=>({found:[],visited:[],smallFinds:[],hints:[]});
-  const freshMystery=()=>({revealed:1,attempted:[],last:null,solved:false,proofWrong:[],proofDone:false,proofLast:null});
+  const freshMystery=()=>({revealed:1,attempted:[],last:null,solved:false,proofWrong:[],proofDone:false,proofLast:null,transferWrong:[],transferDone:false,transferLast:null});
   const empty=()=>({version:1,serial:0,worlds:{},active:null});
   const indexes=value=>Array.isArray(value)?[...new Set(value.filter(placeIndex))].sort((a,b)=>a-b):[];
   const knownWorld=(content,id)=>typeof id==='string'&&object(content?.worlds)&&Object.hasOwn(content.worlds,id);
@@ -24,7 +25,7 @@
     const worlds={},errors=[];
     for(const id of adventures.WORLD_IDS){
       const world=adventures.world(id),rows=data?.DATA?.[id],chapters=story?.DATA?.[id];
-      const smallFind=data?.SMALL_FINDS?.[id],letter=data?.LETTER_FRAGMENTS?.[id],mystery=data?.MYSTERIES?.[id];
+      const smallFind=data?.SMALL_FINDS?.[id],letter=data?.LETTER_FRAGMENTS?.[id],mystery=data?.MYSTERIES?.[id],transfer=data?.TRANSFERS?.[id];
       if(!Array.isArray(rows)||rows.length!==4||!Array.isArray(chapters)||chapters.length!==4||
         world.stops.length!==4||!text(smallFind?.name)||!text(smallFind?.emoji)||
         !Array.isArray(letter)||letter.length!==4||letter.some(part=>!text(part)||part.length>120)){
@@ -57,10 +58,22 @@
         mystery.wrong.some((answer,index)=>index===mystery.target?answer!==null:!text(answer)||answer.length>200)){
         errors.push(id+':mystery');continue;
       }
+      if(!object(transfer)||!text(transfer.title)||transfer.title.length>80||
+        !text(transfer.intro)||transfer.intro.length>180||!text(transfer.why)||transfer.why.length>200||
+        !transferIndex(transfer.target)||
+        !Array.isArray(transfer.clues)||transfer.clues.length!==2||
+        transfer.clues.some(clue=>!text(clue)||clue.length<20||clue.length>140)||
+        !Array.isArray(transfer.choices)||transfer.choices.length!==3||
+        transfer.choices.some(choice=>!text(choice)||choice.length<20||choice.length>175)||
+        new Set(transfer.choices).size!==3||
+        !Array.isArray(transfer.wrong)||transfer.wrong.length!==3||
+        transfer.wrong.some((reply,index)=>index===transfer.target?reply!==null:!text(reply)||reply.length<20||reply.length>200)){
+        errors.push(id+':transfer');continue;
+      }
       if(new Set(places.map(place=>place.clue)).size!==4||new Set(places.map(place=>place.description)).size!==4){
         errors.push(id+':duplicates');continue;
       }
-      worlds[id]={id,title:world.title,emoji:world.emoji,places,letter:[...letter],mystery:{...mystery,clues:[...mystery.clues],wrong:[...mystery.wrong]},smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
+      worlds[id]={id,title:world.title,emoji:world.emoji,places,letter:[...letter],mystery:{...mystery,clues:[...mystery.clues],wrong:[...mystery.wrong]},transfer:{...transfer,clues:[...transfer.clues],choices:[...transfer.choices],wrong:[...transfer.wrong]},smallFind:{emoji:smallFind.emoji,name:smallFind.name}};
     }
     return {worlds,errors};
   }
@@ -92,7 +105,24 @@
     if(proofLast===-1||(proofDone&&(!value.solved||proofLast!==target))||
       (!proofDone&&proofLast!==null&&!proofWrong.includes(proofLast))||
       (!value.solved&&(proofWrong.length||proofLast!==null)))return null;
-    return {revealed:value.revealed,attempted,last,solved:value.solved,proofWrong,proofDone,proofLast};
+    // Legacy saves did not have transfer fields. Keep previously earned treasures
+    // and proof intact. Transfer attempts cannot exist before proof is finished.
+    const transferTarget=world.transfer.target;
+    const transferWrong=Array.isArray(value.transferWrong)?
+      [...new Set(value.transferWrong.filter(index=>transferIndex(index)&&index!==transferTarget))].sort((a,b)=>a-b):[];
+    const transferDone=value.transferDone===true;
+    const transferLast=value.transferLast===undefined||value.transferLast===null?null:
+      transferIndex(value.transferLast)?value.transferLast:-1;
+    const transferValid=transferLast!==-1&&
+      (!transferDone||(proofDone&&transferLast===transferTarget))&&
+      (transferDone||transferLast===null||transferWrong.includes(transferLast))&&
+      (proofDone||(!transferWrong.length&&!transferDone&&transferLast===null));
+    // A bad new exercise must not erase a previously solved mystery.
+    // Reset just its unscored attempt state and allow a fresh try.
+    return {revealed:value.revealed,attempted,last,solved:value.solved,proofWrong,proofDone,proofLast,
+      transferWrong:transferValid?transferWrong:[],
+      transferDone:transferValid?transferDone:false,
+      transferLast:transferValid?transferLast:null};
   }
   function sanitize(raw,content){
     const clean=empty();
@@ -175,7 +205,8 @@
     }
     const worlds=Object.values(content.worlds).map(row=>({id:row.id,title:row.title,emoji:row.emoji,
       count:state.worlds[row.id]?.found.length||0,total:4,mysterySolved:state.worlds[row.id]?.mystery?.solved===true,
-      mysteryProofDone:state.worlds[row.id]?.mystery?.proofDone===true}));
+      mysteryProofDone:state.worlds[row.id]?.mystery?.proofDone===true,
+      mysteryTransferDone:state.worlds[row.id]?.mystery?.transferDone===true}));
     const mysteryProgress=progress.mystery||freshMystery(),mysteryContent=world.mystery;
     const mysteryAvailable=progress.found.length>0;
     const mystery={available:mysteryAvailable,title:mysteryContent.title,intro:mysteryContent.intro,
@@ -186,10 +217,18 @@
       feedback:mysteryAvailable&&mysteryProgress.last!==null?
         (mysteryProgress.solved?mysteryContent.why:mysteryContent.wrong[mysteryProgress.last]):null,
       proof:{done:mysteryAvailable&&mysteryProgress.proofDone,
+        evidence:mysteryAvailable&&mysteryProgress.proofDone?[...world.places[mysteryContent.target].lookFor]:[],
         wrong:mysteryAvailable?[...mysteryProgress.proofWrong]:[],
         choices:mysteryAvailable&&mysteryProgress.solved?proofChoices(world):[],
         feedback:mysteryAvailable&&mysteryProgress.proofLast!==null?
-          (mysteryProgress.proofDone?mysteryContent.why:mysteryContent.wrong[mysteryProgress.proofLast]):null}};
+          (mysteryProgress.proofDone?mysteryContent.why:mysteryContent.wrong[mysteryProgress.proofLast]):null},
+      transfer:mysteryAvailable&&mysteryProgress.proofDone?{
+        title:world.transfer.title,intro:world.transfer.intro,clues:[...world.transfer.clues],
+        choices:mysteryProgress.transferDone?[]:world.transfer.choices.map((label,id)=>({id,label})),
+        wrong:[...mysteryProgress.transferWrong],done:mysteryProgress.transferDone,
+        feedback:mysteryProgress.transferLast!==null?
+          (mysteryProgress.transferDone?world.transfer.why:world.transfer.wrong[mysteryProgress.transferLast]):null
+      }:null};
     return {id,title:world.title,emoji:world.emoji,phase:active?.stage||'map',count:progress.found.length,total:4,
       complete:progress.found.length===4,finderTotal:worlds.reduce((sum,row)=>sum+row.count,0),worlds,
       clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,
@@ -294,5 +333,16 @@
       proofWrong:correct?mystery.proofWrong:[...mystery.proofWrong,index].sort((a,b)=>a-b)};
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
   }
-  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint,mysteryReveal,mysteryGuess,mysteryProof};
+  function mysteryTransfer(raw,worldId,index,content){
+    const state=sanitize(raw,content);
+    if(state.active||!knownWorld(content,worldId)||!transferIndex(index))return raw;
+    const progress=state.worlds[worldId]||emptyWorld();
+    const mystery=progress.mystery||freshMystery();
+    if(!mystery.proofDone||mystery.transferDone||mystery.transferWrong.includes(index))return raw;
+    const correct=index===content.worlds[worldId].transfer.target;
+    const updated={...mystery,transferLast:index,transferDone:correct,
+      transferWrong:correct?mystery.transferWrong:[...mystery.transferWrong,index].sort((a,b)=>a-b)};
+    return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
+  }
+  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint,mysteryReveal,mysteryGuess,mysteryProof,mysteryTransfer};
 });

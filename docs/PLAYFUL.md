@@ -65,6 +65,78 @@ att leta. Varje karta har fyra sakletarpoäng och fyra möjliga ordstjärnor.
 När alla ledtrådar är lösta är kartan färdig, men platserna kan återbesökas.
 Det finns ingen timer, fartbonus, nedräkning eller förlust av tidigare fynd.
 
+### Mysterier: hitta, bevisa, förklara och pröva i en ny situation
+
+Efter barnets första skatt öppnas ett fristående mysterium i varje värld.
+Barnet får tre ledtrådar, väljer en plats och läser varför ett annat val
+inte passar. Efter lösningen finns en frivillig bevisfråga med två konkreta
+detaljer från platsen. **Berätta som en detektiv** uppmuntrar sedan barnet
+att själv säga *därför att* och använda båda spåren. Ett skrivet exempel
+kan öppnas vid behov, men inget fritt svar eller tal spelas in.
+
+När barnet har löst bevisfrågan blir **Prova ett nytt fall** tillgängligt
+under en stängd, frivillig panel. Alla tolv kartor har en egen redaktionellt
+skriven vardagssituation med två nya ledtrådar och tre alternativ:
+- Ett alternativ passar båda detaljerna.
+- Ett alternativ passar bara den första detaljen.
+- Ett alternativ passar bara den andra detaljen.
+
+Exempel: klassen ska till badhuset med **buss 4**. Buss 4 mot centrum har
+rätt nummer men fel mål. Buss 6 mot badhuset har rätt mål men fel nummer.
+Barnet behöver kontrollera **både bussnummer och destination**, inte bara
+känna igen ett bekant ord. Felval ger en konkret förklaring och låses som
+redan provade; det går att pröva ett annat svar utan stress. Efter rätt
+val kan barnet först berätta med egna ord innan förklaringen öppnas.
+
+Nya fallet är **inte** ett prov och ger inga poäng, extra skatter eller
+ordstjärnor. Kartans ordövning är opåverkad. Endast korta index för
+felalternativ och löst/olöst sparas lokalt under mysteriet. Tidigare
+sparade mysterier utan de nya fälten fortsätter fungera. Framtida
+kartledtrådar och deras svar avslöjas inte av det nya fallet.
+
+Källan för samtliga tolv fall är `public/js/treasure-hunt-data.js`
+(`TRANSFERS`). Motor och granskning finns i `public/js/treasure-hunt.js`,
+`tests/treasure-hunt-content.test.js`, `tests/treasure-hunt.test.js`,
+`tests/treasure-hunt-view.test.js` och `tests/treasure-integration.test.js`.
+Kör `npm run check` före merge. Ett verkligt barnprov krävs fortfarande
+för att bedöma om barnet *förstår och förklarar* de två spåren.
+
+### Språkvård: så skriver vi barnens ledtrådar
+
+Språket ska fungera för barn omkring 8–10 år utan att bli barnsligt.
+Skriv hellre två korta meningar än en lång. Använd vardagliga ord och
+konkreta handlingar: *gå över bäcken*, *stå vid ingången*, *jorden blir
+torr*. Ett ord som *hittegods* eller *aula* kan användas när sammanhanget
+hjälper barnet att förstå det. Var konsekvent med ord för samma sak.
+
+Varje mysterium ska följa samma principer:
+
+- **Rubrik och början:** väck nyfikenhet men tala inte om rätt plats.
+  Berättelsen ska handla om samma sak i rubrik, ledtrådar och förklaring.
+- **Två spår på riktigt:** rätt alternativ måste uppfylla båda. Varje
+  felalternativ får uppfylla **bara ett** av dem. Om ett spår säger
+  *basketkorg på väggen* får felalternativet inte byta till en korg på
+  ett fristående stativ och ändå räknas som ett matchande spår.
+- **Förklaring vid fel:** skriv vad som faktiskt stämmer **och** vad
+  som inte passar, utan att säga att barnet är dåligt eller måste skynda.
+  Undvik generiska texter som bara säger *Fel svar*.
+- **Förklaring vid rätt:** visa hur de två konkreta detaljerna hänger
+  ihop. Ge barnet möjlighet att säga *därför att … och …* innan
+  exempelförklaringen visas.
+- **Sakligt korrekt:** använd inte missvisande allmänregler, till exempel
+  att alla plantor måste vattnas varje dag. Ett konkret och begripligt
+  exempel är att jorden får vatten när den blir torr.
+- **Läsbarhet och uppläsning:** alternativen ska gå att förstå utan
+  symboler eller färger. Uppläsning får bara läsa upp det som barnet har
+  valt att visa. Ett dolt facit får en egen uppläsningsknapp **inne i**
+  den öppningsbara förklaringen.
+
+Spara en enda redaktionellt granskad text per fall i
+`public/js/treasure-hunt-data.js`. Skapa inte parallella listor i vy,
+test eller dokumentation. Kontroller ska fånga tekniska fel, men faktisk
+språkförståelse och tvetydigheter måste också granskas genom högläsning
+och frivillig provspelning med barn.
+
 ### Kartmärken och nästa steg
 
 **Min skattbok** samlar de tolv kartorna med separata räknare för hittade

@@ -34,6 +34,8 @@ npm run check
   48 skrivna ledtrådar ger separata sakletarfynd och ordstjärnor i egen takt.
   Två korta hållpunkter hjälper barnet att jämföra platser. Skattboken samlar
   kartmärken och visar vilka skatter och ordstjärnor som finns kvar.
+- **Tolv mysterier** med ledtrådsbevis, frivillig muntlig förklaring och
+  ett nytt vardagsfall där barnet måste kontrollera två detaljer samtidigt.
 - Sparad stjärnsamling med sex samlingsmärken, en synlig stjärnrad och
   frivilliga nya chanser utan timer för de stjärnor som återstår.
 - Uttrycksberättelser, 73 luckor, tre typer av miniuppdrag och serieillustrationer.
