@@ -11,9 +11,9 @@ const fresh=()=>Portals.sanitize(null,content);
 const view=(raw,id=null)=>Portals.model(raw,id,content);
 const clone=x=>JSON.parse(JSON.stringify(x));
 
-test('thirty-two original adventures offer 96 distinct, complete clue steps',()=>{
+test('fifty-two original adventures offer 156 distinct, complete clue steps',()=>{
   assert.deepEqual(content.errors,[]);
-  assert.equal(content.ids.length,32);
+  assert.equal(content.ids.length,52);
   const titles=new Set(),stories=new Set();
   for(const id of content.ids){
     const row=content.stories[id];
@@ -37,12 +37,12 @@ test('thirty-two original adventures offer 96 distinct, complete clue steps',()=
       assert.ok(stage.wrong.filter(Boolean).every(reason=>reason.length>=15));
     }
   }
-  assert.equal(titles.size,32);
+  assert.equal(titles.size,52);
 });
 
-test('all 32 adventures have one of four validated categories, including all new source themes',()=>{
+test('all 52 adventures have one of four validated categories, including all new source themes',()=>{
   const groups=['mystery','fantasy','explore','creative'];
-  assert.deepEqual(groups.map(group=>content.ids.filter(id=>content.stories[id].group===group).length),[6,8,10,8]);
+  assert.deepEqual(groups.map(group=>content.ids.filter(id=>content.stories[id].group===group).length),[11,13,15,13]);
   const newIds=['hotel','underwater','animal-park','magic-exam','spy-school','space-exit',
     'friendly-house','crystal-case','ninja','circus','neon','baking','world-postcards','blocks',
     'creature-friends','gold-rush','slime-art','game-show','knights','fairy-forest'];
@@ -56,9 +56,30 @@ test('all 32 adventures have one of four validated categories, including all new
     'unknown categories fail closed');
 });
 
+test('twenty additional themes stay isolated and preserve progress in all earlier stories',()=>{
+  const newer=['rail-ticket','lighthouse','theater-props','night-library','market-map',
+    'dragon-orchestra','cloud-castle','moon-fairy','mermaid-letter','tiny-giants',
+    'weather-station','polar-post','mountain-trail','volcano-island','star-observatory',
+    'robot-workshop','comic-studio','music-festival','puppet-theater','photo-club'];
+  assert.equal(newer.length,20);
+  assert.deepEqual(content.ids.slice(32),newer,
+    'append adventures after the original 32 so saved IDs remain stable');
+  for(const id of newer){
+    const story=content.stories[id];
+    assert.ok(story&&story.stages.length===3&&story.group);
+    assert.ok(story.stages.every(step=>step.wrong.filter(Boolean).length===2));
+  }
+  const legacy=Portals.next(Portals.choose({},'detective',content.stories.detective.stages[0].answer,content),'detective',content);
+  const clean=Portals.sanitize({...legacy,unknown:{rev:1,step:3,solved:true,wrong:[],hint:false}},content);
+  assert.deepEqual(clean,legacy);
+  assert.equal(view(clean,'detective').current.step,1);
+  assert.equal(view(clean,'rail-ticket').current.step,0);
+  assert.equal(view(clean).entries.length,52);
+});
+
 test('all adventures open immediately and hidden solutions are not included in early models',()=>{
   const state=fresh(),list=view(state);
-  assert.equal(list.doneCount,0);assert.equal(list.entries.length,32);
+  assert.equal(list.doneCount,0);assert.equal(list.entries.length,52);
   assert.ok(list.entries.every(item=>item.count===0&&!item.done&&item.keepsake===null));
   for(const id of content.ids){
     const m=view(state,id).current,original=content.stories[id];
@@ -75,7 +96,7 @@ test('all adventures open immediately and hidden solutions are not included in e
   }
 });
 
-test('answer positions vary across all 96 stages yet stay stable after a wrong choice and reload',()=>{
+test('answer positions vary across all 156 stages yet stay stable after a wrong choice and reload',()=>{
   const positions=[];
   for(const id of content.ids){
     let state={};
@@ -96,7 +117,7 @@ test('answer positions vary across all 96 stages yet stay stable after a wrong c
       state=Portals.next(state,id,content);
     }
   }
-  assert.equal(positions.length,96);
+  assert.equal(positions.length,156);
   assert.deepEqual([...new Set(positions)].sort(),[0,1,2],
     'correct answers must not always occupy the same visible button');
 });
@@ -127,11 +148,11 @@ test('wrong choices give specific help, retries are optional, and completing one
   assert.equal(view(state,id).current.stage.feedback,null);
   assert.equal(view(state,id).current.stage.hint,false);
   assert.deepEqual(view(state,id).current.stage.wrong,[]);
-  assert.deepEqual(view(before).entries.map(x=>x.count),Array(32).fill(0));
+  assert.deepEqual(view(before).entries.map(x=>x.count),Array(52).fill(0));
   assert.notDeepEqual(state,prior);
 });
 
-test('all 96 stages can be completed, earning exactly one keepsake per adventure',()=>{
+test('all 156 stages can be completed, earning exactly one keepsake per adventure',()=>{
   let state=fresh();
   for(const id of content.ids){
     for(let step=0;step<3;step++){
@@ -150,8 +171,8 @@ test('all 96 stages can be completed, earning exactly one keepsake per adventure
     assert.equal(Portals.choose(state,id,0,content),state,'completed adventures are immutable');
     assert.deepEqual(Portals.sanitize(clone(state),content),state);
   }
-  assert.equal(view(state).doneCount,32);
-  assert.equal(view(state).entries.filter(row=>row.done&&row.keepsake).length,32);
+  assert.equal(view(state).doneCount,52);
+  assert.equal(view(state).entries.filter(row=>row.done&&row.keepsake).length,52);
 });
 
 test('malformed imported progress is rejected per story without erasing other discoveries',()=>{
