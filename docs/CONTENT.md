@@ -79,3 +79,15 @@ Ordträning ska ge mer än igenkänning. Alla 121 befintliga ord har nu `teachin
 Visa förklaringen efter svaret, i fokusträning, facit och ordsamlingen. För kända felalternativ visas även vilket annat ord svaret handlar om. Gissa inte en förklaring för en bildetikett eller en handling. Självformulerat språk bedöms inte automatiskt och sparas inte. Tankefrågan är frivillig och ger ingen poäng.
 
 Granska begreppets gräns: motexemplet ska verkligen sakna den testade betydelsen, och det ska finnas exakt ett försvarbart alternativ i den konkreta uppgiften. För Aha behövs en separat lista med granskade berättelser; se [CONTEXTS.md](CONTEXTS.md). Fullständig teknisk täckning ersätter inte språkgranskning med lärare eller barnprovspelning. Aktuell omfattning och nästa kvalitetssteg finns i [WORD-UNDERSTANDING.md](WORD-UNDERSTANDING.md).
+
+En förklaring ska peka ut ledtråden i den aktuella uppgiften och visa hur
+den hör ihop med betydelsen. Lägg inte till en orsak som berättelsen
+inte ger stöd för, och behandla inte egenskaper som motsatser när de kan
+finnas samtidigt. Märk nya exempel som exempel. I bildserier ska bild,
+rubrik och bildtext höra till samma händelse.
+
+Skolordens ordningsuppgifter kräver ett eget `orderExplanation` i
+`missions.json`. Det förklarar sambandet mellan arbetsstegen och används
+i träning, fokus, facit och bonus. Betydelse- och meningsuppgifternas
+förklaringar får inte lånas till ordningsfrågan. Se
+[granskningen efter PR #10](CLEARER-EXPLANATIONS.md).

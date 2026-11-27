@@ -6,9 +6,9 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
   const stages = Object.freeze([
-    {key:'before',label:'1 • SÅ BRUKAR DET VARA'},
-    {key:'after',label:'2 • MEN DEN HÄR GÅNGEN'},
-    {key:'aha',label:'3 • AHA! NU FÖRSTÅR JAG'}
+    {key:'before',label:'1 • BERÄTTELSEN'},
+    {key:'after',label:'2 • SÅ HÄNGER DET IHOP'},
+    {key:'aha',label:'3 • UTTRYCKETS BETYDELSE'}
   ]);
   function validate(data, expressions) {
     const errors=[];

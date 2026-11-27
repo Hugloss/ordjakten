@@ -106,7 +106,7 @@
     "title": "Det sköra ägget",
     "prompt": "Ett skört ägg behöver flyttas till boet. Vilket sätt skyddar ägget med något mjukt?",
     "target": "Flytta ägget till boet",
-    "why": "Ett skört skal kan lätt gå sönder. En mjuk korg skyddar det när du bär det försiktigt.",
+    "why": "Det sköra skalet kan spricka av en stöt. Stoppningen i korgen ger efter och dämpar stötar. När du bär korgen lugnt minskar risken att ägget går sönder.",
     "answer": "nest",
     "options": [
       [
@@ -325,7 +325,7 @@
     "title": "Spegelns hemlighet",
     "prompt": "En liten stjärna står framför en vägg. Välj något speglande så att vi kan se en bild av stjärnan.",
     "target": "Välj material till väggen",
-    "why": "En spegel reflekterar ljus och kan återge en bild av föremålet framför den.",
+    "why": "Du ser en bild av stjärnan i spegeln. Spegeln skickar tillbaka ljus från det som står framför den. Därför är ytan speglande.",
     "answer": "mirror",
     "options": [
       [
@@ -481,7 +481,7 @@
     "title": "Kristallens hemliga sken",
     "prompt": "Vi vill ha ett glittrigt föremål i ljusstrålen. Vad passar bäst?",
     "target": "Välj föremål till ljusstrålen",
-    "why": "Kristallens blanka ytor reflekterar ljus i olika riktningar och kan ge glittrande ljuspunkter.",
+    "why": "När ljuset träffar kristallens blanka ytor skickas det tillbaka i olika riktningar. Då syns små ljuspunkter på ytan. Det är därför kristallen glittrar när den får ljus.",
     "answer": "crystal",
     "options": [
       [
@@ -665,15 +665,15 @@
     "word": "sv-0024",
     "id": "hollow",
     "title": "Röret med den hemliga kulan",
-    "prompt": "En kula ska rulla genom ett föremål. Vilket är ihåligt med en öppning genom hela föremålet?",
+    "prompt": "En liten kula ska rulla genom ett föremål. Vilket är ihåligt och har plats för kulan att komma igenom?",
     "target": "Välj ett föremål som kulan kan passera genom",
-    "why": "Ett tomt rör har ett hålrum inuti. Det är ihåligt. Om båda ändarna är öppna kan kulan passera.",
+    "why": "Pappröret har ett tomt utrymme inuti och är därför ihåligt. Just det här röret är öppet i båda ändarna och bredare än kulan, så kulan kommer igenom.",
     "answer": "tube",
     "options": [
       [
         "tube",
         "🧻",
-        "Tomt öppet papprör"
+        "Öppet papprör med plats för kulan att rulla igenom"
       ],
       [
         "solid",
@@ -696,9 +696,9 @@
     "word": "sv-0054",
     "id": "flight",
     "title": "Fjärilens blomsterstig",
-    "prompt": "En liten kompis ska ta sig genom luften från blomma till blomma. Vilken är flygande?",
+    "prompt": "En liten kompis ska ta sig från blomma till blomma. Vilket alternativ visar en flygande kompis?",
     "target": "Hjälp den till nästa blomma",
-    "why": "En fjäril kan röra sig genom luften med sina vingar. När den gör det är den flygande.",
+    "why": "Fjärilen tar sig genom luften mellan blommorna med hjälp av sina vingar. Därför kan vi beskriva den som en flygande fjäril.",
     "answer": "butterfly",
     "options": [
       [

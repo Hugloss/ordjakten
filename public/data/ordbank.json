@@ -479,8 +479,8 @@
       "review_status": "draft",
       "teaching": {
         "explanation": "Något ihåligt har ett tomrum inuti. Det finns material runt om, men insidan är inte fylld hela vägen.",
-        "familiar": "En toarulle har en vägg av papp runt ett tomt utrymme. Därför kan du se genom rullen från ena änden.",
-        "nonExample": "En massiv träkloss är inte ihålig bara för att du kan gömma något bakom den. Tomrummet måste finnas inuti saken.",
+        "familiar": "En toarulle har en vägg av papp runt ett tomt utrymme. Du kan se genom hålet från ena änden, men du ser inte genom själva pappen.",
+        "nonExample": "En träkloss som består av trä hela vägen igenom är inte ihålig. Ett tomt utrymme bakom klossen räknas inte som ett hål inuti den.",
         "ownPrompt": "Hur kan du ta reda på om en sak är ihålig utan att förstöra den?"
       }
     },
@@ -531,9 +531,9 @@
       },
       "review_status": "draft",
       "teaching": {
-        "explanation": "En vissnad växt har tappat sin spänst så att blad eller stjälkar hänger. Den kan till exempel ha fått för lite vatten.",
+        "explanation": "En vissnad växt har blad eller stjälkar som har tappat sin fasthet och hänger mer än tidigare. Det kan hända när växten får för lite vatten.",
         "familiar": "Blommor som stått länge i en vas utan vatten kan börja sloka i stället för att stå upprätt.",
-        "nonExample": "En frisk växt är inte vissnad bara för att bladen naturligt pekar nedåt. Titta på om den tappat sin vanliga spänst.",
+        "nonExample": "En frisk växt är inte vissnad bara för att bladen naturligt pekar nedåt. Jämför med hur just den växtens blad brukar se ut.",
         "ownPrompt": "Vad skulle du jämföra med för att avgöra om en växt håller på att vissna?"
       }
     },
@@ -1401,9 +1401,9 @@
       "illustration": null,
       "review_status": "draft",
       "teaching": {
-        "explanation": "Ibland tar något längre tid än du vill. Den som är tålmodig kan vänta lugnt eller försöka vidare utan att bli otålig.",
-        "familiar": "När du väntar på att en kaka ska bli färdig i ugnen låter du den gräddas klart i stället för att öppna luckan hela tiden.",
-        "nonExample": "Om du blir arg direkt och kräver att kakan ska bli klar nu visar du inte tålamod i den stunden.",
+        "explanation": "Den som är tålmodig kan låta något ta tid utan att ge upp direkt eller skynda på andra hela tiden. Det kan vara att vänta på sin tur eller att försöka igen när något är svårt.",
+        "familiar": "Du väntar på din tur i ett spel. Det tar en stund, men du låter kompisen spela färdigt innan du börjar.",
+        "nonExample": "Om du avbryter kompisen gång på gång och kräver att få börja genast visar du inte tålamod med väntan just då.",
         "ownPrompt": "När har du behövt vänta på något? Hur visade du tålamod?"
       }
     },
@@ -1641,9 +1641,9 @@
       "illustration": null,
       "review_status": "draft",
       "teaching": {
-        "explanation": "När du är uppmärksam riktar du dina sinnen mot det som är viktigt. Du kan höra en ändring i instruktionen eller se något som andra missar.",
+        "explanation": "När du är uppmärksam lyssnar eller tittar du noga och lägger märke till detaljer. Du kan märka att en instruktion ändras och ändå behöva fråga vad den nya instruktionen betyder.",
         "familiar": "På idrotten lyssnar du på läraren och märker när det är dags att byta övning.",
-        "nonExample": "Om du tittar bort och missar att läraren berättar nästa steg är du inte uppmärksam på just den instruktionen.",
+        "nonExample": "Om du tänker på ditt spel och missar vad läraren säger lyssnar du inte uppmärksamt på just den instruktionen.",
         "ownPrompt": "Hur kan du visa att du är uppmärksam när någon berättar något?"
       }
     },
@@ -1657,7 +1657,7 @@
       "illustration": null,
       "review_status": "draft",
       "teaching": {
-        "explanation": "Att vara varsam är att ta lätta, försiktiga tag så att något eller någon inte skadas. Det handlar om hur du hanterar det du håller på med.",
+        "explanation": "Att vara varsam är att hantera något med omtanke och utan hårda ryck eller stötar, så att det inte skadas. Du kan vara både varsam och försiktig när du bär en ömtålig sak.",
         "familiar": "Du vänder ett tunt blad i en gammal bok genom att lyfta i kanten, utan att rycka. Då minskar risken att sidan går sönder.",
         "nonExample": "Att dra hårt i sidan så att papperet rivs sönder är inte ett varsamt sätt att bläddra.",
         "ownPrompt": "Hur kan du visa någon hur man är varsam med en tunn bok?"
@@ -1817,7 +1817,7 @@
       "illustration": null,
       "review_status": "draft",
       "teaching": {
-        "explanation": "En mening är tvetydig om samma ord kan förstås på två olika sätt. Då kan två personer läsa exakt samma mening och ändå förstå olika saker.",
+        "explanation": "En mening är tvetydig när den kan förstås på två olika sätt. Det kan bero på ett ord med två betydelser eller på hur orden sitter ihop.",
         "familiar": "Om någon säger ”Jag såg en stjärna” kan det betyda att personen såg en stjärna på himlen eller en berömd person, till exempel en filmstjärna.",
         "nonExample": "”Jag såg en stjärna på himlen” berättar tydligare vad personen såg. Då behöver du inte gissa om det var en filmstjärna.",
         "ownPrompt": "Kan du hitta på en mening som kan betyda två olika saker, och göra den tydligare?"

@@ -46,7 +46,7 @@
         "En spegel i mörkret",
         "En slät grå sten"
       ],
-      "En tänd lykta ger ifrån sig eget ljus. Nu kan vi läsa."
+      "Den tända lyktan ger ifrån sig ljus som lyser på boksidan. Då kan vi se bokstäverna. Spegeln behöver ljus från något annat för att kunna skicka ljus vidare."
     ]
   ],
   "space": [
@@ -100,7 +100,7 @@
         "En flagga med enbart små prickar",
         "En helt enfärgad flagga"
       ],
-      "Randig betyder att den har ränder. Portvakten visar oss in."
+      "Flaggans färgade fält ligger som långa band bredvid varandra. Banden är ränder, så flaggan är randig. Den prickiga flaggan har små punkter i stället."
     ],
     [
       "sv-0066",
@@ -130,7 +130,7 @@
         "En matt sten utan blänk",
         "En svart gummibit"
       ],
-      "Glittrigt betyder att något glimmar eller blänker i ljus. Stenen glittrar."
+      "När ljuset träffar stenens blanka ytor syns små ljuspunkter. Därför ser stenen glittrig ut. Den behöver ljus från något annat för att glittra."
     ]
   ],
   "pirate": [
@@ -162,7 +162,7 @@
         "Skakar den hårt",
         "Slänger den i en korg"
       ],
-      "Varsam betyder att hantera något försiktigt så att det inte skadas. Meddelandet är kvar."
+      "Med båda händerna får vi ett stadigt grepp om flaskan. Vi lyfter lugnt så att det tunna glaset inte slår emot något. Så hanterar vi flaskan varsamt."
     ],
     [
       "sv-0043",
@@ -190,7 +190,7 @@
       "sv-0055",
       "Vi vill följa ett simmande djur med blicken. Vilket djur passar?",
       [
-        "En fisk som tar sig fram genom vattnet",
+        "En fisk som tar sig fram i vattnet genom att röra kroppen och fenorna",
         "En fiskmås som flyger över havet",
         "En krabba som går längs stranden"
       ],
@@ -268,7 +268,7 @@
         "En planta utan märkbar lukt",
         "En plastblomma som inte luktar"
       ],
-      "Doftande betyder att något ger ifrån sig en lukt. Vi väljer den doftande blomman."
+      "Blomman ger ifrån sig en lukt som vi kan känna med näsan. Det är lukten som gör att vi beskriver blomman som doftande. De andra valen beskrivs utan märkbar lukt."
     ],
     [
       "sv-0027",
@@ -388,13 +388,13 @@
   "rainbow": [
     [
       "sv-0002",
-      "Vi ska rita ett fluffigt moln. Vilket moln passar bäst?",
+      "Vi ska rita ett moln som ser fluffigt ut. Vilken bild passar bäst?",
       [
-        "Ett mjukt, luftigt moln med bulliga kanter",
+        "Ett moln ritat med mjuka, bulliga kanter",
         "Ett tunt rakt streck",
         "En platt fyrkant"
       ],
-      "Fluffig betyder mjuk och luftig, ofta lite luddig. Vi ritar det bulliga molnet."
+      "De mjuka, bulliga kanterna får molnet i bilden att se mjukt och luftigt ut. Det är därför vi beskriver det som fluffigt."
     ],
     [
       "sv-0011",
@@ -472,13 +472,13 @@
   "music": [
     [
       "sv-0020",
-      "Musikern ber oss spela en långsam melodi. Vad gör vi?",
+      "Vi spelar en snabb melodi. Musikern ber oss göra den långsam. Vad ändrar vi?",
       [
-        "Spelar tonerna i låg fart",
-        "Spelar alla toner så fort vi kan",
-        "Spelar bara en högre ton"
+        "Låter det gå längre tid mellan tonerna",
+        "Spelar lika snabbt men starkare",
+        "Spelar lika snabbt men svagare"
       ],
-      "Långsam betyder låg fart. Vi spelar i lugnt tempo."
+      "När det går längre tid mellan tonerna tar melodin längre tid att spela. Tempot blir långsammare. Att spela starkare eller svagare ändrar hur starkt det låter, inte hur snabbt vi spelar."
     ],
     [
       "sv-0009",

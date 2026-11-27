@@ -171,7 +171,7 @@
   ],
   "js-11-01": [
     "missade inte en enda rörelse",
-    "varje fågel som landade"
+    "fåglarna vid dammen"
   ],
   "js-11-02": [
     "Max förstod inte",
