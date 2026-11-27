@@ -21,19 +21,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  build:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      # The full fast Node tests run once on main, here, before deployment.
+      # Fast Node tests validate the game before publishing any artifacts.
       - name: Test game and validate Pages base path + offline files
         run: npm run check
       - name: Configure GitHub Pages
@@ -42,6 +39,18 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: public
+
+  # The artifact may be invisible to deploy-pages immediately after upload
+  # (actions/deploy-pages#451). A dependent job avoids that same-job race.
+  # If only deployment fails, rerun failed jobs, not the artifact upload.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
