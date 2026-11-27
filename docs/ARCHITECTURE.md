@@ -1,6 +1,6 @@
 # Arkitektur – fristående ämnesbanker och återanvändbara spelmotorer
 
-**Status: föreslagen målarkitektur för granskning, inte implementerad.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
+**Status: federerad målarkitektur; en första svensk bankadapter och ett gemensamt spel-/bedömningskontrakt implementeras i PR #30. Övrig migrering återstår.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
 
 ## Syfte och hårda gränser
 
@@ -214,7 +214,7 @@ Nya ID:n får vara läsbara men ska **inte härledas från dagens arrayposition 
 
 ## Minsta interoperabla kontrakt – specificera före implementation
 
-Detta är **kontraktsutkast, inte ett fastslaget JSON-schema**. De beskriver hur varje självständig bank ansluts via `BankAdapter` utan att svenska, matematik och kemi tvingas till samma interna datamodell.
+Detta är **målkontrakt, inte ett fastslaget JSON-schema för alla framtida ämnen**. PR #30 implementerar en liten delmängd (svenska, flerval och numerisk testadapter) och visar hur en självständig bank ansluts utan att övriga ämnen tvingas till samma interna datamodell.
 
 ### 1. Registry, fråga och sammansatt uppgift
 
@@ -252,6 +252,19 @@ En gemensam fråga kan återanvändas oförändrad i olika spelformer **bara om 
 När ett spel visar fyra av fem granskade svarsalternativ dokumenteras det valda delmängdsurvalet i `QuestionInstance` tillsammans med stabila alternativ-ID:n. Frågerevision, bedömning och semantisk entydighet måste fortsätta stämma för just den instansen; det är **inte** tillräckligt att knapparna har rätt antal.
 
 En enda fråga i flera spelformer är heller inte flera oberoende kunskapsbevis: lärandemodellen ska kunna skilja första mötet, upprepning, återanvändning samma dag, assisterat svar och verklig överföring till nytt sammanhang. Rekommendationsmotorn får läsa sådana signaler, men spelmotorer får inte räkna varje återanvändning som en ny behärskad färdighet.
+
+## Första fungerande vertikala snittet (PR #30)
+
+Denna del är **implementerad**, till skillnad från de fortsatta målkontrakten:
+
+- `content/banks/svenska/manifest.json` deklarerar en **egen språkbank** och pekar på dagens kanoniska svenska JSON-källor. Det ligger **inga kopierade frågetexter** i manifestet.
+- `public/js/banks/svenska.js` är en läsadapter för de 73 befintliga uttrycksfrågornas **betydelseuppgifter**. Lokalt fråge-ID `meaning-ut-0001` har referensen `{bankId:"svenska", id:"meaning-ut-0001", revision:1}`. De äldre `ut-####` är fortfarande begrepps-/historik-ID:n.
+- `public/js/question-platform.js` registrerar oberoende banker, validerar referenser och svarstyper, skapar reproducerbara presentationsinstanser med stabila alternativ-ID:n och kontrollerar svar. Registret lagrar inga ämnestaxonomier eller nya kopior av källdatan. **En bank måste alltid namnges uttryckligen**; det finns ingen implicit gemensam bank.
+- `public/js/question-session.js` demonstrerar skilda **Träna**- och **Testa**-policys över exakt samma fråga. Prov får inget facit/bedömningsutfall i presentations- eller svarshändelserna före avslut; belöningar/lärande är inte kopplade till bedömaren.
+- Den befintliga `engine.js` använder nu språkbankens adapter när den skapar ordinarie **uttrycksbetydelsefrågor**. `app.js` använder samma bankscopade svarskontroll för dem. Äldre utskriftsformat, alternativa uppgiftstyper, lagringsnyckeln `ordjakten-v1` och spelprogression behålls.
+- `tests/question-platform.test.js` verifierar identiska facit för 73 uttryck, träning/prov, stabila alternativ-ID:n, felaktig revision, avvisade svar, isolerade banknamn och en **syntetisk matematikbank som enbart finns i testet**. Ingen riktig matematikbank har skapats.
+
+**Kvar att migrera:** andra svenska frågetyper, Upptäckarklubbens steg/Skattkartans ledtrådar, ämnesspecifik metadata, fullständig frågeinstanspersistens, redaktionella SQL-index och bredare systemtester. Den nya `QuestionSession` används i detta skede som ett verifierat separat kontrakt, **inte** som ersättare för alla den gamla appens omgångar.
 
 ## Första migrationspilot – konkreta acceptanskriterier
 

@@ -2,7 +2,7 @@
 
 ## Nästa arkitektursteg – utan att tappa befintligt innehåll
 
-Den kanoniska målbilden och den detaljerade migreringsordningen finns i [ARCHITECTURE.md](ARCHITECTURE.md). Inventera först frågor, kunskapsmål, scener, ID:n, återkoppling och belöningar. Inför därefter en liten läsadapter och ett gemensamt pilotfall innan innehåll flyttas. Separera sedan bedömning, urval och lärandeprogression från spelmodellerna, med bevarad webbläsarhistorik. De nuvarande språkspelens regler och offline-funktion är kompatibilitetskrav, inte något som ska skrivas om samtidigt.
+Den kanoniska målbilden och den detaljerade migreringsordningen finns i [ARCHITECTURE.md](ARCHITECTURE.md). Inventera först frågor, kunskapsmål, scener, ID:n, återkoppling och belöningar. En första läsadapter och ett gemensamt kontrakt för svenska uttrycksbetydelsefrågor implementeras i PR #30, utan att innehåll flyttas eller kopieras. Fortsätt med fler uppgiftstyper först efter paritetstester. Separera sedan bedömning, urval och lärandeprogression från spelmodellerna, med bevarad webbläsarhistorik. De nuvarande språkspelens regler och offline-funktion är kompatibilitetskrav, inte något som ska skrivas om samtidigt.
 
 ## Nuvarande MVP (finns i koden)
 

@@ -58,7 +58,7 @@ ordfrekvens. Inga ord eller tidigare framsteg har tagits bort.
 
 ## Projektstruktur
 
-Se [målarkitekturen för en ämnesoberoende lärplattform](docs/ARCHITECTURE.md) för hur frågor, svarstyper, kunskapsmål, spelmodeller, berättelser, belöningar och historik ska frikopplas. Dokumentet är en **migrationsplan**, inte en beskrivning av redan genomförda kodändringar.
+Se [målarkitekturen med fristående ämnesbanker och återanvändbara spelmotorer](docs/ARCHITECTURE.md). Svenska, matematik och kemi ska ha **egna kunskapsbanker** med separat innehåll och valfri lagring. Första koddelen använder en svensk bankadapter för befintliga uttrycksfrågor; övrig migration beskrivs i arkitekturdokumentet.
 
 - `public/` – hela statiska webbappen, databank och lokala bildresurser.
 - `scripts/` – utvecklingsserver och innehållsvalidering.

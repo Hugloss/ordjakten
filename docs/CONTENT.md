@@ -1,6 +1,6 @@
 # Ord- och frågekvalitet
 
-Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. Målarkitekturen för en gemensam frågebank över svenska, matematik, kemi, fysik och andra ämnen finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den nya strukturen är ännu inte implementerad; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
+Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. Målarkitekturen för **separata ämnesbanker** som delar spelgränssnitt finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den första svenska frågeadaptern implementeras i PR #30, men innehållets flytt till nya format är ännu inte genomförd; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
 
 ## Kanonisk ordbank
 
