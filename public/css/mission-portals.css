@@ -71,3 +71,13 @@
 .portal-filter-count{font-size:.94rem;font-weight:750;color:var(--muted);margin:.3rem 0 .6rem!important}
 @media(max-width:400px){.portal-filter{flex:1 1 9rem}}
 @media(forced-colors:active){.portal-filter{border-color:CanvasText}.portal-filter[aria-pressed='true']{outline:2px solid Highlight}}
+
+/* Children see twelve adventures at a time, not a wall of fifty-two cards.
+   The next card receives keyboard focus when more are revealed. */
+.portal-more{display:flex;margin:.3rem auto 1rem;min-width:min(100%,18rem);
+  min-height:3.25rem;justify-content:center;align-items:center;
+  padding:.65rem 1rem;border:2px solid var(--accent-line);border-radius:.85rem;
+  background:var(--accent-soft);color:var(--text);font:inherit;font-weight:850;
+  text-align:center;cursor:pointer;overflow-wrap:anywhere}
+.portal-more:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(forced-colors:active){.portal-more{border-color:CanvasText}}
