@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v54-animal-expressions'));
+  assert.ok(worker.includes('v55-everyday-expressions'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -416,10 +416,28 @@ test('animal metaphors have a shared illustration and combined actions explain r
  const html=read('index.html'),app=read('js/app.js'),engine=read('js/engine.js'),comics=read('js/comics.js');
  const expressions=require('../public/data/expressions.json').expressions;
  const animals=expressions.filter(x=>x.animal);
- assert.equal(animals.length,6);
+ assert.equal(animals.length,4);
  for(const entry of animals)assert.ok(html.includes('data-animal="'+entry.animal+'"'));
  assert.ok(engine.includes('animal:entry.animal'));
  assert.ok(comics.includes('renderAnimal(art,expression)'));
  assert.ok(app.includes("C.renderAnimal($('quest-animal-picture'),q)"));
  assert.ok(app.includes('q.action.related.explanation'));
+});
+
+test('everyday expressions replace niche animal nicknames without reusing retired IDs',()=>{
+ const entries=require('../public/data/expressions.json').expressions;
+ const missions=require('../public/data/missions.json').missions;
+ const surprises=require('../public/data/surprises.json').challenges;
+ const comics=require('../public/data/comics.json').stories;
+ assert.equal(entries.length,41);
+ for(const id of ['ut-0029','ut-0031']){
+   assert.ok(!entries.some(x=>x.id===id));
+   assert.ok(!missions.some(x=>x.id===id));
+   assert.ok(!surprises.some(x=>x.id===id));
+   assert.ok(!Object.hasOwn(comics,id));
+ }
+ const phrases=entries.map(x=>x.phrase);
+ for(const phrase of ['Ha fjärilar i magen','Tyst som en mus','Hungrig som en varg','Stark som en oxe','Envis som en åsna','Listig som en räv','Nattuggla','Bokmal','Arbetsmyra','Pigg som en mört','Ana ugglor i mossen','Köpa grisen i säcken'])
+   assert.ok(phrases.includes(phrase));
+ assert.equal(new Set(phrases).size,phrases.length);
 });

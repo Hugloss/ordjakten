@@ -10,8 +10,8 @@ const base=path.resolve(__dirname,'../public');
 const data=JSON.parse(fs.readFileSync(path.join(base,'data/surprises.json'),'utf8'));
 const expressions=JSON.parse(fs.readFileSync(path.join(base,'data/expressions.json'),'utf8'));
 
-test('all 31 expression doors contain an authored two-choice transfer task',()=>{
-  assert.equal(data.challenges.length,31);
+test('all 41 expression doors contain an authored two-choice transfer task',()=>{
+  assert.equal(data.challenges.length,41);
   assert.deepEqual(S.validate(data,expressions),[]);
   for(const challenge of data.challenges){
     const expr=expressions.expressions.find(x=>x.id===challenge.id);

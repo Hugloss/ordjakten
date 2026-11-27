@@ -13,9 +13,9 @@ const bank=JSON.parse(fs.readFileSync(path.join(base,'data/ordbank.json'),'utf8'
 const sandbox={window:{}};
 vm.runInNewContext(fs.readFileSync(path.join(base,'data/curation.js'),'utf8'),sandbox);
 const curation=sandbox.window.ORDJAKTEN_CURATION;
-test('31 hand-authored missions with three unique sentences and three orderable events',()=>{
+test('41 hand-authored missions with three unique sentences and three orderable events',()=>{
   assert.deepEqual(Q.validate(missions,expressions),[]);
-  assert.equal(missions.missions.length,31);
+  assert.equal(missions.missions.length,41);
   assert.equal(Q.TYPES.length,3);
   const target=Q.get(missions,'ut-0001');
   assert.match(target.sentences[0].label,/för en gångs skull/i);
@@ -27,7 +27,7 @@ test('browser mission data stays identical to canonical JSON',()=>{
   vm.runInNewContext(fs.readFileSync(path.join(base,'data/missions.js'),'utf8'),sandbox);
   assert.deepEqual(JSON.parse(JSON.stringify(sandbox.window.ORDJAKTEN_MISSIONS)),missions);
 });
-test('all 31 expressions can be asked in all three modes with valid keys',()=>{
+test('all 41 expressions can be asked in all three modes with valid keys',()=>{
   for(const e of expressions.expressions){
     const questionMeaning=E.makeExpressionQuestion(e,'medium',()=>.42,'meaning',missions);
     assert.equal(questionMeaning.options.length,4);

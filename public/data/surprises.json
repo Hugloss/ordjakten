@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "31 frivilliga miniuppdrag med nya situationer och bildliga uttryck. Öppnas efter inlärning, aldrig under prov.",
+  "description": "41 frivilliga miniuppdrag med nya vardagssituationer. Öppnas efter inlärning, aldrig under prov.",
   "challenges": [
     {
       "id": "ut-0001",
@@ -423,21 +423,6 @@
       "explanation": "Öknens skepp är en metafor för kamelen. En dromedar hör också till kameldjuren."
     },
     {
-      "id": "ut-0029",
-      "prompt": "Vilken NY situation passar uttrycket ”havets enhörning”?",
-      "options": [
-        {
-          "label": "En narval simmar i Arktis. Berättaren kallar den havets enhörning på grund av tanden.",
-          "correct": true
-        },
-        {
-          "label": "En säl ligger på isen och berättaren säger att sälen brukar kallas havets enhörning.",
-          "correct": false
-        }
-      ],
-      "explanation": "Havets enhörning syftar på narvalen, som ibland har en lång tand som liknar ett sagohorn."
-    },
-    {
       "id": "ut-0030",
       "prompt": "Vilken NY situation passar uttrycket ”människans bästa vän”?",
       "options": [
@@ -453,19 +438,184 @@
       "explanation": "Talesättet syftar på hunden. Det betyder inte att alla måste tycka bäst om hundar."
     },
     {
-      "id": "ut-0031",
-      "prompt": "Vilken NY situation passar uttrycket ”naturens ingenjör”?",
+      "id": "ut-0032",
+      "prompt": "Vilken NY situation passar uttrycket ”ha fjärilar i magen”?",
       "options": [
         {
-          "label": "En bäver har byggt en damm som ändrar vattennivån. Guiden kallar bävern naturens ingenjör.",
+          "label": "Sam ska åka karusell för första gången och känner ett nervöst pirr i magen.",
           "correct": true
         },
         {
-          "label": "En gädda simmar förbi. Guiden förklarar att gäddan byggde dammen och är naturens ingenjör här.",
+          "label": "Sam har ätit middag och är mätt, lugn och nöjd med maten.",
           "correct": false
         }
       ],
-      "explanation": "Bävern kallas ofta naturens ingenjör. Uttrycket är bildligt och kan även användas om andra djur."
+      "explanation": "Uttrycket beskriver en pirrig känsla av nervositet eller förväntan. Inga riktiga fjärilar finns i magen."
+    },
+    {
+      "id": "ut-0033",
+      "prompt": "Vilken NY situation passar uttrycket ”tyst som en mus”?",
+      "options": [
+        {
+          "label": "En flicka sitter alldeles tyst under en föreställning för att inte störa.",
+          "correct": true
+        },
+        {
+          "label": "En flicka ropar och sjunger så högt att alla runt omkring hör.",
+          "correct": false
+        }
+      ],
+      "explanation": "Tyst som en mus betyder mycket tyst, inte att någon förvandlas till en mus."
+    },
+    {
+      "id": "ut-0034",
+      "prompt": "Vilken NY situation passar uttrycket ”hungrig som en varg”?",
+      "options": [
+        {
+          "label": "Efter att ha cyklat hela förmiddagen längtar Leo efter sin lunch.",
+          "correct": true
+        },
+        {
+          "label": "Efter en stor lunch är Leo proppmätt och vill inte äta mer.",
+          "correct": false
+        }
+      ],
+      "explanation": "Hungrig som en varg förstärker ordet hungrig. Det betyder att man gärna vill äta mycket."
+    },
+    {
+      "id": "ut-0035",
+      "prompt": "Vilken NY situation passar uttrycket ”stark som en oxe”?",
+      "options": [
+        {
+          "label": "Kim orkar bära en tung väska som de andra inte orkar lyfta.",
+          "correct": true
+        },
+        {
+          "label": "Kim kan springa fort men orkar inte lyfta den tunga väskan.",
+          "correct": false
+        }
+      ],
+      "explanation": "Stark som en oxe är en liknelse som betyder mycket stark. Den handlar om styrka."
+    },
+    {
+      "id": "ut-0036",
+      "prompt": "Vilken NY situation passar uttrycket ”envis som en åsna”?",
+      "options": [
+        {
+          "label": "Alex vägrar att ge upp sitt svåra pussel och försöker igen efter varje misslyckande.",
+          "correct": true
+        },
+        {
+          "label": "Alex ändrar genast sin plan varje gång någon föreslår något annat.",
+          "correct": false
+        }
+      ],
+      "explanation": "Envis som en åsna betyder att man håller fast vid något och inte ger sig så lätt."
+    },
+    {
+      "id": "ut-0037",
+      "prompt": "Vilken NY situation passar uttrycket ”listig som en räv”?",
+      "options": [
+        {
+          "label": "I ett spel hittar Lo ett oväntat knep som löser en svår gåta.",
+          "correct": true
+        },
+        {
+          "label": "Lo trycker på alla knappar utan att tänka eller hitta någon lösning.",
+          "correct": false
+        }
+      ],
+      "explanation": "Listig som en räv betyder klurig och bra på att hitta knep. Listighet kan användas både väl och illa."
+    },
+    {
+      "id": "ut-0038",
+      "prompt": "Vilken NY situation passar uttrycket ”nattuggla”?",
+      "options": [
+        {
+          "label": "På lördagskvällen vill Alex gärna fortsätta läsa fast resten av familjen har lagt sig.",
+          "correct": true
+        },
+        {
+          "label": "Alex somnar tidigt varje kväll och tycker bäst om att gå upp i gryningen.",
+          "correct": false
+        }
+      ],
+      "explanation": "En nattuggla är en person som gärna är vaken sent. Det handlar inte om att man är en riktig fågel."
+    },
+    {
+      "id": "ut-0039",
+      "prompt": "Vilken NY situation passar uttrycket ”bokmal”?",
+      "options": [
+        {
+          "label": "Ari blir glad när han hittar en ny bok och väljer gärna att läsa på sin fritid.",
+          "correct": true
+        },
+        {
+          "label": "Ari lånar böcker enbart för att dekorera hyllan och vill aldrig läsa dem.",
+          "correct": false
+        }
+      ],
+      "explanation": "En bokmal tycker mycket om att läsa. Det är ett bildligt ord för en människa."
+    },
+    {
+      "id": "ut-0040",
+      "prompt": "Vilken NY situation passar uttrycket ”arbetsmyra”?",
+      "options": [
+        {
+          "label": "Under ett gemensamt bygge hjälper Sam flitigt till och gör klart sina uppgifter.",
+          "correct": true
+        },
+        {
+          "label": "Under bygget vägrar Sam att hjälpa till fast han har lovat att göra en uppgift.",
+          "correct": false
+        }
+      ],
+      "explanation": "Arbetsmyra betyder en flitig person. Det betyder inte att man måste arbeta hela tiden; alla behöver vila."
+    },
+    {
+      "id": "ut-0041",
+      "prompt": "Vilken NY situation passar uttrycket ”pigg som en mört”?",
+      "options": [
+        {
+          "label": "Efter en stunds vila känner Sam sig klarvaken och redo att leka.",
+          "correct": true
+        },
+        {
+          "label": "Sam är så trött att han knappt kan hålla ögonen öppna.",
+          "correct": false
+        }
+      ],
+      "explanation": "Pigg som en mört betyder mycket pigg och energisk. En mört är en fisk."
+    },
+    {
+      "id": "ut-0042",
+      "prompt": "Vilken NY situation passar uttrycket ”ana ugglor i mossen”?",
+      "options": [
+        {
+          "label": "En oväntad lapp säger två olika saker. Sam undrar om något inte stämmer.",
+          "correct": true
+        },
+        {
+          "label": "Sam läser en tydlig, riktig instruktion och känner att allt stämmer precis.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ana ugglor i mossen betyder att misstänka att något är lurt. En misstanke är inte samma sak som ett bevis."
+    },
+    {
+      "id": "ut-0043",
+      "prompt": "Vilken NY situation passar uttrycket ”köpa grisen i säcken”?",
+      "options": [
+        {
+          "label": "Lo köper en begagnad leksak i en stängd kartong utan att få se eller prova den.",
+          "correct": true
+        },
+        {
+          "label": "Lo undersöker leksaken noga och provar att den fungerar innan hon köper den.",
+          "correct": false
+        }
+      ],
+      "explanation": "Köpa grisen i säcken betyder att köpa något utan att veta vad man får. Det handlar inte om att köpa en riktig gris."
     }
   ]
 }

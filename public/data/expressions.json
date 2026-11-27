@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Barnvänliga svenska uttryck, idiom och bildliga djurnamn med exempel, svar och förklaringar.",
+  "description": "Barnvänliga, etablerade svenska vardagsuttryck, idiom och liknelser med konkreta exempel och förklaringar.",
   "expressions": [
     {
       "id": "ut-0001",
@@ -1126,47 +1126,6 @@
       "animal": "camel"
     },
     {
-      "id": "ut-0029",
-      "phrase": "Havets enhörning",
-      "scene": "På en karta över Norra ishavet står det: Leta efter havets enhörning. Vilket verkligt djur söker vi?",
-      "definition": "Narvalen, en tandval som kan ha en lång spiralformad tand som liknar ett enhörningshorn.",
-      "example": "I en film om Arktis fick vi se havets enhörning.",
-      "reveal": [
-        {
-          "title": "En saga under vattnet",
-          "text": "Enhörningen är ett sagodjur, men här handlar det om ett verkligt havsdjur."
-        },
-        {
-          "title": "Narvalens långa tand",
-          "text": "Narvalens långa spiralformade utskott är egentligen en tand, inte ett riktigt horn."
-        }
-      ],
-      "options": [
-        {
-          "label": "Narvalen",
-          "correct": true
-        },
-        {
-          "label": "Delfinen",
-          "correct": false
-        },
-        {
-          "label": "Blåvalen",
-          "correct": false
-        },
-        {
-          "label": "Sälen",
-          "correct": false
-        },
-        {
-          "label": "Havsörnen",
-          "correct": false
-        }
-      ],
-      "review_status": "draft",
-      "animal": "narwhal"
-    },
-    {
       "id": "ut-0030",
       "phrase": "Människans bästa vän",
       "scene": "På en utställning om husdjur står det att människans bästa vän har levt nära oss länge. Vilket djur syftar talesättet på?",
@@ -1208,45 +1167,484 @@
       "animal": "dog"
     },
     {
-      "id": "ut-0031",
-      "phrase": "Naturens ingenjör",
-      "scene": "Vid en damm står det att naturens ingenjör har förändrat vattendraget med grenar. Vilket djur brukar kallas så i den här miljön?",
-      "definition": "Bävern. Den kallas ofta naturens ingenjör eftersom den kan bygga dammar och förändra vattenmiljöer.",
-      "example": "Vi såg spår av naturens ingenjör vid bäckens fördämning.",
+      "id": "ut-0032",
+      "phrase": "Ha fjärilar i magen",
+      "scene": "Mira ska uppträda inför klassen. Strax innan hon går upp på scen säger hon att hon har fjärilar i magen.",
+      "definition": "Att känna sig nervös eller förväntansfull inför något.",
+      "example": "Jag hade fjärilar i magen innan min första fotbollsmatch.",
       "reveal": [
         {
-          "title": "Ett bygge i naturen",
-          "text": "En ingenjör kan bygga och lösa tekniska problem. I den här omskrivningen handlar det om ett djur."
+          "title": "Inför uppträdandet",
+          "text": "Mira väntar på att få gå upp på scen."
         },
         {
-          "title": "Bävern bygger",
-          "text": "Bävrar kan bygga dammar med växtmaterial. Det kan skapa våtmarker där andra arter lever."
+          "title": "En pirrig känsla",
+          "text": "Hon är lite nervös och samtidigt förväntansfull. Det känns som om det pirrar i magen."
         }
       ],
       "options": [
         {
-          "label": "Bävern",
+          "label": "Att känna sig nervös eller förväntansfull inför något.",
           "correct": true
         },
         {
-          "label": "Uttern",
+          "label": "Att vara väldigt hungrig efter en lång dag.",
           "correct": false
         },
         {
-          "label": "Rådjuret",
+          "label": "Att känna sig lugn och helt obekymrad.",
           "correct": false
         },
         {
-          "label": "Gäddan",
+          "label": "Att ha fått ont i magen av maten.",
           "correct": false
         },
         {
-          "label": "Haren",
+          "label": "Att vara trött efter att ha sprungit.",
           "correct": false
         }
       ],
-      "review_status": "draft",
-      "animal": "beaver"
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0033",
+      "phrase": "Tyst som en mus",
+      "scene": "Barnen leker kurragömma. Nils sitter bakom soffan och försöker vara tyst som en mus.",
+      "definition": "Att vara mycket tyst och inte göra något väsen av sig.",
+      "example": "Vi satt tysta som möss när vi väntade på överraskningen.",
+      "reveal": [
+        {
+          "title": "Nils gömmer sig",
+          "text": "Han vill inte avslöja var han sitter."
+        },
+        {
+          "title": "Inga ljud",
+          "text": "Han sitter alldeles tyst. Man jämför hans tystnad med en liten mus."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att vara mycket tyst och inte göra något väsen av sig.",
+          "correct": true
+        },
+        {
+          "label": "Att prata högt så att alla hör.",
+          "correct": false
+        },
+        {
+          "label": "Att springa snabbt över ett rum.",
+          "correct": false
+        },
+        {
+          "label": "Att vara mycket rädd för mörker.",
+          "correct": false
+        },
+        {
+          "label": "Att gömma sig utan att bry sig om ljud.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0034",
+      "phrase": "Hungrig som en varg",
+      "scene": "Efter en lång utflykt säger Alva: Nu är jag hungrig som en varg!",
+      "definition": "Att vara väldigt hungrig.",
+      "example": "Efter simträningen var jag hungrig som en varg.",
+      "reveal": [
+        {
+          "title": "En lång utflykt",
+          "text": "Alva har varit ute och rört på sig länge."
+        },
+        {
+          "title": "Dags att äta",
+          "text": "Hon längtar efter mat och använder en liknelse för att visa hur hungrig hon är."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att vara väldigt hungrig.",
+          "correct": true
+        },
+        {
+          "label": "Att vara väldigt törstig.",
+          "correct": false
+        },
+        {
+          "label": "Att vara mycket arg på någon.",
+          "correct": false
+        },
+        {
+          "label": "Att vara trött och vilja sova.",
+          "correct": false
+        },
+        {
+          "label": "Att vara mätt och inte vilja äta.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0035",
+      "phrase": "Stark som en oxe",
+      "scene": "När farfar lyfter en tung låda säger han skämtsamt att han är stark som en oxe.",
+      "definition": "Att vara mycket stark.",
+      "example": "Min moster bar den tunga säcken och var stark som en oxe.",
+      "reveal": [
+        {
+          "title": "En tung låda",
+          "text": "Lådan är svår att lyfta."
+        },
+        {
+          "title": "Farfar orkar",
+          "text": "Han jämför sin styrka med en oxe, som kan vara ett mycket starkt dragdjur."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att vara mycket stark.",
+          "correct": true
+        },
+        {
+          "label": "Att vara långsam och trött.",
+          "correct": false
+        },
+        {
+          "label": "Att vara väldigt hungrig.",
+          "correct": false
+        },
+        {
+          "label": "Att vara stor men inte särskilt stark.",
+          "correct": false
+        },
+        {
+          "label": "Att vara snabb på att springa.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0036",
+      "phrase": "Envis som en åsna",
+      "scene": "Ella vill bygga färdigt sitt torn. Trots att det rasar flera gånger fortsätter hon. Hennes bror säger att hon är envis som en åsna.",
+      "definition": "Att inte ge upp eller ändra sig så lätt.",
+      "example": "Jag var envis som en åsna och fortsatte träna tills jag kunde åka skridskor.",
+      "reveal": [
+        {
+          "title": "Tornet rasar",
+          "text": "Ella stöter på ett problem flera gånger."
+        },
+        {
+          "title": "Hon fortsätter",
+          "text": "Ella ger inte upp. Envishet kan vara bra när något är svårt, men ibland behöver man också kunna ändra sig."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att inte ge upp eller ändra sig så lätt.",
+          "correct": true
+        },
+        {
+          "label": "Att alltid ändra sig så fort någon säger något.",
+          "correct": false
+        },
+        {
+          "label": "Att vara mycket stark i armarna.",
+          "correct": false
+        },
+        {
+          "label": "Att vara trött och inte vilja försöka.",
+          "correct": false
+        },
+        {
+          "label": "Att göra allting snabbt utan att tänka.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0037",
+      "phrase": "Listig som en räv",
+      "scene": "I en saga hittar Leo på ett smart knep för att ta sig förbi en låst port. Berättaren kallar honom listig som en räv.",
+      "definition": "Att vara klurig och skicklig på att hitta smarta knep.",
+      "example": "Hon var listig som en räv när hon löste gåtan.",
+      "reveal": [
+        {
+          "title": "En låst port",
+          "text": "Leo måste hitta ett annat sätt att komma vidare."
+        },
+        {
+          "title": "Ett klurigt knep",
+          "text": "Han hittar en smart lösning. Räven är ofta listig i sagor; det betyder inte att knepet alltid är snällt."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att vara klurig och skicklig på att hitta smarta knep.",
+          "correct": true
+        },
+        {
+          "label": "Att vara mycket stark men inte tänka efter.",
+          "correct": false
+        },
+        {
+          "label": "Att vara mycket hungrig efter maten.",
+          "correct": false
+        },
+        {
+          "label": "Att vara tyst för att man har somnat.",
+          "correct": false
+        },
+        {
+          "label": "Att vara långsam och lätt att lura.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0038",
+      "phrase": "Nattuggla",
+      "scene": "På lovet sitter Robin gärna uppe och läser sent på kvällen. Mamma kallar Robin för en nattuggla.",
+      "definition": "En person som gärna är vaken sent på kvällen eller natten.",
+      "example": "Min kusin är en nattuggla och brukar läsa när resten av familjen har somnat.",
+      "reveal": [
+        {
+          "title": "Kväll hemma",
+          "text": "De andra börjar bli trötta och går och lägger sig."
+        },
+        {
+          "title": "Robin är fortfarande vaken",
+          "text": "Ugglor förknippas med natten. Därför används nattuggla som ett bildligt namn för den som gärna är uppe sent."
+        }
+      ],
+      "options": [
+        {
+          "label": "En person som gärna är vaken sent på kvällen eller natten.",
+          "correct": true
+        },
+        {
+          "label": "En person som alltid vaknar mycket tidigt.",
+          "correct": false
+        },
+        {
+          "label": "En person som är rädd för att vara ute på kvällen.",
+          "correct": false
+        },
+        {
+          "label": "En person som tycker om att titta på fåglar.",
+          "correct": false
+        },
+        {
+          "label": "En person som sover både dag och natt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0039",
+      "phrase": "Bokmal",
+      "scene": "När Noor går till biblioteket lånar hon alltid flera böcker. Kompisen säger att Noor är en riktig bokmal.",
+      "definition": "En person som tycker mycket om att läsa böcker.",
+      "example": "Min bror är en bokmal och läser så fort han får en stund över.",
+      "reveal": [
+        {
+          "title": "På biblioteket",
+          "text": "Noor hittar flera böcker som hon vill läsa."
+        },
+        {
+          "title": "Fullt av berättelser",
+          "text": "Hon läser gärna och mycket. Bokmal används bildligt om den som älskar böcker."
+        }
+      ],
+      "options": [
+        {
+          "label": "En person som tycker mycket om att läsa böcker.",
+          "correct": true
+        },
+        {
+          "label": "En person som skriver fort på ett tangentbord.",
+          "correct": false
+        },
+        {
+          "label": "En person som bara tycker om att titta på film.",
+          "correct": false
+        },
+        {
+          "label": "En person som alltid tappar bort sina böcker.",
+          "correct": false
+        },
+        {
+          "label": "En person som samlar böcker men aldrig vill läsa.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0040",
+      "phrase": "Arbetsmyra",
+      "scene": "När klassen ordnar en fest hjälper Alex till att duka, städa och bära saker. Läraren kallar Alex en arbetsmyra.",
+      "definition": "En person som arbetar flitigt och får mycket gjort.",
+      "example": "Hon är en arbetsmyra som hjälper till med många saker i föreningen.",
+      "reveal": [
+        {
+          "title": "Många saker behöver göras",
+          "text": "Klassen förbereder festen tillsammans."
+        },
+        {
+          "title": "Alex hjälper till",
+          "text": "Alex arbetar flitigt och får mycket gjort, som myror ofta beskrivs när de arbetar tillsammans."
+        }
+      ],
+      "options": [
+        {
+          "label": "En person som arbetar flitigt och får mycket gjort.",
+          "correct": true
+        },
+        {
+          "label": "En person som ofta undviker att hjälpa till.",
+          "correct": false
+        },
+        {
+          "label": "En person som alltid vill bestämma över andra.",
+          "correct": false
+        },
+        {
+          "label": "En person som är mycket hungrig.",
+          "correct": false
+        },
+        {
+          "label": "En person som arbetar snabbt men aldrig slutför något.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0041",
+      "phrase": "Pigg som en mört",
+      "scene": "Efter en god natts sömn skuttar Alva upp ur sängen. Hon säger att hon är pigg som en mört.",
+      "definition": "Att vara mycket pigg och full av energi.",
+      "example": "Efter vilan kände jag mig pigg som en mört igen.",
+      "reveal": [
+        {
+          "title": "Efter en god natts sömn",
+          "text": "Alva har vilat ordentligt."
+        },
+        {
+          "title": "Full av energi",
+          "text": "Hon känner sig redo att göra saker. Uttrycket jämför hennes pigghet med en livlig fisk."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att vara mycket pigg och full av energi.",
+          "correct": true
+        },
+        {
+          "label": "Att vara trött och vilja sova.",
+          "correct": false
+        },
+        {
+          "label": "Att vara hungrig och längta efter mat.",
+          "correct": false
+        },
+        {
+          "label": "Att vara arg på någon annan.",
+          "correct": false
+        },
+        {
+          "label": "Att vara kall och behöva en jacka.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0042",
+      "phrase": "Ana ugglor i mossen",
+      "scene": "Kim får höra två olika förklaringar till varför samma cykel är borta. Kim anar ugglor i mossen.",
+      "definition": "Att misstänka att något inte stämmer eller att något är lurt.",
+      "example": "När samma berättelse ändrades flera gånger började jag ana ugglor i mossen.",
+      "reveal": [
+        {
+          "title": "Två olika berättelser",
+          "text": "Kim märker att förklaringarna inte går ihop."
+        },
+        {
+          "title": "Något känns konstigt",
+          "text": "Kim misstänker att något inte stämmer, men vet ännu inte vad som har hänt."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att misstänka att något inte stämmer eller att något är lurt.",
+          "correct": true
+        },
+        {
+          "label": "Att vara säker på att allt är som det ska.",
+          "correct": false
+        },
+        {
+          "label": "Att se ugglor som lever i en mosse.",
+          "correct": false
+        },
+        {
+          "label": "Att vara mycket rädd för alla fåglar.",
+          "correct": false
+        },
+        {
+          "label": "Att glömma något viktigt som man har lovat.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "id": "ut-0043",
+      "phrase": "Köpa grisen i säcken",
+      "scene": "På en loppis får Sam köpa en stängd låda utan att få veta vad den innehåller. Pappa säger att det vore att köpa grisen i säcken.",
+      "definition": "Att köpa något utan att först veta vad man faktiskt får.",
+      "example": "Jag vill se att cykeln fungerar så att jag inte köper grisen i säcken.",
+      "reveal": [
+        {
+          "title": "En stängd låda",
+          "text": "Sam får inte undersöka innehållet före köpet."
+        },
+        {
+          "title": "Man vet inte vad man får",
+          "text": "Pappa använder uttrycket för att förklara risken med att köpa något utan att veta vad det är."
+        }
+      ],
+      "options": [
+        {
+          "label": "Att köpa något utan att först veta vad man faktiskt får.",
+          "correct": true
+        },
+        {
+          "label": "Att jämföra varor noga innan man handlar.",
+          "correct": false
+        },
+        {
+          "label": "Att köpa en särskilt billig vara som man har undersökt.",
+          "correct": false
+        },
+        {
+          "label": "Att bära hem en vara i en stor kasse.",
+          "correct": false
+        },
+        {
+          "label": "Att lämna tillbaka något som man redan har köpt.",
+          "correct": false
+        }
+      ],
+      "review_status": "draft"
     }
   ]
 }

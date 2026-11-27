@@ -2795,7 +2795,7 @@
     const nExpressions=pool.length-nWords;
     $('pool-info').textContent=(settings.topic==='words'?`${nWords} ord`:settings.topic==='expressions'?`${nExpressions} uttryck`:`${nWords} ord och ${nExpressions} uttryck`)+'. Ingen fråga upprepas under omgången.';
     $('topic-help').textContent=settings.topic==='expressions'
-      ? '🎭 Små vardagsberättelser och en Aha-förklaring efter svaret. Alla 31 uttryck är skrivna för cirka 8–10 år.'
+      ? '🎭 Små vardagsberättelser och en Aha-förklaring efter svaret. Uttrycken är valda för att vara användbara i vardagen, böcker och skolan.'
       : settings.topic==='mixed'
         ? '🎲 En blandning av enstaka ord och vardagsuttryck. Varje uttryck har en liten berättelse.'
         : '🔤 Enstaka ord, med möjlighet att öva i små vardagsberättelser på medel och svårt.';

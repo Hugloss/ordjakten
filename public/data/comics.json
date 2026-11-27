@@ -496,21 +496,6 @@
       ],
       "takeaway": "Öknens skepp är en metafor för kamelen. En dromedar hör också till kameldjuren."
     },
-    "ut-0029": {
-      "before": [
-        "💧",
-        "💭"
-      ],
-      "after": [
-        "👀",
-        "✨"
-      ],
-      "aha": [
-        "💡",
-        "📖"
-      ],
-      "takeaway": "Havets enhörning syftar på narvalen, som ibland har en lång tand som liknar ett sagohorn."
-    },
     "ut-0030": {
       "before": [
         "💛",
@@ -526,20 +511,183 @@
       ],
       "takeaway": "Talesättet syftar på hunden. Det betyder inte att alla måste tycka bäst om hundar."
     },
-    "ut-0031": {
+    "ut-0032": {
       "before": [
-        "🔍",
-        "💧"
+        "🎭",
+        "⏳"
       ],
       "after": [
+        "😰",
+        "💛"
+      ],
+      "aha": [
+        "💡",
+        "😊"
+      ],
+      "takeaway": "Uttrycket beskriver en pirrig känsla av nervositet eller förväntan. Inga riktiga fjärilar finns i magen."
+    },
+    "ut-0033": {
+      "before": [
+        "👀",
+        "🏠"
+      ],
+      "after": [
+        "😌"
+      ],
+      "aha": [
+        "💡",
+        "👍"
+      ],
+      "takeaway": "Tyst som en mus betyder mycket tyst, inte att någon förvandlas till en mus."
+    },
+    "ut-0034": {
+      "before": [
+        "🚲",
+        "⏳"
+      ],
+      "after": [
+        "🍳"
+      ],
+      "aha": [
+        "💡",
+        "😊"
+      ],
+      "takeaway": "Hungrig som en varg förstärker ordet hungrig. Det betyder att man gärna vill äta mycket."
+    },
+    "ut-0035": {
+      "before": [
+        "🏠",
+        "🤔"
+      ],
+      "after": [
+        "💪",
+        "✨"
+      ],
+      "aha": [
+        "💡",
+        "👍"
+      ],
+      "takeaway": "Stark som en oxe är en liknelse som betyder mycket stark. Den handlar om styrka."
+    },
+    "ut-0036": {
+      "before": [
         "🧩",
-        "💦"
+        "😣"
+      ],
+      "after": [
+        "💪",
+        "✅"
+      ],
+      "aha": [
+        "💡",
+        "👍"
+      ],
+      "takeaway": "Envis som en åsna betyder att man håller fast vid något och inte ger sig så lätt."
+    },
+    "ut-0037": {
+      "before": [
+        "🔍",
+        "🤔"
+      ],
+      "after": [
+        "💡",
+        "🧩"
+      ],
+      "aha": [
+        "✨",
+        "👍"
+      ],
+      "takeaway": "Listig som en räv betyder klurig och bra på att hitta knep. Listighet kan användas både väl och illa."
+    },
+    "ut-0038": {
+      "before": [
+        "⏰",
+        "🏠"
+      ],
+      "after": [
+        "📚",
+        "🌅"
+      ],
+      "aha": [
+        "💡",
+        "😌"
+      ],
+      "takeaway": "En nattuggla är en person som gärna är vaken sent. Det handlar inte om att man är en riktig fågel."
+    },
+    "ut-0039": {
+      "before": [
+        "🏠",
+        "📚"
+      ],
+      "after": [
+        "📖",
+        "😊"
+      ],
+      "aha": [
+        "💡",
+        "⭐"
+      ],
+      "takeaway": "En bokmal tycker mycket om att läsa. Det är ett bildligt ord för en människa."
+    },
+    "ut-0040": {
+      "before": [
+        "📋",
+        "🤝"
+      ],
+      "after": [
+        "🧹",
+        "💪"
+      ],
+      "aha": [
+        "💡",
+        "😊"
+      ],
+      "takeaway": "Arbetsmyra betyder en flitig person. Det betyder inte att man måste arbeta hela tiden; alla behöver vila."
+    },
+    "ut-0041": {
+      "before": [
+        "😴",
+        "💤"
+      ],
+      "after": [
+        "⚡",
+        "😁"
+      ],
+      "aha": [
+        "💡",
+        "👍"
+      ],
+      "takeaway": "Pigg som en mört betyder mycket pigg och energisk. En mört är en fisk."
+    },
+    "ut-0042": {
+      "before": [
+        "🚲",
+        "💬"
+      ],
+      "after": [
+        "🤔",
+        "🔍"
       ],
       "aha": [
         "💡",
         "📖"
       ],
-      "takeaway": "Bävern kallas ofta naturens ingenjör. Uttrycket är bildligt och kan även användas om andra djur."
+      "takeaway": "Ana ugglor i mossen betyder att misstänka att något är lurt. En misstanke är inte samma sak som ett bevis."
+    },
+    "ut-0043": {
+      "before": [
+        "🏪",
+        "🔍"
+      ],
+      "after": [
+        "🤔",
+        "💭"
+      ],
+      "aha": [
+        "💡",
+        "📖"
+      ],
+      "takeaway": "Köpa grisen i säcken betyder att köpa något utan att veta vad man får. Det handlar inte om att köpa en riktig gris."
     }
   }
 }

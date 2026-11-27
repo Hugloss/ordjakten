@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "31 uttryck med två redaktionellt skrivna uppdrag: välj rätt mening och sätt händelser i ordning.",
+  "description": "41 uttryck med två redaktionellt skrivna uppdrag: välj rätt mening och sätt händelser i ordning.",
   "missions": [
     {
       "id": "ut-0001",
@@ -647,29 +647,6 @@
       "hint": "Tänk på ett djur som människor länge använt för transport i torra områden."
     },
     {
-      "id": "ut-0029",
-      "sentences": [
-        {
-          "label": "Narvalen kallas ibland havets enhörning på grund av sin långa tand.",
-          "correct": true
-        },
-        {
-          "label": "Vi säger att blåvalen brukar kallas havets enhörning för att den är stor.",
-          "correct": false
-        },
-        {
-          "label": "Vi säger att sälen brukar kallas havets enhörning för att den vilar på isen.",
-          "correct": false
-        }
-      ],
-      "order": [
-        "Barnen läser en gåta om havets enhörning.",
-        "De får se en narval med en lång tand.",
-        "Guiden förklarar att tanden kan påminna om ett sagohorn."
-      ],
-      "hint": "Tänk på ett verkligt djur i Arktis, inte på en häst eller ett sagodjur."
-    },
-    {
       "id": "ut-0030",
       "sentences": [
         {
@@ -693,27 +670,280 @@
       "hint": "Tänk på ett vanligt husdjur som länge hjälpt och följt människor."
     },
     {
-      "id": "ut-0031",
+      "id": "ut-0032",
       "sentences": [
         {
-          "label": "Bävern bygger en damm i bäcken, och guiden kallar den naturens ingenjör.",
+          "label": "Innan jag skulle visa min teckning för hela klassen hade jag fjärilar i magen.",
           "correct": true
         },
         {
-          "label": "Guiden säger att gäddan byggde bäverdämmet och är naturens ingenjör här.",
+          "label": "Jag hade fjärilar i magen eftersom jag var helt lugn och inte väntade på något särskilt.",
           "correct": false
         },
         {
-          "label": "Guiden säger att rådjuret byggde bäverdämmet och är naturens ingenjör här.",
+          "label": "Jag hade fjärilar i magen betyder att jag hittade riktiga fjärilar i lunchen.",
           "correct": false
         }
       ],
       "order": [
-        "Klassen följer en bäck och ser avgnagda grenar.",
-        "De hittar en bäverdamm som håller tillbaka vatten.",
-        "Guiden förklarar varför bävern kallas naturens ingenjör."
+        "Mira får veta att hon snart ska sjunga inför klassen.",
+        "När hon väntar på sin tur börjar hon känna ett pirr.",
+        "Hon berättar att hon har fjärilar i magen inför sången."
       ],
-      "hint": "Tänk på en gnagare som bygger dammar i vattendrag."
+      "hint": "Tänk på känslan som kan komma innan man ska göra något spännande."
+    },
+    {
+      "id": "ut-0033",
+      "sentences": [
+        {
+          "label": "När lillebror sov var vi tysta som möss för att inte väcka honom.",
+          "correct": true
+        },
+        {
+          "label": "Vi skrek så högt vi kunde och var därför tysta som möss.",
+          "correct": false
+        },
+        {
+          "label": "Vi sa att tyst som en mus betyder att springa så fort som möjligt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Nils väljer ett gömställe bakom soffan.",
+        "Han hör den som letar komma närmare.",
+        "Han sitter helt tyst för att inte bli hittad."
+      ],
+      "hint": "Fundera på hur mycket ljud man gör, inte hur liten man är."
+    },
+    {
+      "id": "ut-0034",
+      "sentences": [
+        {
+          "label": "Jag glömde mellanmålet och var hungrig som en varg vid middagen.",
+          "correct": true
+        },
+        {
+          "label": "Jag var hungrig som en varg eftersom jag redan var alldeles proppmätt.",
+          "correct": false
+        },
+        {
+          "label": "Hon var hungrig som en varg betyder att hon var mycket törstig men inte hungrig.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Alva ger sig iväg på en lång utflykt.",
+        "Hon märker att det har gått länge sedan hon åt.",
+        "Vid lunchen säger hon att hon är hungrig som en varg."
+      ],
+      "hint": "Tänk på vad kroppen längtar efter när det har gått länge sedan man åt."
+    },
+    {
+      "id": "ut-0035",
+      "sentences": [
+        {
+          "label": "När hon bar den tunga kartongen sa pappa att hon var stark som en oxe.",
+          "correct": true
+        },
+        {
+          "label": "Han var stark som en oxe eftersom han var så hungrig att han ville äta.",
+          "correct": false
+        },
+        {
+          "label": "Hon sa att stark som en oxe betyder att vara snabbast i ett lopp.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Familjen behöver flytta en tung låda.",
+        "Farfar tar tag i lådan och lyfter den.",
+        "Han skämtar om att han är stark som en oxe."
+      ],
+      "hint": "Fundera på hur mycket kraft som behövs för att lyfta något tungt."
+    },
+    {
+      "id": "ut-0036",
+      "sentences": [
+        {
+          "label": "Trots flera försök som inte lyckades var hon envis som en åsna och försökte igen.",
+          "correct": true
+        },
+        {
+          "label": "Han var envis som en åsna för att han genast gav upp varje gång det blev svårt.",
+          "correct": false
+        },
+        {
+          "label": "Hon kallades envis som en åsna eftersom hon kunde springa mycket fort.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Ella börjar bygga ett högt torn.",
+        "Tornet rasar när hon lägger dit en bit.",
+        "Ella fortsätter bygga och försöker ännu en gång."
+      ],
+      "hint": "Tänk på om personen fortsätter hålla fast vid det som den har bestämt sig för."
+    },
+    {
+      "id": "ut-0037",
+      "sentences": [
+        {
+          "label": "Hon var listig som en räv och kom på ett smart sätt att öppna den låsta lådan.",
+          "correct": true
+        },
+        {
+          "label": "Han var listig som en räv för att han kunde lyfta den allra tyngsta stenen.",
+          "correct": false
+        },
+        {
+          "label": "Hon var listig som en räv när hon sov lugnt utan att lösa något problem.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Leo kommer fram till en låst port.",
+        "Han letar efter ett smart sätt att öppna den.",
+        "Han löser gåtan och kommer förbi porten."
+      ],
+      "hint": "Tänk på någon som löser ett problem med ett smart knep snarare än med kraft."
+    },
+    {
+      "id": "ut-0038",
+      "sentences": [
+        {
+          "label": "På lovet är hon en nattuggla och är gärna vaken sent på kvällen.",
+          "correct": true
+        },
+        {
+          "label": "Han är en nattuggla eftersom han alltid vill lägga sig så tidigt som möjligt.",
+          "correct": false
+        },
+        {
+          "label": "Hon är en nattuggla betyder att hon samlar på bilder av alla sorters fåglar.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Familjen har ätit middag och kvällen börjar bli sen.",
+        "De andra går och lägger sig medan Robin fortsätter läsa.",
+        "Mamma skämtar om att Robin är en nattuggla."
+      ],
+      "hint": "Fundera på vilken tid på dygnet personen helst är vaken."
+    },
+    {
+      "id": "ut-0039",
+      "sentences": [
+        {
+          "label": "Jag är en bokmal och brukar läsa ett kapitel så fort jag får tid.",
+          "correct": true
+        },
+        {
+          "label": "Hon är en bokmal för att hon aldrig öppnar någon bok utan bara tittar på tv.",
+          "correct": false
+        },
+        {
+          "label": "Han kallas bokmal eftersom han är väldigt bra på att springa snabbt.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Noor går in på biblioteket och tittar bland böckerna.",
+        "Hon lånar flera berättelser som hon gärna vill läsa.",
+        "Hemma börjar hon genast läsa en av böckerna."
+      ],
+      "hint": "Tänk på vad personen tycker om att göra med alla sina böcker."
+    },
+    {
+      "id": "ut-0040",
+      "sentences": [
+        {
+          "label": "Hon var en arbetsmyra när vi gjorde klart utställningen tillsammans.",
+          "correct": true
+        },
+        {
+          "label": "Han kallas arbetsmyra eftersom han aldrig vill göra någon av sina uppgifter.",
+          "correct": false
+        },
+        {
+          "label": "Hon kallades arbetsmyra för att hon var så hungrig före lunchen.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Klassen får flera uppgifter inför sin fest.",
+        "Alex hjälper till med dukningen och städningen.",
+        "Läraren tackar Alex för den flitiga hjälpen."
+      ],
+      "hint": "Fundera på hur gärna personen hjälper till och slutför sina uppgifter."
+    },
+    {
+      "id": "ut-0041",
+      "sentences": [
+        {
+          "label": "Efter frukosten kände jag mig pigg som en mört och ville gå ut.",
+          "correct": true
+        },
+        {
+          "label": "Han var pigg som en mört eftersom han knappt orkade hålla sig vaken.",
+          "correct": false
+        },
+        {
+          "label": "Hon sa att pigg som en mört betyder att vara mycket arg på någon.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Alva går och lägger sig när hon är trött.",
+        "Hon sover gott under hela natten.",
+        "Nästa morgon känner hon sig full av energi."
+      ],
+      "hint": "Tänk på hur mycket energi personen har efter att ha vilat."
+    },
+    {
+      "id": "ut-0042",
+      "sentences": [
+        {
+          "label": "När uppgifterna inte gick ihop började jag ana ugglor i mossen.",
+          "correct": true
+        },
+        {
+          "label": "Jag anade ugglor i mossen eftersom jag var helt säker på att allt stämde.",
+          "correct": false
+        },
+        {
+          "label": "Hon anade ugglor i mossen betyder att hon faktiskt såg fåglar vid en sjö.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Kim frågar varför cykeln inte står på sin plats.",
+        "Två personer ger helt olika förklaringar.",
+        "Kim börjar misstänka att något inte stämmer."
+      ],
+      "hint": "Tänk på om personen har märkt något konstigt, utan att veta säkert vad som hänt."
+    },
+    {
+      "id": "ut-0043",
+      "sentences": [
+        {
+          "label": "Jag vill undersöka den begagnade cykeln först så att jag inte köper grisen i säcken.",
+          "correct": true
+        },
+        {
+          "label": "Jag köpte grisen i säcken när jag hade granskat varan noga och visste precis vad jag fick.",
+          "correct": false
+        },
+        {
+          "label": "Att köpa grisen i säcken betyder att jämföra alla varor innan man väljer.",
+          "correct": false
+        }
+      ],
+      "order": [
+        "Sam hittar en stängd låda på loppisen.",
+        "Säljaren vill inte visa vad som finns i lådan.",
+        "Pappa förklarar att ett köp utan att veta innehållet är en risk."
+      ],
+      "hint": "Fundera på vad köparen får veta om varan innan den betalas."
     }
   ]
 }
