@@ -102,7 +102,8 @@
         el('span','treasure-badge-state',collected?'✓ Kartmärke samlat':world.count?'Fortsätt leta':'Börja leta'),
         el('span','treasure-badge-count',`${world.count} av ${world.total} skatter`),
         el('span','treasure-badge-count',`⭐ ${world.starCount} av ${world.total} ordstjärnor`),
-        el('span','treasure-badge-count',world.mysterySolved?'🔍 Mysteriet löst':'🔍 Mysterium kvar'));
+        el('span','treasure-badge-count',world.mysteryProofDone?'🧠 Spårbevis klart':
+          world.mysterySolved?'🔍 Platsen hittad · spårbevis kvar':'🔍 Mysterium kvar'));
       if(world.id===current)button.append(el('span','treasure-badge-current','Den här kartan'));
       row.append(button);list.append(row);
     }
@@ -188,6 +189,33 @@
     if(story.solved){
       box.append(el('p','treasure-mystery-success','✓ Mysteriet löst! Du jämförde ledtrådarna och hittade platsen.'));
       if(story.feedback)box.append(el('p','treasure-mystery-feedback',story.feedback));
+      if(story.proof){
+        const proof=el('div','treasure-proof');
+        proof.append(el('h3','','🧩 Spårdetektivens bevis'));
+        if(story.proof.done){
+          proof.append(el('p','treasure-proof-done','✓ Du hittade de två detaljer som passar platsen. Bra jämfört!'));
+        }else{
+          proof.append(el('p','','Vilka två detaljer visar varför platsen passar? Välj ett par.'));
+          const choices=el('div','treasure-proof-choices');
+          choices.setAttribute('role','group');
+          choices.setAttribute('aria-label','Vilka två detaljer passar platsen?');
+          for(const choice of story.proof.choices){
+            const tried=story.proof.wrong.includes(choice.id);
+            const button=action(el,choice.label+(tried?' – redan provat':''),'treasureMysteryProof',choice.id);
+            button.className='treasure-proof-choice'+(tried?' treasure-mystery-tried':'');
+            button.disabled=tried;
+            choices.append(button);
+          }
+          proof.append(choices);
+          if(story.proof.feedback){
+            const feedback=el('p','treasure-mystery-feedback');
+            feedback.setAttribute('role','status');
+            feedback.textContent='Nästan! '+story.proof.feedback+' Läs detaljerna och försök igen.';
+            proof.append(feedback);
+          }
+        }
+        box.append(proof);
+      }
     }else if(story.revealed<3){
       box.append(el('p','','Du har '+story.revealed+' av 3 ledtrådar. Läs nästa för att få fler spår.'));
       box.append(action(el,'Visa ledtråd '+(story.revealed+1),'treasureMysteryReveal','',null,true));

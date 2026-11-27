@@ -14,7 +14,7 @@
   const text=value=>typeof value==='string'&&value.trim().length>0&&value.length<=700;
   const placeIndex=value=>Number.isInteger(value)&&value>=0&&value<4;
   const emptyWorld=()=>({found:[],visited:[],smallFinds:[],hints:[]});
-  const freshMystery=()=>({revealed:1,attempted:[],last:null,solved:false});
+  const freshMystery=()=>({revealed:1,attempted:[],last:null,solved:false,proofWrong:[],proofDone:false,proofLast:null});
   const empty=()=>({version:1,serial:0,worlds:{},active:null});
   const indexes=value=>Array.isArray(value)?[...new Set(value.filter(placeIndex))].sort((a,b)=>a-b):[];
   const knownWorld=(content,id)=>typeof id==='string'&&object(content?.worlds)&&Object.hasOwn(content.worlds,id);
@@ -65,14 +65,34 @@
     return {worlds,errors};
   }
 
-  function safeMystery(value,target){
+  // The three answer pairs are reused from existing, individually reviewed
+  // map evidence. They are rotated per world, not always presented correct first.
+  function proofChoices(world){
+    const target=world.mystery.target;
+    const ids=[target,...world.places.filter(place=>place.index!==target).slice(0,2).map(place=>place.index)];
+    const shift=(target+world.title.length)%ids.length;
+    return [...ids.slice(shift),...ids.slice(0,shift)].map(id=>({
+      id,label:world.places[id].lookFor.join(' och ')
+    }));
+  }
+  function safeMystery(value,world){
+    const target=world.mystery.target;
     if(!object(value)||!Number.isInteger(value.revealed)||value.revealed<1||value.revealed>3||
       typeof value.solved!=='boolean')return null;
     const attempted=indexes(value.attempted).filter(index=>index!==target);
     const last=value.last===null?null:placeIndex(value.last)?value.last:-1;
     if(last===-1||(value.solved&&(value.revealed!==3||last!==target))||
       (!value.solved&&last!==null&&!attempted.includes(last)))return null;
-    return {revealed:value.revealed,attempted,last,solved:value.solved};
+    // Old saved mysteries lack proof fields. Keep their successful find intact.
+    const allowed=proofChoices(world).map(option=>option.id);
+    const proofWrong=indexes(value.proofWrong).filter(index=>index!==target&&allowed.includes(index));
+    const proofDone=value.proofDone===true;
+    const proofLast=value.proofLast===null||value.proofLast===undefined?null:
+      placeIndex(value.proofLast)?value.proofLast:-1;
+    if(proofLast===-1||(proofDone&&(!value.solved||proofLast!==target))||
+      (!proofDone&&proofLast!==null&&!proofWrong.includes(proofLast))||
+      (!value.solved&&(proofWrong.length||proofLast!==null)))return null;
+    return {revealed:value.revealed,attempted,last,solved:value.solved,proofWrong,proofDone,proofLast};
   }
   function sanitize(raw,content){
     const clean=empty();
@@ -88,7 +108,7 @@
       }
       const smallFinds=indexes(source.smallFinds).filter(index=>visited.includes(index));
       const hints=indexes(source.hints);
-      const mystery=found.length?safeMystery(source.mystery,content.worlds[id].mystery.target):null;
+      const mystery=found.length?safeMystery(source.mystery,content.worlds[id]):null;
       if(found.length||visited.length||smallFinds.length||hints.length)
         clean.worlds[id]={found,visited,smallFinds,hints,...(mystery?{mystery}:{})};
     }
@@ -154,7 +174,8 @@
         reward:active.reward?{...active.reward,...item}:null,activityKey:'treasure:'+id+':'+place.index};
     }
     const worlds=Object.values(content.worlds).map(row=>({id:row.id,title:row.title,emoji:row.emoji,
-      count:state.worlds[row.id]?.found.length||0,total:4,mysterySolved:state.worlds[row.id]?.mystery?.solved===true}));
+      count:state.worlds[row.id]?.found.length||0,total:4,mysterySolved:state.worlds[row.id]?.mystery?.solved===true,
+      mysteryProofDone:state.worlds[row.id]?.mystery?.proofDone===true}));
     const mysteryProgress=progress.mystery||freshMystery(),mysteryContent=world.mystery;
     const mysteryAvailable=progress.found.length>0;
     const mystery={available:mysteryAvailable,title:mysteryContent.title,intro:mysteryContent.intro,
@@ -163,7 +184,12 @@
       attempted:mysteryAvailable?[...mysteryProgress.attempted]:[],
       solved:mysteryAvailable&&mysteryProgress.solved,last:mysteryAvailable?mysteryProgress.last:null,
       feedback:mysteryAvailable&&mysteryProgress.last!==null?
-        (mysteryProgress.solved?mysteryContent.why:mysteryContent.wrong[mysteryProgress.last]):null};
+        (mysteryProgress.solved?mysteryContent.why:mysteryContent.wrong[mysteryProgress.last]):null,
+      proof:{done:mysteryAvailable&&mysteryProgress.proofDone,
+        wrong:mysteryAvailable?[...mysteryProgress.proofWrong]:[],
+        choices:mysteryAvailable&&mysteryProgress.solved?proofChoices(world):[],
+        feedback:mysteryAvailable&&mysteryProgress.proofLast!==null?
+          (mysteryProgress.proofDone?mysteryContent.why:mysteryContent.wrong[mysteryProgress.proofLast]):null}};
     return {id,title:world.title,emoji:world.emoji,phase:active?.stage||'map',count:progress.found.length,total:4,
       complete:progress.found.length===4,finderTotal:worlds.reduce((sum,row)=>sum+row.count,0),worlds,
       clue:cluePlace?{index:target,text:cluePlace.clue,hint:cluePlace.hint,why:cluePlace.why,
@@ -254,5 +280,19 @@
       attempted:correct?mystery.attempted:[...mystery.attempted,index].sort((a,b)=>a-b)};
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
   }
-  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint,mysteryReveal,mysteryGuess};
+  function mysteryProof(raw,worldId,index,content){
+    const state=sanitize(raw,content);
+    if(state.active||!knownWorld(content,worldId)||!placeIndex(index))return raw;
+    const progress=state.worlds[worldId]||emptyWorld();
+    if(!progress.found.length)return raw;
+    const mystery=progress.mystery||freshMystery();
+    const world=content.worlds[worldId];
+    if(!mystery.solved||mystery.proofDone||mystery.proofWrong.includes(index)||
+      !proofChoices(world).some(option=>option.id===index))return raw;
+    const correct=index===world.mystery.target;
+    const updated={...mystery,proofLast:index,proofDone:correct,
+      proofWrong:correct?mystery.proofWrong:[...mystery.proofWrong,index].sort((a,b)=>a-b)};
+    return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
+  }
+  return {ORDER,catalog,sanitize,model,visit,answer,explain,finish,back,hint,mysteryReveal,mysteryGuess,mysteryProof};
 });
