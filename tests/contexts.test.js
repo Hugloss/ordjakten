@@ -16,10 +16,10 @@ const curation=context.window.ORDJAKTEN_CURATION;
 const NOW=1800000000000;
 const WORDS=new Map(bank.words.map(w=>[w.id,w]));
 const round=(settings,cards={})=>E.generateRound(bank,curation,settings,{},()=>.44,null,null,cards,NOW,contexts);
-test('129 authored situations for 43 real words are valid and browser data matches JSON',()=>{
+test('165 authored situations for 55 real words are valid and browser data matches JSON',()=>{
   assert.deepEqual(E.validateContexts(contexts,bank,curation),[]);
-  assert.equal(contexts.wordContexts.length,43);
-  assert.equal(contexts.wordContexts.reduce((n,r)=>n+r.scenes.length,0),129);
+  assert.equal(contexts.wordContexts.length,55);
+  assert.equal(contexts.wordContexts.reduce((n,r)=>n+r.scenes.length,0),165);
   assert.equal(JSON.stringify(context.window.ORDJAKTEN_CONTEXTS),JSON.stringify(contexts));
   for(const r of contexts.wordContexts){
     assert.ok(WORDS.has(r.id));
@@ -27,7 +27,7 @@ test('129 authored situations for 43 real words are valid and browser data match
     assert.equal(new Set(r.scenes.map(s=>s.text)).size,3);
   }
 });
-test('all 129 real-world questions have four unique text answers and no answer leakage',()=>{
+test('all 165 real-world questions have four unique text answers and no answer leakage',()=>{
   for(const record of contexts.wordContexts)for(let i=0;i<3;i++){
     const q=E.makeContextQuestion(WORDS.get(record.id),bank,contexts,()=>.37,i);
     assert.equal(q.kind,'word');assert.equal(q.taskType,'context');

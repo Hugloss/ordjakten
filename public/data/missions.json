@@ -1251,19 +1251,19 @@
     },
     {
       "id": "ut-0057",
-      "prompt": "Lärarens uppgift: ”Beskriv ett äpple som ligger på bordet.” Vilket svar gör det läraren ber om?",
+      "prompt": "Lärarens uppgift: ”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” Vilket svar gör det läraren ber om?",
       "sentences": [
         {
-          "label": "”Beskriv ett äpple som ligger på bordet.” – Det är runt och rött med ett brunt skaft och ett slätt skal.",
+          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” – Det är runt och rött med ett brunt skaft och ett slätt skal.",
           "correct": true
         },
         {
-          "label": "”Beskriv ett äpple som ligger på bordet.” – Jag gillar äpplen för att de är goda.",
+          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” – Jag gillar äpplen för att de är goda.",
           "correct": false,
           "feedback": "Du berättar vad du tycker om äpplen. Läraren frågar hur just äpplet ser ut."
         },
         {
-          "label": "”Beskriv ett äpple som ligger på bordet.” – Jag tror att äpplet växer på ett träd för att få solljus.",
+          "label": "”På bordet ligger ett runt, rött äpple med brunt skaft och slätt skal. Beskriv äpplet.” – Jag tror att äpplet växer på ett träd för att få solljus.",
           "correct": false,
           "feedback": "Du försöker berätta varför äpplet växer. Här behövs i stället detaljer om hur äpplet ser ut."
         }

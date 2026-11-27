@@ -324,7 +324,7 @@ test('mystery chapters live inside the original round and unlock discoveries aft
   const html=read('index.html'),app=read('js/app.js'),worker=read('sw.js');
   for(const id of ['quest-mystery','quest-mystery-progress','quest-mystery-discovery','quest-mystery-finale','play-score-details'])
     assert.ok(html.includes('id="'+id+'"'));
-  assert.ok(worker.includes('v58-child-friendly-school-feedback'));
+  assert.ok(worker.includes('v59-word-understanding'));
   const flow=app.slice(app.indexOf('  function mysteryForRound('),app.indexOf('  function resetQuestionDrag('));
   assert.ok(!flow.includes('history.')&&!flow.includes('saveHistory(')&&!flow.includes('game.answers['));
   assert.ok(flow.includes('Object.keys(game.answers).length'));
@@ -479,4 +479,14 @@ test('school feedback presents concrete explanations, everyday connections and s
  assert.ok(app.includes('Q.schoolFeedback(q,game.selected[q.id],missions)'));
  assert.ok(app.includes("school-feedback-connection').textContent=lesson.connection"));
  assert.ok(app.includes("school-feedback-correction').textContent=lesson.correction"));
+});
+
+test('concrete word lessons are rendered only as teaching, not as an extra scored task',()=>{
+ const html=read('index.html'),app=read('js/app.js');
+ assert.ok(html.includes('id="word-teaching"'));
+ assert.ok(html.includes('id="focus-word-teaching"'));
+ assert.ok(app.includes("renderWordTeaching($('word-teaching'),E.wordFeedback(bank,q,option?.label))"));
+ assert.ok(app.includes("renderWordTeaching($('word-teaching'),null)"));
+ assert.ok(app.includes("E.wordFeedback(bank,q,game.selected[q.id])"));
+ assert.ok(app.includes("Prova med egna ord – frivilligt"));
 });

@@ -188,6 +188,7 @@
       $('explanation-definition').textContent,
       $('explanation-example').textContent];
     if(!$('context-aha').hidden)chunks.push($('context-reason').textContent);
+    if(!$('word-teaching').hidden)chunks.push(...[...$('word-teaching').querySelectorAll('h4,p')].map(node=>node.textContent));
     if(!$('school-feedback').hidden)chunks.push($('school-feedback-correction').textContent,$('school-feedback-explanation').textContent,$('school-feedback-connection').textContent,$('school-feedback-rule').textContent,$('school-feedback-answer').textContent);
     return chunks.filter(Boolean).join('. ');
   }
@@ -2682,6 +2683,7 @@
       `${q.reveal[0].title}: ${q.reveal[0].text} ${q.reveal[1].title}: ${q.reveal[1].text}`:'';
     $('focus-why').hidden=!why;
     $('focus-why').textContent=why;
+    renderWordTeaching($('focus-word-teaching'),E.wordFeedback(bank,q,option?.label));
     $('focus-next').textContent=f.index===f.questions.length-1?'🌟 Se vad jag övade':'Nästa uppgift →';
     updateFocusProgress();
     $('focus-verdict-title').setAttribute('tabindex','-1');
@@ -3260,6 +3262,7 @@
     $('question-area').hidden=false;
     $('feedback-area').hidden=true;
     $('school-feedback').hidden=true;
+    renderWordTeaching($('word-teaching'),null);
     readingCheck=null;
     $('reading-check').hidden=true;
     $('reading-launch').hidden=true;
@@ -3489,6 +3492,7 @@
       $('explanation-word').textContent=q.word;
       $('explanation-definition').textContent=q.definition;
       $('explanation-example').textContent='Exempel: '+q.example;
+      renderWordTeaching($('word-teaching'),E.wordFeedback(bank,q,option?.label));
       renderActionSolution(q);
       $('quest-animal-art').hidden=!C.renderAnimal($('quest-animal-picture'),q);
       $('context-aha').hidden=q.taskType!=='context';
@@ -3673,6 +3677,8 @@
       const def=document.createElement('p');def.textContent='Betydelse: '+q.definition;
       const example=document.createElement('p');example.textContent='Exempel: '+q.example;
       el.append(def,example);
+      const wordLesson=E.wordFeedback(bank,q,game.selected[q.id]);
+      if(wordLesson){const host=element('section','word-teaching');renderWordTeaching(host,wordLesson);el.append(host);}
       if(q.taskType==='context')el.append(element('p','context-review-why','💡 Därför passar ordet: '+q.contextWhy));
       if(q.taskType==='order')el.append(element('p','mission-done','Rätt ordning: '+q.correctOrder.join(' → ')));
       if(q.taskType==='sentence')el.append(element('p','mission-done',(q.schoolInstruction?'Exempelsvar: ':'Rätt mening: ')+q.options.find(o=>o.correct).label));
@@ -3719,6 +3725,20 @@
     if(name==='home')renderSetup();
     show(name);
   }
+  // Keep the same concrete lesson available in feedback, facit and ordsamling.
+  // The open prompt is optional, spoken or thought about; no score or stored text.
+  function renderWordTeaching(host,lesson){
+    host.replaceChildren();host.hidden=!lesson;
+    if(!lesson)return;
+    const rows=[['Tänk på ditt svar',lesson.correction],['💡 Så fungerar ordet',lesson.explanation],
+      ['🌱 Tänk på något du känner igen',lesson.familiar],['↔ När passar ordet inte?',lesson.nonExample],
+      ['💬 Prova med egna ord – frivilligt',lesson.ownPrompt]];
+    for(const [title,body] of rows){
+      if(!body)continue;
+      const part=element('div','word-teaching-part');
+      part.append(element('h4','',title),element('p','',body));host.append(part);
+    }
+  }
   function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
   function renderWordList() {
     const query=$('word-search').value.trim().toLocaleLowerCase('sv-SE');
@@ -3739,6 +3759,9 @@
       row.append(h,badge);card.append(row);
       if(item.kind==='expression')card.append(element('p','expression-scene-mini',entry.scene));
       card.append(element('p','',entry.definition),element('p','word-sample',entry.example));
+      const lesson=item.kind==='word'?E.wordTeaching(bank,entry.id):null;
+      if(lesson){const details=element('details','word-teaching-details'),host=element('div','word-teaching');
+        renderWordTeaching(host,lesson);details.append(element('summary','','💡 Så används ordet'),host);card.append(details);}
       list.append(card);
     }
     $('word-count').textContent=`Visar ${Math.min(entries.length,wordListLimit)} av ${entries.length} ord och uttryck.`;

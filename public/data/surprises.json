@@ -810,22 +810,24 @@
           "correct": false
         }
       ],
-      "explanation": "Ett äpple och en banan är båda frukter. De har olika form. När du berättar om både likheten och skillnaden har du jämfört."
+      "explanation": "Ett äpple och en banan är båda frukter. De har olika form. När du berättar om både likheten och skillnaden har du jämfört.",
+      "ahaDistractor": "”Jämför ett äpple och en banan.” – Jag tycker att bananer smakar bättre än äpplen."
     },
     {
       "id": "ut-0057",
       "prompt": "Vilket svar följer instruktionen ”beskriv”?",
       "options": [
         {
-          "label": "”Beskriv ett rum med ett fönster och tre stolar.” – Rummet är ljust, har ett stort fönster och tre blå stolar vid väggen.",
+          "label": "”Rummet är ljust och har ett stort fönster och tre blå stolar vid väggen. Beskriv rummet.” – Rummet är ljust, har ett stort fönster och tre blå stolar vid väggen.",
           "correct": true
         },
         {
-          "label": "”Beskriv ett rum med ett fönster och tre stolar.” – Jag tycker att rummet är fint eftersom jag gillar blått.",
+          "label": "”Rummet är ljust och har ett stort fönster och tre blå stolar vid väggen. Beskriv rummet.” – Jag tycker att rummet är fint eftersom jag gillar blått.",
           "correct": false
         }
       ],
-      "explanation": "Fönstret, färgen på stolarna och var de står hjälper oss att föreställa oss rummet. Det är en beskrivning."
+      "explanation": "Fönstret, färgen på stolarna och var de står hjälper oss att föreställa oss rummet. Det är en beskrivning.",
+      "ahaDistractor": "”Rummet är ljust och har ett stort fönster och tre blå stolar vid väggen. Beskriv rummet.” – Jag vill gärna vara i det här rummet på rasten."
     },
     {
       "id": "ut-0058",
@@ -840,7 +842,8 @@
           "correct": false
         }
       ],
-      "explanation": "Solljuset färdas mot marken. Din kropp står i vägen för en del av ljuset. Därför blir det mörkare bakom dig och en skugga bildas."
+      "explanation": "Solljuset färdas mot marken. Din kropp står i vägen för en del av ljuset. Därför blir det mörkare bakom dig och en skugga bildas.",
+      "ahaDistractor": "”Förklara varför en skugga bildas när du står i solen.” – Skuggan syns på marken när solen skiner. Det är allt."
     },
     {
       "id": "ut-0059",
@@ -851,11 +854,12 @@
           "correct": true
         },
         {
-          "label": "”Sammanfatta: Sam planterade ett frö, vattnade det varje dag och såg efter några dagar en liten planta.” – Sam hade en grön vattenkanna när han vattnade.",
+          "label": "”Sammanfatta: Sam planterade ett frö, vattnade det varje dag och såg efter några dagar en liten planta.” – Sam vattnade varje dag.",
           "correct": false
         }
       ],
-      "explanation": "Sam satte ett frö i jorden och vattnade det. Det började växa. En kort sammanfattning behöver bara ta med de viktiga händelserna."
+      "explanation": "Sam satte ett frö i jorden och vattnade det. Det började växa. En kort sammanfattning behöver bara ta med de viktiga händelserna.",
+      "ahaDistractor": "”Sammanfatta: Sam planterade ett frö, vattnade det varje dag och såg efter några dagar en liten planta.” – Sam gick ut och cyklade i stället för att plantera något."
     },
     {
       "id": "ut-0060",
@@ -870,7 +874,8 @@
           "correct": false
         }
       ],
-      "explanation": "En faktabok om planeter passar eftersom du behöver fakta till uppgiften. Det är anledningen till att du valde just den boken."
+      "explanation": "En faktabok om planeter passar eftersom du behöver fakta till uppgiften. Det är anledningen till att du valde just den boken.",
+      "ahaDistractor": "”Motivera varför du valde en faktabok till uppgiften om planeter.” – Jag valde faktaboken, men har ingen anledning till valet."
     },
     {
       "id": "ut-0061",
@@ -885,7 +890,8 @@
           "correct": false
         }
       ],
-      "explanation": "En bytesdag gör att gamla leksaker kan användas igen och att fler kan hitta något nytt. Det är två skäl som stödjer förslaget."
+      "explanation": "En bytesdag gör att gamla leksaker kan användas igen och att fler kan hitta något nytt. Det är två skäl som stödjer förslaget.",
+      "ahaDistractor": "”Argumentera för att klassen ska ordna en bytesdag för leksaker.” – En bytesdag betyder att man byter leksaker med andra."
     },
     {
       "id": "ut-0062",
@@ -900,7 +906,8 @@
           "correct": false
         }
       ],
-      "explanation": "En egen flaska kan användas igen och hjälper dig att dricka. Men den behöver också diskas. Du tänker vidare kring både nyttan och vad som behövs för att flaskan ska fungera bra."
+      "explanation": "En egen flaska kan användas igen och hjälper dig att dricka. Men den behöver också diskas. Du tänker vidare kring både nyttan och vad som behövs för att flaskan ska fungera bra.",
+      "ahaDistractor": "”Resonera kring att ta med egen vattenflaska.” – Jag vill ha en vattenflaska. Jag har inget mer att säga om det."
     },
     {
       "id": "ut-0063",
@@ -915,7 +922,8 @@
           "correct": false
         }
       ],
-      "explanation": "Äpple och banan är två konkreta frukter. Det var just två exempel som efterfrågades."
+      "explanation": "Äpple och banan är två konkreta frukter. Det var just två exempel som efterfrågades.",
+      "ahaDistractor": "”Ge två exempel på frukter.” – Ett äpple är en frukt."
     },
     {
       "id": "ut-0064",
@@ -930,7 +938,8 @@
           "correct": false
         }
       ],
-      "explanation": "Gruppen valde en rubrik, skrev fakta, ritade bilder och satte upp affischen. Nu kan vi följa vad de gjorde från början till slut."
+      "explanation": "Gruppen valde en rubrik, skrev fakta, ritade bilder och satte upp affischen. Nu kan vi följa vad de gjorde från början till slut.",
+      "ahaDistractor": "”Redogör för hur gruppen gjorde affischen.” – Affischen var färdig när lektionen slutade."
     },
     {
       "id": "ut-0065",
@@ -945,7 +954,8 @@
           "correct": false
         }
       ],
-      "explanation": "Fyra av fem tillfrågade elever ville leka ute. Det är de flesta i den lilla gruppen. Vi har inte frågat resten av skolan."
+      "explanation": "Fyra av fem tillfrågade elever ville leka ute. Det är de flesta i den lilla gruppen. Vi har inte frågat resten av skolan.",
+      "ahaDistractor": "”Dra en slutsats: Gruppen frågade fem elever; fyra ville leka ute.” – Det var fem elever som fick frågan, men jag säger inte vad någon svarade."
     },
     {
       "id": "ut-0066",
@@ -960,7 +970,8 @@
           "correct": false
         }
       ],
-      "explanation": "Sam suckar och säger att han inte vill fortsätta. Det tyder på att han kan ha tröttnat på leken, men vi kan inte veta säkert."
+      "explanation": "Sam suckar och säger att han inte vill fortsätta. Det tyder på att han kan ha tröttnat på leken, men vi kan inte veta säkert.",
+      "ahaDistractor": "”Tolka: Sam lägger undan leksaken, suckar och säger att han inte vill fortsätta.” – Sam lade undan leksaken och suckade. Jag säger bara vad som hände."
     },
     {
       "id": "ut-0067",
@@ -975,7 +986,8 @@
           "correct": false
         }
       ],
-      "explanation": "En cykel har två hjul. Tre cyklar har 2 + 2 + 2 hjul. Det blir sex hjul."
+      "explanation": "En cykel har två hjul. Tre cyklar har 2 + 2 + 2 hjul. Det blir sex hjul.",
+      "ahaDistractor": "”Beräkna hur många hjul tre vanliga cyklar har tillsammans.” – 3 + 2 = 5 hjul."
     },
     {
       "id": "ut-0068",
@@ -990,7 +1002,8 @@
           "correct": false
         }
       ],
-      "explanation": "En kilometer kan ta ungefär 15 minuter att gå i vanlig promenadtakt. Det är ett rimligt ungefärligt svar; tiden kan variera."
+      "explanation": "En kilometer kan ta ungefär 15 minuter att gå i vanlig promenadtakt. Det är ett rimligt ungefärligt svar; tiden kan variera.",
+      "ahaDistractor": "”Uppskatta hur många minuter en kort promenad till en butik som ligger ungefär en kilometer bort kan ta.” – Det tar säkert en hel vecka att gå en kilometer."
     },
     {
       "id": "ut-0069",
@@ -1005,7 +1018,8 @@
           "correct": false
         }
       ],
-      "explanation": "Dra en linje med varje penna och prova att sudda ut dem. Anteckna vilka som försvann. Då vet du vad som hände i stället för att gissa."
+      "explanation": "Dra en linje med varje penna och prova att sudda ut dem. Anteckna vilka som försvann. Då vet du vad som hände i stället för att gissa.",
+      "ahaDistractor": "”Undersök vilken av tre pennor som går att sudda ut.” – Pennorna har olika färger och ligger på bordet."
     }
   ]
 }

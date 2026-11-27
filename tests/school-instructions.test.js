@@ -109,3 +109,24 @@ test('content checks reject missing concrete explanations and choice-specific fe
  const invalidExpressions={...expressions,expressions:expressions.expressions.map(e=>e.id===id?{...e,schoolRule:''}:e)};
  assert.ok(E.validateExpressions(invalidExpressions).some(s=>s.includes('arbetsregel')));
 });
+
+test('school Aha choices belong to one new task, including standalone repetitions',()=>{
+ const deps={bank,contexts,surprises,missions,random:()=>.42};
+ for(const entry of school){
+   const q=E.makeExpressionQuestion(entry,'medium',()=>.42,'sentence',missions);
+   const check=B.makeCheck(q,deps);
+   const prefix=check.options[0].label.split('” – ')[0];
+   assert.equal(check.options.length,3);
+   assert.ok(check.options.every(o=>o.label.split('” – ')[0]===prefix));
+   assert.ok(check.options.every(o=>!q.options.some(p=>p.label===o.label)));
+   // The per-word Aha planner supplies only the catalogue item, not the quiz flag.
+   const bare={id:entry.id,kind:'expression',word:entry.phrase,definition:entry.definition,options:[]};
+   for(const random of [()=>.01,()=>.99]){
+     const later=B.makeCheck(bare,{...deps,random});
+     assert.equal(later.options.length,3);
+     assert.ok(later.prompt.includes('följer instruktionen'));
+     assert.equal(new Set(later.options.map(o=>o.label.split('” – ')[0])).size,1);
+     assert.equal(later.options.filter(o=>o.correct).length,1);
+   }
+ }
+});

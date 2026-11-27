@@ -29,6 +29,34 @@
     const parsed = Number(value);
     return Number.isFinite(parsed) ? Math.max(min, Math.min(max, Math.floor(parsed))) : fallback;
   }
+  const TEACHING_FIELDS=['explanation','familiar','nonExample','ownPrompt'];
+  function validTeaching(value){
+    return !!value&&typeof value==='object'&&!Array.isArray(value)&&
+      TEACHING_FIELDS.every(key=>typeof value[key]==='string'&&value[key].trim().length>=15)&&
+      new Set(TEACHING_FIELDS.map(key=>value[key].trim())).size===TEACHING_FIELDS.length;
+  }
+  function wordTeaching(bank,id){
+    const lesson=bank?.words?.find(w=>w.id===id)?.teaching;
+    return validTeaching(lesson)?Object.fromEntries(TEACHING_FIELDS.map(key=>[key,lesson[key]])):null;
+  }
+  // Only identify an alternative when its label is an unambiguous bank word
+  // or definition. Do not infer a wrong-answer meaning from pictures or actions.
+  function wordFeedback(bank,question,selectedLabel){
+    if(question?.kind!=='word')return null;
+    const lesson=wordTeaching(bank,question.id);
+    if(!lesson)return null;
+    const selected=question.options?.find(o=>o.label===selectedLabel&&o.correct===false);
+    let correction='';
+    if(selected&&!question.picture&&!question.action){
+      const byWord=['context','reverse','contrast'].includes(question.taskType);
+      const matches=bank.words.filter(w=>w.id!==question.id&&(byWord?w.word:w.definition)===selected.label);
+      if(matches.length===1){
+        const other=matches[0];
+        correction='Det valda svaret handlar om '+other.word.toLocaleLowerCase('sv-SE')+'. Det betyder: '+other.definition+' Här passar '+question.word.toLocaleLowerCase('sv-SE')+' bättre.';
+      }
+    }
+    return {...lesson,correction};
+  }
   function validateBank(bank) {
     const errors = [];
     if (!bank || !Array.isArray(bank.words)) return ['Ordbanken saknar en lista med ord.'];
@@ -39,6 +67,7 @@
       if (ids.has(entry.id)) errors.push('Dubblerat ID: ' + entry.id);
       ids.add(entry.id);
       if (!entry.word || !entry.definition || !entry.example) errors.push('Saknar innehåll: ' + entry.id);
+      if(Object.hasOwn(entry,'teaching')&&!validTeaching(entry.teaching))errors.push('Ofullständig ordförklaring: '+entry.id);
       if (words.has(String(entry.word).toLocaleLowerCase('sv-SE'))) errors.push('Dubblerat ord: ' + entry.word);
       words.add(String(entry.word).toLocaleLowerCase('sv-SE'));
       if (!['easy','medium','hard','expert'].includes(entry.difficulty)) errors.push('Ogiltig nivå: '+entry.id);
@@ -430,6 +459,6 @@
     if (outcome==='right'&&updated[id]) {updated[id]-=1;if(updated[id]===0)delete updated[id];}
     return updated;
   }
-  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,validateExpressions,validateContexts,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
+  return {VALID_COUNTS,VALID_ADVENTURES,DEFAULT_STATE,shuffle,clampInteger,validateBank,wordTeaching,wordFeedback,validateExpressions,validateContexts,getPool,getTopicPool,makeQuestion,makeReverseQuestion,makeContextQuestion,nextReviewTask,makeExpressionQuestion,
     generateRound,score,formatTime,sanitizeSettings,sanitizeHistory,applyOutcome,CAMP_STORY_LIMIT,campStoryKey,sanitizeCampStories};
 });

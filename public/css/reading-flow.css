@@ -400,3 +400,11 @@
 .school-feedback-correction{padding:8px 10px;border-radius:8px;background:var(--surface-2);font-weight:600}
 .school-everyday,.school-how{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2)}
 .school-everyday p,.school-how p{margin-bottom:0}
+
+/* Concrete vocabulary teaching, not a second scored activity. */
+.word-teaching[hidden]{display:none}
+.word-teaching{display:grid;gap:8px;margin:12px 0}
+.word-teaching-part{padding:10px 12px;border-radius:10px;background:var(--surface-2);border-left:3px solid var(--accent)}
+.word-teaching-part h4{font-size:1rem;margin:0 0 4px;line-height:1.4}
+.word-teaching-part p{font-size:1rem;white-space:normal;overflow-wrap:anywhere;line-height:1.55;margin:0}
+.word-teaching-details summary{cursor:pointer;font-weight:700;padding:8px 0}

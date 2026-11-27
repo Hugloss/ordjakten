@@ -40,7 +40,7 @@ if(JSON.stringify(clueLadder)!==JSON.stringify(browserClues))issues.push('Clues 
 issues.push(...Clues.validate(clueLadder,contrasts,bank));
 issues.push(...Contrast.validate(contrasts,bank));
 issues.push(...E.validateContexts(wordContexts,bank,curation));
-if(wordContexts.wordContexts.length!==43||wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)!==129)issues.push('Missing authored context scenes');
+if(wordContexts.wordContexts.length!==55||wordContexts.wordContexts.reduce((n,x)=>n+x.scenes.length,0)!==165)issues.push('Missing authored context scenes');
 if(JSON.stringify(comics)!==JSON.stringify(browserComics))issues.push('Comic JS/JSON diverged');
 for(const [emoji,image] of Object.entries(comics.iconPaths)) {
   const filepath=path.join(root,image.slice(2));
@@ -82,4 +82,4 @@ for(const level of ['easy','medium','hard','exam']){
  }
 }
 if(issues.length){process.stderr.write(issues.map(x=>'✗ '+x).join('\n')+'\n');process.exitCode=1;}
-else process.stdout.write('✓ 121 words + 67 expressions + 129 everyday scenes + 96 comparisons + 64 inference scenes across four pairs + 67 comics and 201 task variations validated.\n');
+else process.stdout.write('✓ 121 words + 67 expressions + 165 everyday scenes + 96 comparisons + 64 inference scenes across four pairs + 67 comics and 201 task variations validated.\n');

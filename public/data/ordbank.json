@@ -968,42 +968,66 @@
     {
       "id": "sv-0072",
       "word": "Tålmodig",
-      "definition": "Kan vänta lugnt utan att ge upp.",
-      "example": "Hon var tålmodig när kön var lång.",
+      "definition": "Kan vänta lugnt eller fortsätta försöka även när något tar tid.",
+      "example": "Leo var tålmodig när han fick knyta om skosnöret flera gånger.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Ibland tar något längre tid än du vill. Den som är tålmodig kan vänta lugnt eller försöka vidare utan att bli otålig.",
+        "familiar": "När du väntar på att en kaka ska bli färdig i ugnen låter du den gräddas klart i stället för att öppna luckan hela tiden.",
+        "nonExample": "Om du blir arg direkt och kräver att kakan ska bli klar nu visar du inte tålamod i den stunden.",
+        "ownPrompt": "När har du behövt vänta på något? Hur visade du tålamod?"
+      }
     },
     {
       "id": "sv-0073",
       "word": "Klumpig",
-      "definition": "Har svårt att röra sig smidigt.",
-      "example": "Han kände sig klumpig när han välte glaset.",
+      "definition": "Som har svårt att röra sig smidigt eller råkar stöta till saker.",
+      "example": "Jag kände mig klumpig när jag råkade välta glaset.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En rörelse kan vara klumpig om den blir osmidig och något råkar gå fel. Alla kan vara klumpiga ibland; det säger inte allt om en person.",
+        "familiar": "När du tar på dig en stor ryggsäck och råkar stöta till en stol kan det vara en klumpig rörelse.",
+        "nonExample": "Om du sänker väskan lugnt mellan stolarna utan att stöta i dem är rörelsen smidig.",
+        "ownPrompt": "Kan du visa en smidig rörelse och beskriva hur en klumpig rörelse kan se ut?"
+      }
     },
     {
       "id": "sv-0074",
       "word": "Pålitlig",
-      "definition": "Går att lita på och håller vad den lovar.",
-      "example": "En pålitlig vän håller sina löften.",
+      "definition": "Som går att lita på, till exempel någon som gör det den har lovat.",
+      "example": "En pålitlig vän säger till om ett löfte måste ändras.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Om någon ofta gör det den lovat kan du lita på personen. Man kan också säga att en sak är pålitlig om den brukar fungera som den ska.",
+        "familiar": "En klocka som brukar visa rätt tid är pålitlig. Du kan lita på att den hjälper dig att hinna i tid.",
+        "nonExample": "Om klockan ofta visar fel tid är den inte pålitlig. Du behöver kontrollera tiden på något annat sätt.",
+        "ownPrompt": "Kan du berätta vad som gör en person eller en sak pålitlig?"
+      }
     },
     {
       "id": "sv-0075",
       "word": "Misstänksam",
-      "definition": "Tror att något kanske inte står rätt till.",
-      "example": "Vakten blev misstänksam när dörren stod öppen.",
+      "definition": "Som misstänker att något kanske inte stämmer.",
+      "example": "Jag blev misstänksam när två personer berättade helt olika saker.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Du är misstänksam när du undrar om någon talar sanning eller om något inte är som det ska. Att misstänka något är inte samma sak som att veta att det är sant.",
+        "familiar": "En försäljare säger att en leksak är helt ny, fast förpackningen ser ut att vara öppnad. Du kan bli misstänksam och fråga först.",
+        "nonExample": "Om du bara undrar hur leksaken fungerar är du nyfiken. Du behöver inte misstänka att något är fel.",
+        "ownPrompt": "Vad kan du göra om du blir misstänksam mot ett meddelande?"
+      }
     },
     {
       "id": "sv-0076",
@@ -1048,22 +1072,34 @@
     {
       "id": "sv-0080",
       "word": "Sparsam",
-      "definition": "Använder inte mer än nödvändigt.",
-      "example": "Hon var sparsam med sin veckopeng.",
+      "definition": "Som inte använder mer än man behöver, till exempel pengar eller material.",
+      "example": "Mira var sparsam med färgen så att den räckte till alla bilder.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Att vara sparsam handlar om att använda lagom mycket och spara resten till senare. Det betyder inte att aldrig använda något.",
+        "familiar": "Du har en bit papper och klipper ut flera små figurer nära varandra så att inte så mycket papper går till spillo.",
+        "nonExample": "Om du tar tio papper fast du bara behöver ett använder du mer än nödvändigt.",
+        "ownPrompt": "Vad kan du vara sparsam med hemma eller i skolan?"
+      }
     },
     {
       "id": "sv-0081",
       "word": "Förvirrad",
-      "definition": "Har svårt att förstå vad som händer.",
-      "example": "Jag blev förvirrad av alla skyltarna.",
+      "definition": "Som har svårt att förstå vad som händer eller hur saker hänger ihop.",
+      "example": "Jag blev förvirrad när instruktionerna sa olika saker.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När flera saker inte går ihop i tankarna kan man känna sig förvirrad. Det kan hjälpa att fråga, läsa en sak i taget och reda ut vad som menas.",
+        "familiar": "Om kartan visar en väg och skyltarna verkar visa en annan kan du bli förvirrad över vilken väg som gäller.",
+        "nonExample": "Om instruktionen är tydlig och du vet precis vad du ska göra är du inte förvirrad.",
+        "ownPrompt": "Vad brukar hjälpa dig när du känner dig förvirrad?"
+      }
     },
     {
       "id": "sv-0082",
@@ -1098,12 +1134,18 @@
     {
       "id": "sv-0085",
       "word": "Förtjust",
-      "definition": "Tycker mycket om något och visar glädje.",
-      "example": "Hon var förtjust i sin nya cykel.",
+      "definition": "Som tycker väldigt mycket om något och blir glad av det.",
+      "example": "Sam var förtjust i sin nya cykel och ville gärna cykla igen.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Att vara förtjust betyder att något gör dig extra glad och att du tycker mycket om det. Man kan vara förtjust i en bok, en lek eller en smak.",
+        "familiar": "Du provar en ny glass och tycker så mycket om den att du gärna vill äta den igen.",
+        "nonExample": "Om glassen smakar illa och du inte vill ha mer är du inte förtjust i den.",
+        "ownPrompt": "Vad är du förtjust i just nu? Berätta varför."
+      }
     },
     {
       "id": "sv-0086",
@@ -1118,12 +1160,18 @@
     {
       "id": "sv-0087",
       "word": "Uppmärksam",
-      "definition": "Lägger noga märke till det som händer.",
-      "example": "Den uppmärksamma eleven hörde instruktionen.",
+      "definition": "Som märker det som händer och lyssnar eller tittar noga.",
+      "example": "Kim var uppmärksam och hörde att en fågel började sjunga utanför fönstret.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "När du är uppmärksam riktar du dina sinnen mot det som är viktigt. Du kan höra en ändring i instruktionen eller se något som andra missar.",
+        "familiar": "På idrotten lyssnar du på läraren och märker när det är dags att byta övning.",
+        "nonExample": "Om du tittar bort och missar att läraren berättar nästa steg är du inte uppmärksam på just den instruktionen.",
+        "ownPrompt": "Hur kan du visa att du är uppmärksam när någon berättar något?"
+      }
     },
     {
       "id": "sv-0088",
@@ -1148,52 +1196,82 @@
     {
       "id": "sv-0090",
       "word": "Brådskande",
-      "definition": "Behöver göras snabbt och kan inte vänta.",
-      "example": "Det var brådskande att ringa efter hjälp.",
+      "definition": "Som behöver göras snart och inte kan vänta.",
+      "example": "Det är brådskande att hinna till bussen som går om två minuter.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En sak är brådskande när något kan gå fel om man väntar för länge. Det handlar om tiden, inte bara om att man vill bli färdig fort.",
+        "familiar": "Du har två minuter kvar till skolbussen. Du behöver ta på dig skorna nu, annars missar du bussen.",
+        "nonExample": "En teckning som du kan måla när som helst under helgen behöver inte bli klar just nu. Den är inte brådskande.",
+        "ownPrompt": "Kan du komma på något som var brådskande för dig? Vad hade hänt om du väntat?"
+      }
     },
     {
       "id": "sv-0091",
       "word": "Svårbegriplig",
-      "definition": "Svår att förstå.",
-      "example": "Instruktionen var svårbegriplig.",
+      "definition": "Som är svår att förstå.",
+      "example": "Den svårbegripliga instruktionen fick mig att be om en enklare förklaring.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något är svårbegripligt när det är svårt att förstå vad det betyder eller hur man ska göra. Det kan bero på krångliga ord eller steg som saknas. Det betyder inte att du är dålig på att lära dig.",
+        "familiar": "Ett spel har en regel som använder många nya ord och hoppar över flera steg. Du behöver en enklare förklaring för att förstå regeln.",
+        "nonExample": "Om regeln visar ett steg i taget med tydliga ord och du förstår direkt är den lättbegriplig.",
+        "ownPrompt": "Kan du tänka på en instruktion som var svår att förstå? Hur kunde den bli tydligare?"
+      }
     },
     {
       "id": "sv-0092",
       "word": "Ovanlig",
-      "definition": "Förekommer inte så ofta.",
-      "example": "En blå hummer är en ovanlig syn.",
+      "definition": "Som man inte ser, gör eller möter så ofta.",
+      "example": "Det var en ovanlig syn att se en vit älg.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något är ovanligt om det inte händer eller finns så ofta i det sammanhanget. Det behöver inte vara omöjligt eller konstigt.",
+        "familiar": "Om det snöar mitt i sommaren där du bor kan det vara ovanligt, eftersom det sällan händer då.",
+        "nonExample": "På vintern kan snö vara vanligt där du bor. Samma snö är inte ovanlig i det sammanhanget.",
+        "ownPrompt": "Vad är vanligt på din skola? Vad skulle vara ovanligt där?"
+      }
     },
     {
       "id": "sv-0093",
       "word": "Ömtålig",
-      "definition": "Kan lätt skadas om man inte är försiktig.",
-      "example": "Den ömtåliga vasen behövde skyddas.",
+      "definition": "Som lätt kan skadas och därför behöver hanteras med omtanke.",
+      "example": "Den ömtåliga vasen behövde skydd i flyttlådan.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Något ömtåligt tål inte hårda tag eller stötar. Det kan få sprickor, märken eller gå sönder. Därför behöver du skydda det när du flyttar det.",
+        "familiar": "En tunn pepparkaka kan gå sönder om du lägger en tung bok ovanpå den. Den behöver hanteras försiktigt.",
+        "nonExample": "En mjuk gummiboll tål vanliga stötar och är inte ömtålig på samma sätt som en tunn kaka.",
+        "ownPrompt": "Vilken sak hemma skulle du packa extra noga inför en flytt? Varför?"
+      }
     },
     {
       "id": "sv-0094",
       "word": "Försiktig",
-      "definition": "Tänker på risker innan man gör något.",
-      "example": "Hon var försiktig när hon gick över isen.",
+      "definition": "Som tänker på vad som kan gå fel och gör så att risken blir mindre.",
+      "example": "Sam var försiktig när han bar en stor bricka med glas.",
       "difficulty": "medium",
       "source": "ordjakten_2_medel",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "Att vara försiktig är att tänka efter före och minska risken att någon skadas eller något går sönder. Man kan ta god tid på sig, fråga en vuxen eller välja ett säkrare sätt.",
+        "familiar": "När du bär en stor bricka med glas kan du gå långsamt och hålla brickan med båda händerna så att inget ramlar.",
+        "nonExample": "Om du springer med brickan och svänger tvärt kan glasen ramla. Då har du inte tänkt på risken.",
+        "ownPrompt": "När behöver du vara försiktig i vardagen? Vad kan du göra för att minska risken?"
+      }
     },
     {
       "id": "sv-0095",
@@ -1228,12 +1306,18 @@
     {
       "id": "sv-0098",
       "word": "Tvetydig",
-      "definition": "Som kan förstås på två olika sätt.",
-      "example": "Meddelandet var tvetydigt och kunde misstolkas.",
+      "definition": "Som kan betyda två olika saker.",
+      "example": "Meningen var tvetydig, så vi frågade vad den betydde.",
       "difficulty": "hard",
       "source": "ordjakten_2_svårt",
       "illustration": null,
-      "review_status": "draft"
+      "review_status": "draft",
+      "teaching": {
+        "explanation": "En mening är tvetydig om samma ord kan förstås på två olika sätt. Då kan två personer läsa exakt samma mening och ändå förstå olika saker.",
+        "familiar": "Om någon säger ”Jag såg en stjärna” kan det betyda att personen såg en stjärna på himlen eller en berömd person, till exempel en filmstjärna.",
+        "nonExample": "”Jag såg en stjärna på himlen” berättar tydligare vad personen såg. Då behöver du inte gissa om det var en filmstjärna.",
+        "ownPrompt": "Kan du hitta på en mening som kan betyda två olika saker, och göra den tydligare?"
+      }
     },
     {
       "id": "sv-0099",

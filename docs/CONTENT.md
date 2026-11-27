@@ -57,3 +57,6 @@ Uttryck med sammanhang ligger **inte** i `ordbank.json`. De har stabila `ut-####
 Det finns fem manuellt valda betydelsealternativ per uttryck, ett rätt. Motorn använder fyra svar i vanliga nivåer och fem i högskoleprovsutmaningen. Alla tvådelade Aha-förklaringar visas **efter** svaret i Träna och bara i facit efter Testa dig. Inga emojis används som alternativ för bildliga uttryck.
 
 Se `EXPRESSIONS.md` för innehållsformat, synkroniseringskommando, pedagogik och redaktionell granskningslista.
+
+## Pedagogisk kvalitetsstandard (pågående genomgång)
+Ordträning ska ge mer än igenkänning. Den fördjupade ordposten har frivillig `teaching` med fyra redaktionellt skrivna fält: `explanation` (enkel konkret förklaring), `familiar` (vardagsexempel), `nonExample` (när ordet inte passar), `ownPrompt` (fråga att besvara muntligt eller tänka på). Visa efter svaret, i fokusträning, facit och ordsamlingen. För kända felalternativ visas även vilket annat ord svaret handlar om. Gissa inte en förklaring för en bildetikett eller en handling. Självformulerat språk bedöms inte automatiskt och sparas inte. Den här strukturen ersätter inte verklig språkgranskning eller provspelning.

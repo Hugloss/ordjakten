@@ -41,26 +41,37 @@
     if(question.kind==='expression'){
       const challenge=surprises?.challenges?.find(x=>x.id===question.id);
       const mission=missions?.missions?.find(x=>x.id===question.id);
+      const school=question.schoolInstruction===true||typeof challenge?.ahaDistractor==='string';
       const candidates=[];
       const surpriseRight=challenge?.options?.find(x=>x.correct===true)?.label;
       const sentenceRight=mission?.sentences?.find(x=>x.correct===true)?.label;
       if(surpriseRight)candidates.push({label:surpriseRight,key:'expression:challenge',why:challenge?.explanation});
       if(sentenceRight && sentenceRight!==surpriseRight)
-        candidates.push({label:sentenceRight,key:'expression:mission',why:question.schoolInstruction?(mission?.explanation||challenge?.explanation):(mission?.hint||challenge?.explanation)});
+        candidates.push({label:sentenceRight,key:'expression:mission',why:school?(mission?.explanation||challenge?.explanation):(mission?.hint||challenge?.explanation)});
       // Aha must not repeat the correct sentence already present among the
       // main question's answer choices. Prefer a genuinely NEW authored scene.
       const shown=new Set((question.options||[]).map(option=>option.label));
       const novelHere=candidates.filter(c=>
         !shown.has(c.label)&&c.label!==question.scene&&c.label!==question.stem);
-      const eligible=novelHere.length?novelHere:candidates;
+      // School answers must answer one shared task. Never reuse the task
+      // that was already shown merely to fill a missing alternative.
+      const eligible=school?novelHere:novelHere.length?novelHere:candidates;
       const fresh=eligible.filter(c=>c.key!==lastEvidence);
       const unproved=fresh.filter(c=>!proofs.has(c.key));
       const picked=choose(unproved.length?unproved:fresh.length?fresh:eligible,random);
-      const wrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
-      wrong.push(...(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label));
-      const prompt=question.schoolInstruction?'Vilket svar följer instruktionen ”'+word+'”?':'Vilken NY situation visar uttrycket ”'+word+'”?';
-      return picked?makeChallenge(prompt,picked.label,wrong,
-        'expression',random,picked.why,picked.key):null;
+      if(!picked)return null;
+      const challengeWrong=(challenge?.options||[]).filter(x=>x.correct===false).map(x=>x.label);
+      const missionWrong=(mission?.sentences||[]).filter(x=>x.correct===false).map(x=>x.label);
+      let wrong=challengeWrong.concat(missionWrong);
+      if(school){
+        wrong=picked.key==='expression:challenge'?challengeWrong.concat(challenge?.ahaDistractor||[]):missionWrong;
+        const prefix=picked.label.split('” – ')[0]+'” – ';
+        wrong=[...new Set(wrong)].filter(label=>typeof label==='string'&&label.startsWith(prefix)&&label!==picked.label&&!shown.has(label));
+        if(wrong.length!==2)return null; // no invented or cross-task alternatives
+      }
+      const prompt=school?'Vilket svar följer instruktionen ”'+word+'”?':'Vilken NY situation visar uttrycket ”'+word+'”?';
+      return makeChallenge(prompt,picked.label,wrong,
+        'expression',random,picked.why,picked.key);
     }
     if(question.kind!=='word')return null;
     const scenes=contexts?.wordContexts||[];

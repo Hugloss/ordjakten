@@ -1010,13 +1010,13 @@
       "scenes": [
         {
           "title": "Ett meddelande",
-          "text": "På lappen står det ”Vi ses vid banken”. Ingen vet om det gäller pengarna eller bänken vid ån.",
-          "why": "Orden kan förstås på två olika sätt."
+          "text": "På lappen står det ”Vi behöver en ny mus”. Ingen vet om det handlar om ett djur eller något till datorn.",
+          "why": "Samma ord, mus, kan betyda ett djur eller en datormus. Meningen behöver mer information."
         },
         {
-          "title": "Efter idrotten",
-          "text": "Läraren säger ”ta den lätta vägen”. Barnen vet inte om hon menar kortaste vägen eller den som är minst jobbig.",
-          "why": "Uttrycket kan tolkas på mer än ett sätt."
+          "title": "På väg till pysslet",
+          "text": "På lappen står det ”Ta med en krona”. Kim vet inte om det betyder ett mynt eller en krona som man har på huvudet.",
+          "why": "Ordet krona kan betyda både ett mynt och en kungakrona. Samma mening kan förstås på två olika sätt."
         },
         {
           "title": "I ett sms",
@@ -1164,6 +1164,318 @@
           "title": "En lugn sjö",
           "text": "Sjön ser helt stilla ut från stranden men under ytan är strömmen stark.",
           "why": "Lugnet man ser stämmer inte med verkligheten."
+        }
+      ]
+    },
+    {
+      "id": "sv-0072",
+      "distractors": [
+        "sv-0071",
+        "sv-0074",
+        "sv-0076",
+        "sv-0095"
+      ],
+      "scenes": [
+        {
+          "title": "I kön",
+          "text": "Kön till rutschkanan är lång. Sam väntar lugnt tills det är hans tur.",
+          "why": "Han kan vänta utan att bli arg eller tränga sig före."
+        },
+        {
+          "title": "Ett frö",
+          "text": "Alva har sått ett frö. Hon tittar till det varje dag och låter det ta den tid det behöver för att gro.",
+          "why": "Alva accepterar att växten behöver tid och väntar lugnt."
+        },
+        {
+          "title": "En virkad mössa",
+          "text": "Mira lär sig virka med en vuxen. När en maska blir fel tar hon det lugnt och försöker på nytt.",
+          "why": "Hon blir inte stressad av att det tar tid att lära sig."
+        }
+      ]
+    },
+    {
+      "id": "sv-0073",
+      "distractors": [
+        "sv-0071",
+        "sv-0074",
+        "sv-0080",
+        "sv-0095"
+      ],
+      "scenes": [
+        {
+          "title": "Med brickan",
+          "text": "På väg till bordet svänger Kim tvärt med brickan och råkar välta en tom plastmugg.",
+          "why": "Kim gör en osmidig rörelse och råkar stöta till muggen."
+        },
+        {
+          "title": "Med vinterstövlar",
+          "text": "Lo försöker gå genom dörren i stora stövlar och råkar snubbla på tröskeln.",
+          "why": "De stora stövlarna gör rörelsen osmidig."
+        },
+        {
+          "title": "I kapprummet",
+          "text": "När Ari ska ta ner jackan från kroken råkar armen slå ner mössan bredvid.",
+          "why": "Ari råkar stöta till något medan armen rör sig."
+        }
+      ]
+    },
+    {
+      "id": "sv-0075",
+      "distractors": [
+        "sv-0072",
+        "sv-0076",
+        "sv-0079",
+        "sv-0095"
+      ],
+      "scenes": [
+        {
+          "title": "Den ändrade lappen",
+          "text": "En lapp säger först att träningen är inställd och sedan att den börjar som vanligt. Kim undrar om någon har ändrat den utan lov.",
+          "why": "De olika beskeden gör att Kim börjar tvivla på om lappen stämmer."
+        },
+        {
+          "title": "Det oväntade meddelandet",
+          "text": "Ett okänt nummer skriver att Lo har vunnit något trots att Lo inte deltagit. Lo undrar om meddelandet verkligen är äkta.",
+          "why": "Lo tror att meddelandet kanske inte är vad det verkar vara."
+        },
+        {
+          "title": "Den öppna kartongen",
+          "text": "En leksak säljs som oanvänd men kartongen är öppnad. Sam undrar om den redan har använts och frågar säljaren.",
+          "why": "Sam misstänker att uppgiften om leksaken kanske inte stämmer."
+        }
+      ]
+    },
+    {
+      "id": "sv-0080",
+      "distractors": [
+        "sv-0071",
+        "sv-0072",
+        "sv-0077",
+        "sv-0095"
+      ],
+      "scenes": [
+        {
+          "title": "Veckopengen",
+          "text": "Kim har femtio kronor. Hon köper det hon behöver för tjugo kronor och lägger undan resten till senare.",
+          "why": "Kim använder bara en del av pengarna och sparar resten."
+        },
+        {
+          "title": "Pysselbordet",
+          "text": "Ari tar lite lim i taget så att flaskan räcker till alla saker som ska limmas.",
+          "why": "Ari använder inte mer lim än vad arbetet behöver."
+        },
+        {
+          "title": "När du borstar tänderna",
+          "text": "Sam stänger kranen medan han borstar och sätter på den igen när han ska skölja.",
+          "why": "Sam använder bara vattnet när det behövs."
+        }
+      ]
+    },
+    {
+      "id": "sv-0081",
+      "distractors": [
+        "sv-0072",
+        "sv-0074",
+        "sv-0076",
+        "sv-0079"
+      ],
+      "scenes": [
+        {
+          "title": "I biblioteket",
+          "text": "Två skyltar pekar åt olika håll mot samma rum. Lo försöker förstå hur de kan stämma och vet inte vart hon ska gå.",
+          "why": "De olika skyltarna gör att Lo inte får ihop informationen."
+        },
+        {
+          "title": "Spelreglerna",
+          "text": "En kompis säger att man får dra två kort, en annan säger ett kort. Sam får inte ihop reglerna och frågar igen.",
+          "why": "Sam har svårt att förstå vad som gäller när beskeden skiljer sig åt."
+        },
+        {
+          "title": "Ny lek",
+          "text": "Alla börjar springa åt olika håll i en lek som Mira inte hört reglerna till. Hon vet inte vad hon ska göra eller varför de springer.",
+          "why": "Mira förstår inte vad som händer i leken ännu."
+        }
+      ]
+    },
+    {
+      "id": "sv-0085",
+      "distractors": [
+        "sv-0072",
+        "sv-0074",
+        "sv-0075",
+        "sv-0080"
+      ],
+      "scenes": [
+        {
+          "title": "En ny bok",
+          "text": "Noor älskar berättelsen om den lilla draken och vill läsa ett kapitel till varje kväll.",
+          "why": "Noor tycker mycket om berättelsen och den gör henne glad."
+        },
+        {
+          "title": "En ny smak",
+          "text": "Ari provar en ny sorts pannkaka, ler och säger att den vill han gärna äta igen.",
+          "why": "Ari visar att han verkligen tycker om smaken."
+        },
+        {
+          "title": "En melodi",
+          "text": "Lo hör en sång som hon tycker är härlig. Hon sjunger gärna med och vill höra den igen.",
+          "why": "Sången ger Lo mycket glädje och hon tycker om den."
+        }
+      ]
+    },
+    {
+      "id": "sv-0087",
+      "distractors": [
+        "sv-0072",
+        "sv-0076",
+        "sv-0080",
+        "sv-0095"
+      ],
+      "scenes": [
+        {
+          "title": "I klassrummet",
+          "text": "Läraren ändrar vilken sida gruppen ska läsa. Mira hör ändringen och slår upp den nya sidan.",
+          "why": "Mira lyssnar noga och lägger märke till den viktiga ändringen."
+        },
+        {
+          "title": "I trädgården",
+          "text": "Lo ser en liten ny knopp på plantan när de andra bara tittar på de stora bladen.",
+          "why": "Lo tittar noga och upptäcker en liten förändring."
+        },
+        {
+          "title": "I trafiken",
+          "text": "Sam stannar vid övergångsstället, tittar åt båda hållen och märker cyklisten som kommer.",
+          "why": "Sam lägger märke till vad som händer omkring övergångsstället."
+        }
+      ]
+    },
+    {
+      "id": "sv-0090",
+      "distractors": [
+        "sv-0072",
+        "sv-0076",
+        "sv-0080",
+        "sv-0085"
+      ],
+      "scenes": [
+        {
+          "title": "Tåget går",
+          "text": "Tåget går om en minut. Kim behöver gå direkt till rätt dörr för att hinna ombord.",
+          "why": "Om Kim väntar missar hon tåget. Saken måste göras snart."
+        },
+        {
+          "title": "En sista inlämning",
+          "text": "Läraren ska låsa klassrummet om två minuter. Noors uppgift ligger kvar där inne och måste hämtas före stängning.",
+          "why": "Uppgiften kan bli inlåst om Noor väntar för länge."
+        },
+        {
+          "title": "Vatten över bordet",
+          "text": "En vattenflaska välter och vattnet rinner mot klassens papper. Sam behöver flytta pappren innan de blir blöta.",
+          "why": "Pappren kan skadas om Sam inte flyttar dem snart."
+        }
+      ]
+    },
+    {
+      "id": "sv-0091",
+      "distractors": [
+        "sv-0074",
+        "sv-0076",
+        "sv-0084",
+        "sv-0092"
+      ],
+      "scenes": [
+        {
+          "title": "Spelbeskrivningen",
+          "text": "Regelbladet använder många ord som barnen inte känner igen och hoppar över hur spelet börjar. Ingen vet hur de ska spela.",
+          "why": "Beskrivningen saknar tydliga förklaringar och är därför svår att förstå."
+        },
+        {
+          "title": "Matteuppgiften",
+          "text": "En uppgift använder flera nya begrepp som inte förklaras. Gruppen behöver be läraren säga samma sak med enklare ord.",
+          "why": "De krångliga begreppen gör uppgiften svår att förstå."
+        },
+        {
+          "title": "Långa instruktioner",
+          "text": "Pappersmodellen ska vikas enligt en lång mening utan bilder. Kim behöver läsa flera gånger för att förstå hur vikningen går till.",
+          "why": "Instruktionen är inte tydlig för Kim och är svår att förstå."
+        }
+      ]
+    },
+    {
+      "id": "sv-0092",
+      "distractors": [
+        "sv-0021",
+        "sv-0036",
+        "sv-0043",
+        "sv-0112"
+      ],
+      "scenes": [
+        {
+          "title": "Sommarvädret",
+          "text": "Det är juli och på orten brukar det vara varmt. En morgon faller snö trots att det nästan aldrig händer där på sommaren.",
+          "why": "Snö är något man mycket sällan ser på den platsen vid den tiden."
+        },
+        {
+          "title": "Bland blommorna",
+          "text": "Alla tulpaner i rabatten brukar vara röda. I år kommer en enda gul tulpan upp, något som inte hänt de senaste åren.",
+          "why": "Den gula tulpanen förekommer sällan i just den rabatten."
+        },
+        {
+          "title": "I skogen",
+          "text": "Guiden säger att fågelarten nästan aldrig syns i trakten. I dag får gruppen se en.",
+          "why": "Fågeln är något man inte möter ofta på den platsen."
+        }
+      ]
+    },
+    {
+      "id": "sv-0093",
+      "distractors": [
+        "sv-0021",
+        "sv-0025",
+        "sv-0043",
+        "sv-0036"
+      ],
+      "scenes": [
+        {
+          "title": "En gammal bild",
+          "text": "Det tunna fotografiet kan rivas sönder om någon böjer det. Mira lägger det i en skyddande mapp.",
+          "why": "Fotografiet kan lätt skadas och behöver skydd."
+        },
+        {
+          "title": "Ett tunt skal",
+          "text": "En dekoration av tunt äggskal kan spricka om man tar för hårt i den. Den ligger i en vadderad ask.",
+          "why": "Det tunna skalet tål inte hårda tag."
+        },
+        {
+          "title": "Vid pysselbordet",
+          "text": "En nygjord pappersfigur har tunna delar som lätt går av. Läraren lägger den på en skyddad hylla.",
+          "why": "Pappersfiguren behöver skyddas eftersom den kan gå sönder lätt."
+        }
+      ]
+    },
+    {
+      "id": "sv-0094",
+      "distractors": [
+        "sv-0071",
+        "sv-0076",
+        "sv-0080",
+        "sv-0085"
+      ],
+      "scenes": [
+        {
+          "title": "På trottoaren",
+          "text": "Marken är hal efter regnet. Sam tar små steg för att inte halka.",
+          "why": "Sam tänker på risken och väljer ett sätt att gå som minskar den."
+        },
+        {
+          "title": "På lekplatsen",
+          "text": "Lo stannar innan hon går förbi gungorna och väntar tills ingen gungar framför henne.",
+          "why": "Lo tänker efter och väntar för att undvika att bli träffad."
+        },
+        {
+          "title": "Med limmet",
+          "text": "Kim läser instruktionen på limflaskan innan arbetet och ber en vuxen om hjälp när hon inte vet hur den ska användas.",
+          "why": "Kim försöker undvika att något går fel genom att läsa och fråga."
         }
       ]
     }
