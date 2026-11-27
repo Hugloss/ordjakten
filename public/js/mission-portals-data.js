@@ -78,7 +78,8 @@
           ],
           "why": "Kalaslådan har rätt text och står bredvid tårtfatet."
         }
-      ]
+      ],
+      "group": "mystery"
     },
     {
       "id": "agents",
@@ -151,7 +152,8 @@
           ],
           "why": "Både START och triangelformen finns på samma knapp."
         }
-      ]
+      ],
+      "group": "mystery"
     },
     {
       "id": "escape",
@@ -224,7 +226,8 @@
           ],
           "why": "Koden börjar med 3 och slutar med 8."
         }
-      ]
+      ],
+      "group": "mystery"
     },
     {
       "id": "pirates",
@@ -297,7 +300,8 @@
           ],
           "why": "Samma kista har både ett hjärta och ett rephandtag."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "magic",
@@ -370,7 +374,8 @@
           ],
           "why": "Rätt trollstav har månen och det blå bandet."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "dinosaurs",
@@ -443,7 +448,8 @@
           ],
           "why": "En skyddad glasmonter låter besökarna se fyndet."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "lab",
@@ -516,7 +522,8 @@
           ],
           "why": "Ordningen rött, blått, grönt följer båda ledtrådarna."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "ghost",
@@ -589,7 +596,8 @@
           ],
           "why": "Lådan är rund och har en vit stjärna på locket."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "space",
@@ -662,7 +670,8 @@
           ],
           "why": "Knappen är märkt SKICKA och har en stjärna."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "jungle",
@@ -735,7 +744,8 @@
           ],
           "why": "Huset med bokbilden och lampan är läshuset."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "heroes",
@@ -808,7 +818,8 @@
           ],
           "why": "Två vänner bär böckerna tillsammans."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "pyramid",
@@ -881,7 +892,8 @@
           ],
           "why": "Det finns både glas och en text om stjärnor."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "hotel",
@@ -954,7 +966,8 @@
           ],
           "why": "Hyllan står vid det runda fönstret och har en blomma."
         }
-      ]
+      ],
+      "group": "mystery"
     },
     {
       "id": "underwater",
@@ -1027,7 +1040,8 @@
           ],
           "why": "Pilen pekar mot den blå cirkeln på kartan."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "animal-park",
@@ -1100,7 +1114,8 @@
           ],
           "why": "Den gröna boken ligger bredvid kikaren."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "magic-exam",
@@ -1173,7 +1188,8 @@
           ],
           "why": "Bokmärket har både en sol och ordet KLAR."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "spy-school",
@@ -1246,7 +1262,8 @@
           ],
           "why": "Det gröna skåpet har en vit stjärna."
         }
-      ]
+      ],
+      "group": "mystery"
     },
     {
       "id": "space-exit",
@@ -1319,7 +1336,8 @@
           ],
           "why": "Stjärnan sitter på glaset i dörrens fönster."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "friendly-house",
@@ -1392,7 +1410,8 @@
           ],
           "why": "Inbjudan ligger i fönstret med gröna gardiner."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "crystal-case",
@@ -1465,7 +1484,8 @@
           ],
           "why": "Glaslådan har en stjärna på locket och en grön duk."
         }
-      ]
+      ],
+      "group": "mystery"
     },
     {
       "id": "ninja",
@@ -1538,7 +1558,8 @@
           ],
           "why": "Båda vännerna hjälps åt att bära böckerna tillsammans."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "circus",
@@ -1611,7 +1632,8 @@
           ],
           "why": "Biljetten har ordet FINAL och ett gult band."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "neon",
@@ -1684,7 +1706,8 @@
           ],
           "why": "Tavlan har svart ram och en gul stjärna på samma bild."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "baking",
@@ -1757,7 +1780,8 @@
           ],
           "why": "Fatet är blått och har fyra små stjärnor på kanten."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "world-postcards",
@@ -1830,7 +1854,8 @@
           ],
           "why": "På torget finns både fontänen och det stora trädet."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "blocks",
@@ -1903,7 +1928,8 @@
           ],
           "why": "Taket har triangelform och en gul flagga."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "creature-friends",
@@ -1976,7 +2002,8 @@
           ],
           "why": "Bokhyllan står bredvid den lilla lyktan."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "gold-rush",
@@ -2049,7 +2076,8 @@
           ],
           "why": "På rätt låda står GLITTER och locket har ett grönt hjärta."
         }
-      ]
+      ],
+      "group": "explore"
     },
     {
       "id": "slime-art",
@@ -2122,7 +2150,8 @@
           ],
           "why": "Bordet har gul duk och tre bilder."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "game-show",
@@ -2195,7 +2224,8 @@
           ],
           "why": "Regnbågen har två vita moln under sig."
         }
-      ]
+      ],
+      "group": "creative"
     },
     {
       "id": "knights",
@@ -2268,7 +2298,8 @@
           ],
           "why": "Den vita flaggan har ett blått hjärta."
         }
-      ]
+      ],
+      "group": "fantasy"
     },
     {
       "id": "fairy-forest",
@@ -2341,7 +2372,8 @@
           ],
           "why": "Den runda lyktan har en måne på utsidan."
         }
-      ]
+      ],
+      "group": "fantasy"
     }
   ];
   for(const story of STORIES){
