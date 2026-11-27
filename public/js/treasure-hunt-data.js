@@ -788,7 +788,7 @@
       ],
       "target": 1,
       "wrong": [
-        "Krukan får vatten, men ingen dagsljus i det mörka förrådet.",
+        "Krukan får vatten, men inget dagsljus i det mörka förrådet.",
         null,
         "Krukan får ljus, men den får inte vatten varje dag."
       ],
