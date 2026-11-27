@@ -101,6 +101,42 @@ Källan för samtliga tolv fall är `public/js/treasure-hunt-data.js`
 Kör `npm run check` före merge. Ett verkligt barnprov krävs fortfarande
 för att bedöma om barnet *förstår och förklarar* de två spåren.
 
+### Språkvård: så skriver vi barnens ledtrådar
+
+Språket ska fungera för barn omkring 8–10 år utan att bli barnsligt.
+Skriv hellre två korta meningar än en lång. Använd vardagliga ord och
+konkreta handlingar: *gå över bäcken*, *stå vid ingången*, *jorden blir
+torr*. Ett ord som *hittegods* eller *aula* kan användas när sammanhanget
+hjälper barnet att förstå det. Var konsekvent med ord för samma sak.
+
+Varje mysterium ska följa samma principer:
+
+- **Rubrik och början:** väck nyfikenhet men tala inte om rätt plats.
+  Berättelsen ska handla om samma sak i rubrik, ledtrådar och förklaring.
+- **Två spår på riktigt:** rätt alternativ måste uppfylla båda. Varje
+  felalternativ får uppfylla **bara ett** av dem. Om ett spår säger
+  *basketkorg på väggen* får felalternativet inte byta till en korg på
+  ett fristående stativ och ändå räknas som ett matchande spår.
+- **Förklaring vid fel:** skriv vad som faktiskt stämmer **och** vad
+  som inte passar, utan att säga att barnet är dåligt eller måste skynda.
+  Undvik generiska texter som bara säger *Fel svar*.
+- **Förklaring vid rätt:** visa hur de två konkreta detaljerna hänger
+  ihop. Ge barnet möjlighet att säga *därför att … och …* innan
+  exempelförklaringen visas.
+- **Sakligt korrekt:** använd inte missvisande allmänregler, till exempel
+  att alla plantor måste vattnas varje dag. Ett konkret och begripligt
+  exempel är att jorden får vatten när den blir torr.
+- **Läsbarhet och uppläsning:** alternativen ska gå att förstå utan
+  symboler eller färger. Uppläsning får bara läsa upp det som barnet har
+  valt att visa. Ett dolt facit får en egen uppläsningsknapp **inne i**
+  den öppningsbara förklaringen.
+
+Spara en enda redaktionellt granskad text per fall i
+`public/js/treasure-hunt-data.js`. Skapa inte parallella listor i vy,
+test eller dokumentation. Kontroller ska fånga tekniska fel, men faktisk
+språkförståelse och tvetydigheter måste också granskas genom högläsning
+och frivillig provspelning med barn.
+
 ### Kartmärken och nästa steg
 
 **Min skattbok** samlar de tolv kartorna med separata räknare för hittade
