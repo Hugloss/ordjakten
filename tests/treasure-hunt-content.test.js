@@ -132,6 +132,16 @@ test('all twelve new cases have independent two-clue evidence and feedback for p
   assert.equal(titles.size,12);assert.equal(intros.size,12);
 });
 
+test('mystery storytelling is consistent and avoids naming the answer in headings',()=>{
+  assert.doesNotMatch(Treasure.MYSTERIES.dinosaurs.title,/anteckning/i,
+    'the scientist finds a stone, not a lost written note');
+  assert.doesNotMatch(Treasure.MYSTERIES.unicorn.title,/bron|regnbåge/i,
+    'the title must not tell the child which place solves the mystery');
+  const garden=Treasure.TRANSFERS.garden;
+  assert.doesNotMatch([...garden.clues,...garden.choices,garden.why].join(' '),/varje dag/i,
+    'watering every day is not a universal rule for plants');
+});
+
 test('the offline browser export contains the same immutable authored content',()=>{
   const context=vm.createContext({});
   vm.runInContext(fs.readFileSync(require.resolve('../public/js/treasure-hunt-data'),'utf8'),context);
