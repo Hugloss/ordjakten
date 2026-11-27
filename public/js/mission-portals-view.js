@@ -54,11 +54,14 @@
     }
     host.append(filters);
     const shown=model.entries.filter(row=>selected==='all'||row.group===selected);
-    const chosenCount=node(doc,'p','portal-filter-count',`Visar ${shown.length} av ${model.entries.length} äventyr`);
+    const requested=Number.isInteger(options.visibleCount)?options.visibleCount:12;
+    const visible=shown.slice(0,Math.max(12,Math.min(64,requested)));
+    const chosenCount=node(doc,'p','portal-filter-count',`Visar ${visible.length} av ${shown.length} äventyr i kategorin (${model.entries.length} totalt)`);
     chosenCount.setAttribute('role','status');host.append(chosenCount);
     const grid=node(doc,'div','portal-grid');
-    for(const row of shown){
+    for(const row of visible){
       const item=button(doc,'','portalOpen',row.id);
+      item.id='portal-card-'+row.id;
       item.className='portal-card'+(row.done?' portal-card-done':'');
       const icon=node(doc,'span','portal-card-icon',row.emoji);icon.setAttribute('aria-hidden','true');
       const title=node(doc,'strong','portal-card-title',row.title);
@@ -68,6 +71,10 @@
       item.append(icon,title,body,status);grid.append(item);
     }
     host.append(grid);
+    if(visible.length<shown.length){
+      const more=button(doc,'Visa 12 fler äventyr · '+(shown.length-visible.length)+' kvar','portalMore');
+      more.id='portal-more';more.classList.add('portal-more');host.append(more);
+    }
     const info=node(doc,'p','portal-note','Det finns ingen timer eller poängjakt. Du kan be om hjälp, prova igen och fortsätta senare. Dina fynd sparas bara i den här webbläsaren.');
     host.append(info);
   }
