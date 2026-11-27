@@ -13,7 +13,7 @@
   const fresh=()=>({rev:1,step:0,solved:false,wrong:[],hint:false});
   function catalog(data){
     const stories={},ids=[],errors=[];
-    if(!Array.isArray(data?.STORIES)||data.STORIES.length!==12)
+    if(!Array.isArray(data?.STORIES)||data.STORIES.length<12||data.STORIES.length>40)
       return {stories,ids,errors:['story-count']};
     for(const row of data.STORIES){
       const id=row?.id,stages=row?.stages;
@@ -39,7 +39,7 @@
       if(!valid){errors.push(id+':stages');continue;}
       stories[id]=row;ids.push(id);
     }
-    if(ids.length!==12)errors.push('incomplete-catalog');
+    if(ids.length!==data.STORIES.length)errors.push('incomplete-catalog');
     return {stories,ids,errors};
   }
   function sanitize(raw,content){
