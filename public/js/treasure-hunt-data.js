@@ -655,7 +655,7 @@
   // These never describe unrevealed map destinations.
   const TRANSFERS={
     "forest": {
-      "title": "Vantarna i hittegodslådan",
+      "title": "Sams försvunna vantar",
       "intro": "Sam tappade sina vantar på skolan. Var ska Sam leta?",
       "clues": [
         "Här finns kläder som någon har glömt.",
@@ -715,7 +715,7 @@
       "why": "Gymnastiksalen är inomhus och har en basketkorg. Båda ledtrådarna stämmer."
     },
     "pirate": {
-      "title": "Färjan till andra sidan",
+      "title": "Miras väg över vattnet",
       "intro": "Mira ska ta sig över till andra sidan med sin cykel. Vad ska hon välja?",
       "clues": [
         "Färden går över vatten.",
@@ -815,7 +815,7 @@
       "why": "Gångbron går över vattnet och har ett räcke. Där finns båda sakerna Elsa söker."
     },
     "animals": {
-      "title": "Kattens mysiga hörna",
+      "title": "Var vilar katten?",
       "intro": "Malte letar efter platsen där katten brukar vila. Vilken hörna passar?",
       "clues": [
         "Där ligger en mjuk filt.",
