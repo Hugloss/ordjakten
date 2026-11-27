@@ -25,20 +25,30 @@ def no_overflow(page):
 def one_story(page):
     page.locator("#quick-portals").click()
     assert page.locator("#view-portals").is_visible()
-    assert page.locator(".portal-card").count()==32
-    assert page.locator(".portal-progress").inner_text().startswith("🎒 0 av 32")
+    assert page.locator(".portal-card").count()==12
+    assert page.locator("#portal-more").is_visible()
+    assert page.locator(".portal-progress").inner_text().startswith("🎒 0 av 52")
     assert page.locator(".portal-card-done").count()==0
     assert page.locator(".portal-journey").count()==0
-    # All 32 themes are still available, but categories avoid a giant
-    # unfiltered mobile list. Filters do not earn or erase discoveries.
+    # Keep 52 themes discoverable without showing 52 cards at once.
+    # Category and page-size choices never modify score or stored progress.
     page.locator('[data-portal-filter="mystery"]').click()
-    assert page.locator(".portal-card").count()==6
+    assert page.locator(".portal-card").count()==11
     assert page.locator('[data-portal-filter="mystery"]').get_attribute("aria-pressed")=="true"
-    assert "Visar 6 av 32" in page.locator(".portal-filter-count").inner_text()
+    assert "Visar 11 av 11" in page.locator(".portal-filter-count").inner_text()
+    assert page.locator("#portal-more").count()==0
     page.locator('[data-portal-filter="fantasy"]').click()
-    assert page.locator(".portal-card").count()==8
+    assert page.locator(".portal-card").count()==12
+    assert page.locator("#portal-more").is_visible()
+    page.locator("#portal-more").click()
+    assert page.locator(".portal-card").count()==13
+    assert page.locator("#portal-more").count()==0
     page.locator('[data-portal-filter="all"]').click()
-    assert page.locator(".portal-card").count()==32
+    assert page.locator(".portal-card").count()==12
+    page.locator("#portal-more").click()
+    assert page.locator(".portal-card").count()==24
+    assert page.evaluate("document.activeElement.id")=="portal-card-hotel"
+    assert "Visar 24 av 52" in page.locator(".portal-filter-count").inner_text()
     no_overflow(page)
     before=stored(page)
     page.locator('[data-portal-open="detective"]').click()
@@ -89,7 +99,20 @@ def one_story(page):
         assert after.get(key)==before.get(key),f"unrelated {key} changed"
     page.locator("[data-portal-back]").first.click()
     assert page.locator(".portal-card-done").count()==1
-    assert "1 av 32" in page.locator(".portal-progress").inner_text()
+    assert "1 av 52" in page.locator(".portal-progress").inner_text()
+    # A new adventure is available from the mystery category. Its state
+    # survives closing the adventure and reopening the browser.
+    page.locator('[data-portal-filter="mystery"]').click()
+    assert page.locator('[data-portal-open="rail-ticket"]').is_visible()
+    page.locator('[data-portal-open="rail-ticket"]').click()
+    rail=page.evaluate("""()=>window.OrdjaktenPortalsData.STORIES.find(x=>x.id==='rail-ticket')""")
+    assert rail["stages"][0]["scene"] in page.locator(".portal-story").inner_text()
+    page.locator(f'[data-portal-answer="{rail["stages"][0]["answer"]}"]').click()
+    assert rail["stages"][0]["why"] in page.locator(".portal-success").inner_text()
+    page.locator("[data-portal-next]").click()
+    assert "Del 2 av 3" in page.locator("#portal-stage-title").inner_text()
+    page.locator("[data-portal-back]").first.click()
+    assert stored(page)["discoveryPortals"]["rail-ticket"]["step"]==1
     page.locator('[data-portal-open="agents"]').click()
     agent=page.evaluate("""()=>window.OrdjaktenPortalsData.STORIES.find(x=>x.id==='agents').stages[0]""")
     page.locator(f'[data-portal-answer="{(agent["answer"]+1)%3}"]').click()
@@ -105,6 +128,10 @@ def restore(browser,viewport,saved,story):
     page.locator('[data-portal-open="detective"]').click()
     assert page.locator(".portal-finish").is_visible()
     assert story["keepsake"]["name"] in page.locator(".portal-finish").inner_text()
+    page.locator("[data-portal-back]").first.click()
+    page.locator('[data-portal-filter="mystery"]').click()
+    page.locator('[data-portal-open="rail-ticket"]').click()
+    assert "Del 2 av 3" in page.locator("#portal-stage-title").inner_text()
     page.locator("[data-portal-back]").first.click()
     page.locator('[data-portal-open="agents"]').click()
     assert page.locator('[data-portal-answer="1"]').count()==1
@@ -137,7 +164,7 @@ def run():
             page.close()
             restore(browser,viewport,snapshot,story)
         browser.close()
-    print("✓ 32 open portals, 3 playable stages, retries, hints, collectible, reload, mobile/desktop and no scoring")
+    print("✓ 52 portals, 156 stages, category paging, new-story resume, keyboard, mobile/desktop, no scoring")
 
 
 if __name__=="__main__":
