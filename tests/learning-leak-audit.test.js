@@ -91,3 +91,22 @@ test('inventory drift is reported instead of silently approving a removed file',
    x.reason==='public-bank-inventory-drift'));
  });
 });
+
+test('a new public application JS file needs explicit publication approval',()=>{
+ fixture(({root,write})=>{
+  write('data/ordbank.json','{}');
+  write('js/banks/svenska.js','module.exports={}');
+  write('js/app.js','void 0');
+  write('js/medical-question-data.js','// accidentally contains content');
+  fs.mkdirSync(path.join(root,'content'),{recursive:true});
+  fs.writeFileSync(path.join(root,'content','public-bank-allowlist.json'),
+    JSON.stringify({
+      schemaVersion:1,publicDataFiles:['ordbank.json'],
+      publicBankAdapterFiles:['svenska.js'],
+      publicAppScriptFiles:['app.js']
+    }));
+  const issues=scan(root,{requireInventory:true});
+  assert.ok(issues.some(x=>x.path==='js/medical-question-data.js'&&
+    x.reason==='unapproved-public-bank-file'));
+ });
+});
