@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="./css/confusions.css">
   <link rel="stylesheet" href="./css/clue-ladder.css">
   <link rel="stylesheet" href="./css/retention.css">
+  <link rel="stylesheet" href="./css/vardagskollen.css">
   <link rel="stylesheet" href="./css/reading-flow.css">
   <link rel="stylesheet" href="./css/guided-reading.css">
   <title>Ordjakten – hitta ordens betydelse</title>
@@ -40,8 +41,10 @@
   <script src="./data/word-contexts.js" defer></script>
   <script src="./data/contrasts.js" defer></script>
   <script src="./data/clue-ladder.js" defer></script>
+  <script src="./data/vardagskunskap.js" defer></script>
   <script src="./js/question-platform.js" defer></script>
   <script src="./js/banks/svenska.js" defer></script>
+  <script src="./js/banks/vardagskunskap.js" defer></script>
   <script src="./js/question-session.js" defer></script>
   <script src="./js/engine.js" defer></script>
   <script src="./js/playful.js" defer></script>
@@ -91,6 +94,7 @@
   <script src="./js/next-adventure.js" defer></script>
   <script src="./js/guided-reading.js" defer></script>
   <script src="./js/app.js" defer></script>
+  <script src="./js/vardagskollen.js" defer></script>
 </head>
 <body>
   <template id="quest-action-template"><svg class="quest-action-svg" viewBox="0 0 300 210" aria-hidden="true">
@@ -202,6 +206,40 @@
         </div>
 
         <section id="star-collection-home" class="panel star-collection" aria-label="Min stjärnsamling"></section>
+
+        <section id="vardagskollen" class="panel vk" aria-labelledby="vk-title">
+          <div class="section-header"><h2 id="vk-title">🌍 Vardagskollen</h2><span class="help-text">10 ämnen · 60 frågor</span></div>
+          <p>Varför slår hjärtat? Hur fungerar naturen? Vad gör man tryggt i köket?
+            Upptäck saker som är bra att kunna – i din egen takt, utan timer eller stjärnkrav.</p>
+          <div id="vk-picker">
+            <div id="vk-modes" class="vk-modes" role="group" aria-label="Hur vill du öva vardagskunskap?">
+              <button id="vk-train" class="vk-mode" type="button" aria-pressed="true">🌱 Träna · få förklaring direkt</button>
+              <button id="vk-test" class="vk-mode" type="button" aria-pressed="false">🧠 Testa · facit på slutet</button>
+            </div>
+            <p class="muted">Välj ett tema. Varje omgång har sex frågor: två lätta, två medel och två kluriga.</p>
+            <div id="vk-topics" class="vk-topics" aria-label="Välj ett vardagstema"></div>
+          </div>
+          <div id="vk-game" hidden>
+            <div class="vk-actions"><button id="vk-exit" type="button" class="secondary-button">← Byt tema</button></div>
+            <p id="vk-current-topic" class="eyebrow"></p>
+            <p id="vk-progress" class="vk-meta" role="status"></p>
+            <p id="vk-stimulus" class="vk-scene"></p>
+            <h3 id="vk-question" class="vk-question" tabindex="-1"></h3>
+            <div id="vk-choices" class="vk-choices" role="group" aria-labelledby="vk-question"></div>
+            <div id="vk-feedback" class="vk-feedback" aria-live="polite" hidden></div>
+            <button id="vk-next" type="button" class="primary-button full-button" hidden>Nästa fråga →</button>
+          </div>
+          <div id="vk-summary" hidden>
+            <h3 id="vk-summary-title" tabindex="-1"></h3>
+            <p id="vk-summary-note" role="status"></p>
+            <ol id="vk-review" class="vk-review" aria-label="Frågorna och förklaringarna"></ol>
+            <div class="vk-actions">
+              <button id="vk-again" type="button" class="primary-button">Prova temat igen</button>
+              <button id="vk-new" type="button" class="secondary-button">Välj ett annat tema →</button>
+            </div>
+          </div>
+          <p id="vk-error" class="form-error" role="alert" hidden></p>
+        </section>
 
         <section class="panel learning-home" aria-labelledby="learning-home-title">
           <div class="learning-home-intro">
