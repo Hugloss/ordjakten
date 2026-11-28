@@ -34,7 +34,8 @@
       const places=[];
       rows.forEach((row,index)=>{
         const key=id+':'+index,task=missions?.tasks?.[key],chapter=chapters[index],stop=world.stops[index];
-        if(!object(row)||!['description','clue','hint','why'].every(field=>text(row[field]))||
+        if(!object(row)||row.questionId!=='treasure-place-'+id+'-'+String(index+1).padStart(2,'0')||
+          !['description','clue','hint','why'].every(field=>text(row[field]))||
           !Array.isArray(row.lookFor)||row.lookFor.length!==2||new Set(row.lookFor).size!==2||
           row.lookFor.some(part=>!text(part)||part.length>100)||
           !task||task.key!==key||task.world!==id||task.index!==index||!text(task.target)||
@@ -52,7 +53,9 @@
       });
       if(places.length!==4)continue;
       if(!object(mystery)||!text(mystery.title)||!text(mystery.intro)||!text(mystery.why)||
-        !placeIndex(mystery.target)||!Array.isArray(mystery.clues)||mystery.clues.length!==3||
+        !placeIndex(mystery.target)||mystery.questionId!=='treasure-mystery-'+id||
+        mystery.proofQuestionId!=='treasure-proof-'+id||
+        !Array.isArray(mystery.clues)||mystery.clues.length!==3||
         mystery.clues.some(clue=>!text(clue)||clue.length>140)||
         !Array.isArray(mystery.wrong)||mystery.wrong.length!==4||
         mystery.wrong.some((answer,index)=>index===mystery.target?answer!==null:!text(answer)||answer.length>200)){
@@ -60,7 +63,7 @@
       }
       if(!object(transfer)||!text(transfer.title)||transfer.title.length>80||
         !text(transfer.intro)||transfer.intro.length>180||!text(transfer.why)||transfer.why.length>200||
-        !transferIndex(transfer.target)||
+        !transferIndex(transfer.target)||transfer.questionId!=='treasure-transfer-'+id||
         !Array.isArray(transfer.clues)||transfer.clues.length!==2||
         transfer.clues.some(clue=>!text(clue)||clue.length<20||clue.length>140)||
         !Array.isArray(transfer.choices)||transfer.choices.length!==3||
@@ -345,7 +348,7 @@
       !proofChoices(world).some(option=>option.id===index))return raw;
     const proof=proofChoices(world).find(option=>option.id===index);
     const verdict=assess===null?index===world.mystery.target:
-      assess('treasure-proof-'+worldId,proof.label);
+      assess(world.mystery.proofQuestionId,proof.label);
     if(![true,false,'correct','incorrect'].includes(verdict))
       throw new Error('Invalid treasure proof assessment: '+worldId);
     const correct=verdict===true||verdict==='correct';

@@ -69,7 +69,9 @@
         source:'public/js/treasure-hunt-data.js',storyId:world});
       // The proof exercise has a distinct assessment: select a pair of features.
       const proofTargets=[mystery.target,...places.map((_,i)=>i).filter(i=>i!==mystery.target).slice(0,2)];
-      question({id:'treasure-proof-'+world,kind:'proofs',skill:'justify-two-clues',
+      assert(mystery.proofQuestionId==='treasure-proof-'+world,
+        'Missing stable mystery proof ID: '+world);
+      question({id:mystery.proofQuestionId,kind:'proofs',skill:'justify-two-clues',
         prompt:'Vilka två spår visar den rätta platsen?',stimulus:mystery.clues.join('\n'),
         labels:proofTargets.map(i=>places[i].lookFor.join(' och ')),correctIndex:0,
         why:mystery.why,source:'public/js/treasure-hunt-data.js',storyId:world});

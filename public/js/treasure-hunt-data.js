@@ -496,6 +496,7 @@
   const MYSTERIES={
     "forest": {
       "questionId": "treasure-mystery-forest",
+      "proofQuestionId": "treasure-proof-forest",
       "title": "Ugglans försvunna bok",
       "intro": "Ugglan hittar inte sin bok. Var kan den vara?",
       "target": 2,
@@ -514,6 +515,7 @@
     },
     "space": {
       "questionId": "treasure-mystery-space",
+      "proofQuestionId": "treasure-proof-space",
       "title": "Robotens försvunna låda",
       "intro": "Roboten har tappat bort en låda som behövs på resan. Var finns den?",
       "target": 0,
@@ -532,6 +534,7 @@
     },
     "castle": {
       "questionId": "treasure-mystery-castle",
+      "proofQuestionId": "treasure-proof-castle",
       "title": "Den försvunna glittrande stenen",
       "intro": "En liten sten har försvunnit ur skattkammaren. Var kan den ligga?",
       "target": 3,
@@ -550,6 +553,7 @@
     },
     "pirate": {
       "questionId": "treasure-mystery-pirate",
+      "proofQuestionId": "treasure-proof-pirate",
       "title": "Flaskposten som försvann",
       "intro": "Kaptenen väntar på ett brev i en flaska. Var ligger flaskan?",
       "target": 2,
@@ -568,6 +572,7 @@
     },
     "ocean": {
       "questionId": "treasure-mystery-ocean",
+      "proofQuestionId": "treasure-proof-ocean",
       "title": "Den borttappade snäckan",
       "intro": "En vän har tappat bort en vacker snäcka. Var letar ni?",
       "target": 0,
@@ -586,6 +591,7 @@
     },
     "dinosaurs": {
       "questionId": "treasure-mystery-dinosaurs",
+      "proofQuestionId": "treasure-proof-dinosaurs",
       "title": "Forskarens märkliga fynd",
       "intro": "En forskare såg något märkligt men har glömt var. Kan du hitta platsen?",
       "target": 1,
@@ -604,6 +610,7 @@
     },
     "garden": {
       "questionId": "treasure-mystery-garden",
+      "proofQuestionId": "treasure-proof-garden",
       "title": "Påsen med hemliga frön",
       "intro": "Trädgårdsmästaren saknar en påse frön. Var kan den ligga?",
       "target": 0,
@@ -622,6 +629,7 @@
     },
     "unicorn": {
       "questionId": "treasure-mystery-unicorn",
+      "proofQuestionId": "treasure-proof-unicorn",
       "title": "Det försvunna halsbandet",
       "intro": "En vän har tappat sitt halsband på vägen. Var kan det ha hänt?",
       "target": 1,
@@ -640,6 +648,7 @@
     },
     "animals": {
       "questionId": "treasure-mystery-animals",
+      "proofQuestionId": "treasure-proof-animals",
       "title": "Kaninens försvunna morot",
       "intro": "Kaninen har tappat bort sin morot. Var kan den ha blivit kvar?",
       "target": 2,
@@ -658,6 +667,7 @@
     },
     "rainbow": {
       "questionId": "treasure-mystery-rainbow",
+      "proofQuestionId": "treasure-proof-rainbow",
       "title": "Den saknade penseln",
       "intro": "En målare kan inte hitta sin pensel. Var kan den vara?",
       "target": 1,
@@ -676,6 +686,7 @@
     },
     "horses": {
       "questionId": "treasure-mystery-horses",
+      "proofQuestionId": "treasure-proof-horses",
       "title": "Den försvunna rosetten",
       "intro": "Efter en tävling saknar någon en rosett. Var hänger den?",
       "target": 3,
@@ -694,6 +705,7 @@
     },
     "music": {
       "questionId": "treasure-mystery-music",
+      "proofQuestionId": "treasure-proof-music",
       "title": "Den borttappade mikrofonen",
       "intro": "En grupp ska uppträda men hittar inte sin mikrofon. Var finns den?",
       "target": 3,

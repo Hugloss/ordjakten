@@ -17,6 +17,7 @@ test('48 world missions and 48 treasure clues plus 24 mystery tasks carry stable
       add(place.questionId);
     }
     assert.equal(Treasure.MYSTERIES[world].questionId,'treasure-mystery-'+world);
+    assert.equal(Treasure.MYSTERIES[world].proofQuestionId,'treasure-proof-'+world);
     assert.equal(Treasure.TRANSFERS[world].questionId,'treasure-transfer-'+world);
     add(Treasure.MYSTERIES[world].questionId);
     add(Treasure.TRANSFERS[world].questionId);
