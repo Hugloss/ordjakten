@@ -266,6 +266,47 @@ Denna del är **implementerad**, till skillnad från de fortsatta målkontrakten
 
 **Kvar att migrera:** ordfrågor (121 ord och 363 scener), bonusuppgifter och andra svenska träningsformer, Upptäckarklubbens steg/Skattkartans ledtrådar, fullständig frågeinstanspersistens och fortsatt redaktionell kvalitetsgranskning. SQLite-indexet är ett banklokalt **härlett index**, inte redaktionell databas. Den nya `QuestionSession` används i detta skede som ett verifierat separat kontrakt, **inte** som ersättare för alla den gamla appens omgångar.
 
+## Implementerat i PR #33: samlat frågeregister inom svenskbanken
+
+**Svenska är fortsatt en enda ämnesbank, skild från \`vardagskunskap\` och framtida matematik/kemi.** \`public/js/banks/svenska-catalog.js\` sammansätter befintliga, skrivna källor till ett enda **läsbart och sökbart register** med \`{bankId:'svenska',id,revision}\`. Samma frågetext finns fortfarande bara hos **en redaktionell ägare**; registret och bankens SQLite-index är härledda projektioner, inte alternativa originalfiler.
+
+| Redan skrivna svenska uppgifter | Frågor med egna ID:n |
+| --- | ---: |
+| Uttryck: betydelse, meningsval, ordningsföljd och sammanhang | 237 |
+| Ord: betydelse och omvänt ordval | 242 |
+| Ord i 363 vardagsscener | 363 |
+| Kuraterade bildfrågor | 30 |
+| Jämförelser och ledtrådsnivåer | 160 |
+| Uttryckens bonusfrågor och ordhandlingar | 96 |
+| Världsuppdragens ordfrågor | 48 |
+| Upptäckarklubben, 52 berättelser × tre steg | 156 |
+| Skattkartans plats-, mysterium-, bevis- och överföringsfrågor | 84 |
+| **Summa svenska** | **1 416** |
+
+Den separata banken \`vardagskunskap\` äger **60** egna frågor och använder samma spelkontrakt. Inget av detta ger matematik eller kemi en delad kunskapsbank.
+
+**Beständiga ID:n i originalkällorna:** \`context-sv-0001-01\` är nu en sparad scenidentitet i \`word-contexts.json\`; \`portal-detective-01\` är ett skrivet berättelsesteg i \`mission-portals-data.js\`; \`world-mission-forest-01\`, \`treasure-place-forest-01\`, \`treasure-mystery-forest\`, \`treasure-proof-forest\` och \`treasure-transfer-forest\` har egna referenser. Samtliga bevarar äldre spel- och progressions-ID:n via explicita koncept-/källreferenser.
+
+**Dynamiska instanser är inte ytterligare redigerbara original.** För vanliga ordfrågor kan motorn fortfarande välja olika felsvar från kuraterade ord. Frågans **mall** har stabilt ID, medan det enskilda försöket behöver låsa valt alternativurval och ordning separat innan fullständig sessionsåterhämtning. Vi får inte skriva varje slumpad variant till en ny manuell frågefil eller låtsas att rättningskontraktet redan representerar alla varianter. Det gäller också dynamiskt genererade Aha-övningar, begreppskartor och fördjupningsuppgifter, som behöver en separat inventering av mallar/instanser innan den äldre logiken ersätts.
+
+**Spelformernas övergång:** Den befintliga \`app.js\` använder nu registret vid svarsrättning för uttryck, skrivna ordscener, kuraterade bildfrågor och handlingar, portaler, världsuppdrag samt Skattkartans ord-, plats- och mysterifrågor. Spelets **regler, belöningar och gamla webbläsarhistorik** ligger kvar hos respektive spelform. Den gamla \`engine.js\` importerar ingen svensk bank och genererade flervalsinstanser fortsätter följa den gamla logiken tills ett neutralt instanskontrakt är klart.
+
+**Sök och kontrollera:**
+
+\`\`\`sh
+node scripts/export-question-catalog.js --bank svenska
+node scripts/export-question-catalog.js --bank svenska --search "grumlig"
+node scripts/export-question-catalog.js --bank svenska --id "portal-detective-01"
+node scripts/export-question-catalog.js --bank vardagskunskap --search "vatten"
+python3 content/banks/svenska/build_index.py --check
+python3 content/banks/svenska/build_index.py --search "för en gångs skull"
+npm run check
+\`\`\`
+
+SQLite är ett **genererat, banklokalt relationsindex** med källfil, fråge-ID, begrepp, färdigheter och svarsalternativ. CI jämför det med den sammansatta Node-katalogen och kontrollerar referenser och unika ID:n. Git och de ursprungliga redaktionella källorna äger innehållet. **En central kunskapsbank eller en gemensam SQL-databas mellan ämnen införs inte.**
+
+**Begränsning som kvarstår:** Frågorna är logiskt samlade genom ett register, men vissa *kanoniska redaktionella källor* ligger fortfarande i äldre \`public/js/\`-moduler för portal- och skattkartsspel. Att senare flytta dessa original till \`content/banks/svenska/\` och generera kompatibla spelfiler kräver en egen paritetsverifierad migration. Det är inte samma sak som att ha två redigerbara kopior, och vi gör ingen riskabel massflytt i denna PR.
+
 ## Första migrationspilot – konkreta acceptanskriterier
 
 **Rekommenderat innehåll:** använd ett redan redaktionellt skrivet flervalsobjekt från `expressions.json`, exempelvis uttrycket `ut-0001` med dess fasta alternativ. Skapa vid implementation en **enda kanonisk fråga** med eget ID och en läsadapter för befintlig datakälla. Verifiera återanvändning i Träna och Testa. Prova därefter en **referens** från en separat äventyrsscen (utan att skriva över en existerande portalfråga eller dess manus). Inga nya frågor dupliceras för att göra pilotfallet möjligt.

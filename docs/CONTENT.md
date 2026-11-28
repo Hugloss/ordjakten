@@ -1,6 +1,6 @@
 # Ord- och frågekvalitet
 
-Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. Målarkitekturen för **separata ämnesbanker** som delar spelgränssnitt finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den första svenska frågeadaptern implementeras i PR #30, men innehållets flytt till nya format är ännu inte genomförd; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
+Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. PR #33 exponerar nu alla inventerade skrivna svenska frågor via ett banklokalt register med 1 416 beständiga fråge-ID:n; se [ARCHITECTURE.md](ARCHITECTURE.md) för inventering, sökning och avgränsningen mellan författade frågor och dynamiska försöksinstanser. Målarkitekturen för **separata ämnesbanker** som delar spelgränssnitt finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den första svenska frågeadaptern implementeras i PR #30, men innehållets flytt till nya format är ännu inte genomförd; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
 
 ## Kanonisk ordbank
 

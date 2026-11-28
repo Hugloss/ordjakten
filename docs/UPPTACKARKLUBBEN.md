@@ -170,6 +170,9 @@ Valet av kategori och visningsantal lagras **inte** som ett barnresultat.
 
 Nedan beskrivs **nuvarande implementation efter PR #28**. Den långsiktiga planen är att skilja berättelsesteg och belöningar från generella frågeobjekt med stabila ID:n, enligt [målarkitekturen](ARCHITECTURE.md). Detta avsnitt ska inte tolkas som en andra, framtida innehållsmodell.
 
+De 156 uppdragen har numera beständiga `portal-<äventyr>-<steg>`-ID:n.
+Svenskbankens gemensamma frågeregister läser innehållet härifrån och
+använder samma facit som spelet utan en extra redigerbar kopia.
 Kanoniskt innehåll finns **bara** i
 `public/js/mission-portals-data.js`: 52 berättelser, 156 uppdrag.
 `mission-portals.js` validerar innehåll och all sparad progression,
