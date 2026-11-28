@@ -367,3 +367,62 @@ test('client cannot send the private canonical ID directly to infer the answer',
  assert.equal((await f.answer(s.sessionId,q.question.instanceId))
    .feedback.status,'correct');
 });
+
+test('ordering questions use opaque choices and are graded in the original semantic order',async()=>{
+ let serverTime=1000000,gradedAnswer;
+ const bank={
+  async plan(){return [{bankId:'logic',id:'order-1',revision:1}]},
+  async present(){return {
+   prompt:'Sort three steps into order',
+   responseSpec:{kind:'ordering',options:[
+    {id:'step-one',label:'First'},
+    {id:'step-two',label:'Second'},
+    {id:'step-three',label:'Third'}
+   ]},correctOrder:['step-one','step-two','step-three']
+  }},
+  async grade({answer}){
+   gradedAnswer=answer;
+   return {status:JSON.stringify(answer)===
+    JSON.stringify(['step-one','step-two','step-three'])?'correct':'incorrect'};
+  }
+ };
+ const gate=Delivery.createProtectedDelivery({
+  authenticate:async()=>({tenantId:'synthetic',subjectId:'learner'}),
+  bank,store:Delivery.createInMemoryStore(),now:()=>serverTime,
+  allowInMemoryForTests:true
+ });
+ const s=await gate.createSession({context:{},bankId:'logic',requestedCount:1});
+ const issued=await gate.nextQuestion({context:{},sessionId:s.sessionId});
+ assert.equal(issued.question.responseSpec.options.every(x=>
+  x.id.startsWith('choice-')),true);
+ const ordered=['First','Second','Third'].map(label=>
+  issued.question.responseSpec.options.find(x=>x.label===label).id);
+ const recorded=await gate.submitAnswer({context:{},sessionId:s.sessionId,
+  instanceId:issued.question.instanceId,response:ordered});
+ assert.equal(recorded.feedback.status,'correct');
+ assert.deepEqual(gradedAnswer,['step-one','step-two','step-three']);
+});
+test('numeric answers remain numeric and protected images never expose source asset IDs',async()=>{
+ let received;
+ const bank={
+  async plan(){return [{bankId:'math',id:'problem-1',revision:1}]},
+  async present(){return {
+   prompt:'What is six times seven?',responseSpec:{kind:'numeric'},
+   media:[{id:'private-asset-src',type:'image',
+    url:'/api/learning/media/'+'Q'.repeat(40),alt:'Simple diagram'}]
+  }},
+  async grade({answer}){received=answer;return {status:answer===42?'correct':'incorrect'}}
+ };
+ const gate=Delivery.createProtectedDelivery({
+  authenticate:async()=>({tenantId:'synthetic',subjectId:'learner'}),
+  bank,store:Delivery.createInMemoryStore(),allowInMemoryForTests:true
+ });
+ const s=await gate.createSession({context:{},bankId:'math',requestedCount:1});
+ const issued=await gate.nextQuestion({context:{},sessionId:s.sessionId});
+ assert.equal(issued.question.media[0].id,'image-1');
+ assert.equal(JSON.stringify(issued).includes('private-asset-src'),false);
+ const res=await gate.submitAnswer({context:{},sessionId:s.sessionId,
+  instanceId:issued.question.instanceId,response:42});
+ assert.equal(res.feedback.status,'correct');
+ assert.equal(received,42);
+});
