@@ -2,6 +2,63 @@
 
 **Status: federerad målarkitektur; en första svensk bankadapter och ett gemensamt spel-/bedömningskontrakt implementeras i PR #30. Övrig migrering återstår.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
 
+## Learning Engine v1 – stringnivåer, evidens och granskningsbar bedömning
+
+**Implementerat i bankneutrala runtime-modulerna** \`public/js/assessment-v1.js\`,
+\`public/js/question-platform.js\` och \`public/js/question-session.js\`. Inspirerat av
+EvalShots ordnade ordnivåer, strikt utfallsseparation och *unknown-is-not-zero*;
+detta är en egen pedagogisk modell, **inte EvalShots exakta betygsskala**.
+
+1. **Definitionen ägs av banken.** Befintliga \`assessmentSpec.kind\` och
+   facitregler fungerar fortsatt. Framtida frågor kan deklarera stabilt
+   \`policyId\`, \`policyRevision\` samt
+   \`rubric: {id,revision,criteria:[{id,description,required?}]}\`.
+   \`rubric\` kräver en uttryckligen rubric-kapabel bedömare; ingen tyst fallback.
+   För äldre frågor härleds en stabil policyreferens från bankens frågereferens.
+2. **Utfallet är inte betyget.** \`outcome\` har \`completed\`, \`invalid\`,
+   \`incomplete\`, \`ungraded\` och \`needs-review\`.
+   \`evaluation.level\` har ordnade, människoläsbara strängar:
+   \`incorrect < limited < partial < correct < excellent\`.
+   Nivån är **null** vid icke bedömda utfall – aldrig 0 eller \`incorrect\`.
+   För att bevara gammal kod finns \`status\` och \`registry.assess()\` kvar.
+   \`registry.assessDetailed()\` ger ett komplett \`learning-assessment.v1\`-resultat.
+3. **Rubrikkriterierna är separata.** Alla deklarerade kriterier måste finnas
+   exakt en gång i en fullföljd rubric-bedömning. Obligatoriska kriterier med
+   nivå under \`correct\` blockerar ett sammanlagt \`correct/excellent\`.
+   Kriterier och nivåer är maskinvaliderade, men deras medicinska/ämnesmässiga
+   korrekthet måste granskas av ansvarig ämnesexpert.
+4. **Bedömare är utbytbara, inte självauktoriserande.** Deterministiska
+   flervals-, numeriska och ordningsbedömare finns. Nya typer ansluts genom
+   \`registerEvaluator\` och måste returnera godkända strängnivåer, entydig
+   rubric och versionssatt identitet. En framtida LLM-bedömare är en **plugin**
+   som kräver separat kvalificering, redaktionell rubrik och möjlighet att
+   avstå (\`needs-review\`); det finns ingen inbyggd AI-rättning i v1.
+5. **Proveniens och integritet.** Resultat binder bank/fråga/revision,
+   bedömningspolicy/revision, bedömare/revision, kunskapsmål och källans
+   granskningsstatus. \`createEvidenceLedger().record()\` kräver unikt
+   \`attemptId\`, \`instanceId\`, spelform och observation om hjälp
+   (\`none/hint/retry/revealed/unknown\`). Det sparar bara klassifikationer
+   och referenser, **inte barns råa svar**, bilder, konton eller fri text.
+   Ledgern är minnesbaserad i v1; eventuell varaktig lagring är ett separat,
+   explicit beslut och får inte blandas med befintliga \`ordjakten-v1\`-nycklar.
+6. **Summering utan falsk matematik.** \`Session.finish()\` lämnar de äldre
+   fälten och \`outcomes\` orörda, men räknar endast faktiska fel som
+   \`incorrect\`. \`partial\`, \`ungraded\`, \`needsReview\`, kompletta
+   \`assessments\`, \`assessmentSummary\` och integritetssnåla \`evidence\`
+   redovisas separat. Låst prov visar aldrig detaljer före \`finish()\`.
+   \`incomplete\` och \`invalid\` godtas inte som färdiga svar.
+7. **Inga godtyckliga kunskapsbetyg.** Enskilda prestationer räcker inte för att
+   fastställa \`novice/developing/proficient/advanced\`. Sammanställningar
+   returnerar därför \`mastery:{level:"unknown",confidence:"insufficient"}\`
+   tills en **separat, ämneskalibrerad och verifierad** policy finns.
+   En hög procentsats på samma fråga får aldrig förvandlas till expertkompetens.
+
+V1:s basgräns är avsiktligt liten: statiska bilder kan refereras via bankens
+medieresurser, men ingen interaktiv DICOM-visare, bildmätning, LLM-rättning
+eller tvärämnesövergripande kunskapsprofil ingår. Korta enhetstester ska täcka
+rubric-konflikter, okunskap/otillräcklig evidens, dubbelregistrerade försök,
+sekretess i prov och bakåtkompatibilitet med Ordjaktens befintliga frågor.
+
 ## Syfte och hårda gränser
 
 Ordjakten ska kunna använda svenska, matematik, kemi, fysik och framtida ämnen från **separata, självständigt ägda kunskapsbanker**. Varje bank har egen begreppsmodell, sitt innehåll, sin versionshistorik och valfri lagring. De återanvändbara spelmotorerna använder bankernas gemensamma **spelgränssnitt**, inte en central databas med alla ämnen.
