@@ -114,3 +114,30 @@ explicitly refused in normal mode. This package does not host a working
 protected API or make existing public Ordjakten questions private. A bot can
 still harvest material over time or by using multiple accounts; rate limiting,
 identity assurance and abuse controls at the edge are needed as well.
+
+## HTTP adapter (server only)
+
+`HttpAdapter.createHttpHandler(delivery,{allowedOrigin,maxBodyBytes})`
+exposes the protected session gate over Node HTTP without creating a server or
+enabling any private bank. It accepts **Bearer-authenticated** requests on
+`/v1/learning/sessions`, `/v1/learning/sessions/:sessionId/next`,
+`/v1/learning/sessions/:sessionId/answers`, and
+`GET /v1/learning/sessions/:sessionId`. There is deliberately **no**
+bulk/list/download endpoint. All responses include `Cache-Control: no-store`
+and other restrictive headers, and a server-paced cooldown produces HTTP 429
+plus `Retry-After` for accessible countdown UI.
+
+The adapter requires a caller-supplied trusted `authenticate` port on every
+request and refuses cross-origin browser calls unless an exact HTTPS origin is
+configured. Request sizes, methods, media paths and accepted fields are
+bounded. Neither the HTTP adapter nor the test-only in-memory store is
+a production backend: no listening server, database, user database, private
+question bank, signed image service, TLS setup or private-policy service is
+included. A real deployment needs all of those integrations and meaningful
+anti-sybil controls.
+
+The delivery module randomizes **per-instance answer option IDs**, shuffles
+presented choices and maps them back to canonical IDs only inside its
+transactional server state before calling the private grader. Protected media
+IDs are replaced by presentation-local names. A selected question is still
+visible to the authorized learner and can be recorded by that learner.
