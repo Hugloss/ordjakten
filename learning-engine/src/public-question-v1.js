@@ -97,4 +97,49 @@ function toPublicQuestion(presentation,{sessionId,media=[]}={}){
  };
  return validatePublicQuestion(question);
 }
-module.exports={SCHEMA_VERSION,validatePublicQuestion,toPublicQuestion};
+
+const PROTECTED_SCHEMA_VERSION='learning-protected-question.v1';
+// Private media is always served through a server-authorized, expiring,
+// instance-bound route. Never emit a permanent public CDN URL for a private bank.
+const PRIVATE_MEDIA_URL=/^\/api\/learning\/media\/[A-Za-z0-9_-]{32,128}$/;
+function validateProtectedQuestion(question){
+ check(only(question,['schemaVersion','sessionId','instanceId','prompt',
+  'stimulus','responseSpec','media'])&&
+  question.schemaVersion===PROTECTED_SCHEMA_VERSION&&
+  typeof question.sessionId==='string'&&question.sessionId.length>0&&
+  question.sessionId.length<=128&&typeof question.instanceId==='string'&&
+  question.instanceId.length>0&&question.instanceId.length<=160&&
+  validText(question.prompt),'Invalid protected question envelope');
+ validateResponse(question.responseSpec);
+ if(question.stimulus!==undefined)
+  check(validText(question.stimulus),'Invalid protected stimulus');
+ if(question.media!==undefined){
+  check(Array.isArray(question.media)&&question.media.length<=6,
+   'Too many protected images');
+  const ids=new Set();
+  for(const item of question.media){
+   validateImage(item);
+   check(PRIVATE_MEDIA_URL.test(item.url),
+    'Protected image must use an authorized expiring media route');
+   check(!ids.has(item.id),'Duplicate protected image ID');
+   ids.add(item.id);
+  }
+ }
+ return question;
+}
+function toProtectedQuestion(presentation,options={}){
+ const publicPacket=toPublicQuestion(presentation,options);
+ // No stable bank/question IDs or private learning targets enter a protected
+ // client. The server keeps the mapping inside the authenticated session.
+ const packet={
+  schemaVersion:PROTECTED_SCHEMA_VERSION,
+  sessionId:publicPacket.sessionId,instanceId:publicPacket.instanceId,
+  prompt:publicPacket.prompt,
+  ...(publicPacket.stimulus===undefined?{}:{stimulus:publicPacket.stimulus}),
+  responseSpec:publicPacket.responseSpec,media:publicPacket.media
+ };
+ return validateProtectedQuestion(packet);
+}
+
+module.exports={SCHEMA_VERSION,PROTECTED_SCHEMA_VERSION,validatePublicQuestion,
+  toPublicQuestion,validateProtectedQuestion,toProtectedQuestion};
