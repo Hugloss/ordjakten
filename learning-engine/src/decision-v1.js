@@ -48,6 +48,22 @@ function validateEvidence(row){
   row.evaluation.criteria.every(c=>isObject(c)&&isToken(c.id)&&
     LEVELS.includes(c.level)),'Invalid learning evidence');
  validateRef(row.questionRef);
+ assert(onlyKeys(row.assessmentRef,['bankId','id','revision'])&&
+  isToken(row.assessmentRef.bankId)&&isToken(row.assessmentRef.id)&&
+  Number.isSafeInteger(row.assessmentRef.revision)&&row.assessmentRef.revision>=1&&
+  row.assessmentRef.bankId===row.questionRef.bankId,
+  'Invalid evidence assessment provenance');
+ assert(onlyKeys(row.evaluator,['id','revision','source'])&&
+  isToken(row.evaluator.id)&&Number.isSafeInteger(row.evaluator.revision)&&
+  row.evaluator.revision>=1&&['deterministic','plugin'].includes(row.evaluator.source),
+  'Invalid evidence evaluator provenance');
+ if(row.rubricRef!==undefined)
+  assert(onlyKeys(row.rubricRef,['id','revision'])&&isToken(row.rubricRef.id)&&
+   Number.isSafeInteger(row.rubricRef.revision)&&row.rubricRef.revision>=1,
+   'Invalid evidence rubric provenance');
+ assert((row.evaluation.criteria.length===0||row.rubricRef!==undefined)&&
+  (row.outcome==='completed'||row.evaluation.criteria.length===0),
+  'Invalid evidence rubric criteria');
  assert(row.outcome==='completed'?
   LEVELS.includes(row.evaluation.level):row.evaluation.level===null,
   'Invalid graded or ungraded evidence');
@@ -68,10 +84,10 @@ function evidenceView({entries,focus}){
  assert(Array.isArray(entries)&&entries.length<=20000,'Invalid evidence population');
  const seen=new Set(),qualified=new Set(),successes=new Set(),days=new Set();
  const byOutcome=counters(OUTCOMES),byLevel=counters(LEVELS),
-  byAssistance=counters(ASSISTANCE);
+  qualifiedByLevel=counters(LEVELS),byAssistance=counters(ASSISTANCE);
  const byDifficulty=Object.create(null),byActivity=Object.create(null),
   criterionNeeds=Object.create(null);
- let observed=0,independent=0,unreviewed=0,knownDay=0;
+ let observed=0,independent=0,unreviewed=0,knownDay=0,latestIndependentDay=null;
  for(const row of entries){
   validateEvidence(row);
   assert(!seen.has(row.attemptId),'Duplicate attempt evidence');
@@ -89,24 +105,30 @@ function evidenceView({entries,focus}){
   if(!reviewed)unreviewed+=1;
   if(!reviewed||row.assistance!=='none'||row.outcome!=='completed')continue;
   independent+=1;
+  qualifiedByLevel[row.evaluation.level]+=1;
   const ref=row.questionRef;
   const key=ref.bankId+'/'+ref.id+'/'+ref.revision;
   qualified.add(key);
   if(['correct','excellent'].includes(row.evaluation.level))successes.add(key);
-  if(row.observedDay!==undefined){days.add(row.observedDay);knownDay+=1;}
+  if(row.observedDay!==undefined){
+   days.add(row.observedDay);knownDay+=1;
+   latestIndependentDay=latestIndependentDay===null?
+     row.observedDay:Math.max(latestIndependentDay,row.observedDay);
+  }
   for(const criterion of row.evaluation.criteria)
    if(!['correct','excellent'].includes(criterion.level))
     criterionNeeds[criterion.id]=(criterionNeeds[criterion.id]||0)+1;
  }
  return {
   schemaVersion:'learning-evidence-view.v1',focus:copy(focus),
-  observedAttempts:observed,byOutcome,byLevel,byAssistance,
+  observedAttempts:observed,byOutcome,byLevel,qualifiedByLevel,byAssistance,
   byDifficulty:{...byDifficulty},byActivity:{...byActivity},
   unreviewedObservations:unreviewed,
   qualifiedIndependentAttempts:independent,
   distinctQualifiedQuestions:qualified.size,
   distinctSuccessfulQuestions:successes.size,
   knownObservationDays:knownDay,distinctObservationDays:days.size,
+  latestIndependentDay,
   criterionNeeds:{...criterionNeeds},
   mastery:{level:'unknown',confidence:'insufficient',
    reason:'Requires an independently qualified bank-specific policy'}

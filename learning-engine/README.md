@@ -35,7 +35,8 @@ audit-ready assessments and a local privacy-minimal evidence ledger.
 `Decisions.evidenceView({entries,focus})`: a **descriptive** summary of
 evidence by `{bankId,skillId}`: completed/invalid/ungraded counts, assistance,
 graded levels, difficulty band, activity kind, reviewed independent attempts,
-distinct questions and distinct observation days, plus criterion gaps.
+**qualified-only grade distribution**, distinct questions, last independent
+observation day and distinct observation days, plus criterion gaps.
 A second success on the same question does not count as new question variety.
 Assisted answers, drafts, unfinished work and missing observations are never
 quietly promoted to independent proficiency. No mastery level is inferred.

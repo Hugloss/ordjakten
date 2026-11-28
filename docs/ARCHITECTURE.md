@@ -2,6 +2,25 @@
 
 **Status: federerad målarkitektur; en första svensk bankadapter och ett gemensamt spel-/bedömningskontrakt implementeras i PR #30. Övrig migrering återstår.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
 
+## Portabel Learning Engine och skyddade frågebanker
+
+Den bankneutrala bedömningskärnan finns som en **fristående paketkatalog** i
+[`learning-engine/`](../learning-engine/README.md), utan beroende på Ordjaktens
+frågedata. Dess `assessment-v1.js` är den enda redigerbara källan; en validerad
+byggspegel används i spelets webbläsarkod. Paketet har även en **ren
+rekommendationsport** som sammanställer evidens per kunskapsmål och validerar
+att privata beslut om `practice_similar`, `practice_prerequisite`,
+`spaced_review`, `continue` och `increase_difficulty` är versions- och
+ämnesskopade. Inga proprietära trösklar, facit eller urvalsregler ligger här.
+
+**Säkerhetsgräns:** Ett privat GitHub-repository skyddar inte data som skickas
+till en statisk klient. Frågor/facit och policyer som ska förbli hemliga måste
+ägas av en separat backend, som autentiserar och begränsar frågeutlämning,
+verifierar försök och håller privata algoritmer och tokens utanför webbläsaren.
+Ordjaktens befintliga publika frågebank kan inte göras hemlig i efterhand.
+En separat publikt licensierad motor-repo samt privata policy-/bank-repos
+är målbilden, **inte något som ännu har skapats**.
+
 ## Learning Engine v1 – stringnivåer, evidens och granskningsbar bedömning
 
 **Implementerat i bankneutrala runtime-modulerna** `public/js/assessment-v1.js`,

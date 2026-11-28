@@ -154,3 +154,29 @@ test('tampered observations and duplicate attempts do not inflate learning evide
  const wrong=store.entries();wrong[0].difficultyBand='some secret!';
  assert.throws(()=>D.evidenceView({entries:wrong,focus}),/difficulty/);
 });
+
+test('evidence summaries distinguish qualified successes and preserve coarse recency',()=>{
+ const store=ledger();
+ add(store,'first','correct',{observedDay:20000});
+ add(store,'helped','correct',{assistance:'hint',observedDay:20005});
+ add(store,'wrong','incorrect',{assessment:assessment('incorrect','q-2'),
+  observedDay:20003});
+ const summary=D.evidenceView({entries:store.entries(),focus});
+ assert.equal(summary.byLevel.correct,2);
+ assert.equal(summary.qualifiedByLevel.correct,1);
+ assert.equal(summary.qualifiedByLevel.incorrect,1);
+ assert.equal(summary.latestIndependentDay,20003);
+ assert.equal(summary.distinctObservationDays,2);
+});
+test('evidence provenance is required and cross-bank assessments fail closed',()=>{
+ const store=ledger();add(store,'one');
+ const wrong=store.entries();
+ delete wrong[0].assessmentRef;
+ assert.throws(()=>D.evidenceView({entries:wrong,focus}),/provenance/);
+ const swapped=store.entries();
+ swapped[0].assessmentRef.bankId='medicine';
+ assert.throws(()=>D.evidenceView({entries:swapped,focus}),/provenance/);
+ const badEvaluator=store.entries();
+ badEvaluator[0].evaluator.revision=0;
+ assert.throws(()=>D.evidenceView({entries:badEvaluator,focus}),/provenance/);
+});
