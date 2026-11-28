@@ -19,7 +19,8 @@ function makeRegistry(){
 
 test('the Swedish bank owns its 73 questions without copied question files',()=>{
   assert.equal(manifest.bankId,'svenska');
-  assert.equal(manifest.primarySource,'public/data/expressions.json');
+  assert.equal(manifest.primarySource,'multiple-authored-sources');
+  assert.equal(manifest.adapter,'public/js/banks/svenska-catalog.js');
   for(const filename of manifest.sourceFiles)assert.ok(fs.existsSync(path.join(root,filename)),filename);
   const registry=makeRegistry();
   assert.deepEqual(registry.bankInfo().map(x=>({id:x.bankId,count:x.count})),[{id:'svenska',count:73}]);
