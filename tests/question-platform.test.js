@@ -128,7 +128,8 @@ test('shared runtime and legacy engine must not depend on a concrete subject ban
     assert.doesNotMatch(text,/OrdjaktenSvenskaBank/,file);
   }
   const app=fs.readFileSync(path.join(root,'public/js/app.js'),'utf8');
-  assert.match(app,/SvenskaBank\.fromLegacyExpressions\(expressions,missions\)/);
+  assert.match(app,/SvenskaCatalog\.fromSources\(/);
+  assert.match(app,/words:bank,contexts,curation,contrasts,clues,surprises/);
   assert.match(app,/bankRegistry\.assess\(ref,answer\)/);
 });
 test('legacy engine meaning questions still keep the original facit and counts',()=>{

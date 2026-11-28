@@ -4098,7 +4098,8 @@
     const outcome=index===null?'unanswered':
       q.kind==='expression'?gradeBankExpression(q,option,isOrder?orderSelection:null):
       isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):
-      (gradeBankWord(q,option)??(option.correct?'right':'wrong'));
+      (q.kind==='word'&&(q.taskType==='context'||q.taskType==='action'||q.picture)?
+        gradeBankWord(q,option):(option.correct?'right':'wrong'));
     clearQuestionPlay();
     game.answers[q.id]=outcome;
     game.selected[q.id]=isOrder&&index!==null?orderSelection.map(key=>q.correctOrder[key]).join(' → '):option?option.label:null;
