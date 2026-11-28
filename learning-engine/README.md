@@ -96,3 +96,21 @@ answer-bearing fields. This reduces accidental data disclosure but cannot
 prevent a misleading prompt, answer embedded in a displayed explanation or
 content scraping. The backend must still review every visible field before
 sending it and must never serve private bank data in a static offline bundle.
+
+## Server-enforced anti-scraping and leak boundary
+
+See [protected question delivery threat model](../docs/LEARNING-QUESTION-LEAK-THREAT-MODEL.md).
+The **server-only** `ProtectedDelivery.createProtectedDelivery(...)` API accepts up
+to 100 questions per authenticated session but reveals **at most one** private
+question at a time. A 30-second default server-side interval plus per-account
+rolling hourly/daily reveal quotas and session limits prevent trivial bulk
+retrieval by clicking through a hundred questions in seconds. Exam answers
+stay withheld until completion. Authenticated, expiring static-image routes
+must be provided by the application backend.
+
+A separate durable, account-transactional store and trusted identity provider
+are required in production. The provided in-memory store is **test-only** and
+explicitly refused in normal mode. This package does not host a working
+protected API or make existing public Ordjakten questions private. A bot can
+still harvest material over time or by using multiple accounts; rate limiting,
+identity assurance and abuse controls at the edge are needed as well.
