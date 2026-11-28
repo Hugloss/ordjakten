@@ -44,6 +44,9 @@ function allowedFields(object,names){
     Object.keys(object).every(name=>names.includes(name));
 }
 async function jsonBody(req,maxBytes,{allowEmpty=false}={}){
+  const length=req.headers['content-length'];
+  if(length!==undefined&&/^\d+$/.test(length)&&Number(length)>maxBytes)
+    throw bodyError('payload_too_large');
   const parts=[];
   let size=0;
   for await(const chunk of req){
@@ -61,20 +64,24 @@ async function jsonBody(req,maxBytes,{allowEmpty=false}={}){
       .decode(Buffer.concat(parts));
     parsed=JSON.parse(utf8);
   }catch(_){throw bodyError('invalid_json')}
-  if(!allowedFields(parsed,[])){
-    // Objects are accepted here, then each operation enforces exact keys.
-    if(parsed===null||typeof parsed!=='object'||Array.isArray(parsed))
-      throw bodyError('invalid_json');
-  }
+  // Operation-specific schemas validate every allowed key after parsing.
+  if(parsed===null||typeof parsed!=='object'||Array.isArray(parsed))
+    throw bodyError('invalid_json');
   return parsed;
 }
 function createHttpHandler(delivery,{allowedOrigin=null,maxBodyBytes=4096}={}){
   if(!delivery||['createSession','nextQuestion','submitAnswer','summary']
     .some(name=>typeof delivery[name]!=='function'))
     throw new Error('A protected delivery service is required');
-  if(allowedOrigin!==null&&
-    (typeof allowedOrigin!=='string'||!/^https:\/\/[^/]+$/.test(allowedOrigin)))
-    throw new Error('Invalid allowed HTTPS origin');
+  if(allowedOrigin!==null){
+    let origin;
+    try{origin=new URL(allowedOrigin)}
+    catch(_){throw new Error('Invalid allowed HTTPS origin')}
+    if(origin.protocol!=='https:'||origin.username||origin.password||
+      origin.pathname!=='/'||origin.search||origin.hash||
+      origin.origin!==allowedOrigin)
+      throw new Error('Invalid allowed HTTPS origin');
+  }
   if(!Number.isSafeInteger(maxBodyBytes)||maxBodyBytes<512||maxBodyBytes>8192)
     throw new Error('Invalid HTTP request body limit');
   return async function protectedLearningHttp(req,res){
