@@ -195,6 +195,8 @@ test('imported assessments require an explicit level, including null for unasses
 });
 test('legacy question IDs at the valid length limit produce valid scoped assessment references',()=>{
   const q=makeQuestion({id:'q'+'x'.repeat(95),rubric:false});
+  delete q.assessmentSpec.policyId;
+  delete q.assessmentSpec.policyRevision;
   const detailed=registryFor(()=>({status:'correct'}),q).assessDetailed(q.ref,'a');
   assert.equal(detailed.assessmentRef.id,q.ref.id);
   assert.equal(detailed.assessmentRef.revision,3);
