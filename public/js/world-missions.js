@@ -592,11 +592,15 @@
     }
     return {task,chapter,options,stage:'question',attempts:0,outcome:null};
   }
-  function answer(round,id){
+  function answer(round,id,assess=null){
     if(round?.stage!=='question')return round;
     const selected=round.options?.find(option=>option.id===id);
     if(!selected)return round;
-    if(selected.correct)return {...round,stage:'explanation',outcome:round.attempts?'supported':'direct'};
+    const verdict=assess===null?selected.correct:assess(round.task.questionId,selected.label);
+    if(![true,false,'correct','incorrect'].includes(verdict))
+      throw new Error('Invalid world mission assessment: '+round.task.questionId);
+    if(verdict===true||verdict==='correct')
+      return {...round,stage:'explanation',outcome:round.attempts?'supported':'direct'};
     if(round.attempts===0)return {...round,attempts:1};
     return {...round,stage:'explanation',attempts:2,outcome:'guided'};
   }

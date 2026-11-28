@@ -2389,6 +2389,16 @@
     if(next===history.discoveryPortals)return;
     stopReadAloud();history.discoveryPortals=next;saveHistory();renderPortals(focus);
   }
+  function assessSwedishChoice(questionId,label){
+    const ref={bankId:'svenska',id:questionId,revision:1};
+    const question=bankRegistry.resolve(ref);
+    const selected=question.responseSpec.options.find(row=>row.label===label);
+    if(!selected)throw new Error('Unregistered authored answer: '+questionId);
+    const status=bankRegistry.assess(ref,selected.id).status;
+    if(status!=='correct'&&status!=='incorrect')
+      throw new Error('Unexpected authored assessment: '+questionId);
+    return status;
+  }
   function handlePortalClick(event){
     const host=$('portals-content'),button=event.target.closest('button');
     if(screen!=='portals'||!button||button.disabled||!host.contains(button))return;
@@ -2414,13 +2424,7 @@
     if(Object.hasOwn(data,'portalListen')){speakReadAloud(portalSpeakText(),button);return;}
     if(Object.hasOwn(data,'portalAnswer')){
       const answer=Number(data.portalAnswer),next=Portals.choose(
-        history.discoveryPortals,portalId,answer,portalContent,(questionId,label)=>{
-          const ref={bankId:'svenska',id:questionId,revision:1};
-          const question=bankRegistry.resolve(ref);
-          const selected=question.responseSpec.options.find(option=>option.label===label);
-          if(!selected)throw new Error('Missing authored portal answer: '+questionId);
-          return bankRegistry.assess(ref,selected.id).status;
-        });
+        history.discoveryPortals,portalId,answer,portalContent,assessSwedishChoice);
       const updated=next!==history.discoveryPortals?Portals.model(next,portalId,portalContent).current:null;
       updatePortal(next,updated?.stage?.feedback&&!updated.stage.solved?'portal-feedback':'portal-stage-title');
     }else if(Object.hasOwn(data,'portalHint'))
@@ -2465,7 +2469,7 @@
   }
   function answerTreasureQuestion(serial,id){
     if(screen!=='treasure')return;
-    const next=Treasure.answer(history.treasureHunt,serial,id,treasureContent);
+    const next=Treasure.answer(history.treasureHunt,serial,id,treasureContent,assessSwedishChoice);
     if(next===history.treasureHunt)return;
     stopReadAloud();history.treasureHunt=next;
     const visit=treasureModel().visit;
@@ -2484,7 +2488,7 @@
   }
   function finishTreasureVisit(serial){
     if(screen!=='treasure')return;
-    const next=Treasure.finish(history.treasureHunt,serial,treasureContent);
+    const next=Treasure.finish(history.treasureHunt,serial,treasureContent,assessSwedishChoice);
     if(next===history.treasureHunt)return;
     stopReadAloud();history.treasureHunt=next;
     saveHistory();renderTreasureHunt();
@@ -2511,19 +2515,19 @@
   }
   function guessTreasureMystery(index){
     if(screen!=='treasure')return;
-    const next=Treasure.mysteryGuess(history.treasureHunt,treasureWorld,index,treasureContent);
+    const next=Treasure.mysteryGuess(history.treasureHunt,treasureWorld,index,treasureContent,assessSwedishChoice);
     if(next===history.treasureHunt)return;
     stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
   }
   function answerTreasureMysteryProof(index){
     if(screen!=='treasure')return;
-    const next=Treasure.mysteryProof(history.treasureHunt,treasureWorld,index,treasureContent);
+    const next=Treasure.mysteryProof(history.treasureHunt,treasureWorld,index,treasureContent,assessSwedishChoice);
     if(next===history.treasureHunt)return;
     stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-mystery-title');
   }
   function answerTreasureMysteryTransfer(index){
     if(screen!=='treasure')return;
-    const next=Treasure.mysteryTransfer(history.treasureHunt,treasureWorld,index,treasureContent);
+    const next=Treasure.mysteryTransfer(history.treasureHunt,treasureWorld,index,treasureContent,assessSwedishChoice);
     if(next===history.treasureHunt)return;
     stopReadAloud();history.treasureHunt=next;saveHistory();renderTreasureHunt('treasure-transfer-title');
   }
@@ -2672,7 +2676,7 @@
   }
   function chooseWorldAction(id){
     if(screen!=='world-mission'||!worldMission)return;
-    const next=WorldMissions.answer(worldMission,id);
+    const next=WorldMissions.answer(worldMission,id,assessSwedishChoice);
     if(next===worldMission)return;
     worldMission=next;renderWorldMission();
     $(next.stage==='explanation'?'world-mission-verdict':'world-mission-hint').focus({preventScroll:true});
