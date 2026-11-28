@@ -25,6 +25,7 @@
     const stories={},ids=[],errors=[];
     if(!Array.isArray(data?.STORIES)||data.STORIES.length<12||data.STORIES.length>64)
       return {stories,ids,errors:['story-count']};
+    const stepIds=new Set();
     for(const row of data.STORIES){
       const id=row?.id,stages=row?.stages;
       if(!/^[a-z][a-z0-9-]*$/.test(id||'')||Object.hasOwn(stories,id)||
@@ -36,6 +37,11 @@
       }
       let valid=true;
       for(const step of stages){
+        if(!/^portal-[a-z][a-z0-9-]*-\d{2}$/.test(step?.questionId||'')||
+          stepIds.has(step.questionId)){
+          valid=false;break;
+        }
+        stepIds.add(step.questionId);
         if(!line(step.title)||!line(step.scene)||!line(step.why)||!Array.isArray(step.clues)||
           step.clues.length!==2||step.clues.some(value=>!line(value))||
           new Set(step.clues).size!==2||!Array.isArray(step.choices)||
