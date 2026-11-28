@@ -1,3 +1,4 @@
+/* GENERATED from learning-engine/src/assessment-v1.js; do not edit manually. */
 /* Versioned, domain-neutral assessment and privacy-minimal evidence contracts. */
 (function(root,factory){
   const api=factory();
@@ -179,13 +180,20 @@
   }
   function createEvidenceLedger(){
     const attempts=new Map();
-    function record({attemptId,instanceId,mode,assistance='unknown',assessment}){
+    function record({attemptId,instanceId,mode,assistance='unknown',assessment,
+      difficultyBand=null,activityKind=null,observedDay=null}){
       assert(typeof attemptId==='string'&&attemptId.length>0&&attemptId.length<=160&&
         typeof instanceId==='string'&&instanceId.length>0&&instanceId.length<=160&&
         validId(mode),'Invalid evidence identity or mode');
       assert(['unknown','none','hint','retry','revealed'].includes(assistance),
         'Invalid assistance observation');
       assert(!attempts.has(attemptId),'Duplicate attempt evidence');
+      assert(difficultyBand===null||(validId(difficultyBand)&&difficultyBand.length<=64),
+        'Invalid difficulty band');
+      assert(activityKind===null||(validId(activityKind)&&activityKind.length<=64),
+        'Invalid activity kind');
+      assert(observedDay===null||(Number.isSafeInteger(observedDay)&&
+        observedDay>=0&&observedDay<=200000),'Invalid observation day');
       validateResult(assessment);
       const row={
         schemaVersion:EVIDENCE_VERSION,attemptId,instanceId,mode,assistance,
@@ -199,7 +207,10 @@
           criteria:assessment.evaluation.criteria.map(x=>({id:x.id,level:x.level}))
         },
         skillIds:[...assessment.evidence.skillIds],
-        reviewStatus:assessment.evidence.reviewStatus
+        reviewStatus:assessment.evidence.reviewStatus,
+        ...(difficultyBand===null?{}:{difficultyBand}),
+        ...(activityKind===null?{}:{activityKind}),
+        ...(observedDay===null?{}:{observedDay})
       };
       attempts.set(attemptId,copy(row));
       return copy(row);
