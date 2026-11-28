@@ -31,7 +31,7 @@ the list of questions, a question bank, answer keys or private metadata.
 `nextQuestion` releases at most **one** question; refreshing before answering
 returns the same active instance rather than another question. After answering,
 an additional question can be issued only after a **server-enforced 30-second
-minimum interval** (configurable by the server operator, minimum allowed 1s).
+minimum interval** (configurable by the server operator, minimum allowed 10s).
 A learner selecting 100 questions therefore needs at least 99 inter-question
 gaps, about **49 minutes 30 seconds**, even if they answer instantly. Other
 quotas may extend that further.
@@ -142,3 +142,8 @@ verify the real durable store across instances, run integration/abuse tests,
 then point the intended *protected* app at that backend. Keep the existing
 static public Ordjakten as a separate public/offline mode until a deliberate
 content migration with clear licensing and compatibility decisions is made.
+
+**Regression coverage:** tests also verify that the same account cannot reset
+its cooldown by finishing one session and starting another. A separate
+principal legitimately has a separate budget, which is why identity assurance
+and external multi-account abuse detection are mandatory for production.

@@ -37,7 +37,7 @@ function validateLimits(overrides){
   const values={...defaults,...overrides};
   assert(Object.keys(overrides).every(k=>Object.hasOwn(defaults,k)),'invalid_limits');
   const ranges={
-    maxQuestionsPerSession:[1,100],minRevealIntervalMs:[1000,300000],
+    maxQuestionsPerSession:[1,100],minRevealIntervalMs:[10000,300000],
     maxRevealsPerHour:[1,1000],maxRevealsPerDay:[1,3000],
     maxSessionsPerDay:[1,24],sessionTtlMs:[60000,7*DAY],
     maxInvalidSubmissions:[1,10],maxAnswerBytes:[32,8192]

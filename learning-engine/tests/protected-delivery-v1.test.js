@@ -154,13 +154,13 @@ test('session limit rejects 101 questions and invalid counts, but allows 100',as
 test('hourly and daily budgets are enforced across question issuances',async()=>{
  const f=fixture({limits:{
   maxRevealsPerHour:2,maxRevealsPerDay:2,
-  minRevealIntervalMs:1000,sessionTtlMs:2*60*60*1000
+  minRevealIntervalMs:10000,sessionTtlMs:2*60*60*1000
  }});
  const s=await f.create(3);
  for(let i=0;i<2;i++){
   const q=await f.issue(s.sessionId);
   await f.answer(s.sessionId,q.question.instanceId);
-  f.advance(1000);
+  f.advance(10000);
  }
  await assert.rejects(f.issue(s.sessionId),errorCode('hourly_quota'));
  f.advance(60*60*1000);
@@ -287,4 +287,37 @@ test('the API does not expose bulk questions, private plans or a client clock co
   store:Delivery.createInMemoryStore(),allowInMemoryForTests:true
  }));
  assert.deepEqual(exposed,['createSession','nextQuestion','submitAnswer','summary']);
+});
+
+test('global cooldown follows the same account across completed sessions',async()=>{
+ const f=fixture();
+ const first=await f.create(1);
+ const q=await f.issue(first.sessionId);
+ await f.answer(first.sessionId,q.question.instanceId);
+ const second=await f.create(1);
+ await assert.rejects(f.issue(second.sessionId),errorCode('cooldown'));
+ f.advance(30000);
+ const later=await f.issue(second.sessionId);
+ assert.equal(later.progress.issued,1);
+ assert.equal(f.counts().revealed,2);
+});
+test('the security interval cannot be weakened to 1 second by configuration',()=>{
+ assert.throws(()=>fixture({limits:{minRevealIntervalMs:1000}}),
+  errorCode('invalid_limits'));
+});
+test('an expired active session cannot be resumed by guessing its ID',async()=>{
+ const f=fixture({limits:{sessionTtlMs:60000}});
+ const s=await f.create(2);
+ await f.issue(s.sessionId);
+ f.advance(60000);
+ await assert.rejects(f.issue(s.sessionId),errorCode('session_not_found'));
+});
+test('a second principal has its own quota, making external anti-sybil protection mandatory',async()=>{
+ const f=fixture();
+ const alice=await f.create(1);
+ const bob=await f.create(1,'train',{token:'bob'});
+ const q1=await f.issue(alice.sessionId);
+ const q2=await f.issue(bob.sessionId,{token:'bob'});
+ assert.notEqual(q1.question.instanceId,q2.question.instanceId);
+ assert.equal(f.counts().revealed,2);
 });
