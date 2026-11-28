@@ -62,6 +62,7 @@ test('multi-criteria rubric preserves a partial result and its independently nam
   assert.deepEqual(result.evaluation.criteria.map(x=>x.id),['method','units']);
   assert.deepEqual(result.evidence.skillIds,['wave-speed']);
   assert.equal(result.assessmentRef.revision,2);
+  assert.deepEqual(result.rubricRef,{id:'wave-speed-rubric',revision:2});
   assert.equal(result.evaluator.source,'plugin');
 });
 test('rubric cannot silently accept missing, duplicated or invented criteria or failed essentials',()=>{
@@ -157,4 +158,25 @@ test('invalid and incomplete submissions cannot finish or pollute an examination
   assert.deepEqual(exam.answer('answer'),{accepted:true,feedback:null});
   exam.next();
   assert.equal(exam.finish().assessmentSummary.byLevel.correct,1);
+});
+test('tampered evidence cannot forge a bank, rubric, reason or completion grade',()=>{
+  const q=makeQuestion({rubric:false});
+  const valid=registryFor(()=>({status:'correct'}),q).assessDetailed(q.ref,'a');
+  const altered=patch=>Object.assign(JSON.parse(JSON.stringify(valid)),patch);
+  assert.throws(()=>Assessment.validateResult(altered({
+    assessmentRef:{...valid.assessmentRef,bankId:'svenska'}
+  })),/provenance/);
+  assert.throws(()=>Assessment.validateResult(altered({
+    evaluation:{level:'correct',criteria:[{id:'extra',level:'correct'}]}
+  })),/Rubric evidence/);
+  assert.throws(()=>Assessment.validateResult(altered({
+    rubricRef:{id:'rubric',revision:1}
+  })),/Rubric evidence/);
+  assert.throws(()=>Assessment.validateResult(altered({
+    evaluation:{level:'correct',criteria:[],reason:'x'.repeat(501)}
+  })),/explanation/);
+  const ungraded=registryFor(()=>({status:'needs-review'}),q)
+    .assessDetailed(q.ref,'a');
+  ungraded.evaluation.criteria=[{id:'invented',level:'correct'}];
+  assert.throws(()=>Assessment.validateResult(ungraded),/Rubric evidence/);
 });

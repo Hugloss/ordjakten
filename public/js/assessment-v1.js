@@ -95,18 +95,36 @@
       result.outcome===STATUS_OUTCOME[result.status]&&
       object(result.evaluation),'Invalid assessment outcome');
     levelFor(result.status,result.evaluation.level);
-    assert(Array.isArray(result.evaluation.criteria)&&
-      result.evaluation.criteria.every(row=>object(row)&&validId(row.id)&&
-        LEVELS.includes(row.level)),'Invalid assessment evidence criteria');
+    const criteria=result.evaluation.criteria;
+    assert(Array.isArray(criteria)&&criteria.every(row=>object(row)&&validId(row.id)&&
+      LEVELS.includes(row.level))&&
+      new Set(criteria.map(row=>row.id)).size===criteria.length,
+      'Invalid or duplicate assessment evidence criteria');
+    assert((result.outcome==='completed'||criteria.length===0)&&
+      ((result.outcome==='completed'&&Boolean(result.rubricRef))===
+        (result.outcome==='completed'&&criteria.length>0)),
+      'Rubric evidence missing or present for an unassessed result');
+    if(result.rubricRef!==undefined)
+      assert(object(result.rubricRef)&&validId(result.rubricRef.id)&&
+        Number.isSafeInteger(result.rubricRef.revision)&&result.rubricRef.revision>0,
+        'Invalid rubric revision reference');
+    if(result.evaluation.reason!==undefined)
+      assert(typeof result.evaluation.reason==='string'&&
+        result.evaluation.reason.trim()&&result.evaluation.reason.length<=500,
+        'Invalid assessment explanation');
     assert(object(result.assessmentRef)&&validId(result.assessmentRef.bankId)&&
       validId(result.assessmentRef.id)&&
       Number.isSafeInteger(result.assessmentRef.revision)&&
-      result.assessmentRef.revision>0&&object(result.evaluator)&&
+      result.assessmentRef.revision>0&&
+      result.assessmentRef.bankId===result.questionRef.bankId&&
+      object(result.evaluator)&&
       validId(result.evaluator.id)&&Number.isSafeInteger(result.evaluator.revision)&&
       result.evaluator.revision>0&&
       ['deterministic','plugin'].includes(result.evaluator.source)&&
       object(result.evidence)&&Array.isArray(result.evidence.skillIds)&&
-      result.evidence.skillIds.length>0&&result.evidence.skillIds.every(validId),
+      result.evidence.skillIds.length>0&&result.evidence.skillIds.every(validId)&&
+      typeof result.evidence.reviewStatus==='string'&&
+      result.evidence.reviewStatus.length>0&&result.evidence.reviewStatus.length<=64,
       'Incomplete assessment provenance');
     return result;
   }
@@ -130,6 +148,8 @@
         id:spec.policyId||question.ref.id+'-assessment',
         revision:spec.policyRevision||question.ref.revision
       },
+      ...(spec.rubric?{rubricRef:{id:spec.rubric.id,
+        revision:spec.rubric.revision}}:{}),
       evaluator:{
         id:metadata.id||question.responseSpec.kind,
         revision:metadata.revision||1,
@@ -169,6 +189,7 @@
         schemaVersion:EVIDENCE_VERSION,attemptId,instanceId,mode,assistance,
         questionRef:{...assessment.questionRef},
         assessmentRef:{...assessment.assessmentRef},
+        ...(assessment.rubricRef?{rubricRef:{...assessment.rubricRef}}:{}),
         evaluator:{...assessment.evaluator},
         outcome:assessment.outcome,
         evaluation:{

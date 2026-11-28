@@ -4,52 +4,57 @@
 
 ## Learning Engine v1 – stringnivåer, evidens och granskningsbar bedömning
 
-**Implementerat i bankneutrala runtime-modulerna** \`public/js/assessment-v1.js\`,
-\`public/js/question-platform.js\` och \`public/js/question-session.js\`. Inspirerat av
+**Implementerat i bankneutrala runtime-modulerna** `public/js/assessment-v1.js`,
+`public/js/question-platform.js` och `public/js/question-session.js`. Inspirerat av
 EvalShots ordnade ordnivåer, strikt utfallsseparation och *unknown-is-not-zero*;
 detta är en egen pedagogisk modell, **inte EvalShots exakta betygsskala**.
 
-1. **Definitionen ägs av banken.** Befintliga \`assessmentSpec.kind\` och
+1. **Definitionen ägs av banken.** Befintliga `assessmentSpec.kind` och
    facitregler fungerar fortsatt. Framtida frågor kan deklarera stabilt
-   \`policyId\`, \`policyRevision\` samt
-   \`rubric: {id,revision,criteria:[{id,description,required?}]}\`.
-   \`rubric\` kräver en uttryckligen rubric-kapabel bedömare; ingen tyst fallback.
+   `policyId`, `policyRevision` samt
+   `rubric: {id,revision,criteria:[{id,description,required?}]}`.
+   `rubric` kräver en uttryckligen rubric-kapabel bedömare; ingen tyst fallback.
    För äldre frågor härleds en stabil policyreferens från bankens frågereferens.
-2. **Utfallet är inte betyget.** \`outcome\` har \`completed\`, \`invalid\`,
-   \`incomplete\`, \`ungraded\` och \`needs-review\`.
-   \`evaluation.level\` har ordnade, människoläsbara strängar:
-   \`incorrect < limited < partial < correct < excellent\`.
-   Nivån är **null** vid icke bedömda utfall – aldrig 0 eller \`incorrect\`.
-   För att bevara gammal kod finns \`status\` och \`registry.assess()\` kvar.
-   \`registry.assessDetailed()\` ger ett komplett \`learning-assessment.v1\`-resultat.
+2. **Utfallet är inte betyget.** `outcome` har `completed`, `invalid`,
+   `incomplete`, `ungraded` och `needs-review`.
+   `evaluation.level` har ordnade, människoläsbara strängar:
+   `incorrect < limited < partial < correct < excellent`.
+   Nivån är **null** vid icke bedömda utfall – aldrig 0 eller `incorrect`.
+   För att bevara gammal kod finns `status` och `registry.assess()` kvar.
+   `registry.assessDetailed()` ger ett komplett `learning-assessment.v1`-resultat.
 3. **Rubrikkriterierna är separata.** Alla deklarerade kriterier måste finnas
    exakt en gång i en fullföljd rubric-bedömning. Obligatoriska kriterier med
-   nivå under \`correct\` blockerar ett sammanlagt \`correct/excellent\`.
+   nivå under `correct` blockerar ett sammanlagt `correct/excellent`.
+   Resultatet innehåller både `assessmentRef` och ett separat, versionssatt
+   `rubricRef`, så en ändrad bedömningsmatris inte kan döljas i historiken.
+   Även importerade evidensposter valideras mot bankomfång, kriterier och utfall.
    Kriterier och nivåer är maskinvaliderade, men deras medicinska/ämnesmässiga
    korrekthet måste granskas av ansvarig ämnesexpert.
 4. **Bedömare är utbytbara, inte självauktoriserande.** Deterministiska
    flervals-, numeriska och ordningsbedömare finns. Nya typer ansluts genom
-   \`registerEvaluator\` och måste returnera godkända strängnivåer, entydig
+   `registerEvaluator` och måste returnera godkända strängnivåer, entydig
    rubric och versionssatt identitet. En framtida LLM-bedömare är en **plugin**
    som kräver separat kvalificering, redaktionell rubrik och möjlighet att
-   avstå (\`needs-review\`); det finns ingen inbyggd AI-rättning i v1.
+   avstå (`needs-review`); det finns ingen inbyggd AI-rättning i v1.
 5. **Proveniens och integritet.** Resultat binder bank/fråga/revision,
    bedömningspolicy/revision, bedömare/revision, kunskapsmål och källans
-   granskningsstatus. \`createEvidenceLedger().record()\` kräver unikt
-   \`attemptId\`, \`instanceId\`, spelform och observation om hjälp
-   (\`none/hint/retry/revealed/unknown\`). Det sparar bara klassifikationer
+   granskningsstatus. `createEvidenceLedger().record()` kräver unikt
+   `attemptId`, `instanceId`, spelform och observation om hjälp
+   (`none/hint/retry/revealed/unknown`). Det sparar bara klassifikationer
    och referenser, **inte barns råa svar**, bilder, konton eller fri text.
    Ledgern är minnesbaserad i v1; eventuell varaktig lagring är ett separat,
-   explicit beslut och får inte blandas med befintliga \`ordjakten-v1\`-nycklar.
-6. **Summering utan falsk matematik.** \`Session.finish()\` lämnar de äldre
-   fälten och \`outcomes\` orörda, men räknar endast faktiska fel som
-   \`incorrect\`. \`partial\`, \`ungraded\`, \`needsReview\`, kompletta
-   \`assessments\`, \`assessmentSummary\` och integritetssnåla \`evidence\`
-   redovisas separat. Låst prov visar aldrig detaljer före \`finish()\`.
-   \`incomplete\` och \`invalid\` godtas inte som färdiga svar.
+   explicit beslut och får inte blandas med befintliga `ordjakten-v1`-nycklar.
+   Vid persistens krävs ett **unikt sessions-ID per omgång**; dubbelregistrerade
+   försök avvisas i stället för att tyst räknas flera gånger.
+6. **Summering utan falsk matematik.** `Session.finish()` lämnar de äldre
+   fälten och `outcomes` orörda, men räknar endast faktiska fel som
+   `incorrect`. `partial`, `ungraded`, `needsReview`, kompletta
+   `assessments`, `assessmentSummary` och integritetssnåla `evidence`
+   redovisas separat. Låst prov visar aldrig detaljer före `finish()`.
+   `incomplete` och `invalid` godtas inte som färdiga svar.
 7. **Inga godtyckliga kunskapsbetyg.** Enskilda prestationer räcker inte för att
-   fastställa \`novice/developing/proficient/advanced\`. Sammanställningar
-   returnerar därför \`mastery:{level:"unknown",confidence:"insufficient"}\`
+   fastställa `novice/developing/proficient/advanced`. Sammanställningar
+   returnerar därför `mastery:{level:"unknown",confidence:"insufficient"}`
    tills en **separat, ämneskalibrerad och verifierad** policy finns.
    En hög procentsats på samma fråga får aldrig förvandlas till expertkompetens.
 
