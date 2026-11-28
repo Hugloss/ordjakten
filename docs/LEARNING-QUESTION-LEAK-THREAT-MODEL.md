@@ -97,7 +97,10 @@ or service-worker caching of private content. Enable CSRF protections for
 cookie-based auth, strict CORS/origin policy, TLS, minimal request logging,
 body-size limits, abuse monitoring, and authenticated image access.
 
-**Transactions are mandatory:** `store.transact(ownerKey,fn)` must serialize
+**Transactions are mandatory:** The adapter must explicitly advertise `atomicAccountTransactions`,
+`durableAcrossRestarts` and `sharedAcrossWorkers` capabilities; this is a
+fail-closed integration check, **not** a substitute for independent deployment
+tests. `store.transact(ownerKey,fn)` must serialize
 all session creation, question issuance, invalid attempt tracking, grading,
 and quota updates **across every process/server instance**. Back it with a
 real transaction/lock solution such as PostgreSQL row locks or Redis Lua
