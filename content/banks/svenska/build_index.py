@@ -89,7 +89,9 @@ def build(db: sqlite3.Connection) -> dict:
                      source, provenance.get("storyId"), provenance.get("sceneId")),
                 )
                 for skill in item["skillIds"]:
-                    skills.add(skill)
+                    if skill not in skills:
+                        db.execute("INSERT INTO skills VALUES (?,?)", (skill, skill))
+                        skills.add(skill)
                     db.execute("INSERT INTO question_skills VALUES (?,?)", (qid, skill))
                 opts = spec["options"]
                 if not 2 <= len(opts) <= 12:
@@ -109,7 +111,7 @@ def build(db: sqlite3.Connection) -> dict:
                          int(kind == "single-choice" and option["id"] == correct),
                          order.index(option["id"]) if kind == "ordering" else None),
                     )
-            db.executemany("INSERT INTO skills VALUES (?,?)", [(skill, skill) for skill in sorted(skills)])
+
     except sqlite3.IntegrityError as exc:
         raise ValueError("SQLite relational integrity failure: " + str(exc)) from exc
 
