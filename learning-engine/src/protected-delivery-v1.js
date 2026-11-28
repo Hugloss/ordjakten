@@ -102,17 +102,23 @@ function validatePlan(rows,count,bankId){
   assert(unique.size===refs.length,'duplicate_private_question');
   return refs;
 }
-function validateAnswer(answer,kind,maxBytes){
+function validateAnswer(answer,spec,maxBytes){
+  const kind=spec.kind;
   assert(kind==='single-choice'||kind==='numeric'||kind==='ordering',
     'invalid_answer');
+  const allowed=kind==='numeric'?null:spec.options.map(x=>x.id);
   if(kind==='single-choice'){
-    assert(typeof answer==='string'&&validToken(answer),'invalid_answer');
+    assert(typeof answer==='string'&&allowed.includes(answer),
+      'invalid_answer');
   }else if(kind==='numeric'){
     assert((typeof answer==='number'&&Number.isFinite(answer))||
-      (typeof answer==='string'&&answer.length<=100),'invalid_answer');
+      (typeof answer==='string'&&answer.length<=100&&
+       /^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(answer.trim())&&
+       Number.isFinite(Number(answer.trim()))),'invalid_answer');
   }else{
-    assert(Array.isArray(answer)&&answer.length>=2&&answer.length<=12&&
-      answer.every(validToken)&&new Set(answer).size===answer.length,
+    assert(Array.isArray(answer)&&answer.length===allowed.length&&
+      new Set(answer).size===allowed.length&&
+      answer.every(id=>typeof id==='string'&&allowed.includes(id)),
       'invalid_answer');
   }
   let size;
@@ -271,7 +277,7 @@ function createProtectedDelivery({
         'invalid_answer_limit');
       let answer;
       try{
-        answer=validateAnswer(response,item.packet.responseSpec.kind,
+        answer=validateAnswer(response,item.packet.responseSpec,
           settings.maxAnswerBytes);
       }catch(error){
         // Validation errors are not a chance to enumerate correct answers.
