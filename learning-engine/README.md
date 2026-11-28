@@ -110,7 +110,11 @@ must be provided by the application backend.
 
 A separate durable, account-transactional store and trusted identity provider
 are required in production. The provided in-memory store is **test-only** and
-explicitly refused in normal mode. This package does not host a working
+explicitly refused in normal mode. A production adapter must explicitly declare
+`store.capabilities.atomicAccountTransactions=true`,
+`durableAcrossRestarts=true` and `sharedAcrossWorkers=true`.
+These declarations are **not proof**: independently test real distributed
+locking, crash recovery, quota consistency and auth across multiple workers. This package does not host a working
 protected API or make existing public Ordjakten questions private. A bot can
 still harvest material over time or by using multiple accounts; rate limiting,
 identity assurance and abuse controls at the edge are needed as well.
