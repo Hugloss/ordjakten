@@ -190,6 +190,9 @@ test('Testa dig reveals no correctness through stars before finish and settles i
   const {context,$,saved}=harness({game});
   context.history.starCollection=started.collection;
   $('story-reveal').hidden=true;
+  // This isolated scoring test extracts submit() without its composition layer;
+  // grading is stubbed here, while the bank's real grading is tested separately.
+  context.gradeBankWord=(question,option)=>option.correct?'right':'wrong';
   vm.runInContext(production('  function submit(','  function advance()'),context);
   vm.runInContext('submit('+questions[0].options.findIndex(option=>option.correct)+')',context);
   assert.equal(context.history.starCollection.total,0);assert.equal(context.game.stars,0);
