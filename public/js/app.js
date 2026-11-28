@@ -120,7 +120,7 @@
   let journey=null,journeyStory=null,journeyKeepsake=null;
   let worldMission=null,worldMissionEarned=null;
   let treasureWorld=settings.adventure,treasureStarReward=null;
-  let portalId=null,portalFilter='all';
+  let portalId=null,portalFilter='all',portalVisible=12;
   let campSelected=null,campTarget=null,campChat=0,campPrompt=0,campMessage='',campRiddle=null,campTheatre=null;
   let campLiving=Living.start(),campToneUntil=0,campMini=null,campBuild=null;
   let questionPresentation=null,questionToken=null,questionDrag=null,questionGhost=null,suppressQuestionClick=false;
@@ -2363,12 +2363,12 @@
   // bounded current-step metadata joins the existing local history export.
   function portalModel(){return Portals.model(history.discoveryPortals,portalId,portalContent);}
   function renderPortals(focus=null){
-    PortalsView.render($('portals-content'),portalModel(),{canReadAloud,category:portalFilter});
+    PortalsView.render($('portals-content'),portalModel(),{canReadAloud,category:portalFilter,visibleCount:portalVisible});
     if(focus)$(focus)?.focus({preventScroll:true});
   }
   function openPortals(){
     if(!['home','learning','results','camp','portals'].includes(screen))return;
-    portalId=null;portalFilter='all';
+    portalId=null;portalFilter='all';portalVisible=12;
     goNav('portals');renderPortals('portal-title');
   }
   function portalSpeakText(){
@@ -2391,7 +2391,15 @@
     const data=button.dataset;
     if(Object.hasOwn(data,'portalFilter')&&!portalId){
       if(!['all','mystery','fantasy','explore','creative'].includes(data.portalFilter))return;
-      portalFilter=data.portalFilter;renderPortals('portal-filter-'+portalFilter);return;
+      portalFilter=data.portalFilter;portalVisible=12;
+      renderPortals('portal-filter-'+portalFilter);return;
+    }
+    if(Object.hasOwn(data,'portalMore')&&!portalId){
+      const matches=portalModel().entries.filter(row=>portalFilter==='all'||row.group===portalFilter);
+      if(portalVisible>=matches.length)return;
+      const nextId=matches[portalVisible]?.id;
+      portalVisible=Math.min(64,portalVisible+12);
+      renderPortals(nextId?'portal-card-'+nextId:'portal-title');return;
     }
     if(Object.hasOwn(data,'portalBack')){portalId=null;stopReadAloud();renderPortals('portal-title');return;}
     if(Object.hasOwn(data,'portalOpen')){

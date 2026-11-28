@@ -2374,6 +2374,1486 @@
         }
       ],
       "group": "fantasy"
+    },
+    {
+      "id": "rail-ticket",
+      "group": "mystery",
+      "emoji": "🚉",
+      "title": "Biljettens hemliga resa",
+      "intro": "På sagostationen har ett tåg fått fel biljett. Hjälp konduktören att hitta rätt innan nästa resa börjar.",
+      "ending": "Biljetten hittas vid rätt bänk. Nu vet resenärerna vart deras sagotåg ska åka.",
+      "keepsake": {
+        "emoji": "🎫",
+        "name": "Tågdetektivens biljett"
+      },
+      "stages": [
+        {
+          "title": "Rätt avgång",
+          "scene": "Konduktören läser två saker på reselappen.",
+          "clues": [
+            "Tåget ska åka till Snöbyn.",
+            "Det avgår från spår 2."
+          ],
+          "choices": [
+            "Spår 2 till Skogsvik.",
+            "Spår 2 till Snöbyn.",
+            "Spår 3 till Snöbyn."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Spåret är rätt, men tåget går till Skogsvik.",
+            null,
+            "Tåget går till Snöbyn, men från spår 3."
+          ],
+          "why": "Tåget mot Snöbyn avgår från spår 2. Båda uppgifterna stämmer."
+        },
+        {
+          "title": "Ett brev från resenären",
+          "scene": "En resenär beskriver sitt borttappade kuvert.",
+          "clues": [
+            "På kuvertet står ordet VÄLKOMMEN.",
+            "En bild av ett tåg finns bredvid texten."
+          ],
+          "choices": [
+            "VÄLKOMMEN med en bild av en buss.",
+            "HEJ med en bild av ett tåg.",
+            "VÄLKOMMEN med en bild av ett tåg."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Ordet stämmer, men bilden visar en buss.",
+            "Tågbilden stämmer, men ordet är HEJ.",
+            null
+          ],
+          "why": "Kuvertet har ordet VÄLKOMMEN och en tågbild."
+        },
+        {
+          "title": "Hitta biljetten",
+          "scene": "Tre bänkar står i stationshuset.",
+          "clues": [
+            "Bänken är grön.",
+            "Bredvid bänken står en papperskorg."
+          ],
+          "choices": [
+            "Grön bänk med en papperskorg bredvid.",
+            "Grön bänk utan papperskorg.",
+            "Blå bänk med en papperskorg bredvid."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Bänken är grön, men papperskorgen saknas.",
+            "Papperskorgen finns, men bänken är blå."
+          ],
+          "why": "Biljetten ligger vid den gröna bänken med papperskorg."
+        }
+      ]
+    },
+    {
+      "id": "lighthouse",
+      "group": "mystery",
+      "emoji": "🗼",
+      "title": "Fyrvaktarens hemliga ljuskod",
+      "intro": "Fyrvaktaren Isa har ritat en kod till havets sagokarta. Hjälp henne att ordna signalerna.",
+      "ending": "Isa hittar sin kodbok och kan berätta om fyrens ljussignaler för alla besökare.",
+      "keepsake": {
+        "emoji": "💡",
+        "name": "Fyrens ljusmärke"
+      },
+      "stages": [
+        {
+          "title": "Hitta rätt fyr",
+          "scene": "På en karta finns tre små fyrar.",
+          "clues": [
+            "Fyren står på en klippa.",
+            "Bredvid finns en liten brygga."
+          ],
+          "choices": [
+            "Fyr på klippa utan brygga.",
+            "Fyr på klippa med en liten brygga.",
+            "Fyr på sandstrand med en liten brygga."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Fyren står på klippan, men bryggan saknas.",
+            null,
+            "Bryggan finns, men fyren står inte på en klippa."
+          ],
+          "why": "Rätt fyr står på klippan och har en brygga bredvid."
+        },
+        {
+          "title": "Ljusets mönster",
+          "scene": "På ett papper beskriver Isa sin tecknade ljussignal.",
+          "clues": [
+            "Först syns en kort blinkning.",
+            "Sedan kommer två långa blinkningar."
+          ],
+          "choices": [
+            "Kort, lång, lång.",
+            "Lång, kort, lång, lång.",
+            "Kort, kort, lång."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "De två långa blinkningarna kommer, men signalen börjar inte med en kort.",
+            "Här börjar det kort, men sedan kommer inte två långa blinkningar."
+          ],
+          "why": "Mönstret börjar med en kort blinkning och slutar med två långa."
+        },
+        {
+          "title": "Kodbokens hylla",
+          "scene": "I fyrens lilla läshörna finns tre böcker.",
+          "clues": [
+            "Boken har ett blått omslag.",
+            "En fyr är ritad på framsidan."
+          ],
+          "choices": [
+            "Blå bok med en fisk på framsidan.",
+            "Röd bok med en fyr på framsidan.",
+            "Blå bok med en fyr på framsidan."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Omslaget är blått, men bilden visar en fisk.",
+            "Fyren finns, men boken är röd.",
+            null
+          ],
+          "why": "Kodboken är blå och har en fyr på framsidan."
+        }
+      ]
+    },
+    {
+      "id": "theater-props",
+      "group": "mystery",
+      "emoji": "🎭",
+      "title": "Teaterns försvunna papperskrona",
+      "intro": "Barnteatern ska spela en saga. En krona av papper har försvunnit bland alla fina saker bakom scenen.",
+      "ending": "Kronan hittas i rätt rekvisitalåda. Nu kan föreställningen börja, och alla får hjälpa till.",
+      "keepsake": {
+        "emoji": "👑",
+        "name": "Teaterkronan"
+      },
+      "stages": [
+        {
+          "title": "Manusets första rad",
+          "scene": "En lapp beskriver vem som ska ha kronan.",
+          "clues": [
+            "Personen spelar en drottning.",
+            "Drottningen kommer in efter draken."
+          ],
+          "choices": [
+            "Drottningen kommer in före draken.",
+            "Drottningen kommer in efter draken.",
+            "En riddare kommer in efter draken."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Rollen stämmer, men ordningen är fel.",
+            null,
+            "Ordningen stämmer, men det är en riddare och inte drottningen."
+          ],
+          "why": "Texten berättar att drottningen kommer in efter draken."
+        },
+        {
+          "title": "Hitta rätt hylla",
+          "scene": "Det finns tre hyllor med teatersaker.",
+          "clues": [
+            "Hyllan har en skylt med ordet SAGOR.",
+            "På hyllan ligger en röd mantel."
+          ],
+          "choices": [
+            "SAGOR med blå mantel.",
+            "DRÄKTER med röd mantel.",
+            "SAGOR med röd mantel."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Skyltens ord stämmer, men manteln är blå.",
+            "Manteln är röd, men skylten säger DRÄKTER.",
+            null
+          ],
+          "why": "Den röda manteln ligger på hyllan märkt SAGOR."
+        },
+        {
+          "title": "Kronans låda",
+          "scene": "Tre lådor står på hyllan.",
+          "clues": [
+            "Lådan har ett lock med stjärnor.",
+            "Där står ordet KRONA."
+          ],
+          "choices": [
+            "Stjärnlock och texten KRONA.",
+            "Stjärnlock och texten MASK.",
+            "Hjärtlock och texten KRONA."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Stjärnorna finns, men ordet är MASK.",
+            "Ordet KRONA stämmer, men locket har hjärtan."
+          ],
+          "why": "Kronans låda har stjärnor på locket och texten KRONA."
+        }
+      ]
+    },
+    {
+      "id": "night-library",
+      "group": "mystery",
+      "emoji": "📚",
+      "title": "Bibliotekets hemliga lånekort",
+      "intro": "Ett bokmärke med en ledtråd har hamnat på fel hylla. Biblioteksvännen Mio vill hitta det.",
+      "ending": "Mio hittar bokmärket och lägger tillbaka det i rätt bok. Bibliotekets hemlighet är löst.",
+      "keepsake": {
+        "emoji": "🔖",
+        "name": "Bokspanarens märke"
+      },
+      "stages": [
+        {
+          "title": "Den rätta bokhyllan",
+          "scene": "Mio hittar ett meddelande om en hylla.",
+          "clues": [
+            "På hyllan står sagoböcker.",
+            "En grön skylt sitter ovanför."
+          ],
+          "choices": [
+            "Sagoböcker under en grön skylt.",
+            "Sagoböcker under en röd skylt.",
+            "Faktaböcker under en grön skylt."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Böckerna är sagor, men skylten är röd.",
+            "Skylten är grön, men böckerna handlar om fakta."
+          ],
+          "why": "Sagoböckerna står under den gröna skylten."
+        },
+        {
+          "title": "Bokens beskrivning",
+          "scene": "En liten lapp beskriver en bestämd bok.",
+          "clues": [
+            "Berättelsen handlar om en vänlig räv.",
+            "En kanin får hjälp att hitta hem."
+          ],
+          "choices": [
+            "En vänlig räv dansar på en äng medan kaninen leker.",
+            "En vänlig räv hjälper en kanin att hitta hem.",
+            "En grinig björn hjälper kaninen att hitta hem."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Räven är vänlig, men kaninen får ingen hjälp att hitta hem.",
+            null,
+            "Kaninen får hjälp, men berättelsen handlar inte om en vänlig räv."
+          ],
+          "why": "En vänlig räv hjälper kaninen att hitta hem. Båda spåren stämmer."
+        },
+        {
+          "title": "Bokmärket i berättelsen",
+          "scene": "Tre bokmärken ligger mellan bokens sidor.",
+          "clues": [
+            "Bokmärket är gult.",
+            "På det står ordet TILLSAMMANS."
+          ],
+          "choices": [
+            "Gult märke med ordet ENSAM.",
+            "Blått märke med ordet TILLSAMMANS.",
+            "Gult märke med ordet TILLSAMMANS."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Färgen stämmer, men ordet är ENSAM.",
+            "Ordet stämmer, men bokmärket är blått.",
+            null
+          ],
+          "why": "Bokmärket är gult och har ordet TILLSAMMANS."
+        }
+      ]
+    },
+    {
+      "id": "market-map",
+      "group": "mystery",
+      "emoji": "🎡",
+      "title": "Sagomarknadens försvunna vägbeskrivning",
+      "intro": "Marknadsnissen har tappat sin karta mellan stånden. Du får hjälpa till att hitta hans lilla arbetsbord.",
+      "ending": "Kartan hittas och nissen kan hjälpa alla gäster att hitta på sagomarknaden.",
+      "keepsake": {
+        "emoji": "🧺",
+        "name": "Marknadens kartmärke"
+      },
+      "stages": [
+        {
+          "title": "Hitta fruktståndet",
+          "scene": "En lapp berättar var nissen stannade först.",
+          "clues": [
+            "Här säljs äpplen.",
+            "Ovanför står en skylt med ett hjärta."
+          ],
+          "choices": [
+            "Äpplen under en skylt med hjärta.",
+            "Äpplen under en skylt med stjärna.",
+            "Päron under en skylt med hjärta."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Äpplena stämmer, men skyltens bild är en stjärna.",
+            "Hjärtat finns, men där säljs päron."
+          ],
+          "why": "Äpplena ligger under skylten med hjärtat."
+        },
+        {
+          "title": "Läs vägen rätt",
+          "scene": "På marken finns tre skyltar med vägord.",
+          "clues": [
+            "Vägen går först mot bron.",
+            "Efter bron ska man gå till vänster."
+          ],
+          "choices": [
+            "Gå mot bron och sedan höger.",
+            "Gå mot bron och sedan vänster.",
+            "Gå mot trädet och sedan vänster."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Bron stämmer, men man ska gå vänster.",
+            null,
+            "Svängen stämmer, men vägen går först mot bron."
+          ],
+          "why": "Först kommer bron och sedan svänger vägen vänster."
+        },
+        {
+          "title": "Hitta kartbordet",
+          "scene": "Tre små bord står vid slutet av marknaden.",
+          "clues": [
+            "Bordet har en blå duk.",
+            "En liten kompass ligger på bordet."
+          ],
+          "choices": [
+            "Blå duk utan kompass.",
+            "Grön duk med kompass.",
+            "Blå duk med kompass."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Duken är blå, men kompassen saknas.",
+            "Kompassen finns, men duken är grön.",
+            null
+          ],
+          "why": "Kartbordet har blå duk och en kompass ovanpå."
+        }
+      ]
+    },
+    {
+      "id": "dragon-orchestra",
+      "group": "fantasy",
+      "emoji": "🐲",
+      "title": "Drakungens borttappade melodi",
+      "intro": "Den lilla draken Flim vill spela en sång för sina vänner men minns inte hur den börjar.",
+      "ending": "Flim hittar melodin och spelar en lugn sång. Vännerna lyssnar och klappar i händerna.",
+      "keepsake": {
+        "emoji": "🎶",
+        "name": "Drakmelodins märke"
+      },
+      "stages": [
+        {
+          "title": "Hitta notboken",
+          "scene": "Tre böcker ligger på drakens bord.",
+          "clues": [
+            "Boken har en grön pärm.",
+            "En liten flöjt finns på framsidan."
+          ],
+          "choices": [
+            "Grön pärm med trumma.",
+            "Grön pärm med flöjt.",
+            "Blå pärm med flöjt."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Färgen stämmer, men bilden visar en trumma.",
+            null,
+            "Flöjten finns, men pärmen är blå."
+          ],
+          "why": "Notboken har grön pärm och en flöjt på framsidan."
+        },
+        {
+          "title": "Sången för en trött vän",
+          "scene": "Flim vill välja en sång som hjälper en vän att vila.",
+          "clues": [
+            "Sången ska låta lugn.",
+            "Texten handlar om att vila."
+          ],
+          "choices": [
+            "Snabb sång om att vila.",
+            "Lugn sång om en vild tävling.",
+            "Lugn sång om att sova gott."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Sången handlar om vila, men den är snabb.",
+            "Sången är lugn, men texten handlar inte om vila.",
+            null
+          ],
+          "why": "Den lugna sången om sömn passar båda spåren."
+        },
+        {
+          "title": "Spela i rätt ordning",
+          "scene": "Tre kort visar hur melodin ska börja.",
+          "clues": [
+            "Första tonen är låg.",
+            "Sista tonen är hög."
+          ],
+          "choices": [
+            "Låg, mellan, hög.",
+            "Hög, mellan, låg.",
+            "Låg, mellan, låg."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Sista tonen är låg i stället för hög.",
+            "Första tonen är låg, men sista är också låg."
+          ],
+          "why": "Melodin börjar lågt och slutar högt."
+        }
+      ]
+    },
+    {
+      "id": "cloud-castle",
+      "group": "fantasy",
+      "emoji": "☁️",
+      "title": "Molnslottets borttappade nyckel",
+      "intro": "På ett slott ovanför molnen har en snäll molnvakt tappat nyckeln till sagosalen.",
+      "ending": "Nyckeln passar sagosalens dörr. Molnvakten öppnar så att alla kan lyssna på berättelser.",
+      "keepsake": {
+        "emoji": "🗝️",
+        "name": "Molnslottets nyckel"
+      },
+      "stages": [
+        {
+          "title": "Trappan i molnet",
+          "scene": "En skylt visar vilken trappa som leder till salen.",
+          "clues": [
+            "Trappan går uppåt.",
+            "Överst sitter en rund lykta."
+          ],
+          "choices": [
+            "Trappa uppåt med rund lykta.",
+            "Trappa uppåt med fyrkantig lykta.",
+            "Trappa nedåt med rund lykta."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Trappan går uppåt, men lyktan är fyrkantig.",
+            "Lyktan är rund, men trappan går nedåt."
+          ],
+          "why": "Trappan går upp till den runda lyktan."
+        },
+        {
+          "title": "Vaktens gåta",
+          "scene": "Vakten beskriver något som finns i sagosalen.",
+          "clues": [
+            "Föremålet kan öppnas.",
+            "Inuti finns skrivna berättelser."
+          ],
+          "choices": [
+            "En öppen kartong med tomma blad.",
+            "En bok med sagor på sidorna.",
+            "En tavla med en saga målad på."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Kartongen kan öppnas, men innehåller inga berättelser.",
+            null,
+            "Sagan finns, men en tavla öppnas inte som en bok."
+          ],
+          "why": "Boken kan öppnas och rymmer skrivna sagor."
+        },
+        {
+          "title": "Den rätta nyckeln",
+          "scene": "Tre nycklar ligger i en skål.",
+          "clues": [
+            "Nyckeln är av silverfärgad metall.",
+            "Ett hjärta syns på handtaget."
+          ],
+          "choices": [
+            "Silvernyckel med stjärna.",
+            "Guldnyckel med hjärta.",
+            "Silvernyckel med hjärta."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Metallen är rätt färg, men bilden är en stjärna.",
+            "Hjärtat finns, men nyckeln är guldfärgad.",
+            null
+          ],
+          "why": "Nyckeln är silverfärgad och har ett hjärta på handtaget."
+        }
+      ]
+    },
+    {
+      "id": "moon-fairy",
+      "group": "fantasy",
+      "emoji": "🌙",
+      "title": "Månälvans hemliga stjärnbrev",
+      "intro": "Månälvan Lumi vill skicka en varm hälsning till en vän som känner sig ensam.",
+      "ending": "Lumi skickar sitt vänliga brev. Hennes vän känner att någon tänker på henne.",
+      "keepsake": {
+        "emoji": "✉️",
+        "name": "Månälvans stjärnbrev"
+      },
+      "stages": [
+        {
+          "title": "Hitta brevpappret",
+          "scene": "Lumi letar efter rätt ark i sagolådan.",
+          "clues": [
+            "Papperet är ljusblått.",
+            "En gul måne finns i hörnet."
+          ],
+          "choices": [
+            "Ljusblått papper med gul måne.",
+            "Ljusblått papper med gul sol.",
+            "Vitt papper med gul måne."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Färgen stämmer, men bilden visar solen.",
+            "Månen stämmer, men papperet är vitt."
+          ],
+          "why": "Brevpapperet är ljusblått med en gul måne."
+        },
+        {
+          "title": "Den vänliga hälsningen",
+          "scene": "Lumi vill skriva en mening som visar omtanke.",
+          "clues": [
+            "Meddelandet frågar hur vännen mår.",
+            "Det erbjuder vänligt sällskap."
+          ],
+          "choices": [
+            "Hur mår du? Jag har mycket att göra.",
+            "Hur mår du? Vill du vara med mig en stund?",
+            "Kom och lek med mig i morgon!"
+          ],
+          "answer": 1,
+          "wrong": [
+            "Meddelandet frågar hur vännen mår, men erbjuder inget sällskap.",
+            null,
+            "Här erbjuds lek, men ingen frågar hur vännen mår."
+          ],
+          "why": "Lumi frågar hur vännen mår och bjuder in till sällskap."
+        },
+        {
+          "title": "Hitta kuvertet",
+          "scene": "Tre kuvert ligger vid fönstret.",
+          "clues": [
+            "Kuvertet har en blå stjärna.",
+            "På baksidan står ordet VÄN."
+          ],
+          "choices": [
+            "Blå stjärna med ordet HEJ.",
+            "Grön stjärna med ordet VÄN.",
+            "Blå stjärna med ordet VÄN."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Stjärnan är blå, men ordet är HEJ.",
+            "Ordet VÄN stämmer, men stjärnan är grön.",
+            null
+          ],
+          "why": "Kuvertet har både en blå stjärna och ordet VÄN."
+        }
+      ]
+    },
+    {
+      "id": "mermaid-letter",
+      "group": "fantasy",
+      "emoji": "🧜",
+      "title": "Sjöjungfruns vänskapspärla",
+      "intro": "Sjöjungfrun Nilla har tappat en pärla från sitt vänskapsarmband. Havsvännerna hjälper henne leta.",
+      "ending": "Pärlan hittas i en mjuk tygpåse. Nilla lagar sitt armband och tackar sina havsvänner.",
+      "keepsake": {
+        "emoji": "🐚",
+        "name": "Vänskapssnäckan"
+      },
+      "stages": [
+        {
+          "title": "Bädden bland snäckorna",
+          "scene": "En lapp beskriver var Nilla lade sitt armband.",
+          "clues": [
+            "Där finns tre snäckor.",
+            "Bredvid ligger en mjuk blå filt."
+          ],
+          "choices": [
+            "Tre snäckor med blå filt.",
+            "Tre snäckor med röd filt.",
+            "En snäcka med blå filt."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Snäckorna är tre, men filten är röd.",
+            "Filten är blå, men snäckorna är inte tre."
+          ],
+          "why": "Tre snäckor ligger bredvid den blå filten."
+        },
+        {
+          "title": "En vän som hjälper",
+          "scene": "Havsvännerna skriver kort om hur de letar tillsammans.",
+          "clues": [
+            "Två vänner hjälper varandra.",
+            "Någon letar efter en borttappad pärla."
+          ],
+          "choices": [
+            "Två vänner hjälper varandra bära en väska.",
+            "Två vänner letar tillsammans efter pärlan.",
+            "En vän letar ensam efter pärlan."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Vännerna hjälps åt, men de letar inte efter en pärla.",
+            null,
+            "En pärla söks, men ingen hjälper till med letandet."
+          ],
+          "why": "Två vänner letar tillsammans efter samma pärla."
+        },
+        {
+          "title": "Hitta den mjuka påsen",
+          "scene": "Tre små påsar ligger på en hylla.",
+          "clues": [
+            "Påsen är grön.",
+            "Den har en vit stjärna på framsidan."
+          ],
+          "choices": [
+            "Grön påse med vit måne.",
+            "Blå påse med vit stjärna.",
+            "Grön påse med vit stjärna."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Påsen är grön, men bilden är en måne.",
+            "Stjärnan är vit, men påsen är blå.",
+            null
+          ],
+          "why": "Den gröna påsen har en vit stjärna."
+        }
+      ]
+    },
+    {
+      "id": "tiny-giants",
+      "group": "fantasy",
+      "emoji": "🪨",
+      "title": "Jättarnas lilla vänskapsgåta",
+      "intro": "De stora men vänliga jättarna vill hitta en försvunnen liten kruka till sin pytteträdgård.",
+      "ending": "Krukan hittas vid rätt stig. Jättarna lär sig att även små saker kan vara viktiga.",
+      "keepsake": {
+        "emoji": "🌱",
+        "name": "Jättarnas frömärke"
+      },
+      "stages": [
+        {
+          "title": "Det lilla fotavtrycket",
+          "scene": "En jättes teckning visar var den lilla stigen börjar.",
+          "clues": [
+            "Där finns ett litet fotavtryck.",
+            "Bredvid växer en stor blomma."
+          ],
+          "choices": [
+            "Litet fotavtryck vid stor blomma.",
+            "Litet fotavtryck vid stor sten.",
+            "Stor blomma vid ett hjulspår."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Fotavtrycket finns, men blomman saknas.",
+            "Blomman finns, men det är ett hjulspår och inte en fot."
+          ],
+          "why": "Stigen börjar vid fotavtrycket och den stora blomman."
+        },
+        {
+          "title": "Vems kruka är det?",
+          "scene": "Tre vänner beskriver sina odlingskrukor.",
+          "clues": [
+            "Krukan är mycket liten.",
+            "Där växer en solros."
+          ],
+          "choices": [
+            "Liten kruka med en ros.",
+            "Liten kruka med en solros.",
+            "Stor kruka med en solros."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Krukan är liten, men blomman är en ros.",
+            null,
+            "Solrosen finns, men krukan är stor."
+          ],
+          "why": "Den lilla krukan innehåller en solros."
+        },
+        {
+          "title": "Plantera på rätt plats",
+          "scene": "Jättarna vill placera krukan där blomman kan växa.",
+          "clues": [
+            "Platsen får ljus under dagen.",
+            "Någon kan ge vatten när jorden blir torr."
+          ],
+          "choices": [
+            "Ljus plats där ingen kan vattna.",
+            "Mörk plats där någon vattnar vid behov.",
+            "Ljus plats där någon vattnar vid behov."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Ljuset finns, men ingen kan vattna när jorden torkar.",
+            "Någon kan vattna, men platsen är mörk.",
+            null
+          ],
+          "why": "Platsen får ljus och vatten när jorden behöver det."
+        }
+      ]
+    },
+    {
+      "id": "weather-station",
+      "group": "explore",
+      "emoji": "🌦️",
+      "title": "Väderstationens borttappade skylt",
+      "intro": "På den lilla väderstationen har skyltarna blandats ihop. Hjälp meteorologen Ella läsa vad de betyder.",
+      "ending": "Skyltarna sitter på rätt plats igen. Ella kan nu förklara vädret med tydliga ord.",
+      "keepsake": {
+        "emoji": "🌤️",
+        "name": "Väderspanarens märke"
+      },
+      "stages": [
+        {
+          "title": "Vilken dag var det?",
+          "scene": "Ella letar efter en bild av en viss väderdag.",
+          "clues": [
+            "På bilden faller regn.",
+            "Träden böjer sig i vinden."
+          ],
+          "choices": [
+            "Regn och stilla träd.",
+            "Regn och träd som böjs av vinden.",
+            "Blåst som böjer träd, men inget regn."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Regnet finns där, men träden står helt stilla.",
+            null,
+            "Träden böjs av vinden, men det regnar inte."
+          ],
+          "why": "Bilden visar både regn och träd som böjs av vinden."
+        },
+        {
+          "title": "Väderorden",
+          "scene": "Ella skriver en kort rapport som passar de två spåren.",
+          "clues": [
+            "Vädret är kallt.",
+            "Något vitt faller från molnen."
+          ],
+          "choices": [
+            "Det är kallt och snö faller.",
+            "Det är kallt men himlen är klar.",
+            "Det är varmt och snö faller i fantasin."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Det är kallt, men inget faller från molnen.",
+            "Snön nämns, men texten säger att det är varmt."
+          ],
+          "why": "Rapporten beskriver kyla och snö som faller."
+        },
+        {
+          "title": "Rätt symbolskylt",
+          "scene": "Tre skyltar står på stationens bord.",
+          "clues": [
+            "Skylten visar ett moln.",
+            "Under molnet finns två blå droppar."
+          ],
+          "choices": [
+            "Moln med två gula stjärnor.",
+            "Sol med två blå droppar.",
+            "Moln med två blå droppar."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Molnet stämmer, men bilden visar stjärnor.",
+            "Dropparna stämmer, men symbolen är en sol.",
+            null
+          ],
+          "why": "Skylten visar ett moln med två blå droppar."
+        }
+      ]
+    },
+    {
+      "id": "polar-post",
+      "group": "explore",
+      "emoji": "❄️",
+      "title": "Snöexpeditionens försvunna vykort",
+      "intro": "Två vänner är på en fantasiexpedition bland snö och is. Ett vykort har hamnat på fel plats.",
+      "ending": "Vykortet hittas i det varma lästältet. Vännerna kan berätta om sitt snöäventyr.",
+      "keepsake": {
+        "emoji": "✉️",
+        "name": "Snöexpeditionens vykort"
+      },
+      "stages": [
+        {
+          "title": "Kartans första markering",
+          "scene": "En tecknad karta visar var vännerna gick.",
+          "clues": [
+            "Stigen leder till ett litet tält.",
+            "Utanför tältet står en blå flagga."
+          ],
+          "choices": [
+            "Litet tält med blå flagga utanför.",
+            "Litet tält med grön flagga utanför.",
+            "Blå flagga vid en stor stuga."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Tältet finns, men flaggan är grön.",
+            "Flaggan är blå, men där finns en stuga och inte ett tält."
+          ],
+          "why": "Det lilla tältet har en blå flagga utanför."
+        },
+        {
+          "title": "Vad betyder skydd?",
+          "scene": "Vännerna söker en plats där de kan läsa sitt vykort.",
+          "clues": [
+            "Platsen skyddar mot vinden.",
+            "Där finns ett bord att lägga vykortet på."
+          ],
+          "choices": [
+            "Ett tält med väggar men inget bord.",
+            "En skyddad stuga med ett bord.",
+            "Ett öppet bord ute i blåsten."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Tältet ger vindskydd, men saknar bord.",
+            null,
+            "Bordet finns, men står ute i vinden."
+          ],
+          "why": "Stugan skyddar mot vinden och har ett bord."
+        },
+        {
+          "title": "Vykortets framsida",
+          "scene": "Tre vykort ligger på bordet.",
+          "clues": [
+            "På kortet finns en tecknad snögubbe.",
+            "Bredvid snögubben står en liten lykta."
+          ],
+          "choices": [
+            "Snögubbe med en stjärna bredvid.",
+            "Lykta bredvid en tecknad björn.",
+            "Snögubbe med en lykta bredvid."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Snögubben finns, men lyktan saknas.",
+            "Lyktan finns, men bilden visar en björn.",
+            null
+          ],
+          "why": "Vykortet visar en snögubbe med en lykta."
+        }
+      ]
+    },
+    {
+      "id": "mountain-trail",
+      "group": "explore",
+      "emoji": "⛰️",
+      "title": "Bergsstigens hemliga riktning",
+      "intro": "Vandraren Noa vill hitta ett läshus längs en trygg tecknad bergsstig. Hjälp till att läsa kartan.",
+      "ending": "Noa hittar läshuset och får vila med en varm filt och en spännande bok.",
+      "keepsake": {
+        "emoji": "🧭",
+        "name": "Bergsstigens kompass"
+      },
+      "stages": [
+        {
+          "title": "Stigarnas skillnad",
+          "scene": "Två ord på kartan visar rätt stig.",
+          "clues": [
+            "Stigen går förbi ett stort vattenfall.",
+            "En träbro finns längre fram."
+          ],
+          "choices": [
+            "Vattenfall och träbro på stigen.",
+            "Vattenfall men ingen bro.",
+            "Träbro på en stig utan vattenfall."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Vattenfallet finns, men träbron saknas.",
+            "Träbron finns, men inget vattenfall."
+          ],
+          "why": "Både vattenfallet och träbron ligger vid samma stig."
+        },
+        {
+          "title": "Läs riktningsorden",
+          "scene": "En vän har skrivit hur Noa ska svänga.",
+          "clues": [
+            "Först går Noa mot det stora trädet.",
+            "Sedan svänger Noa åt höger."
+          ],
+          "choices": [
+            "Mot trädet, sedan vänster.",
+            "Mot trädet, sedan höger.",
+            "Mot stenen, sedan höger."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Trädet är rätt, men svängen går vänster.",
+            null,
+            "Svängen går höger, men första platsen är stenen."
+          ],
+          "why": "Noa går först mot trädet och svänger sedan höger."
+        },
+        {
+          "title": "Ett tryggt läshus",
+          "scene": "Tre stugor syns på kartan.",
+          "clues": [
+            "Huset har ett rött tak.",
+            "En stor bok är målad på dörren."
+          ],
+          "choices": [
+            "Rött tak med en blomma på dörren.",
+            "Blått tak med en bok på dörren.",
+            "Rött tak med en bok på dörren."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Taket är rött, men bilden visar en blomma.",
+            "Boken finns, men taket är blått.",
+            null
+          ],
+          "why": "Läshuset har rött tak och en bok på dörren."
+        }
+      ]
+    },
+    {
+      "id": "volcano-island",
+      "group": "explore",
+      "emoji": "🌋",
+      "title": "Vulkanöns märkliga sten",
+      "intro": "På ett museum finns en sagokarta över en vulkanö. Geologen Nova vill hitta ett gammalt stenprov.",
+      "ending": "Stenen ligger i en trygg glasmonter. Nova visar hur forskare kan jämföra olika stenar.",
+      "keepsake": {
+        "emoji": "🪨",
+        "name": "Stenforskarens fynd"
+      },
+      "stages": [
+        {
+          "title": "Kartans gamla utsiktspunkt",
+          "scene": "Museets karta visar en plats att studera på avstånd.",
+          "clues": [
+            "En vulkan syns på bilden.",
+            "En liten sjö ligger nedanför berget."
+          ],
+          "choices": [
+            "Vulkan med sjö nedanför.",
+            "Vulkan med en stor skog men ingen sjö.",
+            "Sjö nedanför en vanlig kulle."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Vulkanen syns, men sjön saknas.",
+            "Sjön finns, men bilden visar inte en vulkan."
+          ],
+          "why": "På kartan syns en vulkan med en sjö nedanför."
+        },
+        {
+          "title": "Forskaren beskriver stenen",
+          "scene": "Nova har skrivit ner två detaljer.",
+          "clues": [
+            "Stenen är mörk.",
+            "Den har små hål i ytan."
+          ],
+          "choices": [
+            "Mörk sten med slät yta.",
+            "Mörk sten med små hål.",
+            "Ljus sten med små hål."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Färgen stämmer, men ytan är slät.",
+            null,
+            "Hålen finns, men stenen är ljus."
+          ],
+          "why": "Stenen är mörk och har små hål i ytan."
+        },
+        {
+          "title": "Stenen på museet",
+          "scene": "Tre montrar står i utställningen.",
+          "clues": [
+            "På montern står det STENAR.",
+            "På glaset finns en bild av en vulkan."
+          ],
+          "choices": [
+            "STENAR med en bild av en måne.",
+            "FOSSIL med en bild av en vulkan.",
+            "STENAR med en bild av en vulkan."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Texten är STENAR, men bilden visar en måne.",
+            "Vulkanen finns, men texten är FOSSIL.",
+            null
+          ],
+          "why": "Montern är märkt STENAR och har vulkanbilden."
+        }
+      ]
+    },
+    {
+      "id": "star-observatory",
+      "group": "explore",
+      "emoji": "🔭",
+      "title": "Stjärnskådarens kvällskarta",
+      "intro": "På observatoriets lekhörna finns kartor över stjärnhimlen. En liten teckning är försvunnen.",
+      "ending": "Stjärnteckningen hittas i kartlådan. Stjärnskådarna kan fortsätta titta på natthimlen.",
+      "keepsake": {
+        "emoji": "🌠",
+        "name": "Stjärnkartans märke"
+      },
+      "stages": [
+        {
+          "title": "Läs stjärnfiguren",
+          "scene": "Tre teckningar ligger på bordet.",
+          "clues": [
+            "Fyra stjärnor bildar en fyrkant.",
+            "En extra stjärna finns ovanför fyrkanten."
+          ],
+          "choices": [
+            "Fyra stjärnor i fyrkant med en ovanför.",
+            "Fyra stjärnor i fyrkant utan extra stjärna.",
+            "En stjärna ovanför en triangel."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Fyrkanten finns, men stjärnan ovanför saknas.",
+            "Stjärnan ovanför finns, men figuren är en triangel."
+          ],
+          "why": "En stjärna finns ovanför fyrkanten av fyra stjärnor."
+        },
+        {
+          "title": "Titta genom fönstret",
+          "scene": "En bild beskriver var någon stod och tittade.",
+          "clues": [
+            "Platsen har ett stort fönster.",
+            "Bredvid fönstret står en kikare."
+          ],
+          "choices": [
+            "Stort fönster utan kikare.",
+            "Stort fönster med kikare bredvid.",
+            "Kikare bredvid en stängd dörr utan fönster."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Fönstret finns, men kikaren saknas.",
+            null,
+            "Kikaren finns, men inget stort fönster."
+          ],
+          "why": "Det stora fönstret står bredvid kikaren."
+        },
+        {
+          "title": "Kartan i rätt låda",
+          "scene": "Tre kartlådor är märkta med bilder.",
+          "clues": [
+            "På lådan finns en måne.",
+            "Under månen står ordet NATT."
+          ],
+          "choices": [
+            "Måne med ordet DAG.",
+            "Sol med ordet NATT.",
+            "Måne med ordet NATT."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Bilden visar månen, men ordet är DAG.",
+            "Ordet NATT stämmer, men bilden visar solen.",
+            null
+          ],
+          "why": "Rätt låda har månen och ordet NATT."
+        }
+      ]
+    },
+    {
+      "id": "robot-workshop",
+      "group": "creative",
+      "emoji": "🤖",
+      "title": "Robotverkstadens vänliga uppfinning",
+      "intro": "Uppfinnaren Kim bygger en liten hjälprobot av fantasidelar. Hjälp Kim läsa ritningen.",
+      "ending": "Hjälproboten är färdig på ritningen. Den kan nu dela ut böcker till alla i lekhörnan.",
+      "keepsake": {
+        "emoji": "⚙️",
+        "name": "Uppfinnarens kugghjul"
+      },
+      "stages": [
+        {
+          "title": "Hitta ritningen",
+          "scene": "Tre papper ligger på verkstadsbordet.",
+          "clues": [
+            "Bilden visar en robot.",
+            "Robotens huvud är fyrkantigt."
+          ],
+          "choices": [
+            "Robot med fyrkantigt huvud.",
+            "Robot med runt huvud.",
+            "Fyrkantigt huvud på en kattfigur."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Det är en robot, men huvudet är runt.",
+            "Huvudet är fyrkantigt, men figuren är en katt."
+          ],
+          "why": "Ritningen visar en robot med fyrkantigt huvud."
+        },
+        {
+          "title": "Vad ska roboten göra?",
+          "scene": "Kim vill skapa en robot som hjälper till i biblioteket.",
+          "clues": [
+            "Roboten ska bära böcker.",
+            "Den ska lämna böckerna på en hylla."
+          ],
+          "choices": [
+            "Roboten bär böcker till ett bord.",
+            "Roboten bär böcker till en hylla.",
+            "Roboten ställer leksaker på en hylla."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Böckerna bärs, men läggs på bordet.",
+            null,
+            "Hyllan används, men roboten bär leksaker i stället för böcker."
+          ],
+          "why": "Roboten bär böckerna och lämnar dem på hyllan."
+        },
+        {
+          "title": "Startknappens symbol",
+          "scene": "Det finns tre knappar på den ritade roboten.",
+          "clues": [
+            "På knappen står HJÄLP.",
+            "Bredvid texten finns ett grönt hjärta."
+          ],
+          "choices": [
+            "HJÄLP med röd stjärna.",
+            "START med grönt hjärta.",
+            "HJÄLP med grönt hjärta."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Ordet är HJÄLP, men bilden visar en röd stjärna.",
+            "Hjärtat är grönt, men det står START.",
+            null
+          ],
+          "why": "På knappen står HJÄLP bredvid ett grönt hjärta."
+        }
+      ]
+    },
+    {
+      "id": "comic-studio",
+      "group": "creative",
+      "emoji": "🗯️",
+      "title": "Seriestudions försvunna pratbubbla",
+      "intro": "En tecknare ska göra en rolig serie om två vänner. En pratbubbla har hamnat på fel sida.",
+      "ending": "Serien får rätt pratbubbla och går att läsa från början till slut. Tecknaren visar den stolt.",
+      "keepsake": {
+        "emoji": "✏️",
+        "name": "Serietecknarens penna"
+      },
+      "stages": [
+        {
+          "title": "Vem pratar?",
+          "scene": "Tre rutor visar vem som säger hej.",
+          "clues": [
+            "En kanin säger något.",
+            "I bubblan står ordet HEJ."
+          ],
+          "choices": [
+            "Kanin med pratbubblan HEJ.",
+            "Kanin med pratbubblan OJ.",
+            "Räv med pratbubblan HEJ."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Kaninen pratar, men säger OJ.",
+            "HEJ står där, men det är räven som pratar."
+          ],
+          "why": "Kaninen säger HEJ i pratbubblan."
+        },
+        {
+          "title": "Berättelsens ordning",
+          "scene": "Tecknaren vill att händelserna ska gå att förstå.",
+          "clues": [
+            "Först hittar vännen ett brev.",
+            "Sedan läser vännen brevet."
+          ],
+          "choices": [
+            "Vännen läser brevet innan det hittas.",
+            "Vännen hittar brevet och läser det sedan.",
+            "Vännen hittar ett brev och lägger det i en låda utan att läsa."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Vännen läser brevet, men händelserna kommer i fel ordning.",
+            null,
+            "Brevet hittas, men det blir aldrig läst."
+          ],
+          "why": "Vännen hittar först brevet och läser det sedan."
+        },
+        {
+          "title": "Den sista pratbubblan",
+          "scene": "En vän vill tacka den som hjälpte.",
+          "clues": [
+            "Bubblan innehåller ordet TACK.",
+            "Meningen förklarar vad vännen tackar för."
+          ],
+          "choices": [
+            "TACK så mycket!",
+            "Du hjälpte mig med boken!",
+            "TACK för att du hjälpte mig med boken!"
+          ],
+          "answer": 2,
+          "wrong": [
+            "TACK finns, men man får inte veta vad tacket gäller.",
+            "Hjälpen beskrivs, men ordet TACK saknas.",
+            null
+          ],
+          "why": "TACK står där, och meningen berättar varför vännen tackar."
+        }
+      ]
+    },
+    {
+      "id": "music-festival",
+      "group": "creative",
+      "emoji": "🎷",
+      "title": "Musikfestens hemliga program",
+      "intro": "På en vänlig musikfest har programbladet tappats bort. Hjälp arrangörerna ordna spelningen.",
+      "ending": "Musikfestens program är klart. Alla kan lyssna, sjunga och spela tillsammans.",
+      "keepsake": {
+        "emoji": "🎼",
+        "name": "Festmusikens notblad"
+      },
+      "stages": [
+        {
+          "title": "Hitta musikscenen",
+          "scene": "Tre scener har olika skyltar.",
+          "clues": [
+            "Scenen har en bild av en gitarr.",
+            "På skylten står MUSIK."
+          ],
+          "choices": [
+            "Gitarr och ordet MUSIK.",
+            "Gitarr och ordet DANS.",
+            "Trumma och ordet MUSIK."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Gitarren finns, men det står DANS.",
+            "Ordet MUSIK stämmer, men bilden visar en trumma."
+          ],
+          "why": "Skylten visar gitarren och ordet MUSIK."
+        },
+        {
+          "title": "Ordning på låtarna",
+          "scene": "En lapp beskriver vad som ska spelas först och sist.",
+          "clues": [
+            "Första låten är lugn.",
+            "Sista låten är snabb."
+          ],
+          "choices": [
+            "Snabb sång, lugn sång.",
+            "Lugn sång, snabb sång.",
+            "Lugn sång, lugn sång."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Det börjar snabbt och slutar lugnt i stället.",
+            null,
+            "Den första är lugn, men den sista är inte snabb."
+          ],
+          "why": "Programmet börjar lugnt och slutar med snabb musik."
+        },
+        {
+          "title": "Vänliga applåder",
+          "scene": "Arrangören vill hitta en lapp som passar efter spelningen.",
+          "clues": [
+            "Lappen innehåller ett tack.",
+            "Den berömmer att musikerna spelade tillsammans."
+          ],
+          "choices": [
+            "Tack för att du kom!",
+            "Ni spelade fint tillsammans!",
+            "Tack för att ni spelade tillsammans!"
+          ],
+          "answer": 2,
+          "wrong": [
+            "Det finns ett tack, men inget om att spela tillsammans.",
+            "Samarbetet beröms, men ordet tack saknas.",
+            null
+          ],
+          "why": "Lappen tackar musikerna för att de spelade tillsammans."
+        }
+      ]
+    },
+    {
+      "id": "puppet-theater",
+      "group": "creative",
+      "emoji": "🪆",
+      "title": "Dockteaterns försvunna skugga",
+      "intro": "På dockteatern ska tre figurer spela en saga. En av skuggfigurerna är borta.",
+      "ending": "Skuggfiguren hittas i rätt låda. Dockteatern kan nu spela sin berättelse.",
+      "keepsake": {
+        "emoji": "🎭",
+        "name": "Skuggteatermärket"
+      },
+      "stages": [
+        {
+          "title": "Skuggans form",
+          "scene": "Tecknaren beskriver figuren som saknas.",
+          "clues": [
+            "Figuren har långa öron.",
+            "Den håller en liten blomma."
+          ],
+          "choices": [
+            "Kanin med långa öron och blomma.",
+            "Kanin med långa öron utan blomma.",
+            "Kortörad figur med en blomma."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Öronen är långa, men blomman saknas.",
+            "Blomman finns, men öronen är korta."
+          ],
+          "why": "Kaninfiguren har långa öron och en blomma."
+        },
+        {
+          "title": "Var står lampan?",
+          "scene": "Dockorna ska bli skuggor på en vit duk.",
+          "clues": [
+            "En lampa lyser mot duken.",
+            "Figuren står mellan lampan och duken."
+          ],
+          "choices": [
+            "Lampa mot duk, men figuren står bakom lampan.",
+            "Lampa mot duk och figur mellan lampan och duken.",
+            "Figur mellan en släckt lampa och duk."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Lampan lyser mot duken, men figuren står på fel sida.",
+            null,
+            "Figuren står rätt, men lampan är släckt och lyser inte."
+          ],
+          "why": "Lampan lyser och figuren står mellan ljuset och duken."
+        },
+        {
+          "title": "Ordna scenen",
+          "scene": "Sagan har tre delar som måste komma i ordning.",
+          "clues": [
+            "Först hittar dockan en nyckel.",
+            "Sist öppnar dockan en dörr."
+          ],
+          "choices": [
+            "Dörren öppnas och nyckeln hittas efteråt.",
+            "Nyckeln hittas och läggs undan utan att dörren öppnas.",
+            "Nyckeln hittas och därefter öppnas dörren."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Dörren öppnas, men nyckeln hittas inte först.",
+            "Nyckeln hittas, men dörren öppnas aldrig.",
+            null
+          ],
+          "why": "Först hittar dockan nyckeln och sedan öppnar den dörren."
+        }
+      ]
+    },
+    {
+      "id": "photo-club",
+      "group": "creative",
+      "emoji": "📸",
+      "title": "Fotoklubbens försvunna bildtext",
+      "intro": "Fotoklubben gör en utställning av fantasifoton. En bildtext har hamnat vid fel foto.",
+      "ending": "Fotot och bildtexten sitter tillsammans igen. Utställningen går att förstå utan att se varje bild.",
+      "keepsake": {
+        "emoji": "🖼️",
+        "name": "Fotoklubbens bildram"
+      },
+      "stages": [
+        {
+          "title": "Hitta rätt motiv",
+          "scene": "Fotografen beskriver ett foto med två detaljer.",
+          "clues": [
+            "På fotot syns en cykel.",
+            "Bredvid cykeln står en blomkruka."
+          ],
+          "choices": [
+            "Cykel med blomkruka bredvid.",
+            "Cykel bredvid en papperskorg.",
+            "Blomkruka bredvid en sparkcykel."
+          ],
+          "answer": 0,
+          "wrong": [
+            null,
+            "Cykeln syns, men blomkrukan saknas.",
+            "Blomkrukan finns, men fordonet är en sparkcykel."
+          ],
+          "why": "Fotot visar både cykeln och blomkrukan."
+        },
+        {
+          "title": "Vilken bildtext passar?",
+          "scene": "En bild ska visa hur en vän hjälper en annan.",
+          "clues": [
+            "Texten handlar om att hjälpa någon.",
+            "Den nämner Leo."
+          ],
+          "choices": [
+            "Någon hjälper till i dag.",
+            "Sara hjälper Leo att bära böcker.",
+            "Sara och Leo går förbi skolan."
+          ],
+          "answer": 1,
+          "wrong": [
+            "Hjälp nämns, men Leo finns inte i texten.",
+            null,
+            "Leo nämns, men ingen hjälp beskrivs."
+          ],
+          "why": "Bildtexten berättar att Sara hjälper Leo och vad hjälpen gäller."
+        },
+        {
+          "title": "Utställningens sista ram",
+          "scene": "Tre ramar står på ett bord.",
+          "clues": [
+            "Ramen är gjord av trä.",
+            "En gul stjärna sitter överst."
+          ],
+          "choices": [
+            "Träram med röd stjärna.",
+            "Metallram med gul stjärna.",
+            "Träram med gul stjärna."
+          ],
+          "answer": 2,
+          "wrong": [
+            "Ramen är av trä, men stjärnan är röd.",
+            "Stjärnan är gul, men ramen är av metall.",
+            null
+          ],
+          "why": "Träramen har en gul stjärna överst."
+        }
+      ]
     }
   ];
   for(const story of STORIES){

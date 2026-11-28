@@ -1,5 +1,5 @@
 /* Offline-only enhancement. App works fully without service workers. */
-const CACHE_NAME = 'ordjakten-static-v83-federated-svenska-bank'; // Increment on each content release.
+const CACHE_NAME = 'ordjakten-static-v84-svenska-bank-portals-52'; // Increment on each content release.
 const ICON_FILES = [
   "./assets/story-icons/1f305.png",
   "./assets/story-icons/1f31f.png",
