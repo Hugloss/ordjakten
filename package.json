@@ -13,7 +13,7 @@
     "sync:contrasts": "node scripts/sync-contrasts.js",
     "sync:clues": "node scripts/sync-clues.js",
     "check:pages": "node scripts/check-pages.js",
-    "check:learning-engine": "node learning-engine/scripts/sync-browser.js --check && node --test learning-engine/tests/*.test.js"
+    "check:learning-engine": "node scripts/sync-learning-engine.js --check && node --test learning-engine/tests/*.test.js"
   },
   "engines": {
     "node": ">=20"

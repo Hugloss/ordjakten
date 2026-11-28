@@ -2,13 +2,7 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const {Assessment}=require('../index');
-const fs=require('node:fs');
-const path=require('node:path');
-test('standalone package assessment is the single browser source',()=>{
- const source=fs.readFileSync(path.resolve(__dirname,'../src/assessment-v1.js'),'utf8');
- const browser=fs.readFileSync(path.resolve(__dirname,'../../public/js/assessment-v1.js'),'utf8');
- assert.equal(browser,
-  '/* GENERATED from learning-engine/src/assessment-v1.js; do not edit manually. */\n'+source);
+test('standalone package can load its own canonical assessment contract',()=>{
  assert.equal(Assessment.SCHEMA_VERSION,'learning-assessment.v1');
 });
 test('a typed evidence observation preserves coarse metadata but never raw responses',()=>{

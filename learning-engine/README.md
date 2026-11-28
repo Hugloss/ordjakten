@@ -68,13 +68,13 @@ instances.
 ## Running checks and extraction
 
 ```sh
-node learning-engine/scripts/sync-browser.js --check
+node scripts/sync-learning-engine.js --check
 node --test learning-engine/tests/*.test.js
 ```
 
 `learning-engine/src/assessment-v1.js` is the **canonical editable source**.
 `public/js/assessment-v1.js` is its generated compatibility mirror; to
-regenerate it run `node learning-engine/scripts/sync-browser.js`.
+regenerate it run `node scripts/sync-learning-engine.js`.
 Root `npm run check` runs these tests and mirror verification in its
 existing CI job (no extra browser-job needed).
 
