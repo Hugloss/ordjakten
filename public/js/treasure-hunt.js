@@ -34,7 +34,8 @@
       const places=[];
       rows.forEach((row,index)=>{
         const key=id+':'+index,task=missions?.tasks?.[key],chapter=chapters[index],stop=world.stops[index];
-        if(!object(row)||!['description','clue','hint','why'].every(field=>text(row[field]))||
+        if(!object(row)||row.questionId!=='treasure-place-'+id+'-'+String(index+1).padStart(2,'0')||
+          !['description','clue','hint','why'].every(field=>text(row[field]))||
           !Array.isArray(row.lookFor)||row.lookFor.length!==2||new Set(row.lookFor).size!==2||
           row.lookFor.some(part=>!text(part)||part.length>100)||
           !task||task.key!==key||task.world!==id||task.index!==index||!text(task.target)||
@@ -45,14 +46,16 @@
           task.options.filter(option=>option.correct).length!==1||!text(chapter[3])||!text(chapter[4])){
           errors.push(key);return;
         }
-        places.push({index,key,name:stop.name,emoji:stop.emoji,
+        places.push({index,key,questionId:row.questionId,name:stop.name,emoji:stop.emoji,
           description:row.description,clue:row.clue,hint:row.hint,why:row.why,lookFor:[...row.lookFor],
           treasure:{emoji:chapter[3],name:chapter[4]},
           task:{...task,options:task.options.map(option=>({...option}))}});
       });
       if(places.length!==4)continue;
       if(!object(mystery)||!text(mystery.title)||!text(mystery.intro)||!text(mystery.why)||
-        !placeIndex(mystery.target)||!Array.isArray(mystery.clues)||mystery.clues.length!==3||
+        !placeIndex(mystery.target)||mystery.questionId!=='treasure-mystery-'+id||
+        mystery.proofQuestionId!=='treasure-proof-'+id||
+        !Array.isArray(mystery.clues)||mystery.clues.length!==3||
         mystery.clues.some(clue=>!text(clue)||clue.length>140)||
         !Array.isArray(mystery.wrong)||mystery.wrong.length!==4||
         mystery.wrong.some((answer,index)=>index===mystery.target?answer!==null:!text(answer)||answer.length>200)){
@@ -60,7 +63,7 @@
       }
       if(!object(transfer)||!text(transfer.title)||transfer.title.length>80||
         !text(transfer.intro)||transfer.intro.length>180||!text(transfer.why)||transfer.why.length>200||
-        !transferIndex(transfer.target)||
+        !transferIndex(transfer.target)||transfer.questionId!=='treasure-transfer-'+id||
         !Array.isArray(transfer.clues)||transfer.clues.length!==2||
         transfer.clues.some(clue=>!text(clue)||clue.length<20||clue.length>140)||
         !Array.isArray(transfer.choices)||transfer.choices.length!==3||
@@ -252,13 +255,16 @@
       outcome:null,selected:null,optionOrder,reward:null}};
   }
 
-  function answer(raw,serial,optionId,content){
+  function answer(raw,serial,optionId,content,assess=null){
     const state=sanitize(raw,content),active=state.active;
     if(!active||active.serial!==serial||active.stage!=='question')return raw;
     const task=content.worlds[active.world].places[active.place].task;
     const option=task.options.find(row=>row.id===optionId);
     if(!option)return raw;
-    if(option.correct)return {...state,active:{...active,selected:optionId,stage:'explanation',
+    const verdict=assess===null?option.correct:assess(task.questionId,option.label);
+    if(![true,false,'correct','incorrect'].includes(verdict))
+      throw new Error('Invalid word mission assessment: '+task.questionId);
+    if(verdict===true||verdict==='correct')return {...state,active:{...active,selected:optionId,stage:'explanation',
       outcome:active.attempts?'supported':'direct'}};
     const attempts=active.attempts+1;
     return {...state,active:{...active,selected:optionId,attempts,
@@ -271,10 +277,17 @@
     return {...state,active:{...active,stage:'explanation',outcome:'guided',selected:null}};
   }
 
-  function finish(raw,serial,content){
+  function finish(raw,serial,content,assess=null){
     const state=sanitize(raw,content),active=state.active;
     if(!active||active.serial!==serial||active.stage!=='explanation')return raw;
-    const progress=state.worlds[active.world]||emptyWorld(),matched=active.clue!==null&&active.place===active.clue;
+    const progress=state.worlds[active.world]||emptyWorld();
+    const target=active.clue===null?null:content.worlds[active.world].places[active.clue];
+    const selected=content.worlds[active.world].places[active.place];
+    const verdict=target&&assess!==null?assess(target.questionId,selected.description):null;
+    if(verdict!==null&&![true,false,'correct','incorrect'].includes(verdict))
+      throw new Error('Invalid treasure place assessment: '+target.questionId);
+    const matched=active.clue!==null&&(assess===null?
+      active.place===active.clue:verdict===true||verdict==='correct');
     const visited=[...new Set([...progress.visited,active.place])].sort((a,b)=>a-b);
     const found=matched?[...progress.found,active.clue]:progress.found;
     const small=active.clue!==null&&!matched,newSmall=small&&!progress.smallFinds.includes(active.place);
@@ -307,19 +320,24 @@
     if(mystery.solved||mystery.revealed>=3)return raw;
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:{...mystery,revealed:mystery.revealed+1}}}};
   }
-  function mysteryGuess(raw,worldId,index,content){
+  function mysteryGuess(raw,worldId,index,content,assess=null){
     const state=sanitize(raw,content);
     if(state.active||!knownWorld(content,worldId)||!placeIndex(index))return raw;
     const progress=state.worlds[worldId]||emptyWorld();
     if(!progress.found.length)return raw;
     const mystery=progress.mystery||freshMystery();
     if(mystery.solved||mystery.revealed!==3||mystery.attempted.includes(index))return raw;
-    const correct=index===content.worlds[worldId].mystery.target;
+    const world=content.worlds[worldId],target=world.mystery;
+    const verdict=assess===null?index===target.target:
+      assess(target.questionId,world.places[index].description);
+    if(![true,false,'correct','incorrect'].includes(verdict))
+      throw new Error('Invalid treasure mystery assessment: '+target.questionId);
+    const correct=verdict===true||verdict==='correct';
     const updated={...mystery,last:index,solved:correct,
       attempted:correct?mystery.attempted:[...mystery.attempted,index].sort((a,b)=>a-b)};
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
   }
-  function mysteryProof(raw,worldId,index,content){
+  function mysteryProof(raw,worldId,index,content,assess=null){
     const state=sanitize(raw,content);
     if(state.active||!knownWorld(content,worldId)||!placeIndex(index))return raw;
     const progress=state.worlds[worldId]||emptyWorld();
@@ -328,18 +346,28 @@
     const world=content.worlds[worldId];
     if(!mystery.solved||mystery.proofDone||mystery.proofWrong.includes(index)||
       !proofChoices(world).some(option=>option.id===index))return raw;
-    const correct=index===world.mystery.target;
+    const proof=proofChoices(world).find(option=>option.id===index);
+    const verdict=assess===null?index===world.mystery.target:
+      assess(world.mystery.proofQuestionId,proof.label);
+    if(![true,false,'correct','incorrect'].includes(verdict))
+      throw new Error('Invalid treasure proof assessment: '+worldId);
+    const correct=verdict===true||verdict==='correct';
     const updated={...mystery,proofLast:index,proofDone:correct,
       proofWrong:correct?mystery.proofWrong:[...mystery.proofWrong,index].sort((a,b)=>a-b)};
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};
   }
-  function mysteryTransfer(raw,worldId,index,content){
+  function mysteryTransfer(raw,worldId,index,content,assess=null){
     const state=sanitize(raw,content);
     if(state.active||!knownWorld(content,worldId)||!transferIndex(index))return raw;
     const progress=state.worlds[worldId]||emptyWorld();
     const mystery=progress.mystery||freshMystery();
     if(!mystery.proofDone||mystery.transferDone||mystery.transferWrong.includes(index))return raw;
-    const correct=index===content.worlds[worldId].transfer.target;
+    const transfer=content.worlds[worldId].transfer;
+    const verdict=assess===null?index===transfer.target:
+      assess(transfer.questionId,transfer.choices[index]);
+    if(![true,false,'correct','incorrect'].includes(verdict))
+      throw new Error('Invalid treasure transfer assessment: '+transfer.questionId);
+    const correct=verdict===true||verdict==='correct';
     const updated={...mystery,transferLast:index,transferDone:correct,
       transferWrong:correct?mystery.transferWrong:[...mystery.transferWrong,index].sort((a,b)=>a-b)};
     return {...state,worlds:{...state.worlds,[worldId]:{...progress,mystery:updated}}};

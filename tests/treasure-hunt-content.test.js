@@ -18,7 +18,8 @@ test('every existing map place has its own clue, visible description, help and e
     const places=A.world(world).stops,rows=Treasure.DATA[world];
     assert.equal(rows.length,places.length,world);
     rows.forEach((row,index)=>{
-      assert.deepEqual(Object.keys(row),['description','clue','lookFor','hint','why']);
+      assert.deepEqual(Object.keys(row),['questionId','description','clue','lookFor','hint','why']);
+      assert.equal(row.questionId,'treasure-place-'+world+'-'+String(index+1).padStart(2,'0'));
       for(const field of ['description','clue','hint','why']){
         const text=row[field];
         assert.equal(typeof text,'string',world+':'+index+':'+field);

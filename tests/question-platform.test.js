@@ -19,7 +19,8 @@ function makeRegistry(){
 
 test('the Swedish bank owns its 73 questions without copied question files',()=>{
   assert.equal(manifest.bankId,'svenska');
-  assert.equal(manifest.primarySource,'public/data/expressions.json');
+  assert.equal(manifest.primarySource,'multiple-authored-sources');
+  assert.equal(manifest.adapter,'public/js/banks/svenska-catalog.js');
   for(const filename of manifest.sourceFiles)assert.ok(fs.existsSync(path.join(root,filename)),filename);
   const registry=makeRegistry();
   assert.deepEqual(registry.bankInfo().map(x=>({id:x.bankId,count:x.count})),[{id:'svenska',count:73}]);
@@ -128,7 +129,8 @@ test('shared runtime and legacy engine must not depend on a concrete subject ban
     assert.doesNotMatch(text,/OrdjaktenSvenskaBank/,file);
   }
   const app=fs.readFileSync(path.join(root,'public/js/app.js'),'utf8');
-  assert.match(app,/SvenskaBank\.fromLegacyExpressions\(expressions,missions\)/);
+  assert.match(app,/SvenskaCatalog\.fromSources\(/);
+  assert.match(app,/words:bank,contexts,curation,contrasts,clues,surprises/);
   assert.match(app,/bankRegistry\.assess\(ref,answer\)/);
 });
 test('legacy engine meaning questions still keep the original facit and counts',()=>{

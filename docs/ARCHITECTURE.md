@@ -2,6 +2,87 @@
 
 **Status: federerad målarkitektur; en första svensk bankadapter och ett gemensamt spel-/bedömningskontrakt implementeras i PR #30. Övrig migrering återstår.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
 
+## Portabel Learning Engine och skyddade frågebanker
+
+Den bankneutrala bedömningskärnan finns som en **fristående paketkatalog** i
+[`learning-engine/`](../learning-engine/README.md), utan beroende på Ordjaktens
+frågedata. Dess `assessment-v1.js` är den enda redigerbara källan; en validerad
+byggspegel används i spelets webbläsarkod. Paketet har även en **ren
+rekommendationsport** som sammanställer evidens per kunskapsmål och validerar
+att privata beslut om `practice_similar`, `practice_prerequisite`,
+`spaced_review`, `continue` och `increase_difficulty` är versions- och
+ämnesskopade. Inga proprietära trösklar, facit eller urvalsregler ligger här.
+
+**Säkerhetsgräns:** Ett privat GitHub-repository skyddar inte data som skickas
+till en statisk klient. Frågor/facit och policyer som ska förbli hemliga måste
+ägas av en separat backend, som autentiserar och begränsar frågeutlämning,
+verifierar försök och håller privata algoritmer och tokens utanför webbläsaren.
+Ordjaktens befintliga publika frågebank kan inte göras hemlig i efterhand.
+En separat publikt licensierad motor-repo samt privata policy-/bank-repos
+är målbilden, **inte något som ännu har skapats**.
+
+## Learning Engine v1 – stringnivåer, evidens och granskningsbar bedömning
+
+**Implementerat i bankneutrala runtime-modulerna** `public/js/assessment-v1.js`,
+`public/js/question-platform.js` och `public/js/question-session.js`. Inspirerat av
+EvalShots ordnade ordnivåer, strikt utfallsseparation och *unknown-is-not-zero*;
+detta är en egen pedagogisk modell, **inte EvalShots exakta betygsskala**.
+
+1. **Definitionen ägs av banken.** Befintliga `assessmentSpec.kind` och
+   facitregler fungerar fortsatt. Framtida frågor kan deklarera stabilt
+   `policyId`, `policyRevision` samt
+   `rubric: {id,revision,criteria:[{id,description,required?}]}`.
+   `rubric` kräver en uttryckligen rubric-kapabel bedömare; ingen tyst fallback.
+   För äldre frågor härleds en stabil policyreferens från bankens frågereferens.
+2. **Utfallet är inte betyget.** `outcome` har `completed`, `invalid`,
+   `incomplete`, `ungraded` och `needs-review`.
+   `evaluation.level` har ordnade, människoläsbara strängar:
+   `incorrect < limited < partial < correct < excellent`.
+   Nivån är **null** vid icke bedömda utfall – aldrig 0 eller `incorrect`.
+   För att bevara gammal kod finns `status` och `registry.assess()` kvar.
+   `registry.assessDetailed()` ger ett komplett `learning-assessment.v1`-resultat.
+3. **Rubrikkriterierna är separata.** Alla deklarerade kriterier måste finnas
+   exakt en gång i en fullföljd rubric-bedömning. Obligatoriska kriterier med
+   nivå under `correct` blockerar ett sammanlagt `correct/excellent`.
+   Resultatet innehåller både `assessmentRef` och ett separat, versionssatt
+   `rubricRef`, så en ändrad bedömningsmatris inte kan döljas i historiken.
+   Även importerade evidensposter valideras mot bankomfång, kriterier och utfall.
+   Kriterier och nivåer är maskinvaliderade, men deras medicinska/ämnesmässiga
+   korrekthet måste granskas av ansvarig ämnesexpert.
+4. **Bedömare är utbytbara, inte självauktoriserande.** Deterministiska
+   flervals-, numeriska och ordningsbedömare finns. Nya typer ansluts genom
+   `registerEvaluator` och måste returnera godkända strängnivåer, entydig
+   rubric och versionssatt identitet. En framtida LLM-bedömare är en **plugin**
+   som kräver separat kvalificering, redaktionell rubrik och möjlighet att
+   avstå (`needs-review`); det finns ingen inbyggd AI-rättning i v1.
+5. **Proveniens och integritet.** Resultat binder bank/fråga/revision,
+   bedömningspolicy/revision, bedömare/revision, kunskapsmål och källans
+   granskningsstatus. `createEvidenceLedger().record()` kräver unikt
+   `attemptId`, `instanceId`, spelform och observation om hjälp
+   (`none/hint/retry/revealed/unknown`). Det sparar bara klassifikationer
+   och referenser, **inte barns råa svar**, bilder, konton eller fri text.
+   Ledgern är minnesbaserad i v1; eventuell varaktig lagring är ett separat,
+   explicit beslut och får inte blandas med befintliga `ordjakten-v1`-nycklar.
+   Vid persistens krävs ett **unikt sessions-ID per omgång**; dubbelregistrerade
+   försök avvisas i stället för att tyst räknas flera gånger.
+6. **Summering utan falsk matematik.** `Session.finish()` lämnar de äldre
+   fälten och `outcomes` orörda, men räknar endast faktiska fel som
+   `incorrect`. `partial`, `ungraded`, `needsReview`, kompletta
+   `assessments`, `assessmentSummary` och integritetssnåla `evidence`
+   redovisas separat. Låst prov visar aldrig detaljer före `finish()`.
+   `incomplete` och `invalid` godtas inte som färdiga svar.
+7. **Inga godtyckliga kunskapsbetyg.** Enskilda prestationer räcker inte för att
+   fastställa `novice/developing/proficient/advanced`. Sammanställningar
+   returnerar därför `mastery:{level:"unknown",confidence:"insufficient"}`
+   tills en **separat, ämneskalibrerad och verifierad** policy finns.
+   En hög procentsats på samma fråga får aldrig förvandlas till expertkompetens.
+
+V1:s basgräns är avsiktligt liten: statiska bilder kan refereras via bankens
+medieresurser, men ingen interaktiv DICOM-visare, bildmätning, LLM-rättning
+eller tvärämnesövergripande kunskapsprofil ingår. Korta enhetstester ska täcka
+rubric-konflikter, okunskap/otillräcklig evidens, dubbelregistrerade försök,
+sekretess i prov och bakåtkompatibilitet med Ordjaktens befintliga frågor.
+
 ## Syfte och hårda gränser
 
 Ordjakten ska kunna använda svenska, matematik, kemi, fysik och framtida ämnen från **separata, självständigt ägda kunskapsbanker**. Varje bank har egen begreppsmodell, sitt innehåll, sin versionshistorik och valfri lagring. De återanvändbara spelmotorerna använder bankernas gemensamma **spelgränssnitt**, inte en central databas med alla ämnen.
@@ -265,6 +346,47 @@ Denna del är **implementerad**, till skillnad från de fortsatta målkontrakten
 - `tests/question-platform.test.js` verifierar facit och frågeidentiteter för samtliga 237 uppgifter, ordningsföljd och avvisade svar, sammanhangens originaltexter, låsta provresultat, stabila ID:n, felaktiga revisioner och en **syntetisk matematikbank enbart i testet**. `tests/browser_question_bank.py` provar den faktiska webbläsarupplevelsen i Träna/Testa. Bankens separata SQLite-index har **194 begrepp, 237 frågor, 857 svarsalternativ och 3 färdigheter**, och kontrolleras med `build_index.py --check`. Ingen verklig matematikbank har skapats.
 
 **Kvar att migrera:** ordfrågor (121 ord och 363 scener), bonusuppgifter och andra svenska träningsformer, Upptäckarklubbens steg/Skattkartans ledtrådar, fullständig frågeinstanspersistens och fortsatt redaktionell kvalitetsgranskning. SQLite-indexet är ett banklokalt **härlett index**, inte redaktionell databas. Den nya `QuestionSession` används i detta skede som ett verifierat separat kontrakt, **inte** som ersättare för alla den gamla appens omgångar.
+
+## Implementerat i PR #33: samlat frågeregister inom svenskbanken
+
+**Svenska är fortsatt en enda ämnesbank, skild från `vardagskunskap` och framtida matematik/kemi.** `public/js/banks/svenska-catalog.js` sammansätter befintliga, skrivna källor till ett enda **läsbart och sökbart register** med `{bankId:'svenska',id,revision}`. Samma frågetext finns fortfarande bara hos **en redaktionell ägare**; registret och bankens SQLite-index är härledda projektioner, inte alternativa originalfiler.
+
+| Redan skrivna svenska uppgifter | Frågor med egna ID:n |
+| --- | ---: |
+| Uttryck: betydelse, meningsval, ordningsföljd och sammanhang | 237 |
+| Ord: betydelse och omvänt ordval | 242 |
+| Ord i 363 vardagsscener | 363 |
+| Kuraterade bildfrågor | 30 |
+| Jämförelser och ledtrådsnivåer | 160 |
+| Uttryckens bonusfrågor och ordhandlingar | 96 |
+| Världsuppdragens ordfrågor | 48 |
+| Upptäckarklubben, 52 berättelser × tre steg | 156 |
+| Skattkartans plats-, mysterium-, bevis- och överföringsfrågor | 84 |
+| **Summa svenska** | **1 416** |
+
+Den separata banken `vardagskunskap` äger **60** egna frågor och använder samma spelkontrakt. Inget av detta ger matematik eller kemi en delad kunskapsbank.
+
+**Beständiga ID:n i originalkällorna:** `context-sv-0001-01` är nu en sparad scenidentitet i `word-contexts.json`; `portal-detective-01` är ett skrivet berättelsesteg i `mission-portals-data.js`; `world-mission-forest-01`, `treasure-place-forest-01`, `treasure-mystery-forest`, `treasure-proof-forest` och `treasure-transfer-forest` har egna referenser. Samtliga bevarar äldre spel- och progressions-ID:n via explicita koncept-/källreferenser.
+
+**Dynamiska instanser är inte ytterligare redigerbara original.** För vanliga ordfrågor kan motorn fortfarande välja olika felsvar från kuraterade ord. Frågans **mall** har stabilt ID, medan det enskilda försöket behöver låsa valt alternativurval och ordning separat innan fullständig sessionsåterhämtning. Vi får inte skriva varje slumpad variant till en ny manuell frågefil eller låtsas att rättningskontraktet redan representerar alla varianter. Det gäller också dynamiskt genererade Aha-övningar, begreppskartor och fördjupningsuppgifter, som behöver en separat inventering av mallar/instanser innan den äldre logiken ersätts.
+
+**Spelformernas övergång:** Den befintliga `app.js` använder nu registret vid svarsrättning för uttryck, skrivna ordscener, kuraterade bildfrågor och handlingar, portaler, världsuppdrag samt Skattkartans ord-, plats- och mysterifrågor. Spelets **regler, belöningar och gamla webbläsarhistorik** ligger kvar hos respektive spelform. Den gamla `engine.js` importerar ingen svensk bank och genererade flervalsinstanser fortsätter följa den gamla logiken tills ett neutralt instanskontrakt är klart.
+
+**Sök och kontrollera:**
+
+```sh
+node scripts/export-question-catalog.js --bank svenska
+node scripts/export-question-catalog.js --bank svenska --search "grumlig"
+node scripts/export-question-catalog.js --bank svenska --id "portal-detective-01"
+node scripts/export-question-catalog.js --bank vardagskunskap --search "vatten"
+python3 content/banks/svenska/build_index.py --check
+python3 content/banks/svenska/build_index.py --search "för en gångs skull"
+npm run check
+```
+
+SQLite är ett **genererat, banklokalt relationsindex** med källfil, fråge-ID, begrepp, färdigheter och svarsalternativ. CI jämför det med den sammansatta Node-katalogen och kontrollerar referenser och unika ID:n. Git och de ursprungliga redaktionella källorna äger innehållet. **En central kunskapsbank eller en gemensam SQL-databas mellan ämnen införs inte.**
+
+**Begränsning som kvarstår:** Frågorna är logiskt samlade genom ett register, men vissa *kanoniska redaktionella källor* ligger fortfarande i äldre `public/js/`-moduler för portal- och skattkartsspel. Att senare flytta dessa original till `content/banks/svenska/` och generera kompatibla spelfiler kräver en egen paritetsverifierad migration. Det är inte samma sak som att ha två redigerbara kopior, och vi gör ingen riskabel massflytt i denna PR.
 
 ## Första migrationspilot – konkreta acceptanskriterier
 

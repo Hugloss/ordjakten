@@ -25,6 +25,7 @@
     const stories={},ids=[],errors=[];
     if(!Array.isArray(data?.STORIES)||data.STORIES.length<12||data.STORIES.length>64)
       return {stories,ids,errors:['story-count']};
+    const stepIds=new Set();
     for(const row of data.STORIES){
       const id=row?.id,stages=row?.stages;
       if(!/^[a-z][a-z0-9-]*$/.test(id||'')||Object.hasOwn(stories,id)||
@@ -36,6 +37,11 @@
       }
       let valid=true;
       for(const step of stages){
+        if(!/^portal-[a-z][a-z0-9-]*-\d{2}$/.test(step?.questionId||'')||
+          stepIds.has(step.questionId)){
+          valid=false;break;
+        }
+        stepIds.add(step.questionId);
         if(!line(step.title)||!line(step.scene)||!line(step.why)||!Array.isArray(step.clues)||
           step.clues.length!==2||step.clues.some(value=>!line(value))||
           new Set(step.clues).size!==2||!Array.isArray(step.choices)||
@@ -93,14 +99,19 @@
         hint:progress.hint&&!solved}};
     return {entries,current,doneCount:entries.filter(x=>x.done).length};
   }
-  function choose(raw,id,index,content){
+  function choose(raw,id,index,content,assess=null){
     const state=sanitize(raw,content);
     if(!content.stories[id]||!choice(index))return raw;
     const progress=state[id]||fresh();
     if(progress.step===3||progress.solved||progress.wrong.includes(index))return raw;
-    const answer=content.stories[id].stages[progress.step].answer;
-    return {...state,[id]:{...progress,solved:index===answer,
-      wrong:index===answer?progress.wrong:[...progress.wrong,index]}};
+    const stage=content.stories[id].stages[progress.step];
+    const correct=assess===null?index===stage.answer:
+      assess(stage.questionId,stage.choices[index]);
+    if(correct!=='correct'&&correct!=='incorrect'&&typeof correct!=='boolean')
+      throw new Error('Invalid portal assessment: '+stage.questionId);
+    const solved=correct==='correct'||correct===true;
+    return {...state,[id]:{...progress,solved,
+      wrong:solved?progress.wrong:[...progress.wrong,index]}};
   }
   function hint(raw,id,content){
     const state=sanitize(raw,content),progress=state[id]||fresh();

@@ -58,7 +58,7 @@ ordfrekvens. Inga ord eller tidigare framsteg har tagits bort.
 
 ## Projektstruktur
 
-Se [målarkitekturen med fristående ämnesbanker och återanvändbara spelmotorer](docs/ARCHITECTURE.md). Svenska, matematik och kemi ska ha **egna kunskapsbanker** med separat innehåll och valfri lagring. Första implementationen kopplar 237 befintliga svenska uttrycksuppgifter till ett gemensamt bedömningsgränssnitt. Svenskbanken har även ett genererat, separat SQLite-sökindex; övrig migration beskrivs i arkitekturdokumentet.
+Se [målarkitekturen med fristående ämnesbanker och återanvändbara spelmotorer](docs/ARCHITECTURE.md). Svenska, matematik och kemi ska ha **egna kunskapsbanker** med separat innehåll och valfri lagring. PR #33 samlar **1 416 redan skrivna svenska frågor** under gemensamma, beständiga fråge-ID:n via oberoende bankadaptrar. Ett härlett SQLite-index gör innehållet sökbart utan att bli en ny redigerbar källa. Vardagskunskap är en **egen bank med 60 frågor**; matematik och kemi får senare separata banker. Se arkitekturdokumentet för vilka dynamiska frågeinstanser som återstår.
 
 - `public/` – hela statiska webbappen, databank och lokala bildresurser.
 - `scripts/` – utvecklingsserver och innehållsvalidering.

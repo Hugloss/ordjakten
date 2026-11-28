@@ -18,6 +18,23 @@ const R=require('../public/js/review');
 const bank=require('../public/data/ordbank.json');
 const expressions=require('../public/data/expressions.json');
 const contexts=require('../public/data/word-contexts.json');
+const QuestionPlatform=require('../public/js/question-platform');
+const questions=require('../scripts/export-question-catalog').open('svenska').questions;
+const byQuestion=new Map(questions.map(q=>[q.ref.id,q]));
+const provider={
+  describe:()=>({bankId:'svenska',revision:1}),
+  listQuestionIds:()=>[...byQuestion.keys()],
+  getQuestion:id=>byQuestion.get(id)||null
+};
+const questionRegistry=QuestionPlatform.createRegistry();
+questionRegistry.register(provider);
+function assessSwedishChoice(id,label){
+  const ref={bankId:'svenska',id,revision:1};
+  const question=questionRegistry.resolve(ref);
+  const choice=question.responseSpec.options.find(o=>o.label===label);
+  assert.ok(choice,'Unregistered treasure answer: '+id+' -> '+label);
+  return questionRegistry.assess(ref,choice.id).status;
+}
 const app=fs.readFileSync(path.resolve(__dirname,'../public/js/app.js'),'utf8');
 const clone=value=>JSON.parse(JSON.stringify(value));
 const words=L.catalog(bank,expressions,contexts);
@@ -61,7 +78,7 @@ function harness({history=initialHistory(),screen='treasure'}={}){
     if(!nodes.has(id))nodes.set(id,{id,focus(){focus.push(id);},contains(button){return button.host===id;}});
     return nodes.get(id);
   };
-  const context=vm.createContext({E,Stars,Treasure,A,P,treasureContent,history,
+  const context=vm.createContext({E,Stars,Treasure,A,P,treasureContent,history,assessSwedishChoice,
     settings:{...history.settings},screen,treasureWorld:'forest',treasureStarReward:null,canReadAloud:true,$,
     TreasureView:{render(host,model,options){rendered.push({host:host.id,model:clone(model),options:clone(options)});}},
     saveHistory(){saved.push(clone(context.history));},

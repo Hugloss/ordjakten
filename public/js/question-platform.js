@@ -1,10 +1,13 @@
 /* A bank-neutral, dependency-free runtime. Banks own data and taxonomies. */
 (function(root,factory){
-  const api=factory();
+  const assessment=typeof module!=='undefined'&&module.exports?
+    require('./assessment-v1'):root.LearningAssessmentV1;
+  const api=factory(assessment);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.OrdjaktenQuestionPlatform=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Assessment){
   'use strict';
+  if(!Assessment)throw new Error('Learning Assessment v1 must be loaded before the question platform');
   const ID=/^[a-z][a-z0-9-]{1,95}$/;
   const obj=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
   const validId=value=>typeof value==='string'&&ID.test(value);
@@ -102,6 +105,9 @@
       assert(obj(question.responseSpec)&&obj(question.assessmentSpec),'Missing response/assessment specification');
       const evaluator=evaluators.get(question.responseSpec.kind);
       assert(evaluator,'Unsupported response kind: '+question.responseSpec.kind);
+      Assessment.validateDefinition(question);
+      if(question.assessmentSpec.rubric&&evaluator.supportsRubric!==true)
+        throw new Error('Evaluator does not support authored rubric: '+question.responseSpec.kind);
       evaluator.validate(question);
       return question;
     }
@@ -166,15 +172,20 @@
         prompt:question.prompt,stimulus:question.stimulus||null,responseSpec:response
       };
     }
-    function assess(ref,response){
+    function assessDetailed(ref,response){
       const question=resolve(ref);
       const evaluator=evaluators.get(question.responseSpec.kind);
-      const result=evaluator.grade(question,response);
-      assert(obj(result)&&['correct','incorrect','partial','invalid','ungraded','needs-review'].includes(result.status),
-        'Invalid assessor outcome');
-      return {status:result.status};
+      const raw=evaluator.grade(question,response);
+      const kind=question.responseSpec.kind;
+      const builtin=['single-choice','numeric','ordering'].includes(kind);
+      return Assessment.fromEvaluator(question,raw,{
+        id:evaluator.id||kind,revision:evaluator.revision||1,
+        source:builtin?'deterministic':'plugin'
+      });
     }
-    return {register,registerEvaluator,bankInfo,listQuestionRefs,resolve,present,assess};
+    function assess(ref,response){return {status:assessDetailed(ref,response).status};}
+    return {register,registerEvaluator,bankInfo,listQuestionRefs,resolve,present,
+      assess,assessDetailed};
   }
   return {createRegistry};
 });

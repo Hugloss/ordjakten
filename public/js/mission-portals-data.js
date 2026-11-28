@@ -19,6 +19,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-detective-01",
           "title": "Spåren i köket",
           "scene": "En lapp berättar var du ska börja leta.",
           "clues": [
@@ -39,6 +40,7 @@
           "why": "Lådan på bänken är blå och innehåller kalasbestick."
         },
         {
+          "questionId": "portal-detective-02",
           "title": "Vittnets meddelande",
           "scene": "På lådan sitter en lapp. Vilken mening hjälper dig vidare?",
           "clues": [
@@ -59,6 +61,7 @@
           "why": "Lappen nämner både skedar och hyllan där de står."
         },
         {
+          "questionId": "portal-detective-03",
           "title": "Den sista lådan",
           "scene": "Du hittar tre lådor vid hyllan. Vilken ska öppnas?",
           "clues": [
@@ -93,6 +96,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-agents-01",
           "title": "Första signalen",
           "scene": "Tre skärmar blinkar. Vilken visar det rätta tecknet?",
           "clues": [
@@ -113,6 +117,7 @@
           "why": "Skärmen visar en stjärna och siffran 7."
         },
         {
+          "questionId": "portal-agents-02",
           "title": "De tre dörrarna",
           "scene": "Agenten får en lapp som beskriver rätt dörr.",
           "clues": [
@@ -133,6 +138,7 @@
           "why": "Den gröna dörren har det runda fönstret."
         },
         {
+          "questionId": "portal-agents-03",
           "title": "Starta roboten",
           "scene": "Tre knappar sitter på robotens rygg. Vilken behövs?",
           "clues": [
@@ -167,6 +173,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-escape-01",
           "title": "Hyllans lådor",
           "scene": "En lapp berättar var den första nyckeln finns.",
           "clues": [
@@ -187,6 +194,7 @@
           "why": "Rätt låda är gul med ett moln på locket."
         },
         {
+          "questionId": "portal-escape-02",
           "title": "Orden på väggen",
           "scene": "En skylt beskriver ett föremål med två egenskaper.",
           "clues": [
@@ -207,6 +215,7 @@
           "why": "En bok kan öppnas och har sidor av papper."
         },
         {
+          "questionId": "portal-escape-03",
           "title": "Det sista låset",
           "scene": "Välj den sifferkod som stämmer med båda spåren.",
           "clues": [
@@ -241,6 +250,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-pirates-01",
           "title": "Rätt ö på kartan",
           "scene": "Tre öar syns på kartan. Var ska ni gå i land?",
           "clues": [
@@ -261,6 +271,7 @@
           "why": "Ön har både två palmer och en liten brygga."
         },
         {
+          "questionId": "portal-pirates-02",
           "title": "Kaptenens lapp",
           "scene": "Kaptenen har skrivit hur ni ska gå.",
           "clues": [
@@ -281,6 +292,7 @@
           "why": "Ni går till stenen och svänger vänster."
         },
         {
+          "questionId": "portal-pirates-03",
           "title": "Skattkistan",
           "scene": "Tre kistor ligger vid stranden. Vilken är rätt?",
           "clues": [
@@ -315,6 +327,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-magic-01",
           "title": "Bibliotekets dörr",
           "scene": "Tre dörrar leder till olika rum. Vilken behöver Nomi?",
           "clues": [
@@ -335,6 +348,7 @@
           "why": "Rummet har böcker om ljud och en klocka ovanför dörren. Båda spåren stämmer."
         },
         {
+          "questionId": "portal-magic-02",
           "title": "Det magiska ordet",
           "scene": "Boken beskriver ordet Nomi ska säga.",
           "clues": [
@@ -355,6 +369,7 @@
           "why": "Skratta beskriver glädje och ett ljud."
         },
         {
+          "questionId": "portal-magic-03",
           "title": "Rätt trollstav",
           "scene": "Tre stavar ligger i en låda. Vilken hör till klockan?",
           "clues": [
@@ -389,6 +404,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-dinosaurs-01",
           "title": "Spår i leran",
           "scene": "Forskarna söker rätt plats att undersöka.",
           "clues": [
@@ -409,6 +425,7 @@
           "why": "I leran finns både fotspår och små blad."
         },
         {
+          "questionId": "portal-dinosaurs-02",
           "title": "Det märkliga fyndet",
           "scene": "Forskaren beskriver föremålet i sin anteckningsbok.",
           "clues": [
@@ -429,6 +446,7 @@
           "why": "En hård sten som liknar ett ägg passar båda spåren."
         },
         {
+          "questionId": "portal-dinosaurs-03",
           "title": "Skydda fyndet",
           "scene": "Forskarna vill visa fyndet utan att skada det.",
           "clues": [
@@ -463,6 +481,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-lab-01",
           "title": "Den prickiga bubblan",
           "scene": "På en bild syns den bubbla professorn letar efter.",
           "clues": [
@@ -483,6 +502,7 @@
           "why": "Den gula bubblan har precis tre blå prickar."
         },
         {
+          "questionId": "portal-lab-02",
           "title": "Hyllan i labbet",
           "scene": "En lapp beskriver nästa hylla.",
           "clues": [
@@ -503,6 +523,7 @@
           "why": "Hyllan har två lådor och en måne på den övre."
         },
         {
+          "questionId": "portal-lab-03",
           "title": "Färgernas ordning",
           "scene": "Tre skyltar visar färger i olika ordning.",
           "clues": [
@@ -537,6 +558,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-ghost-01",
           "title": "Fönstret i huset",
           "scene": "En lapp berättar var första spåret finns.",
           "clues": [
@@ -557,6 +579,7 @@
           "why": "Fönstret har både blå gardiner och en lykta."
         },
         {
+          "questionId": "portal-ghost-02",
           "title": "Det märkliga ljudet",
           "scene": "Spöket beskriver ett ljud som hörs i huset.",
           "clues": [
@@ -577,6 +600,7 @@
           "why": "Ett svagt pling passar båda spåren."
         },
         {
+          "questionId": "portal-ghost-03",
           "title": "Den lilla lådan",
           "scene": "Klockans saknade del ligger i en låda.",
           "clues": [
@@ -611,6 +635,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-space-01",
           "title": "Hitta antennen",
           "scene": "Roboten letar efter rätt antenn.",
           "clues": [
@@ -631,6 +656,7 @@
           "why": "Både taket och den blå flaggan stämmer med ledtrådarna."
         },
         {
+          "questionId": "portal-space-02",
           "title": "Säg hej till en vän",
           "scene": "Roboten vill skriva något vänligt.",
           "clues": [
@@ -651,6 +677,7 @@
           "why": "Hej! Hur mår du? är både en hälsning och en fråga."
         },
         {
+          "questionId": "portal-space-03",
           "title": "Skicka meddelandet",
           "scene": "På robotens panel finns tre knappar.",
           "clues": [
@@ -685,6 +712,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-jungle-01",
           "title": "Fågelns teckning",
           "scene": "Papegojan visar var stigen börjar.",
           "clues": [
@@ -705,6 +733,7 @@
           "why": "Stigen börjar vid det stora trädet med skylten."
         },
         {
+          "questionId": "portal-jungle-02",
           "title": "Över bäcken",
           "scene": "En lapp beskriver vägen till läshuset.",
           "clues": [
@@ -725,6 +754,7 @@
           "why": "Gångbron har räcke och leder över bäcken."
         },
         {
+          "questionId": "portal-jungle-03",
           "title": "Läshuset",
           "scene": "Tre små hus ligger nära stigen.",
           "clues": [
@@ -759,6 +789,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-heroes-01",
           "title": "Vem behöver hjälp?",
           "scene": "Du ser tre meddelanden. Vilken vän vill få hjälp att hitta hem?",
           "clues": [
@@ -779,6 +810,7 @@
           "why": "Vännen ber om hjälp med att hitta hem."
         },
         {
+          "questionId": "portal-heroes-02",
           "title": "En trygg väg",
           "scene": "På kartan finns tre vägar till biblioteket.",
           "clues": [
@@ -799,6 +831,7 @@
           "why": "Vägen leder till biblioteket via ett övergångsställe."
         },
         {
+          "questionId": "portal-heroes-03",
           "title": "Samarbeta",
           "scene": "Vännen behöver få med sig sina böcker.",
           "clues": [
@@ -833,6 +866,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-pyramid-01",
           "title": "Museets karta",
           "scene": "Guiden söker en karta med två särskilda detaljer.",
           "clues": [
@@ -853,6 +887,7 @@
           "why": "Kartan visar en pyramid och en blå stjärna."
         },
         {
+          "questionId": "portal-pyramid-02",
           "title": "Bilderna på väggen",
           "scene": "Tre skyltar har olika bilder.",
           "clues": [
@@ -873,6 +908,7 @@
           "why": "Skylten visar en sol med tre streck."
         },
         {
+          "questionId": "portal-pyramid-03",
           "title": "Den sista montern",
           "scene": "Du hittar tre montrar. Vilken söker guiden?",
           "clues": [
@@ -907,6 +943,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-hotel-01",
           "title": "En skylt i lobbyn",
           "scene": "Receptionisten söker en plats där första ledtråden ligger.",
           "clues": [
@@ -927,6 +964,7 @@
           "why": "Både klockan och månskylten finns vid samma disk."
         },
         {
+          "questionId": "portal-hotel-02",
           "title": "Paketets etikett",
           "scene": "Du hittar tre paket. Vilket hör till rätt rum?",
           "clues": [
@@ -947,6 +985,7 @@
           "why": "Etiketten visar både rum 12 och en grön stjärna."
         },
         {
+          "questionId": "portal-hotel-03",
           "title": "Rätt plats för paketet",
           "scene": "Tre hyllor står i korridoren. Var ska paketet lämnas?",
           "clues": [
@@ -981,6 +1020,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-underwater-01",
           "title": "En boj i viken",
           "scene": "Sjökartan visar var ubåten ska börja leta.",
           "clues": [
@@ -1001,6 +1041,7 @@
           "why": "En gul boj flyter framför den höga klippan."
         },
         {
+          "questionId": "portal-underwater-02",
           "title": "Anteckningen om fiskarna",
           "scene": "Tre teckningar visar olika platser under vattnet.",
           "clues": [
@@ -1021,6 +1062,7 @@
           "why": "Fiskarna simmar tillsammans ovanför korallerna."
         },
         {
+          "questionId": "portal-underwater-03",
           "title": "Tillbaka till ubåten",
           "scene": "En bild visar vilken markering som leder hem.",
           "clues": [
@@ -1055,6 +1097,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-animal-park-01",
           "title": "Den lilla dammen",
           "scene": "En lapp beskriver var skötaren senast stod.",
           "clues": [
@@ -1075,6 +1118,7 @@
           "why": "Den stora näckrosen flyter i den lilla dammen."
         },
         {
+          "questionId": "portal-animal-park-02",
           "title": "Skyltarna vid stigen",
           "scene": "Vilken skylt kan visa var djuren får vila i fred?",
           "clues": [
@@ -1095,6 +1139,7 @@
           "why": "Skylten berättar både om grodor och deras viloplats."
         },
         {
+          "questionId": "portal-animal-park-03",
           "title": "Hitta spårboken",
           "scene": "Tre hyllor står i skötarens arbetsrum.",
           "clues": [
@@ -1129,6 +1174,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-magic-exam-01",
           "title": "Hitta klassrummet",
           "scene": "Skolans magiska schema beskriver ett rum.",
           "clues": [
@@ -1149,6 +1195,7 @@
           "why": "Både bokbilden och det lila bandet visar rätt rum."
         },
         {
+          "questionId": "portal-magic-exam-02",
           "title": "Ordet i sagan",
           "scene": "Läraren säger: Välj ordet för något som lyser och visar vägen.",
           "clues": [
@@ -1169,6 +1216,7 @@
           "why": "Lyktan ger ljus och hjälper någon att hitta rätt."
         },
         {
+          "questionId": "portal-magic-exam-03",
           "title": "Det sista bokmärket",
           "scene": "Tre bokmärken ligger på bordet.",
           "clues": [
@@ -1203,6 +1251,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-spy-school-01",
           "title": "Rätt agentkort",
           "scene": "Tre kort ligger på bordet.",
           "clues": [
@@ -1223,6 +1272,7 @@
           "why": "Kortet har en triangel och siffran 5."
         },
         {
+          "questionId": "portal-spy-school-02",
           "title": "Hemliga alfabetet",
           "scene": "Agentchefen visar tre kort med ord.",
           "clues": [
@@ -1243,6 +1293,7 @@
           "why": "Ordet SÖK börjar med S och slutar med K."
         },
         {
+          "questionId": "portal-spy-school-03",
           "title": "Meddelandets gömställe",
           "scene": "En lapp beskriver vilket skåp som innehåller svaret.",
           "clues": [
@@ -1277,6 +1328,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-space-exit-01",
           "title": "Korridorens karta",
           "scene": "En bild visar vilken korridor som leder till nästa rum.",
           "clues": [
@@ -1297,6 +1349,7 @@
           "why": "Den röda pilen har en rund lampa under sig."
         },
         {
+          "questionId": "portal-space-exit-02",
           "title": "Låset utan nedräkning",
           "scene": "Ett vänligt sifferlås visar olika koder.",
           "clues": [
@@ -1317,6 +1370,7 @@
           "why": "Koden 2–4–6 börjar och slutar rätt."
         },
         {
+          "questionId": "portal-space-exit-03",
           "title": "Observationsrummet",
           "scene": "Tre dörrar har olika märken.",
           "clues": [
@@ -1351,6 +1405,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-friendly-house-01",
           "title": "Trappans tecken",
           "scene": "En lapp berättar var du ska börja.",
           "clues": [
@@ -1371,6 +1426,7 @@
           "why": "Trappan har ett rött räcke och en lykta."
         },
         {
+          "questionId": "portal-friendly-house-02",
           "title": "Ett snällt ljud",
           "scene": "En vän berättar vilket ljud som hördes från rummet.",
           "clues": [
@@ -1391,6 +1447,7 @@
           "why": "Den lilla bjällran ger ifrån sig ett svagt pling."
         },
         {
+          "questionId": "portal-friendly-house-03",
           "title": "Inbjudans plats",
           "scene": "Tre fönster vetter mot trädgården.",
           "clues": [
@@ -1425,6 +1482,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-crystal-case-01",
           "title": "Monterns etikett",
           "scene": "Guiden läser en gammal etikett.",
           "clues": [
@@ -1445,6 +1503,7 @@
           "why": "Etiketten har diamantformen och ordet GLAS."
         },
         {
+          "questionId": "portal-crystal-case-02",
           "title": "Vaktmästarens lapp",
           "scene": "En lapp beskriver vart kristallen flyttades.",
           "clues": [
@@ -1465,6 +1524,7 @@
           "why": "Skåpet med blått lås står vid pelaren."
         },
         {
+          "questionId": "portal-crystal-case-03",
           "title": "Rätt glaslåda",
           "scene": "Tre små glaslådor står på hyllan.",
           "clues": [
@@ -1499,6 +1559,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-ninja-01",
           "title": "Den hemliga stigen",
           "scene": "En tecknad bana visar tre olika vägar.",
           "clues": [
@@ -1519,6 +1580,7 @@
           "why": "Vägen går över bron och fortsätter till trädet."
         },
         {
+          "questionId": "portal-ninja-02",
           "title": "Balansmärket",
           "scene": "Tre kort visar ninjaklubbens symboler.",
           "clues": [
@@ -1539,6 +1601,7 @@
           "why": "Det fyrkantiga märket har två prickar."
         },
         {
+          "questionId": "portal-ninja-03",
           "title": "Sista meddelandet",
           "scene": "Ninjaläraren berättar hur klassen kan arbeta tillsammans.",
           "clues": [
@@ -1573,6 +1636,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-circus-01",
           "title": "Rätt cirkustält",
           "scene": "En teckning visar tältet där biljetten senast sågs.",
           "clues": [
@@ -1593,6 +1657,7 @@
           "why": "Tältet har röda ränder och en stjärna över ingången."
         },
         {
+          "questionId": "portal-circus-02",
           "title": "Artisternas ordning",
           "scene": "Tre lappar beskriver när olika nummer ska visas.",
           "clues": [
@@ -1613,6 +1678,7 @@
           "why": "Jongleringen ligger först och ringkastningen sist."
         },
         {
+          "questionId": "portal-circus-03",
           "title": "Hitta finalbiljetten",
           "scene": "Tre biljetter ligger i en ask.",
           "clues": [
@@ -1647,6 +1713,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-neon-01",
           "title": "Den lysande skylten",
           "scene": "Iris söker en bild som hör till utställningens början.",
           "clues": [
@@ -1667,6 +1734,7 @@
           "why": "Både den gröna vågen och de tre gula prickarna finns där."
         },
         {
+          "questionId": "portal-neon-02",
           "title": "Måla med ord",
           "scene": "Iris ska märka upp tre teckningar. Vilken lapp passar bilden?",
           "clues": [
@@ -1687,6 +1755,7 @@
           "why": "Teckningen visar en lampa och under den står ordet BLINKAR."
         },
         {
+          "questionId": "portal-neon-03",
           "title": "Galleriets sista tavla",
           "scene": "Tre tavlor väntar på väggen.",
           "clues": [
@@ -1721,6 +1790,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-baking-01",
           "title": "Hitta receptkortet",
           "scene": "På bordet finns tre kort med olika bilder.",
           "clues": [
@@ -1741,6 +1811,7 @@
           "why": "Rätt kort har en jordgubbe och ordet KAKA."
         },
         {
+          "questionId": "portal-baking-02",
           "title": "Vilken ordning?",
           "scene": "Vännerna ska dekorera en bild av en bakelse.",
           "clues": [
@@ -1761,6 +1832,7 @@
           "why": "Glasyren ritas först och bäret sist, precis som på kortet."
         },
         {
+          "questionId": "portal-baking-03",
           "title": "Kalasets fat",
           "scene": "Tre fat står på bordet. Vilket är till de färdiga bilderna?",
           "clues": [
@@ -1795,6 +1867,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-world-postcards-01",
           "title": "Vykortet från bergen",
           "scene": "På en lapp finns två detaljer från resan.",
           "clues": [
@@ -1815,6 +1888,7 @@
           "why": "Bergstoppen har snö och nedanför ligger en klar sjö."
         },
         {
+          "questionId": "portal-world-postcards-02",
           "title": "Vykortet från ön",
           "scene": "Nästa kort visar en plats vid havet.",
           "clues": [
@@ -1835,6 +1909,7 @@
           "why": "Den lilla fyren står på ön som omges av hav."
         },
         {
+          "questionId": "portal-world-postcards-03",
           "title": "Berättarens sista kort",
           "scene": "På sista kortet finns en stad från sagan.",
           "clues": [
@@ -1869,6 +1944,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-blocks-01",
           "title": "Husets första klossar",
           "scene": "Byggplanen visar en trygg start.",
           "clues": [
@@ -1889,6 +1965,7 @@
           "why": "Blå klossar bildar basen och en grön kloss står ovanpå."
         },
         {
+          "questionId": "portal-blocks-02",
           "title": "Bron till läshuset",
           "scene": "Vännerna ritar tre broar mellan två klosstorn.",
           "clues": [
@@ -1909,6 +1986,7 @@
           "why": "Bron går mellan två torn och har en blå båge under sig."
         },
         {
+          "questionId": "portal-blocks-03",
           "title": "Bibliotekets tak",
           "scene": "Sista ritningen visar hur taket ska se ut.",
           "clues": [
@@ -1943,6 +2021,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-creature-friends-01",
           "title": "Den blyga lövvännen",
           "scene": "Ett kort berättar hur den lilla lövvännen trivs.",
           "clues": [
@@ -1963,6 +2042,7 @@
           "why": "Lövvännen får både skugga och en mjuk filt."
         },
         {
+          "questionId": "portal-creature-friends-02",
           "title": "Den glada molnvännen",
           "scene": "Nästa vän har lämnat en tecknad önskelapp.",
           "clues": [
@@ -1983,6 +2063,7 @@
           "why": "Bollarna är både runda och lila, som vännen önskar."
         },
         {
+          "questionId": "portal-creature-friends-03",
           "title": "Den nyfikna bokvännen",
           "scene": "Den sista varelsen vill hitta sin läsplats.",
           "clues": [
@@ -2017,6 +2098,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-gold-rush-01",
           "title": "Kartan vid floden",
           "scene": "Du ser tre tecknade platser vid en sagoflod.",
           "clues": [
@@ -2037,6 +2119,7 @@
           "why": "Bron går över floden och en kaktus står bredvid."
         },
         {
+          "questionId": "portal-gold-rush-02",
           "title": "Guldvaskarens lapp",
           "scene": "En vuxen visar en teckning av låtsasguld.",
           "clues": [
@@ -2057,6 +2140,7 @@
           "why": "Tre gula stjärnor finns inuti den blå cirkeln."
         },
         {
+          "questionId": "portal-gold-rush-03",
           "title": "Lådan på marknaden",
           "scene": "Tre små lådor står på en hylla i lekboden.",
           "clues": [
@@ -2091,6 +2175,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-slime-art-01",
           "title": "Den randiga slembilden",
           "scene": "En av teckningarna ska hänga först.",
           "clues": [
@@ -2111,6 +2196,7 @@
           "why": "Den gröna slembollen har två rosa ränder."
         },
         {
+          "questionId": "portal-slime-art-02",
           "title": "Konstnärens färgord",
           "scene": "På nästa lapp står hur den målade slembollen ser ut.",
           "clues": [
@@ -2131,6 +2217,7 @@
           "why": "Den lila bollen har prickar, så båda spåren stämmer."
         },
         {
+          "questionId": "portal-slime-art-03",
           "title": "Rätt utställningsbord",
           "scene": "Tre bord har dekorerats för slembilderna.",
           "clues": [
@@ -2165,6 +2252,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-game-show-01",
           "title": "Studions skylt",
           "scene": "Tre skyltar sitter ovanför olika dörrar.",
           "clues": [
@@ -2185,6 +2273,7 @@
           "why": "Skylten visar mikrofonen och ordet FRÅGA."
         },
         {
+          "questionId": "portal-game-show-02",
           "title": "Den vänliga frågan",
           "scene": "Programledaren vill välja en bra fråga till alla.",
           "clues": [
@@ -2205,6 +2294,7 @@
           "why": "Varför lyser stjärnor? börjar rätt och har frågetecken."
         },
         {
+          "questionId": "portal-game-show-03",
           "title": "Finalens bakgrund",
           "scene": "Tre tecknade bakgrunder finns i studion.",
           "clues": [
@@ -2239,6 +2329,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-knights-01",
           "title": "Slottets första ledtråd",
           "scene": "En skrivare har ritat tre torn på en karta.",
           "clues": [
@@ -2259,6 +2350,7 @@
           "why": "Det röda taket och det stora trädet finns vid samma torn."
         },
         {
+          "questionId": "portal-knights-02",
           "title": "Drakens brev",
           "scene": "Den vänliga draken har skickat ett brev.",
           "clues": [
@@ -2279,6 +2371,7 @@
           "why": "Brevet berättar om både fest och att alla är välkomna."
         },
         {
+          "questionId": "portal-knights-03",
           "title": "Hitta fredsflaggan",
           "scene": "På borggården ligger tre flaggor.",
           "clues": [
@@ -2313,6 +2406,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-fairy-forest-01",
           "title": "Spåret bland bladen",
           "scene": "En liten karta visar den första lyktan.",
           "clues": [
@@ -2333,6 +2427,7 @@
           "why": "Lyktan hänger i det stora trädet med tre blå löv."
         },
         {
+          "questionId": "portal-fairy-forest-02",
           "title": "Den viskande stigen",
           "scene": "En älva beskriver stigen till nästa lykta.",
           "clues": [
@@ -2353,6 +2448,7 @@
           "why": "Stigen följer bäcken och där växer en lila blomma."
         },
         {
+          "questionId": "portal-fairy-forest-03",
           "title": "Festens sista lykta",
           "scene": "Tre lyktor väntar på att få hängas upp.",
           "clues": [
@@ -2388,6 +2484,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-rail-ticket-01",
           "title": "Rätt avgång",
           "scene": "Konduktören läser två saker på reselappen.",
           "clues": [
@@ -2408,6 +2505,7 @@
           "why": "Tåget mot Snöbyn avgår från spår 2. Båda uppgifterna stämmer."
         },
         {
+          "questionId": "portal-rail-ticket-02",
           "title": "Ett brev från resenären",
           "scene": "En resenär beskriver sitt borttappade kuvert.",
           "clues": [
@@ -2428,6 +2526,7 @@
           "why": "Kuvertet har ordet VÄLKOMMEN och en tågbild."
         },
         {
+          "questionId": "portal-rail-ticket-03",
           "title": "Hitta biljetten",
           "scene": "Tre bänkar står i stationshuset.",
           "clues": [
@@ -2462,6 +2561,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-lighthouse-01",
           "title": "Hitta rätt fyr",
           "scene": "På en karta finns tre små fyrar.",
           "clues": [
@@ -2482,6 +2582,7 @@
           "why": "Rätt fyr står på klippan och har en brygga bredvid."
         },
         {
+          "questionId": "portal-lighthouse-02",
           "title": "Ljusets mönster",
           "scene": "På ett papper beskriver Isa sin tecknade ljussignal.",
           "clues": [
@@ -2502,6 +2603,7 @@
           "why": "Mönstret börjar med en kort blinkning och slutar med två långa."
         },
         {
+          "questionId": "portal-lighthouse-03",
           "title": "Kodbokens hylla",
           "scene": "I fyrens lilla läshörna finns tre böcker.",
           "clues": [
@@ -2536,6 +2638,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-theater-props-01",
           "title": "Manusets första rad",
           "scene": "En lapp beskriver vem som ska ha kronan.",
           "clues": [
@@ -2556,6 +2659,7 @@
           "why": "Texten berättar att drottningen kommer in efter draken."
         },
         {
+          "questionId": "portal-theater-props-02",
           "title": "Hitta rätt hylla",
           "scene": "Det finns tre hyllor med teatersaker.",
           "clues": [
@@ -2576,6 +2680,7 @@
           "why": "Den röda manteln ligger på hyllan märkt SAGOR."
         },
         {
+          "questionId": "portal-theater-props-03",
           "title": "Kronans låda",
           "scene": "Tre lådor står på hyllan.",
           "clues": [
@@ -2610,6 +2715,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-night-library-01",
           "title": "Den rätta bokhyllan",
           "scene": "Mio hittar ett meddelande om en hylla.",
           "clues": [
@@ -2630,6 +2736,7 @@
           "why": "Sagoböckerna står under den gröna skylten."
         },
         {
+          "questionId": "portal-night-library-02",
           "title": "Bokens beskrivning",
           "scene": "En liten lapp beskriver en bestämd bok.",
           "clues": [
@@ -2650,6 +2757,7 @@
           "why": "En vänlig räv hjälper kaninen att hitta hem. Båda spåren stämmer."
         },
         {
+          "questionId": "portal-night-library-03",
           "title": "Bokmärket i berättelsen",
           "scene": "Tre bokmärken ligger mellan bokens sidor.",
           "clues": [
@@ -2684,6 +2792,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-market-map-01",
           "title": "Hitta fruktståndet",
           "scene": "En lapp berättar var nissen stannade först.",
           "clues": [
@@ -2704,6 +2813,7 @@
           "why": "Äpplena ligger under skylten med hjärtat."
         },
         {
+          "questionId": "portal-market-map-02",
           "title": "Läs vägen rätt",
           "scene": "På marken finns tre skyltar med vägord.",
           "clues": [
@@ -2724,6 +2834,7 @@
           "why": "Först kommer bron och sedan svänger vägen vänster."
         },
         {
+          "questionId": "portal-market-map-03",
           "title": "Hitta kartbordet",
           "scene": "Tre små bord står vid slutet av marknaden.",
           "clues": [
@@ -2758,6 +2869,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-dragon-orchestra-01",
           "title": "Hitta notboken",
           "scene": "Tre böcker ligger på drakens bord.",
           "clues": [
@@ -2778,6 +2890,7 @@
           "why": "Notboken har grön pärm och en flöjt på framsidan."
         },
         {
+          "questionId": "portal-dragon-orchestra-02",
           "title": "Sången för en trött vän",
           "scene": "Flim vill välja en sång som hjälper en vän att vila.",
           "clues": [
@@ -2798,6 +2911,7 @@
           "why": "Den lugna sången om sömn passar båda spåren."
         },
         {
+          "questionId": "portal-dragon-orchestra-03",
           "title": "Spela i rätt ordning",
           "scene": "Tre kort visar hur melodin ska börja.",
           "clues": [
@@ -2832,6 +2946,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-cloud-castle-01",
           "title": "Trappan i molnet",
           "scene": "En skylt visar vilken trappa som leder till salen.",
           "clues": [
@@ -2852,6 +2967,7 @@
           "why": "Trappan går upp till den runda lyktan."
         },
         {
+          "questionId": "portal-cloud-castle-02",
           "title": "Vaktens gåta",
           "scene": "Vakten beskriver något som finns i sagosalen.",
           "clues": [
@@ -2872,6 +2988,7 @@
           "why": "Boken kan öppnas och rymmer skrivna sagor."
         },
         {
+          "questionId": "portal-cloud-castle-03",
           "title": "Den rätta nyckeln",
           "scene": "Tre nycklar ligger i en skål.",
           "clues": [
@@ -2906,6 +3023,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-moon-fairy-01",
           "title": "Hitta brevpappret",
           "scene": "Lumi letar efter rätt ark i sagolådan.",
           "clues": [
@@ -2926,6 +3044,7 @@
           "why": "Brevpapperet är ljusblått med en gul måne."
         },
         {
+          "questionId": "portal-moon-fairy-02",
           "title": "Den vänliga hälsningen",
           "scene": "Lumi vill skriva en mening som visar omtanke.",
           "clues": [
@@ -2946,6 +3065,7 @@
           "why": "Lumi frågar hur vännen mår och bjuder in till sällskap."
         },
         {
+          "questionId": "portal-moon-fairy-03",
           "title": "Hitta kuvertet",
           "scene": "Tre kuvert ligger vid fönstret.",
           "clues": [
@@ -2980,6 +3100,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-mermaid-letter-01",
           "title": "Bädden bland snäckorna",
           "scene": "En lapp beskriver var Nilla lade sitt armband.",
           "clues": [
@@ -3000,6 +3121,7 @@
           "why": "Tre snäckor ligger bredvid den blå filten."
         },
         {
+          "questionId": "portal-mermaid-letter-02",
           "title": "En vän som hjälper",
           "scene": "Havsvännerna skriver kort om hur de letar tillsammans.",
           "clues": [
@@ -3020,6 +3142,7 @@
           "why": "Två vänner letar tillsammans efter samma pärla."
         },
         {
+          "questionId": "portal-mermaid-letter-03",
           "title": "Hitta den mjuka påsen",
           "scene": "Tre små påsar ligger på en hylla.",
           "clues": [
@@ -3054,6 +3177,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-tiny-giants-01",
           "title": "Det lilla fotavtrycket",
           "scene": "En jättes teckning visar var den lilla stigen börjar.",
           "clues": [
@@ -3074,6 +3198,7 @@
           "why": "Stigen börjar vid fotavtrycket och den stora blomman."
         },
         {
+          "questionId": "portal-tiny-giants-02",
           "title": "Vems kruka är det?",
           "scene": "Tre vänner beskriver sina odlingskrukor.",
           "clues": [
@@ -3094,6 +3219,7 @@
           "why": "Den lilla krukan innehåller en solros."
         },
         {
+          "questionId": "portal-tiny-giants-03",
           "title": "Plantera på rätt plats",
           "scene": "Jättarna vill placera krukan där blomman kan växa.",
           "clues": [
@@ -3128,6 +3254,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-weather-station-01",
           "title": "Vilken dag var det?",
           "scene": "Ella letar efter en bild av en viss väderdag.",
           "clues": [
@@ -3148,6 +3275,7 @@
           "why": "Bilden visar både regn och träd som böjs av vinden."
         },
         {
+          "questionId": "portal-weather-station-02",
           "title": "Väderorden",
           "scene": "Ella skriver en kort rapport som passar de två spåren.",
           "clues": [
@@ -3168,6 +3296,7 @@
           "why": "Rapporten beskriver kyla och snö som faller."
         },
         {
+          "questionId": "portal-weather-station-03",
           "title": "Rätt symbolskylt",
           "scene": "Tre skyltar står på stationens bord.",
           "clues": [
@@ -3202,6 +3331,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-polar-post-01",
           "title": "Kartans första markering",
           "scene": "En tecknad karta visar var vännerna gick.",
           "clues": [
@@ -3222,6 +3352,7 @@
           "why": "Det lilla tältet har en blå flagga utanför."
         },
         {
+          "questionId": "portal-polar-post-02",
           "title": "Vad betyder skydd?",
           "scene": "Vännerna söker en plats där de kan läsa sitt vykort.",
           "clues": [
@@ -3242,6 +3373,7 @@
           "why": "Stugan skyddar mot vinden och har ett bord."
         },
         {
+          "questionId": "portal-polar-post-03",
           "title": "Vykortets framsida",
           "scene": "Tre vykort ligger på bordet.",
           "clues": [
@@ -3276,6 +3408,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-mountain-trail-01",
           "title": "Stigarnas skillnad",
           "scene": "Två ord på kartan visar rätt stig.",
           "clues": [
@@ -3296,6 +3429,7 @@
           "why": "Både vattenfallet och träbron ligger vid samma stig."
         },
         {
+          "questionId": "portal-mountain-trail-02",
           "title": "Läs riktningsorden",
           "scene": "En vän har skrivit hur Noa ska svänga.",
           "clues": [
@@ -3316,6 +3450,7 @@
           "why": "Noa går först mot trädet och svänger sedan höger."
         },
         {
+          "questionId": "portal-mountain-trail-03",
           "title": "Ett tryggt läshus",
           "scene": "Tre stugor syns på kartan.",
           "clues": [
@@ -3350,6 +3485,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-volcano-island-01",
           "title": "Kartans gamla utsiktspunkt",
           "scene": "Museets karta visar en plats att studera på avstånd.",
           "clues": [
@@ -3370,6 +3506,7 @@
           "why": "På kartan syns en vulkan med en sjö nedanför."
         },
         {
+          "questionId": "portal-volcano-island-02",
           "title": "Forskaren beskriver stenen",
           "scene": "Nova har skrivit ner två detaljer.",
           "clues": [
@@ -3390,6 +3527,7 @@
           "why": "Stenen är mörk och har små hål i ytan."
         },
         {
+          "questionId": "portal-volcano-island-03",
           "title": "Stenen på museet",
           "scene": "Tre montrar står i utställningen.",
           "clues": [
@@ -3424,6 +3562,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-star-observatory-01",
           "title": "Läs stjärnfiguren",
           "scene": "Tre teckningar ligger på bordet.",
           "clues": [
@@ -3444,6 +3583,7 @@
           "why": "En stjärna finns ovanför fyrkanten av fyra stjärnor."
         },
         {
+          "questionId": "portal-star-observatory-02",
           "title": "Titta genom fönstret",
           "scene": "En bild beskriver var någon stod och tittade.",
           "clues": [
@@ -3464,6 +3604,7 @@
           "why": "Det stora fönstret står bredvid kikaren."
         },
         {
+          "questionId": "portal-star-observatory-03",
           "title": "Kartan i rätt låda",
           "scene": "Tre kartlådor är märkta med bilder.",
           "clues": [
@@ -3498,6 +3639,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-robot-workshop-01",
           "title": "Hitta ritningen",
           "scene": "Tre papper ligger på verkstadsbordet.",
           "clues": [
@@ -3518,6 +3660,7 @@
           "why": "Ritningen visar en robot med fyrkantigt huvud."
         },
         {
+          "questionId": "portal-robot-workshop-02",
           "title": "Vad ska roboten göra?",
           "scene": "Kim vill skapa en robot som hjälper till i biblioteket.",
           "clues": [
@@ -3538,6 +3681,7 @@
           "why": "Roboten bär böckerna och lämnar dem på hyllan."
         },
         {
+          "questionId": "portal-robot-workshop-03",
           "title": "Startknappens symbol",
           "scene": "Det finns tre knappar på den ritade roboten.",
           "clues": [
@@ -3572,6 +3716,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-comic-studio-01",
           "title": "Vem pratar?",
           "scene": "Tre rutor visar vem som säger hej.",
           "clues": [
@@ -3592,6 +3737,7 @@
           "why": "Kaninen säger HEJ i pratbubblan."
         },
         {
+          "questionId": "portal-comic-studio-02",
           "title": "Berättelsens ordning",
           "scene": "Tecknaren vill att händelserna ska gå att förstå.",
           "clues": [
@@ -3612,6 +3758,7 @@
           "why": "Vännen hittar först brevet och läser det sedan."
         },
         {
+          "questionId": "portal-comic-studio-03",
           "title": "Den sista pratbubblan",
           "scene": "En vän vill tacka den som hjälpte.",
           "clues": [
@@ -3646,6 +3793,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-music-festival-01",
           "title": "Hitta musikscenen",
           "scene": "Tre scener har olika skyltar.",
           "clues": [
@@ -3666,6 +3814,7 @@
           "why": "Skylten visar gitarren och ordet MUSIK."
         },
         {
+          "questionId": "portal-music-festival-02",
           "title": "Ordning på låtarna",
           "scene": "En lapp beskriver vad som ska spelas först och sist.",
           "clues": [
@@ -3686,6 +3835,7 @@
           "why": "Programmet börjar lugnt och slutar med snabb musik."
         },
         {
+          "questionId": "portal-music-festival-03",
           "title": "Vänliga applåder",
           "scene": "Arrangören vill hitta en lapp som passar efter spelningen.",
           "clues": [
@@ -3720,6 +3870,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-puppet-theater-01",
           "title": "Skuggans form",
           "scene": "Tecknaren beskriver figuren som saknas.",
           "clues": [
@@ -3740,6 +3891,7 @@
           "why": "Kaninfiguren har långa öron och en blomma."
         },
         {
+          "questionId": "portal-puppet-theater-02",
           "title": "Var står lampan?",
           "scene": "Dockorna ska bli skuggor på en vit duk.",
           "clues": [
@@ -3760,6 +3912,7 @@
           "why": "Lampan lyser och figuren står mellan ljuset och duken."
         },
         {
+          "questionId": "portal-puppet-theater-03",
           "title": "Ordna scenen",
           "scene": "Sagan har tre delar som måste komma i ordning.",
           "clues": [
@@ -3794,6 +3947,7 @@
       },
       "stages": [
         {
+          "questionId": "portal-photo-club-01",
           "title": "Hitta rätt motiv",
           "scene": "Fotografen beskriver ett foto med två detaljer.",
           "clues": [
@@ -3814,6 +3968,7 @@
           "why": "Fotot visar både cykeln och blomkrukan."
         },
         {
+          "questionId": "portal-photo-club-02",
           "title": "Vilken bildtext passar?",
           "scene": "En bild ska visa hur en vän hjälper en annan.",
           "clues": [
@@ -3834,6 +3989,7 @@
           "why": "Bildtexten berättar att Sara hjälper Leo och vad hjälpen gäller."
         },
         {
+          "questionId": "portal-photo-club-03",
           "title": "Utställningens sista ram",
           "scene": "Tre ramar står på ett bord.",
           "clues": [

@@ -3,7 +3,7 @@
   "version": 1,
   "language": "sv-SE",
   "ownership": "independent",
-  "primarySource": "public/data/expressions.json",
+  "primarySource": "multiple-authored-sources",
   "sourceFiles": [
     "public/data/ordbank.json",
     "public/data/expressions.json",
@@ -12,14 +12,33 @@
     "public/data/contrasts.json",
     "public/data/clue-ladder.json",
     "public/data/surprises.json",
-    "public/data/comics.json"
+    "public/data/comics.json",
+    "public/data/curation.js",
+    "public/js/mission-portals-data.js",
+    "public/js/treasure-hunt-data.js",
+    "public/js/world-missions.js",
+    "public/js/action-words.js"
   ],
-  "adapter": "public/js/banks/svenska.js",
+  "adapter": "public/js/banks/svenska-catalog.js",
   "supportedQuestionSets": [
     "expression-meaning",
     "expression-sentence",
     "expression-sequence",
-    "expression-context-sentence"
+    "expression-context-sentence",
+    "word-meaning",
+    "word-reverse",
+    "word-context",
+    "word-picture",
+    "compare-words",
+    "word-deduction",
+    "expression-transfer",
+    "word-action",
+    "word-in-scene",
+    "portal-reading-clues",
+    "treasure-place",
+    "treasure-mystery",
+    "treasure-proof",
+    "treasure-transfer"
   ],
-  "note": "This manifest references existing canonical Swedish sources; it does not duplicate questions or claim other subject banks."
+  "note": "Each authored source has one owner. A composed read-only registry indexes question IDs; SQLite is derived, and other subject banks remain independent."
 }

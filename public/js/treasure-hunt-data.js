@@ -10,6 +10,7 @@
   const DATA={
     forest:[
       {
+        questionId:'treasure-place-forest-01',
         description:'En liten fågel sitter på en skylt där skogen börjar.',
         clue:'Leta vid skogens kant. En liten fågel sitter på en skylt där.',
         lookFor:['skogens kant','en fågel på en skylt'],
@@ -17,6 +18,7 @@
         why:'Fågeln sitter på skylten där skogen börjar. Både platsen och fågeln stämmer med ledtråden.'
       },
       {
+        questionId:'treasure-place-forest-02',
         description:'Vid stigen växer svampar i en ring runt en sten.',
         clue:'Följ stigen till en ring av svampar. I mitten ligger en sten.',
         lookFor:['svampar i en ring','en sten i mitten'],
@@ -24,6 +26,7 @@
         why:'Svamparna växer i en ring runt stenen. Både svamparna och stenen stämmer med ledtråden.'
       },
       {
+        questionId:'treasure-place-forest-03',
         description:'En uggla har böcker i ett stort träd.',
         clue:'Sök efter ett stort träd där en uggla håller ordning på böcker.',
         lookFor:['ett stort träd','en uggla med böcker'],
@@ -31,6 +34,7 @@
         why:'Här finns både en uggla och böcker i trädet. Därför passar den här platsen.'
       },
       {
+        questionId:'treasure-place-forest-04',
         description:'Lyktor hänger mellan träden runt en öppen plats.',
         clue:'Hitta den öppna platsen där lyktor hänger mellan träden.',
         lookFor:['en öppen plats','lyktor mellan träden'],
@@ -40,6 +44,7 @@
     ],
     space:[
       {
+        questionId:'treasure-place-space-01',
         description:'En robot står med packlådor bredvid en raket.',
         clue:'En robot packar lådor inför resan. Välj platsen där den står bredvid en raket.',
         lookFor:['en robot med lådor','en raket bredvid roboten'],
@@ -47,6 +52,7 @@
         why:'Roboten, packlådorna och raketen finns på samma plats. Det är där resan ska börja.'
       },
       {
+        questionId:'treasure-place-space-02',
         description:'Fotavtryck syns i dammet bland små stenar.',
         clue:'Leta där fötter har lämnat avtryck i dammet. Små stenar ligger bredvid.',
         lookFor:['fotavtryck i dammet','små stenar bredvid'],
@@ -54,6 +60,7 @@
         why:'Avtrycken syns i dammet och stenarna ligger bredvid. Det stämmer med beskrivningen i ledtråden.'
       },
       {
+        questionId:'treasure-place-space-03',
         description:'En planet omges av stora ringar av is och sten.',
         clue:'Sök efter en planet med is och sten i stora ringar runt sig.',
         lookFor:['en planet','ringar av is och sten'],
@@ -61,6 +68,7 @@
         why:'Isen och stenarna bildar ringar runt planeten. Det gör att den här platsen passar.'
       },
       {
+        questionId:'treasure-place-space-04',
         description:'En byggnad har ett stort fönster och en kikare mot rymden.',
         clue:'Leta efter byggnaden med ett stort fönster och en kikare.',
         lookFor:['ett stort fönster','en kikare i byggnaden'],
@@ -70,6 +78,7 @@
     ],
     castle:[
       {
+        questionId:'treasure-place-castle-01',
         description:'En vakt står vid en stor dörr med flaggor ovanför.',
         clue:'Leta efter en vakt vid en stor dörr. Ovanför dörren hänger flaggor.',
         lookFor:['en vakt vid en stor dörr','flaggor ovanför dörren'],
@@ -77,6 +86,7 @@
         why:'Vakten står vid den stora dörren med flaggor ovanför. Alla delarna hör till samma plats.'
       },
       {
+        questionId:'treasure-place-castle-02',
         description:'Nycklar i olika former hänger på krokar längs väggen.',
         clue:'Gå dit där nycklar i olika former hänger på väggens krokar.',
         lookFor:['nycklar i olika former','krokar på väggen'],
@@ -84,6 +94,7 @@
         why:'Här hänger nycklarna på krokar, precis som ledtråden beskriver.'
       },
       {
+        questionId:'treasure-place-castle-03',
         description:'En vänlig drake sitter på en kudde och berättar sagor.',
         clue:'Hitta den som berättar sagor från sin kudde. Det är en vänlig drake.',
         lookFor:['en drake som berättar sagor','en kudde som draken sitter på'],
@@ -91,6 +102,7 @@
         why:'Draken sitter på kudden och berättar sagor. Därför är det hit ledtråden leder.'
       },
       {
+        questionId:'treasure-place-castle-04',
         description:'Ett rum har hyllor med böcker och en låda med glittrande stenar.',
         clue:'Sök i rummet med bokhyllor. Där finns också en låda med stenar som glittrar.',
         lookFor:['hyllor med böcker','en låda med glittrande stenar'],
@@ -100,6 +112,7 @@
     ],
     pirate:[
       {
+        questionId:'treasure-place-pirate-01',
         description:'En kapten står på en båt med segel och en kompass.',
         clue:'Leta efter kaptenen på en båt. Båten har segel och en kompass.',
         lookFor:['en kapten på en båt','segel och en kompass'],
@@ -107,6 +120,7 @@
         why:'Kaptenen står ombord på båten med seglet och kompassen. Det är samma plats som i ledtråden.'
       },
       {
+        questionId:'treasure-place-pirate-02',
         description:'På ett bord ligger en karta med ett stort kryss.',
         clue:'Hitta bordet där en karta ligger utbredd. På papperet syns ett stort kryss.',
         lookFor:['en karta på ett bord','ett stort kryss på kartan'],
@@ -114,6 +128,7 @@
         why:'Kartan ligger på bordet och har ett stort kryss. Därför passar den här platsen.'
       },
       {
+        questionId:'treasure-place-pirate-03',
         description:'På en strand ligger snäckor och en flaska med ett meddelande.',
         clue:'Sök längs stranden efter snäckor och en flaska med ett meddelande i.',
         lookFor:['snäckor på stranden','en flaska med ett meddelande'],
@@ -121,6 +136,7 @@
         why:'Snäckorna och flaskan med meddelandet ligger tillsammans på stranden. Ledtråden beskriver just det.'
       },
       {
+        questionId:'treasure-place-pirate-04',
         description:'En stor kista innehåller en bok med ett snöre runt.',
         clue:'Leta efter en stor kista. Inuti finns en bok med ett snöre runt.',
         lookFor:['en stor kista','en bok med ett snöre runt'],
@@ -130,6 +146,7 @@
     ],
     ocean:[
       {
+        questionId:'treasure-place-ocean-01',
         description:'Snäckor i olika former ligger i sanden vid vattnet.',
         clue:'Leta i sanden vid vattnet. Där ligger snäckor i olika former.',
         lookFor:['snäckor i olika former','sand vid vattnet'],
@@ -137,6 +154,7 @@
         why:'Snäckorna ligger i sanden, nära vattnet. Både snäckorna och platsen stämmer.'
       },
       {
+        questionId:'treasure-place-ocean-02',
         description:'Små fiskar simmar mellan koraller under vattnet.',
         clue:'Dyk i fantasin till platsen där små fiskar simmar mellan koraller.',
         lookFor:['små fiskar','koraller under vattnet'],
@@ -144,6 +162,7 @@
         why:'De små fiskarna simmar mellan korallerna. Det är den undervattensplats som ledtråden beskriver.'
       },
       {
+        questionId:'treasure-place-ocean-03',
         description:'Sköldpaddor simmar i en vik som skyddas av klippor.',
         clue:'Sök efter viken med sköldpaddor. Klippor skyddar vattnet där.',
         lookFor:['sköldpaddor i en vik','klippor som skyddar vattnet'],
@@ -151,6 +170,7 @@
         why:'Här finns sköldpaddorna i viken mellan klipporna. Båda kännetecknen passar.'
       },
       {
+        questionId:'treasure-place-ocean-04',
         description:'Delfiner hoppar över vågorna nära en liten båt.',
         clue:'Hitta den lilla båten där du kan se delfiner hoppa över vågorna.',
         lookFor:['en liten båt','delfiner som hoppar över vågor'],
@@ -160,6 +180,7 @@
     ],
     dinosaurs:[
       {
+        questionId:'treasure-place-dinosaurs-01',
         description:'I leran syns stora avtryck efter fötter.',
         clue:'Leta efter stora fotavtryck i leran på marken.',
         lookFor:['lera på marken','stora avtryck efter fötter'],
@@ -167,6 +188,7 @@
         why:'Leran visar stora avtryck efter fötter. Det är spåren som ledtråden ber oss leta efter.'
       },
       {
+        questionId:'treasure-place-dinosaurs-02',
         description:'En forskare visar en gammal sten som liknar ett ägg.',
         clue:'Hitta forskaren som visar en gammal sten med samma form som ett ägg.',
         lookFor:['en forskare','en gammal sten formad som ett ägg'],
@@ -174,6 +196,7 @@
         why:'Forskaren visar den äggformade stenen. Det är båda kännetecknen från ledtråden.'
       },
       {
+        questionId:'treasure-place-dinosaurs-03',
         description:'Från en utkiksplats syns ett högt berg med en öppning i toppen.',
         clue:'Sök upp utkiksplatsen där du ser ett högt berg med en öppning längst upp.',
         lookFor:['ett högt berg','en öppning i bergets topp'],
@@ -181,6 +204,7 @@
         why:'Från utkiksplatsen ser vi bergets öppning i toppen. Den platsen stämmer med ledtråden.'
       },
       {
+        questionId:'treasure-place-dinosaurs-04',
         description:'I fantasidalen går stora dinosaurier bland höga växter.',
         clue:'Gå i fantasin dit där stora dinosaurier vandrar mellan höga växter.',
         lookFor:['stora dinosaurier','höga växter'],
@@ -190,6 +214,7 @@
     ],
     garden:[
       {
+        questionId:'treasure-place-garden-01',
         description:'En trädgårdsmästare står vid krukor och en påse frön.',
         clue:'Leta efter den som ska så frön. Där finns både krukor och en fröpåse.',
         lookFor:['krukor','en påse frön'],
@@ -197,6 +222,7 @@
         why:'Trädgårdsmästaren har krukor och frön att så. Alla delarna i ledtråden finns här.'
       },
       {
+        questionId:'treasure-place-garden-02',
         description:'Tulpaner växer längs en stig med en liten skylt.',
         clue:'Följ den lilla skylten till stigen där tulpaner växer längs kanten.',
         lookFor:['tulpaner längs en stig','en liten skylt vid stigen'],
@@ -204,6 +230,7 @@
         why:'Här finns tulpanerna längs stigen och skylten som ledtråden nämner.'
       },
       {
+        questionId:'treasure-place-garden-03',
         description:'Fjärilar flyger över blommorna på en äng.',
         clue:'Hitta ängen där fjärilar flyger mellan blommorna.',
         lookFor:['fjärilar','blommor på en äng'],
@@ -211,6 +238,7 @@
         why:'Fjärilarna flyger över ängens blommor. Därför passar den här platsen.'
       },
       {
+        questionId:'treasure-place-garden-04',
         description:'En liten damm med stilla vatten ligger bland blommor och runda stenar.',
         clue:'Sök efter stilla vatten med blommor och runda stenar runt kanten.',
         lookFor:['stilla vatten','blommor och runda stenar vid kanten'],
@@ -220,6 +248,7 @@
     ],
     unicorn:[
       {
+        questionId:'treasure-place-unicorn-01',
         description:'Ett glittrande spår går över små kullar.',
         clue:'Leta efter ett spår som glittrar när det slingrar sig över små kullar.',
         lookFor:['ett glittrande spår','små kullar'],
@@ -227,6 +256,7 @@
         why:'Spåret glittrar och går över kullarna. Det stämmer med ledtrådens två delar.'
       },
       {
+        questionId:'treasure-place-unicorn-02',
         description:'En bro med regnbågens färger går över en bäck.',
         clue:'Hitta vägen över bäcken. Där finns en bro med regnbågens färger.',
         lookFor:['en bro över en bäck','regnbågens färger på bron'],
@@ -234,6 +264,7 @@
         why:'Bron har regnbågens färger och går över bäcken. Därför passar den här platsen.'
       },
       {
+        questionId:'treasure-place-unicorn-03',
         description:'Hjärtformade stenar ligger på en öppen plats bland fåglar.',
         clue:'Sök på den öppna platsen där fåglar sitter bland stenar formade som hjärtan.',
         lookFor:['fåglar','stenar formade som hjärtan'],
@@ -241,6 +272,7 @@
         why:'Här finns fåglarna och stenarna som liknar hjärtan. Det är kännetecknen i ledtråden.'
       },
       {
+        questionId:'treasure-place-unicorn-04',
         description:'Enhörningar leker på en äng full av blommor.',
         clue:'Hitta ängen där enhörningar leker bland blommorna.',
         lookFor:['en äng med blommor','enhörningar som leker'],
@@ -250,6 +282,7 @@
     ],
     animals:[
       {
+        questionId:'treasure-place-animals-01',
         description:'En katt tittar fram bakom en gardin i ett litet hus.',
         clue:'Leta vid det lilla huset där en katt tittar fram bakom en gardin.',
         lookFor:['ett litet hus','en katt bakom en gardin'],
@@ -257,6 +290,7 @@
         why:'Katten tittar fram bakom gardinen i huset. Det är samma plats som i ledtråden.'
       },
       {
+        questionId:'treasure-place-animals-02',
         description:'En hund leker med en boll bland parkens bänkar.',
         clue:'Hitta platsen med bänkar där en hund leker med en boll.',
         lookFor:['bänkar','en hund med en boll'],
@@ -264,6 +298,7 @@
         why:'Hunden, bollen och bänkarna finns tillsammans här. Därför stämmer platsen.'
       },
       {
+        questionId:'treasure-place-animals-03',
         description:'En kanin nosar på en morot vid en grind.',
         clue:'Gå till grinden där en kanin nosar på en morot.',
         lookFor:['en grind','en kanin som nosar på en morot'],
@@ -271,6 +306,7 @@
         why:'Kaninen nosar på moroten vid grinden. Alla delarna i ledtråden passar.'
       },
       {
+        questionId:'treasure-place-animals-04',
         description:'Flera olika djur sitter tillsammans på en stor filt med frukt.',
         clue:'Hitta den stora filten där flera olika djur har samlats kring frukt.',
         lookFor:['en stor filt med frukt','flera olika djur tillsammans'],
@@ -280,6 +316,7 @@
     ],
     rainbow:[
       {
+        questionId:'treasure-place-rainbow-01',
         description:'Moln bildar en port med en låda färgpennor bakom.',
         clue:'Sök efter en öppning formad av moln. Bakom den väntar en låda färgpennor.',
         lookFor:['en öppning bland molnen','en låda färgpennor bakom öppningen'],
@@ -287,6 +324,7 @@
         why:'Molnen bildar en port och pennorna finns bakom den. Det stämmer med ledtråden.'
       },
       {
+        questionId:'treasure-place-rainbow-02',
         description:'På ett bord står penslar och skålar med färg.',
         clue:'Leta efter bordet med penslar och skålar fyllda med färg.',
         lookFor:['penslar på ett bord','skålar med färg på bordet'],
@@ -294,6 +332,7 @@
         why:'Här står penslarna och skålarna med färg på ett bord. Alla kännetecknen passar.'
       },
       {
+        questionId:'treasure-place-rainbow-03',
         description:'Såpbubblor svävar i luften ovanför en slingrande stig.',
         clue:'Följ stigen där såpbubblor svävar i luften ovanför dig.',
         lookFor:['en stig','såpbubblor i luften ovanför stigen'],
@@ -301,6 +340,7 @@
         why:'Såpbubblorna svävar över den slingrande stigen. Det är den plats ledtråden beskriver.'
       },
       {
+        questionId:'treasure-place-rainbow-04',
         description:'Ett högt torn har lampor och regnbågens alla färger.',
         clue:'Hitta det höga tornet med lampor och regnbågens alla färger.',
         lookFor:['ett högt torn med lampor','regnbågens färger på tornet'],
@@ -310,6 +350,7 @@
     ],
     horses:[
       {
+        questionId:'treasure-place-horses-01',
         description:'I en bod finns höbalar och en korg med morötter.',
         clue:'Leta i boden där höbalar ligger bredvid en korg med morötter.',
         lookFor:['höbalar i en bod','en korg med morötter'],
@@ -317,6 +358,7 @@
         why:'Boden innehåller höbalar och en korg med morötter. Det gör att den stämmer med ledtråden.'
       },
       {
+        questionId:'treasure-place-horses-02',
         description:'En ponny står i en hage vid ett staket.',
         clue:'Sök efter en hage där en liten ponny väntar vid staketet.',
         lookFor:['en ponny','en hage med staket'],
@@ -324,6 +366,7 @@
         why:'Ponnyn står vid hagens staket. Både djuret och platsen passar ledtråden.'
       },
       {
+        questionId:'treasure-place-horses-03',
         description:'En stig för ryttare går förbi ett träd och en liten bäck.',
         clue:'Följ ryttarnas väg som går förbi ett träd och en liten bäck.',
         lookFor:['ett träd vid ryttarnas stig','en liten bäck vid samma stig'],
@@ -331,6 +374,7 @@
         why:'Ryttarnas stig passerar både trädet och bäcken. De två kännetecknen visar vägen.'
       },
       {
+        questionId:'treasure-place-horses-04',
         description:'Rosetter med långa band hänger på en tavla på gården.',
         clue:'Hitta tavlan på gården där rosetter med långa band hänger.',
         lookFor:['en tavla på gården','rosetter med långa band'],
@@ -340,6 +384,7 @@
     ],
     music:[
       {
+        questionId:'treasure-place-music-01',
         description:'En ensam musiker spelar med hjälp av ett notblad.',
         clue:'Hitta musikern som spelar ensam och läser från ett blad med noter.',
         lookFor:['en ensam musiker','ett blad med noter'],
@@ -347,6 +392,7 @@
         why:'Musikern spelar ensam med hjälp av notbladet. På scenen står däremot en hel grupp.'
       },
       {
+        questionId:'treasure-place-music-02',
         description:'Trummor och gitarrer står i ett rum med en liten klocka.',
         clue:'Gå till rummet med en liten klocka där trummor och gitarrer står.',
         lookFor:['trummor och gitarrer','en liten klocka i rummet'],
@@ -354,6 +400,7 @@
         why:'Trummorna, gitarrerna och klockan finns i samma rum. Det är platsen i ledtråden.'
       },
       {
+        questionId:'treasure-place-music-03',
         description:'Lampor hänger över ett öppet golv med plats att dansa.',
         clue:'Hitta det öppna golvet där du kan dansa under lamporna.',
         lookFor:['ett öppet golv att dansa på','lampor ovanför golvet'],
@@ -361,6 +408,7 @@
         why:'Det öppna golvet har plats för dans under lamporna. Båda kännetecknen stämmer.'
       },
       {
+        questionId:'treasure-place-music-04',
         description:'En grupp musiker står på en scen vid en mikrofon.',
         clue:'Sök efter en hel grupp musiker som står tillsammans vid en mikrofon.',
         lookFor:['en grupp musiker','en mikrofon vid gruppen'],
@@ -447,6 +495,8 @@
   // Three contextual clues and grounded explanations for each one-time mystery.
   const MYSTERIES={
     "forest": {
+      "questionId": "treasure-mystery-forest",
+      "proofQuestionId": "treasure-proof-forest",
       "title": "Ugglans försvunna bok",
       "intro": "Ugglan hittar inte sin bok. Var kan den vara?",
       "target": 2,
@@ -464,6 +514,8 @@
       ]
     },
     "space": {
+      "questionId": "treasure-mystery-space",
+      "proofQuestionId": "treasure-proof-space",
       "title": "Robotens försvunna låda",
       "intro": "Roboten har tappat bort en låda som behövs på resan. Var finns den?",
       "target": 0,
@@ -481,6 +533,8 @@
       ]
     },
     "castle": {
+      "questionId": "treasure-mystery-castle",
+      "proofQuestionId": "treasure-proof-castle",
       "title": "Den försvunna glittrande stenen",
       "intro": "En liten sten har försvunnit ur skattkammaren. Var kan den ligga?",
       "target": 3,
@@ -498,6 +552,8 @@
       ]
     },
     "pirate": {
+      "questionId": "treasure-mystery-pirate",
+      "proofQuestionId": "treasure-proof-pirate",
       "title": "Flaskposten som försvann",
       "intro": "Kaptenen väntar på ett brev i en flaska. Var ligger flaskan?",
       "target": 2,
@@ -515,6 +571,8 @@
       ]
     },
     "ocean": {
+      "questionId": "treasure-mystery-ocean",
+      "proofQuestionId": "treasure-proof-ocean",
       "title": "Den borttappade snäckan",
       "intro": "En vän har tappat bort en vacker snäcka. Var letar ni?",
       "target": 0,
@@ -532,6 +590,8 @@
       ]
     },
     "dinosaurs": {
+      "questionId": "treasure-mystery-dinosaurs",
+      "proofQuestionId": "treasure-proof-dinosaurs",
       "title": "Forskarens märkliga fynd",
       "intro": "En forskare såg något märkligt men har glömt var. Kan du hitta platsen?",
       "target": 1,
@@ -549,6 +609,8 @@
       ]
     },
     "garden": {
+      "questionId": "treasure-mystery-garden",
+      "proofQuestionId": "treasure-proof-garden",
       "title": "Påsen med hemliga frön",
       "intro": "Trädgårdsmästaren saknar en påse frön. Var kan den ligga?",
       "target": 0,
@@ -566,6 +628,8 @@
       ]
     },
     "unicorn": {
+      "questionId": "treasure-mystery-unicorn",
+      "proofQuestionId": "treasure-proof-unicorn",
       "title": "Det försvunna halsbandet",
       "intro": "En vän har tappat sitt halsband på vägen. Var kan det ha hänt?",
       "target": 1,
@@ -583,6 +647,8 @@
       ]
     },
     "animals": {
+      "questionId": "treasure-mystery-animals",
+      "proofQuestionId": "treasure-proof-animals",
       "title": "Kaninens försvunna morot",
       "intro": "Kaninen har tappat bort sin morot. Var kan den ha blivit kvar?",
       "target": 2,
@@ -600,6 +666,8 @@
       ]
     },
     "rainbow": {
+      "questionId": "treasure-mystery-rainbow",
+      "proofQuestionId": "treasure-proof-rainbow",
       "title": "Den saknade penseln",
       "intro": "En målare kan inte hitta sin pensel. Var kan den vara?",
       "target": 1,
@@ -617,6 +685,8 @@
       ]
     },
     "horses": {
+      "questionId": "treasure-mystery-horses",
+      "proofQuestionId": "treasure-proof-horses",
       "title": "Den försvunna rosetten",
       "intro": "Efter en tävling saknar någon en rosett. Var hänger den?",
       "target": 3,
@@ -634,6 +704,8 @@
       ]
     },
     "music": {
+      "questionId": "treasure-mystery-music",
+      "proofQuestionId": "treasure-proof-music",
       "title": "Den borttappade mikrofonen",
       "intro": "En grupp ska uppträda men hittar inte sin mikrofon. Var finns den?",
       "target": 3,
@@ -655,6 +727,7 @@
   // These never describe unrevealed map destinations.
   const TRANSFERS={
     "forest": {
+      "questionId": "treasure-transfer-forest",
       "title": "Sams försvunna vantar",
       "intro": "Sam har tappat bort sina vantar på skolan. Var kan de finnas?",
       "clues": [
@@ -675,6 +748,7 @@
       "why": "På fritids ligger glömda vantar i lådan märkt Hittegods. Både kläderna och texten på lådan stämmer."
     },
     "space": {
+      "questionId": "treasure-transfer-space",
       "title": "Klassens bussresa",
       "intro": "Klassen ska åka på utflykt. Vilken buss ska de kliva på?",
       "clues": [
@@ -695,6 +769,7 @@
       "why": "Bussen har nummer 4, och på skylten står det Badhuset. Båda ledtrådarna stämmer."
     },
     "castle": {
+      "questionId": "treasure-transfer-castle",
       "title": "Kims idrottslektion",
       "intro": "Kim ska ha idrott. Vilken plats menar läraren?",
       "clues": [
@@ -715,6 +790,7 @@
       "why": "Gymnastiksalen är inomhus och har en basketkorg på väggen. Båda ledtrådarna stämmer."
     },
     "pirate": {
+      "questionId": "treasure-transfer-pirate",
       "title": "Miras väg till andra sidan",
       "intro": "Mira ska ta sig över till andra sidan med sin cykel. Vad kan hon åka med?",
       "clues": [
@@ -735,6 +811,7 @@
       "why": "Färjan tar Mira och hennes cykel över vattnet. Den passar båda ledtrådarna."
     },
     "ocean": {
+      "questionId": "treasure-transfer-ocean",
       "title": "Var är simlektionen?",
       "intro": "Noa ska på simlektion. Vilken plats passar ledtrådarna?",
       "clues": [
@@ -755,6 +832,7 @@
       "why": "I simhallen finns en bassäng där barnen kan simma. En simlärare leder lektionen. Båda spåren stämmer."
     },
     "dinosaurs": {
+      "questionId": "treasure-transfer-dinosaurs",
       "title": "Hitta rätt utställning",
       "intro": "Livia vill lära sig om djur som levde för länge sedan. Vilken plats passar?",
       "clues": [
@@ -775,6 +853,7 @@
       "why": "På museet visas gamla djurben bakom glas. Skyltarna förklarar vad forskarna har hittat. Båda spåren stämmer."
     },
     "garden": {
+      "questionId": "treasure-transfer-garden",
       "title": "Plantorna som ska växa",
       "intro": "Klassen ska ta hand om sina små plantor. Vilken plats passar ledtrådarna?",
       "clues": [
@@ -795,6 +874,7 @@
       "why": "På fönsterbrädan får plantorna dagsljus och lagom mycket vatten. Det hjälper dem att växa."
     },
     "unicorn": {
+      "questionId": "treasure-transfer-unicorn",
       "title": "Vägen över bäcken",
       "intro": "Elsa vill gå över en bäck och kunna hålla i sig. Vilken väg passar?",
       "clues": [
@@ -815,6 +895,7 @@
       "why": "På gångbron kan Elsa gå över bäcken och hålla i räcket. Båda spåren passar."
     },
     "animals": {
+      "questionId": "treasure-transfer-animals",
       "title": "Var vilar katten?",
       "intro": "Malte letar efter platsen där katten brukar vila. Vilken hörna passar?",
       "clues": [
@@ -835,6 +916,7 @@
       "why": "I kattens hörna finns både en mjuk filt och en matskål. Därför passar båda spåren."
     },
     "rainbow": {
+      "questionId": "treasure-transfer-rainbow",
       "title": "Var målar klassen?",
       "intro": "Alma ska hitta platsen där klassen målar. Vilken plats passar?",
       "clues": [
@@ -855,6 +937,7 @@
       "why": "I bildsalen hänger teckningar på tork. På bordet ligger penslar och vattenfärger. Båda spåren stämmer."
     },
     "horses": {
+      "questionId": "treasure-transfer-horses",
       "title": "Rätt skylt före ridningen",
       "intro": "Ellen letar efter en skylt inför ridlektionen. Vilken skylt menar hon?",
       "clues": [
@@ -875,6 +958,7 @@
       "why": "Skylten sitter vid ridhusets ingång och har orden Hjälm på. Båda detaljerna stämmer."
     },
     "music": {
+      "questionId": "treasure-transfer-music",
       "title": "Körens övningsplats",
       "intro": "Skolans kör ska öva inför avslutningen. Vilken plats passar?",
       "clues": [
