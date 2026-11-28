@@ -4,6 +4,7 @@ const assert=require('node:assert/strict');
 const {ProtectedDelivery:Delivery,PublicQuestion:Public}=require('../index');
 function fixture(overrides={}){
  let serverTime=1000000,graded=0,revealed=0,plans=0;
+ const displayed=new Map();
  const bank={
   async plan({bankId,requestedCount}){
    plans+=1;
@@ -15,7 +16,7 @@ function fixture(overrides={}){
    revealed+=1;
    return {
     instanceId,ref,
-    prompt:'Select an answer for '+ref.id,
+    prompt:'Select the best matching answer.',
     responseSpec:{kind:'single-choice',options:[
       {id:'option-a',label:'Left',correct:false,weight:0.25},
       {id:'option-b',label:'Right',correct:true,weight:0.75}
@@ -53,9 +54,20 @@ function fixture(overrides={}){
  const forAlice=()=>({context:{token:'alice'}});
  const create=(count=100,mode='train',context={token:'alice'})=>gate.createSession({
   context,bankId:'physics',requestedCount:count,mode});
- const issue=(sessionId,context={token:'alice'})=>gate.nextQuestion({context,sessionId});
- const answer=(sessionId,instanceId,response='option-b',context={token:'alice'})=>
-  gate.submitAnswer({context,sessionId,instanceId,response});
+ const issue=async(sessionId,context={token:'alice'})=>{
+  const result=await gate.nextQuestion({context,sessionId});
+  if(result.status==='question')
+   displayed.set(result.question.instanceId,result.question);
+  return result;
+ };
+ const answer=(sessionId,instanceId,response='option-b',context={token:'alice'})=>{
+  const label=response==='option-b'?'Right':
+    response==='option-a'?'Left':null;
+  const visible=displayed.get(instanceId);
+  const selected=label&&visible?.responseSpec.options.find(x=>x.label===label);
+  return gate.submitAnswer({context,sessionId,instanceId,
+    response:selected?selected.id:response});
+ };
  return {gate,bank,create,issue,answer,forAlice,
   advance:ms=>{serverTime+=ms},
   time:()=>serverTime,
@@ -73,7 +85,11 @@ test('one-question delivery: requesting 100 never discloses the plan or 100 ques
  assert.equal(first.progress.issued,1);
  assert.equal(first.progress.answered,0);
  const text=JSON.stringify(first);
- assert.equal(text.includes('question-1'),true); // text prompt, never private ref
+ assert.equal(text.includes('question-1'),false); // hidden private ref
+ assert.equal(text.includes('option-a'),false);
+ assert.equal(text.includes('option-b'),false);
+ assert.equal(first.question.responseSpec.options.every(x=>
+   /^choice-[a-f0-9]{32}$/.test(x.id)),true);
  for(const secret of ['"ref"','assessmentSpec','correctOptionId',
     '"correct":true','weight','PRIVATE_KEY','DO_NOT_SHARE_PRIVATE_RUBRIC'])
   assert.equal(text.includes(secret),false,secret);
@@ -320,4 +336,34 @@ test('a second principal has its own quota, making external anti-sybil protectio
  const q2=await f.issue(bob.sessionId,{token:'bob'});
  assert.notEqual(q1.question.instanceId,q2.question.instanceId);
  assert.equal(f.counts().revealed,2);
+});
+
+test('client choice IDs are per-instance, opaque, and translated only for private grading',async()=>{
+ const f=fixture();
+ const s=await f.create(2);
+ const a=await f.issue(s.sessionId);
+ const firstOptions=a.question.responseSpec.options.map(o=>o.id);
+ assert.equal(firstOptions.some(x=>x==='option-a'||x==='option-b'),false);
+ await f.answer(s.sessionId,a.question.instanceId,'option-b');
+ f.advance(30000);
+ const b=await f.issue(s.sessionId);
+ const nextOptions=b.question.responseSpec.options.map(o=>o.id);
+ assert.equal(nextOptions.some(id=>firstOptions.includes(id)),false);
+ assert.equal((await f.answer(s.sessionId,b.question.instanceId,'option-a'))
+   .feedback.status,'incorrect');
+ assert.deepEqual((await f.gate.summary({context:{token:'alice'},
+   sessionId:s.sessionId})).results,{
+    correct:1,incorrect:1,partial:0,'needs-review':0,ungraded:0
+   });
+});
+test('client cannot send the private canonical ID directly to infer the answer',async()=>{
+ const f=fixture();
+ const s=await f.create(1);
+ const q=await f.issue(s.sessionId);
+ const result=await f.gate.submitAnswer({context:{token:'alice'},
+   sessionId:s.sessionId,instanceId:q.question.instanceId,response:'option-b'});
+ assert.equal(result.status,'invalid_answer');
+ assert.equal(f.counts().graded,0);
+ assert.equal((await f.answer(s.sessionId,q.question.instanceId))
+   .feedback.status,'correct');
 });
