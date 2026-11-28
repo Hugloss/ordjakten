@@ -92,3 +92,57 @@ test('each contrast, ladder, bonus, action and world mission has an authored ans
     assert.equal(q.assessmentSpec.correctOptionId,'mission-option-0');
   }
 });
+
+test('game models use bank assessment for all treasure and world questions without changing rewards',()=>{
+  const Story=require('../public/js/story-quests');
+  const Learning=require('../public/js/learning-map');
+  const Adventures=require('../public/js/adventures');
+  const TreasureGame=require('../public/js/treasure-hunt');
+  const registry=create().registry;
+  const assess=(id,label)=>{
+    const ref={bankId:'svenska',id,revision:1};
+    const question=registry.resolve(ref);
+    const option=question.responseSpec.options.find(o=>o.label===label);
+    assert.ok(option,'Unregistered authored answer: '+id);
+    return registry.assess(ref,option.id).status;
+  };
+  const content=WorldMissions.catalog(Learning.catalog(Words,Expressions,Contexts),Story);
+  const treasure=TreasureGame.catalog(Treasure,Adventures,Story,content);
+  assert.deepEqual(content.errors,[]);
+  assert.deepEqual(treasure.errors,[]);
+  for(const world of Adventures.WORLD_IDS){
+    const round=WorldMissions.start(content,Story.model({},world),0,()=>.4);
+    for(const option of round.options){
+      assert.deepEqual(WorldMissions.answer(round,option.id,assess),
+        WorldMissions.answer(round,option.id),world+' world task');
+    }
+    const visited=TreasureGame.visit({},world,2,treasure,()=>.4);
+    const task=treasure.worlds[world].places[2].task;
+    for(const option of task.options){
+      assert.deepEqual(TreasureGame.answer(visited,visited.serial,option.id,treasure,assess),
+        TreasureGame.answer(visited,visited.serial,option.id,treasure),world+' word visit');
+    }
+    const correct=task.options.find(option=>option.correct);
+    const answered=TreasureGame.answer(visited,visited.serial,correct.id,treasure);
+    const withReward=TreasureGame.finish(answered,visited.serial,treasure);
+    assert.deepEqual(TreasureGame.finish(answered,visited.serial,treasure,assess),
+      withReward,world+' finder reward');
+    let state=TreasureGame.back(withReward,visited.serial,treasure);
+    for(let i=0;i<2;i++)state=TreasureGame.mysteryReveal(state,world,treasure);
+    const target=Treasure.MYSTERIES[world].target;
+    const wrong=(target+1)%4;
+    assert.deepEqual(TreasureGame.mysteryGuess(state,world,wrong,treasure,assess),
+      TreasureGame.mysteryGuess(state,world,wrong,treasure),world+' mystery wrong');
+    const solved=TreasureGame.mysteryGuess(state,world,target,treasure);
+    assert.deepEqual(TreasureGame.mysteryGuess(state,world,target,treasure,assess),
+      solved,world+' mystery solved');
+    const proof=TreasureGame.mysteryProof(solved,world,target,treasure);
+    assert.deepEqual(TreasureGame.mysteryProof(solved,world,target,treasure,assess),
+      proof,world+' evidence proof');
+    const next=Treasure.TRANSFERS[world],other=(next.target+1)%3;
+    assert.deepEqual(TreasureGame.mysteryTransfer(proof,world,other,treasure,assess),
+      TreasureGame.mysteryTransfer(proof,world,other,treasure),world+' transfer wrong');
+    assert.deepEqual(TreasureGame.mysteryTransfer(proof,world,next.target,treasure,assess),
+      TreasureGame.mysteryTransfer(proof,world,next.target,treasure),world+' transfer correct');
+  }
+});
