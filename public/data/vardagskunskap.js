@@ -329,7 +329,7 @@
       "choices": [
         "Bara torka av med en torr handduk",
         "Lägga grönsakerna direkt ovanpå",
-        "Diska skärbrädan ordentligt eller använda en ren annan",
+        "Diska skärbrädan ordentligt eller använda en annan ren skärbräda",
         "Ställa skärbrädan på golvet"
       ],
       "correctIndex": 2,
@@ -564,7 +564,7 @@
         "Att månen flyttar träden",
         "Att molnen alltid är mörkare",
         "Att solen slocknar lite på hösten",
-        "Att jordaxelns lutning ändrar hur solljuset faller under året"
+        "Att jordaxelns lutning gör att solljuset faller olika under året"
       ],
       "correctIndex": 3,
       "explanation": "Jordaxelns lutning gör att norra halvklotet får olika mycket dagsljus och solvärme under året.",
