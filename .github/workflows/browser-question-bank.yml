@@ -1,4 +1,4 @@
-name: Browser check – Swedish question bank
+name: Browser check – subject banks
 
 on:
   pull_request:
@@ -13,6 +13,10 @@ on:
       - 'public/data/missions.*'
       - 'public/index.html'
       - 'tests/browser_question_bank.py'
+      - 'tests/browser_vardagskollen.py'
+      - 'public/js/vardagskollen.js'
+      - 'public/data/vardagskunskap.js'
+      - 'public/css/vardagskollen.css'
       - 'tests/browser_smoke.py'
       - '.github/workflows/browser-question-bank.yml'
   workflow_dispatch:
@@ -37,5 +41,7 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check playwright==1.56.0
           python -m playwright install --with-deps chromium
-      - name: Verify Swedish bank, sentence and ordering gameplay, exam privacy
-        run: python tests/browser_question_bank.py
+      - name: Verify Swedish and everyday subject banks in one Chromium job
+        run: |
+          python tests/browser_question_bank.py
+          python tests/browser_vardagskollen.py
