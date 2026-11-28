@@ -2,6 +2,20 @@
 
 **Status: federerad målarkitektur; en första svensk bankadapter och ett gemensamt spel-/bedömningskontrakt implementeras i PR #30. Övrig migrering återstår.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
 
+
+## Skyddad frågeutlämning och automatiserad insamling
+
+En [testad serverbaserad skyddsgräns](LEARNING-QUESTION-LEAK-THREAT-MODEL.md)
+finns i `learning-engine/src/protected-delivery-v1.js` för framtida privata
+kunskapsbanker. Sessionsskapande med upp till 100 frågor lämnar **ingen
+frågelista** till klienten; nytt innehåll kräver en unik, autentiserad
+frågeinstans och serverstyrd väntetid/kvot. Statisk bild kan visas via
+kortlivad, autentiserad serverresurs, men v1 saknar DICOM/video/zoom.
+**Detta skyddar inte Ordjaktens redan publika/offline-frågor** och ingen
+privat backend är driftsatt. Publik CI spärrar nya uppenbart privata
+frågebankfiler/nycklar i publiceringsartefakter, men publicerat original
+eller historik går inte att återkalla retroaktivt.
+
 ## Portabel Learning Engine och skyddade frågebanker
 
 Den bankneutrala bedömningskärnan finns som en **fristående paketkatalog** i
