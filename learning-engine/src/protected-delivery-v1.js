@@ -192,8 +192,12 @@ function createProtectedDelivery({
     'missing_private_bank_ports');
   assert(isObj(store)&&typeof store.transact==='function',
     'missing_transaction_store');
-  assert(allowInMemoryForTests===true||store.developmentOnly!==true,
-    'non_durable_store');
+  const testOnly=store.developmentOnly===true&&allowInMemoryForTests===true;
+  const durable=store.developmentOnly!==true&&
+    store.capabilities?.atomicAccountTransactions===true&&
+    store.capabilities?.durableAcrossRestarts===true&&
+    store.capabilities?.sharedAcrossWorkers===true;
+  assert(testOnly||durable,'non_durable_store');
   assert(typeof now==='function','clock_unavailable');
   const settings=validateLimits(limits);
   async function owner(context){
