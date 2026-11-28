@@ -32,7 +32,7 @@ test('one bank-scoped Swedish registry resolves all authored assessment sources 
     meaning:121,reverse:121,context:363,picture:pictures,
     contrast:96,clue:64,bonus:73,action:23,worldMission:48,
     portals:156,places:48,mysteries:12,proofs:12,transfers:12,
-    expressions:237,total:1384+pictures
+    expressions:237,total:1386+pictures
   });
   assert.equal(registry.listQuestionRefs('svenska').length,counts.total);
   assert.equal(new Set(registry.listQuestionRefs('svenska').map(x=>x.id)).size,counts.total);
