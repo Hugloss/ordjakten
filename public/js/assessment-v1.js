@@ -94,7 +94,9 @@
     assert(Object.hasOwn(STATUS_OUTCOME,result.status)&&
       result.outcome===STATUS_OUTCOME[result.status]&&
       object(result.evaluation),'Invalid assessment outcome');
-    levelFor(result.status,result.evaluation.level);
+    const checkedLevel=levelFor(result.status,result.evaluation.level);
+    assert(result.evaluation.level===checkedLevel,
+      'Missing or inconsistent assessment grade field');
     const criteria=result.evaluation.criteria;
     assert(Array.isArray(criteria)&&criteria.every(row=>object(row)&&validId(row.id)&&
       LEVELS.includes(row.level))&&
@@ -145,7 +147,7 @@
       questionRef:{...question.ref},
       assessmentRef:{
         bankId:question.ref.bankId,
-        id:spec.policyId||question.ref.id+'-assessment',
+        id:spec.policyId||question.ref.id,
         revision:spec.policyRevision||question.ref.revision
       },
       ...(spec.rubric?{rubricRef:{id:spec.rubric.id,

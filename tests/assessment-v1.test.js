@@ -180,3 +180,37 @@ test('tampered evidence cannot forge a bank, rubric, reason or completion grade'
   ungraded.evaluation.criteria=[{id:'invented',level:'correct'}];
   assert.throws(()=>Assessment.validateResult(ungraded),/Rubric evidence/);
 });
+
+test('imported assessments require an explicit level, including null for unassessed',()=>{
+  const q=makeQuestion({rubric:false});
+  const reg=registryFor(()=>({status:'correct'}),q);
+  const good=reg.assessDetailed(q.ref,'a');
+  const missing=JSON.parse(JSON.stringify(good));
+  delete missing.evaluation.level;
+  assert.throws(()=>Assessment.validateResult(missing),/Missing or inconsistent assessment grade/);
+  const invalid=registryFor(()=>({status:'ungraded'}),q).assessDetailed(q.ref,'a');
+  assert.equal(invalid.evaluation.level,null);
+  delete invalid.evaluation.level;
+  assert.throws(()=>Assessment.validateResult(invalid),/Missing or inconsistent assessment grade/);
+});
+test('legacy question IDs at the valid length limit produce valid scoped assessment references',()=>{
+  const q=makeQuestion({id:'q'+'x'.repeat(95),rubric:false});
+  const detailed=registryFor(()=>({status:'correct'}),q).assessDetailed(q.ref,'a');
+  assert.equal(detailed.assessmentRef.id,q.ref.id);
+  assert.equal(detailed.assessmentRef.revision,3);
+});
+test('legacy registries missing detailed evidence are reported as a gap, not made-up grades',()=>{
+  const ref={bankId:'legacy',id:'one',revision:1};
+  const registry={
+    present:()=>({instanceId:'legacy:1',ref,skillIds:['skill'],responseSpec:{kind:'numeric'}}),
+    assess:()=>({status:'correct'})
+  };
+  const session=Session.create(registry,{mode:'test',refs:[ref]});
+  assert.deepEqual(session.answer(42),{accepted:true,feedback:null});
+  session.next();
+  const done=session.finish();
+  assert.equal(done.correct,1);
+  assert.equal(done.assessmentSummary.total,0);
+  assert.equal(done.assessmentSummary.missingDetailed,1);
+  assert.equal(done.assessmentSummary.mastery.level,'unknown');
+});

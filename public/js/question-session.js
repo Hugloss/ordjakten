@@ -69,7 +69,8 @@
         incorrect:count('incorrect'),partial:count('partial'),
         ungraded:count('ungraded'),needsReview:count('needs-review'),
         outcomes,assessments,
-        assessmentSummary:Assessment.summarize(complete),evidence};
+        assessmentSummary:{...Assessment.summarize(complete),
+          missingDetailed:outcomes.length-complete.length},evidence};
     }
     function snapshot(){
       return {mode,index,total:rounds.length,answered:rounds.filter(row=>row.grade!==null).length,
