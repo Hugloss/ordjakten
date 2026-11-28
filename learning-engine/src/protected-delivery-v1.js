@@ -3,7 +3,7 @@
  * selection/grading algorithms. Never import this module from browser bundles.
  */
 'use strict';
-const {randomBytes}=require('node:crypto');
+const {randomBytes,randomInt}=require('node:crypto');
 const {toProtectedQuestion}=require('./public-question-v1');
 const ID=/^[a-z][a-z0-9-]{1,95}$/;
 const HOUR=60*60*1000, DAY=24*HOUR;
@@ -127,6 +127,36 @@ function validateAnswer(answer,spec,maxBytes){
   assert(size<=maxBytes,'answer_too_large');
   return answer;
 }
+function opaquePresentation(spec){
+  assert(isObj(spec)&&['single-choice','ordering','numeric'].includes(spec.kind),
+    'unsafe_public_projection');
+  if(spec.kind==='numeric')return {publicSpec:{kind:'numeric'},optionMap:null};
+  assert(Array.isArray(spec.options)&&spec.options.length>=2&&
+    spec.options.length<=12,'unsafe_public_projection');
+  const ids=new Set(),map=Object.create(null),options=[];
+  for(const option of spec.options){
+    assert(isObj(option)&&validToken(option.id)&&
+      typeof option.label==='string'&&option.label.trim().length>0&&
+      !ids.has(option.id),'unsafe_public_projection');
+    ids.add(option.id);
+    const opaque='choice-'+randomBytes(16).toString('hex');
+    map[opaque]=option.id;
+    options.push({id:opaque,label:option.label});
+  }
+  // Randomize presentation order without changing the private grader's
+  // canonical option IDs or the correct ordered sequence.
+  for(let index=options.length-1;index>0;index--){
+    const other=randomInt(index+1);
+    [options[index],options[other]]=[options[other],options[index]];
+  }
+  return {publicSpec:{kind:spec.kind,options},optionMap:map};
+}
+function canonicalAnswer(response,optionMap,kind){
+  if(kind==='numeric')return response;
+  if(kind==='single-choice')return optionMap[response];
+  return response.map(id=>optionMap[id]);
+}
+
 function createInMemoryStore(){
   const data=new Map(),locks=new Map();
   return {
@@ -249,13 +279,18 @@ function createProtectedDelivery({
         'private_bank_unavailable');
       // Intentionally discard arbitrary bank metadata. A private bank must
       // issue opaque, authenticated expiring URLs for protected static images.
-      let packet;
+      let packet,optionMap;
       try{
+        const projected=opaquePresentation(presentation.responseSpec);
+        optionMap=projected.optionMap;
+        const protectedMedia=(presentation.media||[]).map((image,index)=>({
+          ...image,id:'image-'+(index+1)
+        }));
         packet=toProtectedQuestion({
-          ...presentation,instanceId,ref
-        },{sessionId:session.id,media:presentation.media||[]});
+          ...presentation,instanceId,ref,responseSpec:projected.publicSpec
+        },{sessionId:session.id,media:protectedMedia});
       }catch(_){throw reject('unsafe_public_projection')}
-      session.current={ref,instanceId,packet,issuedAt:at,answered:false,
+      session.current={ref,instanceId,packet,optionMap,issuedAt:at,answered:false,
         invalidSubmissions:0};
       session.issued+=1;
       state.lastRevealAt=at;
@@ -289,8 +324,9 @@ function createProtectedDelivery({
       let graded;
       try{
         graded=await bank.grade({
-          identity,ref:item.ref,instanceId:item.instanceId,answer,
-          mode:session.mode
+          identity,ref:item.ref,instanceId:item.instanceId,
+          answer:canonicalAnswer(answer,item.optionMap,
+            item.packet.responseSpec.kind),mode:session.mode
         });
       }catch(_){throw reject('private_grading_unavailable')}
       assert(isObj(graded)&&[
@@ -304,6 +340,7 @@ function createProtectedDelivery({
       }
       item.answered=true;
       item.packet=null; // Discard previously exposed content from active store.
+      item.optionMap=null; // Canonical answer IDs are no longer needed.
       item.grade=graded.status; // No raw answer or private explanation stored.
       session.answered+=1;
       session.counts[graded.status]+=1;
