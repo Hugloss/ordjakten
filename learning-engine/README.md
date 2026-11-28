@@ -84,3 +84,15 @@ consume a pinned engine release. Put policy implementations and bank sources
 only in separately permissioned PRIVATE repositories and deploy through
 private backend services. This PR neither creates those repos nor makes
 existing published question material private.
+
+## Public question projection for a private backend
+
+`PublicQuestion.toPublicQuestion(presentation,{sessionId,media})` creates a
+strict allowlisted response that strips answer keys, hidden rubrics, private
+skill graphs, candidate weights and internal question metadata. The v1 public
+protocol supports single-choice, ordering and numeric interactions, with
+optional **static images only**. It rejects unsafe image paths and unknown
+answer-bearing fields. This reduces accidental data disclosure but cannot
+prevent a misleading prompt, answer embedded in a displayed explanation or
+content scraping. The backend must still review every visible field before
+sending it and must never serve private bank data in a static offline bundle.
