@@ -1,0 +1,27 @@
+{
+  "bankId": "vardagskunskap",
+  "version": 1,
+  "language": "sv-SE",
+  "ownership": "independent",
+  "primarySource": "public/data/vardagskunskap.js",
+  "sourceFiles": [
+    "public/data/vardagskunskap.js"
+  ],
+  "adapter": "public/js/banks/vardagskunskap.js",
+  "supportedQuestionSets": [
+    "scenario-single-choice"
+  ],
+  "topics": [
+    "manniskokroppen",
+    "naturen",
+    "koket",
+    "hemmet",
+    "vader",
+    "trafiken",
+    "samarbete",
+    "tid",
+    "pengar",
+    "digitalt"
+  ],
+  "note": "One authored source with stable question IDs. Scenarios, answers and explanations are not copied into any game. All questions start in draft pending educator and child playtesting."
+}
