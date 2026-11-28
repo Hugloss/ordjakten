@@ -1,0 +1,27 @@
+.vk { margin:22px 0; }
+.vk>p {line-height:1.6;}
+.vk-modes {display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;}
+.vk-mode {border:2px solid var(--border);border-radius:12px;padding:12px 16px;min-height:48px;background:var(--surface-2);color:var(--text);font-weight:800;}
+.vk-mode[aria-pressed="true"] {border-color:var(--accent-line);background:var(--accent-soft);}
+.vk-topics {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px;}
+.vk-topic {display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:0;min-height:118px;border:2px solid var(--border);border-radius:14px;padding:16px;background:var(--surface-2);color:var(--text);text-align:left;}
+.vk-topic strong {font-size:17px;line-height:1.35;}
+.vk-topic small {font-size:14px;line-height:1.5;color:var(--muted);}
+.vk-topic-count {margin-top:auto;font-size:12px;font-weight:800;color:var(--accent);}
+.vk-topic:hover,.vk-choice:hover:not(:disabled) {border-color:var(--accent-line);}
+.vk-meta {font-size:14px;font-weight:800;color:var(--accent);margin:12px 0;}
+.vk-scene {background:var(--surface-2);border-radius:12px;padding:17px;margin:14px 0;line-height:1.7;font-size:18px;color:var(--text);}
+.vk-question {font-size:clamp(19px,3.5vw,26px);line-height:1.4;overflow-wrap:anywhere;}
+.vk-choices {display:grid;gap:10px;margin-top:20px;}
+.vk-choice {border:2px solid var(--border);border-radius:13px;padding:16px;min-height:54px;text-align:left;background:var(--surface-2);color:var(--text);font-size:16px;font-weight:750;line-height:1.5;overflow-wrap:anywhere;}
+.vk-choice[aria-pressed="true"] {border-color:var(--accent-line);box-shadow:inset 0 0 0 1px var(--accent-line);}
+.vk-feedback {border:2px solid var(--border);border-radius:13px;padding:16px;margin:18px 0;background:var(--neutral-bg);color:var(--neutral-text);line-height:1.6;}
+.vk-feedback[data-outcome="right"] {background:var(--green-bg);border-color:var(--green-border);color:var(--green-text);}
+.vk-feedback[data-outcome="wrong"] {background:var(--surface-2);border-color:var(--accent-line);color:var(--text);}
+.vk-feedback p {margin:8px 0 0;color:inherit;}
+.vk-actions {display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 4px;}
+.vk-review {display:grid;gap:10px;list-style:none;padding:0;margin:18px 0;}
+.vk-review-card {border:1px solid var(--border);border-radius:12px;padding:15px;background:var(--surface-2);}
+.vk-review-card p {line-height:1.55;color:var(--text);margin:8px 0;}
+.vk-review-card p:last-child {color:var(--muted);}
+@media(max-width:650px){.vk-topics{grid-template-columns:1fr}.vk{padding:16px}.vk-mode{flex:1}.vk-actions button{flex:1;}}
