@@ -147,3 +147,39 @@ content migration with clear licensing and compatibility decisions is made.
 its cooldown by finishing one session and starting another. A separate
 principal legitimately has a separate budget, which is why identity assurance
 and external multi-account abuse detection are mandatory for production.
+
+## HTTP integration and publication allowlist
+
+The package now includes a strict **Node HTTP handler**
+(`learning-engine/src/http-adapter-v1.js`) for the protected endpoints. It
+requires an Authorization Bearer credential on every call, applies an optional
+exact HTTPS Origin allowlist, denies bulk/list routes, rejects oversized or
+unrecognized JSON requests, masks private exceptions, and sends
+`Cache-Control: private, no-store`, `Vary: Authorization` and
+`X-Content-Type-Options: nosniff`. Server timer denials map to
+**HTTP 429** with `Retry-After`. Real authentication, durable persistence,
+private content/grading and authorized media retrieval must be wired by the
+deployment. Tests use an isolated Node server, synthetic questions, and an
+explicit test-only store.
+
+Each protected question also receives new random **option IDs**, so the
+public response does not leak stable authored answer-choice identifiers.
+Private grading receives original IDs only after server-side mapping.
+Presented ordering questions are randomized but translated to their original
+semantic order for grading; numeric values are preserved.
+
+The public CI audit also requires
+[`content/public-bank-allowlist.json`](../content/public-bank-allowlist.json),
+which enumerates the **already intentionally public** `public/data/` files,
+`public/js/banks/` adapters and top-level `public/js/` scripts. New
+filenames cause CI to fail until the inventory is deliberately reviewed and
+updated. This is an explicit change-review checkpoint, **not proof** that
+revised files or prose contain no proprietary material. The old public
+question material and past Git history remain accessible regardless.
+
+**Remaining production blockers:** A durable globally transactional quota
+store, verified identities, user signup/tenant/IP abuse controls, authorized
+short-lived media tokens, HTTPS/CSRF/CORS deployment, data retention policies,
+and private bank/policy services. Without them, this PR provides testable
+server-side machinery but does **not** secure the current GitHub Pages
+deployment.
