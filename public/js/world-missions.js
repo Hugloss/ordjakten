@@ -16,7 +16,8 @@
         "Lyssna på en motor som brummar",
         "Låta vatten droppa i en kopp"
       ],
-      "Torra löv rasslar lätt när de rör sig. Fågeln känner igen ljudet och visar stigen."
+      "Torra löv rasslar lätt när de rör sig. Fågeln känner igen ljudet och visar stigen.",
+      "world-mission-forest-01"
     ],
     [
       "sv-0016",
@@ -26,7 +27,8 @@
         "En sten med tre hörn",
         "En sten som liknar en lång platta"
       ],
-      "En bollformad sten är rund. Under den hittar vi kartan."
+      "En bollformad sten är rund. Under den hittar vi kartan.",
+      "world-mission-forest-02"
     ],
     [
       "sv-0024",
@@ -36,7 +38,8 @@
         "På en träskiva utan hålrum",
         "Mellan två släta stenar"
       ],
-      "Ihålig betyder att det finns ett tomrum inuti. Där får en liten bok plats."
+      "Ihålig betyder att det finns ett tomrum inuti. Där får en liten bok plats.",
+      "world-mission-forest-03"
     ],
     [
       "sv-0018",
@@ -46,7 +49,8 @@
         "En spegel i mörkret",
         "En slät grå sten"
       ],
-      "Den tända lyktan ger ifrån sig ljus som lyser på boksidan. Då kan vi se bokstäverna. Spegeln behöver ljus från något annat för att kunna skicka ljus vidare."
+      "Den tända lyktan ger ifrån sig ljus som lyser på boksidan. Då kan vi se bokstäverna. Spegeln behöver ljus från något annat för att kunna skicka ljus vidare.",
+      "world-mission-forest-04"
     ]
   ],
   "space": [
@@ -58,7 +62,8 @@
         "Ett tomt papperskuvert",
         "En fjäder"
       ],
-      "En låda full med sten väger mycket. Vi packar den längst ner."
+      "En låda full med sten väger mycket. Vi packar den längst ner.",
+      "world-mission-space-01"
     ],
     [
       "sv-0019",
@@ -68,7 +73,8 @@
         "Stenen med en helt slät yta",
         "Stenen med en enda djup grop"
       ],
-      "Knottrig beskriver många små upphöjningar. Vi hittar rätt månsten."
+      "Knottrig beskriver många små upphöjningar. Vi hittar rätt månsten.",
+      "world-mission-space-02"
     ],
     [
       "sv-0035",
@@ -78,7 +84,8 @@
         "Damm som ligger alldeles stilla",
         "Damm som faller rakt ner"
       ],
-      "Virvlande damm rör sig runt. Vi ritar en snurrande rörelse på kartan."
+      "Virvlande damm rör sig runt. Vi ritar en snurrande rörelse på kartan.",
+      "world-mission-space-03"
     ],
     [
       "sv-0003",
@@ -88,7 +95,8 @@
         "Tjock träskiva",
         "Svart kartong"
       ],
-      "Genomskinligt glas går att se igenom. Vi kan titta på stjärnorna."
+      "Genomskinligt glas går att se igenom. Vi kan titta på stjärnorna.",
+      "world-mission-space-04"
     ]
   ],
   "castle": [
@@ -100,7 +108,8 @@
         "En flagga med enbart små prickar",
         "En helt enfärgad flagga"
       ],
-      "Flaggans färgade fält ligger som långa band bredvid varandra. Banden är ränder, så flaggan är randig. Den prickiga flaggan har små punkter i stället."
+      "Flaggans färgade fält ligger som långa band bredvid varandra. Banden är ränder, så flaggan är randig. Den prickiga flaggan har små punkter i stället.",
+      "world-mission-castle-01"
     ],
     [
       "sv-0066",
@@ -110,7 +119,8 @@
         "En rund form utan hörn",
         "En form med tre hörn"
       ],
-      "En fyrkantig form har fyra raka sidor och fyra hörn. Sidorna behöver inte vara lika långa. Vi hittar nyckeln."
+      "En fyrkantig form har fyra raka sidor och fyra hörn. Sidorna behöver inte vara lika långa. Vi hittar nyckeln.",
+      "world-mission-castle-02"
     ],
     [
       "sv-0015",
@@ -120,7 +130,8 @@
         "En hård tegelsten",
         "En stel träbricka"
       ],
-      "En kudde ger efter när man trycker på den. Draken kan sitta bekvämt."
+      "En kudde ger efter när man trycker på den. Draken kan sitta bekvämt.",
+      "world-mission-castle-03"
     ],
     [
       "sv-0007",
@@ -130,7 +141,8 @@
         "En matt sten utan blänk",
         "En svart gummibit"
       ],
-      "När ljuset träffar stenens blanka ytor syns små ljuspunkter. Därför ser stenen glittrig ut. Den behöver ljus från något annat för att glittra."
+      "När ljuset träffar stenens blanka ytor syns små ljuspunkter. Därför ser stenen glittrig ut. Den behöver ljus från något annat för att glittra.",
+      "world-mission-castle-04"
     ]
   ],
   "pirate": [
@@ -142,7 +154,8 @@
         "Den helt släta duken med färgprickar",
         "Duken som ligger helt slät"
       ],
-      "Skrynklig beskriver veck och rynkor. Vi slätar ut duken."
+      "Skrynklig beskriver veck och rynkor. Vi slätar ut duken.",
+      "world-mission-pirate-01"
     ],
     [
       "sv-0042",
@@ -152,7 +165,8 @@
         "En alldeles plan strand",
         "En stig som nästan inte lutar"
       ],
-      "Brant betyder att marken lutar mycket. Vi markerar backen på kartan."
+      "Brant betyder att marken lutar mycket. Vi markerar backen på kartan.",
+      "world-mission-pirate-02"
     ],
     [
       "sv-0088",
@@ -162,7 +176,8 @@
         "Skakar den hårt",
         "Slänger den i en korg"
       ],
-      "Med båda händerna får vi ett stadigt grepp om flaskan. Vi lyfter lugnt så att det tunna glaset inte slår emot något. Så hanterar vi flaskan varsamt."
+      "Med båda händerna får vi ett stadigt grepp om flaskan. Vi lyfter lugnt så att det tunna glaset inte slår emot något. Så hanterar vi flaskan varsamt.",
+      "world-mission-pirate-03"
     ],
     [
       "sv-0043",
@@ -172,7 +187,8 @@
         "Snöret som ligger rakt",
         "Snöret som är klippt i korta bitar"
       ],
-      "Trassligt betyder att något har snott ihop sig. Vi reder ut knutarna."
+      "Trassligt betyder att något har snott ihop sig. Vi reder ut knutarna.",
+      "world-mission-pirate-04"
     ]
   ],
   "ocean": [
@@ -184,7 +200,8 @@
         "Snäckan med enbart små prickar",
         "Den helt enfärgade snäckan"
       ],
-      "En randig snäcka har ränder. Vi ritar av mönstret."
+      "En randig snäcka har ränder. Vi ritar av mönstret.",
+      "world-mission-ocean-01"
     ],
     [
       "sv-0055",
@@ -194,7 +211,8 @@
         "En fiskmås som flyger över havet",
         "En krabba som går längs stranden"
       ],
-      "Fisken tar sig fram i vattnet genom att röra kroppen och fenorna. Det är en simmande fisk."
+      "Fisken tar sig fram i vattnet genom att röra kroppen och fenorna. Det är en simmande fisk.",
+      "world-mission-ocean-02"
     ],
     [
       "sv-0083",
@@ -204,7 +222,8 @@
         "En hamn med bullrande maskiner",
         "En strand där många ropar och springer"
       ],
-      "Fridfull betyder lugn och utan störningar. Vi hittar en rofylld vik."
+      "Fridfull betyder lugn och utan störningar. Vi hittar en rofylld vik.",
+      "world-mission-ocean-03"
     ],
     [
       "sv-0048",
@@ -214,7 +233,8 @@
         "En himmel där tjocka moln helt skymmer solen",
         "En mörk natthimmel efter att solen gått ner"
       ],
-      "Solig betyder att solen skiner på platsen. Det kan vara soligt även en kall dag."
+      "Solig betyder att solen skiner på platsen. Det kan vara soligt även en kall dag.",
+      "world-mission-ocean-04"
     ]
   ],
   "dinosaurs": [
@@ -226,7 +246,8 @@
         "Ett runt spår",
         "Ett spår med lika långa sidor"
       ],
-      "Avlångt betyder betydligt längre än brett. Vi ritar av spåret."
+      "Avlångt betyder betydligt längre än brett. Vi ritar av spåret.",
+      "world-mission-dinosaurs-01"
     ],
     [
       "sv-0012",
@@ -236,7 +257,8 @@
         "Det kan sträcka ut sig och återgå till sin form",
         "Det kan bli magnetiskt"
       ],
-      "Skört betyder att något lätt kan gå sönder. Vi låter forskaren hantera fossilet."
+      "Skört betyder att något lätt kan gå sönder. Vi låter forskaren hantera fossilet.",
+      "world-mission-dinosaurs-02"
     ],
     [
       "sv-0065",
@@ -246,7 +268,8 @@
         "En helt platt topp",
         "En rundad topp som liknar en boll"
       ],
-      "Spetsig beskriver en form som smalnar av till en spets. En spetsig form behöver inte vara vass och kunna skära. Vi ritar bergstoppens form."
+      "Spetsig beskriver en form som smalnar av till en spets. En spetsig form behöver inte vara vass och kunna skära. Vi ritar bergstoppens form.",
+      "world-mission-dinosaurs-03"
     ],
     [
       "sv-0030",
@@ -256,7 +279,8 @@
         "Med enbart bar sand",
         "Med nästan bara torra, vissna blad"
       ],
-      "Frodig beskriver riklig och kraftig växtlighet. Vi fyller dalen med gröna växter."
+      "Frodig beskriver riklig och kraftig växtlighet. Vi fyller dalen med gröna växter.",
+      "world-mission-dinosaurs-04"
     ]
   ],
   "garden": [
@@ -268,7 +292,8 @@
         "En planta utan märkbar lukt",
         "En plastblomma som inte luktar"
       ],
-      "Blomman ger ifrån sig en lukt som vi kan känna med näsan. Det är lukten som gör att vi beskriver blomman som doftande. De andra valen beskrivs utan märkbar lukt."
+      "Blomman ger ifrån sig en lukt som vi kan känna med näsan. Det är lukten som gör att vi beskriver blomman som doftande. De andra valen beskrivs utan märkbar lukt.",
+      "world-mission-garden-01"
     ],
     [
       "sv-0027",
@@ -278,7 +303,8 @@
         "Tulpanen med upprätt gröna blad",
         "Tulpanen med spänstiga blad och en blomma som står upprätt"
       ],
-      "En vissnad växt har tappat spänsten och hänger ofta ner."
+      "En vissnad växt har tappat spänsten och hänger ofta ner.",
+      "world-mission-garden-02"
     ],
     [
       "sv-0023",
@@ -288,7 +314,8 @@
         "Fjärilen med enbart långa ränder",
         "Fjärilen med enfärgade vingar"
       ],
-      "Prickig betyder att något har små prickar. Vi ritar fjärilens mönster."
+      "Prickig betyder att något har små prickar. Vi ritar fjärilens mönster.",
+      "world-mission-garden-03"
     ],
     [
       "sv-0037",
@@ -298,7 +325,8 @@
         "Vattnet känns varmt när vi känner med fingret",
         "Vattnet plaskar när vi rör vid det"
       ],
-      "En speglande yta återger en bild genom att reflektera ljus. Vi ser molnens spegelbild."
+      "En speglande yta återger en bild genom att reflektera ljus. Vi ser molnens spegelbild.",
+      "world-mission-garden-04"
     ]
   ],
   "unicorn": [
@@ -310,7 +338,8 @@
         "Spåret som bara är mörkt och matt",
         "Spåret som bara ger ifrån sig ett ljud"
       ],
-      "Glittrig betyder att något glimmar eller blänker. Vi följer det skimrande spåret."
+      "Glittrig betyder att något glimmar eller blänker. Vi följer det skimrande spåret.",
+      "world-mission-unicorn-01"
     ],
     [
       "sv-0067",
@@ -320,7 +349,8 @@
         "Fyra sidor och fyra hörn",
         "En rund kant utan hörn"
       ],
-      "En triangel har tre hörn och tre sidor. Vi hittar rätt skylt."
+      "En triangel har tre hörn och tre sidor. Vi hittar rätt skylt.",
+      "world-mission-unicorn-02"
     ],
     [
       "sv-0015",
@@ -330,7 +360,8 @@
         "En hård sten",
         "En stel platta av metall"
       ],
-      "Mjukt material ger efter när man trycker på det. Vi lägger fram filten."
+      "Mjukt material ger efter när man trycker på det. Vi lägger fram filten.",
+      "world-mission-unicorn-03"
     ],
     [
       "sv-0084",
@@ -340,7 +371,8 @@
         "En tom äng där allt står still",
         "En äng där alla sover tyst"
       ],
-      "Livlig betyder full av rörelse och energi. Vi ritar en äng full av lek."
+      "Livlig betyder full av rörelse och energi. Vi ritar en äng full av lek.",
+      "world-mission-unicorn-04"
     ]
   ],
   "animals": [
@@ -352,7 +384,8 @@
         "En fisk med blanka fjäll",
         "En fågel täckt av fjädrar"
       ],
-      "Pälsig betyder att något är täckt av päls. Vi ritar kattens päls."
+      "Pälsig betyder att något är täckt av päls. Vi ritar kattens päls.",
+      "world-mission-animals-01"
     ],
     [
       "sv-0008",
@@ -362,7 +395,8 @@
         "En tygbit som blir liggande",
         "En bok som ligger still"
       ],
-      "Bollen träffar marken och far tillbaka upp. Då studsar den. En boll kan också studsa tillbaka från en vägg."
+      "Bollen träffar marken och far tillbaka upp. Då studsar den. En boll kan också studsa tillbaka från en vägg.",
+      "world-mission-animals-02"
     ],
     [
       "sv-0006",
@@ -372,7 +406,8 @@
         "Mjuk som mos",
         "Seg och elastisk"
       ],
-      "Knaprig beskriver något som är sprött och knastrar när man biter."
+      "Knaprig beskriver något som är sprött och knastrar när man biter.",
+      "world-mission-animals-03"
     ],
     [
       "sv-0076",
@@ -382,7 +417,8 @@
         "Behåller all frukt för oss själva",
         "Gömmer undan frukten"
       ],
-      "Generös betyder att gärna dela med sig. Vi bjuder djurvännerna."
+      "Generös betyder att gärna dela med sig. Vi bjuder djurvännerna.",
+      "world-mission-animals-04"
     ]
   ],
   "rainbow": [
@@ -394,7 +430,8 @@
         "Ett tunt rakt streck",
         "En platt fyrkant"
       ],
-      "De mjuka, bulliga kanterna får molnet i bilden att se mjukt och luftigt ut. Det är därför vi beskriver det som fluffigt."
+      "De mjuka, bulliga kanterna får molnet i bilden att se mjukt och luftigt ut. Det är därför vi beskriver det som fluffigt.",
+      "world-mission-rainbow-01"
     ],
     [
       "sv-0011",
@@ -404,7 +441,8 @@
         "Den rinner som vatten",
         "Den är hård och torr som sten"
       ],
-      "Klibbig betyder att något känns klistrigt och gärna fastnar."
+      "Klibbig betyder att något känns klistrigt och gärna fastnar.",
+      "world-mission-rainbow-02"
     ],
     [
       "sv-0003",
@@ -414,7 +452,8 @@
         "Bubblan döljer allt bakom sig",
         "Bubblan består av tjock svart kartong"
       ],
-      "Genomskinlig betyder att man kan se igenom något. Vi visar landskapet bakom bubblan."
+      "Genomskinlig betyder att man kan se igenom något. Vi visar landskapet bakom bubblan.",
+      "world-mission-rainbow-03"
     ],
     [
       "sv-0039",
@@ -424,7 +463,8 @@
         "Lamporna lyser hela tiden",
         "Lamporna är släckta hela tiden"
       ],
-      "Blinkande betyder att något tänds och släcks upprepade gånger. Vi ritar det."
+      "Blinkande betyder att något tänds och släcks upprepade gånger. Vi ritar det.",
+      "world-mission-rainbow-04"
     ]
   ],
   "horses": [
@@ -436,7 +476,8 @@
         "Ett tomt kuvert",
         "En liten fjäder"
       ],
-      "Tung betyder att något väger mycket. Vi ber om hjälp med balen."
+      "Tung betyder att något väger mycket. Vi ber om hjälp med balen.",
+      "world-mission-horses-01"
     ],
     [
       "sv-0072",
@@ -446,7 +487,8 @@
         "Ropar otåligt hela tiden",
         "Springer fram för att skynda på den"
       ],
-      "Vi ger ponnyn tid och väntar lugnt. Då är vi tålmodiga."
+      "Vi ger ponnyn tid och väntar lugnt. Då är vi tålmodiga.",
+      "world-mission-horses-02"
     ],
     [
       "sv-0005",
@@ -456,7 +498,8 @@
         "En sträv grusyta med gott grepp",
         "En torr stig med grovt underlag"
       ],
-      "Hal beskriver en yta där det är lätt att glida. Vi väljer en trygg väg tillsammans."
+      "Hal beskriver en yta där det är lätt att glida. Vi väljer en trygg väg tillsammans.",
+      "world-mission-horses-03"
     ],
     [
       "sv-0023",
@@ -466,7 +509,8 @@
         "Långa ränder över bandet",
         "Ett helt enfärgat band"
       ],
-      "Prickig betyder att något har små prickar. Vi ritar rosetten med prickar."
+      "Prickig betyder att något har små prickar. Vi ritar rosetten med prickar.",
+      "world-mission-horses-04"
     ]
   ],
   "music": [
@@ -478,7 +522,8 @@
         "Spelar lika snabbt men starkare",
         "Spelar lika snabbt men svagare"
       ],
-      "När det går längre tid mellan tonerna tar melodin längre tid att spela. Tempot blir långsammare. Att spela starkare eller svagare ändrar hur starkt det låter, inte hur snabbt vi spelar."
+      "När det går längre tid mellan tonerna tar melodin längre tid att spela. Tempot blir långsammare. Att spela starkare eller svagare ändrar hur starkt det låter, inte hur snabbt vi spelar.",
+      "world-mission-music-01"
     ],
     [
       "sv-0009",
@@ -488,7 +533,8 @@
         "Ett enda kort klick",
         "Ett enstaka knallande ljud"
       ],
-      "Ett surrande ljud fortsätter en stund, som ljudet från en fläkt. Ett enda klick tar slut direkt."
+      "Ett surrande ljud fortsätter en stund, som ljudet från en fläkt. Ett enda klick tar slut direkt.",
+      "world-mission-music-02"
     ],
     [
       "sv-0039",
@@ -498,7 +544,8 @@
         "Lampor som lyser oförändrat",
         "Lampor som aldrig tänds"
       ],
-      "Blinkande lampor tänds och släcks upprepade gånger. Vi ritar ljusshowen."
+      "Blinkande lampor tänds och släcks upprepade gånger. Vi ritar ljusshowen.",
+      "world-mission-music-03"
     ],
     [
       "sv-0085",
@@ -508,7 +555,8 @@
         "Hon tycker inte alls om melodin",
         "Hon har ännu inte hört melodin och vet inte vad hon tycker"
       ],
-      "Förtjust betyder att tycka väldigt mycket om något. Musikern tycker så mycket om melodin att hon gärna spelar den igen."
+      "Förtjust betyder att tycka väldigt mycket om något. Musikern tycker så mycket om melodin att hon gärna spelar den igen.",
+      "world-mission-music-04"
     ]
   ]
 });
@@ -519,12 +567,15 @@
       if(!Array.isArray(rows)||rows.length!==chapters.length){errors.push(world);continue;}
       rows.forEach((row,index)=>{
         const key=world+':'+index;
-        if(!Array.isArray(row)||row.length!==4){errors.push(key);return;}
-        const [target,prompt,actions,why]=row,item=byId.get(target);
+        if(!Array.isArray(row)||row.length!==5){errors.push(key);return;}
+        const [target,prompt,actions,why,questionId]=row,item=byId.get(target);
+        if(questionId!=='world-mission-'+world+'-'+String(index+1).padStart(2,'0')){
+          errors.push(key);return;
+        }
         if(item?.kind!=='word'||!item.name||!item.definition||typeof prompt!=='string'||!prompt.trim()||
           typeof why!=='string'||!why.trim()||!Array.isArray(actions)||actions.length!==3||
           !actions.every(action=>typeof action==='string'&&action.trim())||new Set(actions).size!==3){errors.push(key);return;}
-        tasks[key]={key,world,index,target,word:item.name,definition:item.definition,prompt,why,
+        tasks[key]={key,questionId,world,index,target,word:item.name,definition:item.definition,prompt,why,
           options:actions.map((label,i)=>({id:String(i),label,correct:i===0}))};
       });
     }
