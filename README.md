@@ -25,7 +25,7 @@ npm run check
 - **Träna** med omedelbar återkoppling och **Testa dig** med dolt facit.
 - Lätt, medel, svårt och frivillig **Fördjupning**.
 - 121 ord med konkreta förklaringar, vardagsexempel, motexempel och egna tankefrågor.
-- 59 uttryck, 14 skolord, 363 vardagsscener, 96 jämförelsescener och
+- 73 uttryck, 14 skolord, 363 vardagsscener, 96 jämförelsescener och
   64 djupare berättelser för fyra jämförelsepar.
 - Sex befintliga uttryck har dessutom 18 situationer där sammanhanget
   avgör betydelsen eller visar att barnet behöver fråga vad personen menar.
@@ -58,7 +58,7 @@ ordfrekvens. Inga ord eller tidigare framsteg har tagits bort.
 
 ## Projektstruktur
 
-Se [målarkitekturen för en ämnesoberoende lärplattform](docs/ARCHITECTURE.md) för hur frågor, svarstyper, kunskapsmål, spelmodeller, berättelser, belöningar och historik ska frikopplas. Dokumentet är en **migrationsplan**, inte en beskrivning av redan genomförda kodändringar.
+Se [målarkitekturen med fristående ämnesbanker och återanvändbara spelmotorer](docs/ARCHITECTURE.md). Svenska, matematik och kemi ska ha **egna kunskapsbanker** med separat innehåll och valfri lagring. Första implementationen kopplar 237 befintliga svenska uttrycksuppgifter till ett gemensamt bedömningsgränssnitt. Svenskbanken har även ett genererat, separat SQLite-sökindex; övrig migration beskrivs i arkitekturdokumentet.
 
 - `public/` – hela statiska webbappen, databank och lokala bildresurser.
 - `scripts/` – utvecklingsserver och innehållsvalidering.

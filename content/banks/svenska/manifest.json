@@ -1,0 +1,25 @@
+{
+  "bankId": "svenska",
+  "version": 1,
+  "language": "sv-SE",
+  "ownership": "independent",
+  "primarySource": "public/data/expressions.json",
+  "sourceFiles": [
+    "public/data/ordbank.json",
+    "public/data/expressions.json",
+    "public/data/missions.json",
+    "public/data/word-contexts.json",
+    "public/data/contrasts.json",
+    "public/data/clue-ladder.json",
+    "public/data/surprises.json",
+    "public/data/comics.json"
+  ],
+  "adapter": "public/js/banks/svenska.js",
+  "supportedQuestionSets": [
+    "expression-meaning",
+    "expression-sentence",
+    "expression-sequence",
+    "expression-context-sentence"
+  ],
+  "note": "This manifest references existing canonical Swedish sources; it does not duplicate questions or claim other subject banks."
+}

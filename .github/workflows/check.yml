@@ -29,3 +29,5 @@ jobs:
       # Includes content validation + the full fast Node test suite.
       # Browser/Playwright tests stay local rather than running on every push.
       - run: npm run check
+      - name: Validate the independent Swedish SQLite read index
+        run: python3 content/banks/svenska/build_index.py --check

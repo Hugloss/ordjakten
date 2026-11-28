@@ -1,6 +1,6 @@
 # Ord- och frågekvalitet
 
-Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. Målarkitekturen för en gemensam frågebank över svenska, matematik, kemi, fysik och andra ämnen finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den nya strukturen är ännu inte implementerad; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
+Detta dokument beskriver **nulägets redaktionella språkbank och kvalitetssäkring**. Målarkitekturen för **separata ämnesbanker** som delar spelgränssnitt finns i [ARCHITECTURE.md](ARCHITECTURE.md). Den första svenska frågeadaptern implementeras i PR #30, men innehållets flytt till nya format är ännu inte genomförd; nedanstående filvägar och synkroniseringssteg gäller befintlig kod tills en kontrollerad migrering är gjord.
 
 ## Kanonisk ordbank
 
@@ -27,7 +27,7 @@ Nya ord ska få nytt unikt `sv-####`-ID, nivå (`easy`, `medium`, `hard`, `exper
 
 `extensionWords` och `extensionExpressions` i `public/data/curation.js`
 markerar innehåll som kräver ett aktivt val av fördjupning. Det vanliga
-urvalet omfattar 101 ord och 59 uttryck, inklusive alla 14 skolord.
+urvalet omfattar 101 ord och 65 uttryck, inklusive alla 14 skolord.
 `hardWords` låter den svåra nivån också använda 25 användbara ord om
 känslor och samspel. Svårare träning behöver inte betyda ovanligare ord.
 
@@ -67,7 +67,9 @@ Automatiska tester verifierar ID:n, korrektsvar, dubbla etiketter, antal svar oc
 
 Inför redaktionell status per fråga (utkast/granskad/publicerad). För en skolversion bör svarsalternativen sparas som individuellt granskade uppgifter med fasta option-ID:n, snarare än väljas från genererade definitionsgrupper.
 
-## 25 vardagsuttryck (version 0.6)
+## Historik: de första 25 vardagsuttrycken (version 0.6)
+
+Detta avsnitt beskriver det tidigare införandet. Den **nuvarande** källfilen `public/data/expressions.json` innehåller 73 uttryck, varav 65 ingår i det vanliga urvalet och 8 är frivillig fördjupning. För inventering och framtida innehållsmodell, se [ARCHITECTURE.md](ARCHITECTURE.md).
 
 Uttryck med sammanhang ligger **inte** i `ordbank.json`. De har stabila `ut-####`-ID:n i `data/expressions.json` och en identisk browser-export i `data/expressions.js`.
 
