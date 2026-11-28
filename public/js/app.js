@@ -12,6 +12,7 @@
   const expressions = window.ORDJAKTEN_EXPRESSIONS;
   const QuestionPlatform = window.OrdjaktenQuestionPlatform;
   const SvenskaBank = window.OrdjaktenSvenskaBank;
+  const SvenskaCatalog = window.OrdjaktenSvenskaCatalog;
   const comics = window.ORDJAKTEN_COMICS;
   const C = window.OrdjaktenComics;
   const S = window.OrdjaktenSurprises;
@@ -66,7 +67,7 @@
     $('global-error').textContent='Kunde inte läsa in stjärnsamlingen. Försök ladda om sidan.';
     $('global-error').hidden=false;return;
   }
-  if (!E || !P || !A || !M || !bank || !curation || !expressions || !QuestionPlatform || !SvenskaBank || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !G || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !ActionWords || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || E.validateSelection(curation,bank,expressions,contexts).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length || ActionWords.validate(bank).length) {
+  if (!E || !P || !A || !M || !bank || !curation || !expressions || !QuestionPlatform || !SvenskaBank || !SvenskaCatalog || !comics || !C || !S || !surprises || !Q || !missions || !contexts || !J || !R || !D || !L || !F || !K || !H || !T || !U || !B || !G || !Memory || !AhaPlan || !Recall || !Workshop || !Detector || !Concepts || !Bridges || !Journey || !Knowledge || !Feedback || !Balance || !Challenge || !Story || !Camp || !Theatre || !Living || !Mini || !Builders || !QuestionPlay || !ActionWords || !WorldMissions || !contrasts || !clues || T.validate(clues,contrasts,bank).length || K.validate(contrasts,bank).length || E.validateContexts(contexts,bank,curation).length || E.validateSelection(curation,bank,expressions,contexts).length || Q.validate(missions,expressions).length || E.validateBank(bank).length || E.validateExpressions(expressions).length || C.validate(comics,expressions).length || S.validate(surprises,expressions).length || ActionWords.validate(bank).length) {
     const error = $('global-error');
     error.textContent = 'Kunde inte läsa in ordbanken. Försök ladda om sidan.';
     error.hidden = false;
@@ -75,7 +76,10 @@
 
   // Each subject owns its source data. The game uses a bank-scoped adapter.
   const bankRegistry=QuestionPlatform.createRegistry();
-  bankRegistry.register(SvenskaBank.fromLegacyExpressions(expressions,missions));
+  bankRegistry.register(SvenskaCatalog.fromSources({
+    expressions,missions,words:bank,contexts,curation,contrasts,clues,surprises,
+    portals:PortalsData,treasure:TreasureData,worldMissions:WorldMissions,actionWords:ActionWords
+  }));
 
   const systemTheme = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   const labels = {easy:'🌱 Lätt',medium:'🧩 Medel',hard:'🔥 Svårt',exam:'📚 Fördjupning',expert:'Fördjupning'};
@@ -2409,7 +2413,14 @@
     if(!portalId)return;
     if(Object.hasOwn(data,'portalListen')){speakReadAloud(portalSpeakText(),button);return;}
     if(Object.hasOwn(data,'portalAnswer')){
-      const answer=Number(data.portalAnswer),next=Portals.choose(history.discoveryPortals,portalId,answer,portalContent);
+      const answer=Number(data.portalAnswer),next=Portals.choose(
+        history.discoveryPortals,portalId,answer,portalContent,(questionId,label)=>{
+          const ref={bankId:'svenska',id:questionId,revision:1};
+          const question=bankRegistry.resolve(ref);
+          const selected=question.responseSpec.options.find(option=>option.label===label);
+          if(!selected)throw new Error('Missing authored portal answer: '+questionId);
+          return bankRegistry.assess(ref,selected.id).status;
+        });
       const updated=next!==history.discoveryPortals?Portals.model(next,portalId,portalContent).current:null;
       updatePortal(next,updated?.stage?.feedback&&!updated.stage.solved?'portal-feedback':'portal-stage-title');
     }else if(Object.hasOwn(data,'portalHint'))
@@ -4055,6 +4066,19 @@
       throw new Error('Unusable assessment from Swedish bank: '+q.id);
     return result.status==='correct'?'right':'wrong';
   }
+  function gradeBankWord(q,option){
+    const kind=q.taskType==='context'?'context-'+q.id+'-'+String(q.contextIndex+1).padStart(2,'0'):
+      q.taskType==='action'?'action-'+q.action.id:
+      q.picture?'word-picture-'+q.id:null;
+    if(!kind)return null; // Legacy-generated meaning/reverse choices are instance-specific.
+    const ref={bankId:'svenska',id:kind,revision:1};
+    const question=bankRegistry.resolve(ref);
+    const selected=question.responseSpec.options.find(row=>row.label===option.label);
+    if(!selected)throw new Error('Question answer not registered: '+kind);
+    const verdict=bankRegistry.assess(ref,selected.id).status;
+    if(verdict!=='correct'&&verdict!=='incorrect')throw new Error('Unexpected grade: '+kind);
+    return verdict==='correct'?'right':'wrong';
+  }
   function submit(index) {
     if(!game||game.finished||game.feedback)return;
     if(guidedActive && index!==null)return;
@@ -4074,7 +4098,7 @@
     const outcome=index===null?'unanswered':
       q.kind==='expression'?gradeBankExpression(q,option,isOrder?orderSelection:null):
       isOrder?(Q.checkOrder(orderSelection)?'right':'wrong'):
-      (option.correct?'right':'wrong');
+      (gradeBankWord(q,option)??(option.correct?'right':'wrong'));
     clearQuestionPlay();
     game.answers[q.id]=outcome;
     game.selected[q.id]=isOrder&&index!==null?orderSelection.map(key=>q.correctOrder[key]).join(' → '):option?option.label:null;

@@ -99,14 +99,19 @@
         hint:progress.hint&&!solved}};
     return {entries,current,doneCount:entries.filter(x=>x.done).length};
   }
-  function choose(raw,id,index,content){
+  function choose(raw,id,index,content,assess=null){
     const state=sanitize(raw,content);
     if(!content.stories[id]||!choice(index))return raw;
     const progress=state[id]||fresh();
     if(progress.step===3||progress.solved||progress.wrong.includes(index))return raw;
-    const answer=content.stories[id].stages[progress.step].answer;
-    return {...state,[id]:{...progress,solved:index===answer,
-      wrong:index===answer?progress.wrong:[...progress.wrong,index]}};
+    const stage=content.stories[id].stages[progress.step];
+    const correct=assess===null?index===stage.answer:
+      assess(stage.questionId,stage.choices[index]);
+    if(correct!=='correct'&&correct!=='incorrect'&&typeof correct!=='boolean')
+      throw new Error('Invalid portal assessment: '+stage.questionId);
+    const solved=correct==='correct'||correct===true;
+    return {...state,[id]:{...progress,solved,
+      wrong:solved?progress.wrong:[...progress.wrong,index]}};
   }
   function hint(raw,id,content){
     const state=sanitize(raw,content),progress=state[id]||fresh();
