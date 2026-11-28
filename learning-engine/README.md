@@ -96,3 +96,52 @@ answer-bearing fields. This reduces accidental data disclosure but cannot
 prevent a misleading prompt, answer embedded in a displayed explanation or
 content scraping. The backend must still review every visible field before
 sending it and must never serve private bank data in a static offline bundle.
+
+## Server-enforced anti-scraping and leak boundary
+
+See [protected question delivery threat model](../docs/LEARNING-QUESTION-LEAK-THREAT-MODEL.md).
+The **server-only** `ProtectedDelivery.createProtectedDelivery(...)` API accepts up
+to 100 questions per authenticated session but reveals **at most one** private
+question at a time. A 30-second default server-side interval plus per-account
+rolling hourly/daily reveal quotas and session limits prevent trivial bulk
+retrieval by clicking through a hundred questions in seconds. Exam answers
+stay withheld until completion. Authenticated, expiring static-image routes
+must be provided by the application backend.
+
+A separate durable, account-transactional store and trusted identity provider
+are required in production. The provided in-memory store is **test-only** and
+explicitly refused in normal mode. A production adapter must explicitly declare
+`store.capabilities.atomicAccountTransactions=true`,
+`durableAcrossRestarts=true` and `sharedAcrossWorkers=true`.
+These declarations are **not proof**: independently test real distributed
+locking, crash recovery, quota consistency and auth across multiple workers. This package does not host a working
+protected API or make existing public Ordjakten questions private. A bot can
+still harvest material over time or by using multiple accounts; rate limiting,
+identity assurance and abuse controls at the edge are needed as well.
+
+## HTTP adapter (server only)
+
+`HttpAdapter.createHttpHandler(delivery,{allowedOrigin,maxBodyBytes})`
+exposes the protected session gate over Node HTTP without creating a server or
+enabling any private bank. It accepts **Bearer-authenticated** requests on
+`/v1/learning/sessions`, `/v1/learning/sessions/:sessionId/next`,
+`/v1/learning/sessions/:sessionId/answers`, and
+`GET /v1/learning/sessions/:sessionId`. There is deliberately **no**
+bulk/list/download endpoint. All responses include `Cache-Control: no-store`
+and other restrictive headers, and a server-paced cooldown produces HTTP 429
+plus `Retry-After` for accessible countdown UI.
+
+The adapter requires a caller-supplied trusted `authenticate` port on every
+request and refuses cross-origin browser calls unless an exact HTTPS origin is
+configured. Request sizes, methods, media paths and accepted fields are
+bounded. Neither the HTTP adapter nor the test-only in-memory store is
+a production backend: no listening server, database, user database, private
+question bank, signed image service, TLS setup or private-policy service is
+included. A real deployment needs all of those integrations and meaningful
+anti-sybil controls.
+
+The delivery module randomizes **per-instance answer option IDs**, shuffles
+presented choices and maps them back to canonical IDs only inside its
+transactional server state before calling the private grader. Protected media
+IDs are replaced by presentation-local names. A selected question is still
+visible to the authorized learner and can be recorded by that learner.
