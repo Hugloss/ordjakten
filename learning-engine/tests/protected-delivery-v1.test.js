@@ -426,3 +426,20 @@ test('numeric answers remain numeric and protected images never expose source as
  assert.equal(res.feedback.status,'correct');
  assert.equal(received,42);
 });
+
+test('a nominal production store without declared cross-worker durability is rejected',()=>{
+ const mockBank={
+  plan:async()=>[],present:async()=>({}),grade:async()=>({status:'correct'})
+ };
+ assert.throws(()=>Delivery.createProtectedDelivery({
+  authenticate:async()=>({tenantId:'school',subjectId:'learner'}),
+  bank:mockBank,store:{transact:async()=>({})}
+ }),errorCode('non_durable_store'));
+ assert.throws(()=>Delivery.createProtectedDelivery({
+  authenticate:async()=>({tenantId:'school',subjectId:'learner'}),
+  bank:mockBank,store:{
+   transact:async()=>({}),
+   capabilities:{atomicAccountTransactions:true,durableAcrossRestarts:true}
+  }
+ }),errorCode('non_durable_store'));
+});
