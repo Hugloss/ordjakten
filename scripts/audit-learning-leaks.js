@@ -63,7 +63,8 @@ function scan(root,{requireInventory=false}={}){
     reason:'invalid-public-inventory'});return violations}
   const groups=[
    ['publicDataFiles','data'],
-   ['publicBankAdapterFiles','js/banks']
+   ['publicBankAdapterFiles','js/banks'],
+   ['publicAppScriptFiles','js']
   ];
   if(inventory.schemaVersion!==1)
    violations.push({path:'content/public-bank-allowlist.json',
