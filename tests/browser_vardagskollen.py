@@ -61,7 +61,7 @@ def exam(browser):
         page.locator("#vk-next").click()
     assert page.locator("#vk-summary").is_visible()
     assert page.locator(".vk-review-card").count() == 6
-    assert page.locator(".vk-review-card").first.get_by_text("Passande svar:", exact=False)
+    assert page.locator(".vk-review-card").first.get_by_text("Passande svar:", exact=False).count() == 1
     page.locator("#vk-new").click()
     assert page.locator("#vk-picker").is_visible()
     assert page.locator("#vk-game").is_hidden()
