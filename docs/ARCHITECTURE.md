@@ -1,30 +1,48 @@
-# Arkitektur – ämnesoberoende lärplattform
+# Arkitektur – fristående ämnesbanker och återanvändbara spelmotorer
 
-**Status: föreslagen målarkitektur för granskning, inte implementerad.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
+**Status: federerad målarkitektur; en första svensk bankadapter och ett gemensamt spel-/bedömningskontrakt implementeras i PR #30. Övrig migrering återstår.** Senast genomgången 2026-11-27 mot `main` och den mergade [PR #28](https://github.com/Hugloss/ordjakten/pull/28). Den här sidan är **enda kanoniska beskrivningen av målarkitekturen**. [CONTENT.md](CONTENT.md) dokumenterar hur befintligt språkinnehåll redigeras idag; [PRODUCT.md](PRODUCT.md) dokumenterar produktprinciper. Respektive spelforms dokument beskriver nuvarande beteende, inte en konkurrerande arkitektur.
 
 ## Syfte och hårda gränser
 
-Ordjakten ska kunna lägga till matematik, kemi, fysik, historia och nya spelformer utan att skriva om frågor, kopiera innehåll mellan spelformer eller byta ut den nuvarande webbappen.
+Ordjakten ska kunna använda svenska, matematik, kemi, fysik och framtida ämnen från **separata, självständigt ägda kunskapsbanker**. Varje bank har egen begreppsmodell, sitt innehåll, sin versionshistorik och valfri lagring. De återanvändbara spelmotorerna använder bankernas gemensamma **spelgränssnitt**, inte en central databas med alla ämnen.
 
 1. **Frågan vet inget om spelform, tema, kartor, belöningar, timer, användare eller UI.** Spelmodeller konsumerar frågor via ett neutralt gränssnitt. Frågorna ska därför inte innehålla `gameModes` som redaktionellt ägd lista.
-2. **Kunskapsmål är inte frågor.** Ett begrepp/en färdighet kan undersökas med många frågor och metoder; en fråga kan relatera till flera mål och ämnen.
+2. **Kunskapsmål är inte frågor.** Varje ämnesbank äger sina begrepp och färdigheter. En fråga kan kopplas till flera mål **inom sin bank**; relationer mellan banker är uttryckliga och frivilliga, aldrig ett centralt tvång.
 3. **Svarstyp är inte bedömning.** Inmatningskomponent, tolkning/normalisering och bedömningsstrategi är skilda kontrakt.
 4. **Bedömning är inte pedagogisk slutsats.** Ett enskilt korrekt svar, ett avklarat kapitel och uppnådd färdighet är olika observationer.
 5. **Berättelser är inte frågebanker.** Scener, kapitel, kartor, dialog och samlarobjekt refererar till fråge-ID:n utan att äga facit.
 6. **Regler är inte presentation.** Spelmodellens tillståndsövergångar kan testas utan DOM, och presentationen bestämmer inte rätt/fel.
-7. **Redaktionella filer är källan till sanningen.** Webbläsarformat, sökindex, rapporter och offline-paket är genererade vyer. Två manuellt redigerade kopior är förbjudna.
+7. **Varje bank äger sin egen redaktionella källa.** Webbläsarformat, sökindex, rapporter och offline-paket är härledda vyer per bank. Inget gemensamt redaktionellt mega-register och inga två redigerbara kopior av samma objekt.
 8. **Stabila ID:n, reproducerbarhet och bakåtkompatibilitet** gäller innehåll, frågeinstanser och barns redan sparade historia.
 9. **Lokalt, integritetsvänligt, åtkomligt och offline** är grundkrav. Ingen ny backend, konto eller AI-generering under barnets spelsession krävs för målbilden.
 
+## Federerad bankmodell – inget gemensamt ämneslager
+
+**Ett spel kan använda en eller flera banker utan att bankerna känner till spelet eller varandra.** Delade begrepp, läroplaner och data mellan ämnen är möjliga först när de uttryckligen länkats; vi skapar inte automatiskt en gemensam kunskapsontologi.
+
+| Självständig del | Äger | Anslutning |
+| --- | --- | --- |
+| Bank **svenska** | Ord, uttryck, språkliga färdigheter, språkfrågor, redaktionell status och egen lagringsmodell | `BankAdapter` |
+| Bank **matematik** (framtida) | Tal, algebra, matematiska färdigheter, parametriserade uppgifter och eventuellt egen SQLite/PostgreSQL | `BankAdapter` |
+| Bank **kemi** (framtida) | Kemiska begrepp, reaktioner, säkerhetsgranskning, ämnesspecifik bedömning och egen lagring | `BankAdapter` |
+| Delat **BankRegistry** | Vilka bankadaptrar som är anslutna i aktuell körning; inga frågor, begrepp eller facit | `bankId + questionId + revision` |
+| Delade **spelmodeller** | Träna, Testa, Upptäckarklubben, Skattkartan, spelprogression och presentation | Fråge-/svarskontrakt, oberoende av ämne |
+
+En `ContentRef` ska alltid ange `{bankId, id, revision, locale}`. Samma lokala fråge-ID får finnas i två banker utan kollision. Begrepps-ID:n är **också lokala för banken**. En spelsession låser vilka banker/revisioner som används. Ett äventyr kan referera till en viss fråga i en viss bank eller till ett explicit urval, men en fråga innehåller aldrig information om vilka spel som använder den.
+
+En **relationsdatabas är ett internt lagringsval per bank**, inte den gemensamma plattformen. Svenska har nu ett valfritt, **genererat SQLite-index** i `content/banks/svenska/` med egna tabeller för begrepp, frågor, svarsalternativ och färdighetsrelationer. Git/JSON är fortsatt den enda redigerbara källan. Bygg och kontrollera utan att skapa en fil med `python3 content/banks/svenska/build_index.py --check`; sök med `--search "gångs skull"`; skapa en separat `.sqlite` med `--output /valfri/katalog/svenska.sqlite`. Indexet committas inte. En framtida matematikbank kan i stället välja en egen PostgreSQL-instans, annan schemamodell eller egna JSON-filer. Alla levererar samma neutrala adapter; spelmotorerna ska inte bero på SQL-tabeller, JSON-filvägar eller gemensam driftmiljö.
+
+**Säkerhet och kvalitet:** Varje bank validerar sina egna ID:n, ämnesregler och facit. Registry/Runtime validerar generellt svarskontrakt och åtkomst till en existerande bank. En oladdad bank ger ett tydligt fel – aldrig tyst fallback till svenska. Respektive bank styr om innehållet får publiceras/användas offline; spelmotorerna får inte kringgå licens, granskningsstatus eller ålderskrav.
+
 ## Logiska delar och ansvar
 
-Det här är **ansvarsgränser**, inte förslag om mikrotjänster eller fler repositories.
+Det här är **ansvarsgränser**, inte krav på mikrotjänster. En bank kan senare bo i separat repo/databas, men första piloten kan ligga i samma repo bakom en tydlig modulgräns.
 
 | Del | Äger | Får inte äga |
 | --- | --- | --- |
-| Taxonomi & kunskapsmodell | Ämnen, begrepp, färdigheter, förkunskaper, relationer, läroplanskopplingar | Spelflöden, facit, belöningar |
-| Content Registry | Publicerade innehållsobjekt, stabila ID:n, revisioner, länkar, licenser | Urval efter individ, UI, sessionsdata |
-| Stimulus & frågebank | Granskad fråga, källtext/bild, alternativ, svarsspecifikation, förklaringar | Spelvärld, timer, resultat |
+| Bankens taxonomi & kunskapsmodell | Begrepp, färdigheter, förkunskaper och ämnesregler **inom en bank** | Spelflöden, andra bankers begrepp, belöningar |
+| BankRegistry | Registrerade bankadaptrar och identifierare; upplösning av bankscopade referenser | Att kopiera eller centralt äga frågetexter, facit eller hela ämnens taxonomier |
+| Fristående ämnesbank | Granskade frågor, stimulus, lokala koncept, alternativ, svarsspecifikation och källor | Spelvärld, timer, resultat, andra bankers innehåll |
 | Frågeinstans | Vald revision, parametrar, slumpfrö och ordning för ett enskilt försök | Bestående kunskapsnivå |
 | Urvalspolicy | Filtrering efter mål, ålder, svårighet, täckning, repetition och kompatibilitet | Facit, UI, belöningar |
 | Interaktionsadapter | Flerval, siffra, text, sortering, formler, enhetssvar, simulator | Färdighetsbedömning, poängregler |
@@ -38,13 +56,13 @@ Det här är **ansvarsgränser**, inte förslag om mikrotjänster eller fler rep
 | Presentation & tillgänglighet | Läsbar text, tema, responsivitet, uppläsning, alternativa interaktioner | Urvalets facit och spelregler |
 | Publicering & resurser | Licenser, bilder, innehållsversioner, paketering, cache/manifest | Manuella extra innehållsbanker |
 
-**Beroenderiktning:** Innehåll och taxonomi är oberoende av spel. Urval och bedömning använder gemensamma innehållskontrakt. Spelmodeller anropar urval/bedömning och producerar spelhändelser. UI-adaptrar visar modellerna. Lagringsadaptern sparar typade händelser/tillstånd. Kärnkomponenterna får inte importera en specifik spelvärld, DOM eller browserlager.
+**Beroenderiktning:** Varje bank äger innehåll, ämnesvalidering och taxonomi oberoende av spel. Ett tunt register gör bankernas frågor åtkomliga via `bankId`. Delade urvals-/interaktions- och spelmodeller använder kontrakt, aldrig intern banklagring. Ämnesspecifika bedömare ansluts som tillval. UI-adaptrar visar modellerna och lagringsadaptern sparar typade händelser/tillstånd. Kärnkomponenterna får inte importera en specifik spelvärld, DOM eller ämnesbanks interna filstruktur.
 
 ## Innehållsmodell – det som faktiskt sparas i Git
 
 Skilj på följande identiteter:
 
-- **Subject/Topic/Skill/Concept:** vad innehållet handlar om och vad barnet tränar. Flera ämnen per mål är tillåtna, exempelvis multiplikation i fysik. Svårighetsgrad är redaktionell och kan kalibreras; ålder/årskurs är en urvalsindikator, inte spelform.
+- **Bank-local Topic/Skill/Concept:** vad innehållet i **den banken** handlar om och vad barnet tränar. Matematik och fysik får egna taxonomier även när deras frågor påminner om varandra. Frivilliga tvärämnesreferenser måste innehålla båda bankernas ID:n. Svårighet och ålder är redaktionella urvalsindikatorer, inte spelform.
 - **Stimulus:** ett självständigt textstycke, experiment, bild, diagram, ljud, simulering eller scenario. Delas bara när sammanhang och pedagogisk tolkning verkligen är samma.
 - **Question:** ett självständigt granskat bedömningsobjekt som pekar på kunskapsmål och eventuellt stimulus. Har stabilt ID, revision, språk, instruktion, typad svarsspecifikation, förklaring, käll- och granskningsstatus. Inget äventyrs-ID eller spelmode-ID.
 - **QuestionVariant/Template:** medvetet olika formuleringar eller versionssatta, redaktionellt granskade parameteriserade uppgifter. De är inte "dubletter" bara för att kunskapsmålet sammanfaller.
@@ -117,20 +135,18 @@ Det här objektet vet inte om det visas i **Testa dig**, ett piratäventyr eller
 
 ```text
 content/
-  taxonomy/        # ämnen, begrepp, färdigheter, förkunskaper
-  stimuli/          # delade scenunderlag, texter, diagram, media-referenser
-  questions/        # språk, matematik, kemi, fysik ... en redaktionell källa
-  activities/       # sammansatta/öppna uppdrag
-  adventures/       # scener, steg, fråge-referenser
-  collections/      # redaktionella listor och urval
-  assets/           # manifest, licens, alt-text
-src/
-  core/             # registry, selection, instance, assessment, evidence
-  interactions/     # typade svarskomponenter
-  game-modes/       # train, exam, discovery, treasure
-  presentations/    # kartor, berättelser, ljud, hög kontrast
-  storage/          # migrering, import/export, offline
-public/             # webbapp och genererade/paketerade innehållsfiler
+  banks/
+    svenska/manifest.json   # äger referenser till befintliga svenska original
+    # senare: separata ägda banker, ev. egna repos och DB
+src/                       # framtida delad runtime, inte innehållsbank
+  core/                    # bank registry, selection, assessment, evidence
+  interactions/            # typade svarskomponenter
+  game-modes/              # train, exam, discovery, treasure
+public/
+  data/                    # befintlig svenska-källa, flyttas först efter paritetskontroll
+  js/question-platform.js  # neutral registry/assessment
+  js/banks/svenska.js      # första fristående bankadapter
+  js/                     # befintliga spelmotorer och vyer
 docs/ARCHITECTURE.md
 ```
 
@@ -157,7 +173,116 @@ Detta beskriver **nuläget**, inte att kod redan migrerats.
 | `public/data/*.json` + motsvarande `*.js`, `public/data/curation.js` och synkskript | Etablera en redaktionell källa och genererade browserartefakter med täckningskontroll. |
 | `public/sw.js` innehåller hårdkodat cacheversionsnamn och resurslista | Frikoppla innehållsrelease/manifest och cachepaketering; bevara offline. |
 
-### Migration i små, verifierbara PR:er – ingen kod ändras av denna beskrivning
+## Verifierad inventering – vilka objekt finns redan?
+
+**Ögonblicksbild 2026-11-27, `main` efter mergade PR #28 och #29.** Detta är **antal källposter**, inte antalet unika frågor; lägg aldrig ihop talen till en total. Inventeringen förblir en granskningsöversikt; katalog och framtida counts ska genereras från innehållsfilerna.
+
+| Källa (befintlig) | Verifierat | Nuvarande identitet och framtida roll |
+| --- | ---: | --- |
+| `public/data/ordbank.json` | 121 ord | `sv-####` identifierar ett målord/begrepp, **inte** varje fråga om ordet. |
+| `public/data/word-contexts.json` | 121 ordposter, 363 scener | Samma `sv-####` binder in tre scener per ord; scener behöver separata, stabila stimulus-/uppgifts-ID:n. |
+| `public/data/expressions.json` | 73 uttryck | `ut-####` binder uttryck med scen, fem alternativ och förklaringar. Uttrycks-ID blir begreppsalias; separat ID för varje bedömningsuppgift. |
+| `public/data/missions.json` | 73 uppdragsposter | **Exakt samma 73 uttrycks-ID:n** som i uttrycksbanken. Mening/ordning är egna aktiviteter, inte kopior av ordet. |
+| `public/data/surprises.json` | 73 utmaningar | Exakt samma 73 uttrycks-ID:n; innehåller ytterligare uppgifter. |
+| `public/data/comics.json` | 73 serier kopplade till uttryck | Samma 73 uttrycks-ID:n som objekt-nycklar; serie är återanvändbar media/berättelse, inte en synonym till frågan. |
+| `public/data/contrasts.json` | 12 jämförelsepar, 96 scener | `js-01` o.s.v. för par och **96 unika scen-ID:n**. Behåll relationerna till båda målord. |
+| `public/data/clue-ladder.json` | 4 jämförelsepar, 64 nivåscener | Fyra befintliga `js-...`-referenser; nivåscenerna har egna `ld-...`-ID:n som ska bevaras. |
+| `public/js/mission-portals-data.js` | 32 berättelser, 96 steg/uppdrag | Berättelserna har ID:n; de **96 stegen saknar egna ID:n** och har facit/alternativ inbäddade. Separera frågan från scenen före omordning. |
+| `public/js/treasure-hunt-data.js` | 48 platsledtrådar | Ledtrådarna saknar egna ID:n och är knutna till värld + platsindex. Ytterligare mysterier och överföringsuppgifter finns i samma modul. |
+| `public/js/action-words.js` | 23 skrivna handlingsuppgifter | Varje handling har kort lokalt ID och ordreferens; behöver global uppgiftsidentitet och tydlig bedömnings-/presentationsgräns. |
+| `public/js/story-quests.js` och `public/js/world-missions.js` | Innehåll för vardera 12 världar | Berättelsekapitel respektive skrivna världsuppdrag i JS; inventera varje kapitel/uppgift separat före migrering. |
+| `public/js/adventures.js`, `public/js/question-play.js` | Världs- och presentationsdata | Äger världar, kartor, scenpresentation och ledtrådstexter – inte framtida fråge-ID:n, facit eller kunskapsmål. |
+| `public/data/curation.js` | Urvals- och bildstödsregler | Separera redaktionella bildkopplingar/felalternativ från användaranpassat urval och generell spelpresentation. |
+
+**Resultat av referenskontroll:** 121/121 ord-ID:n matchar posterna i `word-contexts.json`. Mängderna av 73 uttrycks-ID:n är identiska mellan `expressions.json`, `missions.json`, `surprises.json` och serienycklarna i `comics.json`. Det är **referenser till samma begrepp**, inte 292 olika uttryck. Någon semantisk kontroll av alla frågetexter är ännu inte utförd; avsaknad av främmande ID:n bevisar inte avsaknad av innehållsdubletter.
+
+**Viktigt om "en källa":** Även idag är vissa `*.json` redaktionella original med synkade `*.js`-exports, medan andra uppgifter endast finns som JS-objekt. Den senare gruppen ska **inventeras innan flytt**, inte slås ihop genom textmatchning. Skapade presentationer, fysiska interaktioner och berättelser ska bara brytas ut som egna objekt där det faktiskt ger återanvändbarhet. Målet är en ägare per innehållsobjekt – inte att pressa allt till en enda jättestor JSON-fil.
+
+### ID-policy och migreringskarta
+
+| Gammal referens | Föreslagen identitet framåt | Skydd |
+| --- | --- | --- |
+| `sv-0001` som både ord och fråga | Begrepp behåller `sv-0001` som bestående alias; varje separat fråga får `q-...` | Äldre ordhistorik mappas via explicit alias, inte via ändrat ID. |
+| `ut-0001` i fyra innehållskällor | Ett uttryck `ut-0001`, plus fråge-/uppgifts-ID:n och referenser | Bevara scen, svarsalternativ, förklaringar och uppgiftsvariant. |
+| `wordContexts[sv-...].scenes[0..2]` | Varje stimulus/scen och eventuell fråga får eget ID | Engångsmappning av ursprungligt ord-ID **och** position före redaktionell omordning. |
+| `mission-portals-data.STORIES[detective].stages[0..2]` | Stabilt `scene/step`-ID som refererar till självständig `questionId` | Versionerad mappning från berättelse-ID + gamla stegindex; flytta inte stegen först. |
+| `treasure-hunt-data.DATA[forest][0..3]` | Separat `placeId`/`clueId` och eventuellt `questionId` | Bevara gamla platsindex i migreringsmappningen och intjänade fynd. |
+| `js-01`, `js-01-01`, `ld-...` | Behåll befintliga stabila identiteter där de redan är entydiga | Tilldela dem rätt objekttyp; skapa inte nya identiteter enbart för snyggare prefix. |
+| `action-words.js` lokala handlings-ID:n | Globala uppgifts-ID:n med alias från handlings-ID + ord-ID | Skilj rätt-svar-kontroll från animation och manipulation. |
+
+Nya ID:n får vara läsbara men ska **inte härledas från dagens arrayposition vid varje bygge**. Ett migrerat steg får permanent ID även om placering eller ordning senare ändras. Övergången ska ha en envägs, testad tabell `legacyReference → newId`; tvetydigheter måste granskas manuellt. Ingen tyst deduplicering, omnumrering, sammanslagning eller radering av sparad progression.
+
+## Minsta interoperabla kontrakt – specificera före implementation
+
+Detta är **målkontrakt, inte ett fastslaget JSON-schema för alla framtida ämnen**. PR #30 implementerar en liten delmängd (svenska, flerval och numerisk testadapter) och visar hur en självständig bank ansluts utan att övriga ämnen tvingas till samma interna datamodell.
+
+### 1. Registry, fråga och sammansatt uppgift
+
+- `ContentRef = {bankId, id, revision, locale}`. `id` är stabilt, `revision` ökar vid ändring i betydelse/facit/formulering, `locale` är innehållets språk. Sluta använda fråge-ID som synonym till ämnets begrepps-ID.
+- `Question = {ref, skillIds, stimulusRefs?, prompt, responseSpec, assessmentSpec, explanation?, review, provenance?, assetRefs?}`. Frågan är en självständig bedömningsbar enhet och **får inte ha gameMode/adventure/reward/score/localStorage-fält**.
+- `Task/Activity = {id, revision, objectives, steps/questionRefs}` kan vara flera uppgifter, en simulerad laboration eller ett frivilligt fritt resonemang. En fråga behöver **inte** vara flerval eller ens binärt rätt/fel.
+- `Scene = {id, revision, narrative, activityRefs, assetRefs, transitions}`. Ett äventyr äger ordningen och upplevelsen, men inte uppgiftens facit. En scen kan referera till flera frågor och samma fråga får användas av flera scener.
+- `Collection = {id, criteria | orderedRefs}` skiljer fasta redaktionella listor från dynamiskt sökfilter. Gemensam fråga = gemensamt refererat ID, inte en kopia av dess text.
+
+### 2. Svar, bedömning och hjälp
+
+- `ResponseSpec` beskriver **hur svar lämnas** (exempelvis `single-choice`, `multi-choice`, `numeric`, `quantity-with-unit`, `math-expression`, `chemical-equation`, `ordering`, `text`). Interaktionskomponenten väljs av capability-matchning, inte av ämnesnamnet.
+- `AssessmentSpec` anger **hur ett svar kan bedömas** (exakt matchning, ett eller flera tillåtna alternativ, numerisk tolerans, dimension/enhet, symbolisk ekvivalens, atom- och laddningsbevarande, rubrik/mänsklig granskning eller medvetet obetygsatt). Flera vetenskapligt ekvivalenta svar är tillåtna. Normalisering får inte förlora enheter eller betydelse.
+- `AssessmentOutcome = {status, evidence, score?}` har minst `correct`, `incorrect`, `partial`, `ungraded`, `needs-review`, `invalid`. `score`, om det används, är **bedömningsmått** och inte stjärnor eller spelbelöning.
+- `FeedbackPolicy` bestämmer **när** facit/ledtrådar visas (omedelbart i Träna, först efteråt i Testa). `HintContent` hör till uppgiften eller en pedagogisk strategi; ledtrådens **visning** styrs av spelpolicyn. Rätt/fel behöver inte vara synligt i alla spelformer.
+
+### 3. Instans, slump, händelse och progression
+
+- `QuestionInstance = {instanceId, questionRef, parameters?, seed?, choiceOrder?, contextRef?, manifestId}` fryser frågerevisionen och alternativens stabila ID:n för ett försök. Parametriserad uppgift får deterministiskt facit från samma parametrar och bedömningsversion; förklaringen måste vara giltig även efter variation.
+- `AttemptEvidence = {attemptId, instanceId, assessmentStatus, assessedSkillIds, assistance, originMode, eventTime?, assessmentRevision}` förklarar **vad som observerades**, inte automatiskt att barnet kan eller inte kan. `assistance` ska exempelvis skilja självständigt svar, upprepat försök, ledtråd och förhandsvisning. Undvik att spara barns fria texter, ljud eller identifierare.
+- `GameEvent = {sessionId, modeId, eventType, sceneId?, instanceId?, payloadVersion}` får uppdatera ett separat `GameProgress` (plats, kapitel, fynd) medan godkänd `AttemptEvidence` kan uppdatera `LearningProgress` (övningssignaler och repetition). Dessa är **olika projektioner**, även om samma försök utlöser dem.
+- `StorageEnvelope` har egen schemaversion, aktiva sessionsreferenser och innehållsmanifest-ID. Appversion, innehållsrevision och lagringsschema **får inte blandas ihop**. En äldre nyckel `ordjakten-v1` måste kunna läsas och migreras idempotent eller förbli i säkert kompatibilitetsläge tills migrering är klar.
+- `ContentManifest` låser publicerade fråga-/asset-revisioner och offline-buntens version så att cacheuppdatering inte blandar gammalt facit med ny fråga. Om referensen inte finns: **stoppa/visa kontrollerat fel**, hitta inte på ersättningsfråga.
+
+### 4. Spelmodellen får endast begära kapabiliteter
+
+En spelmodell förklarar exempelvis `supportedResponses: [single-choice, numeric]`, vilka feedbackflöden som tillåts och om sessionen är låst eller adaptiv. Urvalet söker frågor vars **krav** uppfylls; frågan behöver inte listas mot varje framtida spelmodell. Redaktionellt urval till världar och uppdrag sker genom samlingar, kunskapsmål eller scenreferenser, **inte genom fältet "spelformer" på frågan**.
+
+**Särskild gräns för prov:** Även om statisk/offline JavaScript inte kan gömma nedladdat facit för den som analyserar koden ska UI, loggning, utvärderingshändelser och progressionsvyer inte avslöja det för barnet före avslutad omgång.
+
+### 5. Återanvändning får inte ändra frågans betydelse
+
+En gemensam fråga kan återanvändas oförändrad i olika spelformer **bara om prompt, nödvändigt stimulus, svarsspecifikation och giltigt facit betyder samma sak**. Om en detektivscen tillför en ny ledtråd som behövs för rätt svar är den inte längre en neutral kosmetisk inramning. Då krävs ett eget versionerat stimulus, en explicit frågevariant eller en separat aktivitet. Detta är särskilt viktigt för vardagsuttryck där sammanhanget avgör innebörden.
+
+När ett spel visar fyra av fem granskade svarsalternativ dokumenteras det valda delmängdsurvalet i `QuestionInstance` tillsammans med stabila alternativ-ID:n. Frågerevision, bedömning och semantisk entydighet måste fortsätta stämma för just den instansen; det är **inte** tillräckligt att knapparna har rätt antal.
+
+En enda fråga i flera spelformer är heller inte flera oberoende kunskapsbevis: lärandemodellen ska kunna skilja första mötet, upprepning, återanvändning samma dag, assisterat svar och verklig överföring till nytt sammanhang. Rekommendationsmotorn får läsa sådana signaler, men spelmotorer får inte räkna varje återanvändning som en ny behärskad färdighet.
+
+## Första fungerande vertikala snittet (PR #30)
+
+Denna del är **implementerad**, till skillnad från de fortsatta målkontrakten:
+
+- `content/banks/svenska/manifest.json` deklarerar en **egen språkbank** och pekar på dagens kanoniska svenska JSON-källor. Det ligger **inga kopierade frågetexter** i manifestet. Bankens `schema.sql` och `build_index.py` kan skapa och validera dess **eget relationsindex**, men påverkar inte spelmotorn eller källdatan.
+- `public/js/banks/svenska.js` läser nu **237 separata uppgifter** utan att skapa kopior av innehållet: 73 betydelsefrågor, 73 meningsfrågor, 73 ordningsfrågor och 18 särskilda sammanhangsscener. Varje uppgift har eget stabilt bankscopat ID. Exempel: `{bankId:"svenska", id:"meaning-ut-0001", revision:1}`, `sentence-ut-0001`, `order-ut-0001` och `sentence-ut-0025-page`. Äldre `ut-####` är fortsatt begrepps- och historik-ID:n.
+- `public/js/question-platform.js` registrerar oberoende banker, validerar referenser och svarstyper, skapar reproducerbara presentationsinstanser med stabila alternativ-ID:n och kontrollerar svar. Registret lagrar inga ämnestaxonomier eller nya kopior av källdatan. **En bank måste alltid namnges uttryckligen**; det finns ingen implicit gemensam bank.
+- `public/js/question-session.js` demonstrerar skilda **Träna**- och **Testa**-policys över exakt samma fråga. Prov får inget facit/bedömningsutfall i presentations- eller svarshändelserna före avslut; belöningar/lärande är inte kopplade till bedömaren.
+- `engine.js` importerar **ingen ämnesbank**. Appens kompositionslager (`app.js`) kopplar in svenskbanken och använder dess neutrala bedömning för **betydelse-, menings- och ordningsfrågor**. Den gamla generatorn producerar fortfarande presentationsuppgifterna tills motsvarande urval/instanser också har migrerats. `ordjakten-v1`, historiska resultat, kartfynd och övriga spel behålls.
+- `tests/question-platform.test.js` verifierar facit och frågeidentiteter för samtliga 237 uppgifter, ordningsföljd och avvisade svar, sammanhangens originaltexter, låsta provresultat, stabila ID:n, felaktiga revisioner och en **syntetisk matematikbank enbart i testet**. `tests/browser_question_bank.py` provar den faktiska webbläsarupplevelsen i Träna/Testa. Bankens separata SQLite-index har **194 begrepp, 237 frågor, 857 svarsalternativ och 3 färdigheter**, och kontrolleras med `build_index.py --check`. Ingen verklig matematikbank har skapats.
+
+**Kvar att migrera:** ordfrågor (121 ord och 363 scener), bonusuppgifter och andra svenska träningsformer, Upptäckarklubbens steg/Skattkartans ledtrådar, fullständig frågeinstanspersistens och fortsatt redaktionell kvalitetsgranskning. SQLite-indexet är ett banklokalt **härlett index**, inte redaktionell databas. Den nya `QuestionSession` används i detta skede som ett verifierat separat kontrakt, **inte** som ersättare för alla den gamla appens omgångar.
+
+## Första migrationspilot – konkreta acceptanskriterier
+
+**Rekommenderat innehåll:** använd ett redan redaktionellt skrivet flervalsobjekt från `expressions.json`, exempelvis uttrycket `ut-0001` med dess fasta alternativ. Skapa vid implementation en **enda kanonisk fråga** med eget ID och en läsadapter för befintlig datakälla. Verifiera återanvändning i Träna och Testa. Prova därefter en **referens** från en separat äventyrsscen (utan att skriva över en existerande portalfråga eller dess manus). Inga nya frågor dupliceras för att göra pilotfallet möjligt.
+
+**Kriterier innan pilot-PR får mergas:**
+
+1. Kanoniskt fråga-/alternativ-ID och revision är oförändrade oavsett spelform; text, facit och förklaring är jämförda mot nuvarande källa.
+2. Ingen fråga eller bedömare importerar `adventures.js`, `mission-portals.js` eller UI; spelmodellen får bara fråga/instans och neutralt bedömningsresultat.
+3. Ett prov avslöjar inte rätt svar i UI förrän omgången är avslutad. Träning får frivillig hjälp utan att ändra facit.
+4. Äldre `sv-####`/`ut-####`-historik, `ordjakten-v1`, portalsteg, fynd och belöningar migreras inte i smyg och förloras inte vid omladdning. Först dokumenterad alias-/instansmappning, sedan migrationskod.
+5. Samma fråga får två olika presentationer utan två manuellt redigerade frågetexter; tests kan kontrollera referensintegritet samt identisk bedömning.
+6. Testerna täcker rätt, fel, delvis/obetygsatt som kontrakt, assisterat svar, slumpad alternativordning, återupptagen session, export/import/radering och offline-cachegräns. Kemi-/fysikgraderare behöver inte vara implementerade i denna pilot, men får inte kräva ett nytt `Question`-kontrakt.
+7. Inget oavsiktligt beroende av konto, nätverk, backend, stor extern runtime, kopiering av licensierade resurser eller sparande av rå fritext introduceras.
+
+**Nästa verifiering före själva kodflytten:** gå igenom `world-missions.js` och `story-quests.js` på objektnivå och kontrollera semantiska dubbleringar mellan formulerade portaluppdrag, världsmysterier och ord-/uttrycksfrågor. De inventerade talen ovan visar **strukturella mängder**, inte att semantisk deduplicering är färdig.
+
+## Migration i små, verifierbara PR:er – ingen kod ändras av denna beskrivning
 
 1. **Inventera och klassificera** samtliga innehållskällor (frågor, stimulus, äventyr, begrepp, medieobjekt), tilldela beständiga ID:n där de saknas och registrera användningsrelationer. Bevara publicerade belöningar och progression.
 2. **Fastställ minimikontrakten** för question, question instance, typed response, assessment, event/evidence, scene, story step och content manifest. Besluta först vilka fält som är kanoniska och vilka som är härledda.
@@ -171,4 +296,4 @@ Detta beskriver **nuläget**, inte att kod redan migrerats.
 
 ## Utanför målbilden just nu
 
-Ingen server, databas, kontosystem, generell AI-rättning, molnprofil, klasslistor eller mikrotjänster. En plugin-/adapterarkitektur här betyder **små typade moduler och kontrakt i samma repo**; externa standardformat eller import-/exportsystem kan anslutas senare utan att diktera hela den interna modellen.
+Ingen gemensam server eller central ämnesdatabas, kontosystem, generell AI-rättning, molnprofil, klasslistor eller mikrotjänster. En plugin-/adapterarkitektur här betyder **små typade moduler och kontrakt i samma repo**; externa standardformat eller import-/exportsystem kan anslutas senare utan att diktera hela den interna modellen.
