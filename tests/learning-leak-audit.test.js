@@ -54,3 +54,40 @@ test('public assets must not contain symlinks or credential-named files',()=>{
   assert.ok(scan(root).some(x=>x.reason==='symlink-in-public-build'));
  });
 });
+
+test('public bank inventory rejects new unsanctioned question-bank files',()=>{
+ fixture(({root,write})=>{
+  write('data/ordbank.json','{"public":true}');
+  write('data/new-medical-bank.json','{"questions":["not authorized for public"]}');
+  write('js/banks/svenska.js','module.exports={}');
+  write('js/banks/private-lessons.js','module.exports={}');
+  const dir=path.join(root,'content');
+  fs.mkdirSync(dir,{recursive:true});
+  fs.writeFileSync(path.join(dir,'public-bank-allowlist.json'),JSON.stringify({
+   schemaVersion:1,publicDataFiles:['ordbank.json'],
+   publicBankAdapterFiles:['svenska.js']
+  }));
+  const reasons=scan(root,{requireInventory:true}).map(row=>row.reason);
+  assert.equal(reasons.filter(x=>x==='unapproved-public-bank-file').length,2);
+ });
+});
+test('CI requires a committed public bank publication inventory',()=>{
+ fixture(({root,write})=>{
+  write('data/ordbank.json','{}');
+  assert.ok(scan(root,{requireInventory:true}).some(row=>
+    row.reason==='missing-public-inventory'));
+ });
+});
+test('inventory drift is reported instead of silently approving a removed file',()=>{
+ fixture(({root,write})=>{
+  write('data/ordbank.json','{}');
+  write('js/banks/svenska.js','{}');
+  fs.mkdirSync(path.join(root,'content'),{recursive:true});
+  fs.writeFileSync(path.join(root,'content','public-bank-allowlist.json'),
+   JSON.stringify({schemaVersion:1,
+    publicDataFiles:['ordbank.json','expressions.json'],
+    publicBankAdapterFiles:['svenska.js']}));
+  assert.ok(scan(root,{requireInventory:true}).some(x=>
+   x.reason==='public-bank-inventory-drift'));
+ });
+});

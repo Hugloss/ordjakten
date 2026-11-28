@@ -13,7 +13,7 @@ const MARKERS=[
  ['api-token',/\bsk-(?:proj-)?[A-Za-z0-9_-]{24,}\b/],
  ['private-bank-marker',/\b(?:PRIVATE_BANK_DO_NOT_PUBLISH|PRIVATE_QUESTION_BANK_DATA|PRIVATE_POLICY_SOURCE_DO_NOT_PUBLISH)\b/]
 ];
-function scan(root){
+function scan(root,{requireInventory=false}={}){
  const pub=path.resolve(root,'public'),violations=[];
  if(!fs.existsSync(pub))return [{path:'public',reason:'missing-public-root'}];
  function traverse(directory){
@@ -52,10 +52,48 @@ function scan(root){
   }
  }
  traverse(pub);
+ const inventoryFile=path.resolve(root,'content','public-bank-allowlist.json');
+ if(!fs.existsSync(inventoryFile)){
+  if(requireInventory)violations.push({path:'content/public-bank-allowlist.json',
+    reason:'missing-public-inventory'});
+ }else{
+  let inventory;
+  try{inventory=JSON.parse(fs.readFileSync(inventoryFile,'utf8'))}
+  catch(_){violations.push({path:'content/public-bank-allowlist.json',
+    reason:'invalid-public-inventory'});return violations}
+  const groups=[
+   ['publicDataFiles','data'],
+   ['publicBankAdapterFiles','js/banks']
+  ];
+  if(inventory.schemaVersion!==1)
+   violations.push({path:'content/public-bank-allowlist.json',
+     reason:'invalid-public-inventory'});
+  for(const [key,relative] of groups){
+   const expected=inventory[key];
+   if(!Array.isArray(expected)||expected.length===0||
+     expected.some(n=>typeof n!=='string'||!/^[-.a-zA-Z0-9_]+$/.test(n))||
+     new Set(expected).size!==expected.length){
+    violations.push({path:'content/public-bank-allowlist.json',
+      reason:'invalid-public-inventory'});
+    continue;
+   }
+   const folder=path.join(pub,relative);
+   if(!fs.existsSync(folder)){
+    violations.push({path:relative,reason:'missing-public-bank-directory'});
+    continue;
+   }
+   const current=fs.readdirSync(folder,{withFileTypes:true})
+     .filter(entry=>entry.isFile()).map(entry=>entry.name);
+   for(const name of current)if(!expected.includes(name))
+    violations.push({path:relative+'/'+name,reason:'unapproved-public-bank-file'});
+   for(const name of expected)if(!current.includes(name))
+    violations.push({path:relative+'/'+name,reason:'public-bank-inventory-drift'});
+  }
+ }
  return violations;
 }
 function main(){
- const root=path.resolve(__dirname,'..'),issues=scan(root);
+ const root=path.resolve(__dirname,'..'),issues=scan(root,{requireInventory:true});
  if(issues.length){
   for(const issue of issues)console.error('PUBLIC_LEAK '+issue.path+' '+issue.reason);
   process.exitCode=1;
